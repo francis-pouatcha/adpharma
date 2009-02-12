@@ -20,11 +20,11 @@
     
    <c:choose>
    <c:when test="${inventaire.etat == etat}">
-                 <span><a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="MODIFIER DETAIL" title="modifier le detail de la commande" /></a></span>
-                <span><a href="${ close_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="CLOTURER" title="cloturer la commande" /></a></span>
+                 <span><a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="MODIFIER DETAIL" title="modifier le detail de l'inventaire" /></a></span>
+                <span><a href="${ close_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="CLOTURER L'inventaire" title="cloturer l'inventaire" /></a></span>
     </c:when>
      <c:otherwise>
-               <span><a href="${ print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer" title="imprimer le bon de commande" /></a></span>
+               <span><a href="${ print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer la fiche " title="imprimer la fiche d'inventaire" /></a></span>
      
       </c:otherwise>
    </c:choose>

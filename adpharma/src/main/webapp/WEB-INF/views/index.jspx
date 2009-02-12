@@ -20,26 +20,23 @@
 
 	  }
   </script>
-  
-     <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
-  
+    <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
     <spring:url var="imgfonct" value="/resources/images/imgfonct.jpg"/>
-     <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
+    <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
     <spring:url var="imgcomp" value="/resources/images/imgfonct2.jpg"/>
-      <spring:url var="userIco" value="/resources/images/user.jpeg"/>
-       <spring:url var="clientIco" value="/resources/images/client.jpeg"/>
-        <spring:url var="caisseIco" value="/resources/images/caisse.jpeg"/>
-     <spring:url var="invoiceIco" value="/resources/images/invoice.jpeg"/>
-     <spring:url var="saleIco" value="/resources/images/sale.jpeg"/> 
-      <spring:url var="produitIco" value="/resources/images/produit.jpeg"/> 
-       <spring:url var="ordonnanceIco" value="/resources/images/ordonnancier.jpeg"/> 
-        <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
-     <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
-      <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
-       <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_fact_url"/>
-        <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
-                    <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_ord_url"/>
-      
+    <spring:url var="userIco" value="/resources/images/user.jpeg"/>
+    <spring:url var="clientIco" value="/resources/images/client.jpeg"/>
+    <spring:url var="caisseIco" value="/resources/images/caisse.jpeg"/>
+    <spring:url var="invoiceIco" value="/resources/images/invoice.jpeg"/>
+    <spring:url var="saleIco" value="/resources/images/sale.jpeg"/> 
+    <spring:url var="produitIco" value="/resources/images/produit.jpeg"/> 
+    <spring:url var="ordonnanceIco" value="/resources/images/ordonnancier.jpeg"/> 
+    <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+    <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
+    <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
+    <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_fact_url"/>
+    <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
+    <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_ord_url"/>
     <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
     <table class="tblog" >
     	<tr>
@@ -83,7 +80,7 @@
     		
     		</td>
     		<td align="center" width="30%" class="tblog">
-    		<h2> PHARMACIE DE L'ALLIANCE </h2>
+    		<h2> PHARMACIE DU ROCHER </h2>
     		<img src="${biglogo}"/>
     		</td>
     		<td align="center" width="30%" valign="center" class="tblog">
@@ -108,11 +105,10 @@
 			<img src="${imgfonct}"/>Gestion des ordonnanciers<br/>
     		</td>
     		<td align="center" width="30%" class="tblog">
-    		<h2> PHARMACIE DE L'ALLIANCE </h2>
+    		<h2> PHARMACIE DU ROCHER </h2>
     		<img src="${biglogo}"/>
     		</td>
     		<td align="center" width="33%" class="tblog">
-    	
     		<img src="${imgcomp}"/>
     		</td>
     	</tr>
@@ -122,16 +118,7 @@
   </util:panel>
   
  
-  <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
 
- 
-</div>
-</div>
 
   
 </div>

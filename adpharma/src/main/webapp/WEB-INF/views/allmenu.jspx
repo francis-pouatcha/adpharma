@@ -16,7 +16,7 @@
     <![endif]-->
     	<jsp:include page="allmenuscripts.jspx" />
                           <spring:url value="/detteclients?page=1&amp;size=${empty param.size ? 100 : param.size}" var="list_dette_url"/>
-                                            <spring:url value="/dataloader/load" var="load_url"/>
+                                            
                                                                     <spring:url value="/produits/attributionFamile?form" var="aff_fsf_url"/>
       <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
       <spring:url value="/commandeclients/cmdCredit?form" var="vente_credit_url"/>
@@ -66,6 +66,7 @@
  <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
 		<li><a  style="text-transform: capitalize;" class="headMenu" href="#">Gestion du Stock</a>
         		<ul class="sub_menu">
+        		<security:authorize ifAnyGranted="ROLE_SAISIE_PRODUIT ,ROLE_SITE_MANAGER">
         			 <li>
         				<a  href="#">Entree En Stock </a>
         				<ul>
@@ -74,11 +75,16 @@
         					<li><a href="${search_list_url}">Rechercher Les Entrees</a></li>
         				</ul>
         			 </li>
+        			</security:authorize>
         			 <li>
         			 	<a href="#">Produits approvisionnes</a>
         			 	<ul>
+        			 	<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
         					<li><a href="${ap_trans_url}">Decomposer</a></li>
+        				</security:authorize>
+        				<security:authorize ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
         					<li><a href="${ap_sortir_url}">Sortir du Stock</a></li>
+        				</security:authorize>
         					<!--  <li><a href="${ap_correct_url}">Compenser Le Stock CIPM</a></li>-->
         					<li><a href="${search_lgap_url}">rechercher</a></li>
         					<li><a href="${lap_list_url}">lister</a></li>
@@ -88,6 +94,7 @@
         				<a href="${imp_code_url}">Impression Code Bare</a>
         				
         			 </li>
+        			 <security:authorize ifAnyGranted="ROLE_PREPARATION_CMD ,ROLE_SITE_MANAGER">
         			  <li>
 		        				<a href="#">Preparation des Commandes</a>
 		        					<ul>
@@ -96,13 +103,18 @@
 		        						<li><a href="${cmd_list_url}">Lister</a></li>	
 		        					</ul>
 		           </li>
+		           </security:authorize>
+		          <security:authorize ifAnyGranted="ROLE_RAYON ,ROLE_SITE_MANAGER">
         			 <li>
-		        				<a href="#">Rayons</a>
+		        				<a href="#">Emplacements / Rayons</a>
 		        					<ul>
 		        						<li><a href="${conf_ray_url}"> Ajouter</a></li>
 		        						<li><a href="${conf_list_ray_url}">Lister</a></li>	
 		        					</ul>
 		        			 </li>
+		        	</security:authorize>
+		        	
+		         <security:authorize ifAnyGranted="ROLE_FOURNISSEUR ,ROLE_SITE_MANAGER">
 		        			 <li>
 		        				<a href="#">Fournisseurs</a>
 		        					<ul>
@@ -110,6 +122,8 @@
 		        						<li><a href="${four_list_url}">Lister</a></li>	
 		        					</ul>
 		        			 </li>
+		        	</security:authorize>
+		        	<security:authorize ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
         			 <li>
         				<a href="#">Mouvements stock</a>
         				<ul>
@@ -117,6 +131,7 @@
         					<li><a href="${mvt_list_url}">Lister</a></li>	
         				</ul>
         			 </li>
+        			 </security:authorize>
         			 
         			
 				</ul>
@@ -128,13 +143,20 @@
         <li>
         	<a href="#">Ventes</a>
         			 	<ul class="sub_menu">
+        			 	 <security:authorize ifAnyGranted="ROLE_VENTE_COMPTANT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
         					<li><a href="${vente_public_url}">Vente Au Comptant</a></li>
+        				 </security:authorize>
+        				 <security:authorize ifAnyGranted="ROLE_VENTE_CREDIT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
         					<li><a href="${vente_credit_url}">Vente a Credit</a></li>
+        				</security:authorize>
+        				<security:authorize ifAnyGranted="ROLE_VENTE_PROFORMAT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
         					<li><a href="${vente_proformat_url}">Facture Proformat</a></li>
+        				</security:authorize>
+        				<security:authorize ifAnyGranted="ROLE_VENTE_VISU ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
         				    <li><a href="${search_url}">Rechercher une vente</a></li>
-        				    <li><a href="${vente_jour_url}">Etat Journalier Des Ventes</a></li>	
+        				    <li><a href="${vente_jour_url}">Ventes du Jour</a></li>	
         					<li><a href="${list_url}">Lister Les Ventes</a></li>	
-        					
+        				</security:authorize>	
         					
 		        		</ul>
                 
@@ -342,8 +364,8 @@
         		<a href="#">Catalogues</a>
         			 	<ul class="sub_menu">
         					<li><a href="${search_lgap_url}">Rechercher un Produit (CIPM)</a></li>
+        					            
         					            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
-        					
         					<li>
 		        				<a href="#">produits</a>
 		        					<ul>
@@ -525,6 +547,9 @@
     <!-- menu etats -->
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
     	<spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
+    	<spring:url value="/etats/print/listingRayon.pdf" var="list_rayon_url"/>
+    	<spring:url value="/etats/print/listingRelationDecomposition.pdf" var="list_relation_url"/>
+    	<spring:url value="/etats/print/listingClient.pdf" var="list_clt_url"/>
     	<spring:url value="/etats/print/listingRupture.pdf" var="list_rup_url"/>
     	<spring:url value="/etats/print/etatJournalierCaisse.pdf" var="cash_journalier_url"/>
     	<spring:url value="/etats/print/etatValorisationStock.pdf" var="et_valeur_stock"/>
@@ -533,12 +558,12 @@
     	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
 		                                  <li><a href="#">Etats </a>
 		        							<ul>
-		        								<li><a href="${list_cat_url}">Listing Catalogue</a></li>
+		        								<li><a href="${list_rayon_url}">Listing Rayons</a></li>
+		        								<li><a href="${list_clt_url}">Listing Clients</a></li>
+		        								<li><a href="${list_relation_url}">Listing Relations de decompositions</a></li>
 		        								<li><a href="${et_valeur_stock}">Etat Valorisation du stock</a></li>
 		        								<li><a href="${et_jour_dette}">Etat Journalier des Dettes </a></li>
-		        								<li><a id="et_per_dette" href="#">Etat Periodique des Dettes </a></li>
 		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
-		        								<li><a id="et_per_cash" href="#">Etat Periodique des Caisses </a></li>
 		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
 		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
 		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>	
@@ -552,12 +577,16 @@
                 <spring:url value="/printerconfigurations?form" var="creer_printer"/>
                       <spring:url value="/licenceentitys/1?form" var="licence_update"/>
                         <spring:url value="/configurations/1?form" var="other_config"/>
-      
+      <spring:url value="/dataloader/loadrayon?form" var="load_rayon_url"/>
+      <spring:url value="/dataloader/loadproduit?form" var="load_produit_url"/>
+      <spring:url value="/dataloader/loadentree?form" var="load_entree_url"/>
                            <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
     			<li>
-    			<a href="#">DataBase</a>
+    			<a href="#">DataBase Import</a>
         			 	<ul class="sub_menu">
-        			 		<li><a href="${load_url }">charger les donnees</a></li>
+        			 		<li><a href="${load_rayon_url }">Importer les Rayons</a></li>
+        			 		<li><a href="${load_produit_url }">Importer le Catalogue</a></li>
+        			 		<li><a href="${load_entree_url }">Importer les Entrees en Stock</a></li>
         			 	</ul>
         		</li>
         		
@@ -597,7 +626,6 @@
     	<li>
     	 <spring:url value="/manuels/sommaire-fr" var="sommaire_url"/>
     		<a  href="${sommaire_url}" style="color: blue; font-weight: bold;">AIDE</a>
-    			
        </li>
   	
  </ul> 

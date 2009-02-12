@@ -434,7 +434,7 @@ $('#updateClient').dialog("close");
 					name="formulaire" onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CiP MAISON</th>
+							<th style="text-align: center;witdh: 200px;">CiP MAISON</th>
 							<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
 							<th style="text-align: center;">prix Unitaire</th>
 							<th style="text-align: center;">QUANTITE</th>
@@ -445,7 +445,7 @@ $('#updateClient').dialog("close");
 						<tr>
 							<td><INPUT type="hidden" name="lineId" id="lineId"
 								value="${saleProcess.lineToUpdate.id}" /> <INPUT type="text"
-								name="cipm" id="1" class="autres"
+								name="cipm" maxlength="-1" id="1" class="autres"
 								value="${saleProcess.lineToUpdate.cipM}" title="Taux De Marge"
 								style=" text-align: center;" disabled="disabled" />
 							</td>
@@ -506,7 +506,7 @@ $('#updateClient').dialog("close");
 					name="formulaire" onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CIP MAISON</th>
+							<th style="text-align: center;  witdh: 200px;">CIP MAISON</th>
 							<th style="text-align: center;">CIP</th>
 							<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
 							<th style="text-align: center;">PRIX UNITAIRE</th>
@@ -527,7 +527,7 @@ $('#updateClient').dialog("close");
 
 									</c:when>
 									<c:otherwise>
-										<INPUT type="text" name="cipm" id="cipm"  class="autres"
+										<INPUT type="text" name="cipm" maxlength="-1" id="cipm"  class="autres"
 											value="${saleProcess.produit.cipMaison}" 
 											onKeyPress="return scanTouche(event)"  onchange="requete();"
 											title="saisir le cipm" 

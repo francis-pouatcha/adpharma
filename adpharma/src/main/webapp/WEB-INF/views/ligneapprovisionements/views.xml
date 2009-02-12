@@ -49,5 +49,8 @@
      <definition extends="approvisionnement" name="ligneapprovisionements/sortiesByCip">
         <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/sortirStockByCip.jspx"/>
     </definition>
+     <definition extends="approvisionnement" name="dataloader/loadentree">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/loadentree.jspx"/>
+    </definition>
     
 </tiles-definitions>

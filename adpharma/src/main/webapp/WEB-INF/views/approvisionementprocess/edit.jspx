@@ -104,7 +104,7 @@
 							<th style="text-align: center;">Prix Vente</th>
 
 							<th style="text-align: center;">Prix Achat</th>
-							<th style="text-align: center;">TVA</th>
+							<th style="text-align: center;">TMul</th>
 
 
 							<th style="text-align: center;">Date Per</th>
@@ -124,11 +124,11 @@
 								value="${approvisonementProcess.lineToUpdate.designation}"
 								style="color: blue; text-align: center;" disabled="disabled"
 								id="des" /></td>
-							<td><input type="text" name="cipM" disabled="disabled"
+							<td><input type="text" name="cipM"  disabled="disabled"
 								class="autres"
 								value="${approvisonementProcess.lineToUpdate.cipMaison}"
 								onkeypress="return scanTouche(event)" onkeyup="requete();"
-								title="saisir le cip" style="color: blue; padding-left: 15px;"
+								title="saisir le cip" style="color: blue; "
 								maxlength="7" autofocus="autofocus" id="cip" /></td>
 							<td><input type="text" name="qte" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}"

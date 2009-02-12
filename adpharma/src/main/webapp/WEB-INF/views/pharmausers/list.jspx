@@ -16,7 +16,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" property="lastName" render="false" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_accountLocked" property="accountLocked" z="G0dfeHrUCX8ThkYfjpdQZDDnrTI="/>
             <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" property="saleKey" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
-            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" property="displayRole" z="fLHwVWWPhE2SMv5c+SSsVIGEZhU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" property="displayRole" render="false" z="user-managed"/>
         </table:table>
     </page:list>
 </div>

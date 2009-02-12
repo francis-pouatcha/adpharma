@@ -31,13 +31,12 @@
 		 <spring:url value="/inventaireProcess/${inventaireProcess.invId}/annulerInv"  var="delete_cmd_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL INVENTAIRE</a></span>
-		<span >
-		<a href="#" style="text-decoration: none;" id="findcip"> <INPUT type="button" class="submits" value="rechercher cip"/></a>
-		</span>
-	 <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
-	 <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT  class="submits" type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
-		
-		</div>
+		<span ><a href="#" style="text-decoration: none;" id="findcip"> <INPUT type="button" class="submits" value="rechercher un produit"/></a></span>
+	    <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer l'inventaire" title="Enregistre L'inventaire" /></a></span>
+	    <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT  class="submits" type="button" value="Annuler l'inventaire" title="Annuler L'inventaire" /></a></span>
+   		<span ><a href="#" style="text-decoration: none;" id="loadfilebtn"> <INPUT type="button" class="submits" value="charger le Fichier"/></a></span>
+   
+   </div>
 		
 	
    		<!-- product selection  	    -->
@@ -245,13 +244,39 @@ function verif_formulaire()
 			}
 			
 		});
+
+		// Dialog	find produit		
+		$('#loadfilediv').dialog({
+			autoOpen: false,
+			width: "auto",
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'fade',
+             position:'center',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+
+
+		
 		
 		$('#findcip').click(function(){
 			$('#findproduit').dialog('open');
 			return false;
 		});
+
+		$('#loadfilebtn').click(function(){
+			$('#loadfilediv').dialog('open');
+			return false;
+		});
 		
-		
+
+			
 		
 		
 	});
@@ -271,8 +296,8 @@ function verif_formulaire()
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Qte Reel</th>
+		    		<th style="text-align: center;">Stock Virtuel</th>
+		    		<th style="text-align: center;">Stock Reel</th>
 		            <th style="text-align: center;">Ecart</th>
 		            <th style="text-align: center;">Prix Total</th>
 		             
@@ -330,10 +355,10 @@ function verif_formulaire()
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Qte Physique</th>
+		    		<th style="text-align: center;">Stock Virtuel</th>
+		    		<th style="text-align: center;">Stock Reel</th>
 		            <th style="text-align: center;">Ecart</th>
-		            <th style="text-align: center;">Prix Total</th>
+		            <th style="text-align: center;">Montant Ecart</th>
 		    		<th colspan="2" style="text-align: center;">ACTION</th>
 		    	</tr>
 		    		<tr>
@@ -385,15 +410,15 @@ function verif_formulaire()
 
 		    <table>
 		    	<tr>
-		    		<th style="text-align: center;">CiP</th>
+		    		 
+		           <th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Qte Reel</th>
+		    		<th style="text-align: center;">Stock Virtuel</th>
+		    		<th style="text-align: center;">Stock Reel</th>
 		            <th style="text-align: center;">Ecart</th>
-		            <th style="text-align: center;">Prix Total</th>
+		            <th style="text-align: center;">Montant Ecart</th>
 		            <th style="text-align: center;">Agent Saisie</th>
 		           <th style="text-align: center;">Date Saisie</th>
-		            
 		    		<th colspan="2" style="text-align: center;">ACTION</th>
 		    	</tr>
 		    	<c:forEach items="${inventaireProcess.productSelected}" var="ligneCommande">
@@ -478,6 +503,16 @@ function verif_formulaire()
 		  </table>
 	</div>	 
    
+</div>
+<spring:url value="/inventaires/loadfile/${inventaireProcess.invId}"  var="load_Form_url" />
+<!-- load file div  -->
+ <div id="loadfilediv" style="display: none;" title="charger le fichier d'inventaire ">
+		
+		<form action="${load_Form_url}" id="loadfileform" method="post" enctype="multipart/form-data">
+		<LABEL> Fichier Inventaire :</LABEL>
+            <input size="50" type="file" name="fichier" /> <br /><br />
+           <input type="submit" class="submits" value="Charger Le Fichier" />
+       </form>
 </div>
  
 

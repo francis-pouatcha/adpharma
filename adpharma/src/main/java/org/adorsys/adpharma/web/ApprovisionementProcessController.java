@@ -131,8 +131,12 @@ public class ApprovisionementProcessController {
 				uiModel.addAttribute("apMessage", "La date de Peremtion de ce produit Doit etre Superieure a la date du jour !");
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
+			
 			ligneApprovisionement.setProduit(produit);
 			ligneApprovisionement.persist();
+			produit.setPrixAchatU(ligneApprovisionement.getPrixVenteUnitaire());
+			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
+			produit.merge();
 			approvisionement.increaseMontant(ligneApprovisionement.getPrixAchatTotal());
 			approvisionement.merge();
 			return initViewContent(approvisionement, tvaj, uiModel);

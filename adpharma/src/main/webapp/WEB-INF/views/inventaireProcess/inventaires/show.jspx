@@ -35,12 +35,13 @@
     
     <page:list id="pl_org_adorsys_adpharma_domain_LigneInventaire" items="${inventaire.ligneInventaire}" z="3MEqxpA476LASp07433etslmugI=">
         <table:table delete="false" update="false" create="false" show="false" data="${inventaire.ligneInventaire}" id="l_org_adorsys_adpharma_domain_LigneInventaire" path="/ligneinventaires" z="oADU3jF9sp1Jk3bMOaCpzwZd/KM=">
-                      <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="produit"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
-                      <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_agentSaisie" maxLength="-1" property="agentSaisie" z="Ad7R97AMtTvyTgBboAG2mOMpzso="/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" property="qteEnStock" z="0fbYI7MAuGD+MOC/It5ALpgKavE="/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_qteReel" property="qteReel" z="VirQn2oOcr1cz4yh0ynbnIcdkBw="/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_ecart" property="ecart" z="dJyibuOwUcOYmziU7GuplDGB8F0="/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" property="prixTotal" z="b6NUDhagpgBb5pCYWjLsjXwu8pg="/>
+            <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="produit"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
+            <table:column label="Stock Virtuel" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" property="qteEnStock" z="0fbYI7MAuGD+MOC/It5ALpgKavE="/>
+            <table:column label="Stock Reel" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteReel" property="qteReel" z="VirQn2oOcr1cz4yh0ynbnIcdkBw="/>
+            <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_ecart" property="ecart" z="dJyibuOwUcOYmziU7GuplDGB8F0="/>
+            <table:column label="Montant Ecart" id="c_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" property="prixTotal" z="b6NUDhagpgBb5pCYWjLsjXwu8pg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_agentSaisie" maxLength="-1" property="agentSaisie" z="Ad7R97AMtTvyTgBboAG2mOMpzso="/>
+       
         </table:table>
     </page:list>
    

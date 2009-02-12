@@ -22,6 +22,10 @@ public class Rayon extends AdPharmaBaseEntity {
     private String name;
 
     private String displayName;
+    
+    private String emplacement;
+    
+    private String codeGeo;
 
     private String note;
 
@@ -31,6 +35,8 @@ public class Rayon extends AdPharmaBaseEntity {
 
     protected void internalPrePersist() {
     }
+    
+    
 
     @PostPersist
     public void postPersist() {
@@ -58,7 +64,27 @@ public class Rayon extends AdPharmaBaseEntity {
         return codeRayon;
     }
     
-    public static List<Rayon> findAllRayons() {
+    public String getEmplacement() {
+		return emplacement;
+	}
+
+	public void setEmplacement(String emplacement) {
+		this.emplacement = emplacement;
+	}
+
+	public String getCodeGeo() {
+		return codeGeo;
+	}
+
+	public void setCodeGeo(String codeGeo) {
+		this.codeGeo = codeGeo;
+	}
+	
+	public boolean existe(){
+		return !Rayon.findRayonsByNameEquals(name).getResultList().isEmpty();
+	}
+
+	public static List<Rayon> findAllRayons() {
         return entityManager().createQuery("SELECT o FROM Rayon o ORDER BY o.name ASC ", Rayon.class).getResultList();
     }
 }

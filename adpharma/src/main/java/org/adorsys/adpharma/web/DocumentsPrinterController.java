@@ -19,6 +19,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
 import org.adorsys.adpharma.beans.EtatManagerBean;
+import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
@@ -212,6 +213,50 @@ public class DocumentsPrinterController {
 			return ;
 		}
 	}
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatFicheStockRayon.pdf", method = RequestMethod.GET)
+	public void etatFicheStockRayon(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		Rayon rayon = etatBean.getRayon();
+		parameters.put("rayonId",rayon.getId());
+		
+		try {
+			if(rayon.getId().intValue()==0){
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.CATALOGUE_FILE_PATH);
+			}else {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_CATALOGUE_RAYON_FILE_PATH);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatVAlorisationRayon.pdf", method = RequestMethod.GET)
+	public void etatVAlorisationRayon(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		Rayon rayon = etatBean.getRayon();
+		parameters.put("rayonId",rayon.getId());
+		
+		try {
+			if(rayon.getId().intValue()==0){
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETA_VALORISATION_STOCK_FILE_PATH);
+			}else {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_VALORISATION_RAYON_FILE_PATH);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
 	
 	@Produces({"application/pdf"})
 	@Consumes({""})
@@ -260,13 +305,50 @@ public class DocumentsPrinterController {
 			return ;
 		}
 	}
+	@Produces({"application/pdf"})
+	@RequestMapping(value = "/print/listingRayon.pdf", method = RequestMethod.GET)
+	public @ResponseBody  void printListingRayon(HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.RAYON_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	@Produces({"application/pdf"})
+	@RequestMapping(value = "/print/listingClient.pdf", method = RequestMethod.GET)
+	public @ResponseBody  void printListingClient(HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.CLIENT_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	@Produces({"application/pdf"})
+	@RequestMapping(value = "/print/listingRelationDecomposition.pdf", method = RequestMethod.GET)
+	public @ResponseBody  void listingRelationDecomposition(HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.RELATION_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
 	
 	@Produces({"application/pdf"})
 	@RequestMapping(value = "/print/listingRupture.pdf", method = RequestMethod.GET)
 	public @ResponseBody  void listingRupture(HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
 		try {
-			jasperPrintService.printDocument(parameters, response, DocumentsPath.CATALOGUE_FILE_PATH);
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.PRODUIT_RUPTURE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

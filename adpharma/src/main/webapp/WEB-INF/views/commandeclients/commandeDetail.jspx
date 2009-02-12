@@ -9,11 +9,13 @@
     <jsp:output omit-xml-declaration="yes"/>
               <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
-               <spring:url value="/paiements/printByCmd/" var="print_url" />
+              <spring:url value="/paiements/printByCmd/" var="print_url" />
               
   <script>
   function printTicketConf(cmdId){
-	   Check = confirm("Imprimer le ticket Avec Remise ? ");
+	  url ='${print_url}'+cmdId+"?doc=ticket.pdf&amp;withRem=true";
+	     window.location= url ;
+	  /** Check = confirm("Imprimer le ticket Avec Remise ? ");
 	   if(Check == false){
 		   var url =  '${print_url}'+cmdId+"?doc=ticket.pdf&amp;withRem=false";
 	     	window.location = url ;
@@ -22,9 +24,12 @@
 		   url ='${print_url}'+cmdId+"?doc=ticket.pdf&amp;withRem=true";
 		     window.location= url ;
 	   }
+		   */
 } 
   function printInvoiceConf(cmdId){
-	   Check = confirm("Imprimer la Facture Avec Remise ? ");
+	  url ='${print_url}'+cmdId+"?doc=facture.pdf&amp;withRem=true";
+	     window.location= url ;
+	  /** Check = confirm("Imprimer la Facture Avec Remise ? ");
 	   if(Check == false){
 		   var url =  '${print_url}'+cmdId+"?doc=facture.pdf&amp;withRem=false";
 	     	window.location = url ;
@@ -33,6 +38,7 @@
 		   url ='${print_url}'+cmdId+"?doc=facture.pdf&amp;withRem=true";
 		     window.location= url ;
 	   }
+		   */
 } 
   function clearDetailTable(){
 		$('#detailTable').html(

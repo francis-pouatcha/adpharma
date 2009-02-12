@@ -117,7 +117,6 @@ public class ProcessHelper {
 	}  
 
 	public static Collection<Filiale> populateAllFiliale() {
-
 		return Filiale.findAllActifFiliales();
 
 	}  
@@ -156,18 +155,7 @@ public class ProcessHelper {
 
 
 	public static Collection<RoleName> populateRoleNames() {
-		ArrayList<RoleName> arrayList = new ArrayList<RoleName>() ;
-		arrayList.add(RoleName.ROLE_ADMIN);
-		arrayList.add(RoleName.ROLE_CASHIER);
-		arrayList.add(RoleName.ROLE_SITE_MANAGER);
-		arrayList.add(RoleName.ROLE_STOCKER);
-		arrayList.add(RoleName.ROLE_INVENTAIRE);
-		arrayList.add(RoleName.ROLE_VENDEUR);
-		arrayList.add(RoleName.ROLE_OPEN_SALE_SESSION);
-		arrayList.add(RoleName.ROLE_GESTION_DETTE);
-		arrayList.add(RoleName.ROLE_RETOUR_PRODUIT);
-
-		return arrayList;
+		 return	Arrays.asList(RoleName.class.getEnumConstants()) ;
 	}
 
 	public static Long getRemise( LigneApprovisionement ligneApprovisionement){ 

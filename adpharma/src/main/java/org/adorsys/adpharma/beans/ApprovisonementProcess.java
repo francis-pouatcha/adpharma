@@ -81,7 +81,9 @@ public class ApprovisonementProcess {
 			mouvementStock.setCipM(ligneApprovisionement.getCipMaison());
 			mouvementStock.setDesignation(ligneApprovisionement.getProduit().getDesignation());
 			mouvementStock.setTypeMouvement(TypeMouvement.APPROVISIONEMENT);
-			mouvementStock.setQteInitiale(produit.getQuantiteEnStock());
+			mouvementStock.setQteInitiale(BigInteger.ZERO);
+			mouvementStock.setPAchatTotal(ligneApprovisionement.getPrixAchatTotal().toBigInteger());
+			mouvementStock.setPVenteTotal(ligneApprovisionement.getPrixVenteUnitaire().toBigInteger().multiply(ligneApprovisionement.getQuantiteAprovisione()));
 
 			ligneApprovisionement.setQuantieEnStock(ligneApprovisionement.getQuantiteAprovisione());//initialisation de la quantite en stock de cette ligne 
 			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mis a jour de la date de derniere entree

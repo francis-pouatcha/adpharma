@@ -12,6 +12,7 @@ import org.apache.commons.lang.time.DateUtils;
 public class PharmaDateUtil {
 
 	public static final String DATE_PATTERN_LONG = "dd-MM-yyyy";
+	public static final String DATE_PATTERN_TRIM = "ddMMyy";
 	public static final String DATE_PATTERN_LONG2 = "yyyy-MM-dd";
 
 	public static final String DATE_PATTERN_LONG_LIT = "EEE, dd MMM yyyy";

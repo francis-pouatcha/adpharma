@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.adorsys.adpharma.utils.UseItemsInterfaces;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,7 +31,7 @@ import org.adorsys.adpharma.domain.Filiale;
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Approvisionement", finders = { "findApprovisionementsByDateCreationBetween" })
-public class Approvisionement extends AdPharmaBaseEntity {
+public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInterfaces {
 
     private String approvisionementNumber;
 
@@ -39,7 +40,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar dateBordereau ;
+    private Calendar dateBordereau = Calendar.getInstance();
 
     @ManyToOne
     private PharmaUser agentCreateur;
@@ -76,7 +77,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateReglement;
-
+    
     @NotNull
     private BigDecimal montantHt = BigDecimal.ZERO;
  
@@ -92,6 +93,17 @@ public class Approvisionement extends AdPharmaBaseEntity {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateCreation = new Date();
 
+     public Approvisionement() {
+		
+	}
+     public Approvisionement(Fournisseur fournisseur,String bordereau,Devise devise,String filiale,Site magasin) {
+ 		this.founisseur = fournisseur;
+ 		this.bordereauNumber = bordereau;
+ 		this.devise = devise;
+ 		this.filiale= filiale;
+ 		this.magasin = magasin ;
+ 		agentCreateur = SecurityUtil.getPharmaUser();
+ 	}
     @Value("false")
     private Boolean urgence;
 
@@ -289,4 +301,10 @@ public class Approvisionement extends AdPharmaBaseEntity {
         
         return valider;
     }
+
+	@Override
+	public boolean hasItems() {
+		if(ligneApprivisionement==null) return false ;
+		return !ligneApprivisionement.isEmpty();
+	}
 }

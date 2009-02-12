@@ -43,5 +43,10 @@
        <definition extends="default" name="produits/attributionfsf">
         <put-attribute name="body" value="/WEB-INF/views/produits/attributionFetSF.jspx"/>
     </definition>
+       <definition extends="default" name="dataloader/loadproduit">
+        <put-attribute name="body" value="/WEB-INF/views/produits/loadproduits.jspx"/>
+    </definition>
    
+   
+  
 </tiles-definitions>

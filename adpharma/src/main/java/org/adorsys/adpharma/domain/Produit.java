@@ -59,6 +59,10 @@ public class Produit extends AdPharmaBaseEntity {
 	private SousFamilleProduit SousfamilleProduit;
 
 	private BigInteger quantiteEnStock = BigInteger.ZERO;
+	
+	private  BigDecimal prixAchatU = BigDecimal.ZERO;
+
+	private  BigDecimal prixVenteU = BigDecimal.ZERO;
 
 	private transient BigDecimal prixAchatSTock = BigDecimal.ZERO;
 
@@ -69,6 +73,27 @@ public class Produit extends AdPharmaBaseEntity {
 	public BigDecimal getPrixAchatSTock() {
 		return prixAchatSTock;
 	}
+	
+
+	public BigDecimal getPrixAchatU() {
+		return prixAchatU;
+	}
+
+
+	public void setPrixAchatU(BigDecimal prixAchatU) {
+		this.prixAchatU = prixAchatU;
+	}
+
+
+	public BigDecimal getPrixVenteU() {
+		return prixVenteU;
+	}
+
+
+	public void setPrixVenteU(BigDecimal prixVenteU) {
+		this.prixVenteU = prixVenteU;
+	}
+
 
 	public void setPrixAchatSTock(BigDecimal prixAchatSTock) {
 		this.prixAchatSTock = prixAchatSTock;
@@ -89,6 +114,9 @@ public class Produit extends AdPharmaBaseEntity {
 	public void setQtevendu(BigInteger qtevendu) {
 		this.qtevendu = qtevendu;
 	}
+	
+
+
 
 	@Value("0")
 	private BigInteger seuilComande;
@@ -238,6 +266,10 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public boolean isOut(){
 		return quantiteEnStock.intValue() <= 0 ;
+	}
+	
+	public boolean existe(){
+	return	!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty() ;
 	}
 
 	public boolean isAlert(){
@@ -404,6 +436,13 @@ public class Produit extends AdPharmaBaseEntity {
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.rayon = :rayon ORDER BY o.designation ASC", Produit.class);
 		q.setParameter("rayon", rayon);
+		return q;
+	}
+	public static TypedQuery<Produit> findProduitsByCip(String cip) {
+		if (cip == null) throw new IllegalArgumentException("The cip argument is required");
+		EntityManager em = Produit.entityManager();
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.cip = :cip ", Produit.class);
+		q.setParameter("cip", cip);
 		return q;
 	}
 

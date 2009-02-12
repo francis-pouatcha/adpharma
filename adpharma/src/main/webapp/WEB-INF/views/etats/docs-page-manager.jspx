@@ -14,13 +14,13 @@
         <legend > Saisir la periode : </legend>
         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="Date Debut"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="Date Fin"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+        <field:input label="Valeur"   field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+        
         <legend> Definir la position : </legend>
         
         <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-         
-         
          
         <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
@@ -76,90 +76,33 @@
                 <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url6"  />
           </td>
      </tr>
+      
       <tr >
           <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
+               <i class="labeletat" > Etat Periodique Taux Marque </i>
           </td>
           <td>
-                <input style="float: right;" type="radio" name="etats" id="7"  />
+                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url7"  />
           </td>
      </tr>
-      <tr >
+     <tr >
           <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
+               <i class="labeletat" > Etat Valorisation du stock par rayon  </i>
           </td>
           <td>
-                <input style="float: right;" type="radio" name="etats" id="8"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="9"  />
+                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url8"  />
           </td>
      </tr>
-      <tr >
+     <tr >
           <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
+               <i class="labeletat" > Listing Catalogue par rayon  </i>
           </td>
           <td>
-                <input style="float: right;" type="radio" name="etats" id="10"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="11"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="12"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="13"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="14"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="15"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat journalier des Ventes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" name="etats" id="16" />
+                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
           </td>
      </tr>
     
-    
-    
-    
+     
     </table>
     </DIV>
     </td>

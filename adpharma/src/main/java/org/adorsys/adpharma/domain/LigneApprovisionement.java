@@ -2,6 +2,8 @@ package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -256,6 +258,23 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		return amount;
 	}
 
+	public BigInteger pushAllInForInventory(BigInteger amount)
+    {
+        BigInteger pushInQuantity = getIncreaseQte();
+        if(pushInQuantity.intValue() < amount.intValue())
+        {
+            BigInteger diff = amount.subtract(pushInQuantity);
+            quantiteAprovisione = quantiteAprovisione.add(diff);
+            quantiteSortie = quantiteSortie.add(diff);
+        }
+        pushInQuantity = getIncreaseQte();
+        setQuantiteSortie(BigInteger.ZERO);
+        setQuantiteVendu(BigInteger.ZERO);
+        amount = amount.subtract(pushInQuantity);
+        CalculeQteEnStock();
+        merge();
+        return amount;
+    }
 
 
 
@@ -429,8 +448,10 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public void calculRemise() {
-		remiseMax = prixVenteUnitaire.multiply(produit.getTauxRemiseMax()).divide(BigDecimal.valueOf(100));
-		remiseMax = BigDecimal.valueOf(remiseMax.longValue());
+		BigDecimal tauxRemiseMax = produit.getTauxRemiseMax();
+		if(tauxRemiseMax==null) tauxRemiseMax = BigDecimal.ZERO ;
+		remiseMax = prixVenteUnitaire.multiply(tauxRemiseMax).divide(BigDecimal.valueOf(100));
+		remiseMax =  BigDecimal.valueOf(remiseMax.longValue());
 	}
 
 	public String toString() {
@@ -571,6 +592,22 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static List<LigneApprovisionement> findAllLigneApprovisionements() {
 		return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ORDER BY o.designation ASC", LigneApprovisionement.class).setParameter("etat", Etat.CLOS).getResultList();
+	}
+	
+	public static List<BigDecimal> findlastPrices(Produit produit) {
+		EntityManager em = LigneApprovisionement.entityManager();
+		 Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id = (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit ) ") ;
+		 q.setParameter("produit",produit);
+		  List<Object[]> resultList = q.getResultList();
+		  ArrayList<BigDecimal> arrayList = new ArrayList<BigDecimal>();
+		 if(!resultList.isEmpty())
+	        {
+	            System.out.println((BigDecimal)((Object[])resultList.get(0))[0]);
+	            System.out.println((BigDecimal)((Object[])resultList.get(0))[1]);
+	            arrayList.add((BigDecimal)((Object[])resultList.get(0))[0]);
+	            arrayList.add((BigDecimal)((Object[])resultList.get(0))[1]);
+	        }
+	        return arrayList;
 	}
 
 	public static long countLigneApprovisionements() {

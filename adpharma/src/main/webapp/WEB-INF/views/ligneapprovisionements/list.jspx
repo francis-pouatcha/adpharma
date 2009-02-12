@@ -12,7 +12,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" property="indexLine" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cip" property="cip" render="${permission }" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit" property="produit" render="false" z="user-managed"/>
-            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" property="cipMaison" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" maxLength="-1" property="cipMaison" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_designation" maxLength="-1" property="designation" z="user-managed"/>
             <table:column date="true" dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" maxLength="-1" property="datePeremtion" z="5iQ0LdWGtN/TvTcaeouHdx3Y2vU="/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" label="qte Aprovisione" property="quantiteAprovisione" render="${permission }" z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>

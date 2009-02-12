@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.beans;
 
 import java.awt.Color;
+import java.math.BigInteger;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -346,8 +347,11 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		}
 		remise.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		table.addCell(remise);
-
 		table.addCell(vide);
+		boolean isSaleCash = facture.getCommande().getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC);
+		BigInteger netPayer = facture.getNetPayer();
+		BigInteger payamount = isSaleCash?BigInteger.ZERO:facture.getAvance();
+		BigInteger reste = isSaleCash?facture.getNetPayer():facture.getReste();
 		// total row
 		PdfPCell totalAvance = new PdfPCell(cellBorderless);
 		totalAvance.setPhrase(new Phrase(new Chunk("Montant Total Avance : ", headerStyle)));
@@ -361,9 +365,10 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		// montant total remise 
 		PdfPCell avance = new PdfPCell(cellBorderless);
 		if(facture.getPrintWithReduction()){
-			avance.setPhrase(new Phrase(new Chunk(facture.getAvance().toString(), headerStyle)));
+			
+			avance.setPhrase(new Phrase(new Chunk(payamount.toString(), headerStyle)));
 		}else {
-			avance.setPhrase(new Phrase(new Chunk(facture.getAvance().add(facture.getMontantRemise()).toString(), headerStyle)));
+			avance.setPhrase(new Phrase(new Chunk(payamount.add(facture.getMontantRemise()).toString(), headerStyle)));
 		}
 		avance.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		table.addCell(avance);
@@ -383,12 +388,12 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		// montant total remise 
 		PdfPCell motantTc= new PdfPCell(cellBordertop);
 		if(facture.getPrintWithReduction()){
-			motantTc.setPhrase(new Phrase(new Chunk(facture.getReste().toString(), headerStyle)));
+			motantTc.setPhrase(new Phrase(new Chunk(reste.toString(), headerStyle)));
 		}else {
 			if(facture.getReste().intValue()==0){
-				motantTc.setPhrase(new Phrase(new Chunk(facture.getReste().toString(), headerStyle)));
+				motantTc.setPhrase(new Phrase(new Chunk(reste.toString(), headerStyle)));
 			}else {
-				motantTc.setPhrase(new Phrase(new Chunk(facture.getReste().add(facture.getMontantRemise()).toString(), headerStyle)));
+				motantTc.setPhrase(new Phrase(new Chunk(reste.add(facture.getMontantRemise()).toString(), headerStyle)));
 			}
 
 		}
@@ -404,13 +409,13 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		}
 
 		if(facture.getPrintWithReduction()){
-			document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(facture.getReste().intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
+			document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 		}else {
 			if(facture.getReste().intValue()==0){
-				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(facture.getReste().intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
+				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 			}else {
-				motantTc.setPhrase(new Phrase(new Chunk(facture.getReste().add(facture.getMontantRemise()).toString(), headerStyle)));
-				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(facture.getReste().add(facture.getMontantRemise()).intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
+				motantTc.setPhrase(new Phrase(new Chunk(reste.add(facture.getMontantRemise()).toString(), headerStyle)));
+				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.add(facture.getMontantRemise()).intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 
 			}
 
