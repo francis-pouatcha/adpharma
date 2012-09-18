@@ -1,0 +1,382 @@
+   <div  xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
+ xmlns:security="http://www.springframework.org/security/tags" 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	 xmlns:spring="http://www.springframework.org/tags" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+    <spring:url value="/fournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="four_list_url"/>
+      <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+      <spring:url value="/commandeclients/cmdCredit?form" var="vente_credit_url"/>
+      <spring:url value="/saleprocess/newProformat" var="vente_proformat_url"/>
+      <spring:url value="/commandeclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_url"/>
+      <spring:url value="/commandeclients?find=BySearch&amp;form" var="search_url"/>
+      <spring:url value="/commandeclients?find=ByStatusAndDateCreationBetween&amp;form" var="status_date_url"/>
+      <spring:url value="/saleprocess/rechercheCmd?form" var="cmd_client_url"/>
+      <spring:url value="/commandprocesses?form" var="cmd_four_url"/>
+            <spring:url value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cmd_list_url"/>
+            <spring:url value="/commandefournisseurs?find=BySearch&amp;form" var="cmd_find_four_url"/>
+     <spring:url value="/fournisseurs?form" var="four_site_url"/>
+            <spring:url value="/approvisionementprocess?form" var="ap_cree_url"/>
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url"/>
+            <spring:url value="/transformationproduits/livreeForm?form" var="ap_trans_url"/>
+            <spring:url value="/approvisionementprocess?form" var="ap_sortir_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaisonEquals&amp;form" var="ap_cip_url"/>
+            <spring:url value="/ligneapprovisionements?find=BySearch&amp;form"  var="search_lgap_url"/>
+           <spring:url value="/approvisionements?find=BySearch&amp;form" var="search_list_url"/>
+    <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
+ <spring:url value="/mouvementstocks?find=BySearch&amp;form" var="mvt_search_url"/>
+                                  <spring:url value="/mouvementstocks?page=1&amp;size=${empty param.size ? 10 : param.size}" var="mvt_list_url"/>
+        <!--  menu Caisse-->
+     <spring:url value="/caisses/ouvrirCaisse?form" var="cai_cree_url"/>
+    <spring:url value="/caisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="caisse_list_url"/>
+ 
+         <spring:url value="/caisses/fermerCaisse" var="delete_caisse_url"/>
+     
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="ap_list_url"/>
+            <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
+            <spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url"/>
+            <spring:url value="/caisses?form" var="cai_de_url"/>
+                <spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url"/>
+            
+            <spring:url value="/operationcaisses?find=ByDateOperationBetween&amp;form" var="cai_op_url"/>
+                <spring:url value="/operationcaisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_ops_url"/>
+                <spring:url value="/paiements?find=ByDateSaisieBetween&amp;form" var="cai_pay_url"/>
+                <spring:url value="/caisses?find=ByCaisseOuverteNot&amp;form" var="cai_find_cai_url"/>
+                <spring:url value="/paiements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_pays_url"/>
+   <spring:url value="/clients?form" var="clt_cree_url"/>
+            <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
+            <spring:url value="/clients?find=ByNomCompletLike&amp;form" var="clt_findN_url"/>
+            <spring:url value="/clients?find=ByClientNumberEquals&amp;form" var="clt_findcn_url"/>
+            <spring:url value="/categorieclients?form" var="clt_cat_url"/>
+                <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_catl_url"/>
+                <spring:url value="/detteclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_detl_url"/>
+                <spring:url value="/detteclients?find=ByClientNameLikeAndSolderNot&amp;form" var="clt_dets_url"/>
+                <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
+      <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_rps_url"/>
+             <spring:url value="/produits/ProduitAlerteStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_as_url"/>
+             <spring:url value="/produits?find=ByQuantiteEnStock&amp;form" var="prd_pv_url"/>
+            <spring:url value="/inventaires?form" var="inv_cree_url"/>
+            <spring:url value="/inventaires?page=1&amp;size=${empty param.size ? 10 : param.size}" var="inv_list_url"/>
+            <spring:url value="/inventaires/ficheInventaireParRayon?form" var="invRayon_fiche_url"/>
+              <spring:url value="/inventaires/ficheInventaireParOrdreAlpha?form" var="invAlpha_fiche_url"/>
+                        <spring:url value="/inventaires/inventaireEnCour" var="invcour_fiche_url"/>
+            
+            <spring:url value="/inventaires?find=ByDateInventaireBetween&amp;form" var="inv_date_url"/>
+            <spring:url value="/inventaires?find=ByEtat&amp;form" var="inv_etat_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaison&amp;form" var="fichetDetail_cipm_url"/>
+    <spring:url value="/pharmausers?form" var="usr_cree_url"/>
+            <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
+            <spring:url value="/pharmausers?find=ByUserNameLike&amp;form" var="usr_name_url"/>
+           
+        <spring:url value="/transformationproduits?find=ByProduitOrigine&amp;form" var="transff_url"/>
+                        <spring:url value="/transformationproduits?form" var="transf_url"/>
+            
+                        <spring:url value="/transformationproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="trans_list_url"/>
+            
+                        <spring:url value="/produits/create/true?form" var="prd_cip_url"/>
+            
+            <spring:url value="/produits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_list_url"/>
+            <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
+                                        <spring:url value="/produits?find=BySearch&amp;form" var="prdf_des_url"/>
+            
+        <spring:url value="/familleproduits?form" var="fp_url"/>
+            <spring:url value="/familleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="fp_list_url"/>
+        <spring:url value="/sousfamilleproduits?form" var="sfp_url"/>
+            <spring:url value="/sousfamilleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="sfp_list_url"/>
+          <spring:url value="/rayons?form" var="conf_ray_url"/>
+            <spring:url value="/rayons?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_ray_url"/>
+            <spring:url value="/tauxmarges?form" var="conf_mrg_url"/>
+            <spring:url value="/tauxmarges?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_mrg_url"/>
+   <spring:url value="/modeconditionements?form" var="conf_con_url"/>
+            <spring:url value="/modeconditionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_con_url"/>
+         <spring:url value="/tvas?form" var="conf_tva_url"/>
+            <spring:url value="/tvas?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_tva_url"/>
+         <spring:url value="/devises?form" var="conf_dev_url"/>
+            <spring:url value="/devises?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_dev_url"/>
+          <spring:url value="/filiales?form" var="create_filiale_url"/>
+            <spring:url value="/sites?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_site_url"/>
+                       <spring:url value="/filiales?page=1&amp;size=${empty param.size ? 10 : param.size}" var="filiale_list_url"/>
+      
+        <spring:url value="/sites?form" var="conf_site_url"/>
+            <spring:url value="/sites?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_site_url"/>
+    <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
+                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
+            <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_fact_url"/>
+                              <spring:url value="/factures?find=ByClientAndDateCreationBetween&amp;form" var="conf_fdp_url"/>
+                                          <spring:url value="/dataloader/load" var="load_url"/>
+      <spring:url value="/passwordresets?form" var="cre_pass_url"/>
+        <spring:url value="/resources/images/arrow-down.gif" var="down_url"/>
+                <spring:url value="/resources/images/arrow-right.gif" var="right_url"/>
+        
+    	   <security:authorize access="isAuthenticated()">
+    	
+   	<div id="myjquerymenu" class="jquerycssmenu">
+<ul>
+<!--  menu commande fournisseur-->
+<security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
+<li ><a href="#" >CMD Fournisseur <img alt="" src="${down_url}" /></a>
+<ul>
+  <li><a  onclick="window.location='${cmd_four_url}' " href="#">Effectuer une commande</a></li>
+  <li><a  onclick="window.location='${cmd_find_four_url}' " href="#">Rechercher Une commande</a></li>
+  <li><a onclick="window.location='${cmd_list_url}' " href="#">Liste Des commandes</a></li>
+  
+  </ul>
+</li>
+    </security:authorize>
+
+ <!--  menu Achat-->
+  <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
+<li><a href="#">Achats <img alt="" src="${down_url}" /></a>
+<ul>
+  <li><a href="#" onclick="window.location='${ap_cree_url}' ">Effectuer un approvisionnement</a></li>
+  <li><a href="#" onclick="window.location='${search_list_url}' ">Rechercher Un approvisionnemt</a></li>
+  <li><a href="#" onclick="window.location='${ap_trans_url}' " >Effectuer Une decomposition</a></li>
+  <li><a href="#">Cree une relation de decomposition</a></li>
+  <li><a href="#">Mouvement de stock <img alt="" src="${right_url}" /></a>
+     <ul>
+  <li><a  onclick="window.location='${mvt_search_url}' " href="#">rechercher</a></li>
+  <li><a  onclick="window.location='${mvt_list_url}' " href="#">Lister</a></li>
+  
+  </ul>
+  </li>
+  </ul>
+</li>
+</security:authorize>
+
+<!--  menu vente -->
+            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
+
+<li><a href="#">Ventes<img alt="" src="${down_url}" /></a>
+  <ul>
+  <li><a href="#" onclick="window.location='${vente_public_url}' ">Vente Au comptant</a></li>
+  <li><a href="#" onclick="window.location='${vente_credit_url}' ">Vente A credit</a></li>
+  <li><a href="#" onclick="window.location='${vente_proformat_url}' ">Etablir Une Facture Proformat</a></li>
+  <li><a href="#" onclick="window.location='${search_url}' ">Rechercher Une Commande Client</a></li>
+    <li><a href="#" onclick="window.location='${list_url}' ">Liste des Commandes Client</a></li>
+  
+  </ul>
+</li>
+</security:authorize>
+
+ <!--  menu Caisse-->
+             <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
+<li><a href="#">Caisses<img alt="" src="${down_url}" /></a>
+<ul>
+  <li><a href="#" onclick="window.location='${cai_cree_url}' ">Ouvrir Une Caisse</a></li>
+  <li><a href="#" onclick="window.location='${delete_caisse_url}' ">Fermer Ma Caisse</a></li>
+  <li><a href="#" onclick="window.location='${cai_enc_url}' ">Encaisser Une Facture</a></li>
+  <li><a href="#" onclick="window.location='${groupe_enc_url}' ">Effecture un Encaissement Groupe</a></li>
+    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+  <li><a href="#" onclick="window.location='${etat_caisse_url}' ">Etat des Caisses</a></li>
+  <li><a href="#" onclick="window.location='${cai_pays_url}' ">Rechercher Un Payement</a></li>
+  <li><a href="#" onclick="window.location='${caisse_list_url}' ">Rechercher Une Caisse</a></li>'
+   </security:authorize>
+  </ul>
+</li>
+ </security:authorize>
+ 
+ <!--  menu Inventaire -->
+             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+ 
+<li><a href="#">Inventaires<img alt="" src="${down_url}" /></a>
+<ul>
+    		<li><a href="#"  onclick="window.location='${inv_cree_url}' ">Effectuer Un inventaire</a></li>
+    		<li><a href="#"  onclick="window.location='${invAlpha_fiche_url}' ">Edition Fiche inventaire</a></li>
+    		<li><a href="#" onclick="window.location='${fichetDetail_cipm_url}' ">Fiche produit(CIPM)</a></li>
+    		<li><a href="#" onclick="window.location='${inv_list_url}' ">Rechercher Un Inventaire</a></li>
+    		<li><a href="#" onclick="window.location='${prd_rps_url}' ">Inventaire produit Enrupture de stock</a></li>
+    		<li><a href="#" onclick="window.location='${prd_as_url}' ">Inventaire Produit en Alert de stock</a></li>
+    		<li><a href="#" onclick="window.location='${prd_pv_url}' ">Inventaire Produit les plus vendus</a></li>
+    		
+  </ul>
+</li>
+ </security:authorize>
+ <!--  menu Utilisateurs -->
+             <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+ 
+<li><a href="#">Utilisateurs<img alt="" src="${down_url}" /></a>
+<ul>
+    		<li><a href="#" onclick="window.location='${usr_cree_url}' ">Creer Un utilisateur</a></li>
+    		<li><a href="#" onclick="window.location='${usr_list_url}' ">Liste Des Utilisateur</a></li>
+    		<li><a href="#" onclick="window.location='${usr_name_url}' ">Rechercher Un Utilisateur</a></li>
+    		
+		</ul>
+
+</li>
+    </security:authorize>
+
+  <!--  menu catalogues -->
+              <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
+  
+<li><a href="#">Catalogues<img alt="" src="${down_url}" /></a>
+ <ul>     
+     		<li><a href="#" onclick="window.location='${search_lgap_url}' ">Rechercher Un Produit</a></li>
+                           <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+    		<li><a href="#"  onclick="window.location='${prd_cip_url}' ">Creer un Produit Avec CIP</a></li>
+    		<li><a href="#" onclick="window.location='${prd_scip_url}' ">Creer un Produit Sans CIP</a></li>
+    		 <li><a href="#" onclick="window.location='${prd_list_url}' ">Liste des Produits</a></li>
+    		
+    		<li><a href="#" >Transformation <img alt="" src="${right_url}" /></a>
+    		  <ul>
+    		<li><a href="#"  onclick="window.location='${transf_url}' ">Creer une relation de Transformation</a></li>
+    		<li><a href="#" onclick="window.location='${trans_list_url}' ">lister les transformations</a></li>
+    		<li><a href="#" onclick="window.location='${transff_url}' ">Rechercher Une transformation</a></li>
+    		<li><a href="#" onclick="window.location='${ap_trans_url}' ">Effectuer Une transformation</a></li>
+    		
+    				
+         </ul>
+    </li> 
+     </security:authorize>		
+</ul>
+</li>
+ </security:authorize>
+ <!--  menu configuration -->
+             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+ 
+<li><a href="#">Supervision<img alt="" src="${down_url}" /></a>
+<ul>
+<li><a href="#" >Fournisseurs<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${four_site_url}' ">Creer Un Fournisseur</a></li>
+    		     <li><a href="#" onclick="window.location='${four_list_url}' ">Liste Des Fournisseurs</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    		
+    		  <li><a href="#" >Clients<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${clt_cree_url}' ">Creer Un Clients</a></li>
+    		     <li><a href="#" onclick="window.location='${clt_findN_url}' ">Rechercher Un Client</a></li> 
+    		     		     <li><a href="#" onclick="window.location='${clt_list_url}' ">Lister Des Clients</a></li> 
+    		 
+    		     <li><a href="#" >Categorie Clients<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${clt_cat_url}' ">Creer Une Categorie Clients</a></li>
+    		     <li><a href="#" onclick="window.location='${clt_catl_url}' ">Liste des Categories Clients</a></li> 
+	       	</ul> 
+    		
+    		</li>
+	       	</ul> 
+    		
+    		</li>
+    		</security:authorize>
+    		<li><a href="#" >gestion des Rayons<img alt="" src="${right_url}" /></a>
+    		 <ul>
+    		     <li><a href="#" onclick="window.location='${conf_ray_url}' ">Creer Un rayon</a></li>
+    		     <li><a href="#" onclick="window.location='${conf_list_ray_url}' ">Liste Des rayons</a></li> 
+	     	</ul>
+    		</li>
+    		<li><a href="#" >FamilleS De Produit<img alt="" src="${right_url}" /></a>
+    		 <ul>
+    		     <li><a href="#"  onclick="window.location='${fp_url}' ">Creer Une Famille de Produits</a></li>
+    		     <li><a href="#" onclick="window.location='${fp_list_url}' ">Liste Des fammilles de produits</a></li> 
+	     	</ul>
+    		</li>
+    		
+    		<li><a href="#" >Conditionnement<img alt="" src="${right_url}" /></a>
+    		 <ul>
+    		     <li><a href="#" onclick="window.location='${conf_con_url}' ">Creer Un mode de conditionnement</a></li>
+    		     <li><a href="#" onclick="window.location='${conf_list_con_url}' ">Liste Des modes de conditionnement</a></li> 
+	     	</ul>
+    		
+    		</li>
+    		
+    		 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    		<li><a href="#" >Taux de  Marge<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${conf_mrg_url}' ">Creer Un taux de marge</a></li>
+    		     <li><a href="#" onclick="window.location='${conf_list_mrg_url}' ">Liste Des taux de marge</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    		<li><a href="#" >TVA<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${conf_tva_url}' ">Creer Une tva</a></li>
+    		     <li><a href="#" onclick="window.location='${conf_list_tva_url}' ">Liste Des tvas</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    		<li><a href="#" >Devises<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${conf_dev_url}' ">Creer Une devise</a></li>
+    		     <li><a href="#" onclick="window.location='${conf_list_dev_url}' ">Liste Des devises</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    		<li><a href="#" >Filiales<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${create_filiale_url}' ">Creer Une Filiales</a></li>
+    		     <li><a href="#" onclick="window.location='${filiale_list_url}' ">Liste Des Filiales</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    		<li><a href="#" >Ordonnancier<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		     <li><a href="#" onclick="window.location='${conf_list_ord_url}' ">Liste Des Ordonnancier</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    		
+    		<li><a href="#" >Sites<img alt="" src="${right_url}" /></a>
+    		    <ul>
+    		   
+    		     <li><a href="#" onclick="window.location='${conf_list_site_url}' ">Liste Des Sites</a></li> 
+	       	</ul> 
+    		
+    		</li>
+    		
+    	</security:authorize>
+    		
+</ul>
+
+</li>
+</security:authorize>
+
+<!--  menu facturation-->
+                           <security:authorize ifAnyGranted="ROLE_SITE_MANAGER , ROLE_CASHIER">
+
+<li><a href="#">Facturation<img  alt="" src="${down_url}" /></a>
+ <ul>
+    		     <li><a href="#" onclick="window.location='${find_pay_url}' ">Recherche Payement Facture</a></li>
+    		     <li><a href="#" onclick="window.location='${dette_clients_url}' ">Recherche Factures</a></li> 
+    		        <li><a href="#" onclick="window.location='${conf_list_fact_url}' ">Liste des Factures</a></li> 
+    		      <li><a href="#" onclick="window.location='${clt_dets_url}' ">Recherche Dette Client</a></li> 
+    		      
+	       	</ul> 
+
+</li>
+</security:authorize>
+
+<!--  menu databaseloader-->
+                           <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
+
+<li><a href="#">DataBase<img  alt="" src="${down_url}" /></a>
+ <ul>
+    <li><a href="#" onclick="window.location='/adpharma/dataloader/load' ">Charger les donnees </a></li>
+    		    
+</ul> 
+</li>
+</security:authorize>
+
+<li><a href="#">Mon Profile<img alt="" src="${down_url}" /></a>
+<ul>
+    <li><a href="#" onclick="window.location='${cre_pass_url}' ">Changer de mot De Passe</a></li>
+    		    
+</ul>
+</li>
+
+</ul>
+<br style="clear: left; color: blue;" />
+</div>
+</security:authorize>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_LigneCmdClient" modelAttribute="ligneCmdClient" path="/lignecmdclients" render="${empty dependencies}" z="FuC16FjoukPtvX5ozJDz9ZRPU9g=">
+        <field:select field="commande" id="c_org_adorsys_adpharma_domain_LigneCmdClient_commande" itemValue="id" items="${commandeclients}" path="/commandeclients" required="true" z="YVVhTHduuqyMiywJE+roj4OQ+Wk="/>
+        <field:input field="quantiteCommande" id="c_org_adorsys_adpharma_domain_LigneCmdClient_quantiteCommande" validationMessageCode="field_invalid_integer" z="T3RXVyD9erthvP1Xb7WuPRN7jPg="/>
+        <field:input field="quantiteRetourne" id="c_org_adorsys_adpharma_domain_LigneCmdClient_quantiteRetourne" validationMessageCode="field_invalid_integer" z="wXtGTKJqRn26dn/C3AUWWRzEsiE="/>
+        <field:input field="prixUnitaire" id="c_org_adorsys_adpharma_domain_LigneCmdClient_prixUnitaire" validationMessageCode="field_invalid_number" z="2vnK0fyc5cxj6ZFW9eiV15AXnc4="/>
+        <field:input field="remise" id="c_org_adorsys_adpharma_domain_LigneCmdClient_remise" validationMessageCode="field_invalid_number" z="BaEsJLVGkwiFDMt/xcHKqNosFyo="/>
+        <field:input field="prixTotal" id="c_org_adorsys_adpharma_domain_LigneCmdClient_prixTotal" validationMessageCode="field_invalid_number" z="S7BsYfwWqE8at+3zR5c1vJHp5vA="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_LigneCmdClient_designation" z="R70cFE/vHlJVL4EH64otDWJoc9M="/>
+        <field:input field="cip" id="c_org_adorsys_adpharma_domain_LigneCmdClient_cip" z="emVWEjWNDxdpXJglks6fSX9pkA8="/>
+        <field:select field="produit" id="c_org_adorsys_adpharma_domain_LigneCmdClient_produit" itemValue="id" items="${ligneapprovisionements}" path="/ligneapprovisionements" z="hsQGW4D+oLG0i0zBBD8/LwNDUOg="/>
+        <field:input field="cipM" id="c_org_adorsys_adpharma_domain_LigneCmdClient_cipM" z="GmfL+2bQ3PSEjOu+bIJLIvrZz1E="/>
+        <field:datetime dateTimePattern="${ligneCmdClient_datesaisie_date_format}" field="dateSaisie" id="c_org_adorsys_adpharma_domain_LigneCmdClient_dateSaisie" z="Gq+pn/w7iK8/ULWfSTmP6kXekF4="/>
+        <field:input field="agentSaisie" id="c_org_adorsys_adpharma_domain_LigneCmdClient_agentSaisie" z="Kj9Ebki0phg+heCsMlXKFZpXQZI="/>
+        <field:input field="totalRemise" id="c_org_adorsys_adpharma_domain_LigneCmdClient_totalRemise" validationMessageCode="field_invalid_number" z="PAAO6uH2EBe35E/VUMdn9G9iKQ0="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_LigneCmdClient_footPrint" z="zzS7eRLdoomhxM+kb04hRadYrcI="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_LigneCmdClient" render="${not empty dependencies}" z="Ord1e9GgkGyQkxYcmDH23/FX/2s="/>
+</div>

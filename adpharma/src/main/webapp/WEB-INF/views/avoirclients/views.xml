@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="avoirclients/list">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/list.jspx"/>
+    </definition>
+<definition extends="default" name="avoirclients/show">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/show.jspx"/>
+    </definition>
+<definition extends="default" name="avoirclients/create">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/create.jspx"/>
+    </definition>
+<definition extends="default" name="avoirclients/update">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/update.jspx"/>
+    </definition>
+<definition extends="default" name="avoirclients/findAvoirClientsByNumeroEquals">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/findAvoirClientsByNumeroEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="avoirclients/search">
+        <put-attribute name="body" value="/WEB-INF/views/avoirclients/search.jspx"/>
+    </definition>
+</tiles-definitions>

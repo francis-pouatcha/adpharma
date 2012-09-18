@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_org_adorsys_adpharma_domain_TauxMarge" object="${tauxmarge}" path="/tauxmarges" z="user-managed">
+        <field:display field="valide" id="s_org_adorsys_adpharma_domain_TauxMarge_valide" object="${tauxmarge}" z="PXEmBHT16r8Ad8tVSU4Oy9k3sBk="/>
+        <field:display field="margeNumber" id="s_org_adorsys_adpharma_domain_TauxMarge_margeNumber" object="${tauxmarge}" z="a/qL5555YQFdCDqFZJd8p2bY6ro="/>
+        <field:display field="margeValue" id="s_org_adorsys_adpharma_domain_TauxMarge_margeValue" object="${tauxmarge}" z="sezusLi0Di82hsxQhAQj1+Cg/C0="/>
+    </page:show>
+    <HR/>
+            <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_TauxMarge_footPrint" object="${tauxmarge}" z="elQtTLE2OcQC4eRReuFWcTWW7uQ="/>
+    
+    <HR style="margin-top: -12px;"/>
+</div>

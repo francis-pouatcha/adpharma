@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:customFind finderName="ByVendeurAndDateCreationBetween" buttonId="4" commandName="ByVendeurAndDateCreationBetween" label="" id="ff_org_adorsys_adpharma_domain_Facture" path="/paiementprocess/findFacture" z="Lw6RKnzSFkEbRtF4+oQpokSYP5Q=">
+        <field:select disableFormBinding="true" field="vendeur" id="f_org_adorsys_adpharma_domain_Facture_vendeur" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="LFDKoA6sIDcIH76+uxlfqbBM6oA="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" disableFormBinding="true" field="minDateC" id="f_org_adorsys_adpharma_domain_Facture_minDateCreation" required="true" z="kOK0L5WJx6DI/usZG9+rOZ12r0Q="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" disableFormBinding="true" field="maxDateC" id="f_org_adorsys_adpharma_domain_Facture_maxDateCreation" required="true" z="ZSroFcQweQl1vq4pL4wCfJZc+yI="/>
+    </form:customFind>
+</div>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_org_adorsys_adpharma_domain_DetteClient" object="${detteclient}" path="/detteclients" update="false" z="user-managed">
+        <field:display field="clientName" id="s_org_adorsys_adpharma_domain_DetteClient_clientName" object="${detteclient}" z="lZlcyprrSAaBV20iPFCG86Ey3O8="/>
+        <field:display date="true" dateTimePattern="${detteClient_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_DetteClient_dateCreation" object="${detteclient}" z="Nm6ZhkK2Z+NsqoiT55kgpoRxYWI="/>
+        <field:display field="montantInitial" id="s_org_adorsys_adpharma_domain_DetteClient_montantInitial" object="${detteclient}" z="fMiV7Au+4XvCzoJL9IQXX6wE3iE="/>
+        <field:display field="avance" id="s_org_adorsys_adpharma_domain_DetteClient_avance" object="${detteclient}" z="sjNEHKgc6UFz/v9TbgmtAEeoodA="/>
+        <field:display field="reste" id="s_org_adorsys_adpharma_domain_DetteClient_reste" object="${detteclient}" z="gjtQHMeFx/OHSPmYtDEeTgraZvI="/>
+        <field:display field="solder" id="s_org_adorsys_adpharma_domain_DetteClient_solder" object="${detteclient}" z="grmUUVroESQV3WAFfH2DbTyjF7w="/>
+        <field:display date="true" dateTimePattern="${detteClient_datedernierversement_date_format}" field="dateDernierVersement" id="s_org_adorsys_adpharma_domain_DetteClient_dateDernierVersement" object="${detteclient}" z="Wpp4a5mnBY7dE6ctte+KHTc1gbI="/>
+        <field:display field="clientNo" id="s_org_adorsys_adpharma_domain_DetteClient_clientNo" object="${detteclient}" z="GBRRK/qRFTC2P3oMyBcRGL1XRKM="/>
+        <field:display field="factureNo" id="s_org_adorsys_adpharma_domain_DetteClient_factureNo" object="${detteclient}" z="Mh8t4CIOJgofup34Oi+mqFXQm0E="/>
+        <field:display field="factureId" id="s_org_adorsys_adpharma_domain_DetteClient_factureId" object="${detteclient}" render="false" z="user-managed"/>
+        <field:display field="clientId" id="s_org_adorsys_adpharma_domain_DetteClient_ClientId" object="${detteclient}" render="false" z="user-managed"/>
+        <field:display field="annuler" id="s_org_adorsys_adpharma_domain_DetteClient_annuler" object="${detteclient}" z="aiMmN0rsGTaFGNxfKi0by8GlnWg="/>
+        <field:display date="true" dateTimePattern="${detteClient_datepaiement_date_format}" field="datePaiement" id="s_org_adorsys_adpharma_domain_DetteClient_datePaiement" object="${detteclient}" z="cFLZWacuEJECL7keMAwZx9cbPnA="/>
+        <field:display field="clientId" id="s_org_adorsys_adpharma_domain_DetteClient_clientId" object="${detteclient}" z="4g4hBh0mbcrsrSapxd7sSMz1+lI="/>
+        <field:display field="etatCredit" id="s_org_adorsys_adpharma_domain_DetteClient_etatCredit" object="${detteclient}" z="+nU7Z+RMtYBkdSJQeCeYFIV7Xco="/>
+        <field:display field="numBon" id="s_org_adorsys_adpharma_domain_DetteClient_numBon" object="${detteclient}" z="kmvGX5EGPWhd+1hubBk7mY1BG6w="/>
+        <field:display field="taux" id="s_org_adorsys_adpharma_domain_DetteClient_taux" object="${detteclient}" z="RGT0PzA28x/y0YrF1QvztQnc6n8="/>
+        <field:display field="sousTotal" id="s_org_adorsys_adpharma_domain_DetteClient_sousTotal" object="${detteclient}" z="9ogIEzHVaS99BuDUMurJ1NBGnxg="/>
+        <field:display field="assurer" id="s_org_adorsys_adpharma_domain_DetteClient_assurer" object="${detteclient}" z="t6u0uWqvIZbFjNj80YD4242rwIY="/>
+    </page:show>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_DetteClient_footPrint" object="${detteclient}" z="0p7bLhhldxi9O1NqU4fW8cHI8Js="/>
+    <HR/>
+</div>

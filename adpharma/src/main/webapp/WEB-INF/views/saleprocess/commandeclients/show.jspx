@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:spring="http://www.springframework.org/tags"
+ xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <spring:url value="/commandeclients/${commandeclient.id}/retourProduit" var="find_cipm_url"/>
+ 	<script type="text/javascript">
+ 
+   $(
+function(){
+ 
+// Hook up the print link.
+$( "a#butRetout" )
+.attr( "href", "javascript:void( 0 )" )
+.click(
+function(){
+
+$( "#cmd" ).hide('fade');
+$( "#retour" ).show('fade');
+$( "#retour" ).show('fade');
+$("#butAnnulerRet").show('fade');
+$(this).hide();
+return( false );
+}
+)
+;
+
+
+
+$( "a#butAnnulerRet" )
+.attr( "href", "javascript:void( 0 )" )
+.click(
+function(){
+
+$( "#retour" ).hide('fade');
+$( "#cmd" ).show('fade');
+$("a#butRetout").show('fade');
+$( "#facture" ).hide('fade');
+$( "#butfac" ).show('fade');
+$( "#nom" ).val("");
+clear();
+$(this).hide('fade');
+return( false );
+});
+
+$( "a#butfac" )
+.attr( "href", "javascript:void( 0 )" )
+.click(
+function(){
+	$( "#cmd" ).hide('fade');
+$( "#facture" ).show('slide');
+$( "#butAnnulerRet" ).show('fade');
+$(this).hide('fade');
+return( false );
+});
+
+$( "#cipm" )
+.change(
+function(){
+	findline();
+return( false );
+});
+ 
+});
+   
+   
+   function findline() {
+		var cipm = document.getElementById("cipm").value;
+		var url = "${find_cipm_url}/" + cipm ;
+			$.get(url,
+				 function(data) {
+					if (data==null) {
+						//clear();
+							alert("Ce produit N'est Pas dans La commande");
+					} else {
+						var tableau=data.split('#');
+						document.getElementById("cipm").value = tableau[1] //data.cipM;
+						document.getElementById("cip").value = tableau[0] //data.cip;
+						document.getElementById("des").value = tableau[2] //data.designation ;
+						document.getElementById("pu").value =tableau[3] // data.prixUnitaire;
+						document.getElementById("qte").value =  tableau[4] //1 ;
+						document.getElementById("qtecmd").value =  tableau[4] //data.quantiteCommande;
+						document.getElementById("qteRet").value = tableau[5] //data.quantiteRetourne;
+				
+					}
+				});
+			
+			
+	}
+   
+   function clear(){
+	   document.getElementById("cip").value = "";
+		document.getElementById("cipm").value = "";
+		document.getElementById("des").value = "";
+		document.getElementById("pu").value = "";
+		document.getElementById("qte").value = "";
+	
+	   
+   }
+   
+   function validerForm(){
+		var cipm = $("#cipm").val();
+         var qte = $("#qte").val();
+         var qteRet = $("#qteRet").val();
+         var qtecmd = $("#qtecmd").val();
+         var result = parseInt(qteRet) + parseInt(qte);
+         if (parseInt(result) > parseInt(qtecmd) || cipm == "" || qte == 0) {
+        	 
+        	 alert("saisir le cipm ou verifier que la qte retournee soit inferieur a la qte commandee !");
+			return false ;
+		  }else{
+			  return true ;
+		  }
+	
+	   
+   }
+   
+   function getCipm(a){
+	   document.getElementById("cipm").value = $(a).attr('id');
+	   console.log($(a).attr('id'));
+	   findline();
+	   return false;
+   }
+   
+</script>   
+   
+    <page:show1 id="ps_org_adorsys_adpharma_domain_CommandeClient" create="false"  update="false" delete="${commandeclient.status eq 'EN_COUR'}" bodyExt="bodyExt.jspx" clientLinks="showLink.jspx"  object="${commandeclient}" path="/commandeclients" z="1A66fYrze0wrG0nIAbWIkwjEZ6s=">
+    <div id="cmd">
+      <table class="tblog">
+            <tr>
+                <td class="tbcreate">  
+          
+        <field:display field="cmdNumber" id="s_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" object="${commandeclient}" z="vXKgqKx39+o+oOU5UXcbm9Vnsbw="/>
+        <field:display date="true" dateTimePattern="${commandeClient_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_CommandeClient_dateCreation" object="${commandeclient}" z="kO5QyPx180F3rFmIwJd0t65rG5E="/>
+        <field:display field="client" id="s_org_adorsys_adpharma_domain_CommandeClient_client" object="${commandeclient}" z="9wXvaql43uZd0mupkcSISWr56ZU="/>
+        <field:display field="vendeur" id="s_org_adorsys_adpharma_domain_CommandeClient_vendeur" object="${commandeclient}" z="P0Rjg9dxSVngd1NXLW+xqL0F7y8="/>
+        <field:display field="status" color="green" id="s_org_adorsys_adpharma_domain_CommandeClient_status" object="${commandeclient}" z="5cvM8W5vv+E9n/z/OZu5+NkUs9w="/>
+        <field:display field="encaisse" color="blue" id="s_org_adorsys_adpharma_domain_CommandeClient_encaisse" object="${commandeclient}" z="sADnnQ9wbhyWFqlRvdy70INCtwo="/>
+        <field:display field="annuler" color="red" id="s_org_adorsys_adpharma_domain_CommandeClient_annuler" object="${commandeclient}" z="7qd+vRCNqv8XSQBjJNR7bkYET9A="/>
+        <field:display field="anullerPar"  id="s_org_adorsys_adpharma_domain_CommandeClient_annuler" label="Anuller Par" object="${commandeclient}" z="7qd+vRCNqv8XSQBjJNR7bkYET9A="/>
+        <field:display date="true" dateTimePattern="${commandeClient_datecreation_date_format}" label="Date Anullation" field="dateAnullation" id="s_org_adorsys_adpharma_domain_CommandeClient_dateCreation" object="${commandeclient}" z="kO5QyPx180F3rFmIwJd0t65rG5E="/>
+        
+        <c:if test="${not empty commandeclient.clientPaiyeur }">
+               <field:display field="clientPaiyeur" id="s_org_adorsys_adpharma_domain_CommandeClient_clientPaiyeur" object="${commandeclient}" z="4x2KAdkcHmGSkCkPotM/6dG12ig="/>
+       
+       </c:if>
+      
+       </td>
+                <td class="tbcreate">
+        <field:display field="montantHt" id="s_org_adorsys_adpharma_domain_CommandeClient_montantHt" object="${commandeclient}" z="x0x8BbxSMksJIwAga07mF+pO2tE="/>
+        <field:display field="montantTva" id="s_org_adorsys_adpharma_domain_CommandeClient_montantTva" object="${commandeclient}" z="vluvQbxnneh3Z3gex9YmfoVYfD0="/>
+        <field:display field="montantTtc" id="s_org_adorsys_adpharma_domain_CommandeClient_montantTtc" object="${commandeclient}" z="XaBENaTv5huYThZ2tKFQtKPNmFg="/>
+        <field:display field="otherRemise" label="autre Remise" id="s_org_adorsys_adpharma_domain_CommandeClient_remise" object="${commandeclient}" z="jqvPYpQQV7iCKxWgaqtoukonmu0="/>
+        <field:display field="remise" label="total Remise" id="s_org_adorsys_adpharma_domain_CommandeClient_remise" object="${commandeclient}" z="jqvPYpQQV7iCKxWgaqtoukonmu0="/>
+        <field:display field="typeCommande" id="s_org_adorsys_adpharma_domain_CommandeClient_typeCommande" object="${commandeclient}" z="Gft7NWvEije6rWUYvjgm8c9opAE="/>
+       <c:if test="${commandeclient.typeCommande  eq 'VENTE_A_CREDIT'}">
+               <field:display field="ventePartiel" id="s_org_adorsys_adpharma_domain_CommandeClient_ventePartiel" object="${commandeclient}" z="4x2KAdkcHmGSkCkPotM/6dG12ig="/>
+       </c:if>
+        <field:display field="tauxCouverture" id="s_org_adorsys_adpharma_domain_CommandeClient_tauxCouverture" object="${commandeclient}" z="cS6r/ezyXDQvvzCh8bCZWYnnmOI="/>
+               <field:display date="true" dateTimePattern="${commandeClient_datecreation_date_format}" label="Date Restoration" field="dateRestoration" id="s_org_adorsys_adpharma_domain_CommandeClient_dateCreation" object="${commandeclient}" z="kO5QyPx180F3rFmIwJd0t65rG5E="/>
+       
+       </td>
+            </tr>
+        </table> 
+     </div>
+     <div id="retour" style="display: none; margin-bottom: 10px; height: 50px;">
+     <form action="${find_cipm_url}" method="POST" id="formulaire"
+					name="formulaire" onsubmit="return validerForm();">
+					<table>
+						<tr>
+							<th style="text-align: center;">CIP MAISON</th>
+							<th style="text-align: center;">CIP</th>
+							<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+							<th style="text-align: center;">PRIX UNITAIRE</th>
+							<th style="text-align: center;">QTE RETOUR</th>
+							<th style="text-align: center;">RAISON</th>
+							<th  style="text-align: center;">ACTION</th>
+						</tr>
+						<tr>
+							<td>
+							<INPUT type="hidden" name="qtecmd" id="qtecmd" />
+							<INPUT type="hidden" name="qteRet" id="qteRet" />
+
+										<INPUT type="text" name="cipm" id="cipm"  class="autres"
+											 maxlength="10"
+											onKeyPress="return scanTouche(event)"
+											title="saisir le cipm" style="color: blue;"
+											autofocus="autofocus" />
+
+								</td>
+							<td><INPUT type="text" name="cip" id="cip" class="autres"
+								value=""
+								style="color: blue; text-align: center;" disabled="disabled" />
+
+							</td>
+							<td><INPUT type="text" name="des" class="des" id="des"
+								title="Designation" value=""
+								style="color: blue; text-align: center;" disabled="disabled" />
+
+							</td>
+							<td><INPUT type="text" name="pu" id="pu" class="autres"
+								value=""
+								style="color: blue; text-align: center;" disabled="disabled" />
+							</td>
+							<td><INPUT type="text" name="qte" id="qte"
+								 value="" class="autres"
+								onKeyPress="return scanTouche(event)" width="50px;"
+								title="saisir la Quantite" maxlength="4" /></td>
+							<td>
+							<SELECT name="raison" id="raison"  style="height: 22px; width: 200px;">
+							<OPTION value="NON_COMMANDE" selected="selected" >NON COMMANDE</OPTION>
+							<OPTION value="AVARIE"  >AVARIE</OPTION>
+														<OPTION value="NON_LIVRE"  >NON LIVRE</OPTION>
+							
+							</SELECT>
+							</td>
+							
+
+							<td align="center">
+
+										<INPUT type="submit"   value="Enregistrer" class="submits" />
+
+								</td>
+
+						</tr>
+					</table>
+				</form>
+     
+     </div>
+           <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
+     
+     <div id="facture" style="display: none; margin-bottom: 10px; height: 50px; ">
+    <center>
+     <form action="${print_inv_url}" style="width: 40%; "  method="GET" id="facture"
+					name="factures" >
+					<table>
+						<tr>
+							<th style="text-align: center;">NOM COMPLET DU CLIENT</th>
+							<th style="text-align: center;" >ACTION</th>
+						</tr>
+						<tr>
+							
+							<td><INPUT type="text" name="nom" id="nom" class="autres"
+								value=""
+								style=" text-align: center;" />
+
+							</td>
+							<td align="center">
+
+										<INPUT type="submit"   value="Imprimer" class="submits" />
+
+								</td>
+								
+
+						</tr>
+					</table>
+	</form>
+ </center>    
+     </div>
+     
+    </page:show1>
+    <HR />
+         <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeClient_footPrint" object="${commandeclient}" z="LQWn8oa0XqGxMaqd1ehaq3tttj4="/>
+    <HR style="margin-top: -12px" />
+    
+     <div id="container">
+<div id="inner" style="overflow: scroll; height: 300px;">
+<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
+<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
+L'aide Pour cette Page est en cour de redaction <br/>
+Merci pour Votre Comprehension <br/>
+
+ 
+</div>
+</div>
+    
+</div>
+       

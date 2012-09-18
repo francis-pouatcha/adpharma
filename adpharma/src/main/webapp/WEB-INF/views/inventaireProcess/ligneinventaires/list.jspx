@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_LigneInventaire" items="${ligneinventaires}" z="3MEqxpA476LASp07433etslmugI=">
+        <table:table data="${ligneinventaires}" id="l_org_adorsys_adpharma_domain_LigneInventaire" path="/ligneinventaires" z="oADU3jF9sp1Jk3bMOaCpzwZd/KM=">
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" property="qteEnStock" z="0fbYI7MAuGD+MOC/It5ALpgKavE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_qteReel" property="qteReel" z="VirQn2oOcr1cz4yh0ynbnIcdkBw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_ecart" property="ecart" z="dJyibuOwUcOYmziU7GuplDGB8F0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_prixUnitaire" property="prixUnitaire" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" property="prixTotal" z="b6NUDhagpgBb5pCYWjLsjXwu8pg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_inventaire" property="inventaire" z="Ad7R97AMtTvyTgBboAG2mOMpzso="/>
+        </table:table>
+    </page:list>
+</div>

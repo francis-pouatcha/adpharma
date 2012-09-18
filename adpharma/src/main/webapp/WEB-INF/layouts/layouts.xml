@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+  <definition name="default" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  <definition name="stat" template="/WEB-INF/layouts/statistic-layout.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+
+  <definition name="public" template="/WEB-INF/layouts/default2.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+     <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="stocker" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+         <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+   <definition name="vendeur" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="approvisionnement" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+            <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="caisse" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+   <definition name="produit" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  <definition name="client" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+   <definition name="configuration" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="admin" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="facturation" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+   <definition name="print" template="/WEB-INF/layouts/print-page.jspx">
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  
+  <definition name="inventaire" template="/WEB-INF/layouts/layout-dojo.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+  </definition>
+  <definition name="dialog" template="/WEB-INF/layouts/dialog.jspx">
+     </definition>
+
+</tiles-definitions>

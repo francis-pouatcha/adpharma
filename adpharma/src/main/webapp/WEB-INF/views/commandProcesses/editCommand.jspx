@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	
+	<div style="margin-bottom: 2px; padding-bottom: 2px;">
+		<span style="font-weight: bold">
+			<c:out value="${commandeProcess.displayName}"/>
+		</span>
+	</div>    
+	<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
+	<spring:url value="/resources/images/annuler.png"  var="annuler" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form"  var="edit_url" />
+		<spring:url value="/commandprocesses/${commandeProcess.cmdId}/findProduct?form"  var="find_product_url" />
+			<spring:url value="/commandprocesses/${commandeProcess.cmdId}/enregistrerCmd"  var="enr_cmd_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/addLine"  var="cmd_add_url" />
+	   	    <spring:url value="/commandprocesses/${commandeProcess.cmdId}/showProduct/"  var="show_prd_url" />
+	   
+				    <spring:url value="/approvisionementprocess/1/findProduct/"  var="find_cip_url" />
+		 <spring:url value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd"  var="delete_cmd_url" />
+	<div style="margin-bottom: 6px; font-weight: bold;">
+		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL COMMANDE</a></span>
+		<span class="nextTab unselectedTab">
+		<c:choose>
+		<c:when test="${not empty commandeProcess.produit}">
+		<a href="javascript:history.back()">RECHERCHE PRODUITS</a>
+		</c:when>
+		<c:otherwise>
+		<a href="${ find_product_url}">RECHERCHE PRODUITS</a>
+		</c:otherwise>
+		</c:choose>
+		</span>
+	 <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
+	 <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
+		
+		</div>
+		
+	
+   		<!-- product selection  	    -->
+	
+  <script type="text/javascript">
+  
+  function conf(){
+	  Check = confirm("Voulez vous vraiment supprimer la ligne? ");
+	  if(Check == false){
+	  	return false;
+	  	
+	  }else{
+	  	return true;
+	  }
+	  }
+  
+function requete(){
+var cip =	document.getElementById("cip").value ;
+if (cip.length==7) {
+	dojo.xhrGet({
+		url: "${find_cip_url }"+cip,
+		handleAs: "text",
+		load: function(data) {
+			if (data=="Aucun produit Trouve") {
+		alert("Aucun produit Trouve");	
+			}else{
+				var t = data.split(',');
+				document.getElementById("cip").value = t[0];
+				document.getElementById("des").value =t[1];
+				document.getElementById("pId").value=t[3];
+				document.getElementById("lien").href="${show_prd_url }"+t[3];
+				document.getElementById("qtes").value = t[4];
+				document.getElementById("sc").value = t[5];
+
+				
+			}
+			},
+		error: function(error) {
+			alert(data);
+			},
+		sync: "true"
+
+		
+		});	
+}
+	
+
+}
+
+function codeTouche(evenement)
+{
+        for (prop in evenement)
+        {
+                if(prop == 'which') return(evenement.which);
+        }
+        return(evenement.keyCode);
+}
+
+function scanTouche(evenement)
+{
+        var reCarValides = /\d/;
+        var reCarSpeciaux = /[\x00\x08\x0D]/;
+        var codeDecimal  = codeTouche(evenement);
+        var car = String.fromCharCode(codeDecimal);
+        var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
+
+        return autorisation;
+}
+
+
+function verif_formulaire()
+{
+ if(document.formulaire.cip.value == "")  {
+   alert("Veuillez entrer le cip du produit!");
+   document.formulaire.cip.focus();
+   return false;
+  }
+ if(document.formulaire.qte.value == "") {
+   alert("Veuillez entrer la quantite a commander!");
+   document.formulaire.qte.focus();
+   return false;
+  }
+ if(document.formulaire.pa.value == "") {
+   alert("Veuillez saisir le Prix achat Unitaire min!");
+   document.formulaire.pa.focus();
+   return false;
+  }
+
+}
+
+
+
+
+</script>
+
+
+<c:choose>
+<c:when test="${not empty commandeProcess.lineToUpdate }">
+     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+ 
+ <util:panel title="Mettre a jour Les Informations" id="upline">
+ <form action="${find_upd_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
+		    <table>
+		    	<tr>
+		    		<th style="text-align: center;">CiP</th>
+		    		<th style="text-align: center;width: 300px;" >Designation</th>
+		    		<th style="text-align: center;">Qte En Stock</th>
+		    		<th style="text-align: center;">Seuil Cmd</th>
+		            <th style="text-align: center;">qte a Commander</th>
+		            <th style="text-align: center;">Prix achat Min</th>
+		            <th style="text-align: center;">Agent Saisie</th>
+		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    	</tr>
+		    		<tr>
+		    			<td>
+		    		<INPUT type="hidden" name="lineId" id="lineId" value="${commandeProcess.lineToUpdate.id}" />	
+		    		<INPUT type="text" name="cip" class="autres" value="${commandeProcess.lineToUpdate.produit.cip}"   style="color: blue; text-align: center;"  disabled="disabled" id="cip" />
+		    			</td>
+		    			<td>
+		 	<INPUT type="text" name="des" class="des" title="Designation" value="${commandeProcess.lineToUpdate.produit.designation}" style="color: blue; text-align: center;" disabled="disabled" id="des" />
+		    			
+		    			</td>
+		    			<td >
+		    		<INPUT type="text"  name="qtes" class="autres" value="${commandeProcess.lineToUpdate.produit.quantiteEnStock}" disabled="disabled"      style="color: blue; "  id="qtes" />
+
+		    			</td>
+		    			<td>
+		    			
+		   	<INPUT type="text" name="sc" style="color: blue;" class="autres" value="${commandeProcess.lineToUpdate.produit.seuilComande }" disabled="disabled"     id="sc" />
+		    			</td>
+
+		    			<td>
+		    			
+		   	<INPUT type="text" name="qte" class="autres" value="${commandeProcess.lineToUpdate.quantiteCommande}" onKeyPress="return scanTouche(event)"  maxlength="7" autofocus="autofocus"  title="quantite a Commander"   id="qte" />
+		    		
+		    			</td>
+		    			<td>
+		     <INPUT type="text" name="pa" class="autres" value="${commandeProcess.lineToUpdate.prixAchatMin}" onKeyPress="return scanTouche(event)"  title="saisir le Prix De Vente Unitaire"   id="pa" />
+		    			</td>
+		    			<td>
+		     <INPUT type="text" name="ag" class="autres" style="color: blue;"  value="${commandeProcess.lineToUpdate.agentSaisie}"  disabled="disabled"     id="ag" />
+		    
+		    			</td>
+		    			
+						<td>
+							<INPUT  class="submits" type="submit"  value="Modifier"  style=" color: red;"/>
+						</td>
+						<td class="utilbox">
+						     <INPUT class="submits" type="button"  value="Annuler" onclick="javascript:history.back()"  style=" color: red;"/>
+						</td>						
+		    		</tr>
+		    </table>
+</form>
+
+		     <BR />
+		     		  <b style="color: red; text-align: center;">   ${apMessage} </b>  
+		     
+		    	  
+</util:panel> 
+  <BR />     
+</c:when>
+<c:otherwise>
+     	<!-- afficher ce formulaire ppour l ajout de produit -->
+
+ <util:panel title="saisir le CIP du Produit" id="cip">
+ <form action="${cmd_add_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
+		    <table>
+		    	<tr>
+		    		<th style="text-align: center;">CiP</th>
+		    		<th style="text-align: center;" >Designation</th>
+		    		<th style="text-align: center;">Qte En Stock</th>
+		    		<th style="text-align: center;">Seuil Cmd</th>
+		            <th style="text-align: center;">qte a Commander</th>
+		            <th style="text-align: center;">Prix achat Min</th>
+		            <th style="text-align: center;">Agent Saisie</th>
+		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    	</tr>
+		    		<tr>
+		    			<td>
+		    				
+		    		<INPUT type="hidden" name="pId" id="pId" value="${commandeProcess. produit.id}" />	
+		    		<INPUT type="text" name="cip" onkeyup="requete();" autofocus="autofocus" class="autres" value="${commandeProcess.produit.cip}" onKeyPress="return scanTouche(event)"   style="color: blue; text-align: center;"  maxlength="7" id="cip" />
+		    			</td>
+		    			<td>
+		 	<INPUT type="text" name="des" class="des" title="Designation" value="${commandeProcess.produit.designation}" style="color: blue; text-align: center;" disabled="disabled" id="des" />
+		    			
+		    			</td>
+		    			<td >
+		    		<INPUT type="text"  name="qtes" class="autres" value="${commandeProcess.produit.quantiteEnStock}" disabled="disabled"      style="color: blue; "  id="qtes" />
+
+		    			</td>
+		    			<td>
+		    			
+		   	<INPUT type="text" name="sc" style="color: blue;" class="autres" value="${commandeProcess.produit.seuilComande }" disabled="disabled"     id="sc" />
+		    			</td>
+
+		    			<td>
+		    			
+		   	<INPUT type="text" name="qte" class="autres" style="color: black; text-align: center;" onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
+		    		
+		    			</td>
+		    			<td>
+		     <INPUT type="text" name="pa" class="autres" onKeyPress="return scanTouche(event)" style="color:black; text-align: center;"  title="saisir le Prix De Vente Unitaire"   id="pa" />
+		    			</td>
+		    			<td>
+		     <INPUT type="text" name="ag" class="autres" style="color: blue; text-align: center;" value="${pageContext['request'].userPrincipal.name}"   disabled="disabled"     id="ag" />
+		                </td>
+		    			<td>
+							<INPUT type="submit" class="submits"  value="Ajouter"  />
+						</td>
+						<td class="utilbox">
+					<spring:url value="/resources/images/show.png" var="show_image_url" />
+					<c:choose>
+		<c:when test="${not empty commandeProcess.produit}">
+                         <a href="${ show_prd_url} ${commandeProcess.produit.id}" alt="Show this product" id="lien" title="Show this product">
+								<img alt="Show " class="image" src="${ show_image_url}" title="Show this Product"/>
+							</a>		
+				</c:when>
+		<c:otherwise>
+                        <a href="#" alt="Show this product" id="lien" title="Show this product">
+								<img alt="Show " class="image" src="${ show_image_url}" title="Show this Product"/>
+							</a>		
+		</c:otherwise>
+		</c:choose>
+							
+						</td>							
+		    		</tr>
+		    </table>
+</form>
+
+		     <BR />
+		  <b style="color: red; text-align: center;">   ${apMessage} </b>  
+		    	  
+</util:panel> 
+  <BR />     
+
+</c:otherwise>
+
+</c:choose>
+  		
+    	
+    	<!-- Show the list of product commanded here -->
+    	<form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${commandeProcess.productSelected}" z="user-managed" 
+    		label="Liste Des Produits A Commander" objectName="Ligne Commande" openPane="${not empty  commandeProcess.productSelected}">
+
+		    <table>
+		    	<tr>
+		    		<th style="text-align: center;" >CiP</th>
+		    		<th style="text-align: center;width: 300px;" >Designation</th>
+		    		<th style="text-align: center;">Qte En Stock</th>
+		    		<th style="text-align: center;">Seuil Cmd</th>
+		            <th style="text-align: center;">qte a Commander</th>
+		            <th style="text-align: center;">Prix achat Min</th>
+		            <th style="text-align: center;">Agent Saisie</th>
+		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    	</tr>
+		    	<c:forEach items="${commandeProcess.productSelected}" var="ligneCommande">
+		    		<tr>
+		    		<td style="text-align: center;">
+		    				<c:out value="${ligneCommande.produit.cip}"></c:out>
+		    			</td >
+		    			<td style=" width: 300px; text-align: left;padding-left: 20px;">
+		    				<c:out value="${ligneCommande.produit.designation}"></c:out>
+		    			
+		    			</td>
+		    			<td  style="text-align: right;padding-right: 20px;">
+		    				<c:out value="${ligneCommande.produit.quantiteEnStock}"></c:out>
+
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		    			
+		    				<c:out value="${ligneCommande.produit.seuilComande}"></c:out>
+		    			</td>
+
+		    			<td style="text-align: right;padding-right: 20px;">
+		    			
+		    				<c:out value="${ligneCommande.quantiteCommande}"></c:out>
+		    		
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		     		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>
+
+		    			</td>
+		    			<td style="text-align: center;">
+		    				<c:out value="${ligneCommande.agentSaisie}"></c:out>
+		    
+		    			</td>
+		    				<td class="utilbox">
+						<spring:url value="/resources/images/update.png" var="update_image_url" />
+		        <spring:url value="/commandprocesses/${commandeProcess.cmdId}/updateLine/${ligneCommande.id} " var="update_line_url" />
+								<a href="${update_line_url}" alt="update" title="update">								
+								<img alt="update" class="image" src="${ update_image_url}" title="mettre a jour la commande "/>
+                              </a>
+						</td>
+						<td class="utilbox">
+						  <spring:url value="/resources/images/delete.png" var="delete_image_url" />
+						 <spring:url value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/${ligneCommande.id}" var="delete_line_url" />
+						  
+								<a href="${ delete_line_url}" alt="Remove" title="Remove">								
+								<img alt="Unselect" class="image" src="${ delete_image_url}" title=" Spprimer la selection" onclick="return conf()"/>
+                              </a>
+							
+						</td>							
+		    		</tr>
+		    	</c:forEach>
+		    </table>
+		    
+        </form:customList>
+        
+</div>

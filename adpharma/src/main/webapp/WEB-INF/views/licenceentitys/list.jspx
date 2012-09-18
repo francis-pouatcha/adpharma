@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_LicenceEntity" items="${licenceentitys}" z="i2vk0dMqKPPfz35lTQUY3tykB2Q=">
+        <table:table data="${licenceentitys}" id="l_org_adorsys_adpharma_domain_LicenceEntity" path="/licenceentitys" z="Ec/wYT0bPSOFx1xDiQghu3gnE6A=">
+            <table:column id="c_org_adorsys_adpharma_domain_LicenceEntity_beginDate" property="beginDate" z="r4FBkupDOP5vFfEjU1F9OkI2qi4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LicenceEntity_endDate" property="endDate" z="Rt5GzPPO1LRCBWiELRn82bU5mB8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LicenceEntity_isValid" property="isValid" z="VaE2GejQvJ/h4L5Owhk8bDGgMfU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LicenceEntity_generateKey" property="generateKey" z="54zFk6jnvaRfyqde2/wCdf/RdqA="/>
+            <table:column date="true" dateTimePattern="${licenceEntity_transtientbegin_date_format}" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" property="transtientBegin" z="PHA6cCBYjCsFiUurwt0+VTmNcWc="/>
+            <table:column date="true" dateTimePattern="${licenceEntity_transtientend_date_format}" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" property="transtientEnd" z="CKOc8bYpCil7QEemZYG+aKSvmF8="/>
+        </table:table>
+    </page:list>
+</div>

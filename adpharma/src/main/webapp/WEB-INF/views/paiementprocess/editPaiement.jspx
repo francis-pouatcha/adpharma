@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	
+	<div style="margin-bottom: 10px; padding-bottom: 5px;">
+		<span style="font-weight: bold">
+			<c:out value="${saleProcess.displayName}"/>
+		</span>
+	</div>    
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit"  var="edit_url" />
+		<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct?form"  var="find_product_url" />
+	    <spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"  var="find_add_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"  var="find_upd_url" />
+
+	    <spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/"  var="show_prd_url" />
+
+			<spring:url value="/resources/images/annuler.png"  var="annuler" />
+			<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
+			<spring:url  value="/saleprocess/${saleProcess.cmdId}/enregistrer"  var="enr_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"  var="delete_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"  var="update_client_url" />
+	<div style="margin-bottom: 6px; font-weight: bold;">
+		<span class="firstTab selectedTab"><a href="${ edit_url}">PAIEMENT</a></span>
+		<span class="nextTab unselectedTab">
+		<c:choose>
+		<c:when test="${not empty saleprocess.produit}">
+		<a href="javascript:history.back()">RECHERCHE FACTURE</a>
+		</c:when>
+		<c:otherwise>
+		<a href="${ find_product_url}">RECHERCHE FACTURE</a>
+		</c:otherwise>
+		</c:choose>
+		</span>
+	<span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
+		<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
+<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Imprimer Facture" title="Imprimer Facture de Caisse" /></a></span>
+<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Facture Proforma" title="Imprimer Facture proforma" /></a></span>
+<span ><a href="${ update_client_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+	
+		</div>
+		
+  
+    	<!-- recherche de produit par code identification -->
+    	
+    
+    	
+  
+
+<c:choose>
+<c:when test="${empty saleProcess.produit}">
+ <c:set value="${saleProcess.produit.id}" var="prd"></c:set>
+</c:when>
+<c:otherwise>
+ <c:set value="#" var="prd"></c:set>
+
+</c:otherwise>
+</c:choose>
+     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+  
+ <util:panel title="Mettre a jour Les Informations" id="upline">
+		    <table>
+		    	<tr>
+		    		<th  style="text-align: center;" >CAISSIER</th>
+		    		<th style="text-align: center;" >CODE CAISSE</th>
+		    		<th  style="text-align: center;" >DATE OUVERTURE</th>
+		            <th  style="text-align: center;" >FOND DE CAISSE</th>
+		    	</tr>
+		    		<tr>
+		    			<td>
+		    	<INPUT type="text"   class="des" value="${paiementProcess.cassier}"   style="color: blue; text-align: center;"  disabled="disabled" />
+		    			</td>
+		    			<td>
+		 	<INPUT type="text" name="des" class="autres"  value="${paiementProcess.caisseNumber}" style="color: blue; text-align: center;" disabled="disabled"  />
+		    			
+		    			</td>
+		    			<td >
+		    		<INPUT type="text"  disabled="disabled" class="des" value="${paiementProcess.dateOuvertureCaisse}" style="color: blue;"  />
+
+		    			</td>
+		    			<td>
+		    			
+		   	<INPUT type="text"  disabled="disabled" style="color: blue;"  class="autres" value="${paiementProcess.fondCaisse}"  />
+		    			</td>
+		    		</tr>
+		    </table>
+
+		     <BR />
+		     		  <b style="color: red; text-align: center;"> <c:out value="${apMessage}" ></c:out>  </b>  
+		     
+		    	  
+</util:panel> 
+   <form:create id="fc_org_adorsys_adpharma_domain_Paiement" modelAttribute="paiement" path="/paiements" render="${empty dependencies}" z="xb/x869kHM6OdLSHYTuENUUhqH4=">
+        <field:select field="facture" disabled="true" id="c_org_adorsys_adpharma_domain_Paiement_facture" itemValue="id" items="${factures}" path="/factures" z="nCqiHsOhwKs4xqHFcetGB9WGugc="/>
+        <field:select field="typePaiement" id="c_org_adorsys_adpharma_domain_Paiement_typePaiement" items="${typepaiements}" path="typepaiements" z="Dzs9YGtnaM4pJOnIYbIfZkx1xgU="/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_Paiement_montant" validationMessageCode="field_invalid_number" z="j5sYcUhtBpzjLB52WvJ7QicYF3U="/>
+        <field:input field="SommeRecue" id="c_org_adorsys_adpharma_domain_Paiement_SommeRecue" validationMessageCode="field_invalid_number" z="zassraKC7FEXuPFvxMu2pnC6gLU="/>
+        <field:input field="Difference" id="c_org_adorsys_adpharma_domain_Paiement_Difference" validationMessageCode="field_invalid_number" z="dkFSzeH6CkXKHsY0kEh4IrPvkfY="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Paiement" render="${not empty dependencies}" z="TsLypd+0VaUiCeeihCCyLagauI0="/>
+        
+</div>

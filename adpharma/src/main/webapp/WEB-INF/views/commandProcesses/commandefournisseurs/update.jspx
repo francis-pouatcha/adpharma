@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="commandeFournisseur" path="/commandefournisseurs" versionField="Version" z="O7uGylH0b9wdwB0TRPs2nlCxEqM=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" render="false" z="user-managed"/>
+        <field:input disabled="true" field="cmdNummber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNummber" z="user-managed"/>
+        <field:datetime dateTimePattern="${commandeFournisseur_datecreation_date_format}" field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" z="PCK9uWSMERzD2JjoB8OmitRmYmw="/>
+        <field:datetime dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="o/NC7N9COcOihDsFpVfUoOpijdY="/>
+        <field:select field="fournisseur" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="Ko+h/8rs62Jv7Du7SyHBRUVaAeE="/>
+        <field:simple field="ligneCommande" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ligneCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Fournisseur" z="aKqybZQfQlI0xGliYie9HLUb1Fk="/>
+        <field:input field="cmdNumber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" z="baSnkVTvcB2PoUKdde1DY0xc7XE="/>
+        <field:checkbox field="etat" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etat" z="UYllUPo5LWz25c7vZCHOM1KR2uA="/>
+        <field:select field="ModeDeSelection" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" items="${modeselections}" path="modeselections" required="true" z="mhjdokAqk5atvL+8H07f998B2Mg="/>
+    </form:update>
+</div>

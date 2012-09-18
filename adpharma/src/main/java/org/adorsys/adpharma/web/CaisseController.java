@@ -1,0 +1,201 @@
+package org.adorsys.adpharma.web;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.adorsys.adpharma.utils.PharmaDateUtil;
+
+import javassist.expr.NewArray;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.adorsys.adpharma.beans.ChiffreAffaireBean;
+import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
+import org.adorsys.adpharma.domain.AvoirClient;
+import org.adorsys.adpharma.domain.Caisse;
+import org.adorsys.adpharma.domain.Filiale;
+import org.adorsys.adpharma.domain.Genre;
+import org.adorsys.adpharma.domain.Inventaire;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.security.SecurityUtil;
+import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.adorsys.adpharma.utils.ProcessHelper ;
+@RooWebScaffold(path = "caisses", formBackingObject = Caisse.class)
+@RequestMapping("/caisses")
+@Controller
+public class CaisseController {
+
+
+	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
+	public String Search(Model uiModel) {
+		uiModel.addAttribute("caisse", new Caisse());
+		return "caisses/search";
+	}
+
+	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+	public String Search(Caisse caisse , Model uiModel) {
+		uiModel.addAttribute("results", Caisse.search(caisse.getCaisseNumber(), caisse.getCaissier(), caisse.getDateOuverture(), caisse.getDateFemeture(), caisse.getCaisseOuverte()).getResultList());
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("caisse", caisse);
+		return "caisses/search";
+	}
+	
+	@RequestMapping(params = { "find=chiffreAffaire", "form" }, method = RequestMethod.GET)
+	public String chiffreAffaireForm(Model uiModel) {
+		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale());
+		uiModel.addAttribute("chiffreAffaire", new ChiffreAffaireBean());
+
+		return "caisses/chiffreaffaire";
+	}
+
+	@RequestMapping(value = "/chiffreAffaire", method = RequestMethod.GET)
+	public String chiffreAffaire(ChiffreAffaireBean chiffreAffaire , Model uiModel) {
+		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale());
+		uiModel.addAttribute("chiffreAffaire", chiffreAffaire);
+		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(chiffreAffaire.getDateDebut(), chiffreAffaire.getDateFin()).getResultList();
+		if (caisses.isEmpty()) {
+			uiModel.addAttribute("appMessage", "aucun etat trouve !");
+			return "caisses/chiffreaffaire";
+		}else {
+			uiModel.addAttribute("caisses", caisses);
+			uiModel.addAttribute("periode",PharmaDateUtil.format(chiffreAffaire.getDateDebut(), "dd-MM-yyyy HH:mm")+" Au "+ PharmaDateUtil.format(chiffreAffaire.getDateFin(), "dd-MM-yyyy HH:mm"));
+			return "chiffreAffaireBean";
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(@Valid Caisse caisse, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("caisse", caisse);
+			addDateTimeFormatPatterns(uiModel);
+			return "caisses/create";
+		}
+		uiModel.asMap().clear();
+		caisse.persist();
+		return "redirect:/caisses/" + encodeUrlPathSegment(caisse.getId().toString(), httpServletRequest);
+	}
+
+	@RequestMapping(value = "/ouvrirCaisse", params = "form", method = RequestMethod.GET)
+	public String createForm(Model uiModel) {
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		List<Caisse> list = Caisse.findCaissesByCaisseOuverteNotAndCaissier(Boolean.FALSE,pharmaUser ).getResultList();
+		Caisse caisse = new Caisse() ;
+		if (!list.isEmpty()) {
+			uiModel.addAttribute("apMessage", "Vous avez deja une caisse ouverte veuillez la fermer avant . !  ");
+			return "caisses/infos";
+
+		}else {
+			caisse = new Caisse(pharmaUser) ;
+		}
+
+		uiModel.addAttribute("caisse", caisse);
+		addDateTimeFormatPatterns(uiModel);
+		return "caisses/create";
+	}
+
+	@RequestMapping(value = "/fermerCaisse", method = RequestMethod.GET)
+	public String fermerCaisse(Model uiModel, HttpServletRequest httpServletRequest) {
+		List<Caisse> list = Caisse.findCaissesByCaisseOuverteAndCaissier(Boolean.TRUE, SecurityUtil.getPharmaUser()).getResultList();
+		Caisse caisse = null;
+		if (!list.isEmpty()) {
+			caisse = list.iterator().next();
+			caisse.setCaisseOuverte(Boolean.FALSE);
+			caisse.setDateFemeture(new Date()) ;
+			caisse.setFermerPar(SecurityUtil.getPharmaUser());
+			Caisse merge = (Caisse) caisse.merge() ;
+			addDateTimeFormatPatterns(uiModel);
+			uiModel.addAttribute("caisse",merge);
+			uiModel.addAttribute("itemId", merge.getId());
+			uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
+			return "caisses/infos";
+
+		}else {
+			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte veuillez en ouvrir une ! ");
+
+			return "caisses/infos";
+
+
+		}
+
+	}
+
+	@RequestMapping(value = "/fermerCaisse/{caisseId}", method = RequestMethod.GET)
+	public String fermerCaisseById(@PathVariable("caisseId")  Long caisseId , Model uiModel, HttpServletRequest httpServletRequest) {
+		Caisse caisse = Caisse.findCaisse(caisseId);
+		caisse.setCaisseOuverte(Boolean.FALSE);
+		caisse.setDateFemeture(new Date()) ;
+		caisse.setFermerPar(SecurityUtil.getPharmaUser());
+		Caisse merge = (Caisse) caisse.merge() ;
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("caisse",merge);
+		uiModel.addAttribute("itemId", merge.getId());
+		uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
+		return "caisses/show";		
+
+	}
+	
+	@RequestMapping(params = { "find=ByEtatCaisse", "form" }, method = RequestMethod.GET)
+	public String ByEtatCaisseForm(Model uiModel) {
+		ProcessHelper.addDateTimeFormatPatterns(uiModel);
+		return "caisses/ByEtatCaisse";
+	}
+	
+	@RequestMapping(params = "find=ByEtatCaisse", method = RequestMethod.GET)
+	public String ByEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
+		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList();
+		if (caisses.isEmpty()) {
+			uiModel.addAttribute("appMessage", "aucun etat trouve !");
+			ProcessHelper.addDateTimeFormatPatterns(uiModel);
+			return "caisses/ByEtatCaisse";
+		}else {
+			uiModel.addAttribute("caisses", caisses);
+			uiModel.addAttribute("periode",PharmaDateUtil.format(minDateOuverture, "dd-MM-yyyy HH:mm")+" Au "+ PharmaDateUtil.format(maxDateOuverture, "dd-MM-yyyy HH:mm"));
+			return "bordereauCaissePdfDocView";
+		}
+	}
+
+
+
+	// imprime les bordereaux de Caisse 
+	@RequestMapping("/{caisseId}/print/{caisseNumber}.pdf")
+	public String print(@PathVariable("caisseId")Long caisseId, Model uiModel){
+		Caisse caisse = Caisse.findCaisse(caisseId);
+		if (caisse!=null) {
+			uiModel.addAttribute("caisse", caisse);
+			return "bordereauCaissePdfDocView";
+		}else {
+			uiModel.addAttribute("apMessage", "un problem est survenu pendant l'operation veuillez contacter ADORSYS  ! ");
+			return "caisses/infos";
+		}
+
+
+	}
+	
+	@ModelAttribute("pharmausers")
+    public Collection<PharmaUser> populatePharmaUsers() {
+	PharmaUser pharmaUser =	new PharmaUser();
+	pharmaUser.setGender(Genre.Neutre);
+	pharmaUser.setFirstName("ALL");
+	pharmaUser.setLastName("USERS");
+	pharmaUser.setId(new Long(0));
+	 Collection<PharmaUser> pharmaUsers =	new ArrayList<PharmaUser>();
+	   pharmaUsers.add(pharmaUser);
+	   pharmaUsers.addAll(PharmaUser.findAllPharmaUsers());
+        return pharmaUsers;
+    }
+
+	@ModelAttribute("caisses")
+	public Collection<Caisse> populateCaisses() {
+		return new ArrayList<Caisse>();
+	}
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="facturation" name="factures/list">
+        <put-attribute name="body" value="/WEB-INF/views/factures/list.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/show">
+        <put-attribute name="body" value="/WEB-INF/views/factures/show.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/create">
+        <put-attribute name="body" value="/WEB-INF/views/factures/create.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/update">
+        <put-attribute name="body" value="/WEB-INF/views/factures/update.jspx"/>
+    </definition>
+ <definition extends="facturation" name="factures/search">
+        <put-attribute name="body" value="/WEB-INF/views/factures/search.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByCommande">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByCommande.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByCaisseAndEncaisserNot">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByCaisseAndEncaisserNot.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByFactureNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByFactureNumberEquals.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByVendeurAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByVendeurAndDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="facturation" name="factures/findFacturesByClientAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesByClientAndDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="default" name="factures/findFacturesBySolderNot">
+        <put-attribute name="body" value="/WEB-INF/views/factures/findFacturesBySolderNot.jspx"/>
+    </definition>
+</tiles-definitions>

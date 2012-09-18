@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_Approvisionement" modelAttribute="approvisionement" path="/approvisionements" render="${empty dependencies}" z="9jayUBwhOnlOfMY9veRsT29beFo=">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Approvisionement_footPrint" render="false" z="user-managed"/>
+                    <field:input field="approvisionementNumber" id="c_org_adorsys_adpharma_domain_Approvisionement_approvisionementNumber" render="false" z="user-managed"/>
+                    <field:input field="bordereauNumber"  id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" required="true" z="VqUolVYHLRQBzTeiXXePY0sVfek="/>
+                    <field:select field="founisseur" id="c_org_adorsys_adpharma_domain_Approvisionement_founisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="nyTC0NH/LjANknw3u0vQf0mwIk8="/>
+                    <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Approvisionement_magasin" itemValue="id" items="${sites}" path="/sites" z="YDh4ZffXiBxcRPJgS2njDh4Uitc="/>
+                    <field:datetime dateTimePattern="${approvisionement_datecommande_date_format}" field="dateCommande" id="c_org_adorsys_adpharma_domain_Approvisionement_dateCommande" z="F7eGHPUr0qlsBWtvTZHpTQY7emk="/>
+                    <field:datetime dateTimePattern="${approvisionement_datebordereau_date_format}" field="dateBordereau" id="c_org_adorsys_adpharma_domain_Approvisionement_dateBordereau" z="9/hLkZ51lvHhPluL4T2ziefApWw="/>
+                    <field:datetime dateTimePattern="${approvisionement_datelivraison_date_format}" field="dateLivraison" id="c_org_adorsys_adpharma_domain_Approvisionement_dateLivraison" required="true" z="user-managed"/>
+                    <field:select field="devise" id="c_org_adorsys_adpharma_domain_Approvisionement_devise" itemValue="id" items="${devises}" path="/devises" z="N5FijHNpekTqYZ3ShB86aXIHaeU="/>
+                </td>
+                <td class="tbcreate">
+                    <field:datetime dateTimePattern="${approvisionement_datereglement_date_format}" field="dateReglement" id="c_org_adorsys_adpharma_domain_Approvisionement_dateReglement" render="false" z="user-managed"/>
+                    <field:input field="montantHt" id="c_org_adorsys_adpharma_domain_Approvisionement_montantHt" required="true" validationMessageCode="field_invalid_number" z="EQ7/DDOa5p8daI2YWb7x8diKgXU="/>
+                    <field:input field="montantTtc" id="c_org_adorsys_adpharma_domain_Approvisionement_montantTtc" validationMessageCode="field_invalid_number" z="K9DZpKNqywu7QpG6zNV8if60F5w="/>
+                    <field:input field="montantRemise" id="c_org_adorsys_adpharma_domain_Approvisionement_montantRemise" validationMessageCode="field_invalid_number" z="8Vv5gntSWbzdmlveEBndxOBQocE="/>
+                    <field:input field="montantNap" id="c_org_adorsys_adpharma_domain_Approvisionement_montantNap" validationMessageCode="field_invalid_number" z="83qxTLDj8bfNPyNlzE1F4M+qx4Q="/>
+                    <field:datetime dateTimePattern="${approvisionement_datecreation_date_format}" field="dateCreation" id="c_org_adorsys_adpharma_domain_Approvisionement_dateCreation" render="false" z="user-managed"/>
+                    <field:checkbox field="urgence" id="c_org_adorsys_adpharma_domain_Approvisionement_urgence" render="false" z="user-managed"/>
+                    <field:simple field="ligneApprivisionement" id="c_org_adorsys_adpharma_domain_Approvisionement_ligneApprivisionement" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Approvisionement" render="false" z="user-managed"/>
+                    <field:checkbox field="cloturer" id="c_org_adorsys_adpharma_domain_Approvisionement_cloturer" render="false" z="user-managed"/>
+                </td>
+            </tr>
+        </table>
+        <field:select field="etat" id="c_org_adorsys_adpharma_domain_Approvisionement_etat" items="${etats}" path="etats" render="false" z="user-managed"/>
+        <field:select field="agentCreateur" id="c_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" itemValue="id" items="${pharmausers}" path="/pharmausers" render="false" z="user-managed"/>
+        <field:select field="commande" id="c_org_adorsys_adpharma_domain_Approvisionement_commande" itemValue="id" items="${commandefournisseurs}" path="/commandefournisseurs" render="false" z="user-managed"/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_Approvisionement_montant" validationMessageCode="field_invalid_number" z="7+LaV7JMlowBJF3Vtx3dMiCQplo="/>
+        <field:input field="filiale" id="c_org_adorsys_adpharma_domain_Approvisionement_filiale" z="kwThw2pEIUzTAYpRswZZA5fnkfE="/>
+        <field:select field="filiales" id="c_org_adorsys_adpharma_domain_Approvisionement_filiales" itemValue="id" items="${filiales}" path="/filiales" z="3R6ZvF7a8X7vOPmRjiPpzyaD/a4="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Approvisionement" render="${not empty dependencies}" z="LPI4PXUGeq+wjGjSKh/AmsTeGlU="/>
+</div>

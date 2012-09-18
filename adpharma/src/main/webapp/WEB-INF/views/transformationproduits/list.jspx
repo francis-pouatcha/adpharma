@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_TransformationProduit" items="${transformationproduits}" z="9rpeaC6CmrsTspwji3FipxkDEyM=">
+        <table:table data="${transformationproduits}" delete="false" id="l_org_adorsys_adpharma_domain_TransformationProduit" path="/transformationproduits" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitOrigine" maxLength="-1" property="produitOrigine" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitCible" maxLength="-1" property="produitCible" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" property="qteCible" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" property="prixVente" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" property="actif" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_origineId" property="origineId" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" property="origineName" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleId" property="cibleId" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" property="cibleName" render="false" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

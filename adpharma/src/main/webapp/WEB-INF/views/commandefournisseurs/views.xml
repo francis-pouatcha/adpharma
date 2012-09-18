@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="stocker" name="commandefournisseurs/list">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/list.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/show">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/show.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/create">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/create.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/update">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/update.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/findCommandeFournisseursByDateCreationBetweenAndEtatCmd">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByDateCreationBetweenAndEtatCmd.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/findCommandeFournisseursByEtatCmdOrDateLimiteLivraisonBetween">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByEtatCmdOrDateLimiteLivraisonBetween.jspx"/>
+    </definition>
+<definition extends="stocker" name="commandefournisseurs/findCommandeFournisseursByFournisseurAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByFournisseurAndDateCreationBetween.jspx"/>
+    </definition>
+
+
+<definition extends="stocker" name="commandefournisseurs/findCommandeFournisseursByCmdNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByCmdNumberEquals.jspx"/>
+    </definition>
+    
+    <definition extends="stocker" name="commandefournisseurs/search">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/search.jspx"/>
+    </definition>
+  
+  
+<definition extends="stocker" name="commandefournisseurs/findCommandeFournisseursByDateLimiteLivraisonBetween">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByDateLimiteLivraisonBetween.jspx"/>
+    </definition>
+<definition extends="default" name="commandefournisseurs/findCommandeFournisseursByLivreNot">
+        <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/findCommandeFournisseursByLivreNot.jspx"/>
+    </definition>
+</tiles-definitions>

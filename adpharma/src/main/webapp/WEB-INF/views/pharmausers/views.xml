@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="admin" name="pharmausers/list">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/list.jspx"/>
+    </definition>
+<definition extends="admin" name="pharmausers/show">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/show.jspx"/>
+    </definition>
+<definition extends="admin" name="pharmausers/create">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/create.jspx"/>
+    </definition>
+<definition extends="admin" name="pharmausers/update">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/update.jspx"/>
+    </definition>
+<definition extends="admin" name="pharmausers/findPharmaUsersByUserNameEquals">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/findPharmaUsersByUserNameEquals.jspx"/>
+    </definition>
+<definition extends="admin" name="pharmausers/findPharmaUsersByUserNameLike">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/findPharmaUsersByUserNameLike.jspx"/>
+    </definition>
+<definition extends="default" name="pharmausers/findPharmaUsersBySaleKeyEquals">
+        <put-attribute name="body" value="/WEB-INF/views/pharmausers/findPharmaUsersBySaleKeyEquals.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:formsp="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_EtatCredits" modelAttribute="etatCredits" path="/etatcreditses" versionField="Version" z="xqilbDZ9wuqOaDQhWt4qO0+LAfM=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" render="false" z="user-managed"/>
+        <field:input disabled="true" field="etatNumber" id="c_org_adorsys_adpharma_domain_EtatCredits_etatNumber" z="user-managed"/>
+        <field:select field="client" id="c_org_adorsys_adpharma_domain_EtatCredits_client" itemValue="id" items="${clients}" path="/clients" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${etatCredits_dateedition_date_format}" disabled="true" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" z="user-managed"/>
+        <field:datetime dateTimePattern="${etatCredits_datepaiement_date_format}" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" z="88xZcNjqN7QKHAHasyHEDgdFfPk="/>
+        <formsp:hidden path="montantInitial"/>
+        <formsp:hidden path="avance"/>
+        <formsp:hidden path="reste"/>
+        <formsp:hidden path="montantAvoir"/>
+        <formsp:hidden path="solder"/>
+        <formsp:hidden path="annuler"/>
+        <formsp:hidden path="consommerAvoir"/>
+        <formsp:hidden path="encaisser"/>
+        <field:input field="listeDettes" id="c_org_adorsys_adpharma_domain_EtatCredits_listeDettes" render="false" z="user-managed"/>
+        <field:input field="clientId" id="c_org_adorsys_adpharma_domain_EtatCredits_clientId" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
+        <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName" render="false" z="user-managed"/>
+        <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_EtatCredits_solder" render="false" z="user-managed"/>
+        <field:input field="montantInitial" id="c_org_adorsys_adpharma_domain_EtatCredits_montantInitial" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="avance" id="c_org_adorsys_adpharma_domain_EtatCredits_avance" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="reste" id="c_org_adorsys_adpharma_domain_EtatCredits_reste" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="montantAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_EtatCredits_annuler" render="false" z="user-managed"/>
+        <field:checkbox field="consommerAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" render="false" z="user-managed"/>
+        <field:input field="agent" id="c_org_adorsys_adpharma_domain_EtatCredits_agent" render="false" z="user-managed"/>
+        <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser" render="false" z="user-managed"/>
+    </form:update>
+</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+       <form:custumcreate id="fc_org_adorsys_adpharma_domain_Inventaire" modelAttribute="printBareCodeBean" path="/approvisionementprocess/printBareCode.pdf" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
+           <field:input field="cmdNumber" label="Code Appr" render="false" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
+           <field:checkbox field="printAll" label="Imprimer Tout ?" render="false" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy"  z="user-managed"/>
+          <field:input field="bareCode" label="Code Bare" required="true" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
+           <field:input field="nombre" label="nombre" required="true" min="1" id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" z="user-managed"/>
+           <field:input field="emptyLine"   id="c_org_adorsys_adpharma_domain_Inventaire_rayon" label="Nb Line Vide"  z="user-managed"/>
+         <field:input field="emptyColumn"  id="c_org_adorsys_adpharma_domain_Inventaire_filiale" label="Nb Colonne Vide"  z="user-managed"/>
+         </form:custumcreate>
+       
+       
+      
+</div>
+
+ 
+
+
+ 

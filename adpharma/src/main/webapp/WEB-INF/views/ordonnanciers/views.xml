@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="configuration" name="ordonnanciers/list">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/list.jspx"/>
+    </definition>
+<definition extends="configuration" name="ordonnanciers/show">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/show.jspx"/>
+    </definition>
+<definition extends="configuration" name="ordonnanciers/create">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/create.jspx"/>
+    </definition>
+<definition extends="configuration" name="ordonnanciers/update">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/update.jspx"/>
+    </definition>
+<definition extends="configuration" name="ordonnanciers/findOrdonnanciersByCommande">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/findOrdonnanciersByCommande.jspx"/>
+    </definition>
+<definition extends="default" name="ordonnanciers/findOrdonnanciersByOrdNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/ordonnanciers/findOrdonnanciersByOrdNumberEquals.jspx"/>
+    </definition>
+</tiles-definitions>

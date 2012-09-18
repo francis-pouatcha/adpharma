@@ -1,0 +1,28 @@
+<div xmlns:spring="http://www.springframework.org/tags" 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+   <util:panel id="title" title="Message D'Information">
+  <div style="overflow-y: scroll; height: 300px; ">
+ <center style="text-transform:none;">
+ 
+ <c:if test="${not empty apMessage}">
+		<hr/>
+			<p  style="color: green; margin-bottom: 1px;">${apMessage}</p>
+		<hr/>
+		
+</c:if>
+	
+  <c:if test="${not empty appMessages}">
+		<hr/>
+		<c:forEach var="appMessage" items="${appMessages}">
+			<p   style="color: green;">${appMessage}</p>
+		</c:forEach> 
+				<hr/>
+		
+	</c:if>
+</center>
+ </div>
+  </util:panel>
+
+</div>

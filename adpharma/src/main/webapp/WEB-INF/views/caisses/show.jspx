@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <c:if test="${not empty apMessage}">
+        <center style="text-transform: uppercase;">
+            <hr/>
+            <p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
+            <hr/>
+        </center>
+    </c:if>
+    <page:show1 clientLinks="showLink.jspx" create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Caisse" object="${caisse}" path="/caisses" update="false" z="user-managed">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:display field="caisseNumber" id="s_org_adorsys_adpharma_domain_Caisse_caisseNumber" object="${caisse}" z="2Tmmjo4v0TTky3gj9JwxOe3gaBw="/>
+                    <field:display field="caissier" id="s_org_adorsys_adpharma_domain_Caisse_caissier" object="${caisse}" z="rhqBpNb7eUBeLERPeytFhPFqelk="/>
+                    <field:display field="site" id="s_org_adorsys_adpharma_domain_Caisse_site" object="${caisse}" z="r1/k8jLeipRZRdXUePW/1AsO8Qc="/>
+                    <field:display field="caisseOuverte" id="s_org_adorsys_adpharma_domain_Caisse_caisseOuverte" object="${caisse}" z="VDvBpDtUFu4mNQiF9rvRNLJrOb0="/>
+                    <field:display date="true" dateTimePattern="${caisse_dateouverture_date_format}" field="dateOuverture" id="s_org_adorsys_adpharma_domain_Caisse_dateOuverture" object="${caisse}" z="ZPNqgfd7oh2OYJfxgK9elhkyKhU="/>
+                    <field:display date="true" dateTimePattern="${caisse_datefemeture_date_format}" field="dateFemeture" id="s_org_adorsys_adpharma_domain_Caisse_dateFemeture" object="${caisse}" z="user-managed"/>
+                    <field:display field="fermerPar" id="s_org_adorsys_adpharma_domain_Caisse_fermerPar" object="${caisse}" z="NFc+yd9Cb4Q4CpY+c9h++uBxRbo="/>
+                    <field:display field="fondCaisse" id="s_org_adorsys_adpharma_domain_Caisse_fondCaisse" object="${caisse}" z="iE5tc2AYq+YMt6n0GTcCarTd2dE="/>
+                </td>
+                <td class="tbcreate">
+                    <field:display field="totalEncaissement" id="s_org_adorsys_adpharma_domain_Caisse_totalEncaissement" object="${caisse}" z="V+m7cXVuVcIyUCjPQr0ADzTUb7s="/>
+                    <field:display field="totalRetrait" id="s_org_adorsys_adpharma_domain_Caisse_totalRetrait" object="${caisse}" z="w9kl0tZOX9TXbLPw5v4dZ1K9CNQ="/>
+                    <field:display field="totalCash" id="s_org_adorsys_adpharma_domain_Caisse_totalCash" object="${caisse}" z="AsKI5HZEji8mzjLcLRCfDHv3XBw="/>
+                    <field:display field="totalCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" object="${caisse}" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
+                    <field:display field="totalCheque" id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" object="${caisse}" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
+                    <field:display field="totalProformat" id="s_org_adorsys_adpharma_domain_Caisse_totalProformat" object="${caisse}" render="false" z="user-managed"/>
+                    <field:display field="totalCarteCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCarteCredit" object="${caisse}" z="w0dT6k/utjPcrqB+C65tnwsM0yA="/>
+                    <field:display field="totalBonClient" id="s_org_adorsys_adpharma_domain_Caisse_totalBonClient" object="${caisse}" z="F2++MQ4grpX3UuLC0Qm9gZpMeMA="/>
+                <field:display field="totalVentePartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalVentePartiel" object="${caisse}" render="false" z="user-managed"/>
+        <field:display field="totalBonCmd" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmd" object="${caisse}" z="oQ8CEYL0Lj6weK3HOycLO48a/s8="/>
+        <field:display field="totalBonCmdPartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" object="${caisse}" z="lAhhyj6dRSRLs+65iLaUvRmqC9M="/>
+   
+                </td>
+            </tr>
+        </table>
+        </page:show1>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Caisse_footPrint" object="${caisse}" z="ZSMk3lzy8yzmlxcZTYgo/2kynbU="/>
+    <HR style="margin-top: -12px;"/>
+</div>

@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:formsp="http://www.springframework.org/tags/form" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+		xmlns:springform="http://www.springframework.org/tags/form" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 version="2.0" style="margin-top: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	  
+	<spring:url value="/paiementprocess/encaisser?form"  var="edit_url" />
+		<spring:url value="/paiementprocess/editPaiement"  var="find_facture_url" />
+		<c:choose>
+		 <c:when test="${empty paiementProcess.factureSelected}">
+		 				<spring:url value="/paiementprocess/factureSuivante/0"  var="next_facture_url"/>
+		 
+		 </c:when>
+		 <c:otherwise>
+		 				<spring:url value="/paiementprocess/factureSuivante/${paiementProcess.factureSelected.id}"  var="next_facture_url"/>
+		 
+		 </c:otherwise>
+		</c:choose>
+	
+						<spring:url value="/avoirclients/findByNumberAjax"  var="find_bon_url"/>
+		
+	    <spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"  var="find_add_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"  var="find_upd_url" />
+	<spring:url value="/paiementprocess/encaisser/${paiementProcess.factureSelected.id}"  var="encaisser_url" />
+	<spring:url value="/paiementprocess/findFactureByFactureNumber"  var="findInvoice_url" />
+        <spring:url value="/paiements/findMyPaiements"  var="mypaiements_url"/>
+
+			<spring:url value="/resources/images/annuler.png"  var="annuler" />
+			<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
+	<div style="margin-bottom: 10px; font-weight: bold;">
+		<span class="firstTab selectedTab"><a href="${ edit_url}"> ENCAISSER</a></span>
+		<span class="nextTab unselectedTab">
+		
+		<a  href="${ find_facture_url}">RECHERCHE FACTURES</a>
+		</span>
+	<SPAN><a style="padding-left: 25px; text-decoration: none; " href="${ next_facture_url}"> <INPUT class="submits" type="button" value="Ticket Suivant" title="Encaisser La Facture Suivante" /></a></SPAN>
+		<c:if test="${ not empty paiementProcess.factureSelected }">
+        <spring:url value="/paiementprocess/annulFacture/${paiementProcess.factureSelected.commande.id}"  var="annuler_facture_url"/>
+		
+		<SPAN><a style="padding-left: 20px; text-decoration: none; " href="${ annuler_facture_url}"> <INPUT class="submits" type="button" value="Annuler La Facture " title="Annuler La Facture " /></a></SPAN>
+	</c:if>
+			<SPAN><a style="padding-left: 20px; text-decoration: none; " href="${ mypaiements_url}"> <INPUT class="submits" style="color: black;" type="button" value="Mes Tickets " title="Lister Mes Tickets " /></a></SPAN>
+	
+		</div>
+		      <spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf"  var="print_ticket" />
+		
+ <script type="text/javascript">
+  
+ 
+ 
+ function calculeReste1()
+ {
+	 var montant = document.getElementById("montant").value ;
+	 var recue = document.getElementById("sommeRecue").value ;
+if (montant == "") {
+	alert("saisir le montant du paiement !");
+	
+}
+else{
+	if (recue == "") {
+		$("#difference").val(0);
+		
+	}
+	else{
+		var diff = recue - montant ;
+		//diff = diff >= 0?diff : 0 ;
+		$("#difference").val(diff);
+
+		
+	}
+	
+	
+}
+ 
+	 
+ }
+ 
+ 
+ function calculeReste2()
+ {
+	 var montant = document.getElementById("montant").value ;
+	 var recue = document.getElementById("sommeRecue").value ;
+	 var  montantBon	= $("#montantBon").val();
+
+if (montant == "") {
+	alert("saisir le montant du paiement !");
+	
+}
+else{
+	if (recue == "") {
+		$("#difference").val(0);
+		
+	}
+	else{
+		recue = parseInt(recue);
+		montantBon = parseInt(montantBon);
+		var diff = recue + montantBon - montant ;
+		$("#difference").val(diff);
+        
+		
+	}
+	
+	
+}
+ 
+	 
+ }
+ function calculeReste()
+ {
+	 var test =	$('#typePaiement :selected').text();
+		if(test == 'BON_AVOIR_CLIENT'){
+			calculeReste2();
+		}else{
+			calculeReste1();
+		}
+ 
+	 
+ }
+ 
+ 
+ function validerEncais()
+ {
+	 
+	 var test =	$('#typePaiement :selected').text();
+	 var compenser =	$('#compenser').val();
+		if(test == 'BON_AVOIR_CLIENT'){
+		return	verif_formulaire2();
+		}else{
+		 return	verif_formulaire();
+		}
+	 
+ }
+ 
+
+ 
+function codeTouche(evenement)
+{
+        for (prop in evenement)
+        {
+                if(prop == 'which') return(evenement.which);
+        }
+        return(evenement.keyCode);
+}
+
+function compenser()
+{
+	var som = $('#sommeRecue').val();
+        if(som == "") $('#compenser').val(false);
+        if(som != "") $('#compenser').val(true);
+}
+
+function scanTouche(evenement)
+{
+        var reCarValides = /\d/;
+        var reCarSpeciaux = /[\x00\x08\x0D]/;
+        var codeDecimal  = codeTouche(evenement);
+        var car = String.fromCharCode(codeDecimal);
+        var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
+      
+        return autorisation;
+}
+
+
+function verif_formulaire()
+{
+	 var modep =	$('#typePaiement :selected').text();
+	 var diffs = $("#difference").val() ;
+	 var montant = document.getElementById("montant").value ;
+	 var recue = document.getElementById("sommeRecue").value ;
+	 recue = recue!=""?recue:0 ; 
+	 test = recue - montant ;
+	 if(document.formulaire.sommeRecue.value == "") {
+		   alert("saisir la somme recue !");
+		   return false;
+		  }
+	if(document.formulaire.difference.value == "") {
+		   alert("Veuillez calculer la  difference !");
+		   return false;
+		  }
+	
+	if(0 > test) {
+		if(modep == 'CREDIT'){
+			return true ;
+		}else{
+			 alert("la somme saisie doit etre superieur au montant !");
+			   $("#sommeRecue").focus() ;
+			return false;
+		}
+		  
+		  }
+	diffs = diffs!=""?diffs:0 ; 
+	 $("#difference").val(diffs);
+	 return true ;
+}
+
+function verif_formulaire2()
+{
+	var diffs = $("#difference").val() ;
+	 var  montantBon	= $("#montantBon").val();
+	 var compenser = $("#compenser").val() ;
+	 var montant = $("#montant").value ;
+	 var recue = document.getElementById("sommeRecue").value ;
+	 recue = recue!=""?recue:0 ; 
+	 recue = parseInt(recue);
+	 montantBon = parseInt(montantBon);
+	 diff = recue + montantBon - montant ;
+	 if(compenser == 'true') {
+		   return verif_formulaire();
+	 }else{
+		 if(0 > diff) {
+			   alert("Somme Recue Incorrect !");
+			   $("#sommeRecue").focus() ;
+			   return false;
+			  }
+
+		 
+	 }
+	 diffs = diffs!=""?diffs:0 ; 
+	 $("#difference").val(diffs);
+  return true ;
+}
+
+
+function clearBonDiv()
+{
+	$('#numeroBon').val("");
+	$('#montantBon').val("");
+
+}
+
+$(function(){
+	//if('${paiement.id}'!= '')  window.location = '${print_ticket}' ;
+	// Dialog			
+	$('#findbon').dialog({
+		open:function(){
+			$('#numero').val("");
+        	$('#valeurBon').val("");
+        		},
+		autoOpen: false,
+		width: 400,
+		title:"Information du Bon Avoir",
+		resizable:false,
+		draggable :true,
+		modal:true ,
+         hide:'slide',
+         show:'slide',
+         position:'center',
+		buttons: {
+			"OK": function() { 
+				$.get( '${find_bon_url}',
+						$('#findbonForm').serialize(),
+			                function(data){
+					        if(data != 'ok'){
+					       $('#infos').html(data);
+					       $('#infos').show();
+					        }else{
+					        var valbon =	parseInt($('#valeurBon').val());
+					        var montant =	parseInt($('#montant').val());
+					        var reste = valbon - montant;
+					        	$('#infos').hide();
+					        	$('#numeroBon').val($('#numero').val());
+					        	$('#montantBon').val($('#valeurBon').val());
+					        	 $('#bondiv').show();
+					        	 $('#findbon').dialog("close");
+					        	 var compenser =	$('#compenser').val(); 
+					        	 if(compenser == 'false'){
+					        	 if(reste > 0){
+					        		 $('#payInfos').html("SOLDE BON : "+reste+" FCFA ;");
+					        		 
+					        	 }else{
+					        		 reste = reste * (-1);
+					        		 $('#payInfos').html("RESTE A PAYER : "+reste+" FCFA ;"); 
+					        	 }
+					        	 }
+					        	 $('#payInfos').show();
+					        }
+					         
+							});
+			},
+			"Annuler": function() { 
+				var monSelect = document.getElementById('typePaiement');
+				monSelect.selectedIndex = 0;
+				clearBonDiv();
+				 $('#payInfos').html("");
+				 $('#payInfos').hide();
+				$(this).dialog("close"); 
+			}  
+		}
+	});
+	
+	
+	
+	$('#typePaiement').change(function(){
+	var test =	$('#typePaiement :selected').text();
+	if(test == 'BON_AVOIR_CLIENT'){
+		compenser();
+		$('#findbon').dialog('open');
+		$('#numero').focus();
+		$('#payInfos').html("");
+		 $('#payInfos').hide();
+		
+	}else{
+		calculeReste1();
+		clearBonDiv();
+		$('#bondiv').hide();
+		compenser();
+		$('#payInfos').html("");
+		 $('#payInfos').hide();
+	}
+		return false;
+	});
+	
+	
+});
+
+
+
+
+</script>	
+     	
+ 
+    	<!-- recherche de produit par code identification -->
+    	
+    
+    	
+  
+
+
+     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+ <util:panel title="encaisser paiement facture No : ${paiementProcess.factureSelected.factureNumber }"  id="upline">
+   <div style="overflow-y: scroll; height: 500px;">
+ 
+		<form action="${findInvoice_url}" method="post">
+		     <table style="margin-bottom: 10px;">
+		    	<tr>
+		    		<th style="text-align: center;">FACTURE No</th>
+		    		<th style="text-align: center;">FACTURE LE</th>
+		    		 <th style="text-align: center;">COMMANDE No</th>
+		    		<th style="text-align: center;">TYPE VENTE</th>
+		    	   <th style="text-align: center;">NET A PAYER</th>
+		    	   <th  style="text-align: center;">REMISE</th>
+		    				    		<th  style="text-align: center;">AVANCE</th>
+		    				    		<th  style="text-align: center;">RESTE</th>
+		    	   		    		<th  style="text-align: center;">VENDEUR</th>
+		    		
+		    	</tr>
+		    		<tr>
+		    			<td style="text-align: center; width: 20px;">
+		    			<INPUT type="text" name="invoiceNumber" id="invoiceNumber" style="text-align: center; color: blue; font: bold; width: 120px;" onkeypress="return scanTouche(event);" maxlength="8" autofocus="autofocus" value="${paiementProcess.factureSelected.factureNumber}"  />
+		    			</td>
+		    			<td style="text-align: center;">
+		    				<fmt:formatDate value="${paiementProcess.factureSelected. dateCreation}" pattern="dd-MM-yyyy HH:mm" />
+		    			</td>
+		    			<td style="text-align: center;">
+		    				<c:out value="${paiementProcess.factureSelected.commande.cmdNumber}"></c:out>
+		    			</td>
+		    			<td style="text-align: center;" width="150px;">
+		    				<c:out value="${paiementProcess.factureSelected.typeCommande}"></c:out>
+		    			</td>
+		    			<td style="text-align: center;">
+		    		<fmt:formatNumber value="${paiementProcess.factureSelected.netPayer}" />
+		    			
+		    			</td>
+		    			<td style="text-align: center;">
+		    			<fmt:formatNumber value="${paiementProcess.factureSelected.montantRemise}" />	
+		    			</td>
+		    			<td style="text-align: center; color: blue; font: bold;">
+		    				<fmt:formatNumber value="${paiementProcess.factureSelected.avance}" />	
+		    			</td>
+		    			<td style="text-align: center; color: green; font: bold;">
+		    				<c:out value="${paiementProcess.factureSelected.reste}"></c:out>
+		    			</td>
+		    			<td style="text-align: center; color: red;">
+		    				<c:out value="${paiementProcess.factureSelected.vendeur}"></c:out>
+		    			</td>
+		    			
+		    		</tr>
+		    </table>	  
+		 </form>     		  
+		     <c:if test="${not empty apMessage}">
+		<hr/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+	</center>
+			<hr/>
+	
+	</c:if>
+		     <c:if test="${paiementProcess.showPostForm }">
+		   <!--  formulaire de paiement --> 
+ <springform:form id="courseForm" name="formulaire" method="POST"  action="${encaisser_url }" onSubmit="return validerEncais()"  modelAttribute="paiement">
+   <table class="tblog">
+            <tr>
+                <td class="tbcreate" valign="top" align="left"> 
+                <springform:hidden id="compenser" path="compenser" />
+               <field:select field="quiPaye" id="c_org_adorsys_adpharma_domain_Paiement_quiPaye" items="${quipayes}" path="quipayes" z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q="/>
+                 
+                  <div>
+      <label  style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_typePaiement">Mode Paiement : </label>
+      <springform:select  id="typePaiement" cssStyle=" width: 212px; height: 25px;" path="typePaiement"  items="${typepaiements}"/>                 
+       </div> 
+       <BR />  
+       <div id="bondiv" style="display: none;">
+         <div>
+      <label  style="font-weight: bold; font-size: 15px; text-transform: uppercase;" for="_numeroBon">Numero du Bon : </label>
+       <springform:input path="numeroBon" id="numeroBon" readonly="true"  cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 30px; height: 31px;" />   
+                  <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
+       </div>
+       <BR />
+          <div>
+      <label  style="font-weight: bold; font-size: 15px; text-transform: uppercase;" for="_montantBon">Montant du Bon : </label>
+       <springform:input path="montantBon" id="montantBon"  readonly="true" cssStyle="color:green ; width: 212px;font-weight: bold; font-size: 30px; height: 31px;" />   
+                  <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
+       </div> 
+         <BR />
+             </div>
+        <div>
+      <label  style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_montant">Montant : </label>
+       <springform:input path="montant" id="montant" readonly="true" onKeyPress="return scanTouche(event)" maxlength="8" cssStyle="color:blue ; width: 212px;font-weight: bold; font-size: 40px; height: 50px;" />   
+                  <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
+       </div>   
+      
+ <BR />
+
+ <div>
+      <label style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_sommeRecue">Somme Recue : </label>
+       <springform:input path="sommeRecue" onKeyPress="return scanTouche(event)" onkeyup="calculeReste()" onfocus="true"  id="sommeRecue" cssStyle=" width: 212px;font-weight: bold; font-size: 40px;  height: 50px;" />   
+		     		  <b id="diff" style="color: red; margin-left: 20px;"> <c:out value="${msgSommeRecue}" ></c:out></b> 
+
+</div>   
+ <BR /> 
+ 
+ <div>
+      <label  style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_difference">Difference : </label>
+       <springform:input path="difference" id="difference" cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;"  readonly="true"/>        
+         
+</div> 
+ 
+ <BR /> 
+ <div>
+<input type="submit" value="Encaisser" class="submits"   />
+</div>
+   </td>
+ 
+       <td valign="top"  class="tbcreate"> 
+      <DIV style="overflow: auto; height: 180px;">
+  
+        
+        <table:table create="false" delete="false" show="false"  update="false" data="${paiementProcess.factureSelected.lineFacture}" id="l_org_adorsys_adpharma_domain_LigneFacture" path="/lignefactures" z="/7PkHTpEf5uSGfxuxSbd6lcD3eg=">
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_cipM" property="cipM" z="hrj3318GceJ5wqDWSgoAQ499GcY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_designation" maxLength="-1" property="designation" z="xKU2BgeOgHByxWhByyq6SiyEE10="/>
+            <table:column label="PU" id="c_org_adorsys_adpharma_domain_LigneFacture_prixUnitaire" property="prixUnitaire" z="Zf/52DswViJJGV/pCTfjMUCtyvE="/>
+            <table:column label="qte" id="c_org_adorsys_adpharma_domain_LigneFacture_qteAchete" property="qteAchete" z="tU0r/NDM7OfAdwiucogYby+2rT4="/>
+            <table:column label="PrixT" id="c_org_adorsys_adpharma_domain_LigneFacture_prixTotal" property="prixTotal" z="MVD9GxajZM5MNOp5W8dQQ4n7gCY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_remise" property="remise" z="MVD9GxajZM5MNOp5W8dQQ4n7gCY="/>
+        </table:table>
+        
+       </DIV>
+     <DIV>
+      <P id="payInfos" style=" font-size: 35px;color: green; font-weight: bold;display: none; "> 
+        
+     </P> 
+       <c:if test="${paiementProcess.factureSelected.commande.typeCommande eq 'VENTE_A_CREDIT' }">
+    <P> 
+            <span><b>TAUX DU BON :</b> <b style="color: green; font-size: 40px;"> ${paiementProcess.factureSelected.commande.tauxCouverture } % </b></span> <BR /><BR />
+        <span><b>CLIENT :</b>  ${paiementProcess.factureSelected.commande.client } </span> <BR /><BR />
+        <span> <b>PART CLIENT :</b> <fmt:formatNumber    value="${paiementProcess.detteclient}"  /> Fcfa
+        </span>
+    
+     </P>
+     
+     <P> 
+        <span><B>PAYEUR : </B>  ${paiementProcess.factureSelected.commande.clientPaiyeur }  </span> <BR /> <BR />
+        <span><B>PART PAYEUR :</B> <fmt:formatNumber  value="${paiementProcess.dettePayeur}"  /></span> Fcfa
+    
+     </P>
+   
+  </c:if>
+  </DIV> 
+                   
+     </td>
+            </tr>
+  </table>
+
+</springform:form>
+		     
+		     
+		     </c:if>
+		     
+		     
+		 <c:if test="${paiementProcess.showDetailForm }">
+	
+		  <page:show1 id="ps_org_adorsys_adpharma_domain_Paiement" clientLinks="showLink.jspx"  update="false" create="false" delete="false" list="false" label="Detail Paiement" object="${paiement}" path="/paiements" z="fyAeiwB2j9oF7Fya80SQjha1x/c=">
+         <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                        <field:display field="caisse" id="s_org_adorsys_adpharma_domain_Paiement_caisse" object="${paiement}" z="1zCsZ4MhzwN0Tg2l3/mVNd2qkoc="/>
+                        <field:display field="cassier" id="s_org_adorsys_adpharma_domain_Paiement_cassier" object="${paiement}" z="15UqF93F5HrhRCngq/tOllharUs="/>
+        <field:display field="paiementNumber"  id="s_org_adorsys_adpharma_domain_Paiement_paiementNumber" object="${paiement}" z="OYr7ppAFTBoPvkuAv8uREQ3FoqI="/>
+        <field:display date="true" dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="s_org_adorsys_adpharma_domain_Paiement_datePaiement" object="${paiement}" z="dQoxciaLzFXMvYzRddc4hN+xprI="/>
+        <field:display date="true" dateTimePattern="dd-MM-yyyy HH:mm" field="dateSaisie" id="s_org_adorsys_adpharma_domain_Paiement_dateSaisie" object="${paiement}" z="hX5GxAeQ0I7jeTkZqtukSWL5HDc="/>
+         <field:display field="informations" id="s_org_adorsys_adpharma_domain_Paiement_informations" object="${paiement}" z="J/k1XoC8q2mwQF43MkAsJHd8dCw="/>
+        
+         </td>
+                <td class="tbcreate"> 
+        <field:display field="facture" id="s_org_adorsys_adpharma_domain_Paiement_facture" object="${paiement}" z="nFbbpMPfCzCLNeREJ0l2kt0w1UU="/>
+        <field:display field="typePaiement" id="s_org_adorsys_adpharma_domain_Paiement_typePaiement" object="${paiement}" z="kZZuKGC+FADJuMZ8qnnMxAL0GDw="/>
+        <field:display field="montant" label="montant Paye" id="s_org_adorsys_adpharma_domain_Paiement_montant" object="${paiement}" z="3LPvtKnsGL75kwU63UYoyqKbsQw="/>
+        <field:display field="sommeRecue" id="s_org_adorsys_adpharma_domain_Paiement_sommeRecue" object="${paiement}" z="uis2mdlTSUK2jyPM0ehqSQ2cVwo="/>
+        <field:display field="difference" id="s_org_adorsys_adpharma_domain_Paiement_difference" object="${paiement}" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
+        </td>
+            </tr>
+        </table>      
+             </page:show1>
+		    
+		     
+		     </c:if>
+		    
+		  
+</div> 	   	  
+</util:panel>
+
+<div id="findbon" style="display: none;">
+    <form id="findbonForm" >
+                <P>
+                <LABEL for="numero"> Numero Du Bon :</LABEL> <INPUT onKeyPress="return scanTouche(event)" id="numero" type="text" name="numero"/>
+                </P>
+                
+                 <P>
+                <LABEL for="montant"> Montant du Bon :</LABEL> <INPUT onKeyPress="return scanTouche(event)" id="valeurBon" type="text" name="montant" />
+                </P>
+                
+                 <P id="infos" style="display: none; color: red; font-weight: bold;">
+               
+                </P>
+              
+        </form>
+</div>
+ <div id="container">
+<div id="inner" style="overflow: scroll; height: 300px;">
+<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
+<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
+L'aide Pour cette Page est en cour de redaction <br/>
+Merci pour Votre Comprehension <br/>
+
+ 
+</div>
+</div>
+
+       
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_LigneFacture" object="${lignefacture}" path="/lignefactures" z="MjjFnLtLa4O2l3GZCoWu6McA+OA=">
+        <field:display field="indexline" id="s_org_adorsys_adpharma_domain_LigneFacture_indexline" object="${lignefacture}" z="WwhjO+SylbA5KxLhiNlEmMr8hU0="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneFacture_cip" object="${lignefacture}" z="1HXzgLzD8iAKBcLtYfCTc+gv3oQ="/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneFacture_designation" object="${lignefacture}" z="K/3SSNo8c1sXQYY0tb2tb2hfybA="/>
+        <field:display field="cipM" id="s_org_adorsys_adpharma_domain_LigneFacture_cipM" object="${lignefacture}" z="iEEsYwBIoCuqB/RkdMtMv0rbkgY="/>
+        <field:display field="prixUnitaire" id="s_org_adorsys_adpharma_domain_LigneFacture_prixUnitaire" object="${lignefacture}" z="q3m4dD31TeLaPHFfo2sXw8M0Hx8="/>
+        <field:display field="remise" id="s_org_adorsys_adpharma_domain_LigneFacture_remise" object="${lignefacture}" z="g9rH3Wgxb4ry79tGu4Gtwiyh5j8="/>
+        <field:display field="prixTotal" id="s_org_adorsys_adpharma_domain_LigneFacture_prixTotal" object="${lignefacture}" z="DJ4YRM+XzectxJ+KqKWw6BlH4/A="/>
+        <field:display field="facture" id="s_org_adorsys_adpharma_domain_LigneFacture_facture" object="${lignefacture}" z="IQHi4i5+FYnl/3LarehMpu24EQ0="/>
+        <field:display field="qteAchete" id="s_org_adorsys_adpharma_domain_LigneFacture_qteAchete" object="${lignefacture}" z="lRV8+Z/9D91x3uzIuHUQ2SHMENA="/>
+        <field:display field="qteRetourne" id="s_org_adorsys_adpharma_domain_LigneFacture_qteRetourne" object="${lignefacture}" z="6DbQcO//T1LLIXxghrhXa2l9cMc="/>
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneFacture_footPrint" object="${lignefacture}" z="ygQj9uoueW/4N5olrpdOlg94ibE="/>
+    </page:show>
+</div>

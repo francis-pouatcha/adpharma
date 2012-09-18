@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_LigneInventaire" modelAttribute="ligneInventaire" path="/ligneinventaires" versionField="Version" z="oSi1JcxfP6jpEI8iwvh+YPPapfQ=">
+        <field:input field="qteEnStock" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" validationMessageCode="field_invalid_integer" z="z5NFfR8+aJeGzu7dDbCJtQ6lTnc="/>
+        <field:input field="qteReel" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteReel" validationMessageCode="field_invalid_integer" z="0MCY0w8g3UdlwTT+TGV48PvqnMs="/>
+        <field:input field="ecart" id="c_org_adorsys_adpharma_domain_LigneInventaire_ecart" validationMessageCode="field_invalid_integer" z="/MmX1dotkbBCpf0plZzJrnx7f3I="/>
+        <field:input field="prixUnitaire" id="c_org_adorsys_adpharma_domain_LigneInventaire_prixUnitaire" validationMessageCode="field_invalid_number" z="0UBRk4iMpNPkqRJoBTv7QLAuWm8="/>
+        <field:input field="prixTotal" id="c_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" validationMessageCode="field_invalid_number" z="0XyuB6ugykR5bIZFsavdBzIoYDs="/>
+        <field:select field="inventaire" id="c_org_adorsys_adpharma_domain_LigneInventaire_inventaire" itemValue="id" items="${inventaires}" path="/inventaires" z="MHZh2gH3uKaR/vqmqH1IHiy9QyQ="/>
+        <field:select field="produit" id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" itemValue="id" items="${produits}" path="/produits" z="/eO6gvVGM1uGORlDsN4E+0JIHrg="/>
+        <field:input field="agentSaisie" id="c_org_adorsys_adpharma_domain_LigneInventaire_agentSaisie" z="kR42gRyw2hl1J8/xlkLGrqEL1Mk="/>
+        <field:datetime dateTimePattern="${ligneInventaire_datesaisie_date_format}" field="dateSaisie" id="c_org_adorsys_adpharma_domain_LigneInventaire_dateSaisie" z="fkdxlvDVfPMNTJyOfx8u4GfbNI0="/>
+    </form:update>
+</div>

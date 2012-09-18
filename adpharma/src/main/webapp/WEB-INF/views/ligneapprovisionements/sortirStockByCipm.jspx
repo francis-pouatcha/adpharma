@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<div style="margin-bottom: 5px; padding-bottom: 5px;">
+		<span style="font-weight: bold"> <c:out
+				value="${commandeProcess.displayName}" />
+		</span>
+	</div>
+	<spring:url value="/" var="home" />
+	<spring:url value="/produits/findProductByDesAjax" var="find_des_url" />
+	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
+	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
+	<spring:url
+		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
+		var="delete_cmd_url" />
+			<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
+		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+	
+		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	
+	<!-- recherche de produit par code identification -->
+
+	<script type="text/javascript">
+    	
+	dojo.ready(function(){   
+		
+		
+    		
+		function clearProductTable(){
+			$('#resultproduit').html(
+					'<tr>
+					<th>CIP</th>
+				    	<th>CIPM</th>
+			    		<th>DESIGNATION</th>
+			    		 <th>PRIX UNIT</th>
+			    		<th>QTE CIPM</th>
+			    		<th>QTE CIP</th>
+			    		<th>SAISIE LE</th>
+			    		<th>FOURNISSEUR</th>
+			    	
+					</tr>');
+		//	$('#designation').val(" ");
+			
+		}
+		
+		
+		$('form#produitfindform').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_product_url}',
+						$('#produitfindform').serialize(),
+			                function(data){
+								$(data).each(function(){
+									
+									$('#resultproduit').append(
+											'<tr id="'+this.cipMaison+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.cipMaison+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.prixVenteUnitaire+'</td>
+										  <td>'+this.quantieEnStock+'</td>
+										  <td>'+this.qteCip+'</td>
+										  <td>'+this.saisiele+'</td>
+										  <td>'+this.fournisseur+'</td>
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproduit tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.getJSON( '${select_product_url}/'+this.id,
+									                function(data){
+											document.getElementById("cipm").value = data.cipMaison;
+			    							document.getElementById("cip").value = data.cip;
+			    							document.getElementById("des").value = data.designation ;
+			    							document.getElementById("pu").value = data.prixVenteUnitaire;
+			    							$("#qtecipm").val(data.quantieEnStock) ;
+											$('#findproduit').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+	
+		
+		
+		
+		// Dialog	find produit		
+		$('#findproduit').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1200,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+    		
+    
+    		function findline() {
+    			var cipm = document.getElementById("cipm").value;
+    			var url = "${find_cipm_url}/" + cipm ;
+    				$.getJSON(url,
+    					 function(data) {
+    						if (data.id == null) {
+    							clear();
+    								alert("Aucun produit Trouve");
+    						} else {
+    							document.getElementById("cipm").value = data.cipMaison;
+    							document.getElementById("cip").value = data.cip;
+    							document.getElementById("des").value = data.designation ;
+    							document.getElementById("pu").value = data.prixVenteUnitaire;
+    							$("#qtecipm").val(data.quantieEnStock) ;
+    						}
+    					});
+    				
+    				
+    		}
+
+    		function clear(){
+    		   document.getElementById("cip").value = "";
+    			document.getElementById("cipm").value = "";
+    			document.getElementById("des").value = "";
+    			document.getElementById("pu").value = "";
+    			document.getElementById("qte").value = "";
+    			document.getElementById("qtecipm").value = "";
+
+    			
+    		   
+    		}
+
+
+$('#findprd').click(function(){
+	$('#findproduit').dialog('open');
+	return false;
+});
+
+
+$( "#cipm" )
+.change(
+function(){
+	findline();
+return( false );
+});
+
+
+$('#subForm').submit(function(){
+	var qtecipm = $("#qtecipm").val();
+    var qte = $("#qte").val();
+    console.log(qte);
+    if (parseInt(qte) > parseInt(qtecipm) || qte==0 || qte.length==0 || qte == null) {
+   	 alert(" la quantite saisie doit etre inferieur a la quantite en stock !");
+		return false ;
+	  }else{
+		  return true ;
+	  }
+});
+ 
+
+
+
+ });
+
+	
+			
+
+
+
+</script>
+		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm"   var="sorti_cipm_url" />
+		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCip"   var="sorti_cip_url" />
+	
+
+	<div style="margin-bottom: 6px; font-weight: bold;">
+		<span class="firstTab selectedTab">
+			<a href="${sorti_cipm_url}">SORTIR DES PRODUITS PAR (C.I.P.M) </a>
+		</span>
+		<span  class="nextTab unselectedTab">
+			<a href="${sorti_cip_url}">SORTIR DES  PRODUITS PAR (C.I.P)</a>
+		</span> 
+		<span>
+			<a  style="text-decoration: none;" id="findprd"  >
+			
+				<INPUT class="submits" type="button" value="Recherche CIPM" title="rechercher un CIPM" />
+			</a>
+		</span>
+		<span><a href="${ home}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Terminer"
+				title="Terminer la sortie" /></a></span>
+
+	</div>
+
+
+	<util:panel title="saisir le CIPM du Produit" id="cip">
+		<div id="sortie">
+			<form action="${add_sortie}?mode=byCipm" method="POST" id="subForm" >
+				<table>
+					<tr>
+				
+						
+						<th style="text-align: center;">CIPM</th>
+						<th style="text-align: center;">CIP</th>
+						<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+						<th style="text-align: center;">PRIX UNITAIRE</th>
+						<th style="text-align: center;">QTE CIPM</th>
+						<th style="text-align: center;">QTE</th>
+						<th style="text-align: center;">RAISON</th>
+						<th style="text-align: center;">ACTION</th>
+					</tr>
+					<tr>
+						<td><INPUT type="hidden" name="lineId" id="lineId" /> <INPUT
+							type="text" name="cipm" id="cipm" class="autres"  
+							onKeyPress="return scanTouche(event)"  title="saisir le cipm"
+							 autofocus="autofocus" />
+
+						</td>
+						<td><INPUT type="text" name="cip" id="cip" class="autres"
+							value="" style="color: blue; text-align: center;"
+							disabled="disabled" /></td>
+						<td><INPUT type="text" name="des" class="des" id="des"
+							title="Designation" value=""
+							style="color: blue; text-align: center;" disabled="disabled" />
+
+						</td>
+						<td><INPUT type="text" name="pu" id="pu" class="autres"
+							value="" style="color: blue; text-align: center;"
+							disabled="disabled" /></td>
+						<td><INPUT type="text" name="qtecipm" id="qtecipm" 
+							class="autres" disabled="disabled" style="color: blue;"
+							width="50px;" /></td>
+						<td><INPUT type="text" name="qte" id="qte" class="autres"
+							onKeyPress="return scanTouche(event)" width="50px;"
+							title="saisir la Quantite" /></td>
+						<td><SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
+								<OPTION value="NON_COMMANDE" selected="selected">NON COMMANDE</OPTION>
+								<OPTION value="AVARIE">AVARIE</OPTION>
+								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
+
+						</SELECT></td>
+
+
+						<td align="center"><INPUT type="submit" value="Enregistrer"
+							class="submits"  /></td>
+
+					</tr>
+				</table>
+			</form>
+
+		</div>
+
+		<BR />
+		<b style="color: red; text-align: center;"> ${apMessage} </b>
+
+	</util:panel>
+	<BR />
+
+
+
+	<!-- afficher les produits sortie par les agent ce jour  -->
+	<util:panel
+		title="Liste Des Produits Sorties Par Tous les Agents ce jour" id="lg">
+		<table>
+			<tr>
+				<th style="size: 15">CiP</th>
+
+				<th>CipM</th>
+				<th style="size: 50">Designation</th>
+				<th>Qte Init</th>
+				<th>Qte Sortie</th>
+				<th>Qte final</th>
+				<th>agent</th>
+
+				<th>Raison</th>
+				<th colspan="2" align="center">ACTION</th>
+			</tr>
+
+			<c:forEach items="${sorties}" var="ligne">
+				<tr>
+					<td><c:out value="${ligne.cip}"></c:out></td>
+					<td ><c:out value="${ligne.cipM}"></c:out></td>
+					<td class="des"><c:out value="${ligne.designation}"></c:out></td>
+
+					<td><c:out value="${ligne.qteInitiale}"></c:out></td>
+
+					<td><c:out value="${ligne.qteDeplace}"></c:out></td>
+
+					<td><c:out value="${ligne.qteFinale}"></c:out></td>
+					<td><c:out value="${ligne.agentCreateur}"></c:out></td>
+					<td><c:out value="${ligne.note}"></c:out></td>
+
+
+
+					<td class="utilbox"><spring:url
+							value="/ligneapprovisionements/annulerSortie/${ligne.id}"
+							var="annuler_sortie_url" /> <a href="${ annuler_sortie_url}"
+						alt="Remove" title="Remove" onclick="return conf()"> <input
+							class="submits" type="button" value="Annuler" />
+					</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+
+
+	</util:panel>
+
+	<div id="findproduit" style="display: none;" title="recherche un cip maison">
+		
+		
+		
+		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
+		</p>
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIPM</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;" width="150px;">POSOLOGIE</th>
+		    		 <th style="text-align: center;" >PRIX UNIT</th>
+		    		<th style="text-align: center;">QTE CIPM</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    		<th style="text-align: center;">SAISIE LE</th>
+		    		<th style="text-align: center;">FOURNISSEUR</th>
+		    	</tr>
+		  </table>
+	</div>	 
+   
+</div>
+
+</div>

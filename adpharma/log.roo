@@ -1,0 +1,161 @@
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-07 03:37:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-07 03:47:37
+entity --class org.adorsys.adpharma.domain.EtatCredits --extends ~.domain.AdPharmaBaseEntity --inheritanceType TABLE_PER_CLASS --entityName EtatCredits 
+field string --fieldName etatNumber 
+field reference --fieldName client --type org.adorsys.adpharma.domain.Client 
+field date --fieldName dateEdition --type java.util.Date --dateTimeFormatPattern dd-MM-yyyyHH:mm
+field date --fieldName datePaiement --type java.util.Date --dateTimeFormatPattern dd-MM-yyyyHH:mm
+field number --fieldName clientId --transient --type java.lang.Long 
+field string --fieldName clientName --transient 
+field number --fieldName montantInitial --type java.math.BigDecimal --value 0
+field number --fieldName avance --type java.math.BigDecimal --value 0
+field number --fieldName reste --type java.math.BigDecimal --value 0
+field boolean --fieldName solder --value false
+field number --fieldName montantAvoir --type java.math.BigDecimal --value 0
+field boolean --fieldName annuler --value false
+field boolean --fieldName consommerAvoir  --value false
+field set --fieldName listeDettes --type ~.domain.DetteClient --mappedBy etat 
+focus --class org.adorsys.adpharma.domain.DetteClient
+field reference --fieldName etat --type org.adorsys.adpharma.domain.EtatCredits
+focus --class org.adorsys.adpharma.domain.EtatCredits
+web mvc scaffold --class ~.web.EtatCreditsController 
+field string --fieldName agent 
+field string --fieldName agent
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-08 07:33:11
+focus --class org.adorsys.adpharma.domain.DetteClient
+field reference --fieldName etatCredit --type org.adorsys.adpharma.domain.EtatCredits 
+// [failed] focus --class org.adorsys.adpharma.domain.Client 
+field string --fieldName matricule
+focus --class org.adorsys.adpharma.domain.EtatCredits
+field boolean --fieldName encaisser --value false
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-09 10:29:28
+focus --class org.adorsys.adpharma.domain.Paiement
+field number --fieldName montantBon --type java.math.BigDecimal
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-09 04:23:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-09 12:28:40
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-10 08:46:30
+// [failed] focus --class org.adorsys.adpharma.domain.Paiement
+field boolean --fieldName compenser --transient --value false 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-10 11:50:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-10 23:53:59
+focus --class org.adorsys.adpharma.domain.Produit 
+json add 
+json add 
+class --class ~.beans.PrintBareCodeBean 
+field string --fieldName bareCode
+field number --fieldName emptyLine --type int --min 0 --max 12
+field number --fieldName emptyColumn --type int --min 0 --max 8
+field boolean --fieldName printAll --value false
+field string --fieldName cmdNumber
+field string --fieldName minBarecode 
+field string --fieldName maxBarecode 
+field number --fieldName nombre --type int --min 1 
+entity --class org.adorsys.adpharma.domain.PrinterConfiguration --extends ~.domain.AdPharmaBaseEntity --entityName PrinterConfiguration --inheritanceType TABLE_PER_CLASS 
+field string --fieldName printerAdresse --notNull 
+field string --fieldName computerAdresse --notNull 
+field boolean --fieldName diseable --value true 
+web mvc scaffold --class ~.web.PrinterConfigurationController
+finder list 
+finder list --depth 2
+finder list 
+finder add --finderName findPrinterConfigurationsByComputerAdresseEquals
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-15 07:48:03
+focus --class org.adorsys.adpharma.domain.AvoirClient
+field boolean --fieldName imprimer --value false
+finder list 
+focus --class org.adorsys.adpharma.domain.Caisse
+finder list 
+finder add --finderName findCaissesByDateOuvertureGreaterThan
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-17 11:49:04
+// [failed] focus --class org.adorsys.adpharma.domain.LigneApprovisionement 
+json add --deepSerialize false 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-17 12:03:34
+focus --class org.adorsys.adpharma.domain.LigneApprovisionement
+field string --fieldName fournisseur --transient yes
+field string --fieldName saisiele --transient yes
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-21 08:42:13
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-21 08:42:53
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-21 08:48:28
+focus --class org.adorsys.adpharma.domain.Approvisionement
+field string --fieldName filiale 
+field reference --fieldName filiales --transient --type org.adorsys.adpharma.domain.Filiale
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-05-30 18:46:53
+focus --class ~.domain.Filiale
+field boolean --fieldName actif --value true 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-01 16:50:16
+focus --class org.adorsys.adpharma.domain.Client
+json add --deepSerialize false
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-01 19:31:23
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-01 19:45:16
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-09 08:44:06
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-06-10 20:45:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-14 08:30:00
+focus --class org.adorsys.adpharma.domain.Produit
+entity --class org.adorsys.adpharma.domain.LicenceEntity 
+field string --fieldName beginDate 
+field string --fieldName endDate
+// [failed] field boolean --fieldName state --value true
+// [failed] field boolean --fieldName state --value true
+field boolean --fieldName  isValid --value true
+field string --fieldName generateKey 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-26 09:36:34
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-06-28 16:14:15
+focus --class org.adorsys.adpharma.domain.LicenceEntity
+controller scaffold --class ~.web.LicenceEntityController 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-02 20:02:30
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-03 13:22:06
+focus --class org.adorsys.adpharma.domain.LigneCmdClient
+json add 
+json add --deepSerialize false
+addon list 
+addon list 
+// [failed] web mvc install language --code es
+// [failed] web mvc install language --code it
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-06 21:09:03
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-06 21:22:04
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-11 10:11:29
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-19 11:48:38
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-19 14:21:09
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-20 16:26:11
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-21 10:37:26
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-21 11:51:30
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-21 12:52:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-23 14:09:32
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-25 08:30:17
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-25 17:18:44
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-26 08:37:24
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-07-27 09:17:03
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-27 11:00:28
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-27 11:49:23
+focus --class org.adorsys.adpharma.domain.CommandeClient
+json add 
+focus --class org.adorsys.adpharma.domain.Facture
+json add 
+focus --class org.adorsys.adpharma.domain.LigneFacture
+json add 
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-28 08:34:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-07-31 16:05:07
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-01 11:21:21
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-01 16:42:59
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-02 10:44:24
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-02 15:13:03
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-06 12:46:57
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-13 08:40:32
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-15 21:54:58
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-16 09:00:43
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-16 09:32:31
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-23 08:17:20
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-24 09:35:53
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-24 11:53:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-24 14:34:43
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-24 16:26:23
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-29 15:36:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-29 15:41:16
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-30 19:15:32
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-30 19:17:24
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-03 11:46:56
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-07 14:28:26
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-14 11:31:00
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-09-17 22:29:37
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-09-17 22:50:38
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-09-17 22:52:19

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_Facture" modelAttribute="facture" path="/factures" versionField="Version" z="O+Ni1M8It3q4sQC7uLn/95dWA30=">
+        <field:input field="factureNumber" id="c_org_adorsys_adpharma_domain_Facture_factureNumber" z="Ueb0I9WbP6kZzUEkk3OLQsZxvek="/>
+        <field:datetime dateTimePattern="${facture_datecreation_date_format}" field="dateCreation" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+        <field:select field="client" id="c_org_adorsys_adpharma_domain_Facture_client" itemValue="id" items="${clients}" path="/clients" required="true" z="gC1S/xBP8/vXZ2wINGhRIbH3Td0="/>
+        <field:select field="caisse" id="c_org_adorsys_adpharma_domain_Facture_caisse" itemValue="id" items="${caisses}" path="/caisses" z="5E75B6lbSumXijhRdgu3SdunRWs="/>
+        <field:select field="vendeur" id="c_org_adorsys_adpharma_domain_Facture_vendeur" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="1adFqbt2K4HF7T01r46dU4nXPQE="/>
+        <field:select field="site" id="c_org_adorsys_adpharma_domain_Facture_site" itemValue="id" items="${sites}" path="/sites" z="pnJPvkC3ei2Vj1toIvwRVlrYpWI="/>
+        <field:select field="commande" id="c_org_adorsys_adpharma_domain_Facture_commande" itemValue="id" items="${commandeclients}" path="/commandeclients" z="INQXwwYIfz5aoQeIqhUxJ0g9H5M="/>
+        <field:select field="typeCommande" id="c_org_adorsys_adpharma_domain_Facture_typeCommande" items="${typecommandes}" path="typecommandes" z="fB7i16DWKItsft9fDIroUY4iZJI="/>
+        <field:input field="montantTotal" id="c_org_adorsys_adpharma_domain_Facture_montantTotal" validationMessageCode="field_invalid_integer" z="deaTTNfnkTQhwxg1FoQtfHqbnLg="/>
+        <field:input field="montantRemise" id="c_org_adorsys_adpharma_domain_Facture_montantRemise" validationMessageCode="field_invalid_integer" z="oh6HcH5tjnyxtEWK62vb/nlIpRQ="/>
+        <field:input field="netPayer" id="c_org_adorsys_adpharma_domain_Facture_netPayer" validationMessageCode="field_invalid_integer" z="HDTkavZxB1IMeNK6bsTxepUmNPY="/>
+        <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_Facture_solder" z="M1A7Xn1Mf9MgNKBUnLvlpYBMn5E="/>
+        <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_Facture_encaisser" z="18yozrz5cI+TAG5DnGto4sRxkC4="/>
+        <field:input field="avance" id="c_org_adorsys_adpharma_domain_Facture_avance" validationMessageCode="field_invalid_integer" z="8EYBAWzKsD+vGEZjWHPt4lc9kHM="/>
+        <field:input field="reste" id="c_org_adorsys_adpharma_domain_Facture_reste" validationMessageCode="field_invalid_integer" z="XKjMteTUeZjeo23Jxguw4H2ZxrI="/>
+        <field:simple field="lineFacture" id="c_org_adorsys_adpharma_domain_Facture_lineFacture" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Facture" z="mettko/1c7TuK+jNLdu5XKzj5F0="/>
+        <field:simple field="paiement" id="c_org_adorsys_adpharma_domain_Facture_paiement" messageCode="entity_reference_not_managed" messageCodeAttribute="Paiement" z="UDKLjuD27v5oDsnD4ranCVyab+8="/>
+        <field:select field="typeFacture" id="c_org_adorsys_adpharma_domain_Facture_typeFacture" items="${typefactures}" path="typefactures" z="7v6YzsJTMvWpWiC5PdHSZ7YtaYM="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Facture_footPrint" z="sufHsuSijLXxZ+NUn31zUlgdvrw="/>
+        <field:input field="cip" id="c_org_adorsys_adpharma_domain_Facture_cip" z="HYXT4jPdT00B2o4wwEFAGwp4U3c="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_Facture_designation" z="vv63xZmLk4x9uxCV7TQfQWeyWSI="/>
+    </form:update>
+</div>

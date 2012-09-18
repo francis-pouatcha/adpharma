@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
+	style=" margin: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <spring:url value="/caisses/${itemId}/print/${caisse.caisseNumber}.pdf"  var="edit_url" />
+     <spring:url value="/caisses/fermerCaisse/${itemId}"  var="close_caisse_url" />
+      
+      <c:choose>
+      <c:when test="${caisse.caisseOuverte}">
+                  <span><a href="${ close_caisse_url}" style="text-decoration: none;" onclick="return closeApp();"><INPUT class="submits"  type="button" value="Fermer la Caisse" title="Fermer cette Caisse" /></a></span>
+      
+      </c:when>
+      <c:otherwise>
+      
+      </c:otherwise>
+      </c:choose>
+      
+         <span><a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="etat de caisse" title="Imprimer l'etat de cette caisse" /></a></span>
+    
+  
+
+   
+    <c:if test="${not empty appMessages}">
+		<hr/>
+	<center>
+		<c:forEach var="appMessage" items="${appMessages}">
+			<p class="appMessage" style="color: green; margin-bottom: 1px;">${appMessage}</p>
+		</c:forEach>
+	</center>
+	</c:if>
+</span>
+

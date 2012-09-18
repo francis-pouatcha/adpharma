@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+        <form:custumcreate modelAttribute="caisse" id="ff_org_adorsys_adpharma_domain_Caisse" path="/caisses/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
+        <table style="border: none;">
+            <tr>
+                <td style="border: none;">
+        <field:input  field="caisseNumber" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber"  z="user-managed"/>
+        <field:select  field="caissier" id="c_org_adorsys_adpharma_domain_Caisse_caissier" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
+         <field:checkbox field="caisseOuverte" id="c_org_adorsys_adpharma_domain_Caisse_caisseOuverte"  z="user-managed"/>
+        
+           </td>
+            <td style="border: none;">
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  field="dateOuverture" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateFemeture" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture"  z="user-managed"/>
+
+   </td>
+   </tr>
+   </table>
+    </form:custumcreate>
+     <page:list id="pl_org_adorsys_adpharma_domain_Caisse" items="${results}" z="COKoLzQZVaNI1qgTDgMJS9D7Y+o=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_Caisse" path="/caisses" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" property="caisseNumber" z="ezEPUt3bMpKUX5LTlLRptl8Q58Q="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_caissier" maxLength="-1" property="caissier" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_site" property="site" z="HEKqib+9X06FrVTvAeZ4fspOSMU="/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" property="dateOuverture" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture" property="dateFemeture" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_fondCaisse" property="fondCaisse" z="iE5tc2AYq+YMt6n0GTcCarTd2dE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalEncaissement" property="totalEncaissement" z="V+m7cXVuVcIyUCjPQr0ADzTUb7s="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalRetrait" property="totalRetrait" z="w9kl0tZOX9TXbLPw5v4dZ1K9CNQ="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCash" property="totalCash" z="AsKI5HZEji8mzjLcLRCfDHv3XBw="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" property="totalCredit" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" property="totalCheque" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Caisse_caisseOuverte" property="caisseOuverte" z="VDvBpDtUFu4mNQiF9rvRNLJrOb0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_fermerPar" property="fermerPar" z="mSyEyZKaL9WQ45Vp04VvtwtGvmk="/>
+        </table:table>
+    </page:list>
+</div>

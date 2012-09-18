@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_CommandeFournisseur" object="${commandefournisseur}" path="/commandefournisseurs" z="/HKEdrc1TEDXzJlZzc+6q+pi12w=">
+        <field:display date="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" object="${commandefournisseur}" z="l1dWLTCmilRZmojzHAL0n6Tf+9k="/>
+        <field:display date="true" dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" object="${commandefournisseur}" render="false" z="user-managed"/>
+        <field:display field="fournisseur" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" object="${commandefournisseur}" z="RL3gTCf3poCMmy0AAXBvJDnHUvg="/>
+        <field:display field="cmdNumber" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" object="${commandefournisseur}" z="7cwCoYKTRkEK/aPuVOYga0rHboo="/>
+        <field:display field="modeDeSelection" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" object="${commandefournisseur}" z="k6SFTkQL1XAWbyp80OY3TPifRz8="/>
+        <field:display field="site" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_site" object="${commandefournisseur}" z="h5Eh3bo77h2pL6uoY48X8jr+4tA="/>
+        <field:display field="etatCmd" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" object="${commandefournisseur}" z="Gmf2szu3Lcf8Jejcx5qNKdzOgHU="/>
+        <field:display field="annuler" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" object="${commandefournisseur}" z="eH0pxOVGGnH4DisDLDumh3PGjRE="/>
+        <field:display field="creePar" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" object="${commandefournisseur}" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
+        <field:display field="livre" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_livre" object="${commandefournisseur}" z="BF+syGDcRNZ/IMKCaMK/ckK5oPc="/>
+        <field:display field="montantHt" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt" object="${commandefournisseur}" z="lq2JekzFPRRjBNOsxvcxmWTvL1g="/>
+        <field:display field="montantTva" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva" object="${commandefournisseur}" z="uU0q3ucr/tAjjJmLm+bQQGIaemE="/>
+        <field:display field="montantTtc" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc" object="${commandefournisseur}" z="s3Oh6qPDSHstxo/h2iBvAJLZNNM="/>
+        <field:display field="tva" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_tva" object="${commandefournisseur}" z="maMaF9hld9W3nDNil8F26e82P1U="/>
+    </page:show>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" object="${commandefournisseur}" z="83gkyuwkFVqDCHeFNQcvDUQBHPE="/>
+    <HR/>
+</div>

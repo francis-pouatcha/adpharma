@@ -1,0 +1,596 @@
+<div  xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
+ xmlns:security="http://www.springframework.org/security/tags" 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	 xmlns:spring="http://www.springframework.org/tags" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  
+   <spring:url value="/resources" var="source"></spring:url>
+   <link rel="stylesheet" href="${source}/js/style.css" type="text/css" media="screen, projection"/>
+	<!--[if lte IE 7]>
+        <link rel="stylesheet" type="text/css" href="${source}/js/ie.css" media="screen" />
+    <![endif]-->
+			
+	<script type="text/javascript" src="${source}/js/jquery-1.3.1.min.js"></script>	
+	<script type="text/javascript" language="javascript" src="${source}/js/jquery.dropdownPlain.js"></script>
+  
+      <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+      <spring:url value="/commandeclients/cmdCredit?form" var="vente_credit_url"/>
+      <spring:url value="/saleprocess/newProformat" var="vente_proformat_url"/>
+      <spring:url value="/commandeclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_url"/>
+      <spring:url value="/commandeclients?find=BySearch&amp;form" var="search_url"/>
+      <spring:url value="/commandeclients?find=ByStatusAndDateCreationBetween&amp;form" var="status_date_url"/>
+      <spring:url value="/saleprocess/rechercheCmd?form" var="cmd_client_url"/>
+      
+          
+   <security:authorize access="isAuthenticated()">
+           <menu:menu id="_topmenu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+  
+<div dojoType="dijit.MenuBar" id="navMenu">
+    <!--  menu commande fournisseur-->
+   
+            <spring:url value="/commandprocesses?form" var="cmd_four_url"/>
+            <spring:url value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cmd_list_url"/>
+            <spring:url value="/commandefournisseurs?find=BySearch&amp;form" var="cmd_find_four_url"/>
+    
+           
+
+  <!--  menu Approvisionnement-->
+    
+            <spring:url value="/approvisionementprocess?form" var="ap_cree_url"/>
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url"/>
+            <spring:url value="/transformationproduits/livreeForm?form" var="ap_trans_url"/>
+            <spring:url value="/approvisionementprocess?form" var="ap_sortir_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaisonEquals&amp;form" var="ap_cip_url"/>
+            <spring:url value="/ligneapprovisionements?find=BySearch&amp;form"  var="search_lgap_url"/>
+           <spring:url value="/approvisionements?find=BySearch&amp;form" var="search_list_url"/>
+    <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
+ <spring:url value="/mouvementstocks?find=BySearch&amp;form" var="mvt_search_url"/>
+                                  <spring:url value="/mouvementstocks?page=1&amp;size=${empty param.size ? 10 : param.size}" var="mvt_list_url"/>
+          
+            <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
+
+        <div dojoType="dijit.PopupMenuBarItem">
+                <span>Gestion du Stock</span>
+                <div dojoType="dijit.Menu" id="livMenu">
+                   <div dojoType="dijit.PopupMenuItem">
+                <span>Approvisionnement</span>
+                <div dojoType="dijit.Menu" id="aprMenu">
+                                        <div dojoType="dijit.MenuItem" onclick="window.location='${ap_cree_url}' "> Creer  </div>
+                                        <div dojoType="dijit.MenuItem" onclick="window.location='${ap_list_url}' "> Lister</div>
+                                        <div dojoType="dijit.MenuItem" onclick="window.location='${search_list_url}' "> Rechercher</div>
+                                      
+                </div>
+              </div>
+                 
+                  <div dojoType="dijit.PopupMenuItem">
+                <span>Produits approvisionnes</span>
+                <div dojoType="dijit.Menu" id="prdaprMenu">
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${ap_trans_url}' ">Decomposer  </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${ap_sortir_url}' ">Sortir du Stock </div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${search_lgap_url}' ">rechercher</div>
+                                <div dojoType="dijit.MenuItem" onclick="window.location='${lap_list_url}' "> lister  </div>
+                         
+                </div>
+              </div>
+               <div dojoType="dijit.PopupMenuItem">
+                <span>Mouvements stock </span>
+                <div dojoType="dijit.Menu" id="mvtcMenu">
+                                       <div dojoType="dijit.MenuItem" onclick="window.location='${mvt_search_url}' "> Rechercher</div>
+                                       <div dojoType="dijit.MenuItem" onclick="window.location='${mvt_list_url}' "> Lister</div>
+                                             
+                </div>
+        </div> 
+                        
+              
+                </div>
+        </div> |
+    </security:authorize>
+
+
+<!--  menu vente -->
+            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
+
+        <div dojoType="dijit.PopupMenuBarItem" >
+                <span > Ventes </span>
+                <div dojoType="dijit.Menu" id="saleMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${vente_public_url}' ">  Vente Au Public </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${vente_credit_url}' "> Vente a Credit</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${vente_proformat_url}' ">Facture Proformat </div>
+              
+               <div dojoType="dijit.PopupMenuItem">
+                <span>Commandes Clients</span>
+                <div dojoType="dijit.Menu" id="findMenu">
+                       <div dojoType="dijit.MenuItem" onclick="window.location='${list_url}' ">Lister</div>
+                       <div dojoType="dijit.MenuItem" onclick="window.location='${search_url}' "> Rechercher </div>
+                        
+                </div>
+              </div>
+                </div>
+        </div> |
+    </security:authorize>
+    
+    <!--  menu Caisse-->
+     <spring:url value="/caisses/ouvrirCaisse?form" var="cai_cree_url"/>
+    <spring:url value="/caisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="caisse_list_url"/>
+ 
+         <spring:url value="/caisses/fermerCaisse" var="delete_caisse_url"/>
+     
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="ap_list_url"/>
+            <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
+            <spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url"/>
+            <spring:url value="/caisses?form" var="cai_de_url"/>
+                <spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url"/>
+            
+            <spring:url value="/operationcaisses?find=ByDateOperationBetween&amp;form" var="cai_op_url"/>
+                <spring:url value="/operationcaisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_ops_url"/>
+                <spring:url value="/paiements?find=ByDateSaisieBetween&amp;form" var="cai_pay_url"/>
+                <spring:url value="/caisses?find=ByCaisseOuverteNot&amp;form" var="cai_find_cai_url"/>
+                <spring:url value="/paiements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_pays_url"/>
+    
+            <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
+
+        <div dojoType="dijit.PopupMenuBarItem" >
+                <span > Caisses </span>
+                <div dojoType="dijit.Menu" id="caisMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cai_cree_url}' ">  Ouvrir </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${delete_caisse_url}' "> Fermer</div>
+                      <div dojoType="dijit.MenuItem" onclick="window.location='${cai_enc_url}' ">Encaisser </div>
+                            <div dojoType="dijit.MenuItem" onclick="window.location='${groupe_enc_url}' ">Encaissement Groupe </div>
+                                                  <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+                                                 <div dojoType="dijit.MenuItem" onclick="window.location='${etat_caisse_url}' ">Etat des Caisses </div> 
+             <div dojoType="dijit.PopupMenuItem">
+                <span>Rechercher</span>
+                <div dojoType="dijit.Menu" id="caisseMenu">
+                                  <div dojoType="dijit.MenuItem" onclick="window.location='${caisse_list_url}' "> Lister les Caisses</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cai_find_cai_url}' "> par etat</div>
+                        
+                </div>
+              </div>          
+             <div dojoType="dijit.PopupMenuItem">
+                <span>Operations des Caisses</span>
+                <div dojoType="dijit.Menu" id="opMenu">
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${cai_ops_url}' "> Lister </div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${cai_op_url}' ">Lister par date </div>
+                         
+                                            
+                </div>
+              </div>
+                           
+             <div dojoType="dijit.PopupMenuItem">
+                <span>payements</span>
+                <div dojoType="dijit.Menu" id="payeMenu">
+                           <div dojoType="dijit.MenuItem" onclick="window.location='${cai_pays_url}' "> Lister</div>
+                           <div dojoType="dijit.MenuItem" onclick="window.location='${cai_pay_url}' ">Lister par Date </div>
+                                     
+                </div>
+              </div>
+              
+               
+             </security:authorize>
+          
+                </div>
+        </div> |
+    </security:authorize>
+    
+    
+  <!--  menu Client -->
+    
+            <spring:url value="/clients?form" var="clt_cree_url"/>
+            <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
+            <spring:url value="/clients?find=ByNomCompletLike&amp;form" var="clt_findN_url"/>
+            <spring:url value="/clients?find=ByClientNumberEquals&amp;form" var="clt_findcn_url"/>
+            <spring:url value="/categorieclients?form" var="clt_cat_url"/>
+                <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_catl_url"/>
+                <spring:url value="/detteclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_detl_url"/>
+                <spring:url value="/detteclients?find=ByClientNameLikeAndSolderNot&amp;form" var="clt_dets_url"/>
+                <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
+    
+                       <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+
+       
+    </security:authorize>
+    
+      <!--  menu Fournisseur-->  
+         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
+          <spring:url value="/fournisseurs?form" var="four_site_url"/>
+            <spring:url value="/fournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="four_list_url"/>
+           
+        
+        </security:authorize>
+        
+      <!--  menu Inventaire -->
+     <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_rps_url"/>
+             <spring:url value="/produits/ProduitAlerteStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_as_url"/>
+             <spring:url value="/produits?find=ByQuantiteEnStock&amp;form" var="prd_pv_url"/>
+            <spring:url value="/inventaires?form" var="inv_cree_url"/>
+            <spring:url value="/inventaires?page=1&amp;size=${empty param.size ? 10 : param.size}" var="inv_list_url"/>
+            <spring:url value="/inventaireProcess/ficheSuivieQte?form" var="fiche_qte_url"/>
+              <spring:url value="/inventaireProcess/ficheInventaireParOrdreAlpha?form" var="invAlpha_fiche_url"/>
+                        <spring:url value="/inventaires/inventaireEnCour" var="invcour_fiche_url"/>
+            
+            <spring:url value="/inventaires?find=ByDateInventaireBetween&amp;form" var="inv_date_url"/>
+            <spring:url value="/inventaires?find=ByEtat&amp;form" var="inv_etat_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaison&amp;form" var="fichetDetail_cipm_url"/>
+           
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+
+        <div dojoType="dijit.PopupMenuBarItem">
+                <span>Inventaires</span>
+                <div dojoType="dijit.Menu" id="invMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${inv_cree_url}' "> Creer Un Inventaire </div>
+                     
+                            <div dojoType="dijit.MenuItem" onclick="window.location='${fichetDetail_cipm_url}' "> Fiche Detaillee produit (C.I.P.M)</div>
+                          <div dojoType="dijit.PopupMenuItem">
+                <span>Edition de Fiches </span>
+                <div dojoType="dijit.Menu" id="ficheMenu">
+      <div dojoType="dijit.MenuItem" onclick="window.location='${invRayol}' "> Fiche Inventaire</div>
+       <div dojoType="dijit.MenuItem" onclick="window.location='${fiche_qte_url}' "> Fiche de suivie de Quantee</div>
+      
+       <div dojoType="dijit.MenuItem" onclick="window.location='${invAlpha_fiche_url}' "> Fiche de Suivi De stock	</div>
+                    
+                            
+               </div>
+        </div>  
+           <div dojoType="dijit.PopupMenuItem">
+                <span>recherche inventaire </span>
+                <div dojoType="dijit.Menu" id="findInvMenu">
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${invcour_fiche_url}' "> En cour</div>
+                          <div dojoType="dijit.MenuItem" onclick="window.location='${inv_date_url}' ">  Par Date</div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${inv_etat_url}' ">  Par Etat</div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${inv_list_url}' "> lister</div>
+                                      
+                            
+               </div>
+        </div> 
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_rps_url}' ">Produits En Rupture De Stock</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_as_url}' "> Produits En Alerte De Stock</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_pv_url}' "> Produit les Plus Vendus</div>
+                  
+             
+                </div>
+        </div> |
+    </security:authorize>
+    
+      <!--  menu Utilisateurs -->
+    
+            <spring:url value="/pharmausers?form" var="usr_cree_url"/>
+            <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
+            <spring:url value="/pharmausers?find=ByUserNameLike&amp;form" var="usr_name_url"/>
+           
+            <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+
+        <div dojoType="dijit.PopupMenuBarItem">
+                <span>Utilisateurs</span>
+                <div dojoType="dijit.Menu" id="usrMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${usr_cree_url}' "> Ajouter </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${usr_list_url}' "> liste des Utilisateurs</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${usr_name_url}' "> Recherche Par Nom</div>
+             
+                </div>
+        </div> |
+    </security:authorize>
+    
+     <!--  menu catalogues -->
+    
+            <spring:url value="/transformationproduits?find=ByProduitOrigine&amp;form" var="transff_url"/>
+                        <spring:url value="/transformationproduits?form" var="transf_url"/>
+            
+                        <spring:url value="/transformationproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="trans_list_url"/>
+            
+                        <spring:url value="/produits/create/true?form" var="prd_cip_url"/>
+            
+            <spring:url value="/produits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_list_url"/>
+            <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
+                                        <spring:url value="/produits?find=BySearch&amp;form" var="prdf_des_url"/>
+                        
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
+
+        <div dojoType="dijit.PopupMenuBarItem">
+                <span>Catalogues </span>
+                        <div dojoType="dijit.Menu" id="prdMenu">
+                                          <security:authorize ifAnyGranted="ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
+                                          <div dojoType="dijit.MenuItem" onclick="window.location='${search_lgap_url}' "> Rechercher un Produit</div>
+                                        </security:authorize>
+                               <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+                   
+        <div dojoType="dijit.PopupMenuItem">
+                <span>produits </span>
+                <div dojoType="dijit.Menu" id="prdcMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_cip_url}' "> Creer Un Produit Avec C.I.P </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_scip_url}' "> Creer Un Produit Sans C.I.P</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${prd_list_url}' "> Lister les Produits</div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${prdf_des_url}' "> Rechercher un Produit</div>
+                        
+               </div>
+        </div>
+        
+                                                         
+          
+        <spring:url value="/familleproduits?form" var="fp_url"/>
+            <spring:url value="/familleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="fp_list_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Famille Produit</span>
+                <div dojoType="dijit.Menu" id="fpMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${fp_url}' ">Creer </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${fp_list_url}' "> Lister </div>
+             
+                </div>
+        </div>
+          <spring:url value="/sousfamilleproduits?form" var="sfp_url"/>
+            <spring:url value="/sousfamilleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="sfp_list_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span> Sous Famille Produit</span>
+                <div dojoType="dijit.Menu" id="sfpMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${sfp_url}' ">Creer </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${sfp_list_url}' "> Lister </div>
+             
+                </div>
+        </div>
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Decompositions </span>
+                <div dojoType="dijit.Menu" id="trancMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${transf_url}' "> Creer </div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${trans_list_url}' "> Lister</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${transff_url}' "> Rechercher</div>
+                            
+                </div>
+        </div>
+              
+               
+                                                        
+                       </security:authorize>
+                                     
+                                     
+                </div>
+        </div> |
+    </security:authorize>
+    
+     <!--  menu configuration -->
+    
+            <spring:url value="/rayons?form" var="conf_ray_url"/>
+            <spring:url value="/rayons?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_ray_url"/>
+            <spring:url value="/tauxmarges?form" var="conf_mrg_url"/>
+            <spring:url value="/tauxmarges?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_mrg_url"/>
+  
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+            <div dojoType="dijit.PopupMenuBarItem">
+                <span>Supervisions</span>
+                <div dojoType="dijit.Menu" id="configMenu">
+
+        <div dojoType="dijit.PopupMenuItem">
+                <span>Rayons</span>
+                <div dojoType="dijit.Menu" id="rayMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_ray_url}' "> Ajouter </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_ray_url}' "> Lister</div>
+             
+                </div>
+        </div>
+          <div dojoType="dijit.PopupMenuItem">
+                <span> CMD Fournisseur </span>
+                <div dojoType="dijit.Menu" id="cmdMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cmd_four_url}' ">  Creer </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cmd_find_four_url}' "> Rechercher</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cmd_list_url}' "> Lister</div>
+             
+                </div>
+        </div> 
+        <div dojoType="dijit.PopupMenuItem">
+                <span>Ordonnancier</span>
+                <div dojoType="dijit.Menu" id="ordMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_ord_url}' "> Lister </div>
+             
+                </div>
+        </div> 
+        
+          <div dojoType="dijit.PopupMenuItem">
+                <span>Fournisseurs</span>
+                <div dojoType="dijit.Menu" id="fourMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${four_site_url}' ">Creer</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${four_list_url}' ">Lister</div>
+             
+                </div>
+        </div> 
+        
+         <div dojoType="dijit.PopupMenuItem">
+                <span> Clients</span>
+                <div dojoType="dijit.Menu" id="cltMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${clt_cree_url}' "> Creer</div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${clt_list_url}' "> Lister</div>
+                      
+                        <div dojoType="dijit.PopupMenuItem">
+                <span>recherche Clients</span>
+                <div dojoType="dijit.Menu" id="recMenu">
+                                 <div dojoType="dijit.MenuItem" onclick="window.location='${clt_findN_url}' "> Par Nom </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${clt_findcn_url}' "> Par Numero </div>
+              
+                </div>
+              </div>   
+                 <div dojoType="dijit.PopupMenuItem">
+                <span>categories Clients</span>
+                <div dojoType="dijit.Menu" id="catMenu">
+                                   <div dojoType="dijit.MenuItem" onclick="window.location='${clt_cat_url}' "> Creer</div>
+                                  <div dojoType="dijit.MenuItem" onclick="window.location='${clt_catl_url}' "> Lister</div>
+                           
+                </div>
+              </div>
+                        
+               <div dojoType="dijit.PopupMenuItem">
+                <span>Dettes Clients</span>
+                <div dojoType="dijit.Menu" id="findcltMenu">
+                       <div dojoType="dijit.MenuItem" onclick="window.location='${clt_detl_url}' ">Lister</div>
+                       <div dojoType="dijit.PopupMenuItem">
+                <span>recherche Dettes </span>
+                <div dojoType="dijit.Menu" id="finddetteMenu">
+                       <div dojoType="dijit.MenuItem" onclick="window.location='${clt_dets_url}' "> Par Client</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${clt_detd_url}' "> Par date</div>
+                               
+                </div>
+              </div> 
+                        
+                </div>
+              </div>
+                </div>
+        </div> 
+     
+         
+           <spring:url value="/modeconditionements?form" var="conf_con_url"/>
+            <spring:url value="/modeconditionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_con_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Conditionnement</span>
+                <div dojoType="dijit.Menu" id="conMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_con_url}' "> Ajouter </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_con_url}' "> Lister </div>
+             
+                </div>
+        </div>
+       
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Taux Marge</span>
+                <div dojoType="dijit.Menu" id="marMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_mrg_url}' "> Ajouter </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_mrg_url}' "> Lister </div>
+             
+                </div>
+        </div>
+         <spring:url value="/tvas?form" var="conf_tva_url"/>
+            <spring:url value="/tvas?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_tva_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>T.V.A</span>
+                <div dojoType="dijit.Menu" id="tvaMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_tva_url}' "> Ajouter  </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_tva_url}' "> Lister</div>
+             
+                </div>
+        </div>
+        
+        
+          <spring:url value="/devises?form" var="conf_dev_url"/>
+            <spring:url value="/devises?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_dev_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Devises</span>
+                <div dojoType="dijit.Menu" id="devMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_dev_url}' "> Ajouter  </div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_dev_url}' "> Lister  </div>
+             
+                </div>
+        </div>
+       <spring:url value="/filiales?form" var="create_filiale_url"/>
+            <spring:url value="/sites?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_site_url"/>
+                       <spring:url value="/filiales?page=1&amp;size=${empty param.size ? 10 : param.size}" var="filiale_list_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Filiales </span>
+                <div dojoType="dijit.Menu" id="filialeMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${create_filiale_url}' "> Ajouter </div>
+                         <div dojoType="dijit.MenuItem" onclick="window.location='${filiale_list_url}' "> lister </div>
+             
+                </div>
+        </div> 
+        
+       
+        
+        <spring:url value="/sites?form" var="conf_site_url"/>
+            <spring:url value="/sites?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_site_url"/>
+           
+         <div dojoType="dijit.PopupMenuItem">
+                <span>Sites</span>
+                <div dojoType="dijit.Menu" id="sitMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_site_url}' "> Lister </div>
+             
+                </div>
+        </div>
+        
+       
+        
+        </div> 
+        </div> |  
+    </security:authorize>
+    
+    
+    <!--  menu facturation-->
+                           <security:authorize ifAnyGranted="ROLE_SITE_MANAGER , ROLE_CASHIER">
+    
+     <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
+                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
+            <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_fact_url"/>
+                              <spring:url value="/factures?find=ByClientAndDateCreationBetween&amp;form" var="conf_fdp_url"/>
+                                          <spring:url value="/dataloader/load" var="load_url"/>
+            
+         <div dojoType="dijit.PopupMenuBarItem">
+                <span>Facturation</span>
+                <div dojoType="dijit.Menu" id="facMenu">
+                                  <div dojoType="dijit.MenuItem" onclick="window.location='${find_pay_url}' ">paiements Facture</div>
+                                       <div dojoType="dijit.PopupMenuItem">
+                <span>Rechercher factures</span>
+                <div dojoType="dijit.Menu" id="rechfacMenu">
+                     <div dojoType="dijit.MenuItem" onclick="window.location='${conf_fdp_url}' ">Par Date</div>
+                                     <div dojoType="dijit.MenuItem" onclick="window.location='${dette_clients_url}' "> Par client</div>
+                       <div dojoType="dijit.MenuItem" onclick="window.location='${conf_fip_url}' ">  Soldees ?</div>
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${conf_list_fact_url}' "> Lister </div>
+     
+                         
+                </div>
+        </div>             
+             
+                </div>
+        </div> |
+        </security:authorize>
+         
+         <!--  menu database-->
+                           <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
+    
+         <div dojoType="dijit.PopupMenuBarItem">
+                <span>DataBase</span>
+                <div dojoType="dijit.Menu" id="DbMenu">
+                <div dojoType="dijit.MenuItem" onclick="window.location='#'">backup </div>
+                            <div dojoType="dijit.MenuItem" onclick="window.location='#' ">restore</div>
+                            <div dojoType="dijit.MenuItem" onclick="window.location='/adpharma/dataloader/load' ">Load data </div>
+                            ${load_url}
+                        
+             
+                </div>
+        </div> |
+        </security:authorize>
+        
+        
+      <!--  menu ordonnancier-->  
+         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+          <spring:url value="/sites?form" var="conf_site_url"/>
+            <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_ord_url"/>
+           
+        
+        </security:authorize>
+        
+         
+          <!--  menu Credential-->    
+          <spring:url value="/passwordresets?form" var="cre_pass_url"/>
+               <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">
+    
+         <div dojoType="dijit.PopupMenuBarItem">
+                <span>Password</span>
+                <div dojoType="dijit.Menu" id="creMenu">
+                        <div dojoType="dijit.MenuItem" onclick="window.location='${cre_pass_url}' "> Change Password</div>
+             
+                </div>
+        </div>
+        </security:authorize>
+      
+        
+    
+</div> 
+
+        </menu:menu>
+    </security:authorize>
+</div> 
+
+

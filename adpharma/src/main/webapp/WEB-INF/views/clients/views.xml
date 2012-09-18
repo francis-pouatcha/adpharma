@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="client" name="clients/list">
+        <put-attribute name="body" value="/WEB-INF/views/clients/list.jspx"/>
+    </definition>
+<definition extends="client" name="clients/show">
+        <put-attribute name="body" value="/WEB-INF/views/clients/show.jspx"/>
+    </definition>
+<definition extends="client" name="clients/create">
+        <put-attribute name="body" value="/WEB-INF/views/clients/create.jspx"/>
+    </definition>
+<definition extends="client" name="clients/update">
+        <put-attribute name="body" value="/WEB-INF/views/clients/update.jspx"/>
+    </definition>
+    
+    <definition extends="client" name="clients/defineClientPayeur">
+        <put-attribute name="body" value="/WEB-INF/views/clients/defineClientPayeur.jspx"/>
+    </definition>
+<definition extends="client" name="clients/findClientsByNomCompletLike">
+        <put-attribute name="body" value="/WEB-INF/views/clients/findClientsByNomCompletLike.jspx"/>
+    </definition>
+<definition extends="client" name="clients/findClientsByClientNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/clients/findClientsByClientNumberEquals.jspx"/>
+    </definition>
+<definition extends="default" name="clients/findClientsByNomLike">
+        <put-attribute name="body" value="/WEB-INF/views/clients/findClientsByNomLike.jspx"/>
+    </definition>
+<definition extends="default" name="clients/findClientsByNomEquals">
+        <put-attribute name="body" value="/WEB-INF/views/clients/findClientsByNomEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="clients/search">
+        <put-attribute name="body" value="/WEB-INF/views/clients/search.jspx"/>
+    </definition>
+</tiles-definitions>

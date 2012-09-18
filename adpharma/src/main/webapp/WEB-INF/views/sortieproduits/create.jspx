@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_SortieProduit" modelAttribute="sortieProduit" path="/sortieproduits" render="${empty dependencies}" z="K0gLosiA4Ig5O49uSUgupb+8izQ=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_SortieProduit_footPrint" z="3GpIPuS0pmpKflU2JA7LeA1zTag="/>
+        <field:input field="aprovisionnement" id="c_org_adorsys_adpharma_domain_SortieProduit_aprovisionnement" required="true" z="z6x76F7j3ECsk8iALzNcgWWkcB4="/>
+        <field:input field="cipMaison" id="c_org_adorsys_adpharma_domain_SortieProduit_cipMaison" required="true" z="mKevPDBg7BRMpVo6qPvLl6z2tCw="/>
+        <field:input field="cip" id="c_org_adorsys_adpharma_domain_SortieProduit_cip" required="true" z="njEcKWqcjIePoStpj38KTDuIWV0="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_SortieProduit_designation" z="q0GIRAZhVEPMJ/+/nt2u2r/cD6Y="/>
+        <field:input field="prixAchat" id="c_org_adorsys_adpharma_domain_SortieProduit_prixAchat" validationMessageCode="field_invalid_number" z="D6l/oTWqxI+uiksmtvwUaxS/bWE="/>
+        <field:input field="quantite" id="c_org_adorsys_adpharma_domain_SortieProduit_quantite" validationMessageCode="field_invalid_integer" z="ZsT7GxdITCcOG7t27qrJAucA6mk="/>
+        <field:input field="prixTotal" id="c_org_adorsys_adpharma_domain_SortieProduit_prixTotal" validationMessageCode="field_invalid_number" z="2k55L9NHmN51Pz4hEEzy1fbpK9A="/>
+        <field:textarea field="causeSortie" id="c_org_adorsys_adpharma_domain_SortieProduit_causeSortie" z="qYYIM8sD2ywb2gkd+uVZO3dFSQ0="/>
+        <field:input field="agentNumber" id="c_org_adorsys_adpharma_domain_SortieProduit_agentNumber" z="uiI3qtMIyxaRYgwitNw08IwPcvk="/>
+        <field:datetime dateTimePattern="${sortieProduit_datesaisie_date_format}" field="dateSaisie" id="c_org_adorsys_adpharma_domain_SortieProduit_dateSaisie" z="J6N8Gio4/S5NRCXekozk4BLZ5XU="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_SortieProduit" render="${not empty dependencies}" z="IyFlWu2Yf7Mv7b8Yw95B2mtPN9I="/>
+</div>

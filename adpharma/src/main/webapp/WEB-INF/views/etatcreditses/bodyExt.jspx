@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	style="width: 100%">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+		<br/>
+        <form:customList id="pl_org_adorsys_adpharma_domain_DetteClient" items="${etatcredits.listeDettes}" z="user-managed" 
+    		label="Listes Des Dettes " objectName="Dettes Clients" openPane="true">
+<div style="overflow: auto; height: 300px;" ></div>
+		  <table>
+		    	<tr>
+		    		<th style="text-align: center;">Facture</th>
+		    				    		<th style="text-align: center;width: 300px;">Client</th>
+		    		<th style="text-align: center;width: 150px;">Date Edition</th>
+		    		<th style="text-align: center;">Montant  </th>
+		    		<th style="text-align: center;">Avance</th>
+		    		<th style="text-align: center;">Reste</th>
+		    		<th style="text-align: center;">Solder?</th>
+		            <th style="text-align: center;">Annuler?</th>
+		            <th style="text-align: center;">ACTION</th>
+		            
+		           
+		            
+		    	</tr>
+		
+		   <c:forEach items="${etatcredits.listeDettes}" var="ligne">
+		   <spring:url value="/factures/print/${ligne.factureNo}.pdf" var="inv_url" />
+		    		<tr>
+		    			<td style="text-align: center;">
+		    			<a  title="Imprimer la facture " href="${inv_url}" style="cursor: pointer;"><c:out value="${ligne.factureNo}"></c:out></a>
+		    			
+		    			</td>
+		   <td style="text-align:left;">
+		    			<c:out value="${ligne.assurer}"></c:out>
+		    			
+		    			</td>
+		    			<td style=" width: 20px; text-align: left;padding-left: 20px;">
+		    			
+		    					      <fmt:formatDate value="${ligne.dateCreation}" pattern="dd-MM-yyyy HH:mm"/>
+		    			
+		    			</td>
+		    			
+		    			<td style="text-align: right;padding-right: 20px;">
+		    			    			<c:out value="${ligne.montantInitial}"></c:out>
+		    		
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		    				    			    		<c:out value="${ligne.avance}"></c:out>
+		    		
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		    			    		<c:out value="${ligne.reste}"></c:out>
+		    	
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		    		  <c:out value="${ligne.solder}"></c:out>
+		    
+		    
+		    			</td>
+		    		
+		    			
+		    			
+								<td style="text-align: right;padding-right: 20px;">
+										    				    		  <c:out value="${ligne.annuler}"></c:out>
+								</td>
+																<td style="text-align:center;">
+								
+					<c:choose>
+					   <c:when test="${ not ligne.annuler}">
+					   
+					      <spring:url value="/detteclients/${itemId}/annuler/${ligne.id}" var="restorer_url" />
+					    <a style="cursor: pointer;" href="${restorer_url}" title="annuler Cette Dette"> <input type="button" class="submits" value="ANNULER" /></a>
+					
+					   </c:when>
+					   
+					   <c:otherwise>
+					   <spring:url value="/detteclients/${itemId}/retorer/${ligne.id}" var="anuller_url" />
+					    <a style="cursor: pointer;" href="${anuller_url}" title="Restorer cette dette  ">  <input type="button" class="submits" style="color: red;" value="RESTORER" /></a>
+					
+					   
+					      </c:otherwise>
+					</c:choose>
+						</td>							
+		    		</tr>
+		    	</c:forEach>
+		    </table>
+		    
+        </form:customList>
+        
+	
+</div>

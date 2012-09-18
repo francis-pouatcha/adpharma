@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="produit" name="mouvementstocks/list">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/list.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/show">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/show.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/create">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/create.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/update">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/update.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/findMouvementStocksByDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/findMouvementStocksByTypeMouvementAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByTypeMouvementAndDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/findMouvementStocksByDesignationEqualsAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByDesignationEqualsAndDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/findMouvementStocksByDateCreationBetweenAndAgentCreateurEquals">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByDateCreationBetweenAndAgentCreateurEquals.jspx"/>
+    </definition>
+<definition extends="produit" name="mouvementstocks/findMouvementStocksByDateCreationBetweenAndAgentCreateurLike">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByDateCreationBetweenAndAgentCreateurLike.jspx"/>
+    </definition>
+<definition extends="default" name="mouvementstocks/findMouvementStocksByCipMEquals">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByCipMEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="mouvementstocks/search">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/search.jspx"/>
+    </definition>
+</tiles-definitions>

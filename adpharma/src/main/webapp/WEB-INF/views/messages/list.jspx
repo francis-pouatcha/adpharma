@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_Message" items="${messages}" z="93aNartwyirjc9/FSDnkHX+FJcU=">
+        <table:table data="${messages}" id="l_org_adorsys_adpharma_domain_Message" path="/messages" z="nHdDNNY73cO/jER1zput2HI5K/s=">
+            <table:column id="c_org_adorsys_adpharma_domain_Message_footPrint" property="footPrint" z="8ag9c7j9bc7Hs08SIiwDKaBf0oY="/>
+            <table:column date="true" dateTimePattern="${message_datecreation_date_format}" id="c_org_adorsys_adpharma_domain_Message_dateCreation" property="dateCreation" z="5idfzMTNaB6ubctoUHZvsEEpHIc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Message_sujet" property="sujet" z="CsSvR6+MUjcFnyg75T7fHejbbbY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Message_contenu" property="contenu" z="XSMIbPVDtXl4fsCfzxx9Qb9hCPY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Message_agentCreateur" property="agentCreateur" z="/Fpuzy+VcFzcnUPeOAE/HRkBl0M="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Message_Destinataires" property="destinataires" z="2NRwveMvZl9C8UcEaPUM9umC860="/>
+        </table:table>
+    </page:list>
+</div>

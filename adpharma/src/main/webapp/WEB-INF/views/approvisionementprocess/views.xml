@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="public" name="approvisionementprocess/edit">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/edit.jspx"/>
+    </definition>
+<definition extends="public" name="approvisionementprocess/findproduct">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/findProduct.jspx"/>
+    </definition>
+<definition extends="public" name="approvisionementprocess/findcmdfour">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/findCmdFournisseur.jspx"/>
+    </definition>
+     <definition extends="public" name="approvisionements/update">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/update.jspx"/>
+    </definition>
+    
+      <definition extends="public" name="/approvisionementprocess/printBareCode">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/printBareCodeView.jspx"/>
+    </definition>
+</tiles-definitions>

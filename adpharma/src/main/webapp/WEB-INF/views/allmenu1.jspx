@@ -1,0 +1,502 @@
+<div  xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
+ xmlns:security="http://www.springframework.org/security/tags" 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	 xmlns:spring="http://www.springframework.org/tags" version="2.0" id="menuDiv" class="menu" >
+  <jsp:directive.page contentType="text/html;charset=UTF-8"  />
+  <jsp:output omit-xml-declaration="yes" />
+  
+   <spring:url value="/resources" var="source"></spring:url>
+   <link rel="stylesheet" href="${source}/js/style.css" type="text/css" media="screen, projection"/>
+	<!--[if lte IE 7]>
+        <link rel="stylesheet" type="text/css" href="${source}/js/ie.css" media="screen" />
+    <![endif]-->
+			
+	 	
+	<script type="text/javascript" language="javascript" src="${source}/js/jquery.dropdownPlain.js"> <!-- required for FF3 and Opera --></script>
+  
+      <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+      <spring:url value="/commandeclients/cmdCredit?form" var="vente_credit_url"/>
+      <spring:url value="/saleprocess/newProformat" var="vente_proformat_url"/>
+      <spring:url value="/commandeclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_url"/>
+      <spring:url value="/commandeclients?find=BySearch&amp;form" var="search_url"/>
+      <spring:url value="/commandeclients?find=ByStatusAndDateCreationBetween&amp;form" var="status_date_url"/>
+      <spring:url value="/saleprocess/rechercheCmd?form" var="cmd_client_url"/>
+      
+          
+   <security:authorize access="isAuthenticated()">
+        
+ 
+    <!--  menu commande fournisseur-->
+   
+            <spring:url value="/commandprocesses?form" var="cmd_four_url"/>
+            <spring:url value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cmd_list_url"/>
+            <spring:url value="/commandefournisseurs?find=BySearch&amp;form" var="cmd_find_four_url"/>
+    
+           
+
+  <!--  menu Approvisionnement-->
+    
+            <spring:url value="/approvisionementprocess?form" var="ap_cree_url"/>
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url"/>
+            <spring:url value="/transformationproduits/livreeForm?form" var="ap_trans_url"/>
+            <spring:url value="/ligneapprovisionements/sortieProduit" var="ap_sortir_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaisonEquals&amp;form" var="ap_cip_url"/>
+            <spring:url value="/ligneapprovisionements?find=BySearch&amp;form"  var="search_lgap_url"/>
+           <spring:url value="/approvisionements?find=BySearch&amp;form" var="search_list_url"/>
+    <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
+ <spring:url value="/mouvementstocks?find=BySearch&amp;form" var="mvt_search_url"/>
+                                  <spring:url value="/mouvementstocks?page=1&amp;size=${empty param.size ? 10 : param.size}" var="mvt_list_url"/>
+          
+           
+
+<ul class="dropdown">
+ <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
+		<li><a href="#">Gestion du Stock</a>
+        		<ul class="sub_menu">
+        			 <li>
+        				<a href="#">Approvisionnement</a>
+        				<ul>
+        					<li><a href="${ap_cree_url}">Creer</a></li>
+        					<li><a href="${ap_list_url}">Lister</a></li>
+        					<li><a href="${search_list_url}">Rechercher</a></li>
+        				</ul>
+        			 </li>
+        			 <li>
+        			 	<a href="#">Produits approvisionnes</a>
+        			 	<ul>
+        					<li><a href="${ap_trans_url}">Decomposer</a></li>
+        					<li><a href="${ap_sortir_url}">Sortir du Stock</a></li>
+        					<li><a href="${search_lgap_url}">rechercher</a></li>
+        					<li><a href="${lap_list_url}">lister</a></li>
+        				</ul>
+        			 </li>
+        			 <li>
+        				<a href="#">Mouvements stock</a>
+        				<ul>
+        					<li><a href="${mvt_search_url}">Rechercher</a></li>
+        					<li><a href="${mvt_list_url}">Lister</a></li>	
+        				</ul>
+        			 </li>
+				</ul>
+		</li>
+  </security:authorize>
+  <!--  menu vente -->
+            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
+
+        <li>
+        	<a href="#">Ventes</a>
+        			 	<ul class="sub_menu">
+        					<li><a href="${vente_public_url}">Vente Au Public</a></li>
+        					<li><a href="${vente_credit_url}">Vente a Credit</a></li>
+        					<li><a href="${vente_proformat_url}">Facture Proformat</a></li>
+        					<li>
+		        				<a href="#">Commandes Clients</a>
+		        					<ul>
+		        						<li><a href="${search_url}">Rechercher</a></li>
+		        						<li><a href="${list_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        		</ul>
+                
+               
+        </li> 
+    </security:authorize>
+ 
+ 	<!--  menu Caisse-->
+     <spring:url value="/caisses/ouvrirCaisse?form" var="cai_cree_url"/>
+    <spring:url value="/caisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="caisse_list_url"/>
+ 
+         <spring:url value="/caisses/fermerCaisse" var="delete_caisse_url"/>
+     
+            <spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="ap_list_url"/>
+            <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
+            <spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url"/>
+            <spring:url value="/caisses?form" var="cai_de_url"/>
+                <spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url"/>
+            
+            <spring:url value="/operationcaisses?find=ByDateOperationBetween&amp;form" var="cai_op_url"/>
+                <spring:url value="/operationcaisses?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_ops_url"/>
+                <spring:url value="/paiements?find=ByDateSaisieBetween&amp;form" var="cai_pay_url"/>
+                <spring:url value="/caisses?find=ByCaisseOuverteNot&amp;form" var="cai_find_cai_url"/>
+                <spring:url value="/paiements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="cai_pays_url"/>
+                    <spring:url value="/avoirclients?form " var="avoir_url"/>
+                             <spring:url value="/avoirclients/search " var="avoir_search_url"/>
+                    <spring:url value="/avoirclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="avoir_list_url"/>
+    
+            <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
+			 <li>
+        		<a href="#">Caisses</a>
+        			 	<ul class="sub_menu">
+        					<li><a href="${cai_cree_url}">Ouvrir</a></li>
+        					<li><a href="${delete_caisse_url}">Fermer</a></li>
+        					<li><a href="${cai_enc_url}">Encaisser</a></li>
+        				 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+        				 	<li><a href="${etat_caisse_url}">Etat des Caisses</a></li>
+        				 	        					<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li>
+        					<li>
+		        				<a href="#">Rechercher</a>
+		        					<ul>
+		        						<li><a href="${caisse_list_url}">Lister les Caisses</a></li>
+		        						<li><a href="${cai_find_cai_url}">par etat</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">Operations des Caisses</a>
+		        					<ul>
+		        						<li><a href="${cai_ops_url}">Lister</a></li>
+		        						<li><a href="${cai_op_url}">Lister par date</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">payements</a>
+		        					<ul>
+		        						<li><a href="${cai_pays_url}">Lister</a></li>
+		        						<li><a href="${cai_pay_url}">Lister par Date </a></li>	
+		        					</ul>
+		        			 </li>
+		        			  <li>
+		        				<a href="#">Avoir Client</a>
+		        					<ul>
+		        						<li><a href="${avoir_url}">Creer un Avoir</a></li>
+		        				       <li><a href="${avoir_search_url}">Rechercher un Avoir  </a></li>	
+		        						<li><a href="${avoir_list_url}">Lister Les Avoirs  </a></li>	
+		        					</ul>
+		        			 </li>
+		        			 </security:authorize>
+		        		</ul>
+                
+               
+        	</li> 
+   		</security:authorize>
+  	
+  	<!--  menu Client -->
+    
+            <spring:url value="/clients?form" var="clt_cree_url"/>
+            <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
+            <spring:url value="/clients?find=ByNomCompletLike&amp;form" var="clt_findN_url"/>
+            <spring:url value="/clients?find=ByClientNumberEquals&amp;form" var="clt_findcn_url"/>
+            <spring:url value="/categorieclients?form" var="clt_cat_url"/>
+                <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_catl_url"/>
+                <spring:url value="/detteclients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_detl_url"/>
+                <spring:url value="/detteclients?find=ByClientNameLikeAndSolderNot&amp;form" var="clt_dets_url"/>
+                <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
+    
+                       <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+
+       
+    </security:authorize>
+    
+      <!--  menu Fournisseur-->  
+         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
+          <spring:url value="/fournisseurs?form" var="four_site_url"/>
+            <spring:url value="/fournisseurs?page=1&amp;size=${empty param.size ? 10 : param.size}" var="four_list_url"/>
+           
+        
+        </security:authorize>
+        
+      <!--  menu Inventaire -->
+     <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_rps_url"/>
+             <spring:url value="/produits/ProduitAlerteStock?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_as_url"/>
+             <spring:url value="/produits?find=ByQuantiteEnStock&amp;form" var="prd_pv_url"/>
+            <spring:url value="/inventaires?form" var="inv_cree_url"/>
+            <spring:url value="/inventaires?page=1&amp;size=${empty param.size ? 10 : param.size}" var="inv_list_url"/>
+            <spring:url value="/inventaireProcess/ficheSuivieQte?form" var="fiche_qte_url"/>
+              <spring:url value="/inventaireProcess/ficheInventaireParOrdreAlpha?form" var="invAlpha_fiche_url"/>
+                        <spring:url value="/inventaires/inventaireEnCour" var="invcour_fiche_url"/>
+            
+            <spring:url value="/inventaires?find=ByDateInventaireBetween&amp;form" var="inv_date_url"/>
+            <spring:url value="/inventaires?find=ByEtat&amp;form" var="inv_etat_url"/>
+            <spring:url value="/ligneapprovisionements?find=ByCipMaison&amp;form" var="fichetDetail_cipm_url"/>
+           
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+
+			<li>
+        		<a href="#">Inventaires</a>
+        			 	<ul class="sub_menu">
+        					<li><a href="${inv_cree_url}">Creer Un Inventaire</a></li>
+        					<li><a href="${fichetDetail_cipm_url}">Fiche Detaillee produit (C.I.P.M)</a></li>
+        					<li><a href="${cai_enc_url}">Encaisser</a></li>
+        					<li>
+		        				<a href="#">Edition de Fiches</a>
+		        					<ul>
+		        						<li><a href="${invRayol}">Fiche Inventaire</a></li>
+		        						<li><a href="${fiche_qte_url}">Fiche de suivie de Quantite </a></li>
+		        						<li><a href="${invAlpha_fiche_url}">Fiche de suivie de stock </a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li><a href="${prd_rps_url}">Produits En Rupture De Stock</a></li>
+        				</ul>
+        	</li>
+   			 </security:authorize>
+   		  
+      <!--  menu Utilisateurs -->
+    
+            <spring:url value="/pharmausers?form" var="usr_cree_url"/>
+            <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
+            <spring:url value="/pharmausers?find=ByUserNameLike&amp;form" var="usr_name_url"/>
+           
+            <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+			<li>
+        		<a href="#">Utilisateurs</a>
+        			 	<ul class="sub_menu">
+        					<li><a href="${usr_cree_url}">Ajouter</a></li>
+        					<li><a href="${usr_list_url}">liste des Utilisateurs</a></li>
+        					<li><a href="${usr_name_url}">Recherche Par Nom</a></li>
+        				</ul>
+        	</li>
+       
+    		</security:authorize>
+   
+  	
+  	   <!--  menu catalogues -->
+    
+            <spring:url value="/transformationproduits?find=ByProduitOrigine&amp;form" var="transff_url"/>
+                        <spring:url value="/transformationproduits/editTransformation/0" var="transf_url"/>
+            
+                        <spring:url value="/transformationproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="trans_list_url"/>
+            
+                        <spring:url value="/produits/create/true?form" var="prd_cip_url"/>
+            
+            <spring:url value="/produits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="prd_list_url"/>
+            <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
+                                        <spring:url value="/produits?find=BySearch&amp;form" var="prdf_des_url"/>
+                        
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
+				<li>
+        		<a href="#">Catalogues</a>
+        			 	<ul class="sub_menu">
+        					<li><a href="${search_lgap_url}">Rechercher un CIPM</a></li>
+        					<li>
+		        				<a href="#">produits</a>
+		        					<ul>
+		        						<li><a href="${prd_cip_url}"> Creer Un Produit Avec C.I.P</a></li>
+		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
+		        						<li><a href="${prd_list_url}"> Lister les produits(CIP)</a></li>
+		        						<li><a href="${prdf_des_url}"> Rechercher un Produit(CIP)</a></li>	
+		        					</ul>
+		        			 </li>
+		        			   <spring:url value="/familleproduits?form" var="fp_url"/>
+            <spring:url value="/familleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="fp_list_url"/>
+            
+          <spring:url value="/sousfamilleproduits?form" var="sfp_url"/>
+            <spring:url value="/sousfamilleproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="sfp_list_url"/>
+		        			 <li style="display: none;">
+		        				<a href="#">Famille Produit</a>
+		        					<ul>
+		        						<li><a href="${fp_url}">Creer</a></li>
+		        						<li><a href="${fp_list_url}">Lister</a></li>
+		        					</ul>
+		        			 </li>
+		        			<li style="display: none;">
+		        				<a href="#"> Sous Famille Produit</a>
+		        					<ul>
+		        						<li><a href="${sfp_url}">Creer</a></li>
+		        						<li><a href="${sfp_list_url}">Lister</a></li>
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#"> Decompositions</a>
+		        					<ul>
+		        						<li><a href="${transf_url}">Creer Une relation</a></li>
+		        						<li><a href="${trans_list_url}">Liste Des Relations</a></li>
+		        						<li><a href="${transff_url}">Rechercher Une Relation</a></li>
+		        					</ul>
+		        			 </li>
+        				</ul>
+        	</li>
+            
+    </security:authorize>
+   
+  	
+  	 <!--  menu configuration -->
+    
+            <spring:url value="/rayons?form" var="conf_ray_url"/>
+            <spring:url value="/rayons?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_ray_url"/>
+            <spring:url value="/tauxmarges?form" var="conf_mrg_url"/>
+            <spring:url value="/tauxmarges?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_mrg_url"/>
+  			   <spring:url value="/modeconditionements?form" var="conf_con_url"/>
+            <spring:url value="/modeconditionements?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_con_url"/>
+            <spring:url value="/tvas?form" var="conf_tva_url"/>
+            <spring:url value="/tvas?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_tva_url"/>
+             <spring:url value="/devises?form" var="conf_dev_url"/>
+            <spring:url value="/devises?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_dev_url"/>
+                 
+       		<spring:url value="/filiales?form" var="create_filiale_url"/>
+            <spring:url value="/sites?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_site_url"/>
+                       <spring:url value="/filiales?page=1&amp;size=${empty param.size ? 10 : param.size}" var="filiale_list_url"/>
+     
+           
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
+            <li>
+        		<a href="#">Supervisions</a>
+        			 	<ul class="sub_menu">
+        					<li>
+		        				<a href="#">Rayons</a>
+		        					<ul>
+		        						<li><a href="${conf_ray_url}"> Ajouter</a></li>
+		        						<li><a href="${conf_list_ray_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">CMD Fournisseur</a>
+		        					<ul>
+		        						<li><a href="${cmd_four_url}"> Creer</a></li>
+		        						<li><a href="${cmd_find_four_url}"> Rechercher</a></li>
+		        						<li><a href="${cmd_list_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">Ordonnancier</a>
+		        					<ul>
+		        						<li><a href="${conf_list_ord_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">Fournisseurs</a>
+		        					<ul>
+		        						<li><a href="${four_site_url}"> Creer</a></li>
+		        						<li><a href="${four_list_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li>
+		        				<a href="#">Clients</a>
+		        					<ul>
+		        						<li><a href="${clt_cree_url}"> Creer</a></li>
+		        						<li><a href="${clt_list_url}">Lister</a></li>
+		        						<li><a href="#">recherche Clients</a>	
+			        						<ul>
+				        						<li><a href="${clt_findN_url}"> Par Nom</a></li>
+				        						<li><a href="${clt_findcn_url}">Par Numero</a></li>	
+			        						</ul>
+		        						</li>
+		        						<li><a href="#">categories Clients</a>
+		        							<ul>
+		        								<li><a href="${clt_cat_url}"> Creer</a></li>
+		        								<li><a href="${clt_catl_url}">Lister</a></li>	
+		        							</ul>
+		        						</li>
+		        						<li>
+		        							<a href="#">Dettes Clients</a>
+		        							<ul>
+		        								<li><a href="${clt_detl_url}">Lister</a></li>
+		        								<li>
+		        									<a href="#">recherche Dettes</a>
+		        									<ul>
+		        										<li><a href="${clt_dets_url}">  Par Client</a></li>
+		        										<li><a href="${clt_detd_url}">Par date</a></li>	
+		        									</ul>
+		        								</li>	
+		        							</ul>
+		        						</li>
+		        					</ul>
+		        			 </li>
+
+		        			 <li>	<a href="#">Conditionnement</a>
+		        					<ul>
+		        						<li><a href="${conf_con_url}"> Ajouter</a></li>
+		        						<li><a href="${conf_list_con_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			  <li><a href="#">Taux Margs</a>
+		        					<ul>
+		        						<li><a href="${conf_mrg_url}"> Ajouter</a></li>
+		        						<li><a href="${conf_list_mrg_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			  <li><a href="#">T.V.A</a>
+		        					<ul>
+		        						<li><a href="${conf_tva_url}"> Ajouter</a></li>
+		        						<li><a href="${conf_list_tva_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			   <li>
+		        			 	<a href="#">Devises</a>
+		        					<ul>
+		        						<li><a href="${conf_dev_url}"> Ajouter</a></li>
+		        						<li><a href="${conf_list_dev_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			   <li>
+		        			 	<a href="#">Filiales</a>
+		        					<ul>
+		        						<li><a href="${create_filiale_url}"> Ajouter</a></li>
+		        						<li><a href="${filiale_list_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 <li><a href="${conf_list_site_url}">Sites</a></li>
+		        		</ul>
+		     </li>
+      
+ 
+    </security:authorize>
+    
+     <!--  menu facturation-->
+                           <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    
+     <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
+                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
+            <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_fact_url"/>
+                              <spring:url value="/factures?find=ByClientAndDateCreationBetween&amp;form" var="conf_fdp_url"/>
+                                          <spring:url value="/dataloader/load" var="load_url"/>
+          <li>  
+            <a href="#">Facturation</a>
+        			 	<ul class="sub_menu">
+        			 		<li><a href="${find_pay_url}">paiements Facture</a></li>
+        					<li>
+		        				<a href="#">Rechercher factures</a>
+		        					<ul>
+		        						<li><a href="${conf_fdp_url}"> Par Date</a></li>
+		        						<li><a href="${dette_clients_url}">Par client</a></li>
+		        						<li><a href="${conf_fip_url}">Soldees ?</a></li>
+		        						<li><a href="${conf_list_fact_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			
+		        	    </ul> 
+		</li>
+        </security:authorize>
+      <!--  menu database-->
+                           <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
+    			<li>
+    			<a href="#">DataBase</a>
+        			 	<ul class="sub_menu">
+        			 		<li><a href="${load_url }">charger les donnees</a></li>
+        			 	</ul>
+        		</li>
+        </security:authorize>
+        
+        
+      <!--  menu ordonnancier-->  
+         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+          <spring:url value="/sites?form" var="conf_site_url"/>
+            <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="conf_list_ord_url"/>
+           
+        
+        </security:authorize>
+        
+         
+          <!--  menu Credential-->    
+          <spring:url value="/passwordresets?form" var="cre_pass_url"/>
+               <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">
+    
+    	<li>
+    			<a href="#">Password</a>
+        			 	<ul class="sub_menu">
+        			 		<li><a href="${cre_pass_url}">Change Password</a></li>
+        			 	</ul>
+        		</li>
+    
+         
+        </security:authorize>
+      
+  	
+ </ul> 
+ </security:authorize>
+ <div style="clear: both;"></div>
+</div> 
+
+

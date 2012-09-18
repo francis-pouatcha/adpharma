@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_ModeConditionement" modelAttribute="modeConditionement" path="/modeconditionements" versionField="Version" z="cZHkemUQLNMjdcvAOdmQ8b3AOTE=">
+        <field:input field="libelle" id="c_org_adorsys_adpharma_domain_ModeConditionement_libelle" z="bOoNoBePUMB4AnJbU7Ge/zszDIo="/>
+        <field:input field="libelleCourt" id="c_org_adorsys_adpharma_domain_ModeConditionement_libelleCourt" z="WZaXmLQ8fEp8qLGwZ9uS6WHjU3g="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_ModeConditionement_footPrint" render="false" z="user-managed"/>
+    </form:update>
+</div>

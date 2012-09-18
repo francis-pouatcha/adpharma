@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 version="2.0" >
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	   
+	<spring:url value="/paiementprocess/encaisser?form"  var="edit_url" />
+		<spring:url value="/paiementprocess/editPaiement"  var="find_facture_url" />
+	    <spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"  var="find_add_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"  var="find_upd_url" />
+
+	    <spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/"  var="show_prd_url" />
+
+			<spring:url value="/resources/images/annuler.png"  var="annuler" />
+			<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
+			<spring:url  value="/saleprocess/${saleProcess.cmdId}/enregistrer"  var="enr_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"  var="delete_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"  var="update_client_url" />
+
+		
+  
+
+     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+ 
+           <jsp:include page="findClientsByNomCompletLike.jspx" />
+           
+		   
+<c:if test="${not empty apMessage}">
+		<hr/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
+	</center>
+	</c:if>
+		     
+
+    	<!-- liste des clients trouves -->
+
+<form:customList id="clientResult" items="${clientfound}" 
+    		z="user-managed" label="LISTES DES CLIENTS TROUVES " objectName="clientfound " openPane="true" >
+	        
+	        <c:if test="${not empty clientfound}">
+		    <table>
+		    	<tr>
+		    		<th style="text-align: center;">client Number</th>
+		    		<th style="text-align: center;width: 200px;">nom Complet</th>
+		    		<th style="text-align: center;">plafond Credit</th>
+		    		<th style="text-align: center;">credit Autorise</th>
+		    		<th style="text-align: center;width: 200px;">client Payeur </th>
+		    		<th style="text-align: center;">taux Couverture</th>
+		    		<th style="text-align: center;"> Dettes</th>
+		    		<th style="text-align: center;">ACTION</th>
+		    		
+		    	</tr>
+		    	<c:forEach items="${clientfound}" var="clt">
+		    		<tr>
+		    			<td style="text-align: center;">
+		    				<c:out value="${clt.clientNumber}"></c:out>
+		    			</td>
+		    			<td style="text-align: left;padding-left: 20px">
+		    				<c:out value="${clt.nomComplet}"></c:out>
+		    			</td>
+		    			<td style="text-align:right;padding-right: 20px">
+		    				<c:out value="${clt.plafondCredit}"></c:out>
+		    			</td>
+		    			<td style="text-align: center;padding-right: 20px">
+		    				<c:out value="${clt.creditAutorise}"></c:out>
+		    			</td>
+		    			<td style="text-align: left;padding-left: 20px">
+		    		<c:out value="${clt.clientPayeur.nomComplet }"></c:out>
+		    			
+		    			</td>
+		    			<td style="text-align: center;padding-right: 20px">
+		    				<c:out value="${clt.tauxCouverture}"></c:out>
+		    			</td>
+		    			<c:choose>
+		    			   <c:when test="${clt.totalDette != 0}">
+		    			   
+		    			   <td style="text-align: center;padding-right: 20px">
+		    				<c:out value="${clt.totalDette}"></c:out>
+		    			      </td>
+		    			   
+		    			   </c:when>
+		    			  <c:otherwise>
+		    			   <td style="text-align: center;padding-right: 20px; color: red;">
+		    				<c:out value="${clt.totalDette}"></c:out>
+		    			      </td>
+		    			  
+		    			  </c:otherwise>
+		    			</c:choose>
+		    			
+		    			
+						<td class="utilbox" style="text-align: center;">
+						<c:choose>
+						 <c:when test="${isClient}">
+						 	<spring:url value="/commandeclients/selectclient/${clt.id}"  var="select_url" />
+						 
+						 </c:when>
+						 
+						 <c:otherwise>
+					<spring:url value="/commandeclients/${idClient}/selectpayeur/${clt.id}"  var="select_url" />
+						 </c:otherwise>
+						</c:choose>
+						<c:if test="${clt.creditAutorise}">
+						[<a style="font-weight: bold;" href="${select_url}" alt="Select" title="Select">Select</a>]
+						</c:if>
+							
+						</td>
+											
+		    		</tr>
+		    	</c:forEach>
+		    </table>	  
+		    </c:if>      
+        </form:customList>
+     
+</div>

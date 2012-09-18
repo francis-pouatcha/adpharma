@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:custumcreate modelAttribute="facture"  id="ff_org_adorsys_adpharma_domain_Facture" path="/factures/search" z="Yee4XxJ5tW1cMi1p5ac3b6Xrd9M=">
+        <table style="border: none;">
+            <tr>
+                <td style="border: none;">
+        <field:input disableFormBinding="true" field="cip" label="Cip Produit" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
+       <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+           </td>
+            <td style="border: none;">
+       <field:input disableFormBinding="true" field="netPayer" label="Montant Min" id="f_org_adorsys_adpharma_domain_Facture_netPayer" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+       <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="Date Min" field="dateCreation"  id="f_org_adorsys_adpharma_domain_Facture_dateCreation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+       <field:checkbox field="solder" id="f_org_adorsys_adpharma_domain_Facture_solder"  label="Solder ? "/>
+   </td>
+   </tr>
+   </table>
+    </form:custumcreate>
+    
+    <c:if test="${ not empty results}">
+     <page:list id="pl_org_adorsys_adpharma_domain_Facture" items="${results}" z="8SceoTuxcq9jmB1uKEBDpUPgQoQ=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_Facture" path="/factures" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_factureNumber" property="factureNumber" z="mtXP0zSgZTShWGN0zqNnYmmA+tA="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_commande" property="commande" render="false" z="Db6sJdzsjRFYMAM571q0OforfF4="/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" maxLength="-1" property="dateCreation" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_vendeur" maxLength="-1" property="vendeur" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_client" maxLength="-1" property="client" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_montantTotal" property="montantTotal" z="uG2T0V5GmpN1EvVqmNlvhufhkoU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_netPayer" property="netPayer" z="OWHx1k+Rl9LTdNdIUhVsUKmPjtc="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_encaisser" property="encaisser" z="ZVGUlbe7B+a7hb+cd68YOASSZuU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_avance" property="avance" z="waNa46akJ4onvuHTiGbLGw7oeI0="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_reste" property="reste" z="htyWHIsVZwzLW9nIZXxMZ+f7kMc="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_solder" property="solder" z="llg3p70RhLSUtgaHL1QX+g7udhw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_caisse" property="caisse" z="Re/XBBZzEFMYSLy2S5UU++1pwqY="/>
+        </table:table>
+    </page:list>
+     <jsp:include page="invoiceDetail.jspx" />
+  </c:if> 
+</div>

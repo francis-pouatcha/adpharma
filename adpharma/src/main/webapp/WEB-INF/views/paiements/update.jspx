@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_Paiement" modelAttribute="paiement" path="/paiements" versionField="Version" z="mt7hjo5mxEHUAGuB8ENUPlvMp0w=">
+        <field:input field="paiementNumber" id="c_org_adorsys_adpharma_domain_Paiement_paiementNumber" z="WYhPa8BPWIqUxgBQVXOyrXeKlcA="/>
+        <field:datetime dateTimePattern="${paiement_datepaiement_date_format}" field="datePaiement" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+        <field:datetime dateTimePattern="${paiement_datesaisie_date_format}" field="dateSaisie" id="c_org_adorsys_adpharma_domain_Paiement_dateSaisie" z="vFwtG0ZZuuEWjbBzdEWSMBJCKHM="/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_Paiement_montant" validationMessageCode="field_invalid_number" z="j5sYcUhtBpzjLB52WvJ7QicYF3U="/>
+        <field:input field="sommeRecue" id="c_org_adorsys_adpharma_domain_Paiement_sommeRecue" validationMessageCode="field_invalid_number" z="C5ehBmf+Gy2EKtQnqgggKpEVeRM="/>
+        <field:input field="difference" id="c_org_adorsys_adpharma_domain_Paiement_difference" validationMessageCode="field_invalid_number" z="TcVOlANlAC7U5PVVbTNLO2/6oOg="/>
+        <field:select field="site" id="c_org_adorsys_adpharma_domain_Paiement_site" itemValue="id" items="${sites}" path="/sites" z="Itqa2Jfu7GY/B3Fd6VHExaV8isY="/>
+        <field:select field="cassier" id="c_org_adorsys_adpharma_domain_Paiement_cassier" itemValue="id" items="${pharmausers}" path="/pharmausers" z="ujA4mPXlMz2oqXFeLTbGn0jHYrE="/>
+        <field:select field="caisse" id="c_org_adorsys_adpharma_domain_Paiement_caisse" itemValue="id" items="${caisses}" path="/caisses" z="fQ5nOR7IJtfeqiL3xlJQt/wzWag="/>
+        <field:select field="facture" id="c_org_adorsys_adpharma_domain_Paiement_facture" itemValue="id" items="${factures}" path="/factures" z="nCqiHsOhwKs4xqHFcetGB9WGugc="/>
+        <field:select field="typePaiement" id="c_org_adorsys_adpharma_domain_Paiement_typePaiement" items="${typepaiements}" path="typepaiements" z="Dzs9YGtnaM4pJOnIYbIfZkx1xgU="/>
+        <field:checkbox field="ticketImprimer" id="c_org_adorsys_adpharma_domain_Paiement_ticketImprimer" z="FD2xg2oK7N6Z3/WOlkOTbgJwJOI="/>
+        <field:input field="payerPar" id="c_org_adorsys_adpharma_domain_Paiement_payerPar" z="Gg4l/eqI4xwqLjHoo1/gIQB/6TA="/>
+        <field:select field="quiPaye" id="c_org_adorsys_adpharma_domain_Paiement_quiPaye" items="${quipayes}" path="quipayes" z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q="/>
+        <field:input field="nomClient" id="c_org_adorsys_adpharma_domain_Paiement_nomClient" z="oNCWBRD1vD78LlLgJwCK+9+Kr/k="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Paiement_footPrint" z="u+podtcJ4VuL+D+a5Ryv1h8+XxA="/>
+        <field:textarea field="informations" id="c_org_adorsys_adpharma_domain_Paiement_informations" z="9pHJoylpQckqrmagCO43Avwr46w="/>
+        <field:input field="numeroBon" id="c_org_adorsys_adpharma_domain_Paiement_numeroBon" z="59liJX5NtFioVJfQfsOjwznKB44="/>
+        <field:input field="montantBon" id="c_org_adorsys_adpharma_domain_Paiement_montantBon" validationMessageCode="field_invalid_number" z="2ySYTYf2RGqVEdiMf/nfmpT21yk="/>
+        <field:checkbox field="compenser" id="c_org_adorsys_adpharma_domain_Paiement_compenser" z="u7lU0OZCiNJf3U678TMXhBE60ZM="/>
+        <field:checkbox field="reduction" id="c_org_adorsys_adpharma_domain_Paiement_reduction" z="ssDnUpRrFKOC0ykphmkGLtRVVCQ="/>
+        <field:input field="caisses" id="c_org_adorsys_adpharma_domain_Paiement_caisses" z="xOCRgapQ9xS+691eBRWA2vxieHE="/>
+    </form:update>
+</div>

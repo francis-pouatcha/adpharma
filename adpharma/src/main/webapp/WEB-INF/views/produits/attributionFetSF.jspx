@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:springform="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<div style="margin-bottom: 2px; padding-bottom: 5px;">
+		<span style="font-weight: bold"> <c:out
+				value="${commandeProcess.displayName}" />
+		</span>
+	</div>
+				    <spring:url value="/produits/findProductApByCipAjax/"  var="find_cip_url" />
+			<spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+	<spring:url value="/" var="home" />
+	<spring:url value="/produits/findProductByDesAjax" var="find_des_url" />
+	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
+	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
+	<spring:url
+		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
+		var="delete_cmd_url" />
+	<spring:url value="/produits/setFamilleAndSousFamille/" var="add_fsf_utl" />
+		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	
+	<!-- recherche de produit par code identification -->
+
+	<script type="text/javascript">
+    	
+	dojo.ready(function(){   
+		
+		
+		function clearProductTable(){
+			$('#resultproduit').html(
+					'<tr>
+					<th>CIP</th>
+			    		<th>DESIGNATION</th>
+			    		<th>QTE CIP</th>
+			    		 <th>FAMILLES</th>
+			    		 <th>SOUS FAMILLES</th>
+			    		 <th>TAUX REM</th>
+					</tr>');
+		}	
+		function videLigne(){
+		    $("#cip").val("");
+			$("#des").val("");
+			$("#qte").val("");
+			$("#rem").val("");
+			$("#lineId").val("");
+		  }
+		function requetes(cip){
+			$.getJSON( "${find_cip_url }"+cip,
+					function(data){
+				if (data.id== null) {
+					alert("Aucun produit Trouve de CIP "+cip);	
+					videLigne();
+						}else{
+							$("#cip").val(data.cip);
+							$("#des").val(data.designation);
+							$("#qte").val(data.quantiteEnStock);
+							$("#rem").val(data.tauxRemiseMax);
+							$("#lineId").val(data.id);
+
+						}
+					
+					});
+			}
+		$('form#produitfindform').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_productajax_url}',
+						$('#produitfindform').serialize(),
+			                function(data){
+								$(data).each(function(){
+									var famille = this.familleProduit == null ?"-//-" :this.familleProduit.libelleFamille ;
+									var sfamille = this.sousfamilleProduit == null ?"-//-" :this.sousfamilleProduit.libelleSousFamille ;
+									$('#resultproduit').append(
+										'<tr id="'+this.cip+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.quantiteEnStock+'</td>
+										  <td>'+famille+'</td>
+										  <td>'+sfamille+'</td>
+										  <td>'+this.tauxRemiseMax+'</td>
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproduit tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$('#findproduit').dialog("close");
+										requetes(current.id);
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+	
+		
+		
+		
+		// Dialog	find produit		
+		$('#findproduit').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1200,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+    		
+    
+    		function findline() {
+    			var cipm = document.getElementById("cipm").value;
+    			var url = "${find_cipm_url}/" + cipm ;
+    				$.getJSON(url,
+    					 function(data) {
+    						if (data.id == null) {
+    							clear();
+    								alert("Aucun produit Trouve");
+    						} else {
+    							document.getElementById("cipm").value = data.cipMaison;
+    							document.getElementById("cip").value = data.cip;
+    							document.getElementById("des").value = data.designation ;
+    							document.getElementById("pu").value = data.prixVenteUnitaire;
+    							$("#qtecipm").val(data.quantieEnStock) ;
+    						}
+    					});
+    				
+    				
+    		}
+
+    		function clear(){
+    		   document.getElementById("cip").value = "";
+    			document.getElementById("cipm").value = "";
+    			document.getElementById("des").value = "";
+    			document.getElementById("pu").value = "";
+    			document.getElementById("qte").value = "";
+    			document.getElementById("qtecipm").value = "";
+
+    			
+    		   
+    		}
+
+
+$('#findprd').click(function(){
+	$('#findproduit').dialog('open');
+	return false;
+});
+
+
+$( "#cipm" )
+.change(
+function(){
+	findline();
+return( false );
+});
+
+
+$('#subForm').submit(function(){
+	var lineId = $("#lineId").val();
+    if (lineId == "") {
+   	 alert("saisir le produit!");
+		return false ;
+	  }else{
+		  return true ;
+	  }
+});
+ 
+
+
+
+ });
+
+	
+			
+
+
+
+</script>
+	
+
+	<div style="margin-bottom: 4px; font-weight: bold;">
+		<span class="firstTab selectedTab">
+			<a href="#">ATTRIBUTION FAMILLES ET SOUS FAMILLES</a>
+		</span> 
+		<span>
+			<a  style="text-decoration: none;" id="findprd"  >
+			
+				<INPUT class="submits" type="button" value="Recherche CIPM" title="rechercher un CIPM" />
+			</a>
+		</span>
+		<span><a href="${ home}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Terminer"
+				title="Terminer la sortie" /></a></span>
+
+	</div>
+
+
+	<util:panel title="saisir le CIPM du Produit" id="cip">
+		<div id="sortie">
+			<form action="${add_fsf_utl}" method="GET" id="subForm" >
+				<table>
+					<tr>
+						<th style="text-align: center;">C.I.P</th>
+						<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+						<th style="text-align: center;">QTE</th>
+						<th style="text-align: center;  witdh: 200px;">FAMILLE</th>
+						<th style="text-align: center; witdh: 230px;">SOUS FAMILLE</th>
+						<th style="text-align: center;">TAUX REM</th>
+						<th style="text-align: center;">ACTION</th>
+					</tr>
+					<tr>
+						<td>
+						<INPUT type="hidden" name="lineId" id="lineId" /> <INPUT
+							type="text" name="cip" id="cip" class="autres"  
+							onKeyPress="return scanTouche(event)"  title="saisir le cip"
+							 autofocus="autofocus" />
+
+						</td>
+						<td><INPUT type="text" name="des" class="des" id="des"
+							title="Designation" value=""
+							style="color: blue; text-align: center;" disabled="disabled" />
+
+						</td>
+						<td><INPUT type="text" name="qte" id="qte" class="autres"
+							value="" style="color: blue; text-align: center;"
+							disabled="disabled" width="50px;" />
+						</td>
+						<td>
+						<SELECT name="famille" style="height: 22px;width: 200px;" id="famille">
+						   <c:forEach items="${familleproduits}" var="famille">
+								<OPTION value="${famille.id}">${famille.libelleFamille}</OPTION>
+								</c:forEach>
+						</SELECT>
+						</td>
+						<td>
+						<SELECT name="sfamille" style="height: 22px;width: 230px;" id="sfamille">
+						   <c:forEach items="${sousfamilleproduits}" var="sfamille">
+								<OPTION value="${sfamille.id}">${sfamille.libelleSousFamille}</OPTION>
+								</c:forEach>
+						</SELECT>
+						</td>
+						<td><INPUT type="text" name="rem" id="rem" class="autres"
+							value="" style="color: blue; text-align: center;"
+							 width="50px;" />
+						</td>
+
+						<td align="center"><INPUT type="submit" value="save"
+							class="submits"  /></td>
+
+					</tr>
+				</table>
+			</form>
+
+		</div>
+
+		<BR />
+		<b style="color: red; text-align: center;"> ${apMessage} </b>
+
+	</util:panel>
+	<BR />
+
+
+
+	<!-- afficher les produits sortie par les agent ce jour  -->
+		<util:panel title="Resultat Attribution " id="resultattri">
+	
+ <div  style="margin-bottom: 15%;">
+
+		<table>
+			<tr>
+				<th style="size: 15">C.I.P</th>
+				<th style="size: 50">Designation</th>
+				<th>qte En Stock</th>
+				<th>rayon</th>
+				<th>famille</th>
+				<th>Sous famille</th>
+				<th>taux rem</th>
+			</tr>
+
+			<c:forEach items="${produits}" var="ligne">
+				<tr>
+					<td><c:out value="${ligne.cip}"></c:out></td>
+					<td class="des"><c:out value="${ligne.designation}"></c:out></td>
+					<td><c:out value="${ligne.quantiteEnStock}"></c:out></td>
+					<td><c:out value="${ligne.rayon.name}"></c:out></td>
+					<td><c:out value="${ligne.familleProduit.libelleFamille}"></c:out></td>
+					<td><c:out value="${ligne.sousfamilleProduit.libelleSousFamille}"></c:out></td>
+				  <td><c:out value="${ligne.tauxRemiseMax}"></c:out></td>
+					
+				</tr>
+			</c:forEach>
+		</table>
+</div>	
+</util:panel>
+
+	<div id="findproduit" style="display: none;" title="recherche un cip ">
+		
+		
+		
+		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation"/>
+		</p>
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIP</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    	   <th style="text-align: center;" >FAMILLES</th>
+		    	   <th style="text-align: center;" >SOUS FAMILLES</th>
+		    	   		    	    <th style="text-align: center;">TAUX REM</th>
+		    	   
+		    
+		    	</tr>
+		  </table>
+	</div>	 
+   
+</div> 
+
+</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_LigneApprovisionement" modelAttribute="ligneApprovisionement" path="/ligneapprovisionements" versionField="Version" z="LYxExYJW9sRDTRyXshzA5Tn5xiM=">
+        <field:input field="footPrint" render="false" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" z="mmuSrO1gwvAPNAhKcNvAXJw75f0="/>
+        <field:input field="lotNumber" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" z="qo5jfznu+x1A2p7LPbrY+r6xbPg="/>
+        <field:select field="produit" render="false" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit" itemValue="id" items="${produits}" path="/produits" required="true" z="tFaYXBgX2ABwx50+Xcbr7RQvl8g="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_designation" z="9CTULts9kJWj/8k0y4ReHno88Vg="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" field="dateFabrication" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_dateFabrication" z="a4LCMrCLw/vP5XJ0AN1faUmWyUs="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" field="datePeremtion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" z="INoStJTwF0135B0kdssoPoOk61U="/>
+        <field:select field="agentSaisie" render="false" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_agentSaisie" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="lPwOKH3hSuvho+9GJC9a5Tcvsms="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" field="dateSaisie" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie" z="vDWHteGwxxnBGmL1O9ExHhEeJgY="/>
+        <field:input field="quantiteAprovisione" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" validationMessageCode="field_invalid_integer" z="5TFpKYNNoEJ9JsmsrAWap84tNNo="/>
+        <field:input field="quantieSortie" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantieSortie" validationMessageCode="field_invalid_integer" z="ExltIJI9wGBCVM6xBavsWXiULxM="/>
+        <field:input field="quantieEnStock" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" validationMessageCode="field_invalid_integer" z="WDtDSn6TfTahPyoaTvAdE9FAQUs="/>
+        <field:input field="prixAchatUnitaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" validationMessageCode="field_invalid_number" z="F86gUBFQ1e0iGlFBcoj87DEafTo="/>
+        <field:input field="prixAchatTotal" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatTotal" validationMessageCode="field_invalid_number" z="LLirBCqM3vw1AaRldLo67ZPAWpg="/>
+        <field:input field="margeBrute" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_margeBrute" validationMessageCode="field_invalid_number" z="qlyXCWO7BDb96F/MWA2x1g53rS0="/>
+        <field:select field="approvisionement" render="false" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" itemValue="id" items="${approvisionements}" path="/approvisionements" required="true" z="b8m6rn0lC5CPKJSbkeknj3DkB9k="/>
+        <field:input field="cipMaison" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" min="7" required="true" z="N98PcG7KjJS30B6yyzyiWXxqm4s="/>
+        <field:input field="prixVenteUnitaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" validationMessageCode="field_invalid_number" z="6L+M1ULm1L2s+bTOnR04bawlS7U="/>
+    </form:update>
+</div>

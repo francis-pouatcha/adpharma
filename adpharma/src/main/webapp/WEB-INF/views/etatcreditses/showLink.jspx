@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
+	style=" margin: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+            		    
+                  			<spring:url  value="/etatcreditses/print/${itemId}.pdf"  var="conv_cmd_url" />
+                                   			<spring:url  value="/etatcreditses/printfacture/${itemId}.pdf"  var="etat_gbl_url" />
+                 
+                        			<spring:url  value="/etatcreditses/${itemId}/annuler"  var="etat_annuler_url" />
+      
+      <spring:url value="/resources/images/sendmail.png"  var="mail" />
+      <spring:url value="/resources/images/print.png"  var="print" />
+      <spring:url value="/resources/images/cloturer.png"  var="close" />
+      <spring:url value="/resources/images/modifier.png"  var="modifier" />
+       
+   <c:set value="CLOS" var="etat"/>
+   <script type="text/javascript">
+function closeFact(){
+Check = confirm("Voulez vous vraiment cloturer cette Facture? Apres la cloture il ne serra  plus possible de modifier les details. ");
+if(Check == false){
+	return false;
+	
+}else{
+	return true;
+}
+}
+
+function annCmd(){
+	Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
+	if(Check == false){
+		return false;
+		
+	}else{
+		return true;
+	}
+	}
+	
+function restoreCmd(){
+	Check = confirm("Voulez vous vraiment Restorer cette commande ?. ");
+	if(Check == false){
+		return false;
+		
+	}else{
+		return true;
+	}
+	}
+</script>
+   
+  
+              <span   ><a href="${ conv_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer l'Etat" title="Imprimer L'etat" /></a></span>
+                   <span   ><a href="${ etat_gbl_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer la Facture Globale" title="Imprimer La facture globale" /></a></span>
+     
+      <c:if test="${not etatcredits.solder}">
+   
+     <span ><INPUT id="pay" class="submits"  type="button" value="Encaisser" title="Encaisser" /> <INPUT id="payd" class="submits" style="display: none;"  type="button" value="Annuler L'encaissement" title="Annuller L'encaissement" /></span>
+      </c:if>
+        <c:if test="${not etatcredits.encaisser}">
+     <span > <a style="text-decoration: none;" href="${etat_annuler_url }"><INPUT id="pay" class="submits"  type="button" value="Annuler L'etat" title="Annuler Etat" /></a></span>
+      </c:if>           
+   <c:if test="${not empty apMessage}">
+		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: -18px;font-weight: bold;font-size: 16px;">${apMessage}</p>
+	</center>
+	</c:if>    
+</span>
+
+

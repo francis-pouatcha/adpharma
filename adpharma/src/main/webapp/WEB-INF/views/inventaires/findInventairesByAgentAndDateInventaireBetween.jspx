@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="ByAgentAndDateInventaireBetween" id="ff_org_adorsys_adpharma_domain_Inventaire" path="/inventaires" z="DuqSFPKqb/1es67/ATQhJ5vijVs=">
+        <field:select disableFormBinding="true" field="agent" id="f_org_adorsys_adpharma_domain_Inventaire_agent" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="77zOB/aCCF2mjzYUDb+hvTe9C1c="/>
+        <field:datetime dateTimePattern="${inventaire_mindateinventaire_date_format}" disableFormBinding="true" field="minDateInventaire" id="f_org_adorsys_adpharma_domain_Inventaire_minDateInventaire" required="true" z="kdzHtZZJlVntYlrPZwuEo69Wrp0="/>
+        <field:datetime dateTimePattern="${inventaire_maxdateinventaire_date_format}" disableFormBinding="true" field="maxDateInventaire" id="f_org_adorsys_adpharma_domain_Inventaire_maxDateInventaire" required="true" z="7NNv1/EMfP72UFhWRBKYuTbND58="/>
+    </form:find>
+</div>

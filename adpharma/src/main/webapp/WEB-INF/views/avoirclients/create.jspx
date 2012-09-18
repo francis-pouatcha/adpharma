@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:formsp="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <spring:url value="/resources/images/globe32.gif" var="loadimage"/>
+    <spring:url value="/saleprocess/0/findProduct" var="find_product_url"/>
+    <spring:url value="/saleprocess/0/selectProduct" var="select_product_url"/>
+    <spring:url value="/clients/getClientByAjax" var="get_client_url"/>
+    <spring:url value="/clients/findClientByAjax" var="find_cliet_url"/>
+    <script type="text/javascript">
+	
+	function clearClientTable(){
+		$('#result').html(
+				'<tr>
+            <th align="center" valign="top">CODE</th>
+            <th align="center" valign="top">NOM</th>
+            <th align="center" valign="top">TELEPHONE</th>
+            <th align="center" valign="top">EMPLOYEUR</th>
+            <th align="center" valign="top">DETTES</th>
+            <th align="center" valign="top">CREDIBLE</th>
+        </tr>');
+	}
+	
+	
+	$(function(){
+		$('form#person').submit
+		(function(){
+			// clearClientTable();
+				$.getJSON( '${find_cliet_url}',
+						$('#person').serialize(),
+			                function(data){
+								$(data).each(function(){$('#result').append(
+										'<tr>
+            <td>'+this.clientNumber+'</td>
+            <td>
+                <a id="'+this.id+'">'+this.nom+'</a>
+            </td>
+            <td>'+this.telephoneMobile+'</td>
+            <td>'+this.employeur+'</td>
+            <td>'+this.totalDette+'</td>
+            <td>'+this.creditAutorise+'</td>
+        </tr>'
+										
+								);});
+								$('table#result a').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.getJSON( '${get_client_url}/'+this.id,
+									                function(data){
+											$('#_clientNumber_id').val(data.clientNumber);
+									    	 $('#_clientName_id').val(data.nom);
+
+											$('#findClient').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+		
+		// Dialog	find client		
+		$('#findClient').dialog({
+			open:function(){
+				// clearClientTable();
+			},
+			autoOpen: false,
+			width: 900,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		$('#finclt').click(function(){
+			$('#findClient').dialog('open');
+			return false;
+		});
+		
+		
+	});
+	
+		
+	
+	</script>
+    <form:create id="fc_org_adorsys_adpharma_domain_AvoirClient" modelAttribute="avoirClient" path="/avoirclients" render="${empty dependencies}" z="QHpVskvWeM0rP138sRoyLxa1U2Y=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_AvoirClient_footPrint" render="false" z="user-managed"/>
+        <field:input field="numero" id="c_org_adorsys_adpharma_domain_AvoirClient_numero" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${avoirClient_dateedition_date_format}" field="dateEdition" id="c_org_adorsys_adpharma_domain_AvoirClient_dateEdition" render="false" z="user-managed"/>
+        <field:input buttonId="finclt" buttonLabel="find" disabled="true" field="clientName" id="c_org_adorsys_adpharma_domain_AvoirClient_clientName" required="true" z="user-managed"/>
+        <formsp:hidden id="_clientNumber_id" path="clientNumber"/>
+        <field:select field="typeBon" id="c_org_adorsys_adpharma_domain_AvoirClient_typeBon" items="${typebons}" path="typebons" z="j3ld4F2p69jypwgwBrwO6/qGhZY="/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_AvoirClient_montant" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="montantUtilise" id="c_org_adorsys_adpharma_domain_AvoirClient_montantUtilise" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="reste" id="c_org_adorsys_adpharma_domain_AvoirClient_reste" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_AvoirClient_annuler" render="false" z="user-managed"/>
+        <field:input field="agent" id="c_org_adorsys_adpharma_domain_AvoirClient_agent" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${avoirClient_datedernierop_date_format}" field="dateDernierOp" id="c_org_adorsys_adpharma_domain_AvoirClient_dateDernierOp" render="false" z="user-managed"/>
+        <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_AvoirClient_solder" render="false" z="user-managed"/>
+        <field:input field="clientNumber" id="c_org_adorsys_adpharma_domain_AvoirClient_clientNumber" render="false" z="user-managed"/>
+        <field:checkbox field="imprimer" id="c_org_adorsys_adpharma_domain_AvoirClient_imprimer" render="false" z="user-managed"/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_AvoirClient" render="${not empty dependencies}" z="QqvzRsseeSNszKLA/bFpA3netfI="/>
+    <div id="findClient" style="display: none;" title="recherche client">
+        <input id="select" type="hidden"/>
+        <form enctype="application/x-www-form-urlencoded" id="person">
+            <p>
+                <label for="name">Nom  :</label>
+                <input name="name" type="text" width="300"/>
+            </p>
+        </form>
+        <center>
+            <IMG alt="loading ..." class="loadimage" src="${loadimage } " style="display: none;"/>
+        </center>
+        <div style="height:300px; overflow: auto;">
+            <table align="left" border="0" cellpadding="0" cellspacing="0" class="result" frame="box" id="result" valign="top" width="100%;">
+                <tr align="top" valign="top">
+                    <th align="center" valign="top">CODE</th>
+                    <th align="center" valign="top">NOM</th>
+                    <th align="center" valign="top">TELEPHONE</th>
+                    <th align="center" valign="top">EMPLOYEUR</th>
+                    <th align="center" valign="top">DETTES</th>
+                    <th align="center" valign="top">CREDIBLE</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

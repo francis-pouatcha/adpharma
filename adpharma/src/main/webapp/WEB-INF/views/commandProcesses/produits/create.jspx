@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits" render="${empty dependencies}" z="ybYMxCCcpnpwII+h6EW1wVPtyZ0=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Produit_footPrint" render="false" z="user-managed"/>
+        <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" render="false" z="user-managed"/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_Produit_designation" required="true" z="QU7r5zqGZMyMej7Tr9SkqPafDG8="/>
+        <field:input field="designationCourt" id="c_org_adorsys_adpharma_domain_Produit_designationCourt" required="true" z="AoHkMVxQIpY0uXvzN7WrVPTU86E="/>
+        <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant" required="true" z="8o5b03mQ3OAtDdHA7C8NST4C92c="/>
+        <field:input field="conditionnement" id="c_org_adorsys_adpharma_domain_Produit_conditionnement" z="jpVUmQGbw5uEtynV88ddziZ2vYs="/>
+        <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
+        <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits" z="OurxblZBwoww2DmBOEF5L/0IPBo="/>
+        <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits" z="H7v25lQAmbUNLHOGGXLVe1G1E48="/>
+        <field:input field="quantiteEnStock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" validationMessageCode="field_invalid_integer" z="aZv2SVBq5+G/yaUflrt5Ot1g7qU="/>
+        <field:input field="planfondStock" id="c_org_adorsys_adpharma_domain_Produit_planfondStock" validationMessageCode="field_invalid_integer" z="/BvITd2/RqanNdTdOpkRwAN/UeA="/>
+        <field:input field="seuilComande" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" validationMessageCode="field_invalid_integer" z="4f/ES3d9TyL7w8Br1piLgLR2kI0="/>
+        <field:input field="tauxRemiseMax" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>
+        <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" z="ys/P81Ss5OdjfSztzJXtlXZF9E0="/>
+        <field:datetime dateTimePattern="${produit_datedernieresortie_date_format}" field="dateDerniereSortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" z="PV+MvJ943DRD4afyn2HizPObZ1A="/>
+        <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
+        <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
+        <field:checkbox field="commander" id="c_org_adorsys_adpharma_domain_Produit_commander" z="w8tHjJgylTeLOLYRrqnQl+wHTeg="/>
+        <field:checkbox field="produitCompose" id="c_org_adorsys_adpharma_domain_Produit_produitCompose" z="vYy5nxaylxeOgf4dThzb/DJzQqo="/>
+        <field:checkbox field="imprimerEtiquette" id="c_org_adorsys_adpharma_domain_Produit_imprimerEtiquette" z="GoW17sEtMddVCWAQhImNNh9j1lI="/>
+        <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="/aJ/nPLLC7Pbr4lVWetnWx6SEh0="/>
+        <field:select field="tvaProduit" id="c_org_adorsys_adpharma_domain_Produit_tvaProduit" itemValue="id" items="${tvas}" path="/tvas" z="1UkofXoJ7/SSEsmj2K7Ar+7ZX6w="/>
+        <field:select field="tauxDeMarge" id="c_org_adorsys_adpharma_domain_Produit_tauxDeMarge" itemValue="id" items="${tauxmarges}" path="/tauxmarges" z="7caGIJ7lWBnqCZZRsg6VK+6zl0E="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Produit" render="${not empty dependencies}" z="n4/IjG6lu5Bj/dySKMFveULZa44="/>
+</div>

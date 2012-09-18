@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+        <form:custumcreate modelAttribute="paiement" id="ff_org_adorsys_adpharma_domain_AvoirClient" path="/paiements/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
+        <field:select field="cassier" id="c_org_adorsys_adpharma_domain_Paiement_cassier" itemValue="id" items="${pharmausers}" path="/pharmausers" z="ujA4mPXlMz2oqXFeLTbGn0jHYrE="/>
+        <field:input field="caisses" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" z="np7ibv91CZIaKMCCUpDZ77gqPTQ="/>
+        <field:select field="typePaiement" id="c_org_adorsys_adpharma_domain_Paiement_typePaiement" items="${typepaiements}" path="typepaiements" z="Dzs9YGtnaM4pJOnIYbIfZkx1xgU="/>
+        <field:datetime dateTimePattern="${paiement_datesaisie_date_format}" field="dateSaisie" label="Min Date Saisie" id="c_org_adorsys_adpharma_domain_Paiement_dateSaisie" z="vFwtG0ZZuuEWjbBzdEWSMBJCKHM="/>
+    </form:custumcreate>
+    <page:list id="pl_org_adorsys_adpharma_domain_Paiement" items="${results}" z="8ofs/1S7Py8D3rJJyf7v7YPALqE=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_Paiement" path="/paiements" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Paiement_paiementNumber" property="paiementNumber" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${paiement_datesaisie_date_format}" maxLength="-1" id="c_org_adorsys_adpharma_domain_Paiement_dateSaisie" property="dateSaisie"  z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_montant" property="montant" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_sommeRecue" property="sommeRecue" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_difference" property="difference" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Paiement_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_typePaiement" maxLength="-1"  property="typePaiement" z="kZZuKGC+FADJuMZ8qnnMxAL0GDw="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_cassier" maxLength="-1" property="cassier" z="15UqF93F5HrhRCngq/tOllharUs="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_quiPaye" label="Verssement effectue par" render="false" maxLength="-1" property="payerPar" z="R6+MVK5BFMks44qzNlnS2sQTVIg="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_ticketImprimer" label="imprimer ?" property="ticketImprimer" z="1KOX11LbSBfhCM2z0u/xoGrE5Lk="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Paiement_facture" maxLength="-1" property="facture" z="nFbbpMPfCzCLNeREJ0l2kt0w1UU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Paiement_compenser" property="compenser" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Paiement_reduction" render="false" property="reduction" z="5YZjQlLjRIMt3BvUf3YGDSdVGzc="/>
+        </table:table>
+    </page:list>
+</div>

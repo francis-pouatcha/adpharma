@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	
+ <script type="text/javascript">
+
+function annCmd(){
+	Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
+	if(Check == false){
+		return false;
+		
+	}else{
+		return true;
+	}
+	}
+	
+
+</script>
+	<div style="margin-bottom: 2px; padding-bottom: 2px;">
+		<span id="cmdName" style="font-weight: bold"> <c:out
+				value="${saleProcess.displayName}" />
+		</span>
+	</div>
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit"
+		var="edit_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct"   var="find_product_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/selectProduct"   var="select_product_url" />
+
+	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
+	<c:choose>
+		<c:when test="${forcer}">
+			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLineForcer"
+				var="addLine_url" />
+			<spring:url
+				value="/saleprocess/${saleProcess.cmdId}/anulerVenteForcer/${saleProcess.produit.id}"
+				var="annulerVenteForcer_url" />
+
+		</c:when>
+		<c:otherwise>
+			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"
+				var="addLine_url" />
+
+		</c:otherwise>
+	</c:choose>
+
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"
+		var="find_upd_url" />
+
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/"
+		var="show_prd_url" />
+
+	<spring:url value="/resources/images/annuler.png" var="annuler" />
+	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrer"
+		var="enr_cmd_url" />
+		<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrementValider"
+		var="valider_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/addGlobalRemise"
+		var="add_rem_url" />
+	<spring:url
+		value="/saleprocess/${saleProcess.cmdId}/addGlobalRemisePourcentage"
+		var="add_rempour_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"
+		var="delete_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/ordonnancier?form"
+		var="ord_cmd_url" />
+
+	<spring:url
+		value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"
+		var="update_client_url" />
+	<spring:url
+		value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form"
+		var="update_credit_client_url" />
+
+	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
+		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE AU PUBLIC</a></span>
+		            
+		            
+		            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
+		
+		<span><a href="${ enr_cmd_url}"
+			style="text-decoration: none;"><INPUT class="submits"
+				type="button" value="Enr et clore"
+				title="Enregistre La Commande" /></a></span>
+				</security:authorize>
+						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher CIPM" type="button"/></a></span> 
+				
+				 <span><a
+			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Annuler La Vente"
+				title="Annuler La vente" onclick="return annCmd();" /></a></span> <span><a href="${ ord_cmd_url}"
+			style="text-decoration: none;"><INPUT class="submits"
+				type="button" value="Ordonnancier"
+				title="editer un ordonnancier pour cette commande" id="btOrdo" onclick="return showform();" /></a></span>
+
+		<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
+			<span><a href="#"
+				style="text-decoration: none;"><INPUT id="infosclient" class="submits"
+					type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+		</c:if>
+		<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
+<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+</c:if> -->
+	</div>
+
+<spring:url value="/clients/${saleProcess.cmdId}/addClientByAjax" var="addClient_url" />
+
+	<script type="text/javascript">
+	function reloadPage()
+	  {
+	  window.location.reload()
+	  }
+	function clearClientTable(){
+		$('#result').html(
+				'<tr>
+	<th  align="center" valign="top" >CODE</th>
+				<th  align="center" valign="top" >NOM</th>
+		<th  align="center" valign="top">TELEPHONE</th>
+		<th  align="center" valign="top" >EMPLOYEUR</th>
+		<th  align="center" valign="top" >DETTES</th>
+		<th  align="center" valign="top" >CREDIBLE</th>
+		
+				</tr>');
+	}
+	
+	function clearProductTable(){
+		$('#resultproduit').html(
+				'<tr>
+				<th>CIP</th>
+			    	<th>CIPM</th>
+		    		<th>DESIGNATION</th>
+		    		 <th>PRIX UNIT</th>
+		    		<th>QTE CIPM</th>
+		    		<th>QTE CIP</th>
+		    		<th>SAISIE LE</th>
+		    		<th>FOURNISSEUR</th>
+		    	
+				</tr>');
+	//	$('#designation').val(" ");
+		
+	}
+	
+	function showform(){
+		dijit.byId('ordonnancier').show();
+		return false;
+	}
+	
+	function back(){
+		dijit.byId('ordonnancier').hide();
+		console.log("submits");
+	}
+	
+	$(function(){
+		
+		$('#cipm').focus();
+		
+		
+		
+		$('form#person').submit
+		(function(){
+			 clearClientTable();
+				$.getJSON( '/adpharma/clients/findClientByAjax',
+						$('#person').serialize(),
+			                function(data){
+								$(data).each(function(){$('#result').append(
+										 '<tr id="'+this.id+'">
+										  <td>'+this.clientNumber+'</td>
+										  <td>'+this.nomComplet+'</td>
+											<td>'+this.telephoneMobile+'</td>
+											<td>'+this.employeur+'</td>
+											<td>'+this.totalDette+'</td>
+											<td>'+this.creditAutorise+'</td>
+
+											</tr>'
+										
+								);});
+								$('table#result tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.get( '${addClient_url}/'+this.id,
+									                function(data){
+											$('#cmdName').html(data);
+											$('#findClient').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('form#produitfindform').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_product_url}',
+						$('#produitfindform').serialize(),
+			                function(data){
+								$(data).each(function(){
+									
+									$('#resultproduit').append(
+									 '<tr id="'+this.id+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.cipMaison+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.prixVenteUnitaire+'</td>
+										  <td>'+this.quantieEnStock+'</td>
+										  <td>'+this.qteCip+'</td>
+										  <td>'+this.saisiele+'</td>
+										  <td>'+this.fournisseur+'</td>
+
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproduit tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.getJSON( '${select_product_url}/'+this.id,
+									                function(data){
+											$('#pId').val(data.id);
+											$('#cip').val(data.cip);
+											$('#cipm').val(data.cipMaison);
+											$('#des').val(data.designation);
+											$('#pu').val(data.prixVenteUnitaire);
+											$('#qte').val(1);
+											$('#pt').val(data.prixVenteUnitaire);
+											$('#remax').val(data.remiseMax);
+											$('#findproduit').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+		
+		// Dialog	find client		
+		$('#findClient').dialog({
+			open:function(){
+				 clearClientTable();
+			},
+			autoOpen: false,
+			width:1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"creer un Client": function() { 
+					$('#updateClient').dialog('open');
+					$(this).dialog("close"); 
+				} ,
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		// Dialog	find produit		
+		$('#findproduit').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+
+                         
+		
+		// Dialog	update client		
+		$('#updateClient').dialog({
+			open:function(){
+				$.getJSON( '/adpharma/saleprocess/${saleProcess.cmdId}/getclientajax',
+						function(data){
+						$('#nom').val(data.nom);
+						$('#prenom').val(data.prenom);
+						$('#telephoneMobile').val(data.telephoneMobile);
+						$('#employeur').val(data.employeur);
+						$('#email').val(data.email);
+						$('#note').val(data.note);
+						$('#cltid').val(data.id);
+						var msg = $('#cltid').val();
+						
+						});
+			},
+			autoOpen: false,
+			width: 500,
+			title:"Information du Client",
+			resizable:true,
+			draggable :true,
+             hide:'slide',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Enregistrer": function() { 
+				$.get( '/adpharma/saleprocess/${saleProcess.cmdId}/updateclientajax',
+$('#clientForm').serialize(),
+function(data){
+	$('#cmdName').html(data);
+$('#updateClient').dialog("close");
+
+		
+});
+					
+				
+
+				},
+				"Chercher": function() { 
+					$(this).dialog("close"); 
+					$('#findClient').dialog("open"); 
+					return false ;
+				}, 
+				"Fermer": function() { 
+					$(this).dialog("close"); 
+				}  
+			}
+		});
+	
+		
+		$('#infosclient').click(function(){
+			$('#updateClient').dialog('open');
+			return false;
+		});
+		
+		$('#findprd').click(function(){
+			$('#findproduit').dialog('open');
+			return false;
+		});
+		
+		
+		
+		
+	});
+	
+		
+		
+		//requete pour la vente
+	function requete() {
+		var cipm = document.getElementById("cipm").value;
+		var url = "${find_cipm_url}" + cipm ;
+			$.getJSON(url,
+				 function(data) {
+				var idproduct = data.cip;
+					if (!data.id) {
+						document.getElementById("cip").value = "";
+						document.getElementById("cipm").value = "";
+						document.getElementById("des").value = "";
+						document.getElementById("pu").value = "";
+						document.getElementById("pId").value = "";
+						document.getElementById("remax").value = "";
+						document.getElementById("qte").value = "";
+						document.getElementById("pt").value = "";
+						document.getElementById("rem").value = "";
+						alert("Aucun produit Trouve");
+					} else {
+						
+						document.getElementById("cip").value = data.cip;
+						document.getElementById("des").value = data.designation ;
+						document.getElementById("pu").value = data.prixVenteUnitaire;
+						document.getElementById("pId").value = data.id;
+						document.getElementById("remax").value = data.remiseMax;
+						document.getElementById("qte").value =  1 ;
+						document.getElementById("pt").value = 0 ;
+					}
+				});
+			
+			
+	}
+
+ 
+	
+	</script>
+
+	<script src="${editJs}" type="text/javascript">
+ 	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+		 			</script>
+
+	<c:choose>
+		<c:when test="${empty saleProcess.produit}">
+			<c:set value="${saleProcess.produit.id}" var="prd"></c:set>
+		</c:when>
+		<c:otherwise>
+			<c:set value="#" var="prd"></c:set>
+
+		</c:otherwise>
+	</c:choose>
+	<c:choose>
+		<c:when test="${not empty saleProcess.lineToUpdate}">
+			<!-- afficher ce formulaire pour la mis a jour des ligne -->
+
+			<util:panel title="Mettre a jour Les Informations" id="upline">
+				<form action="${find_upd_url}" method="POST" id="formulaire"
+					name="formulaire" onSubmit="return verif_formulaire()">
+					<table>
+						<tr>
+							<th style="text-align: center;">CiP MAISON</th>
+							<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+							<th style="text-align: center;">prix Unitaire</th>
+							<th style="text-align: center;">QUANTITE</th>
+							<th style="text-align: center;">remise</th>
+							<th style="text-align: center;">prix Total</th>
+							<th colspan="2" style="text-align: center;">ACTION</th>
+						</tr>
+						<tr>
+							<td><INPUT type="hidden" name="lineId" id="lineId"
+								value="${saleProcess.lineToUpdate.id}" /> <INPUT type="text"
+								name="cipm" id="1" class="autres"
+								value="${saleProcess.lineToUpdate.cipM}" title="Taux De Marge"
+								style=" text-align: center;" disabled="disabled" />
+							</td>
+							<td><INPUT type="text" name="des" class="des"
+								title="Designation"
+								value="${saleProcess.lineToUpdate.designation}"
+								style="color: blue; text-align: center;" disabled="disabled" />
+
+							</td>
+							<td><INPUT type="text" name="pu" id="pu"
+								disabled="disabled" class="autres"
+								value="${saleProcess.lineToUpdate.prixUnitaire}"
+								onKeyPress="return scanTouche(event)" title="saisir le cip"
+								style="color: blue; padding-left: 0px;"  />
+
+							</td>
+							<td><INPUT type="text" name="qte" id="qte" class="autres"
+								onkeyup="calculePt()"
+								value="${saleProcess.lineToUpdate.quantiteCommande}"
+								onKeyPress="return scanTouche(event)" width="50px;"
+								title="saisir la Quantite" maxlength="4" /></td>
+
+
+
+							<td><INPUT type="text" name="rem"
+								onkeyup="calculePtWhithRem()" maxlength="5" class="autres"
+								value="${saleProcess.lineToUpdate.remise}"
+								onKeyPress="return scanTouche(event)" /></td>
+							<td><INPUT type="text" name="pt" id="pt" class="autres"
+								value="${saleProcess.lineToUpdate.prixTotal}"
+								disabled="disabled" style="color: red;" /></td>
+
+							<td><INPUT type="submit" value="Modifier" class="submits" />
+							</td>
+							<td class="utilbox">
+							<A href="${edit_url}" style="text-decoration: none;"><INPUT type="button" class="submits"
+								value="Annuler"
+								style="color: red;" /> </A></td>
+						</tr>
+					</table>
+				</form>
+
+
+				<c:if test="${not empty apMessage}">
+					<hr />
+					<center>
+						<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+					</center>
+					<hr />
+
+				</c:if>
+
+			</util:panel>
+		</c:when>
+		<c:otherwise>
+			<util:panel title="saisir le CIP du Produit" id="cip">
+				<form action="${addLine_url}" method="POST" id="formulaire"
+					name="formulaire" onSubmit="return verif_formulaire()">
+					<table>
+						<tr>
+							<th style="text-align: center;">CIP MAISON</th>
+							<th style="text-align: center;">CIP</th>
+							<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+							<th style="text-align: center;">PRIX UNITAIRE</th>
+							<th style="text-align: center;">QUANTITE</th>
+							<th style="text-align: center;">REMISE</th>
+							<th style="text-align: center;">PRIX TOTAL</th>
+							<th style="text-align: center;">ACTION</th>
+						</tr>
+						<tr>
+							<td><INPUT type="hidden" name="pId" id="pId"
+								value="${saleProcess.produit.id}" /> <c:choose>
+									<c:when test="${forcer}">
+										<INPUT type="text" name="cipm" id="cipm" class="autres"
+											value="${saleProcess.produit.cipMaison}" readonly="readonly"
+											 onKeyPress="return scanTouche(event)"
+											  title="saisir le cipm"
+											 autofocus="autofocus" />
+
+									</c:when>
+									<c:otherwise>
+										<INPUT type="text" name="cipm" id="cipm"  class="autres"
+											value="${saleProcess.produit.cipMaison}" 
+											onKeyPress="return scanTouche(event)"  onchange="requete();"
+											title="saisir le cipm" 
+											autofocus="autofocus" />
+
+									</c:otherwise>
+								</c:choose></td>
+							<td><INPUT type="text" name="cip" id="cip" class="autres"
+								value="${saleProcess.produit.cip}"
+								style="color: blue; text-align: center;" disabled="disabled" />
+
+							</td>
+							<td><INPUT type="text" name="des" class="des" id="des"
+								title="Designation" value="${saleProcess.produit.designation}"
+								style="color: blue; text-align: center;" disabled="disabled" />
+
+							</td>
+							<td><INPUT type="text" name="pu" id="pu" class="autres"
+								value="${saleProcess.produit.prixVenteUnitaire}"
+								style="color: blue; text-align: center;" disabled="disabled" />
+							</td>
+							<td><INPUT type="text" name="qte" id="qte"
+								onkeyup="calculePt()" value="${qte}" class="autres"
+								onKeyPress="return scanTouche(event)" width="50px;"
+								title="saisir la Quantite"  /></td>
+							<td><INPUT type="hidden" name="remax" id="remax"
+								value="${saleProcess.produit.remiseMax}" /> <INPUT type="text"
+								name="rem" id="rem" onkeyup="calculePtWhithRem()" value="${rem}"
+								maxlength="5" class="autres"
+								onKeyPress="return scanTouche(event) ;  " title="la remise" />
+							</td>
+							<td><INPUT type="text" name="pt" id="pt" class="autres"
+								value="${pt}" style="color: red; text-align: center;"
+								disabled="disabled" /></td>
+
+
+							<td align="center"><c:choose>
+									<c:when test="${forcer}">
+										<INPUT type="submit" value="forcer la vente" class="submits"
+											style="color: red; margin-bottom: 1px;" />
+										<a href="${annulerVenteForcer_url}"
+											style="text-align: center; color: green;"> anuller</a>
+
+									</c:when>
+									<c:otherwise>
+										<INPUT type="submit" value="ajouter" class="submits" />
+
+									</c:otherwise>
+								</c:choose></td>
+
+						</tr>
+					</table>
+				</form>
+
+				<c:if test="${not empty apMessage}">
+					<hr />
+					<center>
+						<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+					</center>
+					<hr />
+
+				</c:if>
+
+			</util:panel>
+
+		</c:otherwise>
+
+	</c:choose>
+
+	<table style="border: none; margin-bottom: 5px; margin-top: 5px;">
+		<tr>
+			<td style="border: none; width: 30%;">
+
+				<DIV style="float: left; margin-right: 35%;">
+
+					<table style="border: none;">
+						<form action="${add_rem_url}" method="POST">
+
+							<tr>
+								<td style="border: none;"><INPUT type="text" class="remise"
+									value="Remise  NAP :"
+									style=" text-align: center; background-color: white; width: 220px; color: black;"
+									disabled="disabled" /></td>
+								<td style="border: none;"><INPUT type="text" class="remise"
+									maxlength="5" onKeyPress="return scanToucheminus(event)" name="rem2"
+									id="rem2"
+									style="color: red; text-align: center; border-style: solid; border-color: black;" />
+
+								</td>
+								<td style="border: none;"><INPUT type="submit"
+									value="APPLIQUER" class="submits" /></td>
+
+							</tr>
+						</form>
+
+						<form action="${add_rempour_url}" method="POST">
+
+							<tr>
+								<td style="border: none;"><INPUT type="text" class="remise"
+									value="Remise NAP (%) :"
+									style=" text-align: center; background-color: white; width: 265px; color: black;"
+									disabled="disabled" /></td>
+								<td style="border: none;"><INPUT type="text" class="remise"
+									maxlength="5" onKeyPress="return scanTouche(event)" name="rem3"
+									id="rem3"
+									style="color: red; text-align: center; border-style: solid; border-color: black;" />
+								</td>
+								<td style="border: none;"><INPUT type="submit"
+									value="APPLIQUER" class="submits" /></td>
+
+							</tr>
+						</form>
+
+
+					</table>
+
+
+				</DIV>
+			</td>
+			<td style="border: none; width:auto ; ">
+				<DIV style="float: left; text-align: center; ">
+				 <security:authorize ifAnyGranted="ROLE_OPEN_SALE_SESSION">
+				
+					<table style="border: none; margin-left: 20%;">
+						<form action="${valider_cmd_url}" method="post">
+
+							<tr>
+								<td style="border: none;  "><INPUT type="password"  maxlength="17" autocomplete="off" name="cle" id="cle"
+									style="color: red; text-align: center; border-style: solid; border-color: black; width: 100px;" />
+								</td>
+								</tr>
+								<tr>
+								<td style="border: none; background-color: white;"><INPUT type="submit"
+									value="enr et clore" class="submits"  /></td>
+
+							</tr>
+						</form>
+
+
+					</table>
+                   </security:authorize>
+                  
+
+				</DIV>
+				
+			</td>
+
+			<td style="border: none; width: 35%;">
+
+				<DIV>
+
+					<table>
+						<tr>
+							<th style="text-align: center;">TOTAL COMMANDE</th>
+							<th style="text-align: center;">TOTAL REMISE</th>
+							<th style="text-align: center;">NET A PAYER</th>
+
+						</tr>
+						<tr>
+							
+									<td style=" width: 35%; background-color: white; color: blue; text-align: center; font-weight: bold; font-size: 22px;">
+
+                          <fmt:formatNumber value="${saleProcess.totalCommande }"/>
+							</td>
+							
+								<td style=" width: 25%; background-color: white; color: red; text-align: center; font-weight: bold; font-size: 22px;">
+
+                          <fmt:formatNumber value="${saleProcess.totalRemise }"/>
+							</td>
+							<td style="background-color: white; color: green; text-align: center; font-weight: bold; font-size: 22px;">
+
+                          <fmt:formatNumber minFractionDigits="0"  value="${saleProcess.netApayer }"/> cfa
+							</td>
+
+						</tr>
+					</table>
+				</DIV>
+			</td>
+
+		</tr>
+
+	</table>
+
+	<!-- afficher les lignes de commande  ici -->
+	<util:panel title="Liste Des Produits Commandes" id="lg"
+		openPane="true">
+		<div style="overflow: auto; height: 220px;">
+			<table>
+				<tr>
+					<th style="text-align: center;">CIP MAISON</th>
+					<th style="text-align: center;">CIP</th>
+					<th style="width: 400px; text-align: center;">DESIGNATION</th>
+					<th style="text-align: center;">PRIX UNIT</th>
+					<th style="text-align: center;">QUANTITE</th>
+					<th style="text-align: center;">PRIX TOTAL</th>
+					<th style="text-align: center;">REMISE</th>
+					<th colspan="2" style="text-align: center;">ACTION</th>
+				</tr>
+
+				<c:forEach items="${saleProcess.ligneCommande }" var="ligne">
+					<tr>
+						<td style="text-align: center;"><c:out value="${ligne.cipM}"></c:out>
+						</td>
+						<td style="text-align: center;"><c:out value="${ligne.cip}"></c:out>
+
+						</td>
+						<td style="text-align: left; padding-left: 20px; width: 400px">
+							<c:out value="${ligne.designation}"></c:out>
+
+						</td>
+						<td style="text-align: right; padding-right: 20px">
+								                          <fmt:formatNumber value="${ligne.prixUnitaire }"/>
+								
+								</td>
+						<td style="text-align: right; padding-right: 20px"><c:out
+								value="${ligne.quantiteCommande}"></c:out></td>
+
+						<td style="text-align: right; padding-right: 20px">
+
+								 <fmt:formatNumber value="${ligne.prixTotal }"/>
+								</td>
+								
+						<td style="text-align: right; padding-right: 20px">
+								 <fmt:formatNumber value="${ligne.remise }"/>
+								</td>
+
+						<td class="utilbox"><spring:url
+								value="/resources/images/update.png" var="update_image_url" />
+							<spring:url
+								value="/saleprocess/${saleProcess.cmdId}/updateLine/${ligne.id}"
+								var="update_line_url" /> <a href="${update_line_url}"
+							alt="update" title="update"> <img alt="update" class="image"
+								src="${ update_image_url}" title="mettre a jour la commande " />
+						</a></td>
+						<td class="utilbox"><spring:url
+								value="/resources/images/delete.png" var="delete_image_url" />
+							<spring:url
+								value="/saleprocess/${saleProcess.cmdId}/deleteLine/${ligne.id}"
+								var="delete_line_url" /> <a href="${ delete_line_url}"
+							alt="Remove" title="Remove"> <img alt="Unselect"
+								class="image" src="${ delete_image_url}"
+								title=" unselect this product" onclick="return conf()" />
+						</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+
+		</div>
+	</util:panel>
+	
+	
+<div id="updateClient" style="display: none;">
+    <form id="clientForm" >
+       <INPUT id="cltid" type="hidden" name="cltid" />
+                <P>
+                <LABEL for="nom"> Nom :</LABEL> <INPUT id="nom" type="text" name="nom" value="Client Diver"/>
+                </P>
+                
+                 <P>
+                <LABEL for="prenom"> Prenom :</LABEL> <INPUT id="prenom" type="text" name="prenom" value=""/>
+                </P>
+                
+                 <P>
+                <LABEL for="sexe"> Sexe :</LABEL> <SELECT id="sexe" style="width: 165px; height: 25px;" name="sexe"> <OPTION selected="selected">Masculin</OPTION><OPTION >Feminin</OPTION><OPTION >Neutre</OPTION>
+                </SELECT> 
+                </P>
+                
+                 <P>
+                <LABEL for="telephoneMobile"> Telephone :</LABEL> <INPUT id="telephoneMobile" type="text" name="telephoneMobile" value=""/>
+                </P>
+                
+                
+                     
+                
+                 <P>
+                <LABEL for="email"> Email :</LABEL> <INPUT id="email" type="text" name="email" value=""/>
+                </P>
+                 <P>
+                <LABEL for="employeur"> Employeur :</LABEL> <INPUT id="employeur" type="text" name="employeur" value=""/>
+                </P>
+                 <P>
+                <LABEL for="note"> Note :</LABEL> <INPUT type="text" id="note" name="note" value=""/>
+                </P>
+              
+        </form>
+</div>
+<c:if test="${not empty ordonnancier}">
+ <div id="ordonnancier" data-dojo-type="dijit.Dialog" style="display: none;" data-dojo-props="title:'Ordonnancier'" >
+    <form:create id="fc_org_adorsys_adpharma_domain_Ordonnancier"  modelAttribute="ordonnancier" path="/saleprocess/${saleProcess.cmdId}/ordonnancier" render="true" z="hZvcXFTpo8hTh/5r8Irn4D59h48=">
+        <field:input field="Prescripteur" id="c_org_adorsys_adpharma_domain_Ordonnancier_Prescripteur" required="true" z="KFOsz1aRtwSFvjlsCjWEDLR5wx4="/>
+        <field:input field="hospital" id="c_org_adorsys_adpharma_domain_Ordonnancier_hospital" z="59rV8weuRi6bt45kKz7S6qGR3D0="/>
+        <field:input field="nomDuPatient" id="c_org_adorsys_adpharma_domain_Ordonnancier_nomDuPatient" z="Pf3gP6tTdEZdxFbFyxMBhn0FxxE="/>
+        <field:hidden field="id" id="id"></field:hidden>
+        <field:hidden field="version" id="version"></field:hidden>
+        <field:datetime dateTimePattern="dd-MM-yyyy" field="datePrescription" id="c_org_adorsys_adpharma_domain_Ordonnancier_datePrescription" z="O7/4crvCbuCrW2SJHlhAG6aZl2c="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" render="false" field="dateSaisie" id="c_org_adorsys_adpharma_domain_Ordonnancier_dateSaisie" z="Z0sJ0RPtJcwl5WmrPqQRnI5Trb4="/>
+        <field:input field="footPrint" render="false" id="c_org_adorsys_adpharma_domain_Ordonnancier_footPrint" z="kWZ3rhwRnjiDEluZMSBMltI66a4="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Ordonnancier" render="${not empty dependencies}" z="hvyzU/NHX6eqf0a9BYUYZcBNm2I="/>
+</div>
+</c:if>
+<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+ <div id="findClient" style="display: none;" title="recherche client">
+		
+				<input type="hidden" id="select" />
+		
+		
+		<form  id="person" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="name">Nom  :</label> <input class="searchInput" type="text" name="name"/>
+		</p>
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;" /></center>
+ <div style="height:300px; overflow: auto;"  >
+		<table cellpadding="0" cellspacing="0" border="0" class="result search" align="left" id="result"  valign="top" width="100%;" frame="box">
+		<tr align="top" valign="top">
+		<th  align="center" valign="top" >CODE</th>
+		<th  align="center" valign="top" >NOM</th>
+		<th  align="center" valign="top">TELEPHONE</th>
+		<th  align="center" valign="top" >EMPLOYEUR</th>
+		<th  align="center" valign="top" >DETTES</th>
+		<th  align="center" valign="top" >CREDIBLE</th>
+		
+		
+		</tr>
+		</table>
+	</div>	 
+   
+</div>
+
+
+<div id="findproduit" style="display: none; width: 1000px;" title="recherche un cip maison">
+		
+		
+		
+		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input class="searchInput"  type="text" name="designation"/>
+		</p>
+		 <p>
+		<label for="rp">En Rupture ? :</label> <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
+		</p> 
+		
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIPM</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;" width="150px;">POSOLOGIE</th>
+		    		 <th style="text-align: center;" >PRIX UNIT</th>
+		    		<th style="text-align: center;">QTE CIPM</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    		<th style="text-align: center;">SAISIE LE</th>
+		    		<th style="text-align: center;">FOURNISSEUR</th>
+		    	</tr>
+		  </table>
+	</div>	 
+   
+</div>
+ <div id="container">
+<div id="inner" style="overflow: scroll; height: 300px;">
+<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
+<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
+L'aide Pour cette Page est en cour de redaction <br/>
+Merci pour Votre Comprehension <br/>
+
+ 
+</div>
+</div>
+
+	
+
+</div>

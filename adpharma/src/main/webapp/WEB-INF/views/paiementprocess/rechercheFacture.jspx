@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 version="2.0" style="margin-top: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	   
+	<spring:url value="/paiementprocess/encaisser?form"  var="edit_url" />
+		<spring:url value="/paiementprocess/editPaiement"  var="find_facture_url" />
+	    <spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"  var="find_add_url" />
+<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"  var="find_upd_url" />
+
+	    <spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/"  var="show_prd_url" />
+
+			<spring:url value="/resources/images/annuler.png"  var="annuler" />
+			<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
+			<spring:url  value="/saleprocess/${saleProcess.cmdId}/enregistrer"  var="enr_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"  var="delete_cmd_url" />
+		 <spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"  var="update_client_url" />
+	<div style="margin-bottom: 10px; font-weight: bold;">
+		<span class="firstTab unselectedTab"><a href="${ edit_url}"> ENCAISSER</a></span>
+		<span class="nextTab selectedTab">
+		<c:choose>
+		<c:when test="${not empty paiementProcess.factureSelected}">
+		<a href="javascript:history.back()">RECHERCHE FACTURES</a>
+		</c:when>
+		<c:otherwise>
+		<a href="${ find_facture_url}">RECHERCHE FACTURES</a>
+		</c:otherwise>
+		</c:choose>
+			
+		</span>
+		</div>
+		
+  
+    	<!-- recherche de produit par code identification -->
+    	
+    
+    	
+  
+
+<c:choose>
+<c:when test="${empty saleProcess.produit}">
+ <c:set value="${saleProcess.produit.id}" var="prd"></c:set>
+</c:when>
+<c:otherwise>
+ <c:set value="#" var="prd"></c:set>
+
+</c:otherwise>
+</c:choose>
+     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+ 
+           <jsp:include page="findFacturesByDateCreationBetween.jspx" />
+           
+		       <c:if test="${not empty apMessage}">
+		<hr/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+	</center>
+			<hr/>
+	
+	</c:if><!-- liste des factures en attente de paiement-->
+
+<form:customList id="pl_org_adorsys_adpharma_beans_paiementProcess_factureResult" items="${paiementProcess.factureResult}" 
+    		z="user-managed" label="FACTURES EN ATTENTENT DE PAIEMENT" objectName="facture" openPane="true" >
+<div style="overflow: auto; height: 220px;">   
+	        <c:if test="${not empty paiementProcess.factureResult}">
+		    <table>
+		    	<tr>
+		    		<th style="text-align: center;">FACTURE No</th>
+		    		<th style="text-align: center;">FACTURE LE</th>
+		    		<th style="text-align: center;">COMMANDE No</th>
+		    		<th style="text-align: center;">TYPE VENTE</th>
+		    		<th style="text-align: center;">MONTANT</th>
+		    		<th style="text-align: center;">AVANCE</th>
+		    		<th style="text-align: center;">RESTE</th>
+		    		<th style="text-align: center;">SOLDER ?</th>
+		    		<th style="text-align: center;">ACTION</th>
+		    		
+		    	</tr>
+		    	<c:forEach items="${paiementProcess.factureResult}" var="facture">
+		    		<tr>
+		    			<td style="text-align: center;">
+		    				<c:out value="${facture.factureNumber}"></c:out>
+		    			</td>
+		    			<td style="text-align: center;">
+		    				<fmt:formatDate value="${facture. dateCreation}" pattern="dd-MM-yyyy HH:mm" />
+		    			</td>
+		    			<td style="text-align: center;">
+		    				<c:out value="${facture.commande.cmdNumber}"></c:out>
+		    			</td>
+		    			<td style="text-align: left;padding-left:20px;">
+		    				<c:out value="${facture.typeCommande}"></c:out>
+		    			</td>
+		    			<td style="text-align:right;padding-right: 20px">
+		    		<c:out value="${facture.netPayer}"></c:out>
+		    			
+		    			</td>
+		    			<td style="text-align:right;padding-right: 20px">
+		    				<c:out value="${facture.avance}"></c:out>
+		    			</td>
+		    			<td style="text-align:right;padding-right: 20px; color: blue;">
+		    				<c:out value="${facture.reste}"></c:out>
+		    			</td>
+		    			<td style="text-align:center;">
+		    				<c:out value="${facture.solder}"></c:out>
+		    			</td>
+						<td class="utilbox" style="text-align: center;">
+						<spring:url value="/paiementprocess/selectFacture/${facture.id}"  var="select_url" />
+							[<a style="font-weight: bold;" href="${select_url}" alt="Select" title="Select">Select</a>]
+						</td>
+											
+		    		</tr>
+		    	</c:forEach>
+		    </table>	  
+		    </c:if> 
+</div>	     
+        </form:customList>
+     
+</div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_LigneCmdClient" items="${lignecmdclients}" z="yZleLtskJrTO/BxbB2LIj/3Axo4=">
+        <table:table data="${lignecmdclients}" id="l_org_adorsys_adpharma_domain_LigneCmdClient" path="/lignecmdclients" z="X1ku648NT6F8Py4YXnIKb70bzNU=">
+            <table:column id="c_org_adorsys_adpharma_domain_LigneCmdClient_commande" property="commande" z="3Zj/+ScQEcyyM2BGtWD6ywTlK+4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneCmdClient_quantiteCommande" property="quantiteCommande" z="n9Sp/vxkwtsNpOXgI5DfChGA3tg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneCmdClient_quantiteRetourne" property="quantiteRetourne" z="FQk61bsHGm6FPE0mWVqWZO6Tafg="/>
+            <table:column date="true" dateTimePattern="${ligneCmdClient_datesaisie_date_format}" id="c_org_adorsys_adpharma_domain_LigneCmdClient_dateSaisie" property="dateSaisie" z="TnymXieHUao8U+KyeNUN0bB3hyQ="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneCmdClient_footPrint" property="footPrint" z="g7rUBIF1ZgSJbscJPcPgA2H5wNk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneCmdClient_prixUnitaire" property="prixUnitaire" z="Dy5UvXVY/A8L5QMjGmEL7DmipYs="/>
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:security="http://www.springframework.org/security/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:spring="http://www.springframework.org/tags"   xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 	xmlns:springform="http://www.springframework.org/tags/form"
+	 version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	<div style="margin-bottom: 6px; padding-bottom: 5px;">
+		<span style="font-weight: bold">
+			<c:out value="${approvisonementProcess.displayName}"/>
+		</span>
+	</div>
+	    
+	<div style="margin-bottom: 6px; margin-top:9px; font-weight: bold;">
+	<spring:url value="/approvisionementprocess/${apId}/edit"  var="edit_url" />
+		<spring:url value="/approvisionementprocess/${apId}/findProduct?form"  var="find_product_url" />
+		<spring:url value="/approvisionementprocess/${apId}/findCmdFour?form"  var="find_cmd_four_url" />
+			
+			
+			<spring:url  value="/approvisionementprocess/${approvisonementProcess.apId}/enregistrer"  var="enr_cmd_url" />
+		 <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"  var="delete_cmd_url" />
+		<span class="firstTab unselectedTab"><a href="${ edit_url}">APPROVISIONNEMENT</a></span>
+		<span class="nextTab unselectedTab"><a href="${ find_product_url}">RECHERCHE PRODUIT</a></span>
+		<span class="nextTab selectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span>
+
+	   <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
+		<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
+		
+	</div>
+    	<!-- recherche de produit ici-->
+           <jsp:include page="findCommandeFournisseursByFournisseurAndDateCreationBetween.jspx" />
+           
+      
+      <BR />
+      
+    	<!-- Show the list of commande found Here -->
+    		        <c:if test="${not empty approvisonementProcess.commandeFournisseur}">
+    	
+    	<form:customList id="pl_org_adorsys_adpharma_beans_commandProcess_productResult" items="${approvisonementProcess.commandeFournisseur}" 
+    		z="user-managed" label="Liste Des Commandes Trouvees" objectName="CommandesFournisseur" openPane="true" >
+	        
+ <div style="overflow: auto; height: 200px;">
+		    <table>
+		    	<tr>
+		    		<th >Numero CMD</th>
+		    		<th >Cree Le</th>
+		    		<th>Cree Par</th>
+		    		<th>Fournisseur</th>
+		    		<th>Etat</th>
+		           <th>Site</th>
+		    		<th colspan="2" align="center">ACTION</th>
+		    	</tr>
+		    	<c:forEach items="${approvisonementProcess.commandeFournisseur}" var="cmd">
+		    		<tr>
+		    			<td>
+		    				<c:out value="${cmd.cmdNumber}"></c:out>
+		    			</td>
+		    			<td>
+		    					         <fmt:formatDate value="${cmd.dateCreation}" pattern="dd-MM-yyyy HH:mm"/>
+		    			</td>
+		    			<td>
+		    				<c:out value="${cmd.creePar.userName}"></c:out>
+		    			</td>
+		    			<td>
+		    				<c:out value="${cmd.fournisseur.name}"></c:out>
+		    			</td>
+		    			<td>
+		    				<c:out value="${cmd.etatCmd}"></c:out>
+		    			</td>
+		    			<td>
+		    				<c:out value="${cmd.site.displayName}"></c:out>
+		    			</td>
+						<td class="utilbox">
+						<spring:url value="/approvisionementprocess/${apId}/recupererCmd/${cmd.id}"  var="select_url" />
+							[<a style="font-weight: bold;" href="${select_url}" alt="Select" title="convertir en Approvisionenment">Recuperer</a>]
+						</td>
+						<td class="utilbox">
+					<spring:url value="/resources/images/show.png" var="show_image_url" />
+						<spring:url value="/approvisionementprocess/${apId}/showCmd/${cmd.id}"  var="show_product_url" />
+							<a href="${show_product_url}" alt="Show this product" title="Voir le Detail de Cette Commande">
+								<img alt="Show " class="image" src="${ show_image_url}" title="Voir le Detail de Cette Commande"/>
+							</a>
+						</td>						
+		    		</tr>
+		    	</c:forEach>
+		    </table>
+</div>	  
+        </form:customList>
+      		    </c:if>      
+      
+    
+    
+    	
+</div>

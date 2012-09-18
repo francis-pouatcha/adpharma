@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_Inventaire" modelAttribute="inventaire" path="/inventaires" versionField="Version" z="qA2EJRH27kB93TjNdt4rpAKHK5U=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" render="false" z="user-managed"/>
+        <field:input disabled="true" field="NumeroInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" z="user-managed"/>
+        <field:select disabled="true" field="agent" id="c_org_adorsys_adpharma_domain_Inventaire_agent" itemValue="id" items="${pharmausers}" path="/pharmausers" render="false" z="user-managed"/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_Inventaire_montant" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:select disabled="true" field="etat" id="c_org_adorsys_adpharma_domain_Inventaire_etat" items="${etats}" path="etats" z="user-managed"/>
+        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Inventaire_note" z="MeNnsXK9FhcMZEDzUPVePnX/BPk="/>
+        <field:datetime dateTimePattern="${inventaire_dateinventaire_date_format}" disabled="true" field="dateInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_dateInventaire" z="user-managed"/>
+        <field:select field="site" id="c_org_adorsys_adpharma_domain_Inventaire_site" itemValue="id" items="${sites}" path="/sites" z="pyDS9t14/WrhI+lcZ9oXESM6ZN0="/>
+        <field:simple field="ligneInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_ligneInventaire" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Inventaire" render="false" z="user-managed"/>
+        <field:input disabled="true" field="numeroInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_numeroInventaire" z="user-managed"/>
+        <field:input field="cipProduct" id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${inventaire_datedebut_date_format}" field="dateDebut" id="c_org_adorsys_adpharma_domain_Inventaire_dateDebut" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${inventaire_datefin_date_format}" field="dateFin" id="c_org_adorsys_adpharma_domain_Inventaire_dateFin" render="false" z="user-managed"/>
+        <field:input field="rayon" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" render="false" z="user-managed"/>
+        <field:input field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" render="false" z="user-managed"/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_Inventaire_designation" render="false" z="user-managed"/>
+        <field:input field="beginBy" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy" render="false" z="user-managed"/>
+        <field:input field="endBy" id="c_org_adorsys_adpharma_domain_Inventaire_endBy" render="false" z="user-managed"/>
+        <field:checkbox field="cip" id="c_org_adorsys_adpharma_domain_Inventaire_cip" render="false" z="user-managed"/>
+        <field:checkbox field="cipm" id="c_org_adorsys_adpharma_domain_Inventaire_cipm" render="false" z="user-managed"/>
+        <field:input field="ligneApprovisionements" id="c_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements" render="false" z="user-managed"/>
+        <field:input field="produits" id="c_org_adorsys_adpharma_domain_Inventaire_produits" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${inventaire_daterupture_date_format}" field="dateRupture" id="c_org_adorsys_adpharma_domain_Inventaire_dateRupture" z="veV9y6i45h1Gz8SeL+nmNk3jAn0="/>
+        <field:input field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" z="Vm5WfUGJ7YXxsJD1QYuA/OW9VwI="/>
+        <field:input field="sousFamilleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" z="bYAY7C6g0JjvrSF1qmZ8WoE5JFQ="/>
+    </form:update>
+</div>

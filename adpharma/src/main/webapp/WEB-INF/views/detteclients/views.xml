@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="client" name="detteclients/list">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/list.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/show">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/show.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/create">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/create.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/update">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/update.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/findDetteClientsByFactureIdEqualsAndClientIdEquals">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByFactureIdEqualsAndClientIdEquals.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/findDetteClientsByClientIdEqualsAndSolderNot">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByClientIdEqualsAndSolderNot.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/findDetteClientsByClientNameLike">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByClientNameLike.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/findDetteClientsByClientNameLikeAndSolderNot">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByClientNameLikeAndSolderNot.jspx"/>
+    </definition>
+<definition extends="client" name="detteclients/findDetteClientsByDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="default" name="detteclients/findDetteClientsBySolderNotOrClientNoEquals">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsBySolderNotOrClientNoEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="detteclients/search">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/search.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="inventaire" name="ligneinventaires/list">
+        <put-attribute name="body" value="/WEB-INF/views/ligneinventaires/list.jspx"/>
+    </definition>
+<definition extends="inventaire" name="ligneinventaires/show">
+        <put-attribute name="body" value="/WEB-INF/views/ligneinventaires/show.jspx"/>
+    </definition>
+<definition extends="inventaire" name="ligneinventaires/create">
+        <put-attribute name="body" value="/WEB-INF/views/ligneinventaires/create.jspx"/>
+    </definition>
+<definition extends="inventaire" name="ligneinventaires/update">
+        <put-attribute name="body" value="/WEB-INF/views/ligneinventaires/update.jspx"/>
+    </definition>
+<definition extends="default" name="ligneinventaires/findLigneInventairesByInventaire">
+        <put-attribute name="body" value="/WEB-INF/views/ligneinventaires/findLigneInventairesByInventaire.jspx"/>
+    </definition>
+</tiles-definitions>

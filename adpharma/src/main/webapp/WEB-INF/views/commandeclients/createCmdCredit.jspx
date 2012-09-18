@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:formsp="http://www.springframework.org/tags/form"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/saleprocess/0/findProduct" var="find_product_url" />
+	<spring:url value="/saleprocess/0/selectProduct"
+		var="select_product_url" />
+	<spring:url value="/clients/getClientByAjax" var="get_client_url" />
+	<spring:url value="/clients/findClientByAjax" var="find_cliet_url" />
+	<spring:url value="/clients?form" var="create_cliet_url" />
+
+	<script type="text/javascript">
+	function clearClientTable(){
+		$('#result').html(
+				'<tr>
+	<th  align="center" valign="top" >CODE</th>
+				<th  align="center" valign="top" >NOM COMPLET</th>
+		<th  align="center" valign="top">TELEPHONE</th>
+		<th  align="center" valign="top" >EMPLOYEUR</th>
+		<th  align="center" valign="top" >DETTES</th>
+		<th  align="center" valign="top" >CREDIBLE</th>
+		
+				</tr>');
+	}
+	
+	
+	$(function(){
+		$('form#person').submit
+		(function(){
+			 clearClientTable();
+				$.getJSON( '${find_cliet_url}',
+						$('#person').serialize(),
+			                function(data){
+								$(data).each(function(){$('#result').append(
+										 '<tr id="'+this.id+'">
+										  <td>'+this.clientNumber+'</td>
+										  <td>'+this.nomComplet+'</td>
+											<td>'+this.telephoneMobile+'</td>
+											<td>'+this.employeur+'</td>
+											<td>'+this.totalDette+'</td>
+											<td>'+this.creditAutorise+'</td>
+											</tr>'
+										
+								);});
+								$('table#result tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.getJSON( '${get_client_url}/'+this.id,
+									                function(data){
+									     var select = $('#select').val();
+									     if (select == "findclt" ) {
+									    	 $('#_clientName_id').val(data.nomComplet);
+									    	 $('#_clientId_id').val(data.id);
+									    	if (data.clientPayeur == null) {
+									    		 $('#_payeurName_id').val(data.nomComplet);
+										    	 $('#_payeurId_id').val(data.id);
+										    	 $('#_taux_id').val(100);
+
+											} else {
+												$('#_payeurName_id').val(data.clientPayeur.nomComplet);
+										    	 $('#_payeurId_id').val(data.clientPayeur.id);
+										    	 $('#_taux_id').val(data.tauxCouverture);
+											}
+									    	 	 
+										} else {
+											$('#_payeurName_id').val(data.nomComplet);
+									    	 $('#_payeurId_id').val(data.id);
+									    	 $('#_taux_id').val("");
+
+										}
+
+											
+											$('#findClient').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+		
+		// Dialog	find client		
+		$('#findClient').dialog({
+			open:function(){
+				// clearClientTable();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		$('#findclt').click(function(){
+	    	$('#select').val(this.id);
+			$('#findClient').dialog('open');
+			return false;
+		});
+		
+		$('#findpayeur').click(function(){
+			console.log();
+	    	$('#select').val(this.id);
+			$('#findClient').dialog('open');
+			return false;
+		});
+		
+		
+		
+		
+		
+	});
+	
+		
+	
+	</script>
+	<form:create id="cmdcredit" label="CREATION VENTE A CREDIT"
+		modelAttribute="commandeCredit" path="/commandeclients/cmdCredit"
+		render="${empty dependencies}" z="user-managed">
+		<field:input field="clientName" createUrl="${create_cliet_url }"
+			buttonId="findclt" buttonLabel="find"
+			id="c_org_adorsys_adpharma_domain_CommandeClient_client"
+			required="true" z="user-managed" />
+		<field:input field="payeurName" createUrl="${create_cliet_url }"
+			buttonId="findpayeur" buttonLabel="find"
+			id="c_org_adorsys_adpharma_domain_CommandeClient_clientPaiyeur"
+			z="user-managed" />
+		<field:input field="taux"
+			id="c_org_adorsys_adpharma_domain_CommandeClient_tauxCouverture"
+			max="100" min="0" required="true" z="user-managed" />
+		<field:input field="numeroBon" required="true"
+			id="c_org_adorsys_adpharma_domain_CommandeClient_numeroBon"
+			z="user-managed" />
+		<field:checkbox field="ventePartiel"
+			id="c_org_adorsys_adpharma_domain_CommandeClient_ventePartiel"
+			z="user-managed" />
+		<formsp:hidden id="_clientId_id" path="clientId" />
+		<formsp:hidden id="_payeurId_id" path="payeurId" />
+
+	</form:create>
+
+	<div id="findClient" style="display: none;" title="recherche client">
+
+		<input type="hidden" id="select" />
+
+
+		<form id="person" enctype="application/x-www-form-urlencoded">
+			<p>
+				<label for="name">Nom :</label> <input class="searchInput"
+					type="text" name="name" />
+			</p>
+
+
+		</form>
+
+		<center>
+			<IMG alt="loading ..." src="${loadimage } " class="loadimage"
+				style="display: none;" />
+		</center>
+		<div style="height: 300px; overflow: auto;">
+			<table cellpadding="0" cellspacing="0" border="0"
+				class="result search" align="left" id="result" valign="top"
+				width="100%;" frame="box">
+				<tr align="top" valign="top">
+					<th align="center" valign="top">CODE</th>
+					<th align="center" valign="top">NOM COMPLET</th>
+					<th align="center" valign="top">TELEPHONE</th>
+					<th align="center" valign="top">EMPLOYEUR</th>
+					<th align="center" valign="top">DETTES</th>
+					<th align="center" valign="top">CREDIBLE</th>
+
+
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<div id="container">
+		<div id="inner" style="overflow: scroll; height: 300px;">
+			<a class="aide" href="#"
+				style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br />
+			<center style="text-transform: uppercase;">
+				<H1>Bienvenue dans l'aide D'adPharma</H1>
+			</center>
+			L'aide Pour cette Page est en cour de redaction <br /> Merci pour
+			Votre Comprehension <br />
+
+
+		</div>
+	</div>
+
+</div>

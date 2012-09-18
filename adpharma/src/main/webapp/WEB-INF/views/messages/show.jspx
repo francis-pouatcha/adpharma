@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_Message" object="${message}" path="/messages" z="HXHDwmOtOLZeinUTK6j9pBc+sQQ=">
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Message_footPrint" object="${message}" z="hWI2lHx3HWRkV+KM9rUvSvTzdkI="/>
+        <field:display date="true" dateTimePattern="${message_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_Message_dateCreation" object="${message}" z="wYxwW9/0ihRNdnNneg6hTmTNfC4="/>
+        <field:display field="sujet" id="s_org_adorsys_adpharma_domain_Message_sujet" object="${message}" z="NmP5WsfFdSvmE3KNrUBW8TubTP8="/>
+        <field:display field="contenu" id="s_org_adorsys_adpharma_domain_Message_contenu" object="${message}" z="O177TYKny0EQEzWEY25QUfawXRY="/>
+        <field:display field="agentCreateur" id="s_org_adorsys_adpharma_domain_Message_agentCreateur" object="${message}" z="AGxjYKJw+0WBEFj09s5EmIBIVi8="/>
+        <field:display field="destinataires" id="s_org_adorsys_adpharma_domain_Message_Destinataires" object="${message}" z="oQlkpNE6dcgq2XghXOChuy5KGos="/>
+        <field:display field="envoyer" id="s_org_adorsys_adpharma_domain_Message_envoyer" object="${message}" z="L6RbTO4nyQzr+bR9s5cIS7880gI="/>
+        <field:display date="true" dateTimePattern="${message_datelastsend_date_format}" field="dateLastSend" id="s_org_adorsys_adpharma_domain_Message_dateLastSend" object="${message}" z="bumrGMUOpVCgCCCkeQADZGwtPKY="/>
+    </page:show>
+</div>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_ModeConditionement" modelAttribute="modeConditionement" path="/modeconditionements" render="${empty dependencies}" z="3c+kTvvqiGOXpU1bSCfalAhUGrw=">
+       <table 	class="tblog">
+       <tr>
+       <td class="tbcreate" >
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_ModeConditionement_footPrint" render="false" z="user-managed"/>
+        <field:input field="libelle" id="c_org_adorsys_adpharma_domain_ModeConditionement_libelle" z="bOoNoBePUMB4AnJbU7Ge/zszDIo="/>
+        <field:input field="libelleCourt" id="c_org_adorsys_adpharma_domain_ModeConditionement_libelleCourt" z="WZaXmLQ8fEp8qLGwZ9uS6WHjU3g="/>
+        </td>
+       </tr>
+       </table>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_ModeConditionement" render="${not empty dependencies}" z="f3Pm+U9kug16/1STzcKgbDly2uU="/>
+</div>

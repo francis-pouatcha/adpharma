@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_Caisse" modelAttribute="caisse" path="/caisses" render="${empty dependencies}" z="A5Ds4dsQwaRRCjXwYBYOqHQ0T+8=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Caisse_footPrint" render="false" z="user-managed"/>
+        <field:input disabled="true" field="caisseNumber" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" render="false" z="user-managed"/>
+        <field:select disabled="true" field="caissier" id="c_org_adorsys_adpharma_domain_Caisse_caissier" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
+        <field:select disabled="true" field="site" id="c_org_adorsys_adpharma_domain_Caisse_site" itemValue="id" items="${sites}" path="/sites" z="user-managed"/>
+        <field:datetime dateTimePattern="${caisse_dateouverture_date_format}" disabled="true" field="dateOuverture" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" z="user-managed"/>
+        <field:datetime dateTimePattern="${caisse_datefemeture_date_format}" field="dateFemeture" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture" render="false" z="user-managed"/>
+        <field:input field="fondCaisse" id="c_org_adorsys_adpharma_domain_Caisse_fondCaisse" validationMessageCode="field_invalid_number" z="jJE5pyDxozHhGLdPMj3dk5TY0hk="/>
+        <field:input field="totalEncaissement" id="c_org_adorsys_adpharma_domain_Caisse_totalEncaissement" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalRetrait" id="c_org_adorsys_adpharma_domain_Caisse_totalRetrait" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalCash" id="c_org_adorsys_adpharma_domain_Caisse_totalCash" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalCredit" id="c_org_adorsys_adpharma_domain_Caisse_totalCredit" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalCheque" id="c_org_adorsys_adpharma_domain_Caisse_totalCheque" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:checkbox field="caisseOuverte" id="c_org_adorsys_adpharma_domain_Caisse_caisseOuverte" render="false" z="user-managed"/>
+        <field:input field="totalProformat" id="c_org_adorsys_adpharma_domain_Caisse_totalProformat" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalCarteCredit" id="c_org_adorsys_adpharma_domain_Caisse_totalCarteCredit" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalVentePartiel" id="c_org_adorsys_adpharma_domain_Caisse_totalVentePartiel" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:select field="fermerPar" id="c_org_adorsys_adpharma_domain_Caisse_fermerPar" itemValue="id" items="${pharmausers}" path="/pharmausers" render="false" z="user-managed"/>
+        <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Caisse" render="${not empty dependencies}" z="iJfvJkQD9tVt0m9Gdnw4J5zQ8L8="/>
+        <field:input field="totalBonClient" id="c_org_adorsys_adpharma_domain_Caisse_totalBonClient" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalBonCmd" id="c_org_adorsys_adpharma_domain_Caisse_totalBonCmd" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+        <field:input field="totalBonCmdPartiel" id="c_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
+    </form:create>
+</div>

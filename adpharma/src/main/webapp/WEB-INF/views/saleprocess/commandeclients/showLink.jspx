@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
+	style=" margin: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <spring:url value="/saleprocess/${itemId}/edit"  var="edit_url" />
+      <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
+            <spring:url value="/ordonnanciers/printOrdonnancier/${ordNumber}.pdf"  var="ord_print_url" />
+      			<spring:url  value="/saleprocess/${itemId}/enregistrer"  var="enr_cmd_url" />
+            			<spring:url  value="/commandeclients/annulerCmd/${itemId}"  var="anuller_cmd_url" />
+            			<spring:url  value="/commandeclients/annulerCmdByKey/${itemId}/"  var="anuller_cmdKey_url" />
+            		    <spring:url  value="/commandeclients/restorerCmd/${itemId}"  var="restore_cmd_url" />
+            		            		    <spring:url  value="/commandeclients/restorerCmdByKey/${itemId}"  var="restore_cmdByKey_url" />
+            		    
+            		             <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+            		    
+                  			<spring:url  value="/commandeclients/convertirEnVente/${itemId}"  var="conv_cmd_url" />
+      
+      <spring:url value="/resources/images/sendmail.png"  var="mail" />
+      <spring:url value="/resources/images/print.png"  var="print" />
+      <spring:url value="/resources/images/cloturer.png"  var="close" />
+      <spring:url value="/resources/images/modifier.png"  var="modifier" />
+       
+   <c:set value="CLOS" var="etat"/>
+   <script type="text/javascript">
+function closeFact(){
+Check = confirm("Voulez vous vraiment cloturer cette Facture? Apres la cloture il ne serra  plus possible de modifier les details. ");
+if(Check == false){
+	return false;
+	
+}else{
+	return true;
+}
+}
+
+function annCmd(){
+	Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
+	if(Check == false){
+		return false;
+		
+	}else{
+		return true;
+	}
+	}
+	
+function restoreCmd(){
+	Check = confirm("Voulez vous vraiment Restorer cette commande ?. ");
+	if(Check == false){
+		return false;
+		
+	}else{
+		return true;
+	}
+	}
+	
+	function anullerByKey(){
+		var saisie = prompt("saisir votre cle :");
+		if(saisie == "") {
+			alert("la cle saisie est incorrect");
+		}else{
+			window.location = '${anuller_cmdKey_url}'+saisie ;
+		}
+	}
+</script>
+   
+                <span><a href="${ vente_public_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Vente Au Comptant" title="Imprimer Facture de Caisse" /></a></span>
+  
+    <c:if test="${commandeclient.typeCommande == 'VENTE_PROFORMAT' and not commandeclient.annuler and commandeclient.status =='CLOS'  }">
+              <span   ><a href="${ conv_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Convertir En vente" title="convertir en vente au public" /></a></span>
+   </c:if>
+    <c:choose>
+   <c:when test="${commandeclient.status != etat }">
+       <span   ><a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Modifier Detail" title="Imprimer Facture de Caisse" /></a></span>
+                <span><a href="${ enr_cmd_url}" style="text-decoration: none;" onclick="return closeFact();"><INPUT class="submits"  type="button" value="CLOTURER" title="cloturer la commande" /></a></span>
+    </c:when>
+     <c:otherwise>
+           <c:if test="${not empty commandeclient.factureId }">
+        
+        <span   ><a href="${ print_inv_url}" id="butfac" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer La Facture" title="Imprimer Facture de Caisse" /></a></span>
+      </c:if>
+   
+   <c:if test="${not empty ordNumber }">
+   <span ><a href="${ ord_print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer l'Ordonnancier" title="Imprimer Facture proforma" /></a></span>
+   </c:if>
+    </c:otherwise>
+   </c:choose>
+    <c:if test="${commandeclient.status eq 'CLOS' and not commandeclient.encaisse and not commandeclient.annuler }">
+     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASHIER,ROLE_VENDEUR">
+     <span ><a href="${ anuller_cmd_url}" style="text-decoration: none;" onclick="return annCmd();"><INPUT class="submits" style="color: red ; " type="button" value="Anuller " title="Anuller la Commande" /></a></span>
+    </security:authorize>
+    
+     <security:authorize ifAnyGranted="ROLE_OPEN_SALE_SESSION">
+     <span ><a href="#" onclick="anullerByKey();" style="text-decoration: none;"  ><INPUT class="submits"  style="color: red ; " type="button" value="Anuller " title="Anuller la Commande" /></a></span>
+    </security:authorize>
+   </c:if> 
+               <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR">
+   
+    <c:if test="${ commandeclient.encaisse and not commandeclient.annuler }">
+        <security:authorize ifAnyGranted="ROLE_RETOUR_PRODUIT ,ROLE_SITE_MANAGER">
+       
+     <span ><a id="butRetout" href="${ anuller_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Retour Produit " title="retourner Des Produit" /></a></span>
+      </security:authorize>
+       <span ><a id="butAnnulerRet"  href="${ anuller_cmd_url}" style="text-decoration: none; display: none; "><INPUT class="submits" style="color: red;" type="button" value="Annuler " title="annuler " /></a></span>
+  
+   </c:if> 
+   </security:authorize>
+    <c:if test="${commandeclient.annuler }">
+   <security:authorize ifAnyGranted="ROLE_OPEN_SALE_SESSION">
+	
+	<c:set value="true" var="isVente"/>
+                   </security:authorize>
+   
+        <span ><a href="${ restore_cmd_url}" style="text-decoration: none;" onclick="return restoreCmd();"><INPUT class="submits" type="button" value="Restore" title="Restorer La Commande" /></a></span>
+   
+   </c:if>
+   
+     <c:if test="${not empty bonClient}">
+          <c:if test="${not bonClient.imprimer}">
+       <spring:url value="/avoirclients/print/${bonClient.id}.pdf" var="avoir_url"/>
+              <span><a href="${ avoir_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer Le bon" title="visualiser l'avoir" /></a></span>
+   			</c:if>
+     
+       </c:if> 
+      <c:if test="${not empty factureNumber}">
+        <span style="margin-left: 50px; font-weight: bold;font-size: 30px; color: green;">${factureNumber}  </span>  			
+     
+       </c:if>     
+                   
+   <c:if test="${not empty apMessage}">
+		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: -18px;font-weight: bold;font-size: 16px;">${apMessage}</p>
+	</center>
+	</c:if>    
+</span>
+
+

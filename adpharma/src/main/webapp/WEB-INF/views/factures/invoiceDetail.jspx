@@ -1,0 +1,102 @@
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	style="width: 100%;overflow: auto; height: 200px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+              <spring:url value="/factures/findDetails/ByAjax" var="find_cmdDetail_url"/>
+              <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+              
+  <script>
+  function clearDetailTable(){
+		$('#detailTable').html(
+				'<tr>
+				<th>CIP MAISON</th>
+		    		<th>DESIGNATION</th>
+		    		<th>QTE CIPM</th>
+		    		<th>PRIX TOTAL</th>
+		    		<th>REMISE</th>
+				</tr>');
+	//	$('#designation').val(" ");
+		
+	}
+		function getCmdDetails(cmdId){
+			$.getJSON( '${find_cmdDetail_url}/'+cmdId,
+	                function(data){
+				$(data).each(function(){
+	                  $('#detailTable').append(
+	          '<tr>
+	          <td>'+this.cipM+'</td>
+	          <td>'+this.designation+'</td>
+	          <td>'+this.quantiteCommande+'</td>
+	          <td>'+this.prixTotal+'</td>
+	          <td>'+this.remise+'</td>
+	          
+	          </tr>'
+	                          
+	          );
+		}
+		)}
+			)};
+
+	$(function() {
+$('tr.list').each(function(){
+							var current = this;
+							this.onclick = function(event) {
+								var container = $( "#detail" );
+								event.preventDefault();
+								if (container.is( ":visible" )){
+								container.slideUp( 1000 );
+								clearDetailTable();
+								} else {
+								getCmdDetails(this.id);
+								container.slideDown(1000);
+								}
+								return false;
+							};
+							});
+	
+	})
+	</script>
+   <div id="detail">
+<div id="inner" style="overflow-y: scroll; height: 300px;">
+<center style="text-transform: uppercase; "> <H1 id="detailh">DETAILS DE LA FACTURE </H1> </center>
+   		 <center>	<IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;" /></center>
+   <table id="detailTable" style="margin-bottom: 20px;">
+        
+              <tr>
+                                                                             
+                                                                             <th>CIP MAISON</th> 
+                                                                             <th>DESIGNATION</th> 
+                                                                             <th>QTE CIPM</th> 
+                                                                             <th>PRix Total</th>
+                                                                             <th>REMISE</th>
+                                                                             
+             </tr>
+       </table>
+<span> 
+             <a href="${print_recu_url }"  style="color: blue;font-weight: bold;"  title="Imprimer Le recu D'inscription">
+                 Ticket
+                </a>
+                |
+                <a href="${print_recu_url }"  style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
+                 facture
+                </a>
+                |
+                <a href="${print_recu_url }" style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
+                 Borderau de Livraison
+                </a>
+                |
+                 <a href="${print_recu_url }" style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
+                 carte Scolaire
+                </a>
+                |
+</span>
+ 
+</div>
+
+</div>    
+</div>

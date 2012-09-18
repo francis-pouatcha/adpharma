@@ -1,0 +1,194 @@
+<div id="header" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:url var="banner" value="/resources/images/fakoship_logo.png" />
+  <spring:url var="ship" value="/resources/images/biglogo.png" />
+   <spring:url var="loginimage" value="/resources/images/login.png" />
+    <spring:url var="logoutimage" value="/resources/images/logout.png" />
+     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
+    
+  <spring:url var="home" value="/?lang=fr" /> 
+  <spring:message code="button_home" var="home_label" />
+  
+  <script type="text/javascript">
+function confHeader(){
+Check = confirm("Voulez vous vraiment Ferner votre session? ");
+if(Check == false){
+	return false;
+	
+}else{
+	return true;
+}
+}
+$(function(){
+$('#userInfos').click(function(){
+	
+	$('<div class="userdialog"> </div>').dialog({
+		
+		open: function(){
+			$.getJSON( '/adpharma/pharmausers/userInfos',
+					function(data){
+									$('.userdialog').html(
+											'<p> IDENTIFIANT :  '+ data.userName+'</p>'
+											+'<p>NOM COMPLET :  '+data.fullName+'</p>'
+											+'<p> TELEPHONE :   '+data.phoneNumber+'</p>'
+											+'<p> CLE DE VENTE :  '+data.saleKey+'</p>'
+											
+											);	
+						
+					});
+			
+			
+			
+		},
+		title: 'User Information',
+		width: 400,
+		resizable:true,
+		draggable :true,
+         hide:'slide',
+         show:'slide',
+         position:'center', 
+		modal:true,
+		buttons: {
+			"Reset Your Key": function() { 
+			
+			$.getJSON( '/adpharma/pharmausers/resetSaleKey',
+function(data){
+				$('.userdialog').html(
+						'<p> IDENTIFIANT :'+data.userName+'</p>'
+						+'<p> Nom Complet :'+data.fullName+'</p>'
+						+'<p> TELEPHONE :'+data.phoneNumber+'</p>'
+						+'<p> CLE DE VENTE :'+data.saleKey+'</p>'
+						
+						);	
+	
+});
+				
+			
+
+			}, 
+			"Cancel": function() { 
+				$(this).dialog("close"); 
+			} 
+		}
+		});
+
+	return false;
+});
+});
+</script>
+
+ <spring:url var="user" value="/resources/images/usericon.png" />
+  <spring:url var="search" value="/resources/images/search.png" />
+   <spring:url var="dropdown" value="/resources/images/zonebar-downarrow.png" />
+    <spring:url var="logoutimage" value="/resources/images/logout.png" />
+  <spring:url var="home" value="/" />
+  <spring:url var="img" value="/resources/images/logo.png" />
+  <spring:message code="button_home" var="home_label" />
+  <spring:url value="/resources/j_spring_security_logout" var="logout"/>
+  
+  <!--  <table id="headerTable">
+  	<tr>
+  		<td style="text-align: left; vertical-align: top;">
+  			<table>
+  			<tr>
+  			
+  			<td style="vertical-align: top;">
+	  			<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
+			  	<font face="Trebuchet MS" size="5" color="#ffffff"><strong> ADORSYS WEB PHARMA 1.0 </strong></font><br/>
+			  	<font size="2.5" face="Trebuchet MS"  color="#ffffff"><strong>Gestion du Stock , de  la Caisse et du  Suivi de la Clientele . </strong> </font><br/>
+			     <font size="2.5" face="Trebuchet MS"  color="#ffffff"><strong>Phones : +237 33 42 32 44 / 99 93 99 48 </strong> </font>
+			  	
+			  	</a>
+  			</td>
+  			</tr>
+  			</table>
+		  		  
+  		</td>
+  		
+  		<td  style="padding-top: 20px; vertical-align: top; text-align: center;">
+  			<span class="loginarea">
+  			<c:choose>
+  				<c:when test="${pageContext['request'].userPrincipal != null}">
+  				
+	  				  
+	  				 <font size="5">
+	  				 
+		  				<a href="#" title="cliquer pour voir vos Infos" id="userInfos">  <c:out value="Welcome, "/>${pageContext['request'].userPrincipal.name}</a>
+					      <spring:url value="/resources/j_spring_security_logout" var="logout"/>
+				      </font>
+				      
+				      <br/>
+				    
+  				</c:when>
+  			</c:choose>
+  			</span>
+  		</td>
+  		
+  		<td  style="padding-top: 20px; vertical-align: top; text-align: center;">
+  			<span class="loginarea">
+  			<c:choose>
+  				<c:when test="${pageContext['request'].userPrincipal != null}">
+				     <i> 
+				     
+				      <a href="${logout}" class="lienimg" onclick="return confHeader();">
+				     <font face="Trebuchet MS" size="6" color="#ffffff"><strong> LOGOUT </strong></font><br/>
+				      
+				      </a>
+				      </i>
+  				</c:when>
+  				<c:otherwise>
+				      <spring:url value="/login" var="login"/>
+				      <a href="${login}">
+				      				     <font face="Trebuchet MS" size="6" color="#ffffff"><strong> LOGIN </strong></font><br/>
+				      
+				      </a>
+  				</c:otherwise>
+  			</c:choose>
+  			</span>
+  		</td>
+  		<td style="text-align: right;padding: 5px;">
+		  <a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
+		  	<img src="${ship}" />
+		  </a>
+  		</td>
+  	</tr>
+  </table>-->
+  <div id="top-bar">
+ 		<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
+			<img src="${img}"  alt="DZone" class="floatleft" />
+		</a>
+			<div id="right-side">
+			<c:choose>
+  				<c:when test="${pageContext['request'].userPrincipal != null}">
+  			  <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
+		  		<a href="#"  > Welcome 	${pageContext['request'].userPrincipal.name}</a> to ${sessionBean.connectedSiteName}
+		    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >Users Informations</a>
+  				</c:when>
+  			</c:choose>
+			<c:choose>
+  				<c:when test="${pageContext['request'].userPrincipal != null}">
+				     <a href="${logout}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >Logout</a> 
+				          <spring:url var="setLicence_url" value="#" />
+				     
+  				</c:when>
+  				<c:otherwise>
+  				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
+  				
+				      <spring:url value="/login" var="login"/>
+				      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >Login</a> 
+  				</c:otherwise>
+  			</c:choose>	
+				
+				<form id="main-search" action="#" method="get">
+							<label for="search-field" id="search-field-label">Search</label>
+							<input type="text" tabindex="1" maxlength="255" value="${licenceKey }" id="search-field" name="licenceKey" class="search" />
+							<input type="image" alt="Search" value="Search" src="${search}" id="search-button" class="search" style="text-transform: uppercase;" />  
+				</form>
+			</div>
+		</div>
+</div> 
+
+

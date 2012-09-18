@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
+ xmlns:security="http://www.springframework.org/security/tags" xmlns:spring="http://www.springframework.org/tags" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script type="text/javascript">
+  
+  function conf(){
+	  Check = confirm("Voulez vous vraiment fermer la caisse ? ");
+	  if(Check == false){
+	  	return false;
+	  	
+	  }else{
+	  	return true;
+	  }
+	  }
+  </script>
+    <security:authorize access="isAuthenticated()">
+        <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+                       <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+           
+                <menu:category id="c_client" z="TjeLu8x0oS98tSiRzdPNDOc8U+c=">
+                    <menu:item id="i_client_new" messageCode="global_menu_new" render="false" url="/clients?form" z="0rEWYB2Yq6qokJif3zv05zcXpXk="/>
+                    <menu:item id="i_client_list"  messageCode="global_menu_list" url="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="/DxsyzfFyvp93UEW0WcXvtjs4zo="/>
+                    <menu:item id="fi_client_nomcompletlike" label="Nom" messageCode="global_menu_find" url="/clients?find=ByNomCompletLike&amp;form" z="gb3Q6sqrOHSFoeGLHgM3WO9tZ7E="/>
+                    <menu:item id="fi_client_clientnumberequals" label="Numero Client" messageCode="global_menu_find" url="/clients?find=ByClientNumberEquals&amp;form" z="RtZMMau7ptk10rewE4ZV4MywxUo="/>
+                </menu:category>
+           <menu:category id="c_categorieclient" z="NHaLyF2D2J74U7ElRByVUEZZCco=">
+                    <menu:item id="i_categorieclient_new" render="false" messageCode="global_menu_new" url="/categorieclients?form" z="UHmFqfrinnX7JWrVuLAZl8XTkPc="/>
+                    <menu:item id="i_categorieclient_list" messageCode="global_menu_list" url="/categorieclients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="aQk3jZMJiHrJJWz+lIlF7FBsU9E="/>
+                </menu:category>
+            <menu:category id="c_detteclient" z="n/K6s9ff1ira5TMpqpWmr517ObI=">
+                <menu:item id="i_detteclient_new"  render="false" messageCode="global_menu_new" url="/detteclients?form" z="/Unf72teoWzBMb9uCeKK2XdVJYY="/>
+                <menu:item id="i_detteclient_list" messageCode="global_menu_list" url="/detteclients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="8goohwAWIy5EExwcg1A6o0+Bfw8="/>
+               <menu:item id="fi_detteclient_clientnamelike" label="Nom Client" messageCode="global_menu_find" url="/detteclients?find=ByClientNameLike&amp;form" z="yUkqlCQXXGa3h1TGdKKCEVENWqs="/>
+                <menu:item id="fi_detteclient_clientnamelikeandsoldernot" label="Nom et Etat Solde" messageCode="global_menu_find" url="/detteclients?find=ByClientNameLikeAndSolderNot&amp;form" z="IKzKrMO6ZX8iz2sftrZZGauAh9Y="/>
+                <menu:item id="fi_detteclient_datecreationbetween" label=" Date Creation" messageCode="global_menu_find" url="/detteclients?find=ByDateCreationBetween&amp;form" z="/jajvHx419OAcShtXVtfg5UmuoI="/>
+        </menu:category>
+           </security:authorize>
+       
+        <menu:category id="c_back_to_main"  z="user-managed" label="Retour">
+            <menu:item id="i_back_to_voyage" url="/" label="Au Menu Principal" z="user-managed"/>
+        </menu:category>
+        </menu:menu>
+    </security:authorize>
+</div>

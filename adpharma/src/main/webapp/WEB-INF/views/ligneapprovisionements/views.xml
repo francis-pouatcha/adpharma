@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="approvisionnement" name="ligneapprovisionements/list">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/list.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/show">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/show.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/create">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/create.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/update">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/update.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByProduit">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByProduit.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByApprovisionement">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByApprovisionement.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByCipMaisonEquals">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByCipMaisonEquals.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByDesignationLike">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByDesignationLike.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByQuantieEnStockAndDesignationLike">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByQuantieEnStockAndDesignationLike.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="ligneapprovisionements/findLigneApprovisionementsByQuantieEnStockAndCipEquals">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findLigneApprovisionementsByQuantieEnStockAndCipEquals.jspx"/>
+    </definition>
+    
+    <definition extends="approvisionnement" name="ligneapprovisionements/findProduct">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/findProduct.jspx"/>
+    </definition>
+    <definition extends="approvisionnement" name="ligneapprovisionements/ficheDetailCipm">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/ficheDetaillee.jspx"/>
+    </definition>
+     <definition extends="approvisionnement" name="ligneapprovisionements/search">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/search.jspx"/>
+    </definition>
+    
+     <definition extends="approvisionnement" name="ligneapprovisionements/sortiesByCipm">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/sortirStockByCipm.jspx"/>
+    </definition>
+    
+     <definition extends="approvisionnement" name="ligneapprovisionements/sortiesByCip">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/sortirStockByCip.jspx"/>
+    </definition>
+    
+</tiles-definitions>

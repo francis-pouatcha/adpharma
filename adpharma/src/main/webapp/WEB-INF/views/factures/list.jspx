@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_Facture" items="${factures}" z="8SceoTuxcq9jmB1uKEBDpUPgQoQ=">
+        <table:table create="false" data="${factures}" delete="false" id="l_org_adorsys_adpharma_domain_Facture" path="/factures" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_factureNumber" property="factureNumber" z="mtXP0zSgZTShWGN0zqNnYmmA+tA="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_typeFacture" property="typeFacture" z="75vxvR56+nHWHZ3c8sAiPxkS22k="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_commande" property="commande" render="false" z="Db6sJdzsjRFYMAM571q0OforfF4="/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" maxLength="-1" property="dateCreation" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_vendeur" maxLength="-1" property="vendeur" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_client" maxLength="-1" property="client" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_montantTotal" property="montantTotal" z="uG2T0V5GmpN1EvVqmNlvhufhkoU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_montantRemise" property="montantRemise" z="41sm6xzWXz0ZmCxBzHXH3w3jMJY="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_netPayer" property="netPayer" z="OWHx1k+Rl9LTdNdIUhVsUKmPjtc="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_encaisser" property="encaisser" z="ZVGUlbe7B+a7hb+cd68YOASSZuU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_avance" property="avance" z="waNa46akJ4onvuHTiGbLGw7oeI0="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_reste" property="reste" z="htyWHIsVZwzLW9nIZXxMZ+f7kMc="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Facture_solder" property="solder" z="llg3p70RhLSUtgaHL1QX+g7udhw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_cip" property="cip" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_designation" property="designation" render="false" z="user-managed"/>
+        </table:table>
+    </page:list>
+    <jsp:include page="invoiceDetail.jspx" />
+</div>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show create="false" delete="false"  id="ps_org_adorsys_adpharma_domain_OperationCaisse" object="${operationcaisse}" path="/operationcaisses" update="false" z="user-managed">
+        <field:display field="opNumber" id="s_org_adorsys_adpharma_domain_OperationCaisse_opNumber" object="${operationcaisse}" z="485aGG69pfSgl3yZbPxB/LTDVVE="/>
+        <field:display field="caisse" id="s_org_adorsys_adpharma_domain_OperationCaisse_caisse" object="${operationcaisse}" z="S3fqlsob0ZDmARjwj43yGdNOGmQ="/>
+        <field:display field="operateur" id="s_org_adorsys_adpharma_domain_OperationCaisse_operateur" object="${operationcaisse}" z="VcvdF2kMY1vmJpkwCo5qJobwoLE="/>
+        <field:display date="true" dateTimePattern="${operationCaisse_dateoperation_date_format}" field="dateOperation" id="s_org_adorsys_adpharma_domain_OperationCaisse_dateOperation" object="${operationcaisse}" z="T2QHPMRdF76I1+ldJlZ5e+8/+wU="/>
+        <field:display field="typeOperation" id="s_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" object="${operationcaisse}" z="v8UVeSkVja1tnBNqsuf+37oTSUE="/>
+        <field:display field="modePaiement" id="s_org_adorsys_adpharma_domain_OperationCaisse_modePaiement" object="${operationcaisse}" z="rCw3qSL8glOMICbaDx883nhGQug="/>
+        <field:display field="montant" id="s_org_adorsys_adpharma_domain_OperationCaisse_montant" object="${operationcaisse}" z="yrRipTa0SQVSuJVX/VT7033FgzQ="/>
+        <field:display field="raisonOperation" id="s_org_adorsys_adpharma_domain_OperationCaisse_raisonOperation" object="${operationcaisse}" z="hA+3uTAqMH0/pZZ/sfhYErI4NV4="/>
+        <field:display field="note" id="s_org_adorsys_adpharma_domain_OperationCaisse_note" object="${operationcaisse}" z="mZanSxMeIcQV8e9hv/OT2nrPUcE="/>
+    </page:show>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_OperationCaisse_footPrint" object="${operationcaisse}" z="RZKhRW3lrW8V+6gMTp9q9K3p9m4="/>
+    <HR style="margin-top: -12px;"/>
+</div>

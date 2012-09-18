@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_LicenceEntity" modelAttribute="licenceEntity" path="/licenceentitys" render="${empty dependencies}" z="uvi7+Wduq5pYk1+KK8bHvBFXzag=">
+        <field:input field="beginDate" id="c_org_adorsys_adpharma_domain_LicenceEntity_beginDate" z="IaHN16GFcvVPHq3JRpRE0YoE6RM="/>
+        <field:input field="endDate" id="c_org_adorsys_adpharma_domain_LicenceEntity_endDate" z="a90qvhgdvehz2FyO03nyoENWdHE="/>
+        <field:checkbox field="isValid" id="c_org_adorsys_adpharma_domain_LicenceEntity_isValid" z="uSu5Ie+hDZgDH/sspm4qL4U0X6Q="/>
+        <field:input field="generateKey" id="c_org_adorsys_adpharma_domain_LicenceEntity_generateKey" z="pwFMnkxgWEEWXW/VxAmZXC1f1PI="/>
+        <field:datetime dateTimePattern="${licenceEntity_transtientbegin_date_format}" field="transtientBegin" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" z="pcyOH+1sJ0Bml9G+i8SgepvyF2I="/>
+        <field:datetime dateTimePattern="${licenceEntity_transtientend_date_format}" field="transtientEnd" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" z="+PxUwFVB3Kbstc3J2qcfXBrBOdU="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_LicenceEntity" render="${not empty dependencies}" z="o5oxIr9UMwFuE1ZtUnnsW1sucmw="/>
+</div>

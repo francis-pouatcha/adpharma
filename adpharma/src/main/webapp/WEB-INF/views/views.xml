@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+  <definition extends="default" name="index">
+    <put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
+  </definition>
+  <definition extends="dialog" name="dialogContent">
+    <put-attribute name="body" value="/WEB-INF/views/dialogContent.jspx"/>
+  </definition>
+
+  <definition extends="public" name="dataAccessFailure">
+    <put-attribute name="body" value="/WEB-INF/views/dataAccessFailure.jspx"/>
+  </definition>
+
+  <definition extends="public" name="resourceNotFound">
+    <put-attribute name="body" value="/WEB-INF/views/resourceNotFound.jspx"/>
+  </definition>
+
+  <definition extends="public" name="uncaughtException">
+    <put-attribute name="body" value="/WEB-INF/views/uncaughtException.jspx"/>
+  </definition>
+
+<definition extends="public" name="login">
+        <put-attribute name="body" value="/WEB-INF/views/login.jspx"/>
+    </definition>
+    
+  <definition extends="stocker" name="/menu/cmdFournisseur">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  
+   <definition extends="vendeur" name="/menu/cmdClients">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  
+  <definition extends="approvisionnement" name="/menu/approvisionnement">
+    <put-attribute name="body" value="/WEB-INF/views/stockerIndex.jspx"/>
+  </definition>
+  
+   <definition extends="caisse" name="/menu/caisse">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  
+  <definition extends="produit" name="/menu/produit">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  
+   <definition extends="client" name="/menu/clients">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  <definition extends="configuration" name="/menu/configuration">
+    <put-attribute name="body" value="/WEB-INF/views/iuserIndex.jspx"/>
+  </definition>
+  <definition extends="admin" name="/menu/Users">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+   <definition extends="facturation" name="/menu/facturation">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx"/>
+  </definition>
+  
+   <definition extends="inventaire" name="/menu/inventaire">
+    <put-attribute name="body" value="/WEB-INF/views/userIndex.jspx" />
+  </definition>
+  
+  </tiles-definitions>

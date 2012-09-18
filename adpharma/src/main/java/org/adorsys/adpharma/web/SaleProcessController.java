@@ -1,0 +1,695 @@
+package org.adorsys.adpharma.web;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.adorsys.adpharma.beans.PaiementProcess;
+import org.adorsys.adpharma.beans.SaleProcess;
+import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
+import org.adorsys.adpharma.domain.Caisse;
+import org.adorsys.adpharma.domain.CategorieClient;
+import org.adorsys.adpharma.domain.Client;
+import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Etat;
+import org.adorsys.adpharma.domain.Facture;
+import org.adorsys.adpharma.domain.Genre;
+import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneCmdClient;
+import org.adorsys.adpharma.domain.LigneFacture;
+import org.adorsys.adpharma.domain.Ordonnancier;
+import org.adorsys.adpharma.domain.Paiement;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.RoleName;
+import org.adorsys.adpharma.domain.Site;
+import org.adorsys.adpharma.domain.TypeCommande;
+import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.adorsys.adpharma.utils.ProcessHelper;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@RequestMapping("/saleprocess")
+@Controller
+public class SaleProcessController {
+	@RequestMapping(value = "/newPublicCmd", method = RequestMethod.GET)
+	public String newCommand(Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = initCmdClient();
+		commandeClient.persist() ;
+		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest)+"/edit";
+	}
+
+	public CommandeClient initCmdClient(){
+		CommandeClient commandeClient = new CommandeClient();
+		commandeClient.setTypeCommande(TypeCommande.VENTE_AU_PUBLIC);
+		commandeClient.setClient(Client.findClient(new Long(1)));
+		return commandeClient ;
+	}
+
+	@RequestMapping(value = "/{cmdId}/getclientajax", method = RequestMethod.GET)
+	@ResponseBody
+	public String getClientByAjax(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		System.out.println("in");
+		return commandeClient.getClient().toJson();
+	}
+
+	@RequestMapping(value = "/{mvtId}/visualiserCmd/{factureNumber}", method = RequestMethod.GET)
+	public String visualiserCmd(@PathVariable("mvtId") Long mvtId,@PathVariable("factureNumber") String factureNumber, Model uiModel,HttpServletRequest httpServletRequest) {
+		List<Facture> resultList = Facture.findFacturesByFactureNumberEquals(factureNumber).getResultList();
+		if (!resultList.isEmpty()) {
+			Facture next = resultList.iterator().next();
+			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment( next.getCommande().getId().toString(), httpServletRequest);
+
+		}else {
+
+		}
+		uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
+		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
+
+	}
+
+	@RequestMapping(value = "/{mvtId}/printTicket/{factureNumber}", method = RequestMethod.GET)
+	public String printTicket(@PathVariable("mvtId") Long mvtId,@PathVariable("factureNumber") String factureNumber, Model uiModel,HttpServletRequest httpServletRequest) {
+		List<Paiement> resultList = Paiement.findPaiementsByInvoiceNumberEquals(factureNumber).getResultList();
+		if (!resultList.isEmpty()) {
+			Paiement next = resultList.iterator().next();
+			return "redirect:/paiementprocess/printTicket/"+next.getId().toString()+".pdf";
+
+		}else {
+
+		}
+		uiModel.addAttribute("apMessage","AUCUNE TICKET TROUVEE");
+		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
+
+	}
+
+
+
+	@RequestMapping(value = "/{cmdId}/updateclientajax", method = RequestMethod.GET)
+	@ResponseBody
+	public String updateClientByAjax(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		String cltid = httpServletRequest.getParameter("cltid");
+		Client client = new Client();
+		client.setNom(httpServletRequest.getParameter("nom"));
+		client.setPrenom(httpServletRequest.getParameter("prenom"));
+		client.setEmail(httpServletRequest.getParameter("email"));
+		client.setEmployeur(httpServletRequest.getParameter("employeur"));
+		client.setNote(httpServletRequest.getParameter("note"));
+		client.setTelephoneMobile(httpServletRequest.getParameter("telephoneMobile"));
+		client.setSexe(Genre.getGenreByName(httpServletRequest.getParameter("sexe")));
+
+		if ("1".equalsIgnoreCase(cltid.trim())) {
+			client.persist();
+			commandeClient.setClient(client);
+
+		}else {
+			client = Client.findClient(Long.valueOf(cltid.trim()));
+			client.setNom(httpServletRequest.getParameter("nom"));
+			client.setPrenom(httpServletRequest.getParameter("prenom"));
+			client.setEmail(httpServletRequest.getParameter("email"));
+			client.setEmployeur(httpServletRequest.getParameter("employeur"));
+			client.setNote(httpServletRequest.getParameter("note"));
+			client.setTelephoneMobile(httpServletRequest.getParameter("telephoneMobile"));
+			client.setSexe(Genre.getGenreByName(httpServletRequest.getParameter("sexe")));
+
+			Client merge = (Client) client.merge();
+			commandeClient.setClient(merge);
+
+		}
+		CommandeClient merge = (CommandeClient) commandeClient.merge();
+		return merge.toString();
+	}
+
+	@RequestMapping(value = "/newProformat", method = RequestMethod.GET)
+	public String newProformat(Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = new CommandeClient();
+		commandeClient.setTypeCommande(TypeCommande.VENTE_PROFORMAT);
+		commandeClient.setClient(Client.findClient(new Long(1)));
+		commandeClient.persist() ;
+		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest)+"/edit";
+	}
+
+	@RequestMapping(value = "/{cmdId}/edit", method = RequestMethod.GET)
+	public String editCommand(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpServletRequest httpServletRequest) {
+		uiModel.asMap().clear();
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		uiModel.addAttribute("saleProcess",saleProcess);
+		uiModel.addAttribute("apMessage", httpServletRequest.getAttribute("apMessage"));
+		return "saleprocess/edit";
+	}
+
+
+	//met a jour un client lor d'une vente au comptant  
+	@RequestMapping(value = "/{cmdId}/updateClient/{clId}",params = "form", method = RequestMethod.GET)
+	public String updateClientForm(@PathVariable("cmdId") Long cmdId,@PathVariable("clId") Long clId, Model uiModel) {
+		Client clients = Client.findClient(clId);
+		if ("CL-0001".equals(clients.getClientNumber())) {
+			Client client = Client.findClient(clId).clone();
+			client.persist();
+			CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+			commandeClient.setClient(client);
+			commandeClient.merge();
+			uiModel.addAttribute("client", client);
+		}else {
+			uiModel.addAttribute("client",clients);
+
+		}
+		ProcessHelper.addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("cmdId", cmdId);
+
+		return "saleprocess/updateClient";
+
+	}
+
+	//permet d associer un ordonnancier a un client  
+	//cette fonction ne travaille plus : Moyo
+	@RequestMapping(value = "/{cmdId}/ordonnancier",params = "form", method = RequestMethod.GET)
+	public String createOrUpdateOrdonnanceForm(@PathVariable("cmdId") Long cmdId, Model uiModel) {
+		List<Ordonnancier> ordonnanciers = Ordonnancier.findOrdonnanciersByCommande(CommandeClient.findCommandeClient(cmdId)).getResultList();
+		Collection<CommandeClient> commandeclients = new ArrayList<CommandeClient>();
+		commandeclients.add(CommandeClient.findCommandeClient(cmdId));
+		uiModel.addAttribute("cmdId", cmdId);
+		uiModel.addAttribute("commandeclients", commandeclients);
+
+		if (!ordonnanciers.isEmpty()) {
+			uiModel.addAttribute("ordonnancier", ordonnanciers.iterator().next());
+			return "saleprocess/updateOrdonnancier";
+
+		}else {
+			Ordonnancier ordonnancier = new Ordonnancier();
+			uiModel.addAttribute("ordonnancier", ordonnancier);
+			return "saleprocess/CreateOrdonnancier";
+		}
+
+	}
+	//permet d associer un ordonnancier a un client  
+	@RequestMapping(value = "/{cmdId}/ordonnancier")
+	public String createOrUpdateOrdonnance(HttpServletRequest httpServletRequest, Ordonnancier ordonnancier, 
+			BindingResult bindingResult,@PathVariable("cmdId") Long cmdId, Model uiModel) {
+		Long id = ordonnancier.getId();
+		System.out.print(id);
+
+		uiModel.asMap().clear();
+		if (id==null) {
+			System.out.print(ordonnancier.toString());
+			ordonnancier.setCommande(CommandeClient.findCommandeClient(cmdId));
+			ordonnancier.persist();
+
+		}else {
+			System.out.print(ordonnancier.getVersion());
+			ordonnancier.merge();
+		}
+		ordonnancier.flush();
+		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
+	}
+
+
+	//met a jour un client lor d'une vente au comptant  
+	@RequestMapping(value = "/rechercheCmd",params = "form", method = RequestMethod.GET)
+	public String rechercheCmdForm( Model uiModel) {
+
+		return "saleprocess/rechercheCmd";
+
+	}
+
+	@RequestMapping(value = "/{cmdId}/updateClient", method = RequestMethod.PUT)
+	public String updateClient(@PathVariable("cmdId") String cmdId,@Valid Client client, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		/* Client clt = Client.findClient(client.getId());
+	        client.setClientPayeur(clt.getClientPayeur());
+	        client.setClientPayeurNumber(clt.getClientPayeurNumber());
+		 */ if (bindingResult.hasErrors()) {
+			 uiModel.addAttribute("client", client);
+			 ProcessHelper.addDateTimeFormatPatterns(uiModel);
+			 return "saleprocess/updateClient";
+		 }
+		 uiModel.asMap().clear();
+		 client.merge();
+		 return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId, httpServletRequest)+"/edit";
+	}
+
+	@Transactional
+	@RequestMapping(value = "/{cmdId}/enregistrer", method = RequestMethod.GET)
+	public String enregistrerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		Caisse caisse = PaiementProcess.getOpenCaisse();
+		if (caisse==null) {
+			uiModel.addAttribute("apMessage", "Impossible de cloturer la commande aucune Caisse ouverte") ;
+			return "forward:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
+
+		}
+		if (!commandeClient.validaterCmd(uiModel)) {
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";
+		}
+		if (!commandeClient.getStatus().equals(Etat.CLOS)) {
+			saveAndCloseCmd(commandeClient ,caisse,SecurityUtil.getPharmaUser(null));
+		}
+
+		return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
+	}
+
+
+	@Transactional
+	@RequestMapping(value = "/{cmdId}/enregistrementValider",method = RequestMethod.POST)
+	public String emregistrementValider(@PathVariable("cmdId") Long cmdId, @RequestParam("cle") String key , Model uiModel, HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		Caisse caisse = PaiementProcess.getOpenCaisse();
+		ArrayList<RoleName> role = new ArrayList<RoleName>();
+		role.add(RoleName.ROLE_VENDEUR);
+		role.add(RoleName.ROLE_SITE_MANAGER);
+		if (caisse==null) {
+			uiModel.addAttribute("apMessage", "Impossible de cloturer la commande aucune Caisse ouverte") ;
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";	
+		}
+		if (key == null) {
+			uiModel.addAttribute("apMessage", " veullez saisir  La cle de validation !") ;
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";	
+		} 
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser(key);
+		if (pharmaUser == null) {
+			uiModel.addAttribute("apMessage", "La cle de validation est incorrecte") ;
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";
+		} 
+		if (!pharmaUser.hasAnyRole(role)) {
+			uiModel.addAttribute("apMessage", "Vous n'avez pas les droits necessaire Pour Cloturer cette vente") ;
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";		
+		}
+
+		if (!commandeClient.validaterCmd(uiModel)) {
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";
+		}
+
+		if (!commandeClient.getStatus().equals(Etat.CLOS)) {
+			saveAndCloseCmd(commandeClient ,caisse,pharmaUser);
+		}
+
+		return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
+	}
+
+	// add line to de client commande 
+
+	//@Transactional
+	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
+	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
+			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(pId);
+		int remiseAutorise = ProcessHelper.getRemise(ligneApp).intValue();
+		int qteStock = ligneApp.getProduit().getQuantiteEnStock().intValue();
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		BigDecimal remise = BigDecimal.ZERO ;
+		if (!"".equals(rem)) {
+			remise  = new BigDecimal(rem);
+		}
+
+		// verifier si la commande est en cour ou annule ou encaisser
+		if (commandeClient.getStatus().equals(Etat.CLOS)) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : COMMANDE CLOS ! ");
+		}else if (commandeClient.getEncaisse()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE DEJA ENCAISSEE ! ");
+		}else if (commandeClient.getAnnuler()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE ANULLEE ! ");
+		}else if (qte.intValue() == 0) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE AJOUTEE DOIT ETRE SUPERIEUR A   0  ");
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",qte);
+		}else if (ligneApp.getQuantieEnStock().intValue() < qte.intValue()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE AJOUTEE DOIT ETRE INFERIEUR LA QTE EN STOCK : "+ligneApp.getQuantieEnStock().intValue());
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",qte);
+			uiModel.addAttribute("rem",remise);
+			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
+			uiModel.addAttribute("forcer",Boolean.TRUE);
+
+		}/*else if (commandeClient.contientSameCipM(ligneApp.getCipMaison())) {
+			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
+        return updateCmdLine(cmdId,  sameCipM.getId(), qte, rem, uiModel, httpServletRequest);
+		}*/ else if (!ligneApp.isVenteAutorise()) {
+			uiModel.addAttribute("apMessage","Ce produit N'est Plus Autorise a la vente Veuillez Contacter Le le Manager Pour Plus D'information !");
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",qte);
+		} else if (ligneApp.getDatePeremtion().before(new Date())) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer la vente ! Ce produit est Perime Depuis Le : "+ PharmaDateUtil.format(ligneApp.getDatePeremtion(), "dd-MM-yyyy"));
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",qte);
+			uiModel.addAttribute("rem",remise);
+			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
+			uiModel.addAttribute("forcer",Boolean.TRUE);
+
+		} else{
+			if (remiseAutorise < remise.intValue()) {
+				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+				remise = BigDecimal.ZERO ;
+			}
+			SaleProcess.addline(pId, qte, remise, commandeClient);
+
+		}
+		saleProcess.calculPrix(commandeClient);
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+
+	}
+
+	//@Transactional
+	@RequestMapping(value = "/{cmdId}/addLineForcer", method = RequestMethod.POST)
+	public String addLineForcer(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
+			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(pId);
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		int remiseAutorise = ProcessHelper.getRemise(ligneApp).intValue();
+		BigDecimal remise = BigDecimal.ZERO ;
+		if (StringUtils.isNotBlank(rem)) {
+			remise  = new BigDecimal(rem);
+		}
+		if (remiseAutorise < remise.intValue()) {
+			uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+		}
+
+		// verifier si la commande est en cour ou annuler ou encaisser
+		if (commandeClient.getStatus().equals(Etat.CLOS)) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : COMMANDE CLOS ! ");
+		}else if (commandeClient.getEncaisse()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE DEJA ENCAISSEE ! ");
+		}else if (commandeClient.getAnnuler()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE ANNULEE ! ");
+		}else if (qte.intValue() == 0) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : la qte ajoute  doit etre superieur a  0  ");
+		}/*else if (qte.intValue() > ligneApp.getProduit().getQuantiteEnStock().intValue()) {
+			uiModel.addAttribute("apMessage","Vous Pouver Forcer La vente Jusqu'a :  "+ligneApp.getProduit().getQuantiteEnStock());
+		}*/
+		else{
+			/*if (qte.intValue() <= ligneApp.getQuantieEnStock().intValue()) {
+				SaleProcess.addline(pId, qte, remise, commandeClient);
+			}else {
+				SaleProcess.addlineForcer(pId, qte, remise, commandeClient);
+			}*/
+			SaleProcess.addline(pId, qte, remise, commandeClient);//ddlineForcer(pId, qte, remise, commandeClient);
+
+		}
+		saleProcess.calculPrix(commandeClient);
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+
+	}
+
+	@RequestMapping(value = "/{cmdId}/anulerVenteForcer/{lineId}", method = RequestMethod.GET)
+	public String anulleVenteFore(@PathVariable("cmdId") Long cmdId,@PathVariable Long lineId,Model uiModel) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(lineId);
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		if (ligneApp.getQuantieEnStock().intValue() > 0) {
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",1);
+			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(1)).longValue());
+
+		}
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+
+	}
+
+	// send the line to update to the browser
+	//@Transactional
+	@RequestMapping(value = "/{cmdId}/updateLine/{lnId}",  method = RequestMethod.GET)
+	public String updateLineForm(@PathVariable("lnId") Long lnId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		LigneCmdClient ligne = LigneCmdClient.findLigneCmdClient(lnId); 
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		saleProcess.setLineToUpdate(ligne);
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+	}
+
+	@Transactional
+	@RequestMapping(value = "/{cmdId}/addGlobalRemise",  method = RequestMethod.POST)
+	public String addGlobalRemise(@PathVariable("cmdId") Long cmdId,@RequestParam("rem2") BigDecimal remise , Model uiModel) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		List<LigneCmdClient> resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
+		BigDecimal remises = BigDecimal.ZERO;
+		SaleProcess saleProcess = new SaleProcess(uiModel);
+		if (resultList.isEmpty()) {
+			uiModel.addAttribute("apMessage","impossible d'accorder une reduction ! la commande ne contient aucun produits:");
+
+		}else {
+			if (remise != null) {
+				if (commandeClient.validaterRemiseGlobale(uiModel, remise)) {
+					remises = remise ;
+				}				
+			}
+
+
+		}
+		saleProcess = new  SaleProcess(commandeClient,remises, null);
+		saleProcess.setLigneCommande(resultList);
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+	}
+	@Transactional
+	@RequestMapping(value = "/{cmdId}/addGlobalRemisePourcentage",  method = RequestMethod.POST)
+	public String addGlobalRemisePourcentage(@PathVariable("cmdId") Long cmdId,@RequestParam("rem3") BigDecimal remise , Model uiModel) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		List<LigneCmdClient> resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
+		BigDecimal remises = BigDecimal.ZERO;
+		SaleProcess saleProcess = new SaleProcess(uiModel);
+		if (resultList.isEmpty()) {
+			uiModel.addAttribute("apMessage","impossible d'accorder une reduction ! la commande ne contient aucun produits:");
+
+		}else {
+			if (remise != null) {
+				remise = commandeClient.getMontantTtc().multiply(remise).divide(BigDecimal.valueOf(100));
+				if (commandeClient.validaterRemiseGlobale(uiModel, remise)) {
+					remises = remise ;
+				}
+
+			}
+
+
+		}
+		saleProcess = new  SaleProcess(commandeClient,remises, null);
+		saleProcess.setLigneCommande(resultList);
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+	}
+
+	//update line
+
+	@RequestMapping(value = "/{cmdId}/updateLine", method = RequestMethod.POST)
+	public String updatedLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long lineId,@RequestParam BigInteger qte,
+			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+		return updateCmdLine(cmdId, lineId, qte, rem, uiModel, httpServletRequest) ;
+	}
+	/*
+	 * use for update line of commande
+	 */
+	public String updateCmdLine(Long cmdId,Long lineId,BigInteger qte,String rem,Model uiModel,HttpServletRequest httpServletRequest){
+		LigneCmdClient line =  LigneCmdClient.findLigneCmdClient(lineId);
+		CommandeClient commandeClient=line.getCommande();
+		BigInteger qtc  =  qte  ;//line.getQuantiteCommande().add(qte);
+		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+		int remiseAutorise = ProcessHelper.getRemise(line.getProduit()).intValue();
+		BigDecimal remise = BigDecimal.ZERO ;
+		if (!"".equals(rem)) {
+			remise  = new BigDecimal(rem);
+		}
+		if (commandeClient.getAnnuler()|| commandeClient.getEncaisse()||commandeClient.getStatus().equals(Etat.CLOS)) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : commande annuler Ou Encaisse Ou CLOS");
+			saleProcess.calculPrix(commandeClient);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";
+		}
+		if (line.getProduit().getQuantieEnStock().intValue() < qtc.intValue()) {
+			LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(line.getProduit().getId());
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : la qte ajoute est superieur a la qte en stock :"+line.getProduit().getQuantieEnStock().intValue());
+			saleProcess.setProduit(ligneApp);
+			uiModel.addAttribute("qte",qte);
+			uiModel.addAttribute("rem",remise);
+			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
+			uiModel.addAttribute("forcer",Boolean.TRUE);
+			saleProcess.calculPrix(commandeClient);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";
+
+
+		}
+		if (remiseAutorise < remise.intValue()) {
+			uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+			saleProcess.setLineToUpdate(line);
+			remise = BigDecimal.ZERO ;
+		}
+		line.setQuantiteCommande(qtc);
+		line.setRemise(remise);
+		line.calculPrixTotal();
+		line.calculremiseTotal();
+		line.merge();
+
+		saleProcess.calculPrix(commandeClient);
+		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		uiModel.addAttribute("saleProcess",saleProcess);
+		return "saleprocess/edit";
+	}
+
+	//use to select product after chearch
+	@RequestMapping(value = "/{cmdId}/selectProduct/{pId}",  method = RequestMethod.GET)
+	@ResponseBody
+	public String selectProduct(@PathVariable("pId") Long pId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
+		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(pId);
+		return	ligneApprovisionement.clone().toJson();
+	}
+	@Transactional
+	public void saveAndCloseCmd(CommandeClient commandeClient ,Caisse caisse , PharmaUser vendeur){
+
+		Set<LigneCmdClient> lineCommande = commandeClient.getLineCommande();
+		commandeClient.calculPrixHtAndRemise();
+		commandeClient.calculNetApayer();
+		Facture facture= commandeClient.generateFacture();
+		facture.setSite(SecurityUtil.getPharmaUser().getOffice());
+		facture.avancerPaiement(BigInteger.ZERO);
+		facture.setCaisse(caisse);
+		facture.setTypeFacture(commandeClient.getTypeFacture());
+		facture.setVendeur(vendeur);
+		facture.persist();
+
+		if (!lineCommande.isEmpty()) {
+			for (LigneCmdClient ligne : lineCommande) {
+				LigneFacture ligneFacture= ligne.convertToLigneFacture();
+				ligneFacture.setFacture(facture);
+				ligneFacture.persist();
+			}
+		}
+		commandeClient.setVendeur(vendeur);
+		commandeClient.setStatus(Etat.CLOS);
+		commandeClient.setFactureId(facture.getId());
+		commandeClient.setAnnuler(Boolean.FALSE);
+		commandeClient.merge();
+
+	}
+
+	//delete line to  the commande
+	@RequestMapping(value = "/{cmdId}/deleteLine/{lnId}", method = RequestMethod.GET)
+	public String deleteLine(@PathVariable("cmdId") Long cmdId,@PathVariable("lnId") Long lnId, HttpServletRequest httpServletRequest) {
+		LigneCmdClient line =  LigneCmdClient.findLigneCmdClient(lnId);
+		CommandeClient commandeClient=line.getCommande();
+		if (commandeClient.getAnnuler()|| commandeClient.getEncaisse()||commandeClient.getStatus().equals(Etat.CLOS)) {
+			httpServletRequest.setAttribute("apMessage","impossible d'effectuer cette Operation : commande annuler Ou Encaisse Ou CLOS");
+			return "forward:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
+
+
+		}
+		else{
+			LigneCmdClient.findLigneCmdClient(lnId).remove();
+
+		} 
+
+		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
+
+	}
+	@RequestMapping(value="/findCmd", params = "find=ByDateCreationBetween", method = RequestMethod.GET)
+	public String findCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation")  @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateCreation")  @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+		uiModel.asMap().clear();
+		uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientsByDateCreationBetweenNotEncaisser(minDateCreation, maxDateCreation).getResultList());
+		return "saleprocess/rechercheCmd";
+	}
+	@RequestMapping(value="/findCmd",params = "find=ByStatusAndDateCreationBetween", method = RequestMethod.GET)
+	public String findCommandeClientsByStatusAndDateCreationBetween(@RequestParam("status") Etat status, @RequestParam("minDate")  @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDate")  @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+		uiModel.asMap().clear();
+		uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientsByStatusAndDateCreationBetweenNotEncaisser(status, minDateCreation, maxDateCreation).getResultList());
+		return "saleprocess/rechercheCmd";
+	}
+
+
+	// imprime les factures 
+	@RequestMapping(value = "/print/{invId}.pdf", method = RequestMethod.GET)
+	public String print(@RequestParam(value = "nom", required = false) String nom,  @PathVariable("invId")Long invId, Model uiModel){
+		Facture facture = Facture.findFacture(invId);
+		uiModel.addAttribute("facture", facture);
+		uiModel.addAttribute("nom", nom);
+
+		return "facturePdfDocViews";
+
+	}
+
+
+	//suprime la commande en cour de creation
+	@RequestMapping(value = "/{cmdId}/annuler", method = RequestMethod.GET)
+	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel) {
+
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+
+		if (commandeClient.getStatus().equals(Etat.CLOS) && !commandeClient.getEncaisse()) {
+			commandeClient.setAnnuler(true);
+			commandeClient.setStatus(Etat.EN_COUR);
+			commandeClient.merge();
+			uiModel.addAttribute("apMessage", "commande Anuller avec succes");
+		}
+
+		if (commandeClient.getStatus().equals(Etat.EN_COUR)) {
+			commandeClient.remove();
+			uiModel.addAttribute("apMessage", "commande suprimee avec succes");
+		}
+		return "caisses/infos"	  ; 
+	}
+
+	@ModelAttribute("genres")
+	public Collection<Genre> populateGenres() {
+		return Arrays.asList(Genre.class.getEnumConstants());
+	}
+	@ModelAttribute("categorieclients")
+	public Collection<CategorieClient> populateCategorieClients() {
+		Collection<CategorieClient> aray = new ArrayList<CategorieClient>();
+		aray.addAll(CategorieClient.findCategorieClientsByCategorieNumberEquals("CAT-0000").getResultList());//a revoir
+		return aray;
+
+	}
+	@ModelAttribute("etats")
+	public Collection<Etat> populateEtats() {
+		return Arrays.asList(Etat.class.getEnumConstants());
+	}
+}

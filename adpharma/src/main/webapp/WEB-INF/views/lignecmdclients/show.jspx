@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_LigneCmdClient" object="${lignecmdclient}" path="/lignecmdclients" z="d9GSlioliT5yT4CfaSR/j+3SoyU=">
+        <field:display field="commande" id="s_org_adorsys_adpharma_domain_LigneCmdClient_commande" object="${lignecmdclient}" z="uQeyPqTF9+D6fwVlOD+rUIxJ4S0="/>
+        <field:display field="quantiteCommande" id="s_org_adorsys_adpharma_domain_LigneCmdClient_quantiteCommande" object="${lignecmdclient}" z="+Myl8LUnkS1RLeC2sCa1LchKiaE="/>
+        <field:display field="quantiteRetourne" id="s_org_adorsys_adpharma_domain_LigneCmdClient_quantiteRetourne" object="${lignecmdclient}" z="Q18/DGgRRz7euWZ8g1Djw83SMv4="/>
+        <field:display field="prixUnitaire" id="s_org_adorsys_adpharma_domain_LigneCmdClient_prixUnitaire" object="${lignecmdclient}" z="KzdWmzEv10/WcVj1+qQCAxQgtcY="/>
+        <field:display field="remise" id="s_org_adorsys_adpharma_domain_LigneCmdClient_remise" object="${lignecmdclient}" z="gLEHjD+w0AuFR1J1ekM6NpOvbKI="/>
+        <field:display field="prixTotal" id="s_org_adorsys_adpharma_domain_LigneCmdClient_prixTotal" object="${lignecmdclient}" z="P/M+UI78q1mqGjBdMaKM5Ir6m5w="/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneCmdClient_designation" object="${lignecmdclient}" z="JpjW0cH4TLCE3vBJ1vR8ZOkIAa0="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneCmdClient_cip" object="${lignecmdclient}" z="PyQdjN27+e7hJ8h+MtIJAcskdTE="/>
+        <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneCmdClient_produit" object="${lignecmdclient}" z="NbdImWiZEPJfQXEkDagyod5QnTE="/>
+        <field:display field="cipM" id="s_org_adorsys_adpharma_domain_LigneCmdClient_cipM" object="${lignecmdclient}" z="br2pn0+YNwBzXLX95gvRXe3i3XE="/>
+        <field:display date="true" dateTimePattern="${ligneCmdClient_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_LigneCmdClient_dateSaisie" object="${lignecmdclient}" z="j+ihya3ufeqRGzzhz/aYYWpNEys="/>
+        <field:display field="agentSaisie" id="s_org_adorsys_adpharma_domain_LigneCmdClient_agentSaisie" object="${lignecmdclient}" z="Duz2DJuKa83JsqTIfz9cx1ngLoE="/>
+        <field:display field="totalRemise" id="s_org_adorsys_adpharma_domain_LigneCmdClient_totalRemise" object="${lignecmdclient}" z="iR+1khaJQ/EDg1SnnlOd4NHElhI="/>
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneCmdClient_footPrint" object="${lignecmdclient}" z="vsTTCNJ2l7jUGYgu9PFJPKC2H3Y="/>
+    </page:show>
+</div>

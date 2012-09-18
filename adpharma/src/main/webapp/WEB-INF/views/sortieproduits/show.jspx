@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_SortieProduit" object="${sortieproduit}" path="/sortieproduits" z="IohkGQywQ/BWJj1PdO1JHdZOKsk=">
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_SortieProduit_footPrint" object="${sortieproduit}" z="O5wTfErB2i94SOuLLHFShsNth1k="/>
+        <field:display field="aprovisionnement" id="s_org_adorsys_adpharma_domain_SortieProduit_aprovisionnement" object="${sortieproduit}" z="XWQJRuXnlXbif9466sA4sxsoBqw="/>
+        <field:display field="cipMaison" id="s_org_adorsys_adpharma_domain_SortieProduit_cipMaison" object="${sortieproduit}" z="lode+MuyN9sLrF+ZsOj/uOpPvvE="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_SortieProduit_cip" object="${sortieproduit}" z="GeOOAsEBZGUq7UMped3S/2TUO9M="/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_SortieProduit_designation" object="${sortieproduit}" z="N9NP1PO5//NCN98LvP2RUoEQX7A="/>
+        <field:display field="prixAchat" id="s_org_adorsys_adpharma_domain_SortieProduit_prixAchat" object="${sortieproduit}" z="4x7i7nD0F8MLuBmVNJZUQFV5VCg="/>
+        <field:display field="quantite" id="s_org_adorsys_adpharma_domain_SortieProduit_quantite" object="${sortieproduit}" z="PFVSxqH0UHpn/r4KM6csik2C1BA="/>
+        <field:display field="prixTotal" id="s_org_adorsys_adpharma_domain_SortieProduit_prixTotal" object="${sortieproduit}" z="qUKpHw9vogvUGcHJheUIFbPffvQ="/>
+        <field:display field="causeSortie" id="s_org_adorsys_adpharma_domain_SortieProduit_causeSortie" object="${sortieproduit}" z="wiJTkhgi0YDst2Qk+ZOUWEUnonw="/>
+        <field:display field="agentNumber" id="s_org_adorsys_adpharma_domain_SortieProduit_agentNumber" object="${sortieproduit}" z="7EQmIqLLli6cd0ntD6/QdQJC3M0="/>
+        <field:display date="true" dateTimePattern="${sortieProduit_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_SortieProduit_dateSaisie" object="${sortieproduit}" z="uRx/VVSomRcCPeVn8dQLvzv9+CM="/>
+    </page:show>
+</div>

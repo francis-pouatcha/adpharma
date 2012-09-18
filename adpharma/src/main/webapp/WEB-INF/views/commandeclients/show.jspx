@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_org_adorsys_adpharma_domain_CommandeClient" object="${commandeclient}" path="/commandeclients" update="false" z="user-managed">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:display field="cmdNumber" id="s_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" object="${commandeclient}" z="vXKgqKx39+o+oOU5UXcbm9Vnsbw="/>
+                    <field:display date="true" dateTimePattern="${commandeClient_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_CommandeClient_dateCreation" object="${commandeclient}" z="kO5QyPx180F3rFmIwJd0t65rG5E="/>
+                    <field:display field="client" id="s_org_adorsys_adpharma_domain_CommandeClient_client" object="${commandeclient}" z="9wXvaql43uZd0mupkcSISWr56ZU="/>
+                    <field:display field="vendeur" id="s_org_adorsys_adpharma_domain_CommandeClient_vendeur" object="${commandeclient}" z="P0Rjg9dxSVngd1NXLW+xqL0F7y8="/>
+                    <field:display field="status" id="s_org_adorsys_adpharma_domain_CommandeClient_status" object="${commandeclient}" z="5cvM8W5vv+E9n/z/OZu5+NkUs9w="/>
+                    <field:display field="encaisse" id="s_org_adorsys_adpharma_domain_CommandeClient_encaisse" object="${commandeclient}" z="sADnnQ9wbhyWFqlRvdy70INCtwo="/>
+                    <field:display field="annuler" id="s_org_adorsys_adpharma_domain_CommandeClient_annuler" object="${commandeclient}" z="7qd+vRCNqv8XSQBjJNR7bkYET9A="/>
+                    <field:display field="montantHt" id="s_org_adorsys_adpharma_domain_CommandeClient_montantHt" object="${commandeclient}" z="x0x8BbxSMksJIwAga07mF+pO2tE="/>
+                    <field:display field="montantTva" id="s_org_adorsys_adpharma_domain_CommandeClient_montantTva" object="${commandeclient}" z="vluvQbxnneh3Z3gex9YmfoVYfD0="/>
+                </td>
+                <td class="tbcreate">
+                    <field:display field="montantTtc" id="s_org_adorsys_adpharma_domain_CommandeClient_montantTtc" object="${commandeclient}" z="XaBENaTv5huYThZ2tKFQtKPNmFg="/>
+                    <field:display field="remise" id="s_org_adorsys_adpharma_domain_CommandeClient_remise" object="${commandeclient}" z="jqvPYpQQV7iCKxWgaqtoukonmu0="/>
+                    <field:display field="typeCommande" id="s_org_adorsys_adpharma_domain_CommandeClient_typeCommande" object="${commandeclient}" z="Gft7NWvEije6rWUYvjgm8c9opAE="/>
+                    <field:display field="factureId" id="s_org_adorsys_adpharma_domain_CommandeClient_factureId" object="${commandeclient}" z="1iwvcowW7uGD4PO/WOPQW2S154w="/>
+                    <field:display field="clientPaiyeur" id="s_org_adorsys_adpharma_domain_CommandeClient_clientPaiyeur" object="${commandeclient}" z="4x2KAdkcHmGSkCkPotM/6dG12ig="/>
+                    <field:display field="tauxCouverture" id="s_org_adorsys_adpharma_domain_CommandeClient_tauxCouverture" object="${commandeclient}" z="cS6r/ezyXDQvvzCh8bCZWYnnmOI="/>
+                    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeClient_footPrint" object="${commandeclient}" z="LQWn8oa0XqGxMaqd1ehaq3tttj4="/>
+                </td>
+            </tr>
+        </table>
+        <field:display field="ventePartiel" id="s_org_adorsys_adpharma_domain_CommandeClient_ventePartiel" object="${commandeclient}" z="WNUYVNsokf40kmLJlEtxe+A74lw="/>
+        <field:display field="avoirNumber" id="s_org_adorsys_adpharma_domain_CommandeClient_avoirNumber" object="${commandeclient}" z="1FEr7DhM8QWyHfRpaGk8v/jDJcU="/>
+        <field:display field="numeroBon" id="s_org_adorsys_adpharma_domain_CommandeClient_numeroBon" object="${commandeclient}" z="hKzZISNlX6Ga9Zk5UmMjX8BrGwY="/>
+        <field:display field="otherRemise" id="s_org_adorsys_adpharma_domain_CommandeClient_otherRemise" object="${commandeclient}" z="yoXDL9UPwdodFndm6PAslWgRveo="/>
+        <field:display date="true" dateTimePattern="${commandeClient_dateanullation_date_format}" field="dateAnullation" id="s_org_adorsys_adpharma_domain_CommandeClient_dateAnullation" object="${commandeclient}" z="P2JItZTt71g0ysz2g27izyYIHH8="/>
+        <field:display date="true" dateTimePattern="${commandeClient_daterestoration_date_format}" field="dateRestoration" id="s_org_adorsys_adpharma_domain_CommandeClient_dateRestoration" object="${commandeclient}" z="bTSVGWbK6DB30FThkA0mpL6uMFM="/>
+        <field:display field="anullerPar" id="s_org_adorsys_adpharma_domain_CommandeClient_anullerPar" object="${commandeclient}" z="2V85i5ljPelB2P3fK7uDUBRg9+I="/>
+    </page:show>
+</div>

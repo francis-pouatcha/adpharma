@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_SortieProduit" items="${sortieproduits}" z="ZUI1z4X53iruzESzjwSAEymdQjI=">
+        <table:table data="${sortieproduits}" id="l_org_adorsys_adpharma_domain_SortieProduit" path="/sortieproduits" z="IerRzs2VyqgNhMwFJHpMh+rDM1c=">
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_footPrint" property="footPrint" z="z6SkcX3RO+MvvqzS55iv7AkTXtc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_aprovisionnement" property="aprovisionnement" z="1nr0Hik31osXl9n2pjJGdO2hTPw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_cipMaison" property="cipMaison" z="AucgQyRmaYPkmkBHGsSGjJomJcs="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_cip" property="cip" z="XIOFm+5I55naUzCXYbJrRdKLwZo="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_designation" property="designation" z="vrywsBVVcTffjILQhLEdGeDdWiE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SortieProduit_prixAchat" property="prixAchat" z="fYPmaJJwF/gZFbQcPohYRaCp1TM="/>
+        </table:table>
+    </page:list>
+</div>

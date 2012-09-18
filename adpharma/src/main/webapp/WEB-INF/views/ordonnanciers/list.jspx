@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_Ordonnancier" items="${ordonnanciers}" z="v5c9BJr70FL89oeWbmu6s/+o4tU=">
+        <table:table create="false" data="${ordonnanciers}" delete="false" id="l_org_adorsys_adpharma_domain_Ordonnancier" path="/ordonnanciers" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_ordNumber" property="ordNumber" z="w9DNWB83zUOgtM/A4+CdWJQzHc0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_Prescripteur" maxLength="-1" property="prescripteur" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_hospital" maxLength="-1" property="hospital" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_nomDuPatient" maxLength="-1" property="nomDuPatient" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${ordonnancier_dateprescription_date_format}" id="c_org_adorsys_adpharma_domain_Ordonnancier_datePrescription" maxLength="-1" property="datePrescription" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${ordonnancier_datesaisie_date_format}" id="c_org_adorsys_adpharma_domain_Ordonnancier_dateSaisie" maxLength="-1" property="dateSaisie" z="a18fUlmHp+0UIpryXc+Fp4cK79U="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_commande" maxLength="-1" property="commande" z="pB46XqCQXatBfdwVC6QidlLp3tE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_vendeur" maxLength="-1" property="vendeur" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

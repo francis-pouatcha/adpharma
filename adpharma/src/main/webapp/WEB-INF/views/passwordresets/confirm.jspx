@@ -1,0 +1,13 @@
+<div xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="app_name" code="application_name" />
+  <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" />
+  <util:panel id="title" title="${title}">
+    
+		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: -18px;font-weight: bold;font-size: 16px;">    Password reset successful</p>
+	</center>
+  </util:panel>
+</div>

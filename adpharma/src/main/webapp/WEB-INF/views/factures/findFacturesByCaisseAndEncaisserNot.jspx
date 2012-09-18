@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="ByCaisseAndEncaisserNot" id="ff_org_adorsys_adpharma_domain_Facture" path="/factures" z="eMKN/7w0L5N+gDzvIj3+0JuI5Gg=">
+        <field:select disableFormBinding="true" field="caisse" id="f_org_adorsys_adpharma_domain_Facture_caisse" itemValue="id" items="${caisses}" path="/caisses" required="true" z="7sLLULVXqksGTHWm6BsHGcIXH1I="/>
+        <field:checkbox disableFormBinding="true" field="encaisser" id="f_org_adorsys_adpharma_domain_Facture_encaisser" z="UjsNUyNuwLVmtA8q4VUZZWZg2zw="/>
+    </form:find>
+</div>

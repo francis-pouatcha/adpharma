@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_ListingEtatDette" object="${listingetatdette}" path="/listingetatdettes" z="N72027T9OFVTlfTs2tmQW14zRK0=">
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_ListingEtatDette_footPrint" object="${listingetatdette}" z="tWrmFI3Rqv/M+bmmJuGqUredLLk="/>
+        <field:display date="true" dateTimePattern="${listingEtatDette_date_date_format}" field="date" id="s_org_adorsys_adpharma_domain_ListingEtatDette_date" object="${listingetatdette}" z="ObDpwNxi6KzWZ0hvbaBPDny99GM="/>
+        <field:display field="avoir" id="s_org_adorsys_adpharma_domain_ListingEtatDette_avoir" object="${listingetatdette}" z="sexmG0bFdAL9za9Md+DVobkwAHA="/>
+        <field:display field="etatDettes" id="s_org_adorsys_adpharma_domain_ListingEtatDette_EtatDettes" object="${listingetatdette}" z="ZLj/UeaMOkmno7HzSlr6Pni0Jns="/>
+        <field:display field="client" id="s_org_adorsys_adpharma_domain_ListingEtatDette_client" object="${listingetatdette}" z="uATX5+fYIQw9HoI+VHtLKuvsyM8="/>
+        <field:display field="toutLesClients" id="s_org_adorsys_adpharma_domain_ListingEtatDette_toutLesClients" object="${listingetatdette}" z="3xFPjegukoBywqUqiPcbfaj/+Z8="/>
+        <field:display field="clients" id="s_org_adorsys_adpharma_domain_ListingEtatDette_clients" object="${listingetatdette}" z="VsWI+f0tZIcsPfnOF+GThSPf+bI="/>
+    </page:show>
+</div>

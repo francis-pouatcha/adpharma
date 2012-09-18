@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="vendeur" name="commandeclients/list">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/list.jspx"/>
+    </definition>
+<definition extends="vendeur" name="commandeclients/show">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/show.jspx"/>
+    </definition>
+<definition extends="vendeur" name="commandeclients/create">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/create.jspx"/>
+    </definition>
+<definition extends="vendeur" name="commandeclients/update">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/update.jspx"/>
+    </definition>
+<definition extends="vendeur" name="commandeclients/findCommandeClientsByDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/findCommandeClientsByDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="vendeur" name="commandeclients/findCommandeClientsByStatusAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/findCommandeClientsByStatusAndDateCreationBetween.jspx"/>
+    </definition>
+    <definition extends="vendeur" name="clients/cmdCredit">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/createCmdCredit.jspx"/>
+    </definition>
+    
+    <definition extends="vendeur" name="commandeclients/search">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/search.jspx"/>
+    </definition>
+</tiles-definitions>

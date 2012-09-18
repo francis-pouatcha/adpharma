@@ -1,0 +1,33 @@
+<div align="center" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="app_name" code="application_name" htmlEscape="false" />
+  <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
+  <util:panel id="title" title="${title}">
+   
+    <spring:url var="imgfonct" value="/resources/images/imgfonct.jpg"/>
+     <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
+    <spring:url var="imgcomp" value="/resources/images/imgcomputer.png"/>
+    <table class="tblog" border="0">
+    	<tr>
+    		<td width="6%" class="tblog"></td>
+    		<td align="left" width="31%" class="tblog" >
+    		<img src="${imgfonct}"/>Gestion  approvisionements<br/> 
+			<img src="${imgfonct}"/>Gestion des commandes<br/>
+			<img src="${imgfonct}"/>Gestion de caisse<br/>
+			<img src="${imgfonct}"/>Gestion des utilisateurs<br/>
+			<img src="${imgfonct}"/>Suivi de la clientele<br/>
+			<img src="${imgfonct}"/>Gestion des ordonnanciers<br/>
+			<img src="${imgfonct}"/>Statistiques<br/>
+    		</td>
+    		<td align="center" width="30%" class="tblog">
+    		<img src="${biglogo}"/>
+    		</td>
+    		<td align="center" width="33%" class="tblog">
+    		<img src="${imgcomp}"/>
+    		</td>
+    	</tr>
+    	<tr> <td colspan="4" align="center" class="tblog"> LOGIN : <b style="color: blue;"> admin , manager , stocker , cashier,vendeur</b> PASSWORD : <b> test123</b></td></tr>
+    </table>
+  </util:panel>
+</div>

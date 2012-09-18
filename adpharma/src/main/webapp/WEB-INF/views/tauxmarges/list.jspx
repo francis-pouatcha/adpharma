@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_TauxMarge" items="${tauxmarges}" z="nimPuKHojtQzzlRVDLleD3XEoPM=">
+        <table:table data="${tauxmarges}" delete="false" id="l_org_adorsys_adpharma_domain_TauxMarge" path="/tauxmarges" z="user-managed">
+                       <table:column id="c_org_adorsys_adpharma_domain_TauxMarge_margeNumber" property="margeNumber" z="lJ8UKi8Nv51LbOaE70X/FDcD3As="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TauxMarge_valide" property="valide" z="axBiVCBXOqQUS4MN96E+gr+EhBU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TauxMarge_margeValue" property="margeValue" z="I2CDG/iqpcVkVBPQc06ktoyjQPY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TauxMarge_footPrint" render="false" maxLength="100" property="footPrint" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

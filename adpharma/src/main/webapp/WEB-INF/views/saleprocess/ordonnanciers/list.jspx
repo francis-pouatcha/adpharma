@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_Ordonnancier" items="${ordonnanciers}" z="v5c9BJr70FL89oeWbmu6s/+o4tU=">
+        <table:table data="${ordonnanciers}" id="l_org_adorsys_adpharma_domain_Ordonnancier" path="/ordonnanciers" z="6AHUIfzEdpQq96jrJonZwR42QUo=">
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_Prescripteur" property="prescripteur" z="GPN4hbg+Z0F6PWwlF7Eecop5Un4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_hospital" property="hospital" z="EHsoKVXr//j/fxVhtfotfHrN0rY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_nomDuPatient" property="nomDuPatient" z="fYfV4Orabqj4rXqaoC9uBV7p4s8="/>
+            <table:column date="true" dateTimePattern="${ordonnancier_dateprescription_date_format}" id="c_org_adorsys_adpharma_domain_Ordonnancier_datePrescription" property="datePrescription" z="u5P9Q8HbbQBP9i5vzkEV5IeHPZU="/>
+            <table:column date="true" dateTimePattern="${ordonnancier_datesaisie_date_format}" id="c_org_adorsys_adpharma_domain_Ordonnancier_dateSaisie" property="dateSaisie" z="a18fUlmHp+0UIpryXc+Fp4cK79U="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Ordonnancier_commande" property="commande" z="vkH5IQxyMmGrNTKJhLlPvfbW54o="/>
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_org_adorsys_adpharma_domain_SousFamilleProduit" object="${sousfamilleproduit}" path="/sousfamilleproduits" z="user-managed">
+        <field:display field="sousFamilleNumber" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_sousFamilleNumber" object="${sousfamilleproduit}" z="ibx/mgW8IIvYSpHIiqf0Tw1r4rE="/>
+        <field:display field="libelleSousFamille" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_libelleSousFamille" object="${sousfamilleproduit}" z="3ydYfkv4L2PU2S7Mklqgw24UhTs="/>
+        <field:display field="libelleCourt" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_libelleCourt" object="${sousfamilleproduit}" z="QAOm+3K2qlj1acLhBOZPE/2uhM8="/>
+        <field:display field="note" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_note" object="${sousfamilleproduit}" z="Gxirk8/rcIyRUe3Y1/Pj4zgTdPE="/>
+        <field:display field="famille" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_famille" object="${sousfamilleproduit}" z="nnHhjhJhusbFB0JQQ1CKn8CfEZI="/>
+    </page:show>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_footPrint" object="${sousfamilleproduit}" z="yvFaWXFWFgQhCuzPj7ObXDiJQ3E="/>
+    <HR style="margin-top: -12px;"/>
+</div>

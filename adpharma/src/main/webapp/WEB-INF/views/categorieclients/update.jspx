@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_CategorieClient" modelAttribute="categorieClient" path="/categorieclients" versionField="Version" z="f/kPrr9qC/U/tsxoX6mroXw5WWo=">
+        <field:input disabled="true" field="categorieNumber" id="c_org_adorsys_adpharma_domain_CategorieClient_categorieNumber" z="user-managed"/>
+        <field:input field="libelle" id="c_org_adorsys_adpharma_domain_CategorieClient_libelle" z="8D97pn+4gOrjtuTYCuSjeYZ184g="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CategorieClient_footPrint" render="false" z="user-managed"/>
+        <field:input field="tauxRemiseMax" id="c_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax" max="100" min="0" required="true" validationMessageCode="field_invalid_number" z="sCTefHUlu2TM3VylSswEfZfs2HQ="/>
+        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_CategorieClient_note" z="dbPNf8iXKrdCz4DIZrx5kdfoFLM="/>
+    </form:update>
+</div>

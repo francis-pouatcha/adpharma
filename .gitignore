@@ -4,3 +4,11 @@
 *.jar
 *.war
 *.ear
+target/
+*.class
+bin/
+.settings/
+.classpath
+.project
+org.eclipse.jdt.core.prefs
+.metadata

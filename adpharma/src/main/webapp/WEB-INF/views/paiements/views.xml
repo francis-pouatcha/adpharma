@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="caisse" name="paiements/list">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/list.jspx"/>
+    </definition>
+<definition extends="caisse" name="paiements/show">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/show.jspx"/>
+    </definition>
+<definition extends="caisse" name="paiements/create">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/create.jspx"/>
+    </definition>
+<definition extends="caisse" name="paiements/update">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/update.jspx"/>
+    </definition>
+<definition extends="caisse" name="paiements/findPaiementsByTypePaiementAndCaisse">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/findPaiementsByTypePaiementAndCaisse.jspx"/>
+    </definition>
+<definition extends="caisse" name="paiements/findPaiementsByCaisse">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/findPaiementsByCaisse.jspx"/>
+    </definition>
+<definition extends="default" name="paiements/findPaiementsByInvoiceNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/findPaiementsByInvoiceNumberEquals.jspx"/>
+    </definition>
+    <definition extends="caisse" name="paiements/findPaiementOfInvoice">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/findPaiementOfInvoice.jspx"/>
+    </definition>
+    
+     <definition extends="caisse" name="paiements/rechercheClient">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/rechercheClient.jspx"/>
+    </definition>
+    
+     <definition extends="caisse" name="paiements/encaissementGroupe">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/encaissementGroupe.jspx"/>
+    </definition>
+<definition extends="default" name="paiements/findPaiementsByDateSaisieBetween">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/findPaiementsByDateSaisieBetween.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="paiements/search">
+        <put-attribute name="body" value="/WEB-INF/views/paiements/search.jspx"/>
+    </definition>
+</tiles-definitions>

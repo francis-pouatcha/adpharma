@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="vendeur" name="lignecmdclients/list">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/list.jspx"/>
+    </definition>
+<definition extends="vendeur" name="lignecmdclients/show">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/show.jspx"/>
+    </definition>
+<definition extends="vendeur" name="lignecmdclients/create">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/create.jspx"/>
+    </definition>
+<definition extends="vendeur" name="lignecmdclients/update">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/update.jspx"/>
+    </definition>
+<definition extends="vendeur" name="lignecmdclients/findLigneCmdClientsByCommande">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/findLigneCmdClientsByCommande.jspx"/>
+    </definition>
+<definition extends="default" name="lignecmdclients/findLigneCmdClientsByCipMEqualsAndCommande">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/findLigneCmdClientsByCipMEqualsAndCommande.jspx"/>
+    </definition>
+<definition extends="default" name="lignecmdclients/findLigneCmdClientsByCipEquals">
+        <put-attribute name="body" value="/WEB-INF/views/lignecmdclients/findLigneCmdClientsByCipEquals.jspx"/>
+    </definition>
+</tiles-definitions>

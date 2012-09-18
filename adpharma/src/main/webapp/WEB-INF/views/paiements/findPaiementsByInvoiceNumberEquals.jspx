@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+  <form:find finderName="ByInvoiceNumberEquals" id="ff_org_adorsys_adpharma_domain_Paiement" path="/paiements" z="1d01tKBZQWUi6ocVzWG716gAkvM=">
+        <field:input disableFormBinding="true" field="invoiceNumber" id="f_org_adorsys_adpharma_domain_Paiement_invoiceNumber" required="true" z="o2YIlZHkL9ukswRniNAfMGlMpCU="/>
+    </form:find>
+   
+    
+</div>

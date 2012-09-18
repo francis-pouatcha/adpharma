@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<div style="margin-bottom: 5px; padding-bottom: 5px;">
+		<span style="font-weight: bold"> <c:out
+				value="${commandeProcess.displayName}" />
+		</span>
+	</div>
+	<script type="text/javascript">
+	function isValide(){
+	var qtecip = $("#qtecip").val();
+    var qte = $("#qte").val();
+    if (parseInt(qte) > parseInt(qtecip)|| qte==0 || qte.length==0 || qte == null) {
+   	 alert("la quantite saisie doit etre inferieur a la quantite en stock !");
+		return false ;
+	  }else{
+		  return true ;
+	  }
+};
+	</script>
+
+	<spring:url value="/" var="home" />
+	<spring:url value="/produits/findProductByDesAjax" var="find_des_url" />
+	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
+	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
+	<spring:url
+		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
+		var="delete_cmd_url" />
+	<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
+		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+	
+		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	
+	<!-- recherche de produit par code identification -->
+
+	
+	
+<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm"   var="sorti_cipm_url" />
+		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCip"   var="sorti_cip_url" />
+	
+	<div style="margin-bottom: 6px; font-weight: bold;">
+			<span class="firstTab unselectedTab">
+			<a href="${sorti_cipm_url}">SORTIR DES PRODUITS PAR (C.I.P.M) </a>
+		</span>
+		<span  class="firstTab selectedTab">
+			<a href="${sorti_cip_url}">SORTIR DES  PRODUITS PAR (C.I.P)</a>
+		</span> 
+		<span>
+			<a  style="text-decoration: none;" id="findprd"  >
+			
+				<INPUT class="submits" type="button" value="Recherche CIP" title="rechercher un CIP" />
+			</a>
+		</span>
+		<span><a href="${ home}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Terminer"
+				title="Terminer la sortie" /></a></span>
+
+	</div>
+
+
+	<util:panel title="saisir le CIPM du Produit" id="cip">
+		<div id="sortie">
+			<form action="${add_sortie}?mode=byCip" method="POST" id="subForm" onsubmit="return isValide();" >
+				<table>
+					<tr>
+				
+						
+						<th style="text-align: center;">CIP</th>
+						<th style="text-align: center;">FILIALE</th>
+						<th style="text-align: center; witdh: 300px; ">DESIGNATION</th>
+						<th style="text-align: center;">QTE CIP</th>
+						<th style="text-align: center;">QTE</th>
+						<th style="text-align: center;">RAISON</th>
+						<th style="text-align: center;">ACTION</th>
+					</tr>
+					<tr>
+						<td><INPUT type="hidden" name="pId" id="pId" /> <INPUT
+							type="text" name="cip" id="cip" class="autres" onchange="requete();" 
+							onKeyPress="return scanTouche(event)"  title="saisir le cip"
+							 autofocus="autofocus" />
+
+						</td>
+						<td><INPUT type="text" name="rayon" id="rayon" class="autres"
+							value="" style="color: blue; text-align: center;"
+							disabled="disabled" /></td>
+						<td><INPUT type="text" name="des" class="des" id="des"
+							title="Designation" value=""
+							style="color: blue; text-align:right;" disabled="disabled" />
+
+						</td>
+						<td><INPUT type="text" name="qtecip" id="qtecip" class="autres"
+							value="" style="color: blue; text-align: center;"
+							disabled="disabled" /></td>
+						
+						<td><INPUT type="text" name="qte" id="qte" class="autres"
+							onKeyPress="return scanTouche(event)" width="50px;"
+							title="saisir la Quantite" /></td>
+						<td><SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
+								<OPTION value="NON_COMMANDE" selected="selected">NON COMMANDE</OPTION>
+								<OPTION value="AVARIE">AVARIE</OPTION>
+								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
+
+						</SELECT></td>
+
+
+						<td align="center"><INPUT type="submit" value="Enregistrer"
+							class="submits"  /></td>
+
+					</tr>
+				</table>
+			</form>
+
+		</div>
+
+		<BR />
+		<b style="color: red; text-align: center;"> ${apMessage} </b>
+
+	</util:panel>
+	<BR />
+
+
+
+	<!-- afficher les produits sortie par les agent ce jour  -->
+	<util:panel
+		title="Liste Des Produits Sorties Par Tous les Agents ce jour" id="lg">
+		<table>
+			<tr>
+				<th style="size: 15">CiP</th>
+
+				<th>CipM</th>
+				<th style="size: 50">Designation</th>
+				<th>Qte Init</th>
+				<th>Qte Sortie</th>
+				<th>Qte final</th>
+				<th>agent</th>
+				<th>Raison</th>
+				<th colspan="2" align="center">ACTION</th>
+			</tr>
+
+			<c:forEach items="${sorties}" var="ligne">
+				<tr>
+					<td><c:out value="${ligne.cip}"></c:out></td>
+					<td ><c:out value="${ligne.cipM}"></c:out></td>
+					<td class="des" style="text-align:left;"><c:out value="${ligne.designation}"></c:out></td>
+
+					<td><c:out value="${ligne.qteInitiale}"></c:out></td>
+
+					<td><c:out value="${ligne.qteDeplace}"></c:out></td>
+
+					<td><c:out value="${ligne.qteFinale}"></c:out></td>
+					<td><c:out value="${ligne.agentCreateur}"></c:out></td>
+					<td><c:out value="${ligne.note}"></c:out></td>
+
+
+
+					<td class="utilbox"><spring:url
+							value="/ligneapprovisionements/annulerSortie/${ligne.id}"
+							var="annuler_sortie_url" /> <a href="${ annuler_sortie_url}"
+						alt="Remove" title="Remove" onclick="return conf()"> <input
+							class="submits" type="button" value="Annuler" />
+					</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+
+
+	</util:panel>
+	
+
+	 <jsp:include page="../approvisionementprocess/ajaxSearchProductForm.jspx" />   	
+
+</div>

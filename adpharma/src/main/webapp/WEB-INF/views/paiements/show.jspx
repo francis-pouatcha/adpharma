@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show1 clientLinks="showlink.jspx" create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Paiement" object="${paiement}" path="/paiements" update="false" z="user-managed">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:display field="paiementNumber" id="s_org_adorsys_adpharma_domain_Paiement_paiementNumber" object="${paiement}" z="OYr7ppAFTBoPvkuAv8uREQ3FoqI="/>
+                    <field:display date="true" dateTimePattern="${paiement_datepaiement_date_format}" field="datePaiement" id="s_org_adorsys_adpharma_domain_Paiement_datePaiement" object="${paiement}" z="dQoxciaLzFXMvYzRddc4hN+xprI="/>
+                    <field:display date="true" dateTimePattern="${paiement_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_Paiement_dateSaisie" object="${paiement}" z="hX5GxAeQ0I7jeTkZqtukSWL5HDc="/>
+                    <field:display field="site" id="s_org_adorsys_adpharma_domain_Paiement_site" object="${paiement}" z="x6oJRt/EpNxzUZSt/Lw30ayhd9o="/>
+                    <field:display field="cassier" id="s_org_adorsys_adpharma_domain_Paiement_cassier" object="${paiement}" z="15UqF93F5HrhRCngq/tOllharUs="/>
+                    <field:display field="caisse" id="s_org_adorsys_adpharma_domain_Paiement_caisse" object="${paiement}" z="1zCsZ4MhzwN0Tg2l3/mVNd2qkoc="/>
+                    <field:display field="nomClient" id="s_org_adorsys_adpharma_domain_Paiement_nomClient" object="${paiement}" z="7R6hTc4d52mQ7uQ89lv7NGgfxDM="/>
+                </td>
+                <td class="tbcreate">
+                    <field:display field="facture" id="s_org_adorsys_adpharma_domain_Paiement_facture" object="${paiement}" z="nFbbpMPfCzCLNeREJ0l2kt0w1UU="/>
+                    <field:display field="typePaiement" id="s_org_adorsys_adpharma_domain_Paiement_typePaiement" object="${paiement}" z="kZZuKGC+FADJuMZ8qnnMxAL0GDw="/>
+                    <field:display field="montant" id="s_org_adorsys_adpharma_domain_Paiement_montant" object="${paiement}" z="3LPvtKnsGL75kwU63UYoyqKbsQw="/>
+                    <field:display field="sommeRecue" id="s_org_adorsys_adpharma_domain_Paiement_sommeRecue" object="${paiement}" z="uis2mdlTSUK2jyPM0ehqSQ2cVwo="/>
+                    <field:display field="difference" id="s_org_adorsys_adpharma_domain_Paiement_difference" object="${paiement}" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
+                    <field:display field="ticketImprimer" id="s_org_adorsys_adpharma_domain_Paiement_ticketImprimer" object="${paiement}" z="1KOX11LbSBfhCM2z0u/xoGrE5Lk="/>
+                    <field:display field="payerPar" id="s_org_adorsys_adpharma_domain_Paiement_payerPar" object="${paiement}" z="5HGixMVUn6vSCEg0duxP4LsDa9Y="/>
+                    <field:display field="quiPaye" id="s_org_adorsys_adpharma_domain_Paiement_quiPaye" object="${paiement}" render="false" z="user-managed"/>
+                    <field:display field="informations" id="s_org_adorsys_adpharma_domain_Paiement_informations" object="${paiement}" z="J/k1XoC8q2mwQF43MkAsJHd8dCw="/>
+                </td>
+            </tr>
+        </table>
+        <field:display field="caisses" id="s_org_adorsys_adpharma_domain_Paiement_caisses" object="${paiement}" z="v6SuzrXGt7VrtZ3WBdpagC4sfZE="/>
+        <field:display field="reduction" id="s_org_adorsys_adpharma_domain_Paiement_reduction" object="${paiement}" z="ggyDMLdVsIciNbbHHokcuamYy/c="/>
+        <field:display field="compenser" id="s_org_adorsys_adpharma_domain_Paiement_compenser" object="${paiement}" z="3WXrQXZq9sUk+8wf156xYq9h/Fw="/>
+        <field:display field="numeroBon" id="s_org_adorsys_adpharma_domain_Paiement_numeroBon" object="${paiement}" z="cZ7DfbapItlKUze78WbD9iaQB3g="/>
+        <field:display field="montantBon" id="s_org_adorsys_adpharma_domain_Paiement_montantBon" object="${paiement}" z="Xe0QVWdwFXDk/a9cUO8g01xMHqU="/>
+    </page:show1>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Paiement_footPrint" object="${paiement}" z="kQ09nOuRA9GyTMf3fGiBYrCn+e0="/>
+    <HR style="margin-top: -12px;"/>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:security="http://www.springframework.org/security/tags" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    <c:set value="true" var="hasrole" />
+    </security:authorize>
+    <form:find finderName="BySearch" id="ff_org_adorsys_adpharma_domain_Approvisionement" path="/approvisionements" z="user-managed">
+        <table style="border: none;">
+            <tr>
+                <td style="border: none;"> 
+         <field:input disableFormBinding="true" field="apNumber" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" required="false" z="user-managed"/>
+        <field:select disableFormBinding="true" field="etat" id="f_org_adorsys_adpharma_domain_CommandeClient_status" items="${etats}" path="/etats" required="false" z="user-managed"/>
+         <field:select disableFormBinding="true" field="fournisseur" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseur}" path="/fournisseurs" required="true" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
+         </td>
+                <td style="border: none;" >
+        <field:select field="agentCreateur" disableFormBinding="true" id="c_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" disableFormBinding="true" field="minDateCreation" id="f_org_adorsys_adpharma_domain_Approvisionement_minDateCreation" required="false" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy" disableFormBinding="true" field="maxDateCreation" id="f_org_adorsys_adpharma_domain_Approvisionement_maxDateCreation" required="false" z="user-managed"/>
+     </td>
+            </tr>
+        </table>
+    </form:find>
+    
+     <c:if test="${not empty apMessage}">
+		<hr/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+	</center>
+			<hr/>
+	
+	</c:if>
+   <c:if test="${ not empty results}">
+     <page:list id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${results}" z="Vu8tVf5zR8Fdp2O+lPcd5jnQivg=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_Approvisionement" path="/approvisionements" update="${hasrole }" z="user-managed">
+            <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_devise" property="devise" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" property="bordereauNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_approvisionementNumber" maxLength="-1" property="approvisionementNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_founisseur" maxLength="-1" property="founisseur" z="04y62ITc7RA0QHY55iwJYI6KMBQ="/>
+            <table:column calendar="true" dateTimePattern="${approvisionement_datebordereau_date_format}" id="c_org_adorsys_adpharma_domain_Approvisionement_dateBordereau" property="dateBordereau" render="false" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${approvisionement_datelivraison_date_format}" id="s_org_adorsys_adpharma_domain_Approvisionement_dateCreation" property="dateCreation" z="nceoZzr789SRm0LBklF9FAP0KDo="/>
+            <table:column date="true" dateTimePattern="${approvisionement_datereglement_date_format}" id="s_org_adorsys_adpharma_domain_Approvisionement_dateReglement" property="dateReglement" render="false" z="Fd2c8taaV9W2WFAZ3kzTVJesAI4="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_etat" property="etat" z="10J13CTqaMZlDTzE97gtQ15AVJk="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_montantHt" property="montantHt" z="kok/CLiLguqYlnhS8skdjiI9uC8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" maxLength="-1" property="agentCreateur" z="SCibvg6HExzxzyvOBwwNQsFutl8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_montant" property="montant" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_commande" render="false" property="commande" z="SCibvg6HExzxzyvOBwwNQsFutl8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_filiale" property="filiale" z="ABf1HiPaL1vmBMO967p21Xmq7Vg="/>
+        </table:table>
+    </page:list>
+  </c:if> 
+</div>

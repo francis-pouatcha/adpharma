@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="produit" name="transformationproduits/list">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/list.jspx"/>
+    </definition>
+<definition extends="produit" name="transformationproduits/show">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/show.jspx"/>
+    </definition>
+<definition extends="produit" name="transformationproduits/create">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/create.jspx"/>
+    </definition>
+<definition extends="produit" name="transformationproduits/update">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/update.jspx"/>
+    </definition>
+<definition extends="produit" name="transformationproduits/findTransformationProduitsByProduitOrigine">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/findTransformationProduitsByProduitOrigine.jspx"/>
+    </definition>
+<definition extends="approvisionnement" name="transformationproduits/livre">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/transformerProduitLivre.jspx"/>
+    </definition>
+    <definition extends="approvisionnement" name="transformationproduits/editTransformation">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/editTransformation.jspx"/>
+    </definition>
+    <definition extends="default" name="transformationproduits/search">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/search.jspx"/>
+    </definition>
+    
+    
+    
+<definition extends="default" name="transformationproduits/findTransformationProduitsByProduitOrigineAndProduitCible">
+        <put-attribute name="body" value="/WEB-INF/views/transformationproduits/findTransformationProduitsByProduitOrigineAndProduitCible.jspx"/>
+    </definition>
+</tiles-definitions>

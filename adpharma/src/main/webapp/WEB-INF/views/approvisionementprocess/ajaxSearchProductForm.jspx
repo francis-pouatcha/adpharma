@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	style="width: 100%;overflow: auto; height: 200px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+              <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
+              <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+              				<spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+              <c:choose>
+		<c:when test="${empty approvisonementProcess.apId}">
+              	   <spring:url value="/approvisionementprocess/0/findProduct/"  var="find_cip_url" />
+		</c:when>
+		<c:otherwise>
+<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct/" var="find_cip_url" />
+		</c:otherwise>
+	</c:choose>
+  
+<script type="text/javascript">
+function conf(){
+	  Check = confirm("Voulez vous vraiment supprimer la ligne? ");
+	  if(Check == false){
+	  	return false;
+	  	
+	  }else{
+	  	return true;
+	  }
+	  }
+function verif_formulaire()
+{
+	$('#tvaj').val($('#taux').val());
+	var prixv = document.getElementById("pv").value;
+	var prixa = document.getElementById("pa").value;
+	
+ if(document.formulaire.cip.value == "")  {
+   alert("Veuillez entrer le cip du produit!");
+   document.formulaire.cip.focus();
+   return false;
+  }
+ if(document.formulaire.qte.value == "") {
+   alert("Veuillez entrer la quantite!");
+   document.formulaire.qte.focus();
+   return false;
+  }
+ if(document.formulaire.pa.value == "") {
+   alert("Veuillez saisir le Prix achat Unitaire!");
+   document.formulaire.pa.focus();
+   return false;
+  }
+ 
+ if(document.formulaire.pv.value == "NaN") {
+	   alert("Le prix de Vente Est Incorrect!");
+	   $("#pv").focus();
+	   return false;
+	  }
+ 
+ if(prixv != "") {
+	 if((prixa - prixv) > 0) {
+		   alert("Le prix de vente doit etre superieur ou egale au prix d'achat");
+		   document.formulaire.pv.focus();
+		   return false;
+		  }
+	  }
+ 
+
+}
+function codeTouche(evenement)
+{
+        for (prop in evenement)
+        {
+                if(prop == 'which') return(evenement.which);
+        }
+        return(evenement.keyCode);
+}
+
+function scanTouche(evenement)
+{
+	$('#tpa').attr('checked', false);
+	$('#tpv').attr('checked', false);
+        var reCarValides = /\d/;
+        var reCarSpeciaux = /[\x00\x08\x0D\x2E]/;
+        var codeDecimal  = codeTouche(evenement);
+        var car = String.fromCharCode(codeDecimal);
+        var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
+
+        return autorisation;
+}
+function calculPriceTva(){
+	var pa =	$('#pa').val();
+	var tva =	$('#tva').val();
+	if(tva!=""){
+		pv = parseInt(tva * pa);
+   pv =	roundMoney(pv);
+		$('#pv').val(pv);
+	}
+	}
+function calculPriceTaux(){
+	calculPVWhithTaux();
+	calculPAWhithTaux();
+	}
+
+function calculPVWhithTaux(){
+	if($('#tpv').is(":checked")){
+	var tva =	$('#taux').val();
+	var pv =	$('#pv').val();
+	if(tva!="" || pv!=""){
+		pv = tva * pv
+		$('#pv').val(pv);
+	}
+	}
+}
+
+function calculPAWhithTaux(){
+	if($('#tpa').is(":checked")){
+	var tva =	$('#taux').val();
+	var pa =	$('#pa').val();
+	if(tva!="" || pa!=""){
+		pa= tva * pa
+		$('#pa').val(pa);
+	}
+	}
+}
+
+function roundMoney(money){
+	
+	var stringMoney = ""+money ;
+	console.log(stringMoney);
+	var  size = stringMoney.length ;
+	size = parseInt(size);
+	var roundMoney = parseInt(money);
+    var moneyUnit =	parseInt(stringMoney.charAt(size-1));
+    console.log(moneyUnit);
+    if (5 > moneyUnit ) return (5-moneyUnit) + roundMoney;
+	if (moneyUnit > 5) return (10-moneyUnit) + roundMoney;
+	return roundMoney;
+
+}
+function videLigne(){
+    $("#cip").val("");
+	$("#des").val("");
+	$("#mrg").val("");
+	$("#pId").val("");
+	$("#pv").val("");
+	$("#pa").val("");
+	$("#qte").val("");
+   $("#qtecip").val("");
+   $("#rayon").val("");
+	$("#cip").focus();
+
+  }
+function requete(){
+  var cip =	$("#cip").val();
+  	$.getJSON( "${find_cip_url }"+cip,
+  			function(data){
+  		if (data.id== null) {
+  			alert("Aucun produit Trouve de CIP "+cip);
+  			videLigne();
+  				}else{
+  					$("#cip").val(data.cip);
+  					$("#des").val(data.designation);
+  					$("#mrg").val(data.tauxDeMarge.margeValue);
+  					$("#pId").val(data.id);
+  					$("#qtecip").val(data.quantiteEnStock);
+  					$("#qte").val(1);
+  					$("#pa").val(data.prixAchatSTock);
+  					$("#pv").val(data.prixVenteStock);
+  					$("#rayon").val(data.rayon.codeRayon);
+  					
+  				}
+  			
+  			});
+
+  }
+	$(function(){
+		function clearProductTable(){
+			$('#resultproduit').html(
+					'<tr>
+					<th>CIP</th>
+			    		<th>DESIGNATION</th>
+			    		<th>QTE CIP</th>
+			    		 <th>RAYON</th>
+			    		 <th>FILIALE</th>
+
+					</tr>');
+		//	$('#designation').val(" ");
+			
+		};
+		
+
+
+		$('#cip').focus();
+		$('form#produitfindform').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_productajax_url}',
+						$('#produitfindform').serialize(),
+			                function(data){
+								$(data).each(function(){
+									
+									$('#resultproduit').append(
+										'<tr id="'+this.cip+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.quantiteEnStock+'</td>
+										  <td>'+this.rayon.codeRayon+'</td>
+										  <td>'+this.filiale.libelle+'</td>
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproduit tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										console.log(current.id)
+										$('#findproduit').dialog("close");
+										requetes(current.id);
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+	
+		
+		// Dialog	find produit		
+		$('#findproduit').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		$('#findprd').click(function(){
+			$('#findproduit').dialog('open');
+			return false;
+		});
+		
+		
+		
+		  
+		
+
+			  function requetes(cip){
+			  	$.getJSON( "${find_cip_url }"+cip,
+			  			function(data){
+			  		if (data.id== null) {
+			  			alert("Aucun produit Trouve de CIP "+cip);	
+			  			videLigne();
+			  				}else{
+			  					$("#cip").val(data.cip);
+			  					$("#des").val(data.designation);
+			  					$("#mrg").val(data.tauxDeMarge.margeValue);
+			  					$("#pId").val(data.id);
+			  					$("#qtecip").val(data.quantiteEnStock);
+			  					$("#qte").focus();
+			  					$("#pa").val(data.prixAchatSTock);
+			  					$("#pv").val(data.prixVenteStock);
+			  					$("#rayon").val(data.rayon.codeRayon);
+			  					
+			  					
+			  				}
+			  			
+			  			});
+
+			  	}
+
+			 
+		
+			 
+	
+
+	})
+	
+	</script>
+   <div id="findproduit" style="display: none;" title="recherche un cip ">
+		
+		
+		
+		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation"/>
+		</p>
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIP</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    	   <th style="text-align: center;" >RAYON</th>
+		    	   <th style="text-align: center;" >FILIALE</th>
+		    
+		    	</tr>
+		  </table>
+	</div>	 
+   
+</div>      
+</span>

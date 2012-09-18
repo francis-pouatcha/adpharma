@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_CommandeClient" modelAttribute="commandeClient" path="/commandeclients" render="${empty dependencies}" z="rVh2iojzPybIcw4aFHX6keJCTuE=">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeClient_footPrint" render="false" z="user-managed"/>
+                    <field:input field="cmdNumber" id="c_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" render="false" z="user-managed"/>
+                    <field:datetime dateTimePattern="${commandeClient_datecreation_date_format}" field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeClient_dateCreation" z="joh2J3PJOhnXA027+cRXA61KxgY="/>
+                    <field:select field="client" id="c_org_adorsys_adpharma_domain_CommandeClient_client" itemValue="id" items="${clients}" path="/clients" required="true" z="GadDX4dc2HqHvzTeULG4quEPttw="/>
+                    <field:select field="vendeur" id="c_org_adorsys_adpharma_domain_CommandeClient_vendeur" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="JS5JH+DRc26fu7mNQZdIoU1qR4o="/>
+                    <field:select field="status" id="c_org_adorsys_adpharma_domain_CommandeClient_status" items="${etats}" path="etats" z="GtQm7YAYz2IRkyEGO6620VRdNJc="/>
+                    <field:checkbox field="encaisse" id="c_org_adorsys_adpharma_domain_CommandeClient_encaisse" z="26csTPRDFOwNazal9D9eCgFrXr8="/>
+                    <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_CommandeClient_annuler" z="7biv80U8/x1sKgUlVxKcPSSphJ8="/>
+                    <field:input field="montantHt" id="c_org_adorsys_adpharma_domain_CommandeClient_montantHt" validationMessageCode="field_invalid_number" z="gQFd3BlFr71NCZVUPAtDNLDAzcs="/>
+                </td>
+                <td class="tbcreate">
+                    <field:input field="montantTva" id="c_org_adorsys_adpharma_domain_CommandeClient_montantTva" validationMessageCode="field_invalid_number" z="d+76245udmIX33Lag7Zj1cRCqaQ="/>
+                    <field:input field="montantTtc" id="c_org_adorsys_adpharma_domain_CommandeClient_montantTtc" validationMessageCode="field_invalid_number" z="gPOMT5l2Isnfxbbe5OEL9FBU058="/>
+                    <field:input field="remise" id="c_org_adorsys_adpharma_domain_CommandeClient_remise" validationMessageCode="field_invalid_number" z="HulsEz/zEwXPNFJ2ummaPR/8pEs="/>
+                    <field:select field="typeCommande" id="c_org_adorsys_adpharma_domain_CommandeClient_typeCommande" items="${typecommandes}" path="typecommandes" z="ozIbptIQoRzJbYbyk5MoY7yVHP8="/>
+                    <field:simple field="lineCommande" id="c_org_adorsys_adpharma_domain_CommandeClient_lineCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Client" z="OFbUNKowB8cEjW0sEjEI9a5xnmw="/>
+                    <field:input field="factureId" id="c_org_adorsys_adpharma_domain_CommandeClient_factureId" validationMessageCode="field_invalid_integer" z="3pbJwytpoda7jmcwAKJgEur8LoE="/>
+                    <field:select field="clientPaiyeur" id="c_org_adorsys_adpharma_domain_CommandeClient_clientPaiyeur" itemValue="id" items="${clients}" path="/clients" z="+LrXq3sxk3YHKEVuFI8p9TSuFbc="/>
+                    <field:input field="tauxCouverture" id="c_org_adorsys_adpharma_domain_CommandeClient_tauxCouverture" max="100" min="0" required="true" z="L8Eunzrmjh0iRbBtAP+I2de4wQY="/>
+                </td>
+            </tr>
+        </table>
+        <field:checkbox field="ventePartiel" id="c_org_adorsys_adpharma_domain_CommandeClient_ventePartiel" z="Bgehr7NaO68udjgd3JyvDHBoOnU="/>
+        <field:input field="avoirNumber" id="c_org_adorsys_adpharma_domain_CommandeClient_avoirNumber" z="HoDNFAQS/yytNbv/Z07TttGL1Ww="/>
+        <field:input field="numeroBon" id="c_org_adorsys_adpharma_domain_CommandeClient_numeroBon" z="ZGTSpJxVmvT8dpkgT9ZvyoUt5Fg="/>
+        <field:input field="otherRemise" id="c_org_adorsys_adpharma_domain_CommandeClient_otherRemise" validationMessageCode="field_invalid_number" z="GkjXq2xBfA0OTaWacJugWXkbVk4="/>
+        <field:datetime dateTimePattern="${commandeClient_dateanullation_date_format}" field="dateAnullation" id="c_org_adorsys_adpharma_domain_CommandeClient_dateAnullation" z="S2nnngQxgnpWsTV1TVZ2VBY5yMc="/>
+        <field:datetime dateTimePattern="${commandeClient_daterestoration_date_format}" field="dateRestoration" id="c_org_adorsys_adpharma_domain_CommandeClient_dateRestoration" z="VMrDEW2euAjBlUF9oJcNgTzdSgs="/>
+        <field:input field="anullerPar" id="c_org_adorsys_adpharma_domain_CommandeClient_anullerPar" z="gad2FnrRLcAhdibFU62GOieMIgw="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeClient" render="${not empty dependencies}" z="tAZ+gy9hoMD3KAJ/PF68PWu787Q="/>
+</div>

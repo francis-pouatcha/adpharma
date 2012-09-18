@@ -1,0 +1,732 @@
+package org.adorsys.adpharma.web;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.adorsys.adpharma.beans.PaiementProcess;
+import org.adorsys.adpharma.beans.PrintService;
+import org.adorsys.adpharma.domain.AvoirClient;
+import org.adorsys.adpharma.domain.Caisse;
+import org.adorsys.adpharma.domain.Client;
+import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.DestinationMvt;
+import org.adorsys.adpharma.domain.DetteClient;
+import org.adorsys.adpharma.domain.Facture;
+import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneCmdClient;
+import org.adorsys.adpharma.domain.MouvementStock;
+import org.adorsys.adpharma.domain.OperationCaisse;
+import org.adorsys.adpharma.domain.Paiement;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.QuiPaye;
+import org.adorsys.adpharma.domain.TypeCommande;
+import org.adorsys.adpharma.domain.TypeFacture;
+import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.domain.TypeOpCaisse;
+import org.adorsys.adpharma.domain.TypePaiement;
+import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.ProcessHelper;
+import org.adorsys.adpharma.utils.TicketPrinter;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@RequestMapping("/paiementprocess")
+@Controller
+public class PaiementProcessController {
+
+	@RequestMapping(value = "/editPaiement", method = RequestMethod.GET)
+	public String editPaiement( Model uiModel, HttpServletRequest httpServletRequest) {
+
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}else {
+
+			List<Facture> factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
+			paiementProcess.setFactureResult(factureResult);
+			uiModel.addAttribute("paiementProcess",paiementProcess);
+			return "paiementprocess/rechercheFacture";
+
+		}
+	}
+
+	@RequestMapping(value = "/encaisser" ,params = "form", method = RequestMethod.GET)
+	public String encaisserPaiementForm( Model uiModel, HttpServletRequest httpServletRequest) {
+
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}else {
+
+			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
+			uiModel.addAttribute("paiementProcess",paiementProcess);
+			Paiement paiement = new Paiement() ;
+			uiModel.addAttribute("paiement",paiement);
+			return "paiementprocess/encaisserPaiement";
+
+		}
+	}
+
+	@RequestMapping(value = "/findFactureByFactureNumber" , method = RequestMethod.POST)
+	public String findInvoice(@RequestParam("invoiceNumber") String invoiceNumber , Model uiModel, HttpServletRequest httpServletRequest) {
+		List<Facture> invoice = Facture.findFacturesByFactureNumberEquals("FAC-"+ StringUtils.remove(invoiceNumber, "FAC-")).getResultList();
+		if (invoice.iterator().hasNext()) {
+			return "redirect:/paiementprocess/selectFacture/" + ProcessHelper.encodeUrlPathSegment(invoice.iterator().next().getId().toString(), httpServletRequest);
+
+		}else {
+			uiModel.addAttribute("apMessage","Aucune Facture trouvee Verifier Le numero Saisie !");
+			return "paiementprocess/encaisserPaiement";
+
+		}
+
+
+	}
+
+
+
+	@Transactional
+	@RequestMapping(value = "/encaisser/{factureId}" , method = RequestMethod.POST)
+	public String encaisserPaiement(@PathVariable("factureId")Long factureId,@Valid Paiement paiement ,BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		Facture facture = Facture.findFacture(factureId);
+		if (facture == null) {
+			uiModel.addAttribute("apMessage", " impossible d'encaisser La Commande  est ANULLER !");
+		}else {
+			if (facture.estSolder()) {
+				uiModel.addAttribute("apMessage", " impossible d'encaisser Facture deja soldee !");
+
+			}else if (facture.getEncaisser()) {
+				uiModel.addAttribute("apMessage", " Facture deja encaisser  !");
+
+			}else{
+
+				paiement.setFacture(facture);
+				paiement.definirPayeur();
+				PaiementProcess paiementProcess = new PaiementProcess(openCaisse ,facture);
+				if (paiement.validate(uiModel , paiementProcess.getDetteclient())) {
+					paiementProcess.setShowPostForm(true);
+					uiModel.addAttribute("paiementProcess",paiementProcess);
+					uiModel.addAttribute("paiement",paiement);
+					uiModel.addAttribute("cash",facture.isCashPaiement());
+					uiModel.addAttribute("typepaiements",populateTypePaiements(facture.getCommande()));
+					return "paiementprocess/encaisserPaiement";
+				}
+				uiModel.asMap().clear();
+				paiement.setCaisse(openCaisse);
+				paiement.persist();
+				encaisser(facture, openCaisse, paiement);
+				paiement.merge();
+				paiementProcess.setShowDetailForm(true);
+				uiModel.addAttribute("paiementProcess",paiementProcess);
+				uiModel.addAttribute("paiement",paiement);
+			}
+		}
+		return "paiementprocess/encaisserPaiement";
+
+	}
+
+	
+	@RequestMapping(value = "/selectFacture/{factureId}" ,method = RequestMethod.GET)
+	public String selectFacture(@PathVariable("factureId") Long factureId ,  Model uiModel,  HttpServletRequest httpServletRequest) {
+
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}else {
+
+
+			Facture facture = Facture.findFacture(factureId);
+			PaiementProcess paiementProcess = new PaiementProcess(openCaisse ,facture);
+			uiModel.addAttribute("paiementProcess",paiementProcess);
+			if (facture.getEncaisser()) {
+				uiModel.addAttribute("apMessage"," Cette facture a deja ete encaisse !");
+				return "paiementprocess/encaisserPaiement";
+
+			}
+			if (facture.estSolder()) {
+				uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement cette Facture est  deja soldee !");
+				return "paiementprocess/encaisserPaiement";
+
+			}
+			if (facture.getTypeFacture().equals(TypeFacture.PROFORMAT)) {
+				uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Facture Proformat !");
+				return "paiementprocess/encaisserPaiement";
+
+			}
+			paiementProcess.setShowPostForm(true);
+			uiModel.addAttribute("paiementProcess",paiementProcess);
+			Paiement paiement = new Paiement() ;
+			initPaiementView(facture, paiement, uiModel);
+			return "paiementprocess/encaisserPaiement";
+
+		}
+	}
+
+	@RequestMapping(value = "/factureSuivante/{factureId}" ,method = RequestMethod.GET)
+	public String factureSuivante(@PathVariable("factureId") Long factureId,Model uiModel,  HttpServletRequest httpServletRequest) {
+		List<Facture> factureResult ;
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}else {
+			factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+			if (factureResult.isEmpty()) {
+				uiModel.addAttribute("apMessage","Aucune Factures en attente de paiement  !");
+				return "paiementprocess/encaisserPaiement";
+
+			}else {
+				if (factureResult.size() >1) {
+					Facture facture = Facture.findFacture(factureId);
+					if (factureResult.contains(facture)) {
+						int index = factureResult.indexOf(facture);
+						index = index+1;
+						if (index <factureResult.size()) {
+							Facture facture2 = factureResult.get(index);
+							return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(facture2.getId().toString(), httpServletRequest);
+
+						}
+					}
+				}
+
+				return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(factureResult.iterator().next().getId().toString(), httpServletRequest);
+			}
+
+
+		}
+
+
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUnCashInvoicesNumber" ,method = RequestMethod.GET)
+	public String getUnCashInvoicesNumber(){
+		List<Facture> resultList = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+		return ""+resultList.size();
+		
+		
+	}
+
+	@Transactional
+	@RequestMapping(value = "/annulFacture/{cmdId}" ,method = RequestMethod.GET)
+	public String annulFacture(@PathVariable("cmdId") Long cmdId ,Model uiModel,  HttpServletRequest httpServletRequest) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		if (commandeClient.getEncaisse()) {
+			uiModel.addAttribute("apMessage", "impossible d'annuler COMMANDE DEJA ENCAISSEE !");
+
+		}else {
+			commandeClient.annulerCommande(SecurityUtil.getUserName());
+			uiModel.addAttribute("apMessage", "Facture Annnuler Avec Succes !");
+
+		}
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
+		uiModel.addAttribute("paiementProcess",paiementProcess);
+		Paiement paiement = new Paiement() ;
+		uiModel.addAttribute("paiement",paiement);
+		return "paiementprocess/encaisserPaiement";
+
+	}
+
+
+	@RequestMapping(value = "/findFacture" ,params = "find=ByClientAndDateCreationBetween", method = RequestMethod.GET)
+	public String findFacturesByClientAndDateCreationBetween(@RequestParam("client") Client client, @RequestParam("minDateCr") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCr") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+
+		List<Facture> factures = Facture.findFacturesByClientAndDateCreationBetweenNotsolder(client, minDateCreation, maxDateCreation).getResultList();
+		return	showPoduct(factures, uiModel);
+	}
+
+	@RequestMapping(value = "/findFacture" ,params = "find=ByDateCreationBetween", method = RequestMethod.GET)
+	public String findFacturesByDateCreationBetween(@RequestParam("minDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+		if (minDateCreation == null || maxDateCreation == null) {
+			uiModel.addAttribute("apMessage", " veuillez saisir les deux dates  ");
+			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
+		}
+		List<Facture> factures = Facture.findFacturesByDateCreationBetweenNotsolder(minDateCreation, maxDateCreation).getResultList();
+		return	showPoduct(factures, uiModel);	   
+
+	}
+
+	@RequestMapping(value = "/findFacture",params = "find=ByFactureNumberEquals", method = RequestMethod.GET)
+	public String findFacturesByFactureNumberEquals(@RequestParam("factureNumber") String factureNumber, Model uiModel) {
+		if (StringUtils.isBlank(factureNumber)) {
+			uiModel.addAttribute("apMessage", " veuillez saisir le numero de la facture ");
+			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
+		}
+		List<Facture> factures =  Facture.findFacturesByFactureNumberEqualsNotSolder(factureNumber).getResultList();
+		return	showPoduct(factures, uiModel);	   
+	}
+
+	@RequestMapping(params = "find=ByVendeurAndDateCreationBetween", method = RequestMethod.GET)
+	public String findFacturesByVendeurAndDateCreationBetween(@RequestParam("vendeur") PharmaUser vendeur, @RequestParam("minDateC") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateC") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+		if (minDateCreation == null || maxDateCreation == null) {
+			uiModel.addAttribute("apMessage", " veuillez saisir les deux dates  ");
+			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
+		}
+		List<Facture> factures = Facture.findFacturesByVendeurAndDateCreationBetweenNotSolder(vendeur, minDateCreation, maxDateCreation).getResultList();
+		return	showPoduct(factures, uiModel);	   
+	}
+
+
+	// display the list of product to the client 
+	public String showPoduct(List<Facture>  factureResult ,Model uiModel){
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}
+
+		PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
+		paiementProcess.setFactureResult(factureResult);
+		uiModel.addAttribute("paiementProcess",paiementProcess);
+		ProcessHelper.addDateTimeFormatPatterns(uiModel);
+		return "paiementprocess/rechercheFacture";
+	}
+
+	// imprime les tickets de caisse 
+	@RequestMapping("/printTicket/{ticketId}.pdf")
+	public String print(@PathVariable("ticketId")Long ticketId, Model uiModel,HttpServletRequest httpServletRequest){
+		Paiement paiement = Paiement.findPaiement(ticketId);
+
+		if (!paiement.getTicketImprimer()) {
+			paiement.setTicketImprimer(true);
+			paiement.merge();
+		}
+
+		System.out.println("Adresse"+httpServletRequest.getRemoteAddr());
+		uiModel.addAttribute("paiement", paiement);
+		try {
+			TicketPrinter.buildTicket(paiement);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("eereur d'impression de ticket !");
+			System.out.println(e.getMessage());
+		}
+		if (PrintService.print("/tools/adpharma/documents/ticket.pdf" , httpServletRequest)) {
+			return "redirect:/paiementprocess/encaisser?form";
+		}
+		return "ticketPdfDocView";
+
+
+	}
+	
+	@RequestMapping("/printTicketWithourReduce/{ticketId}.pdf")
+	public String printTicketWithourReduce(@PathVariable("ticketId")Long ticketId, Model uiModel,HttpServletRequest httpServletRequest){
+		Paiement paiement = Paiement.findPaiement(ticketId);
+
+		if (!paiement.getTicketImprimer()) {
+			paiement.setTicketImprimer(true);
+			paiement.merge();
+		}
+		paiement.setReduction(Boolean.FALSE);
+		uiModel.addAttribute("paiement", paiement);
+		try {
+			TicketPrinter.buildTicket(paiement);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("eereur d'impression de ticket !");
+			System.out.println(e.getMessage());
+		}
+		if (PrintService.print("/tools/adpharma/documents/ticket.pdf" , httpServletRequest)) {
+			return "redirect:/paiementprocess/encaisser?form";
+		}
+		return "ticketPdfDocView";
+
+
+	}
+
+  @Transactional
+	public void encaisser( Facture facture ,Caisse caisse,Paiement paiement) {
+		CommandeClient commande = facture.getCommande();
+		TypeCommande typeCommande = commande.getTypeCommande();
+
+		if (typeCommande.equals(TypeCommande.VENTE_AU_PUBLIC)) {
+			encaisserVenteComptant(facture, caisse, paiement);
+		}
+		if (typeCommande.equals(TypeCommande.VENTE_A_CREDIT)) {
+			encaisserVentePartiel(facture, caisse, paiement);
+		}
+		commande.setEncaisse(true);
+		commande.merge();
+
+	}
+
+
+	// gere les paiements des facture a credit	
+  @Transactional
+	public void avanceVenteCredit(Facture facture ,Caisse caisse,Paiement paiement){
+		QuiPaye quiPaye = paiement.getQuiPaye();
+		DetteClient detteClient = null ;
+		Client client;
+		if (quiPaye.equals(QuiPaye.CLIENT)) {
+			client =facture.getCommande().getClient();
+			paiement.setNomClient(client.getNomComplet());
+			List<DetteClient> dette = DetteClient.findDetteClientsByFactureIdEqualsAndClientIdEquals(facture.getId(), facture.getCommande().getClient().getId()).getResultList();
+			if (dette.iterator().hasNext()) {
+				detteClient = dette.iterator().next(); 
+			}
+		}else {
+			client =facture.getCommande().getClientPaiyeur();
+			paiement.setNomClient(client.getNomComplet());
+			List<DetteClient> dette = DetteClient.findDetteClientsByFactureIdEqualsAndClientIdEquals(facture.getId(), facture.getCommande().getClientPaiyeur().getId()).getResultList();
+			detteClient = dette.iterator().next(); 
+		}
+		detteClient.avancer(paiement.getMontant().toBigInteger());
+		detteClient.setDateDernierVersement(new Date());
+		detteClient.merge();
+		genererOperationCaisse(caisse, paiement);
+		client.calculeTotalDette();
+		client.merge();
+
+	}
+
+
+	public void encaisserVenteComptant(Facture facture ,Caisse caisse,Paiement paiement){
+		genererMvtStock(facture , caisse);
+		genererOperationCaisse(caisse, paiement);
+		paiement.setNomClient(facture.getClient().getNomComplet());
+		facture.avancerPaiement(paiement.getMontant().toBigInteger());
+		facture.setEncaisser(Boolean.TRUE);
+		facture.merge();
+	}
+
+
+
+	// gere les encaissement des facture a credit
+	public void encaisserVenteCredit(Facture facture ,Caisse caisse,Paiement paiement){
+		genererDetteClient(facture,BigInteger.ZERO);
+		genererMvtStock(facture, caisse);
+		genererOperationCaisse(caisse, paiement);
+		facture.avancerPaiement(paiement.getMontant().toBigInteger());
+		facture.setEncaisser(Boolean.TRUE);
+		facture.merge();
+
+	}
+
+	public void encaisserVentePartiel(Facture facture ,Caisse caisse,Paiement paiement){
+		CommandeClient cmd = facture.getCommande() ;
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && cmd.getVentePartiel()) {
+			Paiement paiement2 = paiement.getPaiementClientPayeur();
+			if (paiement2!=null) {
+				caisse.updateBonCmd(paiement2.getMontant());
+				genererOperationCaisse(caisse, paiement2.getMontant(), paiement2.getTypePaiement());
+			}
+			genererDetteClientPayeur(facture);
+			genererOperationCaisse(caisse, paiement);
+			facture.avancerPaiement(paiement.getMontant().toBigInteger());
+
+		}
+		
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && !cmd.getVentePartiel()) {
+			Paiement paiement2 = paiement.getPaiementClientPayeur();
+			if (paiement2!=null) {
+				caisse.updateBonCmd(paiement2.getMontant());
+				genererOperationCaisse(caisse, paiement2.getMontant(), paiement2.getTypePaiement());
+			}
+			genererDetteClientPayeur(facture);
+			genererDetteClient(facture,paiement.getAvancePartClient());
+			genererOperationCaisse(caisse, paiement);
+			facture.avancerPaiement(paiement.getAvancePartClient());
+		}
+		facture.setEncaisser(Boolean.TRUE);
+		facture.merge();
+		genererMvtStock(facture,caisse);
+
+	}
+    @Transactional
+	public void genererDetteClient(Facture facture , BigInteger avance){
+		CommandeClient commande = facture.getCommande();
+		Client client = commande.getClient();
+        avance = avance!=null ?avance : BigInteger.ZERO ;
+		BigDecimal amount = new BigDecimal(facture.getMontantTotal());
+		amount=amount.multiply(BigDecimal.valueOf(commande.getTauxCouverture())).divide(BigDecimal.valueOf(100));
+		BigInteger partPayeur = amount.toBigInteger();
+		BigInteger partClient = facture.getNetPayer().subtract(partPayeur.add(avance));
+		//defini la dette du client 
+		if (partClient.intValue()!=0) {
+			DetteClient detteClient = new DetteClient() ;
+			detteClient.setFactureNo(facture.getFactureNumber());
+			detteClient.setClientNo(client.getClientNumber());
+			detteClient.setMontantInitial(partClient);
+			detteClient.setClientId(client.getId());
+			detteClient.setClientName(client.getNomComplet());
+			detteClient.setFactureId(facture.getId());
+			detteClient.avancer(BigInteger.ZERO);
+			detteClient.persist();
+		}
+
+	}
+
+    @Transactional
+	public void genererDetteClientPayeur(Facture facture){
+		CommandeClient commande = facture.getCommande();
+		Client paiyeur = commande.getClientPaiyeur();
+		BigDecimal amount = new BigDecimal(facture.getNetPayer());
+		amount=amount.multiply(BigDecimal.valueOf(commande.getTauxCouverture())).divide(BigDecimal.valueOf(100));
+		BigInteger partPayeur = amount.toBigInteger();
+		System.out.println(partPayeur);
+		//defini la dette du client  payeur
+		if (partPayeur.intValue()!=0) {
+			DetteClient dettePayeur = new DetteClient() ;
+			dettePayeur.setFactureNo(facture.getFactureNumber());
+			dettePayeur.setClientNo(paiyeur.getClientNumber());
+			dettePayeur.setMontantInitial(partPayeur);
+			dettePayeur.setClientId(paiyeur.getId());
+			dettePayeur.setClientName(paiyeur.getNomComplet());
+			dettePayeur.setFactureId(facture.getId());
+			dettePayeur.avancer(BigInteger.ZERO);
+			System.out.println(dettePayeur);
+			dettePayeur.persist();
+			paiyeur.calculeTotalDette();
+			paiyeur.merge();
+		}
+
+	}
+
+	// genere les mvt de stock
+    @Transactional
+	public void genererMvtStock(Facture facture , Caisse caisse){
+		Set<LigneCmdClient> lineCommande = facture.getCommande().getLineCommande();
+		if (!lineCommande.isEmpty()) {
+			for (LigneCmdClient ligne : lineCommande) {
+				String filiale = "";
+				MouvementStock mouvementStock = new MouvementStock();
+				mouvementStock.setAgentCreateur(facture.getVendeur().getDisplayName());
+				mouvementStock.setCip(ligne.getCip());
+				mouvementStock.setCipM(ligne.getCipM());
+				mouvementStock.setDesignation(ligne.getDesignation());
+				mouvementStock.setDestination(DestinationMvt.CLIENT);
+				mouvementStock.setNumeroTicket(facture.getFactureNumber());
+				mouvementStock.setOrigine(DestinationMvt.MAGASIN);
+				mouvementStock.setQteDeplace(ligne.getQuantiteCommande());
+				mouvementStock.setTypeMouvement(TypeMouvement.VENTE);
+				mouvementStock.setSite(facture.getSite());
+				mouvementStock.setAgentCreateur(facture.getVendeur().getUserName());
+				LigneApprovisionement ligneApprovisionement = ligne.getProduit();
+				Produit prd = ligneApprovisionement.getProduit() ;
+				ligneApprovisionement.setQuantiteVendu(ligneApprovisionement.getQuantiteVendu().add(ligne.getQuantiteCommande()));
+				ligneApprovisionement.CalculeQteEnStock();
+				ligneApprovisionement.merge();
+				mouvementStock.setQteInitiale(prd.getQuantiteEnStock());
+				//prd.setQuantiteEnStock(prd.getQuantiteEnStock().subtract(ligne.getQuantiteCommande()));
+				prd.setTrueStockValue();
+				prd.setDateDerniereSortie(new Date());
+				mouvementStock.setQteFinale(prd.getQuantiteEnStock());
+				mouvementStock.setPVenteTotal(ligne.getPrixTotal().subtract(ligne.getTotalRemise()).toBigInteger());
+				mouvementStock.setPAchatTotal(ligne.getQuantiteCommande().multiply(ligneApprovisionement.getPrixAchatUnitaire().toBigInteger()));
+				mouvementStock.setRemiseTotal(ligne.getTotalRemise().toBigInteger());
+				mouvementStock.setCaisse(caisse.getCaisseNumber());
+				filiale = ligneApprovisionement.getApprovisionement().getFiliale();
+				filiale = StringUtils.isNotBlank(filiale)?filiale:"";
+				if (StringUtils.isNotBlank(filiale)) {
+					mouvementStock.setFiliale(filiale);
+				} else {
+					if (prd.getFiliale() != null) {
+						mouvementStock.setFiliale(prd.getFiliale().getFilialeNumber());
+					}
+				}
+				
+				prd.merge();   
+				mouvementStock.persist();
+			}
+		}
+
+	}
+
+	//genere les operation de caisse
+    @Transactional
+	public void genererOperationCaisse(Caisse caisse,Paiement paiement){
+		OperationCaisse operationCaisse = new OperationCaisse();
+		operationCaisse.setCaisse(caisse);
+		operationCaisse.setModePaiement(paiement.getTypePaiement());
+		operationCaisse.setOperateur(SecurityUtil.getPharmaUser());
+		operationCaisse.setTypeOperation(TypeOpCaisse.ENCAISSEMENT);
+		operationCaisse.setDateOperation(new Date());
+		operationCaisse.setRaisonOperation("Paiement Facture No : "+paiement.getFacture().getFactureNumber());
+		TypePaiement typePaiement = paiement.getTypePaiement();
+
+		if (typePaiement.equals(TypePaiement.CASH)) caisse.updateCash(paiement.getMontant());
+
+		if (typePaiement.equals(TypePaiement.CHEQUE)) caisse.updateCheque(paiement.getMontant());
+
+		/*if (typePaiement.equals(TypePaiement.CREDIT)) {
+			caisse.updateCredit(BigDecimal.valueOf(paiement.getFacture().getNetPayer().longValue()));
+			operationCaisse.setMontant(BigDecimal.valueOf(paiement.));
+
+		}*/
+		//definir le total des remise
+			caisse.updateRemiseTotal(BigDecimal.valueOf(paiement.getFacture().getMontantRemise().longValue()));
+	    if (typePaiement.equals(TypePaiement.VENTE_PARTIEL))caisse.updateCash(paiement.getMontant());
+		if (typePaiement.equals(TypePaiement.BON_CMD)) caisse.updateBonCmd(paiement.getMontant());
+		if (typePaiement.equals(TypePaiement.BON_CMD_PARTIEL)) caisse.updateCash(paiement.getMontant());
+		if (typePaiement.equals(TypePaiement.CARTE_CREDIT)) caisse.updateCarteCredit(paiement.getMontant());
+		if (typePaiement.equals(TypePaiement.CREDIT)) {
+			caisse.updateCash(new BigDecimal(paiement.getAvancePartClient()));
+			caisse.updateCredit(new BigDecimal(paiement.getRestePartClient()));
+
+		}
+		if (typePaiement.equals(TypePaiement.BON_AVOIR_CLIENT)) {
+			AvoirClient avoirClient =	AvoirClient.search(null,paiement.getNumeroBon(), null, null, null, null, null).getResultList().iterator().next();
+			if (paiement.getCompenser()) {
+				if (avoirClient.getReste().intValue() >= paiement.getMontant().intValue()) {
+					caisse.updateBonClient(paiement.getMontant());
+					avoirClient.avancer(paiement.getMontant());
+					//caisse.updateCash(paiement.getMontant());
+				}else {
+					caisse.updateBonClient(avoirClient.getReste());
+					caisse.updateCash(paiement.getMontant().subtract(avoirClient.getReste()));
+					avoirClient.avancer(avoirClient.getReste());
+
+				}
+
+			}else {
+
+				if (avoirClient.getReste().intValue() >= paiement.getMontant().intValue()) {
+					caisse.updateBonClient(paiement.getMontant());
+					avoirClient.avancer(paiement.getMontant());
+
+				}else {
+					caisse.updateBonClient(paiement.getMontantBon());
+					avoirClient.avancer(paiement.getMontantBon());
+					caisse.updateCash(paiement.getMontant().subtract(paiement.getMontantBon()));
+				}
+			}
+
+		}
+		operationCaisse.setMontant(paiement.getMontant());
+		operationCaisse.persist();
+		caisse.merge();
+
+	}
+
+	public void genererOperationCaisse(Caisse caisse,BigDecimal montant, TypePaiement type){
+		OperationCaisse operationCaisse = new OperationCaisse();
+		operationCaisse.setCaisse(caisse);
+		operationCaisse.setModePaiement(type);
+		operationCaisse.setOperateur(SecurityUtil.getPharmaUser());
+		operationCaisse.setTypeOperation(TypeOpCaisse.ENCAISSEMENT);
+		operationCaisse.setDateOperation(new Date());
+		//operationCaisse.setRaisonOperation("Paiement Facture No : "+paiement.getFacture().getFactureNumber());
+		operationCaisse.setMontant(montant);
+		operationCaisse.persist();
+
+	}
+
+
+
+
+	//  neccessaire pour les pour vues
+
+	/* @ModelAttribute("typepaiements")
+		    public Collection<TypePaiement> populateTypePaiements() {
+		         Collection<TypePaiement> list = Arrays.asList(TypePaiement.class.getEnumConstants());
+		         return list ;
+		    }*/
+	public Collection<TypePaiement> populateTypePaiements(boolean cash) {
+		Collection<TypePaiement> list = new ArrayList<TypePaiement>();
+		if (cash) {
+			list.add(TypePaiement.CASH);
+			list.add(TypePaiement.CHEQUE);
+			list.add(TypePaiement.CARTE_CREDIT);
+			list.add(TypePaiement.BON_AVOIR_CLIENT);
+
+
+
+		}else {
+			//list.add(TypePaiement.VENTE_PARTIEL);
+			list.add(TypePaiement.CREDIT);
+		}
+		return list ;
+	}
+
+	public Collection<TypePaiement> populateTypePaiements(CommandeClient cmd) {
+		Collection<TypePaiement> list = new ArrayList<TypePaiement>();
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC)) {
+			list.add(TypePaiement.CASH);
+			list.add(TypePaiement.CHEQUE);
+			list.add(TypePaiement.CARTE_CREDIT);
+			list.add(TypePaiement.BON_AVOIR_CLIENT);
+			return list ;
+
+
+		}
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && cmd.getVentePartiel()) {
+			list.add(TypePaiement.BON_CMD_PARTIEL);
+			return list;
+		}
+
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && !cmd.getVentePartiel()) {
+			//list.add(TypePaiement.BON_CMD);
+			list.add(TypePaiement.CREDIT);
+			return list;
+		}
+
+		list.add(TypePaiement.CASH);
+		list.add(TypePaiement.CHEQUE);
+		list.add(TypePaiement.BON_AVOIR_CLIENT);
+		list.add(TypePaiement.CARTE_CREDIT);
+		return list ;
+
+	}
+
+	public void initPaiementView(Facture facture,Paiement paiement,Model uiModel){
+		CommandeClient cmd = facture.getCommande();
+		uiModel.addAttribute("typepaiements",populateTypePaiements(facture.getCommande()));
+
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC)) {
+			paiement.setMontant(BigDecimal.valueOf(facture.getNetPayer().longValue()));
+		}
+		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)) {
+			paiement.setMontant(BigDecimal.valueOf(facture.calculerPartClient().longValue()));
+
+		}
+		/*if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && !cmd.getVentePartiel()) {
+			paiement.setMontant(BigDecimal.ZERO);
+
+		}*/
+		uiModel.addAttribute("typepaiements",populateTypePaiements(facture.getCommande()));
+		uiModel.addAttribute("paiement",paiement);
+	}
+
+	/*@ModelAttribute("pharmausers")
+	public Collection<PharmaUser> populatePharmaUsers() {
+		return PharmaUser.findAllPharmaUsers();
+	}*/
+
+
+
+	@ModelAttribute("quipayes")
+	public Collection<QuiPaye> populateQuiPayes() {
+		return Arrays.asList(QuiPaye.CLIENT);
+	}
+
+	/*@ModelAttribute("clients")
+	public Collection<Client> populateClients() {
+		return Client.findAllClients();
+	}*/
+
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="public" name="produits/list">
+        <put-attribute name="body" value="/WEB-INF/views/produits/list.jspx"/>
+    </definition>
+<definition extends="public" name="produits/show">
+        <put-attribute name="body" value="/WEB-INF/views/produits/show.jspx"/>
+    </definition>
+<definition extends="public" name="produits/create">
+        <put-attribute name="body" value="/WEB-INF/views/produits/create.jspx"/>
+    </definition>
+<definition extends="public" name="produits/update">
+        <put-attribute name="body" value="/WEB-INF/views/produits/update.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByDesignationLike">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByDesignationLike.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByProduitNumberLike">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByProduitNumberLike.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByPosologieLike">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByPosologieLike.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByRayon">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByRayon.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByFamilleProduit">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByFamilleProduit.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByCipEquals">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByCipEquals.jspx"/>
+    </definition>
+<definition extends="public" name="produits/findProduitsByQuantiteEnStock">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByQuantiteEnStock.jspx"/>
+    </definition>
+<definition extends="default" name="produits/findProduitsByDesignationEquals">
+        <put-attribute name="body" value="/WEB-INF/views/produits/findProduitsByDesignationEquals.jspx"/>
+    </definition>
+    <definition extends="default" name="produits/search">
+        <put-attribute name="body" value="/WEB-INF/views/produits/search.jspx"/>
+    </definition>
+       <definition extends="default" name="produits/attributionfsf">
+        <put-attribute name="body" value="/WEB-INF/views/produits/attributionFetSF.jspx"/>
+    </definition>
+   
+</tiles-definitions>

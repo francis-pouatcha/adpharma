@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="BySearch" id="ff_org_adorsys_adpharma_domain_CommandeFournisseur" path="/commandefournisseurs" z="qbkeF1w2HCrF9qmP9BqJUHrCEGI=">
+        <table style="border: none;">
+            <tr>
+                <td style="border: none;">
+        <field:input disableFormBinding="true" field="cmdNumber" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" required="false" z="o8gQ/NfKWPNwzKU+UrQvc9PPJLU="/>
+               <field:select disableFormBinding="true" field="fournisseur" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="false" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
+                        <field:select disableFormBinding="true" field="etatCmd" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" items="${etats}" path="/etats" required="false" z="ddHvIJaCRq4gseOGUVAccmhCiss="/>
+                
+                  </td >
+                <td style="border: none;" >
+                      <field:datetime dateTimePattern="${commandeFournisseur_datecreation_date_format}" disableFormBinding="true" field="minDateCreation" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_minDateCreation" required="false" z="user-managed"/>
+        <field:datetime dateTimePattern="${commandeFournisseur_datecreation_date_format}" disableFormBinding="true" field="maxDateCreation" id="f_org_adorsys_adpharma_domain_CommandeFournisseur_maxDateCreation" required="fasle" z="user-managed"/>
+          </td>
+            </tr>
+        </table>
+    </form:find>
+       <c:if test="${not empty apMessage}">
+		<hr/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+	</center>
+			<hr/>
+	
+	</c:if>
+    <c:if test="${ not empty results}">
+     <page:list id="pl_org_adorsys_adpharma_domain_CommandeFournisseur" items="${results}" z="XfKNp4xlwXdf5nGL1niAegujyOk=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_CommandeFournisseur" path="/commandefournisseurs" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" property="cmdNumber" z="/PEr9avlllYbGPkWH7EwHO2Wplk="/>
+            <table:column date="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" label="Date Edition" property="dateCreation" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" property="dateLimiteLivraison" z="UW5RO2IaULSi10G29l0tSleQUHc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" maxLength="-1" property="fournisseur" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_site" render="false" maxLength="-1" property="site" z="h5Eh3bo77h2pL6uoY48X8jr+4tA="/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" property="etatCmd" z="Gmf2szu3Lcf8Jejcx5qNKdzOgHU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" property="annuler" z="eH0pxOVGGnH4DisDLDumh3PGjRE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" maxLength="-1" property="creePar" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_livre" property="livre" render="false" z="BF+syGDcRNZ/IMKCaMK/ckK5oPc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_livre" property="livre" z="dZNxv+gJm2MMPpCFl6hTAgVzUq4="/>
+        </table:table>
+    </page:list>>
+  </c:if> 
+</div>

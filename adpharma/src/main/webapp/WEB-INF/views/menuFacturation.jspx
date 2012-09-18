@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" xmlns:security="http://www.springframework.org/security/tags" xmlns:spring="http://www.springframework.org/tags" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+   
+    <security:authorize access="isAuthenticated()">
+        <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASHIER">
+                <menu:category id="c_facture" z="BJFuqzNXUea+YVr8ccKI7c/4tOI=">
+                    <menu:item id="i_facture_new" render="false"  messageCode="global_menu_new" url="/factures?form" z="jDdWsy9zkLcBn7jndXX/UjL4F1A="/>
+                    <menu:item id="i_facture_list" messageCode="global_menu_list" url="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" z="HVDPqnIehDsWoipeBOCy3Imlc6U="/>
+                    <menu:item id="fi_facture_soldernot" label="etat Solde " messageCode="global_menu_find" url="/factures?find=BySolderNot&amp;form" z="ILpRPt8H1npzxdQKeeof+yclNLM="/>
+                    <menu:item id="fi_facture_facturenumberequals" label="Numero Facture" messageCode="global_menu_find" url="/factures?find=ByFactureNumberEquals&amp;form" z="lzdHlE+Q5qXUcsaw+QhZC34kZQ8="/>
+                    <menu:item id="fi_facture_datecreationbetween" label="Date de Facturation" messageCode="global_menu_find" url="/factures?find=ByDateCreationBetween&amp;form" z="7PnFlwQEfw2y9C/kvOx4Xwoz+7o="/>
+                    <menu:item id="fi_facture_clientanddatecreationbetween" label="Clients" messageCode="global_menu_find" url="/factures?find=ByClientAndDateCreationBetween&amp;form" z="4Yg6WU0c9Sm44F4CAwX1qHAXDqs="/>
+                </menu:category>
+                 <menu:category id="c_lignefacture" z="WeixYbN9O7k6ku8Tg6pm301XhNc=">
+                    <menu:item id="i_lignefacture_new" messageCode="global_menu_new" url="/lignefactures?form" z="bYA6snQZBdNJIZMI7IYa/Vc/YqE="/>
+                    <menu:item id="i_lignefacture_list" messageCode="global_menu_list" url="/lignefactures?page=1&amp;size=${empty param.size ? 10 : param.size}" z="aKhwUvEkJmNKIV61jGWNVvJzmis="/>
+                </menu:category>
+            
+                  <menu:category id="c_back_to_main"  z="user-managed" label="Retour">
+            <menu:item id="i_back_to_voyage" url="/" label="Au Menu Principal" z="user-managed"/>
+        </menu:category>
+                    </security:authorize>
+                
+        </menu:menu>
+    </security:authorize>
+</div>

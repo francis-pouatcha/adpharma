@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:spring="http://www.springframework.org/tags"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <spring:url value="/commandprocesses/${cmdId}/editCommand?form"  var="edit_url" />
+    <div style="margin-bottom: 10px; padding-bottom: 5px;">
+		<span style="font-weight: bold">
+		<span style="padding-left: 10px;" >[<a href="${edit_url}">Back to Commande</a>]</span>
+		</span>
+	</div> 
+    <form:update id="fu_org_adorsys_adpharma_domain_LigneCmdFournisseur" modelAttribute="ligneCmdFournisseur" path="/commandprocesses/${cmdId}/lignecommand/${ligneCmdFournisseur.id}" versionField="Version" z="8LlPW8+BWlembXaP8iBn1Zwjm/k=">
+      <field:select field="commande" disabled="true" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_commande"  itemValue="id" items="${commandefournisseurs}" path="/commandefournisseurs" z="BuRLKaOWJ3qLi0EIh7lN9qWbwWE="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_footPrint" render="false" z="user-managed"/>
+        <field:input disabled="true" field="ligneNumber" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_ligneNumber" z="user-managed"/>
+        <field:select field="produit" disabled="true" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_produit" itemValue="id" items="${produits}" path="/produits" z="bQCGFHeNIzb9xR6EKQTFuiDX9pM="/>
+        <field:datetime dateTimePattern="${ligneCmdFournisseur_datesaisie_date_format}" disabled="true" field="dateSaisie" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_dateSaisie" z="pLHd+2yvGNqsCLPL128yxkbaPEU="/>
+        <field:input field="quantiteCommande" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_quantiteCommande" validationMessageCode="field_invalid_integer" z="y6cvPzBS9RTeEQUFZOvJy+yR8ZE="/>
+    </form:update>
+</div>

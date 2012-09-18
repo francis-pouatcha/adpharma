@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:security="http://www.springframework.org/security/tags" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    <c:set value="true" var="hasrole" />
+    </security:authorize>
+    <page:show1 id="ps_org_adorsys_adpharma_domain_Approvisionement" update="${hasrole }" create="false" delete="${not approvisionement.cloturer}" clientLinks="showLink.jspx" bodyExt="bodyExt.jspx"  object="${approvisionement}" path="/approvisionements" z="Fb6GPgoOW8VbB9CtiUgFi9kf5rg=">
+       <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+        <field:display field="approvisionementNumber" id="s_org_adorsys_adpharma_domain_Approvisionement_approvisionementNumber" object="${approvisionement}" z="lXlj26U0HJt6PXNjCv7JfsLhyc8="/>
+        <field:display field="bordereauNumber" id="s_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" object="${approvisionement}" z="b+MBRKYzLP+FFF6/Pze/zOR7vaE="/>
+        <field:display calendar="true" dateTimePattern="${approvisionement_datebordereau_date_format}" field="dateBordereau" id="s_org_adorsys_adpharma_domain_Approvisionement_dateBordereau" object="${approvisionement}" z="z9BaKtu9+NIPG+mSXyJcR9cZWbk="/>
+        <field:display field="magasin" id="s_org_adorsys_adpharma_domain_Approvisionement_magasin" object="${approvisionement}" z="+J8B5Pi3FIj6yAit09XyuDgo8wE="/>
+        <field:display date="true" dateTimePattern="${approvisionement_datecommande_date_format}" field="dateCommande" id="s_org_adorsys_adpharma_domain_Approvisionement_dateCommande" object="${approvisionement}" z="M2oXG436bq2n1/QHAvEzok69jFY="/>
+        <field:display date="true" dateTimePattern="${approvisionement_datelivraison_date_format}" field="dateLivraison" id="s_org_adorsys_adpharma_domain_Approvisionement_dateLivraison" object="${approvisionement}" z="nceoZzr789SRm0LBklF9FAP0KDo="/>
+        <field:display field="founisseur" id="s_org_adorsys_adpharma_domain_Approvisionement_founisseur" object="${approvisionement}" z="Dnqn+vMaZEMidjJF2qZCunJnuLY="/>
+       </td>
+       <td class="tbcreate">
+        <field:display field="montantHt" id="s_org_adorsys_adpharma_domain_Approvisionement_montantHt" object="${approvisionement}" z="kok/CLiLguqYlnhS8skdjiI9uC8="/>
+        <field:display date="true" dateTimePattern="${approvisionement_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_Approvisionement_dateCreation" object="${approvisionement}" z="ewJdTVp92uNiOSoStIYuXEVgEiY="/>
+        <field:display field="cloturer" id="s_org_adorsys_adpharma_domain_Approvisionement_cloturer" object="${approvisionement}" z="DByjIcDQS8sySI9HZbOm1Rogp3s="/>
+        <field:display field="etat" id="s_org_adorsys_adpharma_domain_Approvisionement_etat" object="${approvisionement}" z="10J13CTqaMZlDTzE97gtQ15AVJk="/>
+        <field:display field="devise" id="s_org_adorsys_adpharma_domain_Approvisionement_devise" object="${approvisionement}" z="xivrKI2JAlYIqv7t6L8iI5hJGKs="/>
+        <field:display field="agentCreateur" id="s_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" object="${approvisionement}" z="gHy5fBxq1OjpdT7lBvn9AMu4Qis="/>
+        <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Approvisionement_filiale" object="${approvisionement}" z="Zq4ByrXtYv32l29QVT1dvzshxUQ="/>
+  
+    </td>
+            </tr>
+        </table>
+    </page:show1>
+    <HR />
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Approvisionement_footPrint" object="${approvisionement}" z="WbG+G4m13H6S9Ftd8862TqXvUpA="/>
+    <HR style="margin-top:-12px;"/>
+     <div id="container">
+<div id="inner" style="overflow: scroll; height: 300px;">
+<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
+<center style="text-transform: uppercase; "> <H1>Bievenue dans l'aide D'adPharma</H1> </center>
+L'aide Pour cette Page est en cour de redaction <br/>
+Merci pour Votre Comprehension <br/>
+
+ 
+</div>
+</div>
+    
+</div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_LigneFacture" items="${lignefactures}" z="04bFu6NmVZFWUs67qiIJc0u/HOI=">
+        <table:table data="${lignefactures}" id="l_org_adorsys_adpharma_domain_LigneFacture" path="/lignefactures" z="/7PkHTpEf5uSGfxuxSbd6lcD3eg=">
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_indexline" property="indexline" z="Zf/52DswViJJGV/pCTfjMUCtyvE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_cip" property="cip" z="ZUk8gLt0fojqtTw4b7+Ef/4JLdc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_designation" property="designation" z="xKU2BgeOgHByxWhByyq6SiyEE10="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_cipM" property="cipM" z="hrj3318GceJ5wqDWSgoAQ499GcY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_qteAchete" property="qteAchete" z="tU0r/NDM7OfAdwiucogYby+2rT4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneFacture_footPrint" property="footPrint" z="MVD9GxajZM5MNOp5W8dQQ4n7gCY="/>
+        </table:table>
+    </page:list>
+</div>

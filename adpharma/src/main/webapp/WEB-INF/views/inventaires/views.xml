@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="inventaire" name="inventaires/list">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/list.jspx"/>
+    </definition>
+<definition extends="inventaire" name="inventaires/show">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/show.jspx"/>
+    </definition>
+<definition extends="inventaire" name="inventaires/create">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/create.jspx"/>
+    </definition>
+<definition extends="inventaire" name="inventaires/update">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/update.jspx"/>
+    </definition>
+<definition extends="inventaire" name="inventaires/findInventairesByAgentAndDateInventaireBetween">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/findInventairesByAgentAndDateInventaireBetween.jspx"/>
+    </definition>
+<definition extends="inventaire" name="inventaires/findInventairesByDateInventaireBetween">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/findInventairesByDateInventaireBetween.jspx"/>
+    </definition>
+     <definition extends="inventaire" name="inventaires/findInventairesByEtat">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/findInventairesByEtat.jspx"/>
+    </definition>
+    
+     <definition extends="default" name="inventaires/inventaireFicheQte">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/inventaireSuiviQte.jspx"/>
+    </definition>
+     <definition extends="print" name="inventaires/ficheSuivieQte">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/ficheSuiviQte.jspx"/>
+    </definition>
+     <definition extends="inventaire" name="inventaires/inventaireParOrdreAlpha">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/inventaireParOrdreAlpha.jspx"/>
+    </definition>
+     <definition extends="print" name="inventaires/ficheSuivieStock">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/ficheSuivieStock.jspx"/>
+    </definition>
+    
+</tiles-definitions>

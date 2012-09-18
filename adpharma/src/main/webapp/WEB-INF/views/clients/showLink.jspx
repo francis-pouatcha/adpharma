@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
+	style=" margin: 10px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <spring:url value="/clients/${itemId}/defineClientPayeur?form"  var="payer_url" />
+      <spring:url value="/approvisionementprocess/${itemId}/cloturer"  var="close_url" />
+      <spring:url value="/approvisionementprocess/${itemId}/printFicheAp/${itemId}.pdf"  var="print_ficheAp_url" />
+      <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare/${itemId}.pdf"  var="print_ficheCB_url" />
+      <spring:url value="/resources/images/sendmail.png"  var="mail" />
+      <spring:url value="/resources/images/print.png"  var="print" />
+      <spring:url value="/resources/images/cloturer.png"  var="close" />
+      <spring:url value="/resources/images/modifier.png"  var="modifier" />
+   <c:choose>
+      <c:when test="${approvisionement.cloturer}">
+   <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="FICHE APROVISIONNEMENT" title="Imprimer la fiche d approvisionnement" /></a></span>
+       <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="FICHE CODE BARE" title="Imprimer la fiche de code bare" /></a></span>
+      </c:when>
+      <c:otherwise>
+      <span><a href="${ close_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="DETAILS DETTES" title="Cloturer l'approvisionnement" /></a></span>
+    
+      </c:otherwise>
+   </c:choose>
+   <c:if test="${not approvisionement.cloturer}">
+   
+     <span><a href="${ payer_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="ASSOCIER CLIENT PAYEUR" title="modifier le detail" /></a></span>
+    
+   </c:if>
+</span>
+

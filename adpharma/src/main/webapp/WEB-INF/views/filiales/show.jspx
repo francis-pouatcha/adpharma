@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show delete="false" id="ps_org_adorsys_adpharma_domain_Filiale" object="${filiale}" path="/filiales" z="user-managed">
+        <field:display field="filialeNumber" id="s_org_adorsys_adpharma_domain_Filiale_filialeNumber" object="${filiale}" z="QIYM8hjSchyNCB4K5r6RH6DI63U="/>
+        <field:display field="libelle" id="s_org_adorsys_adpharma_domain_Filiale_libelle" object="${filiale}" z="FuAT8/Lebent3+PFNqapjaTbElo="/>
+        <field:display field="description" id="s_org_adorsys_adpharma_domain_Filiale_description" object="${filiale}" z="x8Bu+/Q7pjukgfmJCjLjJ7DQAgQ="/>
+        <field:display field="actif" id="s_org_adorsys_adpharma_domain_Filiale_actif" object="${filiale}" z="YAQpgzKce4XxsPDTeKzlFwAM1Xw="/>
+    </page:show>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Filiale_footPrint" object="${filiale}" z="4LIlajVQh8UgsBBpOQGKjXEPV1I="/>
+    <HR/>
+</div>

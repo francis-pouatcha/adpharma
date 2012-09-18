@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="approvisionements/list">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/list.jspx"/>
+    </definition>
+<definition extends="default" name="approvisionements/show">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/show.jspx"/>
+    </definition>
+<definition extends="default" name="approvisionements/create">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/create.jspx"/>
+    </definition>
+<definition extends="default" name="approvisionements/update">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/update.jspx"/>
+    </definition>
+<definition extends="default" name="approvisionements/findApprovisionementsByDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/findApprovisionementsByDateCreationBetween.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="approvisionements/search">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/search.jspx"/>
+    </definition>
+    
+</tiles-definitions>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="ByQuantieEnStockAndCipEquals" id="ff_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="ohFk+2AE/pSN9+YOWH8+Uh8Pb+M=">
+        <field:input disableFormBinding="true" field="quantieEnStock" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" required="true" validationMessageCode="field_invalid_integer" z="86PCZmzGvuLH2JB5ePZqWhGVoAo="/>
+        <field:input disableFormBinding="true" field="cip" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_cip" required="true" z="NIG1RUUOwHYxwn/F9rExF4voSLo="/>
+    </form:find>
+</div>

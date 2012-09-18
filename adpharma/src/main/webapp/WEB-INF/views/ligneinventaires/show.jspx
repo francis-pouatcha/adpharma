@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_LigneInventaire" object="${ligneinventaire}" path="/ligneinventaires" z="INvhqnn8iwx70SaVdFyO82bOmOg=">
+        <field:display field="qteEnStock" id="s_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" object="${ligneinventaire}" z="mObL1/p4701mX5YIY8Yqc1s3qA0="/>
+        <field:display field="qteReel" id="s_org_adorsys_adpharma_domain_LigneInventaire_qteReel" object="${ligneinventaire}" z="/kZVhopVRe9mcVMzMn17J6EKOVM="/>
+        <field:display field="ecart" id="s_org_adorsys_adpharma_domain_LigneInventaire_ecart" object="${ligneinventaire}" z="rnE0zieOCskuCZIZvkFk5k0ETn8="/>
+        <field:display field="prixUnitaire" id="s_org_adorsys_adpharma_domain_LigneInventaire_prixUnitaire" object="${ligneinventaire}" z="IgE2npewRbH+LncwHGIRtAFzTXE="/>
+        <field:display field="prixTotal" id="s_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" object="${ligneinventaire}" z="EtS/MdulnnVRE0Pn+6+SVjE3+6c="/>
+        <field:display field="inventaire" id="s_org_adorsys_adpharma_domain_LigneInventaire_inventaire" object="${ligneinventaire}" z="rYXjuBz6K7b5ot8fDX0SMRIVx/0="/>
+        <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneInventaire_produit" object="${ligneinventaire}" z="loDZBAe7lURI1x6eZCIqQaaDL98="/>
+        <field:display field="agentSaisie" id="s_org_adorsys_adpharma_domain_LigneInventaire_agentSaisie" object="${ligneinventaire}" z="u+RpSZuv9DgSU92b2v4ycExLlxQ="/>
+        <field:display date="true" dateTimePattern="${ligneInventaire_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_LigneInventaire_dateSaisie" object="${ligneinventaire}" z="7v3OeEOdxDzi3bgX+WeZSOfCmiw="/>
+    </page:show>
+</div>

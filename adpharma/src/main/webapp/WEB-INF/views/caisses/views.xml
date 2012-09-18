@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="caisse" name="caisses/list">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/list.jspx"/>
+    </definition>
+<definition extends="caisse" name="caisses/show">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/show.jspx"/>
+    </definition>
+<definition extends="caisse" name="caisses/create">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/create.jspx"/>
+    </definition>
+<definition extends="caisse" name="caisses/update">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/update.jspx"/>
+    </definition>
+    <definition extends="caisse" name="caisses/infos">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/infosCaisse.jspx"/>
+    </definition>
+    
+<definition extends="caisse" name="caisses/findCaissesByCaisseOuverteNot">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/findCaissesByCaisseOuverteNot.jspx"/>
+    </definition>
+<definition extends="caisse" name="caisses/findCaissesByCaisseOuverteNotAndCaissier">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/findCaissesByCaisseOuverteNotAndCaissier.jspx"/>
+    </definition>
+<definition extends="default" name="caisses/findCaissesByDateOuvertureBetween">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/findCaissesByDateOuvertureBetween.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="caisses/ByEtatCaisse">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/etatCaisse.jspx"/>
+    </definition>
+     <definition extends="default" name="caisses/search">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/search.jspx"/>
+    </definition>
+<definition extends="default" name="caisses/findCaissesByDateOuvertureGreaterThan">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/findCaissesByDateOuvertureGreaterThan.jspx"/>
+    </definition>
+    <definition extends="default" name="caisses/chiffreaffaire">
+        <put-attribute name="body" value="/WEB-INF/views/caisses/chiffreAffaire.jspx"/>
+    </definition>
+    
+    
+</tiles-definitions>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div style="margin-bottom: 10px; padding-bottom: 5px;">
+		<span style="font-weight: bold">
+		<span style="padding-left: 10px;" >[<a  style="color: green;" href="javascript:history.back()"> <B>RETOUR VENTE </B></a>]</span>
+		</span>
+	</div> 
+    <form:update id="fu_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/saleprocess/${cmdId}/updateClient" versionField="Version" z="Il6d8I6l1DUYb7NswUqvws6qXoM=">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:input disabled="true" field="clientNumber" id="c_org_adorsys_adpharma_domain_Client_clientNumber" z="user-managed"/>
+                      <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
+                    <field:input field="nom" id="c_org_adorsys_adpharma_domain_Client_nom" z="OA317rdr3pSMhCRqjbqj+Fk8rrs="/>
+                    <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom" z="n0FrbSWLpMhBuSagDveKHFazNCg="/>
+                    <field:input field="nomComplet"  render="false" id="c_org_adorsys_adpharma_domain_Client_nomComplet" z="HEynEMAX6TgRSM2bFsFgfRG1rw0="/>
+                    <field:input field="telephoneFixe" id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
+                     <field:select field="categorie" render="false" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
+                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Client_footPrint" render="false" z="user-managed"/>
+                    <field:input field="totalDette" id="c_org_adorsys_adpharma_domain_Client_totalDette" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
+                    <field:checkbox field="remiseAutorise" render="false" id="c_org_adorsys_adpharma_domain_Client_remiseAutorise" z="8+oZZxMe4vZMA0wHjQNcjmMQcJw="/>
+                        <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" z="UEVz4Qi38EfJSl81OAO5fxyACeo="/>
+                     </td>
+                <td class="tbcreate">
+                 <field:input field="fax" id="c_org_adorsys_adpharma_domain_Client_fax" z="aOSu7ScTBW5cIY/nnmRzVfsL4UE="/>
+                    <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
+                    <field:select render="false" field="clientPayeur" id="c_org_adorsys_adpharma_domain_Client_clientPayeur" itemValue="id" items="${clients}" path="/clients" z="user-managed"/>
+                    <field:checkbox field="creditAutorise" render="false" id="c_org_adorsys_adpharma_domain_Client_creditAutorise" z="zEDzQc4bFRJoKrA3dPZwQM2X+zo="/>
+                    <field:input field="plafondCredit" render="false" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
+                    <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
+                    <field:datetime dateTimePattern="dd-MM-yyyy" field="dateNaissance" id="c_org_adorsys_adpharma_domain_Client_dateNaissance" z="ELbkD0T3EOInbSqx5X88ctouD7g="/>
+                    <field:input field="tauxCouverture" render="false" id="c_org_adorsys_adpharma_domain_Client_tauxCouverture" validationMessageCode="field_invalid_number" z="user-managed"/>
+                    <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Client_note" z="sQqHMh6y6j+33iNnM7I5LaZNQLo="/>
+                    <field:input field="clientPayeurNumber" render="false" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" z="1B3XCfplB4aQ+MRt3P1NLMWEbWw="/>
+                      </td>
+            </tr>
+        </table>
+    </form:update>
+</div>
+
+

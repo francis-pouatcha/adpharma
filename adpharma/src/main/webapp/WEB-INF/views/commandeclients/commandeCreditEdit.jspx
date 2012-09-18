@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:form="http://www.springframework.org/tags/form"
+xmlns:tiles="http://tiles.apache.org/tags-tiles"
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+   
+    <script type="text/javascript">
+  
+
+function verif_formulaire()
+{
+ if(document.formulaire.clientId.value == "")  {
+   alert("Veuillez  chercher le  client");
+   return false;
+  }
+ if(document.formulaire.payeurId.value == "") {
+   alert("Veuillez chercher le cliend payeur ");
+   return false;
+  }
+ if(document.formulaire.taux.value > 100) {
+	   alert("Le taux de couverture doit Etre compris entre 0  et 100 ! ");
+	   return false;
+	  }
+ 
+ 
+
+}
+
+
+function verif_client()
+{
+ if(document.formulaire.clientId.value == "")  {
+   alert("Veuillez  chercher d abord  le  client !");
+   return false;
+  }
+ 
+ 
+
+}
+
+function codeTouche(evenement)
+{
+        for (prop in evenement)
+        {
+                if(prop == 'which') return(evenement.which);
+        }
+        return(evenement.keyCode);
+}
+
+function scanTouche(evenement)
+{
+        var reCarValides = /\d/;
+        var reCarSpeciaux = /[\x00\x08\x0D]/;
+        var codeDecimal  = codeTouche(evenement);
+        var car = String.fromCharCode(codeDecimal);
+        var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
+
+        return autorisation;
+}
+
+
+
+</script>
+   	<spring:url value="/commandeclients/findClientForCmd"  var="client_url" />
+   	<spring:url value="/commandeclients/${commandeCredit.clientId}/findClientPayeur"  var="payeur_url"/>
+   	   	<spring:url value="/commandeclients/cmdCredit"  var="create_url" />
+   	
+   
+   <util:panel id="myPanel" title="creation commande a credit ">
+<form:form id="courseForm" name="formulaire" method="POST"  action="${create_url }"  onSubmit="return verif_formulaire()"  modelAttribute="commandeCredit">
+<form:hidden path="clientId"  id="clientId" />
+<form:hidden path="payeurId" id="payeurId" />
+ <div>
+<label for="_clientName">Client : </label>
+   <form:input path="clientName" id="clientName"  cssStyle="color:blue ; "  size="30" readonly="true"/>  <A href="${client_url} " style="  text-decoration:  none;"><INPUT type="button" value="chercher" style=" text-decoration:  none; border-color: blue; color: red; margin-left: 25px; height: 20px;"/> </A>
+      <B style="color: red; padding-left: 20px;" >${ msgClient}</B>
+</div>
+<br/>
+
+<div >
+      <label for="_payeurName">Client Payeur: </label>
+          <form:input path="payeurName" id="payeurName" cssStyle="color:blue ;"  size="30"   readonly="true"/>  <A href="${payeur_url } " style="  text-decoration:  none;"><INPUT type="button" onclick="return verif_client()" value="chercher" style=" border-color: blue; color: red; margin-left: 25px; height: 20px;"/> </A> 
+         <B style="color: red; padding-left: 20px;" >${ msgPayeur}</B>
+</div>
+<br/>
+
+<div>
+      <label for="_taux">Taux de Couverture : </label>
+     <c:choose>
+      <c:when test="${commandeCredit.clientId eq commandeCredit.payeurId }">
+       <form:input path="taux" id="taux" size="3"  readonly="true"/>   % 
+      </c:when>
+      <c:otherwise>
+             <form:input path="taux" size="3" onKeyPress="return scanTouche(event)"  maxlength="3"   id="taux"/>   % 
+      </c:otherwise>
+     </c:choose>
+         <B style="color: red; padding-left: 20px;" >${ msgTaux}</B>
+</div>
+<br/>
+<div >
+      <label for="_ventePartiel">Vente Partiel ?: </label>
+          <form:checkbox path="ventePartiel" id="ventePartiel" cssStyle="color:red ;"  />   
+         <B style="color: red; padding-left: 20px;" >${ msgventePartiel}</B>
+</div>
+<br/>
+
+<div>
+<input type="submit" value="Submit"  style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;"/>
+</div>
+</form:form>
+
+</util:panel>
+   
+   
+   
+</div>

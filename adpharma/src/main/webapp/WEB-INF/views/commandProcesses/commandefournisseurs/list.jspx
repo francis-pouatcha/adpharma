@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_CommandeFournisseur" items="${commandefournisseurs}" z="XfKNp4xlwXdf5nGL1niAegujyOk=">
+        <table:table data="${commandefournisseurs}" id="l_org_adorsys_adpharma_domain_CommandeFournisseur" path="/commandefournisseurs" z="d7YQBSpalMlgwwDj1wBtqtwULW4=">
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" property="footPrint" z="DYGXu2P9alGtke6GusRZ8APT4jc="/>
+            <table:column date="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" property="dateCreation" z="kYRtkVmPoBi+gCfL7LQpWGICeyI="/>
+            <table:column date="true" dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" property="dateLimiteLivraison" z="UW5RO2IaULSi10G29l0tSleQUHc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" property="fournisseur" z="XNIOZQ0xSFF0MU1d4D89o6o5+LA="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" property="cmdNumber" z="/PEr9avlllYbGPkWH7EwHO2Wplk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etat" property="etat" z="X2Y61LWuhrYmoE0I7ZoskJD+BIg="/>
+        </table:table>
+    </page:list>
+</div>

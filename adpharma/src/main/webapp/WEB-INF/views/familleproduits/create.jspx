@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_FamilleProduit" modelAttribute="familleProduit" path="/familleproduits" render="${empty dependencies}" z="w53UL2ouZlP0QvWiAJQpUfP0v98=">
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_FamilleProduit_footPrint" render="false" z="user-managed"/>
+        <field:input field="libelleFamille" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleFamille" required="true" z="N+Y4548uTT1WhWA7mEnaRTqRACg="/>
+        <field:input field="libelleCourt" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" render="false" z="user-managed"/>
+        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_FamilleProduit_note" label="Description" z="user-managed"/>
+        <field:input field="familleNumber" id="c_org_adorsys_adpharma_domain_FamilleProduit_familleNumber" render="false" z="user-managed"/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_FamilleProduit" render="${not empty dependencies}" z="DF7IMfwEoe1nQIVCgXcOvndeuhY="/>
+</div>

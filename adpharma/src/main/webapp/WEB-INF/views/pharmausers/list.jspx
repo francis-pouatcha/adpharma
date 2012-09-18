@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" z="snn3NDRMyKmOxR88QsvMpnOk8Kw=">
+        <table:table data="${pharmausers}" delete="false" id="l_org_adorsys_adpharma_domain_PharmaUser" path="/pharmausers" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" property="userNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userName" maxLength="-1" property="userName" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" maxLength="-1" property="fullName" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_gender" property="gender" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_phoneNumber" property="phoneNumber" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_office" render="false" maxLength="-1" property="office" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" property="firstName" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" property="lastName" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_accountLocked" property="accountLocked" z="G0dfeHrUCX8ThkYfjpdQZDDnrTI="/>
+               <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" property="saleKey" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
+            
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show1 clientLinks="showLink.jspx" create="false" delete="false" id="ps_org_adorsys_adpharma_domain_MouvementStock" object="${mouvementstock}" path="/mouvementstocks" update="false" z="user-managed">
+       <table class="tblog">
+            <tr>
+                <td class="tbcreate"> 
+        <field:display field="mvtNumber" id="s_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" object="${mouvementstock}" z="WKeh1reFfxjhBtTbaz+7ZGbsbm4="/>
+        <field:display date="true" dateTimePattern="${mouvementStock_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_MouvementStock_dateCreation" object="${mouvementstock}" z="+PiI3vZVUg+pwH9eN4bnX7mZTn0="/>
+        <field:display field="agentCreateur" id="s_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" object="${mouvementstock}" z="miSQ9pyMxyJr52848apbtVFtmYc="/>
+        <field:display field="typeMouvement" id="s_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" object="${mouvementstock}" z="hVtj0ZIAxrh+n5nIx+PPVhA2oko="/>
+        <field:display field="site" id="s_org_adorsys_adpharma_domain_MouvementStock_site" object="${mouvementstock}" z="XPcDQ0xMmyP45HoH3yMPVYrsu1o="/>
+        <field:display field="origine" id="s_org_adorsys_adpharma_domain_MouvementStock_origine" object="${mouvementstock}" z="rrcHuh2Tuk8nhDAHaNk1iRd3qVs="/>
+        <field:display field="destination" id="s_org_adorsys_adpharma_domain_MouvementStock_destination" object="${mouvementstock}" z="SUKTor69bmT5Wcv6UyuCKl19NHE="/>
+                <field:display field="caisse" id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" object="${mouvementstock}" z="NlyhUv35yRaMsPNYXtzLyoFijVQ="/>
+        
+        <field:display field="numeroTicket" id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" object="${mouvementstock}" z="geWeOCKtjFtiMMGq/dHl7TPXbA0="/>
+        <field:display field="numeroBordereau" id="s_org_adorsys_adpharma_domain_MouvementStock_numeroBordereau" object="${mouvementstock}" z="HxwudMWmVKWGlkcWojnUB28zEVk="/>
+        </td>
+                        <td class="tbcreate"> 
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_MouvementStock_cip" object="${mouvementstock}" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
+        <field:display field="cipM" id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" object="${mouvementstock}" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_MouvementStock_designation" object="${mouvementstock}" z="Oxy9xJ8jH74fbm2mDw8LKT8H28I="/>
+        <field:display field="qteInitiale" id="s_org_adorsys_adpharma_domain_MouvementStock_qteInitiale" object="${mouvementstock}" z="OLFC6396t2UTuaCbTf+gr4F0ldk="/>
+               <field:display field="qteDeplace" id="s_org_adorsys_adpharma_domain_MouvementStock_qteDeplace" object="${mouvementstock}" z="a8dV7YTj105fKsXY6tljfg17+5c="/>
+        <field:display field="qteFinale" id="s_org_adorsys_adpharma_domain_MouvementStock_qteFinale" object="${mouvementstock}" z="lvQD5Q75vW38KMtqGK5pZDG6QkA="/>
+        <field:display field="PAchatTotal" id="s_org_adorsys_adpharma_domain_MouvementStock_pAchatTotal" object="${mouvementstock}" z="h9TygbMy/NQP7+2Sei2Jhrn2KDM="/>
+        <field:display field="PVenteTotal" id="s_org_adorsys_adpharma_domain_MouvementStock_pVenteTotal" object="${mouvementstock}" z="VUSAWJpIW/BJ6rpc/KVw7hpw6ck="/>
+        <field:display field="remiseTotal" id="s_org_adorsys_adpharma_domain_MouvementStock_remiseTotal" object="${mouvementstock}" z="IWjpZd2tbBNyiN5+bourQe2mCZQ="/>
+        <field:display field="filiale" id="s_org_adorsys_adpharma_domain_MouvementStock_filiale" object="${mouvementstock}" z="dFWXtxp7aZk3VG6TV995A2K63yk="/>
+        <field:display field="note" id="s_org_adorsys_adpharma_domain_MouvementStock_note" object="${mouvementstock}" z="pzIri5pi5k7vrQ/8cBYOVFdMprM="/>
+        <field:display field="annuler" id="s_org_adorsys_adpharma_domain_MouvementStock_annuler" object="${mouvementstock}" z="GZxijW0MKTzyuIrIr1vYR0I7EEY="/>
+   </td>
+   </tr> 
+   </table>
+    </page:show1>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_MouvementStock_footPrint" object="${mouvementstock}" z="RAFmKXctFy+XG+pmA4F2MCcgGC8="/>
+    <HR/>
+</div>

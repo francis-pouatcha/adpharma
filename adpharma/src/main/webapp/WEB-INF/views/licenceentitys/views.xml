@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="licenceentitys/list">
+        <put-attribute name="body" value="/WEB-INF/views/licenceentitys/list.jspx"/>
+    </definition>
+<definition extends="default" name="licenceentitys/show">
+        <put-attribute name="body" value="/WEB-INF/views/licenceentitys/show.jspx"/>
+    </definition>
+<definition extends="default" name="licenceentitys/create">
+        <put-attribute name="body" value="/WEB-INF/views/licenceentitys/create.jspx"/>
+    </definition>
+<definition extends="default" name="licenceentitys/update">
+        <put-attribute name="body" value="/WEB-INF/views/licenceentitys/update.jspx"/>
+    </definition>
+    
+  <definition extends="default" name="licenceentitys/infos">
+        <put-attribute name="body" value="/WEB-INF/views/licenceentitys/licenceinformation.jspx"/>
+  </definition>
+</tiles-definitions>

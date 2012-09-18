@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+        <form:custumcreate modelAttribute="transformationProduit" id="fc_org_adorsys_adpharma_domain_TransformationProduit" path="/transformationproduits/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
+        <field:input field="origineName" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
+        <field:input field="cibleName" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
+         <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" z="BxnqXpc+Hewrkb1dQ0/fJCndu0A="/>
+        
+    </form:custumcreate>
+     <page:list id="pl_org_adorsys_adpharma_domain_TransformationProduit" items="${results}" z="9rpeaC6CmrsTspwji3FipxkDEyM=">
+        <table:table data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_TransformationProduit" path="/transformationproduits" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitOrigine" maxLength="-1" property="produitOrigine" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitCible" maxLength="-1" property="produitCible" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" property="qteCible" z="+NPpMg8ZrS1bIiDf14r/edw3eGg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" property="prixVente" z="Jk4xwon6AGwMlVPOJ3323xOXqZ4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" property="actif" z="tQP6T/cmIQ5r8UBhTivaDKPVt9s="/>
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_LigneFacture" modelAttribute="ligneFacture" path="/lignefactures" render="${empty dependencies}" z="YRack5dV2VCcph0MD62Q8u5NXkg=">
+        <field:input field="indexline" id="c_org_adorsys_adpharma_domain_LigneFacture_indexline" z="JFA8uQzUJ1gE6fTFhzpzkEg2q88="/>
+        <field:input field="cip" id="c_org_adorsys_adpharma_domain_LigneFacture_cip" z="hd8zo0TWHm80s4pG1UUKwueJB54="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_LigneFacture_designation" z="RkIS9GpizCj9IgVy/z4kkN73ZBk="/>
+        <field:input field="cipM" id="c_org_adorsys_adpharma_domain_LigneFacture_cipM" z="fdtRH+YWZqUnzsa1WrA9bxqgjAg="/>
+        <field:input field="prixUnitaire" id="c_org_adorsys_adpharma_domain_LigneFacture_prixUnitaire" validationMessageCode="field_invalid_integer" z="UvbHfb7J/hBzFWP8r7tUWOzU81w="/>
+        <field:input field="remise" id="c_org_adorsys_adpharma_domain_LigneFacture_remise" validationMessageCode="field_invalid_integer" z="r346XcGQoDnBNdoBqG5/kXprTUM="/>
+        <field:input field="prixTotal" id="c_org_adorsys_adpharma_domain_LigneFacture_prixTotal" validationMessageCode="field_invalid_integer" z="TrhRNnDiD+V9pNviciXuk6+UsDU="/>
+        <field:select field="facture" id="c_org_adorsys_adpharma_domain_LigneFacture_facture" itemValue="id" items="${factures}" path="/factures" required="true" z="7hGWHZWHX6KvO0cBRwA0+EHF3t0="/>
+        <field:input field="qteAchete" id="c_org_adorsys_adpharma_domain_LigneFacture_qteAchete" validationMessageCode="field_invalid_integer" z="8qdpqau/IUNRed5INrq1SUkRXbI="/>
+        <field:input field="qteRetourne" id="c_org_adorsys_adpharma_domain_LigneFacture_qteRetourne" validationMessageCode="field_invalid_integer" z="9JhZBm4TAFTdebIoh25u8kYVYoE="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_LigneFacture_footPrint" z="YDEbyFw8CQoz9+ctiZd1vACxArg="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_LigneFacture" render="${not empty dependencies}" z="pYX9Xx1cehRX1Vb48E8okfhDTkg="/>
+</div>

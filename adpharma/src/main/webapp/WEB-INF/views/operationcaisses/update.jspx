@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_OperationCaisse" modelAttribute="operationCaisse" path="/operationcaisses" versionField="Version" z="N1NIXZkn/0KnBceLwmYX14Qi++s=">
+        <field:input field="opNumber" id="c_org_adorsys_adpharma_domain_OperationCaisse_opNumber" z="uiUqrj11Xrc1IanWKSku6nPpiGU="/>
+        <field:select field="caisse" id="c_org_adorsys_adpharma_domain_OperationCaisse_caisse" itemValue="id" items="${caisses}" path="/caisses" z="jCvPN8SqwLTnHit+dFGhqrMPWz4="/>
+        <field:select field="operateur" id="c_org_adorsys_adpharma_domain_OperationCaisse_operateur" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="7cX7GuNQnW3QHNoDWyFJMTSbOKs="/>
+        <field:datetime dateTimePattern="${operationCaisse_dateoperation_date_format}" field="dateOperation" id="c_org_adorsys_adpharma_domain_OperationCaisse_dateOperation" z="xg7dq2/1Gapr8Ah8edI/Sx8kxfE="/>
+        <field:select field="typeOperation" id="c_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" items="${typeopcaisses}" path="typeopcaisses" z="eZ6DZlPd+ILmaZYcqWt7jofuNW0="/>
+        <field:select field="modePaiement" id="c_org_adorsys_adpharma_domain_OperationCaisse_modePaiement" items="${typepaiements}" path="typepaiements" z="yW5JImNPOKDXVVvGzGlTP0+INYo="/>
+        <field:input field="montant" id="c_org_adorsys_adpharma_domain_OperationCaisse_montant" validationMessageCode="field_invalid_number" z="ERV336TwgIt/G9xZXrqZGoMLQc4="/>
+        <field:textarea field="raisonOperation" id="c_org_adorsys_adpharma_domain_OperationCaisse_raisonOperation" z="Ase4DEUpHGmelXbfG+G28H5tO/o="/>
+        <field:input field="note" id="c_org_adorsys_adpharma_domain_OperationCaisse_note" z="tFKhPa9YZjln3fkjv74mH5nwEMc="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_OperationCaisse_footPrint" z="KsrYD4Po6SXk7Qf+P1YjYrvDXaI="/>
+    </form:update>
+</div>

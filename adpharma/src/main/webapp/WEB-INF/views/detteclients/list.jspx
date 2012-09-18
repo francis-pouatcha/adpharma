@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_DetteClient" items="${detteclients}" z="DNg67SL6NthDAvpPO58mJVf09is=">
+        <table:table create="false" data="${detteclients}" delete="false" id="l_org_adorsys_adpharma_domain_DetteClient" path="/detteclients" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_DetteClient_clientNo" property="clientNo" render="false" z="GBRRK/qRFTC2P3oMyBcRGL1XRKM="/>
+            <table:column id="s_org_adorsys_adpharma_domain_DetteClient_factureNo" property="factureNo" z="Mh8t4CIOJgofup34Oi+mqFXQm0E="/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_clientName" label="Payeur" maxLength="-1" property="clientName" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_DetteClient_clientNo" label="Client" maxLength="-1" property="assurer" z="GBRRK/qRFTC2P3oMyBcRGL1XRKM="/>
+            <table:column date="true" dateTimePattern="${detteClient_datecreation_date_format}" id="c_org_adorsys_adpharma_domain_DetteClient_dateCreation" maxLength="-1" property="dateCreation" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_montantInitial" label="Montant" property="montantInitial" z="idMLTn1lp+ZSbf8ZKwMqk/o4Lq8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_avance" property="avance" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_reste" property="reste" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_solder" property="solder" render="false" z="+7JGrL912c89jciq7N8lHGEIpYU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_annuler" property="annuler" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_etatCredit" maxLength="-1" property="etatCredit" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_clientId" property="clientId" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_factureId" property="factureId" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_numBon" property="numBon" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_taux" property="taux" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_sousTotal" property="sousTotal" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_assurer" property="assurer" render="false" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

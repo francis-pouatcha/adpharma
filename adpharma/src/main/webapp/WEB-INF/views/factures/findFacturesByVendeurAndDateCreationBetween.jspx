@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="ByVendeurAndDateCreationBetween" id="ff_org_adorsys_adpharma_domain_Facture" path="/factures" z="Lw6RKnzSFkEbRtF4+oQpokSYP5Q=">
+        <field:select disableFormBinding="true" field="vendeur" id="f_org_adorsys_adpharma_domain_Facture_vendeur" itemValue="id" items="${pharmausers}" path="/pharmausers" required="true" z="LFDKoA6sIDcIH76+uxlfqbBM6oA="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" disableFormBinding="true" field="minDateCreation" id="f_org_adorsys_adpharma_domain_Facture_minDateCreation" required="true" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" disableFormBinding="true" field="maxDateCreation" id="f_org_adorsys_adpharma_domain_Facture_maxDateCreation" required="true" z="user-managed"/>
+    </form:find>
+</div>

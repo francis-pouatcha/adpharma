@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <page:show1 id="ps_org_adorsys_adpharma_domain_Inventaire" create="false" bodyExt=""   delete="${inventaire.etat eq 'EN_COUR' }" clientLinks="showLink.jspx"  object="${inventaire}" path="/inventaires" z="1A66fYrze0wrG0nIAbWIkwjEZ6s=">
+         <table class="tblog">
+            <tr>
+                <td class="tbcreate"> 
+         <field:display field="numeroInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" object="${inventaire}" z="aP/XQpMBwyhQlaNpnlbR99Dokjg="/>
+        <field:display field="agent" id="s_org_adorsys_adpharma_domain_Inventaire_agent" object="${inventaire}" z="fv23Ongc+od6dWLuxiUOqmWjRt0="/>
+        <field:display field="montant" id="s_org_adorsys_adpharma_domain_Inventaire_montant" object="${inventaire}" z="4lbzhirXZQIZLOJ8b77AK1QU0uM="/>
+        <field:display field="etat" id="s_org_adorsys_adpharma_domain_Inventaire_etat" object="${inventaire}" z="FPPQjwYkVH2Aa5kkq6hX5DwZcC0="/>
+        </td>
+                <td class="tbcreate">
+        <field:display date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" field="dateInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" object="${inventaire}" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
+        <field:display field="site" id="s_org_adorsys_adpharma_domain_Inventaire_site" object="${inventaire}" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
+           <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
+          
+         </td>
+            </tr>
+                  </table>  
+         
+     
+       
+       
+    </page:show1>
+     
+    <HR />
+            <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Inventaire_footPrint" object="${inventaire}" z="74/NPbhASb5onj9dRwW4aOUkRQA="/>
+    
+    <HR />
+     <div id="container">
+<div id="inner" style="overflow: scroll; height: 300px;">
+<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
+<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
+L'aide Pour cette Page est en cour de redaction <br/>
+Merci pour Votre Comprehension <br/>
+
+ 
+</div>
+</div>
+    
+</div> 
+ 
+      

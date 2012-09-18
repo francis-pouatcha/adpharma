@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="caisse" name="operationcaisses/list">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/list.jspx"/>
+    </definition>
+<definition extends="caisse" name="operationcaisses/show">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/show.jspx"/>
+    </definition>
+<definition extends="caisse" name="operationcaisses/create">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/create.jspx"/>
+    </definition>
+<definition extends="caisse" name="operationcaisses/update">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/update.jspx"/>
+    </definition>
+<definition extends="default" name="operationcaisses/findOperationCaissesByCaisse">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/findOperationCaissesByCaisse.jspx"/>
+    </definition>
+<definition extends="default" name="operationcaisses/findOperationCaissesByDateOperationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/operationcaisses/findOperationCaissesByDateOperationBetween.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_LigneCmdFournisseur" object="${lignecmdfournisseur}" path="/lignecmdfournisseurs" z="tnzHDlwx49wtIIjg/ufpvIznlIc=">
+        <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_produit" object="${lignecmdfournisseur}" z="C08CI/F4Pn4PKhGj/jcKqugKXHQ="/>
+        <field:display date="true" dateTimePattern="${ligneCmdFournisseur_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_dateSaisie" object="${lignecmdfournisseur}" z="zyw7X7RDPRGPcaoP5rCH6Jf5Nq4="/>
+        <field:display field="quantiteCommande" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_quantiteCommande" object="${lignecmdfournisseur}" z="1A8A4UL7GK1CoQroQuXj0SAjrwU="/>
+        <field:display field="commande" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_commande" object="${lignecmdfournisseur}" z="I+ZOmqFJpP4D9K3xss/ajhdZh9M="/>
+        <field:display field="prixAchatMin" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin" object="${lignecmdfournisseur}" z="JZqabSdL8OIlnCTO8GNI+0zogts="/>
+        <field:display field="agentSaisie" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_agentSaisie" object="${lignecmdfournisseur}" z="57jPK4qbzN333/54tCRH37jDzbE="/>
+        <field:display field="indexLine" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_indexLine" object="${lignecmdfournisseur}" z="/vdAo5yH7yoE+cEdZsWR5Lf1Rjk="/>
+        <field:display field="prixAchatTotal" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatTotal" object="${lignecmdfournisseur}" z="tw/PeO0/qRSSmBLvPm/OzrRERt4="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_cip" object="${lignecmdfournisseur}" z="3LhVA+qTvdUTfSOJEw/pOXYlIRA="/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" object="${lignecmdfournisseur}" z="xtXZfRDokiSWFbnckf55zIVKCJM="/>
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_footPrint" object="${lignecmdfournisseur}" z="qPz5aV0TtI8AcGRWMEUwwcsbEz4="/>
+    </page:show>
+    <HR/>
+    <HR/>
+</div>

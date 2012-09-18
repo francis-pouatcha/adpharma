@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:security="http://www.springframework.org/schema/security"
+    
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<!-- HTTP security configurations -->
+    <http auto-config="true" use-expressions="true">
+    	<form-login login-processing-url="/resources/j_spring_security_check" authentication-success-handler-ref="authentificationFilter" login-page="/login" authentication-failure-url="/login?login_error=t"/>
+        <logout  logout-url="/resources/j_spring_security_logout"/>
+   <!--   <security:session-management
+        invalid-session-url="/login">
+        <security:concurrency-control
+            error-if-maximum-exceeded="true" max-sessions="1" expired-url="/login"
+            session-registry-ref="sessionRegistry" />
+    </security:session-management>-->
+
+        <!-- for all ressources  -->
+        <intercept-url pattern="/resources/**" access="permitAll" />
+         <intercept-url pattern="/pharmausers/userInfos" access="permitAll" />
+          <intercept-url pattern="/pharmausers/resetSaleKey" access="permitAll" />
+         
+         
+        <!-- Simply authenticated -->
+        <intercept-url pattern="/passwordresets/**" access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_SUPER_ADMIN')"/>        
+	        <intercept-url pattern="/commandprocesses/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+		        <intercept-url pattern="/approvisionementprocess/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+			       		        <intercept-url pattern="/approvisionements/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+			       
+			        <intercept-url pattern="/ligneapprovisionements/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')"/>
+	        <intercept-url pattern="/saleprocess/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_CASHIER','ROLE_OPEN_SALE_SESSION')"/>
+	        <intercept-url pattern="/commandeclients/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')"/>
+	        <intercept-url pattern="/caisses/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+	        	        <intercept-url pattern="/factures/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+	        <intercept-url pattern="/paiementprocess/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+	        
+	        	        <intercept-url pattern="/devises/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+	        	        	        	        <intercept-url pattern="/filiales/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+	        	        	      <intercept-url pattern="/sites/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+	        	        	        	      <intercept-url pattern="/tvas/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+	        	     	        	        	        	      <intercept-url pattern="/tauxmarges/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+	        	     	        	        	        	      <intercept-url pattern="/modeconditionements/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+	 	        	     	        	        	        	      <intercept-url pattern="/rayons/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+	 
+	        
+	        	        	        
+	        	        
+	        
+	        <intercept-url pattern="/operationcaisses/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+	        <intercept-url pattern="/paiements/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+	        <intercept-url pattern="/clients/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')"/>
+	        <intercept-url pattern="/categorieclients/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')"/>
+		        <intercept-url pattern="/detteclients/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')"/>
+		        <intercept-url pattern="/fournisseurs/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+		        <intercept-url pattern="/produits/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_OPEN_SALE_SESSION','ROLE_VENDEUR')"/>
+		        		       <intercept-url pattern="/inventaires/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE')"/>
+		  <intercept-url pattern="/inventaireProcess/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE')"/>
+		  <intercept-url pattern="/statistics/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE')"/>
+		     <intercept-url pattern="/commandefournisseurs/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+		        		        <intercept-url pattern="/pharmausers/**" access="hasAnyRole('ROLE_ADMIN','ROLE_SUPER_ADMIN')"/>
+		        		        <intercept-url pattern="/transformationproduits/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+		        		        		        <intercept-url pattern="/mouvementstocks/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+		        		        		        <intercept-url pattern="/transformationproduits/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"/>
+			        		        		        <intercept-url pattern="/ordonnanciers/**" access="hasAnyRole('ROLE_SITE_MANAGER')"/>
+				        		        		        <intercept-url pattern="/dataloader/**" access="hasAnyRole('ROLE_SUPER_ADMIN')"/>
+	
+	        <intercept-url pattern="/etatcreditses/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR')"/>
+		        <intercept-url pattern="/avoirclients/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR')"/>
+	
+        <intercept-url pattern="/adpharma/**"  access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')"/>
+        <intercept-url pattern="/resources/**"  access="permitAll" />
+        <intercept-url pattern="/**" access="permitAll" />
+    </http>
+
+	<!-- Configure Authentication mechanism -->
+		<authentication-manager>
+	    <authentication-provider  user-service-ref='adPharmaUserDetailsService' >
+	    	<password-encoder base64="false" hash="md5">
+	    		<salt-source system-wide="ace6b4f53"/>
+	    	</password-encoder>
+	    </authentication-provider>
+  	  </authentication-manager>
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
+</beans:beans>

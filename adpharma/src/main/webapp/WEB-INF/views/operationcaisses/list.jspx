@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_OperationCaisse" items="${operationcaisses}" z="6hITB4HK4JH4VMi1ecFa71M1dNY=">
+        <table:table create="false" data="${operationcaisses}" delete="false" id="l_org_adorsys_adpharma_domain_OperationCaisse" path="/operationcaisses" update="false" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_OperationCaisse_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_OperationCaisse_opNumber" property="opNumber" z="YN5a1nCF1ovN6jTpRWqFwNbmUGk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_OperationCaisse_caisse" property="caisse" z="BjERt+C2E6PJNUlLwHbj3x7MUAQ="/>
+            <table:column id="c_org_adorsys_adpharma_domain_OperationCaisse_operateur" maxLength="-1" property="operateur" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_OperationCaisse_dateOperation" maxLength="-1" property="dateOperation" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" maxLength="-1" property="typeOperation" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_OperationCaisse_montant" property="montant" z="yrRipTa0SQVSuJVX/VT7033FgzQ="/>
+              <table:column property="modePaiement" id="s_org_adorsys_adpharma_domain_OperationCaisse_modePaiement" maxLength="-1" z="rCw3qSL8glOMICbaDx883nhGQug="/>
+      
+        </table:table>
+    </page:list>
+</div>

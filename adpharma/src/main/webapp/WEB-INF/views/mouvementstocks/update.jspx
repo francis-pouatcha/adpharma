@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_adorsys_adpharma_domain_MouvementStock" modelAttribute="mouvementStock" path="/mouvementstocks" versionField="Version" z="pb7cSwoYLy/aXBBuI1iLgbQcwtQ=">
+        <field:input field="mvtNumber" id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" z="RxgMJLnBy3gKKcUVmveTtUf4tu0="/>
+        <field:datetime dateTimePattern="${mouvementStock_datecreation_date_format}" field="dateCreation" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" z="KsgnvcfgV6giqd8RQlTpvS6XJcc="/>
+        <field:input field="agentCreateur" id="c_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" required="true" z="HRdHZhAgSfhzrZjFjNOzY28MwsY="/>
+        <field:select field="typeMouvement" id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" items="${typemouvements}" path="typemouvements" z="UdVGLHjQSZ3I2UcMfBNnSeV2x1g="/>
+        <field:input field="qteDeplace" id="c_org_adorsys_adpharma_domain_MouvementStock_qteDeplace" validationMessageCode="field_invalid_integer" z="tX1y2rrLuqtn3095MptslVc4dHk="/>
+        <field:select field="site" id="c_org_adorsys_adpharma_domain_MouvementStock_site" itemValue="id" items="${sites}" path="/sites" z="rgWO+f+OJfb/U1b5tebygA3my+8="/>
+        <field:select field="origine" id="c_org_adorsys_adpharma_domain_MouvementStock_origine" items="${destinationmvts}" path="destinationmvts" z="Fu/RqX1RgNqTh8t3WBF2Nfg/OYw="/>
+        <field:select field="destination" id="c_org_adorsys_adpharma_domain_MouvementStock_destination" items="${destinationmvts}" path="destinationmvts" z="pT1HFG6D0xZKm4Vptz5BKtA4eZ8="/>
+        <field:input field="numeroTicket" id="c_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" z="BxMJ/3xz/Wd6Cz1aiuyPvwWyu7E="/>
+        <field:input field="numeroBordereau" id="c_org_adorsys_adpharma_domain_MouvementStock_numeroBordereau" z="H1g3bh8WeCcGTzh1Q9B2DH84Mio="/>
+        <field:input field="cip" id="c_org_adorsys_adpharma_domain_MouvementStock_cip" z="NYEBD1qr2wqmMBwFTHbOpSAbc2c="/>
+        <field:input field="cipM" id="c_org_adorsys_adpharma_domain_MouvementStock_cipM" z="aQ/mgvjeC8OqjgJ7uWm4UyBOk6k="/>
+        <field:input field="designation" id="c_org_adorsys_adpharma_domain_MouvementStock_designation" z="2GS7Rw+VSqq6GhIoHToNWMcJ7To="/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_MouvementStock_footPrint" z="NfWBMRspOfYp/jamROPJKgjH2i4="/>
+        <field:input field="qteInitiale" id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale" validationMessageCode="field_invalid_integer" z="NSBK0FookmHp7SP91vTeeYKF7+E="/>
+        <field:input field="qteFinale" id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale" validationMessageCode="field_invalid_integer" z="2jojYaakhmd8xdV/BzXAQnPSU5o="/>
+        <field:input field="caisse" id="c_org_adorsys_adpharma_domain_MouvementStock_caisse" z="KtZWv0Qld1hq7+i9To9e9qegCHA="/>
+        <field:input field="pAchatTotal" id="c_org_adorsys_adpharma_domain_MouvementStock_pAchatTotal" validationMessageCode="field_invalid_integer" z="PKjNrCswGeMxJxoGGNnaMHzZlb4="/>
+        <field:input field="pVenteTotal" id="c_org_adorsys_adpharma_domain_MouvementStock_pVenteTotal" validationMessageCode="field_invalid_integer" z="+0sGCa1UxhLu5FMvBuHyOGopvqE="/>
+        <field:input field="remiseTotal" id="c_org_adorsys_adpharma_domain_MouvementStock_remiseTotal" validationMessageCode="field_invalid_integer" z="Z4AhIcA1c9orafr9qfWsSgWp1Ds="/>
+        <field:input field="filiale" id="c_org_adorsys_adpharma_domain_MouvementStock_filiale" z="LHIJ4dtxBAGDpr36zfKT0y80KA4="/>
+        <field:input field="note" id="c_org_adorsys_adpharma_domain_MouvementStock_note" z="hUGxx2GB/7m+NdL3MSI9rhnHu+s="/>
+        <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_MouvementStock_annuler" z="UDKDyyR4kCzbS9OVeJPUzUMJHvA="/>
+    </form:update>
+</div>

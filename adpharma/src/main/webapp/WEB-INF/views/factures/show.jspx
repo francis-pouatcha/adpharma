@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show1 clientLinks="showLink.jspx" create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Facture" object="${facture}" path="/factures" update="false" z="user-managed">
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+                    <field:display field="factureNumber" id="s_org_adorsys_adpharma_domain_Facture_factureNumber" object="${facture}" z="BFd5FA88mSa3fMspiPKtyoxOyF4="/>
+                    <field:display date="true" dateTimePattern="${facture_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_Facture_dateCreation" object="${facture}" z="UgOoVXPE1Fp2EXfCFQTODUmniII="/>
+                    <field:display field="vendeur" id="s_org_adorsys_adpharma_domain_Facture_vendeur" object="${facture}" z="BatQ3h7i8gJDNUBu0Bhcmhl5g88="/>
+                    <field:display field="site" id="s_org_adorsys_adpharma_domain_Facture_site" object="${facture}" z="+8B0LbABx9qxQ7JFSQJ9Mly1dDI="/>
+                    <field:display field="commande" id="s_org_adorsys_adpharma_domain_Facture_commande" object="${facture}" z="Db6sJdzsjRFYMAM571q0OforfF4="/>
+                    <field:display field="typeFacture" id="s_org_adorsys_adpharma_domain_Facture_typeFacture" object="${facture}" z="75vxvR56+nHWHZ3c8sAiPxkS22k="/>
+                    <field:display field="typeCommande" id="s_org_adorsys_adpharma_domain_Facture_typeCommande" object="${facture}" z="Eu3jZ2/eth4Tp6FMe0BNLfdIH80="/>
+                    <field:display field="caisse" id="s_org_adorsys_adpharma_domain_Facture_caisse" object="${facture}" z="h1C/11M+t955bnvM0XrCMt5GYEY="/>
+                </td>
+                <td class="tbcreate">
+                    <field:display field="lineFacture" id="s_org_adorsys_adpharma_domain_Facture_lineFacture" object="${facture}" render="false" z="user-managed"/>
+                    <field:display field="client" id="s_org_adorsys_adpharma_domain_Facture_client" object="${facture}" z="yfCKYwdTJyKwf5vLCkeBGv7flRE="/>
+                    <field:display field="encaisser" id="s_org_adorsys_adpharma_domain_Facture_encaisser" object="${facture}" z="ZVGUlbe7B+a7hb+cd68YOASSZuU="/>
+                    <field:display field="montantTotal" id="s_org_adorsys_adpharma_domain_Facture_montantTotal" object="${facture}" z="uG2T0V5GmpN1EvVqmNlvhufhkoU="/>
+                    <field:display field="montantRemise" id="s_org_adorsys_adpharma_domain_Facture_montantRemise" object="${facture}" z="41sm6xzWXz0ZmCxBzHXH3w3jMJY="/>
+                    <field:display field="netPayer" id="s_org_adorsys_adpharma_domain_Facture_netPayer" object="${facture}" z="OWHx1k+Rl9LTdNdIUhVsUKmPjtc="/>
+                    <field:display field="avance" id="s_org_adorsys_adpharma_domain_Facture_avance" object="${facture}" z="waNa46akJ4onvuHTiGbLGw7oeI0="/>
+                    <field:display field="reste" id="s_org_adorsys_adpharma_domain_Facture_reste" object="${facture}" z="htyWHIsVZwzLW9nIZXxMZ+f7kMc="/>
+                    <field:display field="solder" id="s_org_adorsys_adpharma_domain_Facture_solder" object="${facture}" z="llg3p70RhLSUtgaHL1QX+g7udhw="/>
+                    <field:display field="cip" id="s_org_adorsys_adpharma_domain_Facture_cip" object="${facture}" render="false" z="user-managed"/>
+                    <field:display field="designation" id="s_org_adorsys_adpharma_domain_Facture_designation" object="${facture}" render="false" z="user-managed"/>
+                </td>
+            </tr>
+        </table>
+    </page:show1>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Facture_footPrint" object="${facture}" z="lhDxKm146YRni7/AoYGDGkOrjRQ="/>
+    <HR style="margin-top: -12px;"/>
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:security="http://www.springframework.org/security/tags"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+ xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:find finderName="ByDes" id="ff_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="RBdyWARIAU5WvUkmUMYrlt7zO0s=">
+        <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_designation" required="true" z="fIbPR98z97fzjC5TeL+vkcw3mho="/>
+    </form:find>
+    
+        <security:authorize ifAnyGranted="ROLE_STOCKER,ROLE_SITE_MANAGER">
+                <c:set value="true" var="permission" ></c:set>
+    </security:authorize>
+    <BR />
+    <page:list id="pl_org_adorsys_adpharma_domain_LigneApprovisionement" label="Produits de ce Nom" items="${results}" z="XNJ3+p/wW1uX+GZn2T2s2QYtIkM=">
+        <table:table data="${results}" delete="false"  show="${permission }" update="${permission }" create="false" id="l_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="user-managed">
+             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" property="lotNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" property="indexLine" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cip" property="cip" render="${permission }" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit" property="produit" render="false" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" property="cipMaison" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_designation" maxLength="-1" property="designation" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" maxLength="-1" property="datePeremtion" z="5iQ0LdWGtN/TvTcaeouHdx3Y2vU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" label="qte Aprovisione" property="quantiteAprovisione" render="${permission }" z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" label="qte Vendu" property="quantiteVendu" render="${permission }" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteSortie" label="qte Sortie" property="quantiteSortie" render="${permission }" z="A07vvkOcTdaMnP0hkIpRBTFrsTM="/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" label="qte En stock" property="quantieEnStock" z="U1bqJlzV7lqmOkmpqTQDEESiFGQ="/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" property="prixAchatUnitaire" render="${permission }" z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" property="prixVenteUnitaire" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
+       </table:table>
+    </page:list>
+    
+</div>

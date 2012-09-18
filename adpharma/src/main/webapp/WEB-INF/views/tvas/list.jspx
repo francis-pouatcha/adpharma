@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_TVA" items="${tvas}" z="3LJF0ooLLtUsUu5IZq27QC6iCMI=">
+        <table:table data="${tvas}" delete="false" id="l_org_adorsys_adpharma_domain_TVA" path="/tvas" z="user-managed">
+          
+                      <table:column id="c_org_adorsys_adpharma_domain_TVA_tvaNumber" property="tvaNumber" z="7a9XLYILoRnaWNAwGFMnUCu8hpE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TVA_tauxTva" property="tauxTva" z="197qYe7WjsOBIMFfaFQpSQNmXZI="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TVA_valide" property="valide" z="QXMdDyLqI2B9Di3WjcRdGyjwW5o="/>
+            <table:column id="c_org_adorsys_adpharma_domain_TVA_footPrint" render="false" maxLength="-1" property="footPrint" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

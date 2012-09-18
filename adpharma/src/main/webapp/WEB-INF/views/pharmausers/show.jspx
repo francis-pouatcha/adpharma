@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show1 clientLinks="showClientLinks.jspx" delete="false" id="ps_org_adorsys_adpharma_domain_PharmaUser" object="${pharmauser}" path="/pharmausers" z="user-managed">
+                           <field:display field="roleNames" id="s_org_adorsys_adpharma_domain_PharmaUser_roleNames" object="${pharmauser}" z="a3bqO8E8rdlev4IiNFrhykLxJJ4="/>
+       
+        <table class="tblog">
+            <tr>
+                <td class="tbcreate" style="width: 50%;">
+                    <field:display field="userNumber" id="s_org_adorsys_adpharma_domain_PharmaUser_userNumber" object="${pharmauser}" z="iR89ow0zdolLdwZBhG62ESR9BW4="/>
+                    <field:display field="gender" id="s_org_adorsys_adpharma_domain_PharmaUser_gender" object="${pharmauser}" z="36/U24Tj4OswuNWtQ/TS7DutftU="/>
+                    <field:display field="userName" id="s_org_adorsys_adpharma_domain_PharmaUser_userName" object="${pharmauser}" z="x3f71HnyiCxKTNl1s2bULNi8MhM="/>
+                    <field:display field="firstName" id="s_org_adorsys_adpharma_domain_PharmaUser_firstName" object="${pharmauser}" render="false" z="user-managed"/>
+                    <field:display field="lastName" id="s_org_adorsys_adpharma_domain_PharmaUser_lastName" object="${pharmauser}" render="false" z="user-managed"/>
+                    <field:display field="fullName" id="s_org_adorsys_adpharma_domain_PharmaUser_fullName" object="${pharmauser}" z="j9hcfBXXQDJlGCRRb/vIhtB29tg="/>
+                    <field:display field="password" id="s_org_adorsys_adpharma_domain_PharmaUser_password" object="${pharmauser}" render="false" z="user-managed"/>
+                    <field:display field="phoneNumber" id="s_org_adorsys_adpharma_domain_PharmaUser_phoneNumber" object="${pharmauser}" z="/1H4H2v0vrcTS1ZLtbN4bbMqoQs="/>
+                    <field:display date="true" dateTimePattern="${pharmaUser_accountexpiration_date_format}" field="accountExpiration" id="s_org_adorsys_adpharma_domain_PharmaUser_accountExpiration" object="${pharmauser}" z="RgM7I7zLY95y4vYJtmlVvTKJrRs="/>
+                </td>
+                <td class="tbcreate" style="width: 50%;">
+                        <field:display field="saleKey" id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" object="${pharmauser}" z="CB3adaZD4hGcZ9b2XzSVgg1tXA4="/>
+                    <field:display field="disableLogin" id="s_org_adorsys_adpharma_domain_PharmaUser_disableLogin" object="${pharmauser}" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
+                    <field:display field="accountLocked" id="s_org_adorsys_adpharma_domain_PharmaUser_accountLocked" object="${pharmauser}" z="G0dfeHrUCX8ThkYfjpdQZDDnrTI="/>
+                    <field:display date="true" dateTimePattern="${pharmaUser_credentialexpiration_date_format}" field="credentialExpiration" id="s_org_adorsys_adpharma_domain_PharmaUser_credentialExpiration" object="${pharmauser}" z="sGfsCDTf3cBI9Cn+jhEezwag4rs="/>
+                    <field:display field="adresse" id="s_org_adorsys_adpharma_domain_PharmaUser_adresse" object="${pharmauser}" z="01xUF3+Wy52zhGyT6Vp75scR1YQ="/>
+                    <field:display field="email" id="s_org_adorsys_adpharma_domain_PharmaUser_email" object="${pharmauser}" z="NxISEBERZG2OFgSYMVchKbKOy6M="/>
+                    <field:display field="office" id="s_org_adorsys_adpharma_domain_PharmaUser_office" object="${pharmauser}" z="p+OblM8hKzk9s9O8/j1Kz4+Sy+s="/>
+                    <field:display field="tauxRemise" id="s_org_adorsys_adpharma_domain_PharmaUser_tauxRemise" object="${pharmauser}" z="S/PHUf/cTZjC4cBXgN0dFTr//nM="/>
+                </td>
+            </tr>
+        </table>
+    </page:show1>
+    <HR/>
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_PharmaUser_footPrint" object="${pharmauser}" z="P3Wtyddoo+bIoYTG8/bTebKhojo="/>
+    <HR style="margin-top: -12px;"/>
+</div>
