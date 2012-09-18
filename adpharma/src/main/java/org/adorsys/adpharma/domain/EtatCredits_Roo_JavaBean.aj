@@ -3,10 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
 import org.adorsys.adpharma.domain.Client;
-import org.adorsys.adpharma.domain.EtatCredits;
 
 privileged aspect EtatCredits_Roo_JavaBean {
     

@@ -3,14 +3,31 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.LigneCmdClient;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect LigneCmdClient_Roo_ToString {
     
     public String LigneCmdClient.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("AgentSaisie: ").append(getAgentSaisie()).append(", ");
+        sb.append("Cip: ").append(getCip()).append(", ");
+        sb.append("CipM: ").append(getCipM()).append(", ");
+        sb.append("Commande: ").append(getCommande()).append(", ");
+        sb.append("DateSaisie: ").append(getDateSaisie()).append(", ");
+        sb.append("Designation: ").append(getDesignation()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("PrixTotal: ").append(getPrixTotal()).append(", ");
+        sb.append("PrixUnitaire: ").append(getPrixUnitaire()).append(", ");
+        sb.append("Produit: ").append(getProduit()).append(", ");
+        sb.append("QteToAdd: ").append(getQteToAdd()).append(", ");
+        sb.append("QuantiteCommande: ").append(getQuantiteCommande()).append(", ");
+        sb.append("QuantiteRetourne: ").append(getQuantiteRetourne()).append(", ");
+        sb.append("Remise: ").append(getRemise()).append(", ");
+        sb.append("StringFormat: ").append(getStringFormat()).append(", ");
+        sb.append("TotalRemise: ").append(getTotalRemise()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

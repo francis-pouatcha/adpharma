@@ -3,11 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
 import java.util.Date;
 import java.util.List;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.EtatDette;
-import org.adorsys.adpharma.domain.ListingEtatDette;
 
 privileged aspect ListingEtatDette_Roo_JavaBean {
     

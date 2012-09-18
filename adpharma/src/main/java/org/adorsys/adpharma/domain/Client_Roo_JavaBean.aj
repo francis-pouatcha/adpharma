@@ -3,6 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;

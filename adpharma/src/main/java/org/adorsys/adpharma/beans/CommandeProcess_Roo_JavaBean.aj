@@ -3,8 +3,9 @@
 
 package org.adorsys.adpharma.beans;
 
+import java.lang.Long;
+import java.lang.String;
 import java.util.List;
-import org.adorsys.adpharma.beans.CommandeProcess;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;

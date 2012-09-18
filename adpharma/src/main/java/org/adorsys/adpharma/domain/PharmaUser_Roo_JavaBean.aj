@@ -3,11 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 import org.adorsys.adpharma.domain.Genre;
-import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.Site;
 

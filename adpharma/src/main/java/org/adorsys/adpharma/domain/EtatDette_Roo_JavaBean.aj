@@ -3,13 +3,13 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DetteClient;
-import org.adorsys.adpharma.domain.EtatDette;
 
 privileged aspect EtatDette_Roo_JavaBean {
     

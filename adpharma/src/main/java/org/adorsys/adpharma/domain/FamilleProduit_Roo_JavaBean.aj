@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.FamilleProduit;
+import java.lang.String;
 
 privileged aspect FamilleProduit_Roo_JavaBean {
     

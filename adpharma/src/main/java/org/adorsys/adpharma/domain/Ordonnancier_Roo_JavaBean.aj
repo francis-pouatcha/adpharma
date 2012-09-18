@@ -3,9 +3,9 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.util.Date;
 import org.adorsys.adpharma.domain.CommandeClient;
-import org.adorsys.adpharma.domain.Ordonnancier;
 
 privileged aspect Ordonnancier_Roo_JavaBean {
     

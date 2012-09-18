@@ -3,14 +3,23 @@
 
 package org.adorsys.adpharma.domain.virtualtable;
 
-import org.adorsys.adpharma.domain.virtualtable.ProduitV;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect ProduitV_Roo_ToString {
     
     public String ProduitV.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cip: ").append(getCip()).append(", ");
+        sb.append("CipMaison: ").append(getCipMaison()).append(", ");
+        sb.append("Designation: ").append(getDesignation()).append(", ");
+        sb.append("Filiale: ").append(getFiliale()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Pachat: ").append(getPachat()).append(", ");
+        sb.append("Pvente: ").append(getPvente()).append(", ");
+        sb.append("Qte: ").append(getQte()).append(", ");
+        sb.append("Rayon: ").append(getRayon()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

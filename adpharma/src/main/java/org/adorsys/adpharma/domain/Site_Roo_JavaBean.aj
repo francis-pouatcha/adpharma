@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.Site;
+import java.lang.String;
 
 privileged aspect Site_Roo_JavaBean {
     

@@ -3,8 +3,9 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.util.Date;
-import org.adorsys.adpharma.domain.LicenceEntity;
 
 privileged aspect LicenceEntity_Roo_JavaBean {
     

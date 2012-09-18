@@ -3,10 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
-import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;

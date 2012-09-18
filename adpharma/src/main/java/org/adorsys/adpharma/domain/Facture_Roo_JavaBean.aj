@@ -3,13 +3,14 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Set;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
-import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.LigneFacture;
 import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.domain.PharmaUser;

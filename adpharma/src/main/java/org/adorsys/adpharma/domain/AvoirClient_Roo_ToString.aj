@@ -3,14 +3,30 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.AvoirClient;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect AvoirClient_Roo_ToString {
     
     public String AvoirClient.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Agent: ").append(getAgent()).append(", ");
+        sb.append("Annuler: ").append(getAnnuler()).append(", ");
+        sb.append("ClientName: ").append(getClientName()).append(", ");
+        sb.append("ClientNumber: ").append(getClientNumber()).append(", ");
+        sb.append("DateDernierOp: ").append(getDateDernierOp()).append(", ");
+        sb.append("DateEdition: ").append(getDateEdition()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Imprimer: ").append(getImprimer()).append(", ");
+        sb.append("Montant: ").append(getMontant()).append(", ");
+        sb.append("MontantUtilise: ").append(getMontantUtilise()).append(", ");
+        sb.append("Numero: ").append(getNumero()).append(", ");
+        sb.append("Reste: ").append(getReste()).append(", ");
+        sb.append("Solder: ").append(getSolder()).append(", ");
+        sb.append("TypeBon: ").append(getTypeBon()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("solder: ").append(getsolder());
+        return sb.toString();
     }
     
 }

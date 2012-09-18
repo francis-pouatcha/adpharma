@@ -3,14 +3,25 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.OperationCaisse;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect OperationCaisse_Roo_ToString {
     
     public String OperationCaisse.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Caisse: ").append(getCaisse()).append(", ");
+        sb.append("DateOperation: ").append(getDateOperation()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("ModePaiement: ").append(getModePaiement()).append(", ");
+        sb.append("Montant: ").append(getMontant()).append(", ");
+        sb.append("Note: ").append(getNote()).append(", ");
+        sb.append("OpNumber: ").append(getOpNumber()).append(", ");
+        sb.append("Operateur: ").append(getOperateur()).append(", ");
+        sb.append("RaisonOperation: ").append(getRaisonOperation()).append(", ");
+        sb.append("TypeOperation: ").append(getTypeOperation()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

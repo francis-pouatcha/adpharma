@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain.virtualtable;
 
-import org.adorsys.adpharma.domain.virtualtable.ProduitV;
+import java.lang.String;
 
 privileged aspect ProduitV_Roo_JavaBean {
     

@@ -3,10 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.DestinationMvt;
-import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeMouvement;
 

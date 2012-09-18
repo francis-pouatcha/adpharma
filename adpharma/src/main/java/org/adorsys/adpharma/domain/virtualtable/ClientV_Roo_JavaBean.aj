@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain.virtualtable;
 
-import org.adorsys.adpharma.domain.virtualtable.ClientV;
+import java.lang.String;
 
 privileged aspect ClientV_Roo_JavaBean {
     

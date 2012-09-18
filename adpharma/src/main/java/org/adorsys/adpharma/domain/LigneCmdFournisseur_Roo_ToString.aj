@@ -3,14 +3,26 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.LigneCmdFournisseur;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect LigneCmdFournisseur_Roo_ToString {
     
     public String LigneCmdFournisseur.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("AgentSaisie: ").append(getAgentSaisie()).append(", ");
+        sb.append("Cip: ").append(getCip()).append(", ");
+        sb.append("Commande: ").append(getCommande()).append(", ");
+        sb.append("DateSaisie: ").append(getDateSaisie()).append(", ");
+        sb.append("Designation: ").append(getDesignation()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("IndexLine: ").append(getIndexLine()).append(", ");
+        sb.append("PrixAchatMin: ").append(getPrixAchatMin()).append(", ");
+        sb.append("PrixAchatTotal: ").append(getPrixAchatTotal()).append(", ");
+        sb.append("Produit: ").append(getProduit()).append(", ");
+        sb.append("QuantiteCommande: ").append(getQuantiteCommande()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

@@ -3,11 +3,12 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.Approvisionement;
-import org.adorsys.adpharma.domain.LigneApprovisionement;
 
 privileged aspect LigneApprovisionement_Roo_JavaBean {
     

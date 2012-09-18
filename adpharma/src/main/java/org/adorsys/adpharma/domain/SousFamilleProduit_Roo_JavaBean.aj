@@ -3,8 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import org.adorsys.adpharma.domain.FamilleProduit;
-import org.adorsys.adpharma.domain.SousFamilleProduit;
 
 privileged aspect SousFamilleProduit_Roo_JavaBean {
     

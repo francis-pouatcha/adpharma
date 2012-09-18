@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
+import java.lang.Long;
 import org.adorsys.adpharma.domain.FootPrint;
 
 privileged aspect AdPharmaBaseEntity_Roo_JavaBean {

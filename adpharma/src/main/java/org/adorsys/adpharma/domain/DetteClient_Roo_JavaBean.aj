@@ -3,9 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.Long;
+import java.lang.String;
 import java.math.BigInteger;
 import java.util.Date;
-import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
 
 privileged aspect DetteClient_Roo_JavaBean {

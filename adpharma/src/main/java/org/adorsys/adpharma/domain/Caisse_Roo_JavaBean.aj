@@ -3,9 +3,10 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
-import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Site;
 

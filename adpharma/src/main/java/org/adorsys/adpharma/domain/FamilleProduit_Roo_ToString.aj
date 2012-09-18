@@ -3,14 +3,20 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.FamilleProduit;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect FamilleProduit_Roo_ToString {
     
     public String FamilleProduit.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("FamilleNumber: ").append(getFamilleNumber()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("LibelleCourt: ").append(getLibelleCourt()).append(", ");
+        sb.append("LibelleFamille: ").append(getLibelleFamille()).append(", ");
+        sb.append("Note: ").append(getNote()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

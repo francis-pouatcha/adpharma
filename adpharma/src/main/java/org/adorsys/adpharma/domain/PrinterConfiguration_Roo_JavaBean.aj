@@ -3,7 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.PrinterConfiguration;
+import java.lang.Boolean;
+import java.lang.String;
 
 privileged aspect PrinterConfiguration_Roo_JavaBean {
     

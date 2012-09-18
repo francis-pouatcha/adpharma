@@ -3,14 +3,19 @@
 
 package org.adorsys.adpharma.domain.virtualtable;
 
-import org.adorsys.adpharma.domain.virtualtable.ClientV;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect ClientV_Roo_ToString {
     
     public String ClientV.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Employeur: ").append(getEmployeur()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Name: ").append(getName()).append(", ");
+        sb.append("Payeur: ").append(getPayeur()).append(", ");
+        sb.append("TypeClient: ").append(getTypeClient()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

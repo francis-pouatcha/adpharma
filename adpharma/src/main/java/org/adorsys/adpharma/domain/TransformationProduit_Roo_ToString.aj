@@ -3,14 +3,25 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.TransformationProduit;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect TransformationProduit_Roo_ToString {
     
     public String TransformationProduit.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Actif: ").append(getActif()).append(", ");
+        sb.append("CibleId: ").append(getCibleId()).append(", ");
+        sb.append("CibleName: ").append(getCibleName()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("OrigineId: ").append(getOrigineId()).append(", ");
+        sb.append("OrigineName: ").append(getOrigineName()).append(", ");
+        sb.append("PrixVente: ").append(getPrixVente()).append(", ");
+        sb.append("ProduitCible: ").append(getProduitCible()).append(", ");
+        sb.append("ProduitOrigine: ").append(getProduitOrigine()).append(", ");
+        sb.append("QteCible: ").append(getQteCible()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

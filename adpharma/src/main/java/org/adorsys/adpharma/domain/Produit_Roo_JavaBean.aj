@@ -3,13 +3,14 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.ModeConditionement;
-import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TVA;

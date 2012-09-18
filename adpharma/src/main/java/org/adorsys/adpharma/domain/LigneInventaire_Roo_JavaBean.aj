@@ -3,11 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.Inventaire;
-import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.Produit;
 
 privileged aspect LigneInventaire_Roo_JavaBean {

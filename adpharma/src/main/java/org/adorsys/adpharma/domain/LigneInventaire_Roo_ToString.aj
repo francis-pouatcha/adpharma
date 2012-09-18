@@ -3,14 +3,24 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.LigneInventaire;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect LigneInventaire_Roo_ToString {
     
     public String LigneInventaire.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("AgentSaisie: ").append(getAgentSaisie()).append(", ");
+        sb.append("DateSaisie: ").append(getDateSaisie()).append(", ");
+        sb.append("Ecart: ").append(getEcart()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Inventaire: ").append(getInventaire()).append(", ");
+        sb.append("PrixTotal: ").append(getPrixTotal()).append(", ");
+        sb.append("PrixUnitaire: ").append(getPrixUnitaire()).append(", ");
+        sb.append("Produit: ").append(getProduit()).append(", ");
+        sb.append("QteEnStock: ").append(getQteEnStock()).append(", ");
+        sb.append("QteReel: ").append(getQteReel()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

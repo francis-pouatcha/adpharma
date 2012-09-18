@@ -3,10 +3,10 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.adorsys.adpharma.domain.Produit;
-import org.adorsys.adpharma.domain.TransformationProduit;
 
 privileged aspect TransformationProduit_Roo_JavaBean {
     

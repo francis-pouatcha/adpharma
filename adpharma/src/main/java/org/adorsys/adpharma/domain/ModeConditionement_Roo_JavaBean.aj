@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.ModeConditionement;
+import java.lang.String;
 
 privileged aspect ModeConditionement_Roo_JavaBean {
     

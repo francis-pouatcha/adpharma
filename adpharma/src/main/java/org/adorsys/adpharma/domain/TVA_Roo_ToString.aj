@@ -3,14 +3,19 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.TVA;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect TVA_Roo_ToString {
     
     public String TVA.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("TauxTva: ").append(getTauxTva()).append(", ");
+        sb.append("TvaNumber: ").append(getTvaNumber()).append(", ");
+        sb.append("Valide: ").append(getValide()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

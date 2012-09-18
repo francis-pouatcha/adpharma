@@ -3,8 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
-import org.adorsys.adpharma.domain.Fournisseur;
 
 privileged aspect Fournisseur_Roo_JavaBean {
     

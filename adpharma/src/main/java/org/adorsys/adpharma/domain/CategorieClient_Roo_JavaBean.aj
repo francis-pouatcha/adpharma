@@ -3,8 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
-import org.adorsys.adpharma.domain.CategorieClient;
 
 privileged aspect CategorieClient_Roo_JavaBean {
     

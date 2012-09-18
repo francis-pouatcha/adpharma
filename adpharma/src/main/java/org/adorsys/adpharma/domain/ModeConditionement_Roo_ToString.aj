@@ -3,14 +3,18 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.ModeConditionement;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect ModeConditionement_Roo_ToString {
     
     public String ModeConditionement.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Libelle: ").append(getLibelle()).append(", ");
+        sb.append("LibelleCourt: ").append(getLibelleCourt()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

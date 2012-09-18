@@ -3,14 +3,40 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.MouvementStock;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect MouvementStock_Roo_ToString {
     
     public String MouvementStock.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("AgentCreateur: ").append(getAgentCreateur()).append(", ");
+        sb.append("Annuler: ").append(getAnnuler()).append(", ");
+        sb.append("Caisse: ").append(getCaisse()).append(", ");
+        sb.append("Cip: ").append(getCip()).append(", ");
+        sb.append("CipM: ").append(getCipM()).append(", ");
+        sb.append("DateCreation: ").append(getDateCreation()).append(", ");
+        sb.append("Designation: ").append(getDesignation()).append(", ");
+        sb.append("Destination: ").append(getDestination()).append(", ");
+        sb.append("Filiale: ").append(getFiliale()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("MvtNumber: ").append(getMvtNumber()).append(", ");
+        sb.append("Note: ").append(getNote()).append(", ");
+        sb.append("NumeroBordereau: ").append(getNumeroBordereau()).append(", ");
+        sb.append("NumeroTicket: ").append(getNumeroTicket()).append(", ");
+        sb.append("Origine: ").append(getOrigine()).append(", ");
+        sb.append("PAchatTotal: ").append(getPAchatTotal()).append(", ");
+        sb.append("PVenteTotal: ").append(getPVenteTotal()).append(", ");
+        sb.append("QteDeplace: ").append(getQteDeplace()).append(", ");
+        sb.append("QteFinale: ").append(getQteFinale()).append(", ");
+        sb.append("QteInitiale: ").append(getQteInitiale()).append(", ");
+        sb.append("RemiseTotal: ").append(getRemiseTotal()).append(", ");
+        sb.append("Site: ").append(getSite()).append(", ");
+        sb.append("TypeMouvement: ").append(getTypeMouvement()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("pAchatTotal: ").append(getpAchatTotal()).append(", ");
+        sb.append("pVenteTotal: ").append(getpVenteTotal());
+        return sb.toString();
     }
     
 }

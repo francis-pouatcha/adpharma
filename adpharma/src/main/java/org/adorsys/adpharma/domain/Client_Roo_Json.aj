@@ -4,6 +4,7 @@
 package org.adorsys.adpharma.domain;
 
 import flexjson.JSONDeserializer;
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

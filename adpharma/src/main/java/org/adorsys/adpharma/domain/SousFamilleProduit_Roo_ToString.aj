@@ -3,14 +3,21 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.SousFamilleProduit;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect SousFamilleProduit_Roo_ToString {
     
     public String SousFamilleProduit.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Famille: ").append(getFamille()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("LibelleCourt: ").append(getLibelleCourt()).append(", ");
+        sb.append("LibelleSousFamille: ").append(getLibelleSousFamille()).append(", ");
+        sb.append("Note: ").append(getNote()).append(", ");
+        sb.append("SousFamilleNumber: ").append(getSousFamilleNumber()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

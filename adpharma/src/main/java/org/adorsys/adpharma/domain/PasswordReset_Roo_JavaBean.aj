@@ -3,7 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.PasswordReset;
+import java.lang.String;
 
 privileged aspect PasswordReset_Roo_JavaBean {
     

@@ -3,10 +3,10 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
-import org.adorsys.adpharma.domain.SortieProduit;
 
 privileged aspect SortieProduit_Roo_JavaBean {
     

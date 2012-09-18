@@ -3,10 +3,11 @@
 
 package org.adorsys.adpharma.beans;
 
+import java.lang.Long;
+import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import org.adorsys.adpharma.beans.SaleProcess;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;

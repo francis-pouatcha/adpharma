@@ -3,9 +3,9 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigInteger;
 import org.adorsys.adpharma.domain.Facture;
-import org.adorsys.adpharma.domain.LigneFacture;
 
 privileged aspect LigneFacture_Roo_JavaBean {
     

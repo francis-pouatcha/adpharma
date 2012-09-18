@@ -3,14 +3,22 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.LicenceEntity;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect LicenceEntity_Roo_ToString {
     
     public String LicenceEntity.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("BeginDate: ").append(getBeginDate()).append(", ");
+        sb.append("EndDate: ").append(getEndDate()).append(", ");
+        sb.append("GenerateKey: ").append(getGenerateKey()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("IsValid: ").append(getIsValid()).append(", ");
+        sb.append("TranstientBegin: ").append(getTranstientBegin()).append(", ");
+        sb.append("TranstientEnd: ").append(getTranstientEnd()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("ValidLicence: ").append(isValidLicence());
+        return sb.toString();
     }
     
 }

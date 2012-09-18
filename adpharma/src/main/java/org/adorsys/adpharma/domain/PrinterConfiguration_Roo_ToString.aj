@@ -3,14 +3,19 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.PrinterConfiguration;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect PrinterConfiguration_Roo_ToString {
     
     public String PrinterConfiguration.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("ComputerAdresse: ").append(getComputerAdresse()).append(", ");
+        sb.append("Diseable: ").append(getDiseable()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("PrinterName: ").append(getPrinterName()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }

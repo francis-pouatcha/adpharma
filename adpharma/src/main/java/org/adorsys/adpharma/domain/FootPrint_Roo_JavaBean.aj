@@ -3,7 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.FootPrint;
+import java.lang.Long;
+import java.lang.String;
 
 privileged aspect FootPrint_Roo_JavaBean {
     

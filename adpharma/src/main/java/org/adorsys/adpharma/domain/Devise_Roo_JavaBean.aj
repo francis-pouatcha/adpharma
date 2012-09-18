@@ -3,8 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
-import org.adorsys.adpharma.domain.Devise;
 
 privileged aspect Devise_Roo_JavaBean {
     

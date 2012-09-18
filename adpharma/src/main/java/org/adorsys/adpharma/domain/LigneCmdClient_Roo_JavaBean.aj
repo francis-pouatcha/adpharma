@@ -3,12 +3,12 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
-import org.adorsys.adpharma.domain.LigneCmdClient;
 
 privileged aspect LigneCmdClient_Roo_JavaBean {
     

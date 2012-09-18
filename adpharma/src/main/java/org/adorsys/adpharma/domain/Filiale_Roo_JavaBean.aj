@@ -3,7 +3,8 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.Filiale;
+import java.lang.Boolean;
+import java.lang.String;
 
 privileged aspect Filiale_Roo_JavaBean {
     

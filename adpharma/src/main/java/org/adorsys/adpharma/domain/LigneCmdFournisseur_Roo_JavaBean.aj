@@ -3,11 +3,11 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
-import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.Produit;
 
 privileged aspect LigneCmdFournisseur_Roo_JavaBean {

@@ -3,14 +3,25 @@
 
 package org.adorsys.adpharma.domain;
 
-import org.adorsys.adpharma.domain.EtatDette;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import java.lang.String;
 
 privileged aspect EtatDette_Roo_ToString {
     
     public String EtatDette.toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Avoir: ").append(getAvoir()).append(", ");
+        sb.append("Avoirs: ").append(getAvoirs() == null ? "null" : getAvoirs().size()).append(", ");
+        sb.append("Client: ").append(getClient()).append(", ");
+        sb.append("DateCreation: ").append(getDateCreation()).append(", ");
+        sb.append("DateReglage: ").append(getDateReglage()).append(", ");
+        sb.append("Dettes: ").append(getDettes() == null ? "null" : getDettes().size()).append(", ");
+        sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("NetAPayer: ").append(getNetAPayer()).append(", ");
+        sb.append("TotalAvoir: ").append(getTotalAvoir()).append(", ");
+        sb.append("TotalDette: ").append(getTotalDette()).append(", ");
+        sb.append("Version: ").append(getVersion());
+        return sb.toString();
     }
     
 }
