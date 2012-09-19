@@ -132,7 +132,7 @@
   <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
 <li><a href="#">Achats <img alt="" src="${down_url}" /></a>
 <ul>
-  <li><a href="#" onclick="window.location='${ap_cree_url}' ">Effectuer un approvisionnement</a></li>
+  <li><a href="#" onclick="window.location='${ap_cree_url}' ">Effectuer   un approvisionnement</a></li>
   <li><a href="#" onclick="window.location='${search_list_url}' ">Rechercher Un approvisionnemt</a></li>
   <li><a href="#" onclick="window.location='${ap_trans_url}' " >Effectuer Une decomposition</a></li>
   <li><a href="#">Cree une relation de decomposition</a></li>

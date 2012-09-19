@@ -203,7 +203,8 @@
             <spring:url value="/categorieclients?form" var="clt_cat_url"/>
                 <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="clt_catl_url"/>
                 <spring:url value="/etatcreditses?form" var="etat_credit_url"/>
-                                <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etat_url"/>
+                                <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etatList_url"/>
+                                 <spring:url value="/etatcreditses?find=BySearch&amp;form" var="find_etat_url"/>
                 
                 
                 <spring:url value="/detteclients?find=BySearch&amp;form" var="clt_dets_url"/>
@@ -435,15 +436,19 @@
 		        							<ul>
 		        						<li><a href="${list_dette_url}">Lister les dettes</a></li>
 		        						<li><a href="${clt_dets_url}">recherche Dettes</a></li>
-		        						<li><a href="${etat_credit_url}">Edition Etat Credit</a></li>
-		        						<li><a href="${find_etat_url}">Recherche Etat Credit</a></li>
-		        							<!-- 	<li>
-		        									<spring:url value="/listingetatdettes?form" var="listing_dette" ></spring:url>
-		        									<a href="${listing_dette}" >Edition des dettes</a>
-		        								</li> -->	
 		        							</ul>
 		        						</li>
-		        								        <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+		        						 <li>
+		        							<a href="#">Etats de Credits</a>
+		        							<ul>
+		        						<li><a href="${etat_credit_url}">Edition Etat Credit</a></li>
+		        						<li><a href="${find_etat_url}">Recherche Etat Credit</a></li>
+		        						<li><a href="${find_etatList_url}">Lister Les Etat Credit</a></li>
+		        							</ul>
+		        						</li>
+		        						
+		        						
+	 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 		        						
 		                                  <li><a href="#">categories Clients</a>
 		        							<ul>

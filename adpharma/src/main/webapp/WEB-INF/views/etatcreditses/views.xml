@@ -13,4 +13,8 @@
 <definition extends="default" name="etatcreditses/update">
         <put-attribute name="body" value="/WEB-INF/views/etatcreditses/update.jspx"/>
     </definition>
+    
+     <definition extends="default" name="etatcreditses/search">
+        <put-attribute name="body" value="/WEB-INF/views/etatcreditses/search.jspx"/>
+    </definition>
 </tiles-definitions>

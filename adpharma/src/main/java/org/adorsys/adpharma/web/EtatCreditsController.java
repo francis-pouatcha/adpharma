@@ -53,6 +53,22 @@ public class EtatCreditsController {
 		return "redirect:/etatcreditses/" + encodeUrlPathSegment(etatCredits.getId().toString(), httpServletRequest);
 	}
 
+@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
+public String Search(Model uiModel) {
+ DetteClient detteClient = new DetteClient();
+ detteClient.setDateCreation(null);
+	uiModel.addAttribute("etatCredits",new EtatCredits() );
+	return "etatcreditses/search";
+}
+
+@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+public String Search(EtatCredits etat , Model uiModel) {
+	uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEdition(), etat.getDatePaiement(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
+	addDateTimeFormatPatterns(uiModel);
+	uiModel.addAttribute("etatCredits", new EtatCredits());
+	return "etatcreditses/search";
+}
+
 @Transactional
 	@RequestMapping("/{etatId}/annuler")
 	public String anullerEtat(@PathVariable("etatId")Long etatId, Model uiModel){

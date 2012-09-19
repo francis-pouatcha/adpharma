@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/> 
+        <form:custumcreate modelAttribute="etatCredits" label="." id="fc_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
+         <table class="tblog">
+            <tr>
+                <td class="tbcreate">
+        <field:input field="etatNumber" id="c_org_adorsys_adpharma_domain_EtatCredits_etatNumber"  z="user-managed"/>
+        <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName"  z="user-managed"/>
+         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition"  z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
+     
+           </td>
+                <td class="tbcreate">
+                
+      <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_EtatCredits_solder"  z="user-managed"/>
+        <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_EtatCredits_annuler" z="user-managed"/>
+               <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser"  z="user-managed"/>
+       
+        
+        </td>
+        </tr>
+        </table>
+    </form:custumcreate>
+    <page:list id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${results}" z="DNg67SL6NthDAvpPO58mJVf09is=">
+        <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_DetteClient" path="/detteclients" update="false" z="user-managed">
+           <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_etatNumber" property="etatNumber" z="d2g2LbHP2V2d3i9Ys/r7O/X6ik0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" property="dateEdition" z="ikmm2karrojRu92cXTrm3/oexms="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" property="datePaiement" z="RjCIG9leq9eGtR3NvE32r7bGHF0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_client" maxLength="-1" property="client" z="NXZ9ALtNXoiczr7CSaII1Y198t8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_montantInitial" label="montant" property="montantInitial" z="ab+16xkeKDkTAbiRLo0ZobhemXc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_avance" property="avance" z="ab+16xkeKDkTAbiRLo0ZobhemXc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" label="avoir" property="montantAvoir" z="ab+16xkeKDkTAbiRLo0ZobhemXc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_reste" property="reste" z="ab+16xkeKDkTAbiRLo0ZobhemXc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_listeDettes" property="listeDettes" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_clientId" property="clientId" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_clientName" property="clientName" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_solder" property="solder" z="NXZ9ALtNXoiczr7CSaII1Y198t8="/>
+                        <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_annuler" property="annuler" z="NXZ9ALtNXoiczr7CSaII1Y198t8="/>
+            
+           </table:table>
+    </page:list>
+</div>
