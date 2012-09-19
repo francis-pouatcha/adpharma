@@ -234,10 +234,10 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	            searchQuery.append(" AND o.etatNumber = :etatNumber ");
 	        }
 	        if (dateEdition!=null) {
-	            searchQuery.append("AND o.dateEdition >= :dateEdition ");
+	            searchQuery.append("AND o.dateEdition > :dateEdition ");
 	        }
 	        if (datePaiement!=null) {
-	            searchQuery.append("AND o.datePaiement >= :datePaiement ");
+	            searchQuery.append("AND o.datePaiement > :datePaiement ");
 	        }
 	        if (solder!=null) {
 	            searchQuery.append("AND o.solder IS :solder ");
