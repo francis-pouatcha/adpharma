@@ -20,6 +20,7 @@ import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.DetteClient;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
@@ -54,6 +55,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PaiementProcessController {
 
+	@RequestMapping(value="/getUnpayCloseSalesNumber/ByAjax", method = RequestMethod.GET)
+	@ResponseBody
+	public String getUnpayCloseSalesNumber() {
+		List<Long> unpayCloseSales = CommandeClient.findUnpayCloseSales(Etat.CLOS, Boolean.FALSE,  Boolean.FALSE, TypeCommande.VENTE_PROFORMAT);
+		if(!unpayCloseSales.isEmpty()){
+		Long unpay =  unpayCloseSales.iterator().next();
+			 return unpay.toString() ;
+		}
+		return  null ;
+	}
 	@RequestMapping(value = "/editPaiement", method = RequestMethod.GET)
 	public String editPaiement( Model uiModel, HttpServletRequest httpServletRequest) {
 
@@ -71,6 +82,7 @@ public class PaiementProcessController {
 
 		}
 	}
+	
 
 	@RequestMapping(value = "/encaisser" ,params = "form", method = RequestMethod.GET)
 	public String encaisserPaiementForm( Model uiModel, HttpServletRequest httpServletRequest) {

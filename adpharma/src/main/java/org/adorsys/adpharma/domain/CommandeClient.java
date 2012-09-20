@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PostPersist;
 import javax.persistence.PreRemove;
+import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -458,6 +459,18 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		q.setParameter("encaisse", Boolean.FALSE);
 		return q;
 	}
+	
+
+	 public static List<Long> findUnpayCloseSales(Etat status , Boolean encaisser, Boolean annuler,TypeCommande typeCommande) {
+	        EntityManager em = CommandeClient.entityManager();
+	        Query q = em.createQuery("SELECT  COUNT(distinct o.id) FROM CommandeClient AS o WHERE o.status = :status AND o.encaisse IS :encaisse  AND o.annuler IS :annuler AND  o.typeCommande != :typeCommande   ");
+	        q.setParameter("status", status);
+	        q.setParameter("encaisse", encaisser);
+	        q.setParameter("annuler", annuler);
+	        q.setParameter("typeCommande", typeCommande);
+	        return q.getResultList();
+	    }
+
 
 	public static List<CommandeClient> findCommandeClientEntries(int firstResult, int maxResults) {
 		return entityManager().createQuery("SELECT o FROM CommandeClient o ORDER BY o.id DESC ", CommandeClient.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

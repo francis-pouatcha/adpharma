@@ -7,12 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.beans.EtatCreditFinder;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
-import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Paiement;
-import org.apache.log4j.Logger;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,19 +56,20 @@ public class EtatCreditsController {
 public String Search(Model uiModel) {
  DetteClient detteClient = new DetteClient();
  detteClient.setDateCreation(null);
-	uiModel.addAttribute("etatCredits",new EtatCredits() );
+	uiModel.addAttribute("etatCreditFinder",new EtatCreditFinder() );
 	return "etatcreditses/search";
 }
 
 @RequestMapping(value = "/BySearch", method = RequestMethod.GET)
-public String Search(EtatCredits etat , Model uiModel) {
+public String Search(EtatCreditFinder etat  , Model uiModel) {
 	uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEdition(), etat.getDatePaiement(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
 	addDateTimeFormatPatterns(uiModel);
-	uiModel.addAttribute("etatCredits", new EtatCredits());
+	uiModel.addAttribute("etatCreditFinder", new EtatCredits());
+	
 	return "etatcreditses/search";
 }
 
-@Transactional
+
 	@RequestMapping("/{etatId}/annuler")
 	public String anullerEtat(@PathVariable("etatId")Long etatId, Model uiModel){
 		EtatCredits etatCredits = 	EtatCredits.findEtatCredits(etatId);
