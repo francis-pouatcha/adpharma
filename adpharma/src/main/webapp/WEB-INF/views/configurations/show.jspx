@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Configuration" list="false" object="${configuration}" path="/configurations" z="user-managed">
+        <field:display field="saleForce" label="Forcer Les Ventes ?" id="s_org_adorsys_adpharma_domain_Configuration_saleForce" object="${configuration}" z="FtBrjAD0m9BetHyWGy7tXmjryqg="/>
+        <field:display label="Fermer Les Caisse Avec Factures Impayees ?" field="closeCashUnpaySale"  id="s_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" object="${configuration}" z="L2nUf0USRoPEtsRSmkZr4JQj5/Y="/>
+        <field:display field="closeCancelSale" label="Autoriser L.anullation des Ventes  ?"  id="s_org_adorsys_adpharma_domain_Configuration_closeCancelSale" object="${configuration}" z="U8pWWPsh3exmcj4TySFy7FAOCj0="/>
+        <field:display field="restoreCancelSale" label="Restorer Les Ventes Anuller ?" id="s_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="VFY87oo7rbZvtwaC3yYfDW0wt/0="/>
+    </page:show>
+</div>

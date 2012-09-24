@@ -504,6 +504,7 @@
                 <spring:url value="/printerconfigurations?page=1&amp;size=${empty param.size ? 50 : param.size}" var="printer_list"/>
                 <spring:url value="/printerconfigurations?form" var="creer_printer"/>
                       <spring:url value="/licenceentitys/1?form" var="licence_update"/>
+                        <spring:url value="/configurations/1" var="other_config"/>
       
                            <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
     			<li>
@@ -514,10 +515,16 @@
         		</li>
         		
         		<li>
-    			<a href="#">Printer Configuration</a>
+    			<a href="#"> Configurations</a>
         			 	<ul class="sub_menu">
-        			 		<li><a href="${printer_list }">Lister les Imprimantes</a></li>
-        			 		<li><a href="${creer_printer }">Ajouter Une Imprimant</a></li>
+        			 		 <li>
+		        				<a href="#">Printers</a>
+		        					<ul>
+		        						<li><a href="${printer_list }">Lister les Imprimantes </a></li>
+        			 		          <li><a href="${creer_printer }">Ajouter Une Imprimant</a></li>
+		        					</ul>
+		        			 </li>
+        			 		 <li><a href="${other_config }">Others Configurations</a></li>
         			 		
         			 	</ul>
         		</li>

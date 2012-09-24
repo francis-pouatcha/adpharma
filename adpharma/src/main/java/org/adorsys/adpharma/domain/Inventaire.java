@@ -41,8 +41,8 @@ import javax.persistence.CascadeType;
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Inventaire", finders = { "findInventairesByDateInventaireBetween", "findInventairesByEtat", "findInventairesByAgentAndDateInventaireBetween" })
 public class Inventaire extends AdPharmaBaseEntity {
-   
-	
+
+
 	private String numeroInventaire;
 
 	@ManyToOne
@@ -62,12 +62,12 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 	@ManyToOne
 	private Site site;
-	
+
 	/*
 	 * champ utili  pour l'edition des fiches d'inventaires
 	 */
-    private transient FamilleProduit familleProduit  ;
-	
+	private transient FamilleProduit familleProduit  ;
+
 	public FamilleProduit getFamilleProduit() {
 		return familleProduit;
 	}
@@ -85,16 +85,16 @@ public class Inventaire extends AdPharmaBaseEntity {
 	}
 
 	private transient SousFamilleProduit sousFamilleProduit ;
-    private transient Rayon rayon ;
-	
+	private transient Rayon rayon ;
+
 	private transient Filiale filiale ;
-	
+
 	private transient String beginBy ;
-	
+
 	private transient String endBy;
-	
+
 	private transient String cipProduct;
-	
+
 	public String getCipProduct() {
 		return cipProduct;
 	}
@@ -107,16 +107,16 @@ public class Inventaire extends AdPharmaBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private transient Date dateDebut;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private transient Date dateFin;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private transient Date dateRupture;
-	
-	
+
+
 	public Date getDateRupture() {
 		return dateRupture;
 	}
@@ -233,16 +233,16 @@ public class Inventaire extends AdPharmaBaseEntity {
 	}
 
 	private transient Boolean cip = true ;
-	
+
 	private transient boolean cipm  = false;
-	
+
 	private transient Boolean pAchat  = false;
-	
+
 	private transient Boolean pVente  = false;
-	
+
 	private transient List<LigneApprovisionement> ligneApprovisionements = new ArrayList<LigneApprovisionement>() ;	
 	private transient List<Produit> produits = new ArrayList<Produit>() ;
-	 
+
 
 
 	@PrePersist
@@ -298,19 +298,15 @@ public class Inventaire extends AdPharmaBaseEntity {
 	}
 
 	public void restoreStock(){
-		
 		InventoryService inventoryService = new InventoryService();
 		Set<LigneInventaire> ligneInventaires =	getLigneInventaire();
 		for (LigneInventaire ligneInventaire : ligneInventaires) {
-			//ligneInventaire.restoreEcart();
 			Produit produit = ligneInventaire.getProduit();
 			inventoryService.setNegativeStockToZero(produit);
 			BigInteger trueStock = inventoryService.getTrueStockQuantity(produit);
 			BigInteger qteReel = ligneInventaire.getQteReel();
-			 System.out.println("true ="+trueStock+" reeel ="+qteReel);
 			if (qteReel.intValue() > trueStock.intValue()) {
 				BigInteger ecart = qteReel.subtract(trueStock);
-				System.out.println("ecart "+ecart);
 				inventoryService.updateStockToUp(produit, ecart);
 			}
 			if (qteReel.intValue() < trueStock.intValue()) {
@@ -325,7 +321,7 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 
 	}
-	
+
 	public boolean isFindall(){
 		return  rayon==null &&filiale==null;
 	}
@@ -337,35 +333,35 @@ public class Inventaire extends AdPharmaBaseEntity {
 	public static List<Inventaire> findAllInventaires() {
 		return entityManager().createQuery("SELECT o FROM Inventaire o ORDER BY o.id DESC", Inventaire.class).getResultList();
 	}
-	
-	 public static List<Produit> searchFicheInventaire(String cip,String cipm, String designation,String beginBy,String endBy, Rayon rayon, Filiale filiale) {
-	        StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.produitNumber IS NOT NULL ");
-	        if (StringUtils.isNotBlank(cip)) {
-	            return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip).getResultList();
-	        } else {
-	            if (StringUtils.isNotBlank(designation)) {
-	            	designation = designation + "%";
-	                searchQuery.append(" AND  LOWER(o.designation) LIKE LOWER(:designation) ");
-	            }
-	            if (rayon != null) {
-	                searchQuery.append(" AND o.rayon = :rayon ");
-	            }
-	            if (filiale != null) {
-	                searchQuery.append(" AND o.filiale = :filiale ");
-	            }
-	            TypedQuery<Produit> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
-	            if (StringUtils.isNotBlank(designation)) {
-	                q.setParameter("designation", designation);
-	            }
-	            if (rayon != null) {
-	                q.setParameter("rayon", rayon);
-	            }
-	            if (filiale != null) {
-	                q.setParameter("filiale", filiale);
-	            }
-	            return q.getResultList(); 
-	        }
-	       
-	    }
+
+	public static List<Produit> searchFicheInventaire(String cip,String cipm, String designation,String beginBy,String endBy, Rayon rayon, Filiale filiale) {
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.produitNumber IS NOT NULL ");
+		if (StringUtils.isNotBlank(cip)) {
+			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip).getResultList();
+		} else {
+			if (StringUtils.isNotBlank(designation)) {
+				designation = designation + "%";
+				searchQuery.append(" AND  LOWER(o.designation) LIKE LOWER(:designation) ");
+			}
+			if (rayon != null) {
+				searchQuery.append(" AND o.rayon = :rayon ");
+			}
+			if (filiale != null) {
+				searchQuery.append(" AND o.filiale = :filiale ");
+			}
+			TypedQuery<Produit> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
+			if (StringUtils.isNotBlank(designation)) {
+				q.setParameter("designation", designation);
+			}
+			if (rayon != null) {
+				q.setParameter("rayon", rayon);
+			}
+			if (filiale != null) {
+				q.setParameter("filiale", filiale);
+			}
+			return q.getResultList(); 
+		}
+
+	}
 
 }

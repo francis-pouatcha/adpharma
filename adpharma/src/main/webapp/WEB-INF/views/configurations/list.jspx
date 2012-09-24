@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_Configuration" items="${configurations}" z="plMydWa76lMkp6qq36kgyiWinKg=">
+        <table:table data="${configurations}" id="l_org_adorsys_adpharma_domain_Configuration" path="/configurations" z="OXW1YdUvLibmPYHyNLtMQhDBKBM=">
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_saleForce" property="saleForce" z="HxMY/YuJcGGQecs3u6rAxInfwJw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" property="closeCashUnpaySale" z="KVdYFUxu1sxOyHLOEaTc4UJ0xQk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" property="closeCancelSale" z="sLb/lZvoHDjxRos2D7ancMy5wJU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" property="restoreCancelSale" z="1Sv7/rjQGZXJgRlPoAxbZv7GARM="/>
+        </table:table>
+    </page:list>
+</div>

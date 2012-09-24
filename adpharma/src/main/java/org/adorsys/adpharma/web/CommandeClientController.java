@@ -12,10 +12,12 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.beans.CommandeCredit;
 import org.adorsys.adpharma.beans.PaiementProcess;
 import org.adorsys.adpharma.beans.SearchSalesBean;
+import org.adorsys.adpharma.beans.SessionBean;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
@@ -115,7 +117,11 @@ public class CommandeClientController {
 	public String restorerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel , HttpServletRequest httpServletRequest) {
 		Caisse caisse = PaiementProcess.getOpenCaisse();
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-
+		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
+		Configuration configuration = sessionBean.getConfiguration();
+      if(configuration.getRestoreCancelSale()){
+    	  
+      
 		if (caisse == null) {
 			uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
 
@@ -124,7 +130,9 @@ public class CommandeClientController {
 			commandeClient.restorerCommande();
 			uiModel.addAttribute("apMessage", "Commande Restorer Avec Succes !");
 		}
-
+      }else {
+    	  uiModel.addAttribute("apMessage", "La restoration des commandes Annuler est DESACTIVE !");  
+	     }
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandeclient", CommandeClient.findCommandeClient(cmdId));
 		uiModel.addAttribute("itemId", cmdId);
@@ -141,6 +149,11 @@ public class CommandeClientController {
 		ArrayList<RoleName> role = new ArrayList<RoleName>();
 		role.add(RoleName.ROLE_VENDEUR);
 		role.add(RoleName.ROLE_SITE_MANAGER);
+		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean");
+		Configuration configuration = sessionBean.getConfiguration();
+		if(configuration.getRestoreCancelSale()){
+			
+		
 		if (caisse == null) {
 			uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
 
@@ -158,6 +171,10 @@ public class CommandeClientController {
 
 		}
 
+		}else {
+			uiModel.addAttribute("apMessage", "La restoration des commandes Annuler A etee Desactive !");
+		}
+		
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandeclient", commandeClient);
 		uiModel.addAttribute("itemId", cmdId);

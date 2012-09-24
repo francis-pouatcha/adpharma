@@ -307,7 +307,7 @@ public class Facture extends AdPharmaBaseEntity {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getFactureNumber()).append(" du ");
-        sb.append(PharmaDateUtil.format(getDateCreation(), "dd-MM-yyyy HH:mm"));
+        sb.append(PharmaDateUtil.format(getDateCreation(), "dd-MM-yyyy hh:mm"));
         return sb.toString();
     }
 

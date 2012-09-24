@@ -225,21 +225,21 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	}
 	
 	 public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEdition, Date datePaiement, Boolean solder, Boolean anuller,Boolean encaisser) {
-	        StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE   o.id IS NOT NULL ");
+	        StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE o.id IS NOT NULL ");
 	        if (StringUtils.isNotBlank(clientName)) {
 	        	clientName = clientName+"% " ;
-	            searchQuery.append(" AND LOWER (o.client.nom ) LIKE LOWER (:clientName) ");
+	            searchQuery.append(" AND  LOWER(o.client.nom) LIKE LOWER(:nom)  ");
 	        }
 	        if (StringUtils.isNotBlank(etatNumber)) {
 	            searchQuery.append(" AND o.etatNumber = :etatNumber ");
 	        }
 	        if (dateEdition!=null) {
-	            searchQuery.append("AND o.dateEdition > :dateEdition ");
+	            searchQuery.append("AND o.dateEdition >= :dateEdition ");
 	        }
 	        if (datePaiement!=null) {
-	            searchQuery.append("AND o.datePaiement > :datePaiement ");
+	            searchQuery.append("AND o.datePaiement >= :datePaiement ");
 	        }
-	        if (solder!=null) {
+	       if (solder!=null) {
 	            searchQuery.append("AND o.solder IS :solder ");
 	        }
 	        if (anuller!=null) {
@@ -253,7 +253,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	       
 	        TypedQuery<EtatCredits> q = entityManager().createQuery(searchQuery.toString(), EtatCredits.class);
 	        if (StringUtils.isNotBlank(clientName)) {
-	            q.setParameter("clientName", clientName);
+	            q.setParameter("nom", clientName);
 	        }
 	        if (StringUtils.isNotBlank(etatNumber)) {
 	            q.setParameter("etatNumber", etatNumber);

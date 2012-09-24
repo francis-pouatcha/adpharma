@@ -1,13 +1,17 @@
 package org.adorsys.adpharma.beans;
 
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Site;
 /**
  * use to hold user session informtions
  */
+
 public class SessionBean {
 	
 	private Long connectedSiteId  ;
+	
+	private Configuration configuration ;
 	
 	public Long getConnectedSiteId() {
 		return connectedSiteId;
@@ -48,4 +52,14 @@ public class SessionBean {
 		if(user ==null) return false;
 		return user.getOffice().getId() == connectedSiteId ;
 	}
+
+	public Configuration getConfiguration() {
+		return Configuration.findConfiguration(new Long(1));
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+	
+	
 }

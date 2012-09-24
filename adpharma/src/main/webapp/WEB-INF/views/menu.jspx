@@ -261,6 +261,10 @@
                 <menu:item id="i_licenceentity_new" messageCode="global_menu_new" url="/licenceentitys?form" z="hm5LY6Saz1skWkbUUkKW95udfH0="/>
                 <menu:item id="i_licenceentity_list" messageCode="global_menu_list" url="/licenceentitys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="zXCFLNA8vQPk1qnfEW7EDd44Rp8="/>
             </menu:category>
+            <menu:category id="c_configuration" z="ex6zSpCyqSksY2xxo+2yaACAxic=">
+                <menu:item id="i_configuration_new" messageCode="global_menu_new" url="/configurations?form" z="PpKhRYSLF3fMvOlr5J8dEALoaF8="/>
+                <menu:item id="i_configuration_list" messageCode="global_menu_list" url="/configurations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="eTnA6q7aRKdliIXm9IDu8P8bUhU="/>
+            </menu:category>
         </menu:menu>
     </security:authorize>
 </div>

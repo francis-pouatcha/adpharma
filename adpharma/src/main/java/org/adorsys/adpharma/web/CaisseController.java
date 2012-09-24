@@ -13,13 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.adorsys.adpharma.beans.ChiffreAffaireBean;
+import org.adorsys.adpharma.beans.SessionBean;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
+import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Configuration;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Genre;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -30,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.adorsys.adpharma.utils.ProcessHelper ;
+import org.apache.log4j.spi.LoggerFactory;
 @RooWebScaffold(path = "caisses", formBackingObject = Caisse.class)
 @RequestMapping("/caisses")
 @Controller
@@ -40,6 +46,7 @@ public class CaisseController {
 	public String Search(Model uiModel) {
 		uiModel.addAttribute("caisse", new Caisse());
 		return "caisses/search";
+		
 	}
 
 	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
@@ -49,7 +56,7 @@ public class CaisseController {
 		uiModel.addAttribute("caisse", caisse);
 		return "caisses/search";
 	}
-	
+
 	@RequestMapping(params = { "find=chiffreAffaire", "form" }, method = RequestMethod.GET)
 	public String chiffreAffaireForm(Model uiModel) {
 		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale());
@@ -106,26 +113,42 @@ public class CaisseController {
 	@RequestMapping(value = "/fermerCaisse", method = RequestMethod.GET)
 	public String fermerCaisse(Model uiModel, HttpServletRequest httpServletRequest) {
 		List<Caisse> list = Caisse.findCaissesByCaisseOuverteAndCaissier(Boolean.TRUE, SecurityUtil.getPharmaUser()).getResultList();
-		Caisse caisse = null;
-		if (!list.isEmpty()) {
-			caisse = list.iterator().next();
-			caisse.setCaisseOuverte(Boolean.FALSE);
-			caisse.setDateFemeture(new Date()) ;
-			caisse.setFermerPar(SecurityUtil.getPharmaUser());
-			Caisse merge = (Caisse) caisse.merge() ;
-			addDateTimeFormatPatterns(uiModel);
-			uiModel.addAttribute("caisse",merge);
-			uiModel.addAttribute("itemId", merge.getId());
-			uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
-			return "caisses/infos";
+		Caisse caisse = list.isEmpty() ?null :list.iterator().next();
+		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
+		Configuration configuration = sessionBean.getConfiguration();
+		List<Long> unpaySalesNumber = CommandeClient.findUnpayCloseSales(Etat.CLOS, false, false, TypeCommande.VENTE_PROFORMAT);
+		if(caisse != null){
+			if(configuration.getCloseCashUnpaySale()){
+				closeCash(uiModel,caisse);
+			}else {
+				Long number = unpaySalesNumber.iterator().next();
+				if(number >0){
+					uiModel.addAttribute("apMessage", "Impossible de Fermer La Caisse Vous Avez : "+number +" Factures en attente d'encaissement ");
+				}else {
+					closeCash(uiModel,caisse);
+				}
 
+			}
 		}else {
 			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte veuillez en ouvrir une ! ");
-
-			return "caisses/infos";
-
-
 		}
+
+		return "caisses/infos";
+
+	}
+
+	public void closeCash(Model uiModel,Caisse caisse){
+		caisse.setCaisseOuverte(Boolean.FALSE);
+		caisse.setDateFemeture(new Date()) ;
+		caisse.setFermerPar(SecurityUtil.getPharmaUser());
+		Caisse merge = (Caisse) caisse.merge() ;
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("caisse",merge);
+		uiModel.addAttribute("itemId", merge.getId());
+		uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
+
+
+
 
 	}
 
@@ -143,13 +166,13 @@ public class CaisseController {
 		return "caisses/show";		
 
 	}
-	
+
 	@RequestMapping(params = { "find=ByEtatCaisse", "form" }, method = RequestMethod.GET)
 	public String ByEtatCaisseForm(Model uiModel) {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		return "caisses/ByEtatCaisse";
 	}
-	
+
 	@RequestMapping(params = "find=ByEtatCaisse", method = RequestMethod.GET)
 	public String ByEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList();
@@ -180,19 +203,19 @@ public class CaisseController {
 
 
 	}
-	
+
 	@ModelAttribute("pharmausers")
-    public Collection<PharmaUser> populatePharmaUsers() {
-	PharmaUser pharmaUser =	new PharmaUser();
-	pharmaUser.setGender(Genre.Neutre);
-	pharmaUser.setFirstName("ALL");
-	pharmaUser.setLastName("USERS");
-	pharmaUser.setId(new Long(0));
-	 Collection<PharmaUser> pharmaUsers =	new ArrayList<PharmaUser>();
-	   pharmaUsers.add(pharmaUser);
-	   pharmaUsers.addAll(PharmaUser.findAllPharmaUsers());
-        return pharmaUsers;
-    }
+	public Collection<PharmaUser> populatePharmaUsers() {
+		PharmaUser pharmaUser =	new PharmaUser();
+		pharmaUser.setGender(Genre.Neutre);
+		pharmaUser.setFirstName("ALL");
+		pharmaUser.setLastName("USERS");
+		pharmaUser.setId(new Long(0));
+		Collection<PharmaUser> pharmaUsers =	new ArrayList<PharmaUser>();
+		pharmaUsers.add(pharmaUser);
+		pharmaUsers.addAll(PharmaUser.findAllPharmaUsers());
+		return pharmaUsers;
+	}
 
 	@ModelAttribute("caisses")
 	public Collection<Caisse> populateCaisses() {

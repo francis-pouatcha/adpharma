@@ -15,11 +15,13 @@ import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.PaiementProcess;
 import org.adorsys.adpharma.beans.SaleProcess;
+import org.adorsys.adpharma.beans.SessionBean;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Genre;
@@ -333,6 +335,8 @@ public class SaleProcessController {
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
 			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
+		Configuration configuration = sessionBean.getConfiguration();
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(pId);
 		int remiseAutorise = ProcessHelper.getRemise(ligneApp).intValue();
@@ -360,7 +364,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			uiModel.addAttribute("forcer",Boolean.TRUE);
+		   if (configuration.getSaleForce()) 	uiModel.addAttribute("forcer",Boolean.TRUE);
 
 		}/*else if (commandeClient.contientSameCipM(ligneApp.getCipMaison())) {
 			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
@@ -375,7 +379,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			uiModel.addAttribute("forcer",Boolean.TRUE);
+			  if (configuration.getSaleForce()) uiModel.addAttribute("forcer",Boolean.TRUE);
 
 		} else{
 			if (remiseAutorise < remise.intValue()) {
@@ -528,6 +532,8 @@ public class SaleProcessController {
 	 * use for update line of commande
 	 */
 	public String updateCmdLine(Long cmdId,Long lineId,BigInteger qte,String rem,Model uiModel,HttpServletRequest httpServletRequest){
+		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
+		Configuration configuration = sessionBean.getConfiguration();
 		LigneCmdClient line =  LigneCmdClient.findLigneCmdClient(lineId);
 		CommandeClient commandeClient=line.getCommande();
 		BigInteger qtc  =  qte  ;//line.getQuantiteCommande().add(qte);
@@ -551,7 +557,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			uiModel.addAttribute("forcer",Boolean.TRUE);
+		   if(configuration.getSaleForce())	uiModel.addAttribute("forcer",Boolean.TRUE);
 			saleProcess.calculPrix(commandeClient);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);

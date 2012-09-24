@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
@@ -40,6 +41,7 @@ public class AdPharmaInitFilter extends OncePerRequestFilter {
 			CategorieClient.initCategorieClient();
 			Client.initClient() ;
 			Filiale.initFiliale();
+			Configuration.init() ;
 			done=true;
 		}
 		

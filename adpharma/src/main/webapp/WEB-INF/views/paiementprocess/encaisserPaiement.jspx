@@ -61,11 +61,11 @@
  function generateWord(){
 	 $.get( '${unpayCmd}',
 	                function(data){
-			        if(data != null){
-			        $("#infos").val(data+" Factures En attente ! ");
-			        }else{
-			        
+			        if(data == '0'){
 			        	 $("#infos").val("Aucune Factures en attente !");
+			        }else{
+			        	 $("#infos").val(data+" Factures En attente ! ");
+			        	
 			        }
 			         
 					});
@@ -524,8 +524,8 @@ $(function(){
                         <field:display field="caisse" id="s_org_adorsys_adpharma_domain_Paiement_caisse" object="${paiement}" z="1zCsZ4MhzwN0Tg2l3/mVNd2qkoc="/>
                         <field:display field="cassier" id="s_org_adorsys_adpharma_domain_Paiement_cassier" object="${paiement}" z="15UqF93F5HrhRCngq/tOllharUs="/>
         <field:display field="paiementNumber"  id="s_org_adorsys_adpharma_domain_Paiement_paiementNumber" object="${paiement}" z="OYr7ppAFTBoPvkuAv8uREQ3FoqI="/>
-        <field:display date="true" dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="s_org_adorsys_adpharma_domain_Paiement_datePaiement" object="${paiement}" z="dQoxciaLzFXMvYzRddc4hN+xprI="/>
-        <field:display date="true" dateTimePattern="dd-MM-yyyy HH:mm" field="dateSaisie" id="s_org_adorsys_adpharma_domain_Paiement_dateSaisie" object="${paiement}" z="hX5GxAeQ0I7jeTkZqtukSWL5HDc="/>
+        <field:display date="true" dateTimePattern="dd-MM-yyyy hh:mm" field="datePaiement" id="s_org_adorsys_adpharma_domain_Paiement_datePaiement" object="${paiement}" z="dQoxciaLzFXMvYzRddc4hN+xprI="/>
+        <field:display date="true" dateTimePattern="dd-MM-yyyy hh:mm" field="dateSaisie" id="s_org_adorsys_adpharma_domain_Paiement_dateSaisie" object="${paiement}" z="hX5GxAeQ0I7jeTkZqtukSWL5HDc="/>
          <field:display field="informations" id="s_org_adorsys_adpharma_domain_Paiement_informations" object="${paiement}" z="J/k1XoC8q2mwQF43MkAsJHd8dCw="/>
         
          </td>

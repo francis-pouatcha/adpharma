@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_org_adorsys_adpharma_domain_Configuration" modelAttribute="configuration" path="/configurations" render="${empty dependencies}" z="y+kq0+OlQ+812Z9nwMCi0caXu8k=">
+        <field:checkbox field="saleForce" id="c_org_adorsys_adpharma_domain_Configuration_saleForce" z="7yx75pXjUGFxdYszUrPhJ5vfP6Q="/>
+        <field:checkbox field="closeCashUnpaySale" id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" z="LgZxq62q6wXP8Zc2WOMZtwfQx64="/>
+        <field:checkbox field="closeCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" z="X/fLML/P1TS2xrQyhPalHoqQwLU="/>
+        <field:checkbox field="restoreCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Configuration" render="${not empty dependencies}" z="n5WKmI2zluUl8/h2o1jkpDeb8lg="/>
+</div>

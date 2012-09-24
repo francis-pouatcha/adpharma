@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +37,7 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 			session.setAttribute("sessionBean", sessionBean) ;
 
 		}else {
+			
 		}
 		super.onAuthenticationSuccess(request, response, authentication);
 		return;

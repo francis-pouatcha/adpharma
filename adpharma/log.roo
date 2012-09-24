@@ -158,3 +158,14 @@ json add
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-14 11:31:00
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-19 10:42:39
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-09-19 13:06:54
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-24 08:58:39
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-24 10:46:55
+entity --class org.adorsys.adpharma.domain.Configuration
+field boolean --fieldName saleForce --value false
+field boolean --fieldName closeCashUnpaySale --value true
+field boolean --fieldName closeCancelSale --value true
+web mvc scaffold --class ~.web.ConfigurationController 
+help web mvc contrller
+help web mvc controller
+quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-09-24 13:02:45
