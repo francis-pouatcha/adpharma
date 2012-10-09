@@ -5,8 +5,8 @@
     <page:list id="pl_org_adorsys_adpharma_domain_PrinterConfiguration" items="${printerconfigurations}" z="tC1ZVuB4lTRsH4bBu5afrBZ5u08=">
         <table:table data="${printerconfigurations}" id="l_org_adorsys_adpharma_domain_PrinterConfiguration" path="/printerconfigurations" z="z8szGMWTKzPMTsLliMcUSOfYdwE=">
             <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_printerName" property="printerName" z="4lXMOtaSihZ1wd9twes7nEbRc/0="/>
-            <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_computerAdresse" property="computerAdresse" z="c5SCz13AEGCkAqQgvgUj4IVaxtI="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_printerName" maxLength="-1" property="printerName" z="4lXMOtaSihZ1wd9twes7nEbRc/0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_computerAdresse" maxLength="-1" property="computerAdresse" z="c5SCz13AEGCkAqQgvgUj4IVaxtI="/>
             <table:column id="c_org_adorsys_adpharma_domain_PrinterConfiguration_diseable" property="diseable" z="aAZGwHncpvSwxuXI5nn4xT/Y42U="/>
         </table:table>
     </page:list>

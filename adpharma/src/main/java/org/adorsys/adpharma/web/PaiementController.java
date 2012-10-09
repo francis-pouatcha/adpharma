@@ -262,6 +262,7 @@ public class PaiementController {
 			paiement.merge();
 		}
 		uiModel.addAttribute("paiement", paiement);
+		
 	  return "ticketPdfDocView";
 		
 

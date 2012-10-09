@@ -18,8 +18,6 @@
       <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_EtatCredits_solder"  z="user-managed"/>
         <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_EtatCredits_annuler" z="user-managed"/>
                <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser"  z="user-managed"/>
-       
-        
         </td>
         </tr>
         </table>

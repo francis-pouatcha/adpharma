@@ -587,6 +587,7 @@ if (commande.getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC) ) {
 			document.setHeader(header);*/
 		
 			super.buildPdfMetadata(model, document, request);
+			
 		}
 
 }

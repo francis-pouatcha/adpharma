@@ -50,7 +50,7 @@
 		<SPAN><a style="padding-left: 20px; text-decoration: none; " href="${ annuler_facture_url}"> <INPUT class="submits" type="button" value="Annuler La Facture " title="Annuler La Facture " /></a></SPAN>
 	</c:if>
 			<SPAN><a style="padding-left: 20px; text-decoration: none; " href="${ mypaiements_url}"> <INPUT class="submits" style="color: black;" type="button" value="Mes Tickets " title="Lister Mes Tickets " /></a></SPAN>
-				<SPAN><a style="padding-left: 20px; text-decoration: none; " href="#"> <INPUT style="color: red; font-weight: bold; font-style: italic; border: none; text-decoration: blink;"  type="text" value="" id="infos" height="60px" width="200px;" /></a></SPAN>
+				<SPAN><a style="padding-left: 20px; text-decoration: none; " href="#"> <INPUT style="color: red; font-weight: bold; font-style: italic; border: none; text-decoration: blink; width: 300px;" height="25px;  "   type="text" value="" id="infos" /></a></SPAN>
 	
 		</div>
 		      <spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf"  var="print_ticket" />

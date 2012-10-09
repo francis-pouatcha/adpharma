@@ -1,5 +1,7 @@
 package org.adorsys.adpharma.web;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.PrinterConfiguration;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.QuiPaye;
 import org.adorsys.adpharma.domain.TypeCommande;
@@ -39,6 +42,8 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.adorsys.adpharma.utils.TicketPrinter;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,14 +59,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/paiementprocess")
 @Controller
 public class PaiementProcessController {
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value="/getUnpayCloseSalesNumber/ByAjax", method = RequestMethod.GET)
 	@ResponseBody
 	public String getUnpayCloseSalesNumber() {
 		List<Long> unpayCloseSales = CommandeClient.findUnpayCloseSales(Etat.CLOS, Boolean.FALSE,  Boolean.FALSE, TypeCommande.VENTE_PROFORMAT);
 		if(!unpayCloseSales.isEmpty()){
-		Long unpay =  unpayCloseSales.iterator().next();
-			 return unpay.toString() ;
+			Long unpay =  unpayCloseSales.iterator().next();
+
+			return unpay.toString() ;
 		}
 		return  null ;
 	}
@@ -82,7 +89,7 @@ public class PaiementProcessController {
 
 		}
 	}
-	
+
 
 	@RequestMapping(value = "/encaisser" ,params = "form", method = RequestMethod.GET)
 	public String encaisserPaiementForm( Model uiModel, HttpServletRequest httpServletRequest) {
@@ -154,13 +161,22 @@ public class PaiementProcessController {
 				paiementProcess.setShowDetailForm(true);
 				uiModel.addAttribute("paiementProcess",paiementProcess);
 				uiModel.addAttribute("paiement",paiement);
+				try {
+					String remoteAddr = httpServletRequest.getRemoteAddr();
+					List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
+					String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
+					TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
+				} catch (Exception e) {
+					logger.error("erreur d'impression !");
+					e.printStackTrace();
+				}
 			}
 		}
 		return "paiementprocess/encaisserPaiement";
 
 	}
 
-	
+
 	@RequestMapping(value = "/selectFacture/{factureId}" ,method = RequestMethod.GET)
 	public String selectFacture(@PathVariable("factureId") Long factureId ,  Model uiModel,  HttpServletRequest httpServletRequest) {
 
@@ -233,14 +249,14 @@ public class PaiementProcessController {
 
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getUnCashInvoicesNumber" ,method = RequestMethod.GET)
 	public String getUnCashInvoicesNumber(){
 		List<Facture> resultList = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
 		return ""+resultList.size();
-		
-		
+
+
 	}
 
 	@Transactional
@@ -331,21 +347,28 @@ public class PaiementProcessController {
 
 		System.out.println("Adresse"+httpServletRequest.getRemoteAddr());
 		uiModel.addAttribute("paiement", paiement);
+
 		try {
-			TicketPrinter.buildTicket(paiement);
+			String remoteAddr = httpServletRequest.getRemoteAddr();
+			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
+			String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
+		
+			TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("eereur d'impression de ticket !");
+			System.out.println("ereur de construction de ticket !");
 			System.out.println(e.getMessage());
+			return "ticketPdfDocView";
 		}
-		if (PrintService.print("/tools/adpharma/documents/ticket.pdf" , httpServletRequest)) {
+		/*if (PrintService.print(TicketPrinter.TICKET_FILE , httpServletRequest)) {
 			return "redirect:/paiementprocess/encaisser?form";
 		}
-		return "ticketPdfDocView";
-
+		*/
+		return "redirect:/paiementprocess/encaisser?form";
 
 	}
-	
+
 	@RequestMapping("/printTicketWithourReduce/{ticketId}.pdf")
 	public String printTicketWithourReduce(@PathVariable("ticketId")Long ticketId, Model uiModel,HttpServletRequest httpServletRequest){
 		Paiement paiement = Paiement.findPaiement(ticketId);
@@ -356,22 +379,26 @@ public class PaiementProcessController {
 		}
 		paiement.setReduction(Boolean.FALSE);
 		uiModel.addAttribute("paiement", paiement);
+
 		try {
-			TicketPrinter.buildTicket(paiement);
+			String remoteAddr = httpServletRequest.getRemoteAddr();
+			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
+			String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
+		
+			TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("eereur d'impression de ticket !");
 			System.out.println(e.getMessage());
+			return "ticketPdfDocView";
 		}
-		if (PrintService.print("/tools/adpharma/documents/ticket.pdf" , httpServletRequest)) {
-			return "redirect:/paiementprocess/encaisser?form";
-		}
-		return "ticketPdfDocView";
-
-
+		
+		
+		return "redirect:/paiementprocess/encaisser?form";
 	}
 
-  @Transactional
+	@Transactional
 	public void encaisser( Facture facture ,Caisse caisse,Paiement paiement) {
 		CommandeClient commande = facture.getCommande();
 		TypeCommande typeCommande = commande.getTypeCommande();
@@ -389,7 +416,7 @@ public class PaiementProcessController {
 
 
 	// gere les paiements des facture a credit	
-  @Transactional
+	@Transactional
 	public void avanceVenteCredit(Facture facture ,Caisse caisse,Paiement paiement){
 		QuiPaye quiPaye = paiement.getQuiPaye();
 		DetteClient detteClient = null ;
@@ -452,7 +479,7 @@ public class PaiementProcessController {
 			facture.avancerPaiement(paiement.getMontant().toBigInteger());
 
 		}
-		
+
 		if (cmd.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && !cmd.getVentePartiel()) {
 			Paiement paiement2 = paiement.getPaiementClientPayeur();
 			if (paiement2!=null) {
@@ -469,11 +496,11 @@ public class PaiementProcessController {
 		genererMvtStock(facture,caisse);
 
 	}
-    @Transactional
+	@Transactional
 	public void genererDetteClient(Facture facture , BigInteger avance){
 		CommandeClient commande = facture.getCommande();
 		Client client = commande.getClient();
-        avance = avance!=null ?avance : BigInteger.ZERO ;
+		avance = avance!=null ?avance : BigInteger.ZERO ;
 		BigDecimal amount = new BigDecimal(facture.getMontantTotal());
 		amount=amount.multiply(BigDecimal.valueOf(commande.getTauxCouverture())).divide(BigDecimal.valueOf(100));
 		BigInteger partPayeur = amount.toBigInteger();
@@ -493,7 +520,7 @@ public class PaiementProcessController {
 
 	}
 
-    @Transactional
+	@Transactional
 	public void genererDetteClientPayeur(Facture facture){
 		CommandeClient commande = facture.getCommande();
 		Client paiyeur = commande.getClientPaiyeur();
@@ -520,7 +547,7 @@ public class PaiementProcessController {
 	}
 
 	// genere les mvt de stock
-    @Transactional
+	@Transactional
 	public void genererMvtStock(Facture facture , Caisse caisse){
 		Set<LigneCmdClient> lineCommande = facture.getCommande().getLineCommande();
 		if (!lineCommande.isEmpty()) {
@@ -561,7 +588,7 @@ public class PaiementProcessController {
 						mouvementStock.setFiliale(prd.getFiliale().getFilialeNumber());
 					}
 				}
-				
+
 				prd.merge();   
 				mouvementStock.persist();
 			}
@@ -570,7 +597,7 @@ public class PaiementProcessController {
 	}
 
 	//genere les operation de caisse
-    @Transactional
+	@Transactional
 	public void genererOperationCaisse(Caisse caisse,Paiement paiement){
 		OperationCaisse operationCaisse = new OperationCaisse();
 		operationCaisse.setCaisse(caisse);
@@ -591,8 +618,8 @@ public class PaiementProcessController {
 
 		}*/
 		//definir le total des remise
-			caisse.updateRemiseTotal(BigDecimal.valueOf(paiement.getFacture().getMontantRemise().longValue()));
-	    if (typePaiement.equals(TypePaiement.VENTE_PARTIEL))caisse.updateCash(paiement.getMontant());
+		caisse.updateRemiseTotal(BigDecimal.valueOf(paiement.getFacture().getMontantRemise().longValue()));
+		if (typePaiement.equals(TypePaiement.VENTE_PARTIEL))caisse.updateCash(paiement.getMontant());
 		if (typePaiement.equals(TypePaiement.BON_CMD)) caisse.updateBonCmd(paiement.getMontant());
 		if (typePaiement.equals(TypePaiement.BON_CMD_PARTIEL)) caisse.updateCash(paiement.getMontant());
 		if (typePaiement.equals(TypePaiement.CARTE_CREDIT)) caisse.updateCarteCredit(paiement.getMontant());
