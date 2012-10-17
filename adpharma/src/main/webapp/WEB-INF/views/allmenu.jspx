@@ -562,7 +562,8 @@
         </security:authorize>
       
     	<li>
-    		<a class="aide" href="#" style="color: blue; font-weight: bold;">AIDE</a>
+    	 <spring:url value="/manuels/sommaire-fr" var="sommaire_url"/>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold;">AIDE</a>
     			
        </li>
   	

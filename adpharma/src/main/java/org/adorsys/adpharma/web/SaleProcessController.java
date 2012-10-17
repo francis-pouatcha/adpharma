@@ -307,6 +307,13 @@ public class SaleProcessController {
 			uiModel.addAttribute("saleProcess",saleProcess);
 			return "saleprocess/edit";
 		} 
+		if(pharmaUser.isAccountLocked()){
+			uiModel.addAttribute("apMessage", "Votre compte a ete bloque veullez contatcter l'administrateur pour plus d'infos !") ;
+			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
+			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+			uiModel.addAttribute("saleProcess",saleProcess);
+			return "saleprocess/edit";	
+		}
 		if (!pharmaUser.hasAnyRole(role)) {
 			uiModel.addAttribute("apMessage", "Vous n'avez pas les droits necessaire Pour Cloturer cette vente") ;
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
@@ -364,7 +371,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-		   if (configuration.getSaleForce()) 	uiModel.addAttribute("forcer",Boolean.TRUE);
+			if (configuration.getSaleForce()) 	uiModel.addAttribute("forcer",Boolean.TRUE);
 
 		}/*else if (commandeClient.contientSameCipM(ligneApp.getCipMaison())) {
 			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
@@ -379,7 +386,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			  if (configuration.getSaleForce()) uiModel.addAttribute("forcer",Boolean.TRUE);
+			if (configuration.getSaleForce()) uiModel.addAttribute("forcer",Boolean.TRUE);
 
 		} else{
 			if (remiseAutorise < remise.intValue()) {
@@ -557,7 +564,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-		   if(configuration.getSaleForce())	uiModel.addAttribute("forcer",Boolean.TRUE);
+			if(configuration.getSaleForce())	uiModel.addAttribute("forcer",Boolean.TRUE);
 			saleProcess.calculPrix(commandeClient);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);

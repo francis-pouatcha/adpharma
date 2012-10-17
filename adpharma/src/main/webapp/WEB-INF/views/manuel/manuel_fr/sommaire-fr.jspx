@@ -1,0 +1,88 @@
+<div align="center" xmlns:spring="http://www.springframework.org/tags"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+	style="overflow-y: auto; height: 500px;">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message var="app_name" code="application_name"
+		htmlEscape="false" />
+	<spring:message var="title" code="welcome_titlepane"
+		arguments="${app_name}" htmlEscape="false" />
+	<util:panel id="title" title="${title}">
+
+		<spring:url var="imgfonct" value="/resources/images/imgfonct.jpg" />
+		<spring:url var="biglogo" value="/resources/images/biglogo.jpg" />
+		<spring:url var="imgcomp" value="/resources/images/imgcomputer.png" />
+
+
+		<center>
+			<h1>Guide Utilisation de L'application AdPharma 1.0</h1>
+		</center>
+
+		<div class="manuel">
+			<h1>Table Des Matieres</h1>
+			<ol>
+				<li><a href="#">Introduction </a>
+					<ol>
+						<li>Presentation de Adpharma et convention generale</li>
+						<li>Connection</li>
+					</ol></li>
+				<li>Gesttion Du Stock
+					<ol>
+						<li>Approvisionnemnt
+							<ol>
+								<li>Creer un Approvisionnement</li>
+								<li>Rechercher Un Approvisionnement</li>
+								<li>Lister les Approvisionnements</li>
+								<li>Decomposer un produit Approvisionne</li>
+								<li>Sortir du stock un produit Approvisionne</li>
+								<li>Rechercher un produit Approvisionne</li>
+								<li>Impression du code Barre d'un produit Approvisionne</li>
+							</ol>
+						</li>
+						<li>Mouvements De Stock
+							<ol>
+								<li>Visualiser Les Mouvements de stock</li>
+								<li>Rechercher un Mouvement</li>
+
+							</ol>
+						</li>
+						<li>Commande Fournisseur
+							<ol>
+								<li>Effectuer Une Commande Fournisseur</li>
+								<li>Recchercher une commande</li>
+
+
+							</ol>
+						</li>
+					</ol>
+				</li>
+				<li>Gestion Des Ventes
+					<ol>
+						<li>Effectuer une vente
+							<ol>
+								<li>Vente Au Comptant</li>
+								<li>Vente a credit</li>
+								<li>editer une proformat</li>
+								<li>recherche une vente</li>
+							</ol>
+						</li>
+						<li>Imprimer une Facture</li>
+						<li>Effectuer un retour de Produit</li>
+					</ol>
+				</li>
+				<li>Gestion des Caisses
+					<ol>
+						<li>Ouvrir une caisse</li>
+						<li>Fermer une caisse</li>
+						<li>Effectuer une encaissement</li>
+						<li>Visualiser l'etat des  vente</li>
+					</ol>
+				</li>
+				<li>Gestion Des Inventaires</li>
+			</ol>
+		</div>
+
+
+	</util:panel>
+</div>

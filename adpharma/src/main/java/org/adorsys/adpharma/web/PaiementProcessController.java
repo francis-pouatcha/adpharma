@@ -162,10 +162,11 @@ public class PaiementProcessController {
 				uiModel.addAttribute("paiementProcess",paiementProcess);
 				uiModel.addAttribute("paiement",paiement);
 				try {
-					String remoteAddr = httpServletRequest.getRemoteAddr();
-					List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
-					String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
-					TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
+					//String remoteAddr = httpServletRequest.getRemoteAddr();
+					//List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
+					//String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
+					TicketPrinter.buildTicket(paiement,Boolean.TRUE);
+					PrintService.silentPrint(TicketPrinter.TICKET_FILE);
 				} catch (Exception e) {
 					logger.error("erreur d'impression !");
 					e.printStackTrace();
@@ -353,7 +354,8 @@ public class PaiementProcessController {
 			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
 			String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
 		
-			TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
+			TicketPrinter.buildTicket(paiement,Boolean.TRUE);
+			PrintService.silentPrint(TicketPrinter.TICKET_FILE) ;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -381,12 +383,12 @@ public class PaiementProcessController {
 		uiModel.addAttribute("paiement", paiement);
 
 		try {
-			String remoteAddr = httpServletRequest.getRemoteAddr();
-			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
-			String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
+			//String remoteAddr = httpServletRequest.getRemoteAddr();
+			//List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
+			//String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
 		
-			TicketPrinter.buildTicket(paiement,Boolean.TRUE,printerName);
-
+			TicketPrinter.buildTicket(paiement,Boolean.TRUE);
+            PrintService.silentPrint(TicketPrinter.TICKET_FILE);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("eereur d'impression de ticket !");

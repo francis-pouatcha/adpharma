@@ -112,7 +112,7 @@
 			<img src="${imgfonct}"/>Gestion des ordonnanciers<br/>
     		</td>
     		<td align="center" width="30%" class="tblog">
-    		<h2> PHARMACIE DE L' ESSEC </h2>
+    		<h2> PHARMACIE DE L'ALLIANCE </h2>
     		<img src="${biglogo}"/>
     		</td>
     		<td align="center" width="33%" class="tblog">

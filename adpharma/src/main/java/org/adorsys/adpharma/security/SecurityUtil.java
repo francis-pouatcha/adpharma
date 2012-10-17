@@ -50,12 +50,12 @@ public class SecurityUtil {
 	public static PharmaUser getPharmaUser(String key){
 		PharmaUser pharmaUser = null ;
 		if(StringUtils.isNotBlank(key)){
-		List<PharmaUser> resultList = PharmaUser.findPharmaUsersBySaleKeyEquals(key).getResultList();
-		if (!resultList.isEmpty()) {
-			pharmaUser = resultList.iterator().next();
-		}
+			List<PharmaUser> resultList = PharmaUser.findPharmaUsersBySaleKeyEquals(key).getResultList();
+			if (!resultList.isEmpty()) {
+				pharmaUser = resultList.iterator().next();
+			}
 		}else {
-			 pharmaUser = getPharmaUser();
+			pharmaUser = getPharmaUser();
 			if (pharmaUser.hasAnyRole(RoleName.ROLE_OPEN_SALE_SESSION)) {
 				pharmaUser = null ;
 			}

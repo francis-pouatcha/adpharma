@@ -13,6 +13,8 @@
   <spring:message code="button_home" var="home_label" />
   
   <script type="text/javascript">
+     
+  
 function confHeader(){
 Check = confirm("Voulez vous vraiment Ferner votre session? ");
 if(Check == false){
@@ -88,74 +90,10 @@ function(data){
   <spring:url var="img" value="/resources/images/logo.png" />
   <spring:message code="button_home" var="home_label" />
   <spring:url value="/resources/j_spring_security_logout" var="logout"/>
-  
-  <!--  <table id="headerTable">
-  	<tr>
-  		<td style="text-align: left; vertical-align: top;">
-  			<table>
-  			<tr>
-  			
-  			<td style="vertical-align: top;">
-	  			<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
-			  	<font face="Trebuchet MS" size="5" color="#ffffff"><strong> ADORSYS WEB PHARMA 1.0 </strong></font><br/>
-			  	<font size="2.5" face="Trebuchet MS"  color="#ffffff"><strong>Gestion du Stock , de  la Caisse et du  Suivi de la Clientele . </strong> </font><br/>
-			     <font size="2.5" face="Trebuchet MS"  color="#ffffff"><strong>Phones : +237 33 42 32 44 / 99 93 99 48 </strong> </font>
-			  	
-			  	</a>
-  			</td>
-  			</tr>
-  			</table>
-		  		  
-  		</td>
-  		
-  		<td  style="padding-top: 20px; vertical-align: top; text-align: center;">
-  			<span class="loginarea">
-  			<c:choose>
-  				<c:when test="${pageContext['request'].userPrincipal != null}">
-  				
-	  				  
-	  				 <font size="5">
-	  				 
-		  				<a href="#" title="cliquer pour voir vos Infos" id="userInfos">  <c:out value="Welcome, "/>${pageContext['request'].userPrincipal.name}</a>
-					      <spring:url value="/resources/j_spring_security_logout" var="logout"/>
-				      </font>
-				      
-				      <br/>
-				    
-  				</c:when>
-  			</c:choose>
-  			</span>
-  		</td>
-  		
-  		<td  style="padding-top: 20px; vertical-align: top; text-align: center;">
-  			<span class="loginarea">
-  			<c:choose>
-  				<c:when test="${pageContext['request'].userPrincipal != null}">
-				     <i> 
-				     
-				      <a href="${logout}" class="lienimg" onclick="return confHeader();">
-				     <font face="Trebuchet MS" size="6" color="#ffffff"><strong> LOGOUT </strong></font><br/>
-				      
-				      </a>
-				      </i>
-  				</c:when>
-  				<c:otherwise>
-				      <spring:url value="/login" var="login"/>
-				      <a href="${login}">
-				      				     <font face="Trebuchet MS" size="6" color="#ffffff"><strong> LOGIN </strong></font><br/>
-				      
-				      </a>
-  				</c:otherwise>
-  			</c:choose>
-  			</span>
-  		</td>
-  		<td style="text-align: right;padding: 5px;">
-		  <a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
-		  	<img src="${ship}" />
-		  </a>
-  		</td>
-  	</tr>
-  </table>-->
+    <spring:message code="security_logout"  var="msg_logout"/>
+      <spring:message code="security_login"  var="msg_login"/>
+       <spring:message code="security_user_infos"  var="msg_user"/>
+       
   <div id="top-bar">
  		<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
 			<img src="${img}"  alt="DZone" class="floatleft" />
@@ -164,13 +102,17 @@ function(data){
 			<c:choose>
   				<c:when test="${pageContext['request'].userPrincipal != null}">
   			  <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
-		  		<a href="#"  > Welcome 	${pageContext['request'].userPrincipal.name}</a> to ${sessionBean.connectedSiteName}
-		    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >Users Informations</a>
+		  		<a href="#"  > Bienvenue 	${pageContext['request'].userPrincipal.name}</a> Sur  ${sessionBean.connectedSiteName}
+		    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
   				</c:when>
   			</c:choose>
 			<c:choose>
   				<c:when test="${pageContext['request'].userPrincipal != null}">
-				     <a href="${logout}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >Logout</a> 
+				     <a href="${logout}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >
+				     
+				    ${msg_logout}
+				    
+				     </a> 
 				          <spring:url var="setLicence_url" value="#" />
 				     
   				</c:when>
@@ -178,7 +120,7 @@ function(data){
   				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
   				
 				      <spring:url value="/login" var="login"/>
-				      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >Login</a> 
+				      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" > ${msg_login}</a> 
   				</c:otherwise>
   			</c:choose>	
 				

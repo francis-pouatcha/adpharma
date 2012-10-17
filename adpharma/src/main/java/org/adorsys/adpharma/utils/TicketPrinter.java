@@ -40,7 +40,7 @@ public class TicketPrinter {
 	
 public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.pdf";
 //public static final String TICKET_FILE ="/tools/adpharma/documents/ticket.pdf";
-	public static void buildTicket( Paiement pay,Boolean print,String printerName) throws Exception {
+	public static void buildTicket( Paiement pay,Boolean print) throws Exception {
 		Document document = new Document(new Rectangle(0, 0, 220, 1000));
 		
 		FileOutputStream fileOutputStream = new FileOutputStream(new File(TICKET_FILE));
@@ -549,15 +549,7 @@ payTable.addCell(diffCell2);
 			
 		}
 	 document.close();
-	if(print){
-		// Desktop.getDesktop().print(new File(TICKET_FILE));
-		PrintService.PrintFile(TICKET_FILE,printerName);
-		
-		
-	}else {
-		 Desktop.getDesktop().open(new File(TICKET_FILE));
 	}
-		}
 	
 		
 	}

@@ -1,4 +1,5 @@
 package org.adorsys.adpharma.beans;
+import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,7 +57,7 @@ private static final	String ACROD_COMMAND =  "C:\\Program Files\\Adobe\\Acrobat 
 		  // Create the print job  
 		
 		  
-		  DocPrintJob job = service.createPrintJob();  
+		  DocPrintJob job = null ;//service.createPrintJob(); 
 		  if(StringUtils.isNotBlank(printerName)){
 			  DocPrintJob job1 =null;
 			  for(javax.print.PrintService s : services) {
@@ -66,21 +67,22 @@ private static final	String ACROD_COMMAND =  "C:\\Program Files\\Adobe\\Acrobat 
 				        System.out.println("PDF printer available.");
 				        job1 = s.createPrintJob(); 
 				        isPrinterWhithName =Boolean.TRUE;
+				        job=job1;
 		                break;
 		            }
 		        }
-			 job =job1;
 		}
 		  
-		  acroPrint(fileUrl, printerName);
+		  
+		  
 		  if(job ==null) throw new NullPointerException("no Printer Available"); 
 		  //Create the Doc. You can pass set of attributes(type of PrintRequestAttributeSet) as the   
 		  //3rd parameter specifying the page setup, orientation, no. of copies, etc instead of null.   
 		  Doc doc = new SimpleDoc(is, flavor, null);  
 		  //Order to print, (can pass attributes instead of null)  
 		  if(com.lowagie.tools.Executable.isWindows()){
-			if(isPrinterWhithName)  acroPrint(fileUrl, printerName);
 			 com.lowagie.tools.Executable.printDocumentSilent(file); 
+			if(isPrinterWhithName)  acroPrint(fileUrl, printerName);
 		  }else {
 			  job.print(doc, null);
 		    }   
@@ -131,6 +133,27 @@ private static final	String ACROD_COMMAND =  "C:\\Program Files\\Adobe\\Acrobat 
 	            t.printStackTrace();
 	        }*/
 
+		
+	}
+	
+	public static boolean silentPrint( String filePath){
+		
+		
+
+				File file = new File(filePath);
+				
+					 try {
+						 Desktop.getDesktop().print(file);
+						//com.lowagie.tools.Executable.printDocumentSilent(file,false);
+						 return true ;
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}// TODO Auto-generated method stub
+			
+			
+			return false ;
 		
 	}
 

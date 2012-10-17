@@ -161,7 +161,7 @@
 
 
 							<td><input type="text" name="prm" class="autres"
-								title="saisir la Date De Peremption" id="prm" /></td>
+								title="format (MMYY)" id="prm" onfocus="this.value=''"  value="MMYY"/></td>
 
 							<td><input class="submits" type="submit" value="Modifier" />
 							</td>
@@ -195,9 +195,9 @@
 							<th style="text-align: center;">Prix Vente</th>
 
 							<th style="text-align: center;">Prix Achat</th>
-							<th style="text-align: center;">TVA</th>
+							<th style="text-align: center;">T.Mul</th>
 
-							<th style="text-align: center;">Date Per</th>
+							<th style="text-align: center;">Date Per.</th>
 							<th colspan="2" style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
@@ -235,7 +235,7 @@
 								title="saisir le Prix D'achat unitaire" /></td>
 
 							<td><input type="text" name="prm" class="autres"
-								title="saisir la Date De Peremption" value="${apId}" id="prm" />
+								title="format (MMYY)" onfocus="this.value=''"  value="MMYY" id="prm" />
 
 							</td>
 

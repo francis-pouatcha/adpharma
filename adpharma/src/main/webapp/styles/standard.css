@@ -12,12 +12,58 @@ body,div,td {
 	color: black;
 }
 
+input#prm{
+	color: silver;
+}
+
+input#prm:FOCUS{
+	color: blue;
+	
+}
+
 #wrapper {
 	margin-top: 5px;
 }
 
 .search {
 	color: black;
+	
+}
+.manuel {
+	color: black;
+	margin-left: 22%;
+}
+
+.manuel h1 {
+	color: black;
+	font-weight: bold;
+	
+}
+
+.manuel a {
+	text-decoration: none;
+	color: black;
+	text-transform: capitalize;
+	font-size: 20px;
+}
+.manuel a:focus {
+	text-decoration:underline;
+	color: blue;
+	
+}
+
+.manuel ol li {
+font-size: 14px;
+list-style-type: upper-roman;
+}
+.manuel ol ol li {
+list-style-type: upper-alpha;
+}
+.manuel ol ol ol li {
+list-style-type: decimal;
+}
+.manuel li li {
+font-size: 1em;
 }
 
 
