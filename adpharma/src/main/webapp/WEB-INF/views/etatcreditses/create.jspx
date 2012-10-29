@@ -113,7 +113,10 @@
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" render="false" z="user-managed"/>
         <field:input field="agent" id="c_org_adorsys_adpharma_domain_EtatCredits_agent" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="${etatCredits_dateedition_date_format}" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" render="false" z="user-managed"/>
-        <field:datetime dateTimePattern="${etatCredits_datepaiement_date_format}" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" required="true" z="user-managed"/>
+               <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="minDateDette" label="Date Dette Min" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" z="user-managed"/>
+               <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="maxDateDette" label="Date Dette Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
+       
+        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" required="true" z="user-managed"/>
         <field:input field="avance" id="c_org_adorsys_adpharma_domain_EtatCredits_avance" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="solde" id="c_org_adorsys_adpharma_domain_EtatCredits_solde" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="montantAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
@@ -122,7 +125,7 @@
         <field:checkbox field="solder" id="c_org_adorsys_adpharma_domain_EtatCredits_solder" render="false" z="user-managed"/>
         <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_EtatCredits_annuler" render="false" z="user-managed"/>
         <field:select field="listeDettes" id="c_org_adorsys_adpharma_domain_EtatCredits_listeDettes" itemValue="id" items="${detteclients}" multiple="true" path="/detteclients" render="false" z="user-managed"/>
-        <field:checkbox field="consommerAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" label="Consommer Les Avoirs ?" z="user-managed"/>
+        <field:checkbox field="consommerAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" label="Consommer Avoirs ?" z="user-managed"/>
         <field:input field="clientId" id="c_org_adorsys_adpharma_domain_EtatCredits_clientId" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
         <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName" render="false" z="user-managed"/>
         <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser" render="false" z="user-managed"/>

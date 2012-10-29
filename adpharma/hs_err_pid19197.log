@@ -1,0 +1,53 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0xb6004f15, pid=19197, tid=3013335920
+#
+# JRE version: 6.0_22-b22
+# Java VM: OpenJDK Client VM (20.0-b11 mixed mode, sharing linux-x86 )
+# Derivative: IcedTea6 1.10.6
+# Distribution: Ubuntu 11.04, package 6b22-1.10.6-0ubuntu1
+# Problematic frame:
+# J  org.sonatype.guice.plexus.locators.RealmFilter$FilteredItr.hasNext()Z
+#
+# If you would like to submit a bug report, please include
+# instructions how to reproduce the bug and visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-6/
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x085edc00):  JavaThread "Worker-9" [_thread_in_Java, id=19283, stack(0xb396d000,0xb39be000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=128 (), si_addr=0x00000000
+
+Registers:
+EAX=0x9440a2d8, EBX=0x88b89420, ECX=0x649d57c8, EDX=0x88acca70
+ESP=0xb39bc460, EBP=0xb39bc508, ESI=0x00000000, EDI=0x00000158
+EIP=0xb6004f15, EFLAGS=0x00210246, CR2=0xb7436100
+
+Top of Stack: (sp=0xb39bc460)
+0xb39bc460:   649d57c8 88aeeb80 b39bc508 b5f8f550
+0xb39bc470:   082ab210 082ab210 649d57c8 03cf659e
+0xb39bc480:   082ab210 b39bc498 b39bc508 b5f615f8
+0xb39bc490:   085c4414 00000000 b39bc508 b5fd9784
+0xb39bc4a0:   00000001 0404bff4 b39bc508 b5f82f78
+0xb39bc4b0:   0000006c b39bc510 649d5788 b5715b04
+0xb39bc4c0:   0000000b 6a5974a8 b39bc508 b5430529
+0xb39bc4d0:   649d5708 649d5468 75c59448 b5430529 
+
+Instructions: (pc=0xb6004f15)
+0xb6004ef5:   90 90 3b 41 04 0f 85 90 4e 45 ff 89 84 24 00 d0
+0xb6004f05:   ff ff 55 83 ec 28 89 4c 24 18 8b 71 10 83 fe 00
+0xb6004f15:   0f 84 f4 00 00 00 e9 43 01 00 00 8b 71 08 8b ce
+0xb6004f25:   90 b8 ff ff ff ff e8 e0 52 45 ff 83 f8 00 0f 84 
+
+Register to memory mapping:
+
+EAX=0x9440a2d8 is an oop
+{instance class} 
+ - klass: {other class}
+EBX=0x88b89420 is an oop
+{method} 
+ - klass: {other class}
+ECX=

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.EtatCreditFinder;
+import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/etatcreditses")
 @Controller
 public class EtatCreditsController {
-@Transactional
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid EtatCredits etatCredits, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Client findClient = Client.findClient(etatCredits.getClientId());
@@ -52,44 +53,47 @@ public class EtatCreditsController {
 		return "redirect:/etatcreditses/" + encodeUrlPathSegment(etatCredits.getId().toString(), httpServletRequest);
 	}
 
-@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
-public String Search(Model uiModel) {
- DetteClient detteClient = new DetteClient();
- detteClient.setDateCreation(null);
-	uiModel.addAttribute("etatCreditFinder",new EtatCreditFinder() );
-	return "etatcreditses/search";
-}
+	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
+	public String Search(Model uiModel) {
+		DetteClient detteClient = new DetteClient();
+		detteClient.setDateCreation(null);
+		uiModel.addAttribute("etatCreditFinder",new EtatCreditFinder() );
+		return "etatcreditses/search";
+	}
 
-@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
-public String Search(EtatCreditFinder etat  , Model uiModel) {
-	uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEdition(), etat.getDatePaiement(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
-	addDateTimeFormatPatterns(uiModel);
-	uiModel.addAttribute("etatCreditFinder", new EtatCredits());
-	
-	return "etatcreditses/search";
-}
+	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+	public String Search(EtatCreditFinder etat  , Model uiModel) {
+		uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEdition(), etat.getDatePaiement(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("etatCreditFinder", new EtatCredits());
+
+		return "etatcreditses/search";
+	}
 
 
 	@RequestMapping("/{etatId}/annuler")
 	public String anullerEtat(@PathVariable("etatId")Long etatId, Model uiModel){
 		EtatCredits etatCredits = 	EtatCredits.findEtatCredits(etatId);
 		if (etatCredits!=null) {
-			
-		if (etatCredits.getEncaisser()) {
-			uiModel.addAttribute("apMessage", "IMPOSSIBLE D'ANNULER L' ETAT EST DEJA ENCAISSE! ");
-		}else {
-			List<DetteClient> listeDettes = etatCredits.getListeDettes();
-			if (!listeDettes.isEmpty()) {
-				for (DetteClient detteClient : listeDettes) {
-					detteClient.setEtatCredit(null);
-					detteClient.merge();
-				}
-			}
-			etatCredits.remove();
-			uiModel.addAttribute("apMessage", "ETAT SUPRIME AVEC SUCCES ! ");
 
-		}
-		return "caisses/infos";     
+			if (etatCredits.getEncaisser()) {
+				uiModel.addAttribute("apMessage", "IMPOSSIBLE D'ANNULER L' ETAT EST DEJA ENCAISSE! ");
+			}else {
+				etatCredits.initListDetteWhithoutSort();
+				List<DetteClient> listeDettes = etatCredits.getListeDettes();
+				if (!listeDettes.isEmpty()) {
+					for (DetteClient detteClient : listeDettes) {
+						 detteClient.setEtatCredit(null);
+						 detteClient.merge();
+						 detteClient.flush();
+						
+					}
+				}
+				etatCredits.remove();
+				uiModel.addAttribute("apMessage", "ETAT SUPRIME AVEC SUCCES ! ");
+
+			}
+			return "caisses/infos";     
 		}else {
 			uiModel.addAttribute("apMessage", "ETAT DEJA SUPRIME  ! ");
 			return "caisses/infos";     
@@ -106,7 +110,7 @@ public String Search(EtatCreditFinder etat  , Model uiModel) {
 		return "etatCreditPdf";
 
 	}
-	
+
 	@RequestMapping("/printfacture/{etatId}.pdf")
 	public String printfacuture(  @PathVariable("etatId")Long etatId, Model uiModel){
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(etatId);
@@ -123,7 +127,7 @@ public String Search(EtatCreditFinder etat  , Model uiModel) {
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
 		return initShowView(uiModel, etatCredits);
 	}
-	
+
 	@Transactional
 	@RequestMapping(value = "/encaisser/{id}", method = RequestMethod.POST)
 	public String encaisser( Paiement paiement,@PathVariable("id") Long id, Model uiModel ,HttpServletRequest httpServletRequest) {
@@ -145,7 +149,7 @@ public String Search(EtatCreditFinder etat  , Model uiModel) {
 	}
 
 	public String initShowView( Model uiModel, EtatCredits etatCredits){
-		
+
 		etatCredits.initListeDettes();
 		Paiement paiement = new Paiement();
 		paiement.setMontant(etatCredits.getReste());

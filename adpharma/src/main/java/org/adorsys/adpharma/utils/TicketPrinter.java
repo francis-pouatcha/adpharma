@@ -221,8 +221,8 @@ if (!ligneFacture.isEmpty()) {
 		
 		PdfPCell cipCell1 = new PdfPCell(cellBorderlessStyle);
 	     int lengt =	line.getDesignation().length(); 
-	     if (lengt >24) {
-				cipCell1.setPhrase(new Phrase(new Chunk(line.getDesignation().substring(0, 18).toUpperCase(), conStyle)));
+	     if (lengt >21) {
+				cipCell1.setPhrase(new Phrase(new Chunk(line.getDesignation().substring(0, 20).toUpperCase(), conStyle)));
 
 		}else {
 			cipCell1.setPhrase(new Phrase(new Chunk(line.getDesignation().toUpperCase(), conStyle)));

@@ -222,6 +222,7 @@ reste = montant;
         if (solder != null) {
             searchQuery.append(" AND  o.solder IS :solder ");
         }
+        
         if (StringUtils.isNotBlank(numero)) {
             searchQuery.append(" AND  o.numero = :numero ");
         }

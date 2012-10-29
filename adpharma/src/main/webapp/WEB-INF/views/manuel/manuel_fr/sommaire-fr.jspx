@@ -9,7 +9,6 @@
 	<spring:message var="title" code="welcome_titlepane"
 		arguments="${app_name}" htmlEscape="false" />
 	<util:panel id="title" title="${title}">
-
 		<spring:url var="imgfonct" value="/resources/images/imgfonct.jpg" />
 		<spring:url var="biglogo" value="/resources/images/biglogo.jpg" />
 		<spring:url var="imgcomp" value="/resources/images/imgcomputer.png" />
@@ -27,6 +26,41 @@
 						<li>Presentation de Adpharma et convention generale</li>
 						<li>Connection</li>
 					</ol></li>
+					
+					<li>Gestion Des Utilisateurs
+					<ol>
+						<li>gerer des comptes Utilisateur
+							<ol>
+								<li>Ajouter un compte</li>
+								<li>Rechercher un compter</li>
+								<li>Suspendre un compte</li>
+								<li>Retablir un compte Suspendu </li>
+								<li>Mettre a jour un mot de passe oublier </li>
+							</ol>
+						</li>
+						<li>Changer Son mot de passe</li>
+						<li>Visualiser les infos Utilisateurs</li>
+						
+					</ol>
+				</li>
+				<li>Gesttion Du Catalogue de produits
+					<ol>
+						<li>Produits
+							<ol>
+								<li>Creer un Produit avec C.I.P</li>
+								<li>Creer un produit sans C.I.P</li>
+								<li>Rechercher un produit du catalogue</li>
+							</ol>
+						</li>
+						<li>Decomposition  De Produit
+							<ol>
+								<li>Creer une relation de Decomposition</li>
+								<li>Rechercher et Visualiser les relations de decompositions</li>
+
+							</ol>
+						</li>
+					</ol>
+				</li>
 				<li>Gesttion Du Stock
 					<ol>
 						<li>Approvisionnemnt
@@ -43,12 +77,14 @@
 						<li>Mouvements De Stock
 							<ol>
 								<li>Visualiser Les Mouvements de stock</li>
+								<li>Visualiser la fiche detaillee d'un produit par CIPM</li>
 								<li>Rechercher un Mouvement</li>
 
 							</ol>
 						</li>
 						<li>Commande Fournisseur
 							<ol>
+							    <li>Editer une fiche de suivi de quantite </li>
 								<li>Effectuer Une Commande Fournisseur</li>
 								<li>Recchercher une commande</li>
 
@@ -77,9 +113,55 @@
 						<li>Fermer une caisse</li>
 						<li>Effectuer une encaissement</li>
 						<li>Visualiser l'etat des  vente</li>
+						<li>Rechercher une caisse </li>
 					</ol>
 				</li>
-				<li>Gestion Des Inventaires</li>
+				
+				<li>Gestion des Inventaires
+					<ol>
+						<li> Editer une fiche de suivie du stock</li>
+						<li>Effectuer un inventaire</li>
+						<li>REchercher un Inventaire</li>
+					</ol>
+				</li>
+				
+				<li>Suivie Clientelle
+					<ol>
+						<li>Gestions des clients
+							<ol>
+								<li>Creer un Client</li>
+								<li>Rechercher un client</li>
+								<li>Creer une categorie de client</li>
+							</ol>
+						</li>
+						<li>Gestion des Dettes
+							<ol>
+								<li>Visualiser Les dettes d'un client</li>
+								<li>Editer un etat detaille des dette d'un client </li>
+								<li>Encaisser un etat de credit </li>
+
+							</ol>
+						</li>
+						<li>Gestion des Avoir
+							<ol>
+							    <li>Visualisation des Avoirs  </li>
+								<li>Creation des Avoirs</li>
+								<li>Annulation des Avoirs</li>
+							</ol>
+						</li>
+					</ol>
+				</li>
+				<li>Supervision 
+					<ol>
+						<li>Visualiser des courbes statistiques</li>
+						<li>Gerer les devises </li>
+						<li>gerer les taux de marges</li>
+						<li>gerer les modes de conditionnements</li>
+						<li>gerer les ordonanciers </li>
+						<li>gerer les filiales </li>
+						<li>gerer les sites </li>
+					</ol>
+				</li>
 			</ol>
 		</div>
 

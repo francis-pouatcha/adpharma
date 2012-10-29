@@ -6,37 +6,49 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
+                <FIELDSET>
+               <LEGEND> Infos Produits</LEGEND>              
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Produit_footPrint" render="false" z="user-managed"/>
                     <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" render="false" z="user-managed"/>
                     <field:input field="cip" id="c_org_adorsys_adpharma_domain_Produit_cip" render="${cip}" required="true" z="user-managed"/>
-                    <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits"  z="user-managed"/>
+               <!-- <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits"  z="user-managed"/>
                     <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits"  z="user-managed"/>
+                --> 
                     <field:select field="modeConditionement" id="c_org_adorsys_adpharma_domain_Produit_modeConditionement" itemValue="id" items="${modeconditionements}" path="/modeconditionements" render="false" z="user-managed"/>
                     <field:input field="designation" id="c_org_adorsys_adpharma_domain_Produit_designation" required="true" z="QU7r5zqGZMyMej7Tr9SkqPafDG8="/>
-                    <field:input field="quantiteEnStock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
+                    <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
+                    <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
+                    <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant" required="false" z="user-managed"/>
+                                    <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
+                
+                  </FIELDSET>
+                       </td>
+                <td class="tbcreate">
+                 <FIELDSET>
+               <LEGEND> Infos Stock</LEGEND>   
+                       <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" disabled="true" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" render="false" z="user-managed"/>
+                    <field:datetime dateTimePattern="${produit_datedernieresortie_date_format}" disabled="true" field="dateDerniereSortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" render="false" z="user-managed"/>
+                 <field:input field="quantiteEnStock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
                     <field:input field="seuilComande" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" validationMessageCode="field_invalid_integer" z="4f/ES3d9TyL7w8Br1piLgLR2kI0="/>
                     <field:input field="tauxRemiseMax" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>
                     <field:select field="tvaProduit" id="c_org_adorsys_adpharma_domain_Produit_tvaProduit" itemValue="id" items="${tvas}" path="/tvas" z="1UkofXoJ7/SSEsmj2K7Ar+7ZX6w="/>
                     <field:select field="tauxDeMarge" id="c_org_adorsys_adpharma_domain_Produit_tauxDeMarge" itemValue="id" items="${tauxmarges}" path="/tauxmarges" z="7caGIJ7lWBnqCZZRsg6VK+6zl0E="/>
-                    <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
                     <field:input field="plafondStock" id="c_org_adorsys_adpharma_domain_Produit_plafondStock" validationMessageCode="field_invalid_integer" z="DPR1QqMyvQB+RqYN+gwAtskwqYU="/>
-                </td>
-                <td class="tbcreate">
-                    <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
-                    <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
-                    <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant" required="false" z="user-managed"/>
-                    <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" disabled="true" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" render="false" z="user-managed"/>
-                    <field:datetime dateTimePattern="${produit_datedernieresortie_date_format}" disabled="true" field="dateDerniereSortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" render="false" z="user-managed"/>
+             
+                  <!--  
                     <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
                     <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
+                                    <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="/aJ/nPLLC7Pbr4lVWetnWx6SEh0="/>
+                
+                   -->
                     <field:checkbox field="commander" id="c_org_adorsys_adpharma_domain_Produit_commander" render="false" z="user-managed"/>
                     <field:checkbox field="produitCompose" id="c_org_adorsys_adpharma_domain_Produit_produitCompose" render="false" z="user-managed"/>
-                    <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="/aJ/nPLLC7Pbr4lVWetnWx6SEh0="/>
                     <field:input field="prixTotalStock" id="c_org_adorsys_adpharma_domain_Produit_prixTotalStock" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
                     <field:input field="prixAchatSTock" id="c_org_adorsys_adpharma_domain_Produit_prixAchatSTock" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
                     <field:input field="prixVenteStock" id="c_org_adorsys_adpharma_domain_Produit_prixVenteStock" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
                     <field:input field="qtevendu" id="c_org_adorsys_adpharma_domain_Produit_qtevendu" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
                     <field:datetime dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" render="false" z="user-managed"/>
+               </FIELDSET>
                 </td>
             </tr>
         </table>

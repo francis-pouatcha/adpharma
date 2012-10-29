@@ -67,9 +67,9 @@ public void protectSomeField(){
 	    	footPrint2.setBusinessName(footPrint.getBusinessName());
 	    	footPrint2.setBusinessKey(footPrint.getBusinessKey());
 	    	footPrint2.setTechId(footPrint.getTechId());
-	    	ChangeHistory changeHistory = new ChangeHistory();
-	    	changeHistory.setFootPrint(this.footPrint);
-	    	changeHistory.persist();
+	    	//ChangeHistory changeHistory = new ChangeHistory();
+	    	//changeHistory.setFootPrint(this.footPrint);
+	    	//changeHistory.persist();
 	    	this.footPrint = footPrint2;
 		}
 	    

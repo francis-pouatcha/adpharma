@@ -37,6 +37,14 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateEdition;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	private transient Date minDateDette ;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	private transient Date maxDateDette ;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
@@ -71,8 +79,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 	@javax.persistence.PostLoad
 	public void PostLoad() {
-
-		// listeDettes = DetteClient.search(null, this, null, null).getResultList();
+		//listeDettes = DetteClient.search(null, this, null, null,null,null).getResultList();
 		//sortListeDettes();
 	}
 
@@ -82,7 +89,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 	public void initListeDettes(){
 
-		listeDettes = DetteClient.search(null, this, null, null).getResultList();
+		initListDetteWhithoutSort();
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -92,6 +99,18 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		}).start();
 
 	}
+	
+	 
+    public static long countEtatCreditses() {
+        return entityManager().createQuery("SELECT COUNT(o) FROM EtatCredits o", Long.class).getSingleResult();
+    }
+	
+	
+	public void initListDetteWhithoutSort(){
+		listeDettes = DetteClient.search(null, this, null, null,null,null).getResultList();
+	}
+	
+	
 
 	public void avancer(BigDecimal amount){
 		avance = avance.add(amount);
@@ -109,7 +128,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 			amount = paiement.getSommeRecue();
 		}
 		avancer(amount);
-		listeDettes = DetteClient.search(null, this, null, null).getResultList();
+		listeDettes = DetteClient.search(null, this, null, null,null,null).getResultList();
 		for (DetteClient dette : listeDettes) {
 			if (!dette.getAnnuler()) {
 				facture =   Facture.findFacturesByFactureNumberEquals(dette.getFactureNo()).getResultList().iterator().next();
@@ -134,9 +153,9 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 
 	public void validate(BindingResult bindingResult) {
-		List<DetteClient> listDettes = DetteClient.search(getClient().getId(), null, Boolean.FALSE, Boolean.FALSE).getResultList();
+		List<DetteClient> listDettes = DetteClient.search(getClient().getId(), null, Boolean.FALSE, Boolean.FALSE ,getMinDateDette(),getMaxDateDette()).getResultList();
 		if (listDettes.isEmpty()) {
-			ObjectError error = new ObjectError("listDettes", "ce Client de possede Aucune Dette Non Facturee");
+			ObjectError error = new ObjectError("listDettes", "ce Client de possede Aucune Dette Non Facturee Pour la Periode Specifiee");
 			bindingResult.addError(error);
 		} else {
 			getListeDettes().addAll(listDettes);
@@ -224,58 +243,76 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		}
 	}
 	
-	 public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEdition, Date datePaiement, Boolean solder, Boolean anuller,Boolean encaisser) {
-	        StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE o.id IS NOT NULL ");
-	        if (StringUtils.isNotBlank(clientName)) {
-	        	clientName = clientName+"% " ;
-	            searchQuery.append(" AND  LOWER(o.client.nom) LIKE LOWER(:nom)  ");
-	        }
-	        if (StringUtils.isNotBlank(etatNumber)) {
-	            searchQuery.append(" AND o.etatNumber = :etatNumber ");
-	        }
-	        if (dateEdition!=null) {
-	            searchQuery.append("AND o.dateEdition >= :dateEdition ");
-	        }
-	        if (datePaiement!=null) {
-	            searchQuery.append("AND o.datePaiement >= :datePaiement ");
-	        }
-	       if (solder!=null) {
-	            searchQuery.append("AND o.solder IS :solder ");
-	        }
-	        if (anuller!=null) {
-	            searchQuery.append("AND o.annuler IS :anuller ");
-	        }
-	        if (encaisser!=null) {
-	            searchQuery.append("AND o.encaisser IS :encaisser ");
-	        }
-	        
-	        
-	       
-	        TypedQuery<EtatCredits> q = entityManager().createQuery(searchQuery.toString(), EtatCredits.class);
-	        if (StringUtils.isNotBlank(clientName)) {
-	            q.setParameter("nom", clientName);
-	        }
-	        if (StringUtils.isNotBlank(etatNumber)) {
-	            q.setParameter("etatNumber", etatNumber);
-	        }
-	        if (dateEdition!=null) {
-	        	q.setParameter("dateEdition", dateEdition);
-	        }
-	        if (datePaiement!=null) {
-	            q.setParameter("datePaiement", datePaiement);
-	        }
-	        if (solder!=null) {
-	        	q.setParameter("solder", solder);
-	        }
-	        if (anuller!=null) {
-	        	q.setParameter("anuller", anuller);
-	        }
-	        if (encaisser!=null) {
-	        	q.setParameter("encaisser", encaisser);
-	        }
-	        
-	        return q;
-	    }
+	
+
+	public Date getMinDateDette() {
+		return minDateDette;
+	}
+
+	public void setMinDateDette(Date minDateDette) {
+		this.minDateDette = minDateDette;
+	}
+
+	public Date getMaxDateDette() {
+		return maxDateDette;
+	}
+
+	public void setMaxDateDette(Date maxDateDette) {
+		this.maxDateDette = maxDateDette;
+	}
+
+	public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEdition, Date datePaiement, Boolean solder, Boolean anuller,Boolean encaisser) {
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE o.id IS NOT NULL ");
+		if (StringUtils.isNotBlank(clientName)) {
+			clientName = clientName+"% " ;
+			searchQuery.append(" AND  LOWER(o.client.nom) LIKE LOWER(:nom)  ");
+		}
+		if (StringUtils.isNotBlank(etatNumber)) {
+			searchQuery.append(" AND o.etatNumber = :etatNumber ");
+		}
+		if (dateEdition!=null) {
+			searchQuery.append("AND o.dateEdition >= :dateEdition ");
+		}
+		if (datePaiement!=null) {
+			searchQuery.append("AND o.datePaiement >= :datePaiement ");
+		}
+		if (solder!=null) {
+			searchQuery.append("AND o.solder IS :solder ");
+		}
+		if (anuller!=null) {
+			searchQuery.append("AND o.annuler IS :anuller ");
+		}
+		if (encaisser!=null) {
+			searchQuery.append("AND o.encaisser IS :encaisser ");
+		}
+
+
+
+		TypedQuery<EtatCredits> q = entityManager().createQuery(searchQuery.toString(), EtatCredits.class);
+		if (StringUtils.isNotBlank(clientName)) {
+			q.setParameter("nom", clientName);
+		}
+		if (StringUtils.isNotBlank(etatNumber)) {
+			q.setParameter("etatNumber", etatNumber);
+		}
+		if (dateEdition!=null) {
+			q.setParameter("dateEdition", dateEdition);
+		}
+		if (datePaiement!=null) {
+			q.setParameter("datePaiement", datePaiement);
+		}
+		if (solder!=null) {
+			q.setParameter("solder", solder);
+		}
+		if (anuller!=null) {
+			q.setParameter("anuller", anuller);
+		}
+		if (encaisser!=null) {
+			q.setParameter("encaisser", encaisser);
+		}
+
+		return q;
+	}
 
 	public Long getClientId() {
 		return clientId;

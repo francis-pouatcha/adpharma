@@ -15,6 +15,7 @@ import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeBon;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -31,7 +32,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Component("avoirPdfView")
-
 public class AvoirPdfView extends   AbstractPdfView {
 	
 	@Override
@@ -52,7 +52,6 @@ public class AvoirPdfView extends   AbstractPdfView {
 
 		PdfPCell cellBorderlessStyle = new PdfPCell(cellStyle);
 		cellBorderlessStyle.setBorderWidth(0);
-		
 
 		PdfPCell cellBorderless = new PdfPCell(cellStyle);
 		cellBorderless.setBorderWidthBottom(0);
@@ -90,7 +89,7 @@ public class AvoirPdfView extends   AbstractPdfView {
 		
 
 		PdfPCell lineCell = new PdfPCell(cellBorderlessStyle);
-		lineCell.setPhrase(new Phrase(new Chunk("--------------------------------", boddyStyle)));
+		lineCell.setPhrase(new Phrase(new Chunk("----------------------------------", boddyStyle)));
 		lineCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		lineCell.setPaddingBottom(2);
 		

@@ -70,6 +70,11 @@ public class InventoryService {
 
 	}
 
+	/**
+	 * use to resotre stock quantity to up 
+	 * @param produit
+	 * @param quantity
+	 */
 	public void updateStockToUp(Produit produit, BigInteger quantity){
 		if(produit == null || quantity == null ) throw  new IllegalArgumentException(" produit or quantity arguments is required ")	;
 		if(quantity.intValue() <= 0) return ;

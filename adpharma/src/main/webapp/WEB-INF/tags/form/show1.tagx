@@ -110,7 +110,7 @@
           <spring:message arguments="${label}" code="entity_not_found_single" />
         </c:otherwise>
       </c:choose>
-                <input type="button" class="submits" value="Retour" onclick="javascript:back();" />
+             
       
     </util:panel>
   </c:if>

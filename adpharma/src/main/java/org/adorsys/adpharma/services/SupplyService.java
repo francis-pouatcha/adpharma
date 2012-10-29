@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SupplyService {
-	
+
 	public void compenserStock(BigInteger quantieEnStock, LigneApprovisionement ligneApprovisionement){
-		
+
 		if (quantieEnStock.intValue() > 0) {
-			
+
 			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockLessThanAndCipEquals(BigInteger.ZERO, ligneApprovisionement.getCip()).getResultList();
-			
+
 			if (!resultList.isEmpty()) {
-				
+
 				for (LigneApprovisionement line : resultList) {
-					
-					
+
+
 					if(ligneApprovisionement.canCompencse(line.getQuantieEnStock().abs())){
 						ligneApprovisionement.setQuantiteSortie(ligneApprovisionement.getQuantiteSortie().add(line.getQuantieEnStock().abs()));
 						line.setQuantiteVendu(line.getQuantiteAprovisione());
@@ -37,7 +37,7 @@ public class SupplyService {
 					}
 					line.merge();
 				}
-				
+
 				ligneApprovisionement.CalculeQteEnStock();
 				ligneApprovisionement.merge();
 

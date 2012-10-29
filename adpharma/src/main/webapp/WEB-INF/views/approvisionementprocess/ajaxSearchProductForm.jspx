@@ -134,7 +134,10 @@ function roundMoney(money){
 	var roundMoney = parseInt(money);
     var moneyUnit =	parseInt(stringMoney.charAt(size-1));
     console.log(moneyUnit);
-    if (5 > moneyUnit ) return (5-moneyUnit) + roundMoney;
+    if (5 > moneyUnit ){
+    	if(moneyUnit == 0) return roundMoney ;
+    	return (5-moneyUnit) + roundMoney;
+    }
 	if (moneyUnit > 5) return (10-moneyUnit) + roundMoney;
 	return roundMoney;
 

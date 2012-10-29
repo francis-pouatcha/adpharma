@@ -41,7 +41,7 @@ public class DetteClient extends AdPharmaBaseEntity {
     private String clientName;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
     private Date dateCreation = new Date();
 
     private BigInteger montantInitial = BigInteger.ZERO;
@@ -196,7 +196,7 @@ public class DetteClient extends AdPharmaBaseEntity {
     
    
 
-    public static TypedQuery<DetteClient> search(Long clientId, EtatCredits etatCredit, Boolean annuler, Boolean solder) {
+    public static TypedQuery<DetteClient> search(Long clientId, EtatCredits etatCredit, Boolean annuler, Boolean solder,Date minDate,Date maxDate) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM DetteClient AS o WHERE  ");
         if (etatCredit != null) {
             searchQuery.append("  o.etatCredit = :etatCredit  ");
@@ -205,6 +205,15 @@ public class DetteClient extends AdPharmaBaseEntity {
         }
         if (clientId != null) {
             searchQuery.append(" AND o.clientId = :clientId ");
+        }
+        if (minDate != null) {
+            searchQuery.append(" AND o.dateCreation >= :minDate ");
+        }
+        if (minDate != null) {
+            searchQuery.append(" AND o.dateCreation >= :minDate ");
+        }
+        if (maxDate != null) {
+            searchQuery.append(" AND o.dateCreation <= :maxDate ");
         }
         if (annuler != null) {
             searchQuery.append(" AND o.annuler = :annuler ");
@@ -224,6 +233,12 @@ public class DetteClient extends AdPharmaBaseEntity {
         }
         if (etatCredit != null) {
             q.setParameter("etatCredit", etatCredit);
+        }
+        if (minDate != null) {
+        	  q.setParameter("minDate", minDate);
+        }
+        if (maxDate != null) {
+        	 q.setParameter("maxDate", maxDate);
         }
         return q;
     }

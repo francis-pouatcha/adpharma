@@ -30,7 +30,7 @@ public class MouvementStock extends AdPharmaBaseEntity {
     private String mvtNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
     private Date dateCreation = new Date();
 
     @NotNull
@@ -138,7 +138,7 @@ public class MouvementStock extends AdPharmaBaseEntity {
     }
     
     public static List<MouvementStock> search(TypeMouvement typeMouvement, Date minDate, Date maxDate) {
-        StringBuilder searchQuery = new StringBuilder("SELECT o FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
+        StringBuilder searchQuery = new StringBuilder("SELECT o FROM MouvementStock AS o WHERE o.dateCreation >= :minDateCreation AND o.dateCreation <= :maxDateCreation ");
         minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
         maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
         
@@ -151,8 +151,8 @@ public class MouvementStock extends AdPharmaBaseEntity {
             q.setParameter("typeMouvement", typeMouvement);
         }
        
-        q.setParameter("minDateCreation", minDate);
-        q.setParameter("maxDateCreation", maxDate);
+        q.setParameter("minDateCreation", minDate ,TemporalType.TIMESTAMP);
+        q.setParameter("maxDateCreation", maxDate ,TemporalType.TIMESTAMP);
         q.setParameter("annuler", Boolean.FALSE);
         return q.getResultList();
     }

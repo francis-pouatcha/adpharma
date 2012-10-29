@@ -81,14 +81,9 @@
     	   </table>
     		
     		</td>
-    		<td align="left" width="31%" class="tblog" >
-    	    <img src="${imgfonct}"/>Gestion des commandes <br/>
-    		<img src="${imgfonct}"/>Gestion des approvisionements<br/> 
-			<img src="${imgfonct}"/>Gestion des Ventes<br/>
-			<img src="${imgfonct}"/>Gestion de la caisse<br/>
-		   <img src="${imgfonct}"/>Suivi de la clientele<br/>
-			<img src="${imgfonct}"/>Gestion des utilisateurs<br/>
-			<img src="${imgfonct}"/>Gestion des ordonnanciers<br/>
+    		<td align="center" width="30%" class="tblog">
+    		<h2> PHARMACIE DE L'ALLIANCE </h2>
+    		<img src="${biglogo}"/>
     		</td>
     		<td align="center" width="30%" valign="center" class="tblog">
     		

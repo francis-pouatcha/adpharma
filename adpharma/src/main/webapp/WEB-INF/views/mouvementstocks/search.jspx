@@ -34,7 +34,7 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" property="mvtNumber" z="axWyghN8Isf0UeoVN3kBjrC2rvg="/>
                        <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" maxLength="-1" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" maxLength="-1" property="agentCreateur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" maxLength="-1" property="typeMouvement" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_designation" maxLength="-1" property="designation" z="Oxy9xJ8jH74fbm2mDw8LKT8H28I="/>
@@ -42,7 +42,7 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteDeplace"  property="qteDeplace" z="user-managed"/>
                        <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" property="numeroTicket" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
-             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
+             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" render="false" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_footPrint" property="footPrint" render="false" z="user-managed"/>
           </table:table>
     </page:list>

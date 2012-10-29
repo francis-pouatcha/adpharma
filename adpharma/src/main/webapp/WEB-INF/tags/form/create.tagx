@@ -8,7 +8,10 @@
   <jsp:directive.attribute name="compositePkField" type="java.lang.String" required="false" rtexprvalue="true" description="The field name of the composite primary key (only used if a composite PK is present in the form backing object)" />
   <jsp:directive.attribute name="multipart" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if this is a multipart form (default: false)" />
   <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this object, will default to a message bundle if not supplied"/>
+   <jsp:directive.attribute name="labelButon" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for submit button"/>
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+    <jsp:directive.attribute name="otherBut" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the form need other button " />
+  
   <jsp:directive.attribute name="openPane" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Control if the title pane is opened or closed by default (default: true)"/>
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)"/>
 	
@@ -48,11 +51,20 @@
         </c:if>
         <jsp:doBody />
         <div class="submit" id="${fn:escapeXml(id)}_submit">
-          <spring:message code="button_save" var="save_button" htmlEscape="false" />
+        <c:choose>
+          <c:when  test="${not empty labelButon}">
+          <c:set var="save_button" value="${ labelButon}"  />
+          </c:when>
+           <c:otherwise>
+             <spring:message code="button_save" var="save_button" htmlEscape="false" />
+          </c:otherwise>
+        </c:choose>
+        
           <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
           <input id="proceed" type="submit" value="${fn:escapeXml(save_button)}"/>
-                    <input type="button" class="submits" value="Retour" onclick="javascript:back();" />
-          
+           <c:if test="${not empty otherBut}">   
+                    <input type="button" class="submits" value="${otherBut}"  id="${otherBut}" />
+          </c:if>
         </div>
       </form:form>
     </util:panel>

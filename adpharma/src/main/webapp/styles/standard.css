@@ -605,14 +605,32 @@ caption {
 }
 
 fieldset {
-	background: none; /* #e0e7d3; */
-	padding: 3px;
-	padding-top: 5px;
-	border: 1px solid black;
-	width: auto; /* 100%; */
+	background-color:white;
+border: none;
+border-radius: 2px;
+margin-bottom: 12px;
+overflow: hidden;
+padding: 0 10px;
+
 }
 
-legend{font-weight: bold; color: blue;}
+legend{
+	/*font-weight: bold; color: blue;*/
+	
+background-color: #4494C9;
+border-bottom: 1px solid #d4d4d4;
+border-top: 1px solid #d4d4d4;
+border-radius: 5px;
+box-shadow: 3px 3px 3px #ccc;
+color: #fff;
+font-size: 1.1em;
+font-weight :bold ;
+margin: 12px;
+padding: 0.3em 1em;
+text-shadow: #9FBEB9 1px 1px 1px;
+text-transform: uppercase;
+	
+	}
 
 fieldset label {
 	width: 160px;
