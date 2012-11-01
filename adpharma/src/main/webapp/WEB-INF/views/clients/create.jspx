@@ -7,6 +7,7 @@
     <spring:url value="/saleprocess/0/selectProduct" var="select_product_url"/>
     <spring:url value="/clients/getClientByAjax" var="get_client_url"/>
     <spring:url value="/clients/findClientByAjax" var="find_cliet_url"/>
+    
     <script type="text/javascript">
 	
 	function clearClientTable(){
@@ -103,7 +104,7 @@
 		
 	
 	</script>
-    <form:create id="fc_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/clients" render="${empty dependencies}" z="ys02dHc9phUWtWwquIgxG46avgY=">
+    <form:create id="fc_org_adorsys_adpharma_domain_Client"  modelAttribute="client" path="/clients" render="${empty dependencies}" z="ys02dHc9phUWtWwquIgxG46avgY=">
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
@@ -138,6 +139,9 @@
         </table>
          </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Client" render="${not empty dependencies}" z="nSq/AjKH2v+IhEisFDeN0tNZUJc="/>
+    
+    
+    
     <div id="findClient" style="display: none;" title="recherche client">
         <form enctype="application/x-www-form-urlencoded" id="person">
             <p>

@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_PharmaUser" modelAttribute="pharmaUser" path="/pharmausers" versionField="Version" z="HCg8Ic9YZXApK0OF9K/uzV4L628=">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
-                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" render="false" z="user-managed"/>
-                    <field:input disabled="true" field="userNumber" id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" z="user-managed"/>
-                    <field:input field="userName" id="c_org_adorsys_adpharma_domain_PharmaUser_userName" required="false" z="user-managed"/>
+        <div id="tabset" >
+          <ul>
+           <li> <a href="#tab1">Information Utilisateur </a> </li>
+            <li> <a href="#tab2">Roles Utilisateur </a> </li>
+          </ul>
+          <div id="tab1">
+        
+        
+                   <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" render="false" z="user-managed"/>
+                    <field:display  hiddenfield="true"  object="${pharmaUser}" field="userNumber" id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" z="user-managed"/>
+                    <field:display  hiddenfield="true" object="${pharmaUser}" field="userName" id="c_org_adorsys_adpharma_domain_PharmaUser_userName"  z="user-managed"/>
                     <field:input field="firstName" id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" required="true" z="pHoH+Xz8CIlhYYYzlJAU3gcF2d8="/>
                     <field:input field="lastName" id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" required="true" z="PuCOzoneB1lbeFE4VsN+0QScFjA="/>
                     <field:input field="fullName" id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" render="false" z="user-managed"/>
                     <field:select field="gender" id="c_org_adorsys_adpharma_domain_PharmaUser_gender" items="${genres}" path="genres" z="5/L+JTepv8NohtXCtNjKjCDUsQA="/>
-                    <field:select field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" z="user-managed"/>
                     <field:input field="saleKey" id="c_org_adorsys_adpharma_domain_PharmaUser_saleKey" render="false" z="user-managed"/>
-                </td>
-                <td class="tbcreate">
                     <field:select field="office" id="c_org_adorsys_adpharma_domain_PharmaUser_office" itemValue="id" items="${sites}" path="/sites" z="EktJ4p/QX1qJG2ilVNHcpLNIGp4="/>
                     <field:input field="tauxRemise" id="c_org_adorsys_adpharma_domain_PharmaUser_tauxRemise" max="100" min="0" required="true" validationMessageCode="field_invalid_number" z="UTwaYO+ip4nb8emctyB5tjhFgfA="/>
                     <field:input field="adresse" id="c_org_adorsys_adpharma_domain_PharmaUser_adresse" z="7gTahhJ/ijDxlXGWq7geRyngTVQ="/>
@@ -26,9 +28,18 @@
                     <field:datetime dateTimePattern="${pharmaUser_accountexpiration_date_format}" field="accountExpiration" id="c_org_adorsys_adpharma_domain_PharmaUser_accountExpiration" render="false" z="user-managed"/>
                     <field:datetime dateTimePattern="${pharmaUser_credentialexpiration_date_format}" field="credentialExpiration" id="c_org_adorsys_adpharma_domain_PharmaUser_credentialExpiration" render="false" z="user-managed"/>
                     <field:checkbox field="disableLogin" id="c_org_adorsys_adpharma_domain_PharmaUser_disableLogin" render="false" z="user-managed"/>
-                    <field:checkbox field="accountLocked" id="c_org_adorsys_adpharma_domain_PharmaUser_accountLocked" z="user-managed"/>
-                </td>
-            </tr>
-        </table>
+             </div>
+            <div id="tab2">
+                                             <field:select style="width: 100%; font-size: 18px;font-style: italic; height:500px;" field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" z="user-managed"/>
+            
+            </div> 
+             
+             </div>
     </form:update>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_PharmaUser" render="${not empty dependencies}" z="jW5xSNjpH6A5VKgKa3Qyy8uuHo4="/>
+<script type="text/javascript">
+ $('#tabset').tabs();
+
+</script>
 </div>
+

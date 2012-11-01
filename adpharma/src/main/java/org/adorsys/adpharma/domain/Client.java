@@ -199,7 +199,9 @@ public class Client extends AdPharmaBaseEntity {
     }
 
     public String displayName() {
-        return new StringBuilder().append(sexe.getSalutation()).append(" ").append(nom).append(" ").append(prenom).toString();
+        String toString = "" ;
+    	if(sexe != null)toString= new  StringBuilder().append(sexe.getSalutation()).append(" ").append(nom).append(" ").append(prenom).toString();
+        return  toString ;
     }
     
     public String displayNameShot() {

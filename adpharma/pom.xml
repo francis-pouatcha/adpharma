@@ -60,12 +60,14 @@
     </pluginRepositories>
     <dependencies>
         <!-- General dependencies for standard applications -->
+         <!--  
         <dependency>
+
   <groupId>net.sf.ehcache</groupId>
   <artifactId>ehcache-core</artifactId>
   <version>2.3.0</version>
 </dependency>
-        
+   -->     
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
@@ -514,6 +516,7 @@
         </dependency>
     </dependencies>
     <build>
+    <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

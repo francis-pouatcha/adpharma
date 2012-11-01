@@ -2,29 +2,49 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_org_adorsys_adpharma_domain_Inventaire" object="${inventaire}" path="/inventaires" z="jJYiRhZr5T2/yjIwQpcsybjmSMk=">
-        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Inventaire_footPrint" object="${inventaire}" z="74/NPbhASb5onj9dRwW4aOUkRQA="/>
+    
+    
+    <div id="container">
+    
+    <ul>
+<li><a href="#panel1">Tab One</a></li>
+<li><a href="#panel2">Tab Two</a></li>
+</ul>
+    
+    <div id="#panel1">
+   <page:show delete="false" update="false"  id="ps_org_adorsys_adpharma_domain_Inventaire" object="${inventaire}" path="/inventaires" z="jJYiRhZr5T2/yjIwQpcsybjmSMk=">
+         <field:display field="numeroInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_numeroInventaire" object="${inventaire}" z="c37/zjLGlwl+AZaYgLPO/dJ4vXw="/>
         <field:display field="agent" id="s_org_adorsys_adpharma_domain_Inventaire_agent" object="${inventaire}" z="fv23Ongc+od6dWLuxiUOqmWjRt0="/>
         <field:display field="montant" id="s_org_adorsys_adpharma_domain_Inventaire_montant" object="${inventaire}" z="4lbzhirXZQIZLOJ8b77AK1QU0uM="/>
         <field:display field="etat" id="s_org_adorsys_adpharma_domain_Inventaire_etat" object="${inventaire}" z="FPPQjwYkVH2Aa5kkq6hX5DwZcC0="/>
-        <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
         <field:display date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" field="dateInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" object="${inventaire}" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
         <field:display field="site" id="s_org_adorsys_adpharma_domain_Inventaire_site" object="${inventaire}" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
-        <field:display field="numeroInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_numeroInventaire" object="${inventaire}" z="c37/zjLGlwl+AZaYgLPO/dJ4vXw="/>
-        <field:display field="cipProduct" id="s_org_adorsys_adpharma_domain_Inventaire_cipProduct" object="${inventaire}" z="rWBGaoLdUbP3usEI0FwVroDW0ZE="/>
-        <field:display date="true" dateTimePattern="${inventaire_datedebut_date_format}" field="dateDebut" id="s_org_adorsys_adpharma_domain_Inventaire_dateDebut" object="${inventaire}" z="OzSD2m6dRwGNqRdzLycCY94A1Ro="/>
-        <field:display date="true" dateTimePattern="${inventaire_datefin_date_format}" field="dateFin" id="s_org_adorsys_adpharma_domain_Inventaire_dateFin" object="${inventaire}" z="Yw7BZnp5gIQkj8WDy2ag+BCZaJo="/>
-        <field:display field="rayon" id="s_org_adorsys_adpharma_domain_Inventaire_rayon" object="${inventaire}" z="uSFxdaOZbPscBZ33sZ8Dxb5D7iE="/>
-        <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Inventaire_filiale" object="${inventaire}" z="LZDVFqHXR1u+VUIJI/fK7CaTfKU="/>
-        <field:display field="designation" id="s_org_adorsys_adpharma_domain_Inventaire_designation" object="${inventaire}" z="R/Ogga/nkgYv/+IBOZceuxy8I0g="/>
-        <field:display field="beginBy" id="s_org_adorsys_adpharma_domain_Inventaire_beginBy" object="${inventaire}" z="ieUlVAizMDCXOOY5/xASSi7OfgE="/>
-        <field:display field="endBy" id="s_org_adorsys_adpharma_domain_Inventaire_endBy" object="${inventaire}" z="8nzQPvnzxDqTe8QRL5JEIfheZ8A="/>
-        <field:display field="cip" id="s_org_adorsys_adpharma_domain_Inventaire_cip" object="${inventaire}" z="RMleWfPECqSRbAbdAEVWtBfgQk8="/>
-        <field:display field="cipm" id="s_org_adorsys_adpharma_domain_Inventaire_cipm" object="${inventaire}" z="6ziGEYKT+jrBMbE9Jr+E5YUBaDA="/>
-        <field:display field="ligneApprovisionements" id="s_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements" object="${inventaire}" z="av2UzOuQdR4mNAXHcAtLu1DrOjA="/>
-        <field:display field="produits" id="s_org_adorsys_adpharma_domain_Inventaire_produits" object="${inventaire}" z="Hj3jG75/YF5LjrFmoLBST4A9jbs="/>
-        <field:display date="true" dateTimePattern="${inventaire_daterupture_date_format}" field="dateRupture" id="s_org_adorsys_adpharma_domain_Inventaire_dateRupture" object="${inventaire}" z="GuV/b4MIykLpYDpkFhK9TGOlXno="/>
-        <field:display field="familleProduit" id="s_org_adorsys_adpharma_domain_Inventaire_familleProduit" object="${inventaire}" z="lJEZSXo9boDEOAJxc0RjPYpAoPo="/>
-        <field:display field="sousFamilleProduit" id="s_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" object="${inventaire}" z="RLy6XsucinSRklOPHajR+Du45S0="/>
-    </page:show>
+                <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
+        
+        </page:show>
+          <HR />
+                <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Inventaire_footPrint" object="${inventaire}" z="74/NPbhASb5onj9dRwW4aOUkRQA="/>
+        
+        <HR />
+        
+    </div>
+    <div id="#panel2">
+    mcontenu paneau 2 ici
+    </div>
+    
+    
+    
+    </div>
+    
+    <script type="text/javascript">
+		
+	
+	$(function(){
+		$('#container').tabs();
+		
+	});
+	
+		
+	
+	</script>
 </div>

@@ -15,6 +15,7 @@
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
   <jsp:directive.attribute name="frontLink" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
+  <jsp:directive.attribute name="style" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
 
   <c:if test="${empty render or render}">
 
@@ -55,7 +56,7 @@
                 <c:when test="${disableFormBinding}">
                   <c:choose>
                     <c:when test="${multiple}">
-                      <select id="_${sec_field}_id"  name="${sec_field}" multiple="${multiple}">
+                      <select style="${style}" id="_${sec_field}_id"  name="${sec_field}" multiple="${multiple}">
                       <c:forEach items="${items}" var="item">
                         <option value="${item}">
                         <c:choose>
@@ -71,7 +72,7 @@
                       </select>
                     </c:when>
                     <c:otherwise>
-                      <select id="_${sec_field}_id" name="${sec_field}">
+                      <select style="${style}" id="_${sec_field}_id" name="${sec_field}">
                       <c:forEach items="${items}" var="item">
                         <option value="${item}">
                         <c:choose>
@@ -93,7 +94,7 @@
                     <c:when test="${empty itemLabel}">
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" />
+                          <form:select cssStyle="${style }" id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" />
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" />
@@ -103,7 +104,7 @@
                     <c:otherwise>
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemLabel="${sec_itemLabel}"/>
+                          <form:select cssStyle="${style }" id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemLabel="${sec_itemLabel}"/>
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemLabel="${sec_itemLabel}"/>
@@ -121,7 +122,7 @@
                 <c:when test="${disableFormBinding}">
                   <c:choose>
                     <c:when test="${multiple}">
-                      <select id="_${sec_field}_id" name="${sec_field}" multiple="${multiple}">
+                      <select style="${style}" id="_${sec_field}_id" name="${sec_field}" multiple="${multiple}">
                         <c:forEach items="${items}" var="item">
                           <option value="${item[fn:escapeXml(itemValue)]}">
                             <c:choose>
@@ -137,7 +138,7 @@
                       </select>
                     </c:when>
                     <c:otherwise>
-                      <select id="_${sec_field}_id" name="${sec_field}" multiple="${multiple}">
+                      <select style="${style}" id="_${sec_field}_id" name="${sec_field}" multiple="${multiple}">
                         <c:forEach items="${items}" var="item">
                           <option value="${item[fn:escapeXml(itemValue)]}">
                             <c:choose>
@@ -159,7 +160,7 @@
                     <c:when test="${empty itemLabel}">
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" />
+                          <form:select cssStyle="${style }" id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" />
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemValue="${fn:escapeXml(itemValue)}" />
@@ -172,7 +173,7 @@
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}"/>
                         </c:when>
                         <c:otherwise>
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}"/>
+                          <form:select cssStyle="${style }" id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}"/>
                         </c:otherwise>
                       </c:choose>
                     </c:otherwise>

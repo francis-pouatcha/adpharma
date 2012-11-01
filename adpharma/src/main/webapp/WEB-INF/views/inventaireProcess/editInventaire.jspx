@@ -479,15 +479,6 @@ function verif_formulaire()
 	</div>	 
    
 </div>
- <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
-
  
-</div>
-</div>
 
 </div>

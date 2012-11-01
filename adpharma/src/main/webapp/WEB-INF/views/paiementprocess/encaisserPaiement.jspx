@@ -459,7 +459,7 @@ $(function(){
  
  <div>
       <label  style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_difference">Difference : </label>
-       <springform:input path="difference" id="difference" cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;"  readonly="true"/>        
+       <springform:input  path="difference" id="difference" cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;"  readonly="true"/>        
          
 </div> 
  

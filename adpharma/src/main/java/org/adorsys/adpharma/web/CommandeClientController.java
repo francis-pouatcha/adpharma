@@ -3,6 +3,7 @@ package org.adorsys.adpharma.web;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,12 +16,14 @@ import org.adorsys.adpharma.beans.SearchSalesBean;
 import org.adorsys.adpharma.beans.SessionBean;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
+import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
+import org.adorsys.adpharma.domain.Genre;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.MouvementStock;
@@ -29,6 +32,7 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.TypeBon;
+import org.adorsys.adpharma.domain.TypeClient;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
 import org.adorsys.adpharma.domain.TypeMouvement;
@@ -203,6 +207,11 @@ public class CommandeClientController {
 	@RequestMapping(value = "/cmdCredit", params = "form", method = RequestMethod.GET)
 	public String cmdCreditForm(Model uiModel) {
 		uiModel.addAttribute("commandeCredit",new CommandeCredit());
+		uiModel.addAttribute("client",new Client());
+		uiModel.addAttribute("typeclients",Arrays.asList(TypeClient.class.getEnumConstants()));
+		uiModel.addAttribute("genres",Arrays.asList(Genre.class.getEnumConstants()));
+		uiModel.addAttribute("categorieclients",CategorieClient.findAllCategorieClients());
+		
 		return "clients/cmdCredit";
 	}
 

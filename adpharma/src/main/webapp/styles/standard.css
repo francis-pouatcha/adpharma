@@ -14,6 +14,12 @@ body,div,td {
 
 input#prm{
 	color: silver;
+	 
+	 
+}
+
+select option{
+	margin-bottom: 10px;
 }
 
 input#prm:FOCUS{
@@ -366,7 +372,6 @@ label {
 	margin-left: 5px;
 	margin-top: 0px;
 	font-weight: bold;
-	color: black;
 }
 
 input {

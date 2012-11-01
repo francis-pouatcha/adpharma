@@ -3,9 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show1 delete="false" id="ps_org_adorsys_adpharma_domain_Client" object="${client}" path="/clients" z="user-managed">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
                     <field:display field="clientNumber" id="s_org_adorsys_adpharma_domain_Client_clientNumber" object="${client}" z="ddGzH8JV3/4ezZNidn1dt54Mp20="/>
                     <field:display field="typeClient" id="s_org_adorsys_adpharma_domain_Client_typeClient" object="${client}" z="U8/Nni279vOR2X7vu0UFSrAsThY="/>
                     <field:display field="nom" id="s_org_adorsys_adpharma_domain_Client_nom" object="${client}" render="false" z="user-managed"/>
@@ -17,8 +14,7 @@
                     <field:display field="email" id="s_org_adorsys_adpharma_domain_Client_email" object="${client}" z="M1p8YKzjQthp10UIiLas3hiixM4="/>
                     <field:display field="creditAutorise" id="s_org_adorsys_adpharma_domain_Client_creditAutorise" object="${client}" z="4fmJaWIzO5OEmVyaxIVIM12+Op0="/>
                     <field:display field="plafondCredit" id="s_org_adorsys_adpharma_domain_Client_plafondCredit" object="${client}" z="hHkjkXFCGtLC4DcHqVYytf25Aag="/>
-                </td>
-                <td class="tbcreate">
+               
                     <field:display field="employeur" id="s_org_adorsys_adpharma_domain_Client_employeur" object="${client}" z="ZSrA2eFRs69sxek4W3co6njqEP0="/>
                     <field:display field="clientPayeur" id="s_org_adorsys_adpharma_domain_Client_clientPayeur" object="${client}" z="zk3ThwJncD2nOWC+ZTNNjIMNvQY="/>
                     <field:display field="tauxCouverture" id="s_org_adorsys_adpharma_domain_Client_tauxCouverture" object="${client}" z="AX1JINM2SwkC/IC03jj6tVSFo+g="/>
@@ -29,9 +25,7 @@
                     <field:display field="categorie" id="s_org_adorsys_adpharma_domain_Client_categorie" object="${client}" z="hkwgsXcrTMugff/lpvfUbc3VfoQ="/>
                     <field:display field="totalDette" id="s_org_adorsys_adpharma_domain_Client_totalDette" object="${client}" z="aWwDiD2u51A1DcLI2vMumH126NI="/>
                     <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" object="${client}" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
-                </td>
-            </tr>
-        </table>
+             
         <field:display field="matricule" id="s_org_adorsys_adpharma_domain_Client_matricule" object="${client}" z="LfvOzbojV27GKKGMKP7G/8dkJ0Y="/>
     </page:show1>
     <HR/>

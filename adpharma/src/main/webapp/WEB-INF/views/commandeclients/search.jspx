@@ -7,9 +7,9 @@
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
-           <field:input disableFormBinding="true" field="commandeNumber" id="f_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
-           <field:input disableFormBinding="true" field="cipm" label="CIPM" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-           <field:input disableFormBinding="true" field="designation" label="Designation" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+           <field:input  field="commandeNumber" id="f_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
+           <field:input  field="cipm" label="CIPM" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+           <field:input  field="designation" label="Designation" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
            <field:checkbox  field="anuller" label="Anuller ?" id="f_org_adorsys_adpharma_domain_CommandeClient_client" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
           
           </td>

@@ -90,8 +90,8 @@ function annCmd(){
 		
 		<span><a href="${ enr_cmd_url}"
 			style="text-decoration: none;"><INPUT class="submits"
-				type="button" value="Enr et clore"
-				title="Enregistre La Commande" /></a></span>
+				type="button" value="Cloturer"
+				title="Enregistrer La Commande" /></a></span>
 				</security:authorize>
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher CIPM" type="button"/></a></span> 
 				

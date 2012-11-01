@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.EntityManager;
@@ -15,23 +16,24 @@ import javax.persistence.PostPersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.beans.factory.annotation.Value;
-import javax.validation.constraints.Max;
-import org.springframework.roo.addon.json.RooJson;
 
 @RooJavaBean
 @RooToString
@@ -59,6 +61,17 @@ public class PharmaUser extends AdPharmaBaseEntity {
     private String fullName;
 
     private String password;
+    
+    
+    private transient String displayRole;
+    
+    public String getDisplayRole(){
+    	return displayRole ;
+    }
+    
+    public void setDisplayRole( String displayRole){
+    	this.displayRole  =displayRole;
+    }
 
     @ElementCollection
     private Set<RoleName> roleNames = new HashSet<RoleName>();
@@ -91,7 +104,8 @@ public class PharmaUser extends AdPharmaBaseEntity {
     public void postPersit() {
         userNumber = NumberGenerator.getNumber("U-", getId(), 4);
     }
-
+    
+    
     @Override
     protected void internalPostPersit() {
     }

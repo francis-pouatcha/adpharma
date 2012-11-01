@@ -6,9 +6,7 @@
         <c:set value="true" var="hasrole"/>
     </security:authorize>
     <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_LigneApprovisionement" object="${ligneapprovisionement}" path="/ligneapprovisionements" z="user-managed">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
+        
                     <field:display field="lotNumber" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" object="${ligneapprovisionement}" z="1HLvUyv7NfuHb8Gr5Cbmqfsk06g="/>
                     <c:choose>
                         <c:when test="${hasrole}">
@@ -35,8 +33,7 @@
                     <field:display field="quantieEnStock" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" object="${ligneapprovisionement}" z="U1bqJlzV7lqmOkmpqTQDEESiFGQ="/>
                     <field:display field="prixAchatUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" object="${ligneapprovisionement}" z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
                     <field:display field="prixAchatTotal" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatTotal" object="${ligneapprovisionement}" z="z9BKOmYFVkChmdCFQRLuyuLNkqo="/>
-                </td>
-                <td class="tbcreate">
+              
                     <field:display field="margeBrute" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_margeBrute" object="${ligneapprovisionement}" z="+nBkIo7u7DU1baue4Vud3MHKamk="/>
                     <field:display field="cipMaison" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" object="${ligneapprovisionement}" z="fXq7ZCyK356fUT03LojOZ+RU434="/>
                     <field:display field="prixVenteUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" object="${ligneapprovisionement}" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
@@ -49,10 +46,7 @@
                     <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_remiseAutorise" object="${ligneapprovisionement}" z="MT1QcPRsrh6lfHshofYMdkQW2Ms="/>
                     <field:display field="qteCip" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_qteCip" object="${ligneapprovisionement}" render="false" z="user-managed"/>
                     <field:display field="fournisseur" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_fournisseur" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-                    <field:display field="saisiele" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_saisiele" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-                </td>
-            </tr>
-        </table>
+             
         <field:display field="skipPriceConvertion" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" object="${ligneapprovisionement}" z="UCo1vg46KF/sxbA2buLyMZhcC84="/>
     </page:show>
     <HR/>

@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.web;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -8,11 +9,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.beans.CommandeCredit;
+import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Filiale;
+import org.adorsys.adpharma.domain.Genre;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.domain.TypeClient;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.beanutils.converters.LongArrayConverter;
 import org.apache.commons.lang.StringUtils;
@@ -80,6 +85,26 @@ public class ClientController {
 		uiModel.asMap().clear();
 		client.persist();
 		return "redirect:/clients/" + encodeUrlPathSegment(client.getId().toString(), httpServletRequest);
+	}
+	
+	
+	@RequestMapping(value = "/createForCreditSale",method = RequestMethod.POST)
+	public String createByAjax(@Valid Client client, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		client.validate(bindingResult);
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("client", client);
+			addDateTimeFormatPatterns(uiModel);
+			return "clients/create";
+		}
+		uiModel.asMap().clear();
+		client.persist();
+		uiModel.addAttribute("commandeCredit",new CommandeCredit(client));
+		uiModel.addAttribute("client",new Client());
+		uiModel.addAttribute("typeclients",Arrays.asList(TypeClient.class.getEnumConstants()));
+		uiModel.addAttribute("genres",Arrays.asList(Genre.class.getEnumConstants()));
+		uiModel.addAttribute("categorieclients",CategorieClient.findAllCategorieClients());
+		
+		return "clients/cmdCredit";
 	}
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)

@@ -133,7 +133,7 @@ public class EtatCreditPdf  extends   AbstractPdfView {
 		document.add(spaceTable);
 		
 		// la table d'approvisionement
-		float[] colWidths = {1.5f, 5f,1.7f, 1.5f,1.5f, 1.5f};
+		float[] colWidths = {1.5f, 4.5f,1.7f, 2f,1.5f, 1.5f};
 		PdfPTable table = new PdfPTable(colWidths);
 		table.setWidthPercentage(100);
 		table.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -216,7 +216,7 @@ public class EtatCreditPdf  extends   AbstractPdfView {
 			
 		// Date Credit
 				PdfPCell inPvCell = new PdfPCell(cellBorderless);
-				inPvCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(line.getDateCreation(), "dd-MM-yyyy"), boddyStyle)));
+				inPvCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(line.getDateCreation(), "dd-MM-yyyy hh:mm"), boddyStyle)));
 				inPvCell.setPaddingBottom(2);
 				inPvCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 

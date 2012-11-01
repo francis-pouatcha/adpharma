@@ -20,9 +20,8 @@
    <jsp:directive.attribute name="buttonId" type="java.lang.String" required="false" rtexprvalue="true" description="Set field type (default 'text', or 'password')" />
     <jsp:directive.attribute name="buttonLabel" type="java.lang.String" required="false" rtexprvalue="true" description="Set field type (default 'text', or 'password')" />
      <jsp:directive.attribute name="createUrl" type="java.lang.String" required="false" rtexprvalue="true" description="Set field type (default 'text', or 'password')" />
- 
- 
- 
+      <jsp:directive.attribute name="createBut" type="java.lang.String" required="false" rtexprvalue="true" description="Set field type (default 'text', or 'password')" />
+   <jsp:directive.attribute name="style" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
   
@@ -72,7 +71,7 @@
       <c:choose>
         <c:when test="${disableFormBinding}">
        
-          <input id="_${sec_field}_id" name="${sec_field}" type="${fn:escapeXml(type)}" />
+          <input   id="_${sec_field}_id" style="${style}" name="${sec_field}" type="${fn:escapeXml(type)}" />
         </c:when>
         <c:otherwise>
           <c:choose>
@@ -81,7 +80,7 @@
             </c:when>
             <c:otherwise>
             
-              <form:input id="_${sec_field}_id" path="${sec_field}" disabled="${disabled}" />
+              <form:input     cssStyle="${style }" id="_${sec_field}_id" path="${sec_field}" disabled="${disabled}" />
             </c:otherwise>
           </c:choose>
           <c:if test="${not empty buttonId}">
@@ -92,6 +91,12 @@
 		                 <spring:url value="/resources/images/create.png" var="create_image_url" />
 		  <a href="${fn:escapeXml(createUrl)}" alt="${fn:escapeXml(create_label)}" title="${fn:escapeXml(create_label)}">
                   <img alt="${fn:escapeXml(create_label)}" class="image" src="${fn:escapeXml(create_image_url)}" title="${fn:escapeXml(create_label)}" />
+                </a>
+		</c:if>
+		<c:if test="${not empty createBut}">
+		                 <spring:url value="/resources/images/create.png" var="create_image_url" />
+               <a href="#" alt="${fn:escapeXml(create_label)}" title="${fn:escapeXml(create_label)}">
+                  <img alt="${fn:escapeXml(create_label)}"  id="${createBut }"  class="image" src="${fn:escapeXml(create_image_url)}" title="${fn:escapeXml(create_label)}" />
                 </a>
 		</c:if>
           

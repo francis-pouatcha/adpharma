@@ -278,7 +278,7 @@ public class Inventaire extends AdPharmaBaseEntity {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Inventaire No: ").append(getNumeroInventaire()).append(" Du :");
-		sb.append(PharmaDateUtil.format(getDateInventaire(), "dd-MM-yyyy HH:mm")).append(" , ");
+		sb.append(PharmaDateUtil.format(getDateInventaire(), "dd-MM-yyyy hh:mm")).append(" , ");
 		sb.append("Agent: ").append(getAgent().displayName()).append(" , ");
 		sb.append("Site: ").append(getSite());
 		return sb.toString();

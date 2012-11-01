@@ -35,12 +35,7 @@ public class CommandeCredit {
 
 	private BigInteger taux = BigInteger.valueOf(100) ;
 
-	public CommandeCredit(Client client){
-		clientId = client.getId();
-		payeurId = client.getId();
-		clientName = client.getNomComplet();
-		payeurName = client.getNomComplet();
-	}
+	
 
 
 	public CommandeCredit(CommandeClient commandeClient){
@@ -54,6 +49,15 @@ public class CommandeCredit {
 
 	public CommandeCredit(){
 
+	}
+	
+	
+	public CommandeCredit(Client client){
+		clientId = client.getId();
+		payeurId = client.getClientPayeur().getId();
+		clientName = client.getNomComplet();
+		payeurName = client.getClientPayeur().getNomComplet();
+		taux = client.getTauxCouverture().toBigInteger();
 	}
 
 	public boolean valider(Model uiModel){

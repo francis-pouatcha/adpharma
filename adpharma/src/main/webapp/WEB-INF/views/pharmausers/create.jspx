@@ -3,9 +3,14 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_org_adorsys_adpharma_domain_PharmaUser" modelAttribute="pharmaUser" path="/pharmausers" render="${empty dependencies}" z="x7vrP8JiAYxjAFEjJQrxi0aufzc=">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
+        <div id="tabset" >
+          <ul>
+           <li> <a href="#tab1">Information Utilisateur </a> </li>
+            <li> <a href="#tab2">Roles Utilisateur </a> </li>
+          </ul>
+          <div id="tab1">
+        
+        
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" render="false" z="user-managed"/>
                     <field:input field="userNumber" id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" render="false" required="true" z="user-managed"/>
                     <field:input field="userName" id="c_org_adorsys_adpharma_domain_PharmaUser_userName" required="true" z="dQ+MBxRIuLFpZB+9ZECHApYXwQM="/>
@@ -13,10 +18,7 @@
                     <field:input field="lastName" id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" required="true" z="PuCOzoneB1lbeFE4VsN+0QScFjA="/>
                     <field:input field="fullName" id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" render="false" z="user-managed"/>
                     <field:select field="gender" id="c_org_adorsys_adpharma_domain_PharmaUser_gender" items="${genres}" path="genres" z="5/L+JTepv8NohtXCtNjKjCDUsQA="/>
-                    <field:select field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" z="user-managed"/>
                     <field:input field="saleKey" id="c_org_adorsys_adpharma_domain_PharmaUser_saleKey" render="false" z="user-managed"/>
-                </td>
-                <td class="tbcreate">
                     <field:select field="office" id="c_org_adorsys_adpharma_domain_PharmaUser_office" itemValue="id" items="${sites}" path="/sites" z="EktJ4p/QX1qJG2ilVNHcpLNIGp4="/>
                     <field:input field="tauxRemise" id="c_org_adorsys_adpharma_domain_PharmaUser_tauxRemise" max="100" min="0" required="true" validationMessageCode="field_invalid_number" z="UTwaYO+ip4nb8emctyB5tjhFgfA="/>
                     <field:input field="adresse" id="c_org_adorsys_adpharma_domain_PharmaUser_adresse" z="7gTahhJ/ijDxlXGWq7geRyngTVQ="/>
@@ -27,9 +29,17 @@
                     <field:datetime dateTimePattern="${pharmaUser_credentialexpiration_date_format}" field="credentialExpiration" id="c_org_adorsys_adpharma_domain_PharmaUser_credentialExpiration" render="false" z="user-managed"/>
                     <field:checkbox field="disableLogin" id="c_org_adorsys_adpharma_domain_PharmaUser_disableLogin" render="false" z="user-managed"/>
                     <field:checkbox field="accountLocked" id="c_org_adorsys_adpharma_domain_PharmaUser_accountLocked" render="false" z="user-managed"/>
-                </td>
-            </tr>
-        </table>
+            </div>
+            <div id="tab2">
+                         <field:select style="width: 100%; font-size: 18px;font-style: italic; height:500px;" field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" z="user-managed"/>
+            
+            </div> 
+             
+             </div>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_PharmaUser" render="${not empty dependencies}" z="jW5xSNjpH6A5VKgKa3Qyy8uuHo4="/>
+<script type="text/javascript">
+ $('#tabset').tabs();
+
+</script>
 </div>
