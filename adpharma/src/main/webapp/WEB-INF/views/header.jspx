@@ -12,8 +12,15 @@
   <spring:url var="home" value="/?lang=fr" /> 
   <spring:message code="button_home" var="home_label" />
   
+
+  
   <script type="text/javascript">
-     
+  function pgClock() {
+	  var sTime=(new Date()).toString();
+	  document.getElementById('search-field').value =
+	    sTime.substring(0,3+sTime.lastIndexOf(':'));
+	  setTimeout('pgClock()',333);
+	 } ;
   
 function confHeader(){
 Check = confirm("Voulez vous vraiment Ferner votre session? ");
@@ -25,6 +32,8 @@ if(Check == false){
 }
 }
 $(function(){
+	pgClock();
+	
 $('#userInfos').click(function(){
 	
 	$('<div class="userdialog"> </div>').dialog({
@@ -126,7 +135,7 @@ function(data){
 				
 				<form id="main-search" action="#" method="get">
 							<label for="search-field" id="search-field-label">Search</label>
-							<input type="text" tabindex="1" maxlength="255" value="${licenceKey }" id="search-field" name="licenceKey" class="search" />
+		<input  type="text" tabindex="1" maxlength="255" style="text-align:center; color:green; "  value="${licenceKey }"  id="search-field" name="licenceKey" class="search" />
 							<input type="image" alt="Search" value="Search" src="${search}" id="search-button" class="search" style="text-transform: uppercase;" />  
 				</form>
 			</div>

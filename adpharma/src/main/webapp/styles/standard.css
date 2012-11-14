@@ -10,10 +10,12 @@ body,div,td {
 	font-family: Courier, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: black;
+	
 }
 
 input#prm{
 	color: silver;
+	
 	 
 	 
 }
@@ -552,12 +554,16 @@ ul li {
 	border: none;
 }
 
+table tr:hover{
+	cursor: pointer;
+}
 table {
 	background: #EEEEEE;
 	margin: 2px 0 0 0;
-	border: 1px solid #BBBBBB;
+	borderu: 1px solid #BBBBBB;
 	border-collapse: collapse;
-	width: 100%
+	width: 100%;
+	margin-bottom: 5px;
 }
 
 table table {

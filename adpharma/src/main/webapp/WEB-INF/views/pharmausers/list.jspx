@@ -11,12 +11,12 @@
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_gender" property="gender" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_phoneNumber" property="phoneNumber" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
-            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_office" render="false" maxLength="-1" property="office" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_office" maxLength="-1" property="office" render="false" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" property="firstName" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" property="lastName" render="false" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_accountLocked" property="accountLocked" z="G0dfeHrUCX8ThkYfjpdQZDDnrTI="/>
-               <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" property="saleKey" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
-            
+            <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" property="saleKey" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" property="displayRole" z="fLHwVWWPhE2SMv5c+SSsVIGEZhU="/>
         </table:table>
     </page:list>
 </div>

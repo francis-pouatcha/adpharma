@@ -6,6 +6,9 @@
   <jsp:directive.attribute name="field" type="java.lang.String" required="true" rtexprvalue="true" description="The field exposed from the form backing object" />
   <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this field, will default to a message bundle if not supplied" />
   <jsp:directive.attribute name="labelCode" type="java.lang.String" required="false" rtexprvalue="true" description="Key for label message bundle if label is not supplied" />
+   <jsp:directive.attribute name="titleMessage" type="java.lang.String" required="false" rtexprvalue="true" description="Key for label message bundle if label is not supplied" />
+ 
+ 
   <jsp:directive.attribute name="required" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicates if this field is required (default false)" />
   <jsp:directive.attribute name="disabled" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Specify if this field should be enabled" />
   <jsp:directive.attribute name="validationRegex" type="java.lang.String" required="false" rtexprvalue="true" description="Specify regular expression to be used for the validation of the input contents" />
@@ -80,7 +83,7 @@
             </c:when>
             <c:otherwise>
             
-              <form:input     cssStyle="${style }" id="_${sec_field}_id" path="${sec_field}" disabled="${disabled}" />
+              <form:input     cssStyle="${style }"  id="_${sec_field}_id" path="${sec_field}" disabled="${disabled}" />
             </c:otherwise>
           </c:choose>
           <c:if test="${not empty buttonId}">
@@ -113,6 +116,7 @@
           <spring:message argumentSeparator="," arguments="${label}, " code="field_simple_validation" var="field_validation" htmlEscape="false" />
         </c:otherwise>
       </c:choose>
+     
       <c:set var="sec_field_validation">
         <spring:escapeBody javaScriptEscape="true">${field_validation}</spring:escapeBody>
       </c:set>
@@ -126,9 +130,19 @@
       <c:if test="${!empty validationRegex}">
         <c:set var="sec_validation_regex" value="regExp : '${validationRegex}', " />
       </c:if>
-      <script type="text/javascript">
+       <c:choose>
+        <c:when test="${empty titleMessage}">
+          <script type="text/javascript">
         Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${sec_field}_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${sec_field_validation}', invalidMessage: '${sec_field_invalid}', required : ${required}, ${sec_validation_regex} missingMessage : '${sec_field_required}' }})); 
       </script>
+              </c:when>
+        <c:otherwise>
+ <script type="text/javascript">
+        Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${sec_field}_id', widgetType : 'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: '${titleMessage}', invalidMessage: '${sec_field_invalid}', required : ${required}, ${sec_validation_regex} missingMessage : '${sec_field_required}' }})); 
+      </script>
+              </c:otherwise>
+      </c:choose>
+     
     </div>
     <br />
   </c:if>

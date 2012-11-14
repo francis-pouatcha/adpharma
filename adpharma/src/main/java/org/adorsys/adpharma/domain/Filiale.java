@@ -57,6 +57,7 @@ public class Filiale extends AdPharmaBaseEntity {
     }
     
     public static List<Filiale> findAllFiliales() {
-        return entityManager().createQuery("SELECT o FROM Filiale o", Filiale.class).getResultList();
+    	return findAllActifFiliales();
+      //  return entityManager().createQuery("SELECT o FROM Filiale o ", Filiale.class).getResultList();
     }
 }

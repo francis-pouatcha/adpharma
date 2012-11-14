@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.domain.FamilleProduit;
+import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
+import org.adorsys.adpharma.domain.TVA;
+import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
@@ -45,13 +49,13 @@ public class ProduitController {
 
 		return reponse;
 	}
-	
+
 	@RequestMapping(value="/attributionFamile", params = "form", method = RequestMethod.GET)
 	public String attributionFamile(Model uiModel) {
 		uiModel.addAttribute("produit", new Produit());
 		return "produits/attributionfsf";
 	}
-	
+
 	@RequestMapping(value="/setFamilleAndSousFamille",method = RequestMethod.GET)
 	public String setFamilleAndSousFamille(@RequestParam("rem") BigDecimal rem ,@RequestParam("lineId") Long lineId,@RequestParam(value="famille" ,required = false) Long familleId ,@RequestParam(value="sfamille" ,required = false) Long sfamilleId, Model uiModel, HttpServletRequest httpServletRequest) {
 		Produit produit = Produit.findProduit(lineId);
@@ -64,7 +68,7 @@ public class ProduitController {
 		uiModel.addAttribute("produits", arrayList);
 		return "produits/attributionfsf";
 	}
-	
+
 	@RequestMapping(value="/findProductApByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductApByCipAjax(@PathVariable("cip") String cip,Model uiModel) {
@@ -77,34 +81,34 @@ public class ProduitController {
 
 		return prd.toJson();
 	}
-	
-	//a redefinir
-		@RequestMapping(value="/findProductByCipAjax", method = RequestMethod.GET)
-		@ResponseBody
-		public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
-			  String des = httpServletRequest.getParameter("designation");
-			List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(200).getResultList();
-			System.out.println("in");
-			return Produit.toJsonArray(resultList);
-		}
-		
-		@RequestMapping(value="/findProductByIdAjax/{id}", method = RequestMethod.GET)
-		@ResponseBody
-		public String findProductByIdAjax(@PathVariable("id") Long id,Model uiModel ,  HttpServletRequest httpServletRequest) {
-			 Produit produit = Produit.findProduit(id);
-			 produit.calculPrixTotalStock();
 
-			return produit.toJson();
-		}
-		
-		
+	//a redefinir
+	@RequestMapping(value="/findProductByCipAjax", method = RequestMethod.GET)
+	@ResponseBody
+	public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
+		String des = httpServletRequest.getParameter("designation");
+		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(200).getResultList();
+		System.out.println("in");
+		return Produit.toJsonArray(resultList);
+	}
+
+	@RequestMapping(value="/findProductByIdAjax/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findProductByIdAjax(@PathVariable("id") Long id,Model uiModel ,  HttpServletRequest httpServletRequest) {
+		Produit produit = Produit.findProduit(id);
+		produit.calculPrixTotalStock();
+
+		return produit.toJson();
+	}
+
+
 	//retourne les information apres un ajax request
 	@RequestMapping(value="/findByCipmAjax/{cipm}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findByCipmAjax(@PathVariable("cipm") String cipm,Model uiModel) {
-	String	cipMaison = cipm;
-	 cipMaison = StringUtils.removeStart(cipMaison, "0");
-	        
+		String	cipMaison = cipm;
+		cipMaison = StringUtils.removeStart(cipMaison, "0");
+
 		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(50).getResultList();
 		if (!lines.isEmpty()) {
 			return lines.iterator().next().clone().toJson();
@@ -112,9 +116,9 @@ public class ProduitController {
 			return new LigneApprovisionement().toJson();
 		}	
 
-		}
+	}
 
-		
+
 	@RequestMapping(value="/create/{cip}",method = RequestMethod.POST)
 	public String create(@PathVariable("cip") boolean cip, @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		produit.validate(bindingResult);
@@ -127,6 +131,18 @@ public class ProduitController {
 		uiModel.asMap().clear();
 		produit.persist();
 		return "redirect:/produits/" + encodeUrlPathSegment(produit.getId().toString(), httpServletRequest);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/createByAjax",method = RequestMethod.GET)
+	public String create( @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		produit.validate(bindingResult);
+		if (bindingResult.hasErrors()) {
+			return null;
+		}
+		uiModel.asMap().clear();
+		produit.persist();
+		return produit.toJson() ;
 	}
 
 	@RequestMapping(value="/ProduitRuptureStock",method = RequestMethod.GET)
@@ -166,12 +182,14 @@ public class ProduitController {
 		return "produits/create";
 	}
 
+
 	
 
-	 @ModelAttribute("produits")
-	    public Collection<Produit> populateProduits() {
-	        return new ArrayList<Produit>();
-	    }	 
+
+	@ModelAttribute("produits")
+	public Collection<Produit> populateProduits() {
+		return new ArrayList<Produit>();
+	}	 
 
 
 }

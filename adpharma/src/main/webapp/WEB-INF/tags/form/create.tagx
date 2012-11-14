@@ -132,7 +132,7 @@
 					</table>
 				</c:when>
              <c:otherwise>
-             <form:form  id="${formId }" action="${fn:escapeXml(form_url)}"
+             <form:form  id="${formId }"  action="${fn:escapeXml(form_url)}"
 									method="POST" modelAttribute="${modelAttribute}"
 									enctype="${enctype}" onsubmit="encodePk()">
 									<form:errors cssClass="errors" delimiter="&lt;p/&gt;" />

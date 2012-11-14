@@ -9,6 +9,7 @@
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
 	 version="2.0">
+<jsp:include page="orderEdit_script.jspx" />
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 	
@@ -16,7 +17,7 @@
 		<span style="font-weight: bold">
 			<c:out value="${commandeProcess.displayName}"/>
 		</span>
-	</div>    
+	</div>   
 	<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
 	<spring:url value="/resources/images/annuler.png"  var="annuler" />
 	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form"  var="edit_url" />
@@ -29,6 +30,7 @@
 		 <spring:url value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd"  var="delete_cmd_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL COMMANDE</a></span>
+<!-- 
 		<span class="nextTab unselectedTab">
 		<c:choose>
 		<c:when test="${not empty commandeProcess.produit}">
@@ -39,105 +41,229 @@
 		</c:otherwise>
 		</c:choose>
 		</span>
+ -->
 	 <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
 	 <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
 		
 		</div>
 		
+		        <spring:url value="/commandprocesses/${commandeProcess.cmdId}/updateLine/ " var="update_line_url" />
+		        <spring:url value="/commandprocesses/${commandeProcess.cmdId}/updateLineByAjax " var="update_url" />
+		        <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+		        
+ <spring:url value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/" var="delete_line_url" />
+		
+		<script type="text/javascript">
+		function deleteRow(row) {
+			$.get('${delete_line_url}' + row, function(data) {
+				if (data == "ok") {
+					var rowId = "tr#" + row;
+					$(rowId).hide();
+				} else {
+					alert('une erreur est survenue durant la supression !');
+				}
+			});
+		};
+
+		function hideRow(rowId) {
+			if (conf()) {
+				deleteRow(rowId);
+			}
+
+		};
+		
+		function getLineById(lineId){
+				$.getJSON( '${update_line_url}'+lineId,
+			                function(data){
+					if(data!=null){
+						  $('#_cip_id').val(data.cip);
+						  $('#_id_id').val(data.id);
+						  $('#_designation_id').val(data.designation);
+						  $('#_quantiteCommande_id').val(data.quantiteCommande);
+						  $('#_prixAchatMin_id').val(data.prixAchatMin);
+						  $('#_prixAVenteMin_id').val(data.prixAVenteMin);
+						  $('#_agentSaisie_id').val(data.agentSaisie);
+						  
+						  
+						  $('#editLineDiv').dialog('open');
+					}else{
+						alert('la ligne est introuvable !');
+					}
+					         
+							});
+				return false ;
+		} ;
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+		
+		//Dialog	find client		
+		
+		$(function() {
+			$('#editLineDiv').dialog({
+				open : function() {
+				},
+				autoOpen : false,
+				width : 500,
+				resizable : true,
+				draggable : true,
+				modal : true,
+				hide : 'fade',
+				show : 'slide'
+				
+
+			});
+			
+			$('input#proceed').click(function(){
+				saveLine();
+				return false;
+			});
+			
+			
+			function saveLine(){
+				$.getJSON( '${update_url}',
+						$('#editLineForm').serialize(),
+			                function(data){
+					if(data!=null){
+						var rowId = "tr#"+$('#_id_id').val()+" td";
+						var int = parseInt('0');
+						$(rowId).each(function(){
+							if(int==3)	$(this).html(data.quantiteCommande);
+							if(int==4)	$(this).html(data.prixAchatMin);
+							if(int==5)	$(this).html(data.prixAVenteMin);
+							int++ ;
+						});
+						  
+						  $('#editLineDiv').dialog('close');
+					}else{
+						alert('la ligne est introuvable !');
+					}
+					         
+							});
+			}
+			
+			$('input#false').click(function(){
+				$('#editLineDiv').dialog('close');
+				return false;
+			});
+			
+			$('tr.list').dblclick(function(){
+				var rwoId =$(this).attr('id');
+				if( isSavable(rwoId)){
+					saveChange(rwoId)
+				}else{
+					toggleToinput(rwoId) ;
+				}
+				  
+				return false;
+			});
+			
+			
+			function setFormInfos(rowId ,qte,pa,pv){
+				  $('#_cip_id').val('cip');
+				  $('#_id_id').val(rowId);
+				  $('#_designation_id').val('des');
+				  $('#_quantiteCommande_id').val(qte);
+				  $('#_prixAchatMin_id').val(pa);
+				  $('#_prixAVenteMin_id').val(pv);
+				  $('#_agentSaisie_id').val('agent');
+			}
+			function toggleToinput(rowId){
+				var tbs = "tr#"+rowId+" td";
+				var int = parseInt('0');
+				$(tbs).each(function(){
+					if(int==3){
+					if(!$(this).children().is('input')){
+						var text=	$(this).text();
+					    var input = '<input type="text" class="autres"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+					   $(this).html(input);
+			          }
+					}
+					if(int==4)	{
+						if(!$(this).children().is('input')){
+							var text=	$(this).text();
+						    var input = '<input type="text" class="autres"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+						   $(this).html(input);
+				          }
+					}
+					if(int==5)	{
+						if(!$(this).children().is('input')){
+							var text=	$(this).text();
+						    var input = '<input type="text"  class="autres"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+						   $(this).html(input);
+				          }
+					}
+					int++ ;
+				});
+				
+			};
+			function isSavable(rowId){
+				var tbs = "tr#"+rowId+" td";
+				var result = false ;
+				var int = parseInt('0');
+				$(tbs).each(function(){
+					if(int==3){
+					if($(this).children().is('input')){
+						result = true ;
+			          }
+					
+					}
+					int++ ;
+				});
+				return result ;
+			}
+			function saveChange(rowId){
+				var tbs = "tr#"+rowId+" td";
+				var int = parseInt('0');
+				var qte='';
+				var pa='';
+				var pv='';
+				
+				$(tbs).each(function(){
+					if(int==3){
+					if($(this).children().is('input')){
+			        	var put =  $(this).children();
+			        	qte = $(put).val() ;
+			        	$(this).html( qte) ;
+			          }
+					
+					}
+					if(int==4)	{
+						if($(this).children().is('input')){
+					        	var put =  $(this).children();
+					        	pa = $(put).val() ;
+						        $(this).html( pa) ;
+					          }
+					}
+					if(int==5)	{
+						if($(this).children().is('input')){
+					        	var put =  $(this).children();
+					            pv = $(put).val() ;
+						        $(this).html( pv) ;
+					      }
+					}
+					int++ ;
+				});
+				 setFormInfos(rowId ,qte,pa,pv)
+				 saveLine();
+			};
+			
+			
+			
+			
+			
+			
+		});
+	</script>
 	
    		<!-- product selection  	    -->
 	
-  <script type="text/javascript">
   
-  function conf(){
-	  Check = confirm("Voulez vous vraiment supprimer la ligne? ");
-	  if(Check == false){
-	  	return false;
-	  	
-	  }else{
-	  	return true;
-	  }
-	  }
-  
-function requete(){
-var cip =	document.getElementById("cip").value ;
-if (cip.length==7) {
-	dojo.xhrGet({
-		url: "${find_cip_url }"+cip,
-		handleAs: "text",
-		load: function(data) {
-			if (data=="Aucun produit Trouve") {
-		alert("Aucun produit Trouve");	
-			}else{
-				var t = data.split(',');
-				document.getElementById("cip").value = t[0];
-				document.getElementById("des").value =t[1];
-				document.getElementById("pId").value=t[3];
-				document.getElementById("lien").href="${show_prd_url }"+t[3];
-				document.getElementById("qtes").value = t[4];
-				document.getElementById("sc").value = t[5];
-
-				
-			}
-			},
-		error: function(error) {
-			alert(data);
-			},
-		sync: "true"
-
-		
-		});	
-}
-	
-
-}
-
-function codeTouche(evenement)
-{
-        for (prop in evenement)
-        {
-                if(prop == 'which') return(evenement.which);
-        }
-        return(evenement.keyCode);
-}
-
-function scanTouche(evenement)
-{
-        var reCarValides = /\d/;
-        var reCarSpeciaux = /[\x00\x08\x0D]/;
-        var codeDecimal  = codeTouche(evenement);
-        var car = String.fromCharCode(codeDecimal);
-        var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
-
-        return autorisation;
-}
-
-
-function verif_formulaire()
-{
- if(document.formulaire.cip.value == "")  {
-   alert("Veuillez entrer le cip du produit!");
-   document.formulaire.cip.focus();
-   return false;
-  }
- if(document.formulaire.qte.value == "") {
-   alert("Veuillez entrer la quantite a commander!");
-   document.formulaire.qte.focus();
-   return false;
-  }
- if(document.formulaire.pa.value == "") {
-   alert("Veuillez saisir le Prix achat Unitaire min!");
-   document.formulaire.pa.focus();
-   return false;
-  }
-
-}
-
-
-
-
-</script>
-
 
 <c:choose>
 <c:when test="${not empty commandeProcess.lineToUpdate }">
@@ -149,12 +275,12 @@ function verif_formulaire()
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;width: 300px;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Seuil Cmd</th>
-		            <th style="text-align: center;">qte a Commander</th>
-		            <th style="text-align: center;">Prix achat Min</th>
-		            <th style="text-align: center;">Agent Saisie</th>
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    		<th style="text-align: center;">Stock</th>
+		    		<th style="text-align: center;">stock alert</th>
+		            <th style="text-align: center;">qte cmd</th>
+		            <th style="text-align: center;">Prix achat </th>
+		            <th style="text-align: center;">Agent </th>
+		    		<th style="text-align: center;">ACTION</th>
 		    	</tr>
 		    		<tr>
 		    			<td>
@@ -176,7 +302,7 @@ function verif_formulaire()
 
 		    			<td>
 		    			
-		   	<INPUT type="text" name="qte" class="autres" value="${commandeProcess.lineToUpdate.quantiteCommande}" onKeyPress="return scanTouche(event)"  maxlength="7" autofocus="autofocus"  title="quantite a Commander"   id="qte" />
+		   	<INPUT type="text" name="qte" class="autres" value="${commandeProcess.lineToUpdate.quantiteCommande}"  onKeyPress="return scanTouche(event)"  maxlength="7" autofocus="autofocus"  title="quantite a Commander"   id="qte" />
 		    		
 		    			</td>
 		    			<td>
@@ -213,12 +339,12 @@ function verif_formulaire()
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Seuil Cmd</th>
-		            <th style="text-align: center;">qte a Commander</th>
-		            <th style="text-align: center;">Prix achat Min</th>
-		            <th style="text-align: center;">Agent Saisie</th>
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    		<th style="text-align: center;"> Stock</th>
+		    		<th style="text-align: center;">Stock alert</th>
+		            <th style="text-align: center;">qte cmd</th>
+		            <th style="text-align: center;">Prix achat </th>
+		            <th style="text-align: center;">Agent </th>
+		    		<th style="text-align: center;">ACTION</th>
 		    	</tr>
 		    		<tr>
 		    			<td>
@@ -253,22 +379,7 @@ function verif_formulaire()
 		    			<td>
 							<INPUT type="submit" class="submits"  value="Ajouter"  />
 						</td>
-						<td class="utilbox">
-					<spring:url value="/resources/images/show.png" var="show_image_url" />
-					<c:choose>
-		<c:when test="${not empty commandeProcess.produit}">
-                         <a href="${ show_prd_url} ${commandeProcess.produit.id}" alt="Show this product" id="lien" title="Show this product">
-								<img alt="Show " class="image" src="${ show_image_url}" title="Show this Product"/>
-							</a>		
-				</c:when>
-		<c:otherwise>
-                        <a href="#" alt="Show this product" id="lien" title="Show this product">
-								<img alt="Show " class="image" src="${ show_image_url}" title="Show this Product"/>
-							</a>		
-		</c:otherwise>
-		</c:choose>
-							
-						</td>							
+												
 		    		</tr>
 		    </table>
 </form>
@@ -283,24 +394,25 @@ function verif_formulaire()
 
 </c:choose>
   		
-    	
+    	<center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
     	<!-- Show the list of product commanded here -->
     	<form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${commandeProcess.productSelected}" z="user-managed" 
     		label="Liste Des Produits A Commander" objectName="Ligne Commande" openPane="${not empty  commandeProcess.productSelected}">
-
-		    <table>
+<div style="overflow-y: auto;height:800px;">
+		    <table id="orderItems">
 		    	<tr>
 		    		<th style="text-align: center;" >CiP</th>
 		    		<th style="text-align: center;width: 300px;" >Designation</th>
-		    		<th style="text-align: center;">Qte En Stock</th>
-		    		<th style="text-align: center;">Seuil Cmd</th>
-		            <th style="text-align: center;">qte a Commander</th>
-		            <th style="text-align: center;">Prix achat Min</th>
-		            <th style="text-align: center;">Agent Saisie</th>
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
+		    		<th style="text-align: center;">Stock</th>
+		    		<th style="text-align: center;">Commande </th>
+		            <th style="text-align: center;">Prix achat </th>
+		            <th style="text-align: center;">Prix Vente </th>
+		            <th style="text-align: center;">Agent </th>
+		    		<th  style="text-align: center;">ACTION</th>
 		    	</tr>
+		 
 		    	<c:forEach items="${commandeProcess.productSelected}" var="ligneCommande">
-		    		<tr>
+		    		<tr class="list"  id="${ ligneCommande.id}">
 		    		<td style="text-align: center;">
 		    				<c:out value="${ligneCommande.produit.cip}"></c:out>
 		    			</td >
@@ -314,42 +426,47 @@ function verif_formulaire()
 		    			</td>
 		    			<td style="text-align: right;padding-right: 20px;">
 		    			
-		    				<c:out value="${ligneCommande.produit.seuilComande}"></c:out>
+		    				<c:out value="${ligneCommande.quantiteCommande}"></c:out>
 		    			</td>
 
 		    			<td style="text-align: right;padding-right: 20px;">
 		    			
-		    				<c:out value="${ligneCommande.quantiteCommande}"></c:out>
+		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>
 		    		
 		    			</td>
 		    			<td style="text-align: right;padding-right: 20px;">
-		     		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>
+		     		    				<c:out value="${ligneCommande.prixAVenteMin}"></c:out>
 
 		    			</td>
 		    			<td style="text-align: center;">
 		    				<c:out value="${ligneCommande.agentSaisie}"></c:out>
 		    
 		    			</td>
-		    				<td class="utilbox">
-						<spring:url value="/resources/images/update.png" var="update_image_url" />
-		        <spring:url value="/commandprocesses/${commandeProcess.cmdId}/updateLine/${ligneCommande.id} " var="update_line_url" />
-								<a href="${update_line_url}" alt="update" title="update">								
-								<img alt="update" class="image" src="${ update_image_url}" title="mettre a jour la commande "/>
-                              </a>
-						</td>
+		    				
 						<td class="utilbox">
 						  <spring:url value="/resources/images/delete.png" var="delete_image_url" />
-						 <spring:url value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/${ligneCommande.id}" var="delete_line_url" />
 						  
-								<a href="${ delete_line_url}" alt="Remove" title="Remove">								
-								<img alt="Unselect" class="image" src="${ delete_image_url}" title=" Spprimer la selection" onclick="return conf()"/>
-                              </a>
+								<img alt="${ligneCommande.id}"  class="image" src="${ delete_image_url}" title=" Spprimer la selection" onclick="hideRow(this.alt);"/>
 							
 						</td>							
 		    		</tr>
 		    	</c:forEach>
+		  
 		    </table>
-		    
+		     </div>
         </form:customList>
-        
+    
+   <div id="editLineDiv">
+       	<center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+   
+    <form:create label="modification de la Ligne" otherBut="cancel" formId="editLineForm"  diseableSubmit="true" id="fc_org_adorsys_adpharma_domain_LigneCmdFournisseur" modelAttribute="ligneCmdFournisseur" path="#"  z="M03QQWNaBYxQ5t1cWBz/XrQVa6Y=">
+                 <field:hidden field="id"  id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" />
+                 <field:hidden field="agentSaisie"  id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_agentSaisie" />
+                 <field:input field="cip" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_cip" z="OPw69/NtopeJeQmRzWLmZvKE/dk="/>
+                 <field:input  field="designation" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" z="OPw69/NtopeJeQmRzWLmZvKE/dk="/>
+                 <field:input label="Qte Commandee" field="quantiteCommande" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_quantiteCommande" validationMessageCode="field_invalid_integer" z="y6cvPzBS9RTeEQUFZOvJy+yR8ZE="/>
+                 <field:input field="prixAchatMin" label="Prix Achat" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin" validationMessageCode="field_invalid_number" z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU="/>
+                 <field:input field="prixAVenteMin"  label="Prix Vente" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin" validationMessageCode="field_invalid_number" z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU="/>
+    </form:create>
+  </div>      
 </div>

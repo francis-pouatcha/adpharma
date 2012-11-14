@@ -21,6 +21,8 @@
       <spring:url value="/commandeclients/cmdCredit?form" var="vente_credit_url"/>
       <spring:url value="/saleprocess/newProformat" var="vente_proformat_url"/>
       <spring:url value="/commandeclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="list_url"/>
+      <spring:url value="/commandeclients/find=venteJournalier?page=1&amp;size=${empty param.size ? 50 : param.size}" var="vente_jour_url"/>
+      
       <spring:url value="/commandeclients?find=BySearch&amp;form" var="search_url"/>
       <spring:url value="/commandeclients?find=ByStatusAndDateCreationBetween&amp;form" var="status_date_url"/>
       <spring:url value="/saleprocess/rechercheCmd?form" var="cmd_client_url"/>
@@ -64,11 +66,11 @@
 		<li><a href="#">Gestion du Stock</a>
         		<ul class="sub_menu">
         			 <li>
-        				<a href="#">Approvisionnement</a>
+        				<a href="#">Entree En Stock </a>
         				<ul>
-        					<li><a href="${ap_cree_url}">Creer</a></li>
-        					<li><a href="${ap_list_url}">Lister</a></li>
-        					<li><a href="${search_list_url}">Rechercher</a></li>
+        					<li><a href="${ap_cree_url}">Effectuer Une Entree</a></li>
+        					<li><a href="${ap_list_url}">Lister Les Entrees</a></li>
+        					<li><a href="${search_list_url}">Rechercher Les Entrees</a></li>
         				</ul>
         			 </li>
         			 <li>
@@ -85,6 +87,14 @@
         				<a href="${imp_code_url}">Impression Code Bare</a>
         				
         			 </li>
+        			  <li>
+		        				<a href="#">Preparation des Commandes</a>
+		        					<ul>
+		        						<li><a href="${cmd_four_url}"> Effectuer Une Preparation</a></li>
+		        						<li><a href="${cmd_find_four_url}"> Liste des Preparations</a></li>
+		        						<li><a href="${cmd_list_url}">Lister</a></li>	
+		        					</ul>
+		           </li>
         			 <li>
 		        				<a href="#">Rayons</a>
 		        					<ul>
@@ -107,14 +117,7 @@
         				</ul>
         			 </li>
         			 
-        			 <li>
-		        				<a href="#">CMD Fournisseur</a>
-		        					<ul>
-		        						<li><a href="${cmd_four_url}"> Creer</a></li>
-		        						<li><a href="${cmd_find_four_url}"> Rechercher</a></li>
-		        						<li><a href="${cmd_list_url}">Lister</a></li>	
-		        					</ul>
-		        			 </li>
+        			
 				</ul>
 		</li>
   </security:authorize>
@@ -124,10 +127,11 @@
         <li>
         	<a href="#">Ventes</a>
         			 	<ul class="sub_menu">
-        					<li><a href="${vente_public_url}">Vente Au Public</a></li>
+        					<li><a href="${vente_public_url}">Vente Au Comptant</a></li>
         					<li><a href="${vente_credit_url}">Vente a Credit</a></li>
         					<li><a href="${vente_proformat_url}">Facture Proformat</a></li>
         				    <li><a href="${search_url}">Rechercher une vente</a></li>
+        				    <li><a href="${vente_jour_url}">Lite Des Ventes Du jour</a></li>	
         					<li><a href="${list_url}">Lister Les Ventes</a></li>	
         					
         					
@@ -148,6 +152,7 @@
             <spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url"/>
             <spring:url value="/caisses?form" var="cai_de_url"/>
                 <spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url"/>
+                         <spring:url value="/caisses?find=etatJournalier&amp;form" var="etat_jour_caisse_url"/>
             
             <spring:url value="/operationcaisses?find=ByDateOperationBetween&amp;form" var="cai_op_url"/>
                 <spring:url value="/operationcaisses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="cai_ops_url"/>
@@ -167,8 +172,11 @@
         					<li><a href="${delete_caisse_url}">Fermer</a></li>
         					<li><a href="${cai_enc_url}">Encaisser</a></li>
         				 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+        				 	<li><a href="${etat_jour_caisse_url}">Etat Journalier des Caisses</a></li>
         				 	<li><a href="${etat_caisse_url}">Etat des Caisses</a></li>
-<!--         				 	        					<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
+        				 	
+        				 	
+<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
 		        		 
 
         					<li>

@@ -16,10 +16,14 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.Etat;
+import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
+import org.adorsys.adpharma.domain.TVA;
+import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
@@ -84,6 +88,7 @@ public class ApprovisionementProcessController {
 		ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 	}
 	
@@ -129,6 +134,7 @@ public class ApprovisionementProcessController {
 		}
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 
 	}
@@ -168,6 +174,7 @@ public class ApprovisionementProcessController {
 		}
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 
 	}
@@ -200,6 +207,7 @@ public class ApprovisionementProcessController {
 		}
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 
 	}
@@ -234,6 +242,7 @@ public class ApprovisionementProcessController {
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		approvisonementProcess.setLineToUpdate(LigneApprovisionement.findLigneApprovisionement(lnId));
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 	}
 	//assure la convertion des lignes de commande en ligne d'approvisionement 
@@ -281,6 +290,7 @@ public class ApprovisionementProcessController {
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		approvisonementProcess.setProduit(produit);
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 	}
 	@RequestMapping(value = "/{apId}/enregistrer", method = RequestMethod.GET)
@@ -364,6 +374,16 @@ public class ApprovisionementProcessController {
 	@ModelAttribute("devises")
 	public Collection<Devise> populateDevises() {
 		return Devise.findAllDevises();
+	}
+	
+	public void initProcurementViewDependencies(Model uiModel){
+		uiModel.addAttribute("produit", new Produit());
+		uiModel.addAttribute("rayons", Rayon.findAllRayons());
+		uiModel.addAttribute("filiales", Filiale.findAllFiliales());
+		uiModel.addAttribute("tauxmarges", TauxMarge.findAllTauxMarges());
+		uiModel.addAttribute("tvas", TVA.findAllTVAS());
+		
+		
 	}
 
 }

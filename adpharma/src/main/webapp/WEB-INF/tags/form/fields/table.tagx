@@ -25,6 +25,8 @@ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:spring="http://www.springfra
   <jsp:directive.attribute name="customCommands" type="java.util.Collection" required="false" rtexprvalue="true" description="The collection command to be included in the table" />
    <jsp:directive.attribute name="contextMenuLink" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
   <jsp:directive.attribute name="custom" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Activating custom behavior" />
+      <jsp:directive.attribute name="tableId" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
+     
        <spring:url value="${path}/" var="jq_show_url" />
 
 <script>
@@ -32,7 +34,6 @@ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:spring="http://www.springfra
 $('tr.list').each(function(){
 							var current = this;
 							this.ondblclick = function(event) {
-								//window.open('${jq_show_url}'+this.id);
 								window.location = '${jq_show_url}'+this.id ;
 								return false;
 							
@@ -42,8 +43,7 @@ $('tr.list').each(function(){
 							});
 	})
 	</script>
- 
-  <c:if test="${empty render or render}">
+  <c:if  test="${empty render or render}">
 
     <c:set var="columnProperties" scope="request" />
     <c:set var="columnColors" scope="request" />
@@ -82,7 +82,7 @@ $('tr.list').each(function(){
 	
     <spring:eval var="colCounter" expression="1" />
     <div  id="myDiv">
-    <table title="double click to Show " >
+    <table id="${tableId }"  title="double click to Show " >
     
       <thead>
         <tr >

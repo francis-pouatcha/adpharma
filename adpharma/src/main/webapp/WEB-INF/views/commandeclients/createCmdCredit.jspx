@@ -16,7 +16,7 @@
 
 	<script type="text/javascript">
 	function clearClientTable(){
-		$('#result').html(
+		$('#result').html( 
 				'<tr>
 	<th  align="center" valign="top" >CODE</th>
 				<th  align="center" valign="top" >NOM COMPLET</th>
@@ -26,6 +26,7 @@
 		<th  align="center" valign="top" >CREDIBLE</th>
 		
 				</tr>');
+		
 	}
 	
 	
@@ -47,6 +48,7 @@
 											</tr>'
 										
 								);});
+								
 								$('table#result tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {
@@ -99,7 +101,7 @@
 		// Dialog	find client		
 		$('#findClient').dialog({
 			open:function(){
-				// clearClientTable();
+		   //clearClientTable();
 			},
 			autoOpen: false,
 			width: 1000,
@@ -123,8 +125,7 @@
 		});
 		
 		$('#findpayeur').click(function(){
-			console.log();
-	    	$('#select').val(this.id);
+                   $('#select').val(this.id);
 			$('#findClient').dialog('open');
 			return false;
 		});
@@ -138,7 +139,7 @@
 		
 	
 	</script>
-	 <spring:url value="/resources/images/globe32.gif" var="loadimage"/>
+	 <spring:url value="/resources/images/ajax-loader.gif" var="loadimage"/>
 	 
 	<form:create   bodyExt="bodyExt.jspx" id="cmdcredit" label="CREATION VENTE A CREDIT"
 		modelAttribute="commandeCredit" path="/commandeclients/cmdCredit"

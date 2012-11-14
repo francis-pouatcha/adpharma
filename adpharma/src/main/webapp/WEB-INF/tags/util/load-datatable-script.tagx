@@ -1,0 +1,16 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+  <jsp:output omit-xml-declaration="yes" />
+    <!--   set all url for javascript and css  resources -->
+    
+        <spring:url value="/resources/datatables/css/jquery.dataTables.css" var="datatables_css_url" />
+        <spring:url value="/resources/datatables/js/jquery.dataTables.js" var="datatables_js_url" />
+
+<!--  add all css resources -->
+    <link rel="stylesheet" type="text/css" href="${datatables_css_url}" />
+
+ 
+<!--  add all javascripts resources  -->
+    <script src="${datatables_js_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
+
+</jsp:root>

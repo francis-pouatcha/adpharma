@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
- xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:springform="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    <jsp:include page="createForm_script.jspx" /> 
     
-    <form:create id="fc_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="commandeFournisseur" path="/commandprocesses" render="${empty dependencies}" z="user-managed">
-                <field:select field="site" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_site" itemValue="id" items="${sites}" path="/sites" z="o9ACgUkDWf5q2bGayLPSDBzjHPQ="/>
-        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" render="false" z="user-managed"/>
-        <field:input field="cmdNummber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNummber" render="false" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" render="false" field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateLimiteLivraison" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
-        <field:select field="fournisseur" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="user-managed"/>
-        <field:simple field="ligneCommande" render="false" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ligneCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Fournisseur" z="user-managed"/>
-        <field:input field="cmdNumber" render="false" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" z="user-managed"/>
-        <field:checkbox field="etat" render="false" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etat" z="user-managed"/>
-        <field:select field="ModeDeSelection" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" items="${modeselections}" path="modeselections" required="true" z="user-managed"/>
-         <field:select field="tva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_tva" itemValue="id" items="${tvas}" path="/tvas" z="iX/CebcAgb/4d20kt/rJTdQxWY8="/>
- 
-    </form:create>
-  
+    <form:create  id="fc_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="orderPreParationBean" path="/commandprocesses/preparedOrder" render="${empty dependencies}" z="user-managed">
+         <table class="tableForm">
+             <tr>
+                 <td valign="top">
+                 <div  id="infos">
+                 <legend> Infos Preparation</legend>
+                        <field:select field="magasin" style="width: 60%;"  disableFormBinding="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_site" itemValue="id" items="${sites}" path="/sites" z="o9ACgUkDWf5q2bGayLPSDBzjHPQ="/>
+                        <field:select field="fournisseur" style="width: 60%;"  disableFormBinding="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="user-managed"/>
+                        <field:datetime label="Date Livraison" dateTimePattern="dd-MM-yyyy hh:mm" field="deliveryDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
+                            <label  style="font-weight: bold; font-size: 12px;" for="_modeSelection">Mode Preparation : </label>
+                            <springform:select   id="_modeSelection_id" cssStyle=" width: 212px; height: 25px;" path="modeSelection"  items="${modeselections}"/> <BR />                
+                       <field:input field="productSelectionQuantity" titleMessage="Quantite Maximal de Produit A secletionner !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Qte A Selectioner"  />
+                       <field:input field="minStock" titleMessage="Stock A partir du quel les produits seront commandable !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Stock Limit"  />
+               
+                </div>
+                 </td>
+                 <td valign="top">
+                 <div  id="zone" >
+                        <legend>Zone de Recherche</legend>
+                         <field:select label="Rayon" style="width: 60%;"  itemValue="id" disableFormBinding="true" field="rayon" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection"  items="${rayons}" path="/rayon" required="true" z="user-managed"/>
+                         <field:select label="Filiale" itemValue="id" field="filiale" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection"  items="${filiales}" path="/rayon" required="true" z="user-managed"/>
+                </div>
+                <div id="plage">
+                        <legend>Plage de Produits</legend>
+                         <field:input field="beginBy" titleMessage="Produit dont le nom Commance Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Commancant Par"  />
+                         <field:input field="endBy"  titleMessage="Produit dont le nom se Termise  Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Se terminant Par"  />
+                </div>
+                <div id="periode" style="display: none;">
+                        <legend>Periode  des Ventes</legend>
+                         <field:datetime label="Date debut" dateTimePattern="dd-MM-yyyy hh:mm" field="beginDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
+                         <field:datetime label="Date Fin" dateTimePattern="dd-MM-yyyy hh:mm" field="endDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
+                </div>
+                 
+                </td>
+             </tr>
+         
+         
+         </table>
+           </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeFournisseur" render="${not empty dependencies}" z="user-managed"/>
 </div>

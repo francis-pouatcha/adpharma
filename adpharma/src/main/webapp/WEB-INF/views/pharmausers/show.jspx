@@ -20,7 +20,8 @@
         <field:display field="email" id="s_org_adorsys_adpharma_domain_PharmaUser_email" object="${pharmauser}" z="NxISEBERZG2OFgSYMVchKbKOy6M="/>
         <field:display field="office" id="s_org_adorsys_adpharma_domain_PharmaUser_office" object="${pharmauser}" z="p+OblM8hKzk9s9O8/j1Kz4+Sy+s="/>
         <field:display field="tauxRemise" id="s_org_adorsys_adpharma_domain_PharmaUser_tauxRemise" object="${pharmauser}" z="S/PHUf/cTZjC4cBXgN0dFTr//nM="/>
-       <field:display field="roleNames"   id="s_org_adorsys_adpharma_domain_PharmaUser_roleNames" object="${pharmauser}" z="a3bqO8E8rdlev4IiNFrhykLxJJ4="/>
+        <field:display field="roleNames" id="s_org_adorsys_adpharma_domain_PharmaUser_roleNames" object="${pharmauser}" z="a3bqO8E8rdlev4IiNFrhykLxJJ4="/>
+        <field:display field="displayRole" id="s_org_adorsys_adpharma_domain_PharmaUser_displayRole" object="${pharmauser}" z="vDnHgXKZeUNY8dRCAJx0kiXHy7w="/>
     </page:show1>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_PharmaUser_footPrint" object="${pharmauser}" z="P3Wtyddoo+bIoYTG8/bTebKhojo="/>

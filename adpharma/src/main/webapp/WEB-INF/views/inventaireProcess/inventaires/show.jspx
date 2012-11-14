@@ -9,12 +9,31 @@
     <div id="tabset">
     
     <ul>
-<li><a href="#panel1">Details Inventaire</a></li>
-<li><a href="#panel2">Infos Inventaires</a></li>	
+<li><a href="#panel1">Infos Inventaire</a></li>
+<li><a href="#panel2">Details Inventaires</a></li>	
 </ul>
     
     <div id="panel1" >
-   <page:list id="pl_org_adorsys_adpharma_domain_LigneInventaire" items="${inventaire.ligneInventaire}" z="3MEqxpA476LASp07433etslmugI=">
+   
+    
+    <page:show1 clientLinks="showLink.jspx"  delete="${inventaire.etat=='EN_COUR' }"  update="${inventaire.etat=='EN_COUR' }" id="ps_org_adorsys_adpharma_domain_Inventaire" object="${inventaire}" path="/inventaires" z="jJYiRhZr5T2/yjIwQpcsybjmSMk=">
+         <field:display field="numeroInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_numeroInventaire" object="${inventaire}" z="c37/zjLGlwl+AZaYgLPO/dJ4vXw="/>
+        <field:display field="agent" id="s_org_adorsys_adpharma_domain_Inventaire_agent" object="${inventaire}" z="fv23Ongc+od6dWLuxiUOqmWjRt0="/>
+        <field:display field="montant" id="s_org_adorsys_adpharma_domain_Inventaire_montant" object="${inventaire}" z="4lbzhirXZQIZLOJ8b77AK1QU0uM="/>
+        <field:display field="etat" id="s_org_adorsys_adpharma_domain_Inventaire_etat" object="${inventaire}" z="FPPQjwYkVH2Aa5kkq6hX5DwZcC0="/>
+        <field:display date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" field="dateInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" object="${inventaire}" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
+        <field:display field="site" id="s_org_adorsys_adpharma_domain_Inventaire_site" object="${inventaire}" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
+                <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
+        
+        </page:show1>
+          <HR />
+                <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Inventaire_footPrint" object="${inventaire}" z="74/NPbhASb5onj9dRwW4aOUkRQA="/>
+        
+        <HR />
+    </div>
+    <div id="panel2">
+    
+    <page:list id="pl_org_adorsys_adpharma_domain_LigneInventaire" items="${inventaire.ligneInventaire}" z="3MEqxpA476LASp07433etslmugI=">
         <table:table delete="false" update="false" create="false" show="false" data="${inventaire.ligneInventaire}" id="l_org_adorsys_adpharma_domain_LigneInventaire" path="/ligneinventaires" z="oADU3jF9sp1Jk3bMOaCpzwZd/KM=">
                       <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="produit"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
                       <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_agentSaisie" maxLength="-1" property="agentSaisie" z="Ad7R97AMtTvyTgBboAG2mOMpzso="/>
@@ -24,22 +43,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_LigneInventaire_prixTotal" property="prixTotal" z="b6NUDhagpgBb5pCYWjLsjXwu8pg="/>
         </table:table>
     </page:list>
-    </div>
-    <div id="panel2">
-   <page:show delete="false" update="false"  id="ps_org_adorsys_adpharma_domain_Inventaire" object="${inventaire}" path="/inventaires" z="jJYiRhZr5T2/yjIwQpcsybjmSMk=">
-         <field:display field="numeroInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_numeroInventaire" object="${inventaire}" z="c37/zjLGlwl+AZaYgLPO/dJ4vXw="/>
-        <field:display field="agent" id="s_org_adorsys_adpharma_domain_Inventaire_agent" object="${inventaire}" z="fv23Ongc+od6dWLuxiUOqmWjRt0="/>
-        <field:display field="montant" id="s_org_adorsys_adpharma_domain_Inventaire_montant" object="${inventaire}" z="4lbzhirXZQIZLOJ8b77AK1QU0uM="/>
-        <field:display field="etat" id="s_org_adorsys_adpharma_domain_Inventaire_etat" object="${inventaire}" z="FPPQjwYkVH2Aa5kkq6hX5DwZcC0="/>
-        <field:display date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" field="dateInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" object="${inventaire}" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
-        <field:display field="site" id="s_org_adorsys_adpharma_domain_Inventaire_site" object="${inventaire}" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
-                <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
-        
-        </page:show>
-          <HR />
-                <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Inventaire_footPrint" object="${inventaire}" z="74/NPbhASb5onj9dRwW4aOUkRQA="/>
-        
-        <HR />
+   
         
     </div>
     

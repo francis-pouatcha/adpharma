@@ -25,6 +25,7 @@ function annCmd(){
 	}
 	
 
+
 </script>
 	<div style="margin-bottom: 2px; padding-bottom: 2px;">
 		<span id="cmdName" style="font-weight: bold"> <c:out
@@ -83,7 +84,7 @@ function annCmd(){
 		var="update_credit_client_url" />
 
 	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE AU PUBLIC</a></span>
+		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
 		            
 		            
 		            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
@@ -522,7 +523,7 @@ $('#updateClient').dialog("close");
 											value="${saleProcess.produit.cipMaison}" readonly="readonly"
 											 onKeyPress="return scanTouche(event)"
 											  title="saisir le cipm"
-											 autofocus="autofocus" />
+											/>
 
 									</c:when>
 									<c:otherwise>
@@ -530,7 +531,7 @@ $('#updateClient').dialog("close");
 											value="${saleProcess.produit.cipMaison}" 
 											onKeyPress="return scanTouche(event)"  onchange="requete();"
 											title="saisir le cipm" 
-											autofocus="autofocus" />
+											 />
 
 									</c:otherwise>
 								</c:choose></td>

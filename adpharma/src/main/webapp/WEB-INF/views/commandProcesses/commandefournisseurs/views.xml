@@ -13,5 +13,13 @@
 <definition extends="stocker" name="commandefournisseurs/update">
         <put-attribute name="body" value="/WEB-INF/views/commandefournisseurs/update.jspx"/>
     </definition>
+    
+    <definition extends="stocker" name="commandprocesses/editPreparedOrder">
+        <put-attribute name="body" value="/WEB-INF/views/commandProcesses/commandefournisseurs/editPreparedOrder.jspx"/>
+    </definition>
+    
+    
+    
+    
 
 </tiles-definitions>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:springform="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	style="width: 100%;overflow: auto; height: 200px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:url value="/produits/createByAjax"  var="create_prd_url" />
+    <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+<script type="text/javascript">
+function clearCreateForm(){
+	$("#_designation_id").val("");
+	$("#_cip_id").val("");
+	$("#_fabricant_id").val("");
+	$("#_seuilComande_id").val("5");
+	$("#_plafondStock_id").val("100");
+	$("#_tauxRemiseMax_id").val("5");
+};
+	$(function(){
+		// Dialog	find produit		
+		$('#create_product').dialog({
+			open:function(){
+				clearCreateForm();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'slide',
+             show:'slide',
+             position:'center',
+		});
+		
+		$('#createprd').click(function(){
+			$('#create_product').dialog('open');
+			return false;
+		});
+		$('input#false').click(function(){
+			$('#create_product').dialog('close');
+			return false;
+		});
+		
+		
+		
+		
+		$('input#proceed').click(function(){
+			if($("#_designation_id").val()){
+				
+				$.getJSON( "${create_prd_url }",
+						$('form#createPrd').serialize(),
+			  			function(data){
+			  		if (data== null) {
+			  			alert("Un Produit de meme Cip Existe deja !  ");
+			  			
+			  				}else{
+			  					videLigne();
+			  					$("#cip").val(data.cip);
+			  					$("#des").val(data.designation);
+			  					$("#mrg").val(data.tauxDeMarge.margeValue);
+			  					$("#pId").val(data.id);
+			  					$("#qtecip").val(data.quantiteEnStock);
+			  					$("#qte").val(1);
+			  					$("#pa").val(data.prixAchatSTock);
+			  					$("#pv").val(data.prixVenteStock);
+			  					$("#rayon").val(data.rayon.codeRayon);
+			  					$('#create_product').dialog('close');
+
+			  				}
+			  			
+			  			});
+			}else{
+				
+				alert("Veulliez Saisir la designation du produit !  ");
+			}
+			
+			
+			return false;
+		});
+		
+
+	})
+	
+	</script>
+   <div id="create_product"  style="display: none;" title="Creer un nouveau Produit ">
+         <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+	    <form:create  formId="createPrd" diseableSubmit="true" otherBut="Annuler" id="fc_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits/create/${cip}" render="${empty dependencies}" z="user-managed">
+        <table>
+            <tr>
+                <td valign="top">
+               <LEGEND> Infos Produits</LEGEND>              
+                    <field:input field="designation"  style="width: 60%;" id="c_org_adorsys_adpharma_domain_Produit_designation" required="true" z="QU7r5zqGZMyMej7Tr9SkqPafDG8="/>
+                    <field:input field="cip"  id="c_org_adorsys_adpharma_domain_Produit_cip"  z="user-managed"/>
+                    <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant"  z="user-managed"/>
+                    <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
+                  <LEGEND> Infos Emplacement</LEGEND> 
+                   <div>
+                      <label   for="_rayon">Rayon : </label>
+                        <springform:select  id="rayon" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="rayon"  items="${rayons}"/>                 
+                   </div> 
+                   <BR /> 
+                   <div>
+                      <label   for="_filiale">Filiale : </label>
+                        <springform:select  id="filiale" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="filiale"  items="${filiales}"/>                 
+                   </div> 
+                   <BR />  
+                       </td>
+                <td valign="top">
+               <LEGEND> Infos Stock</LEGEND>   
+                    <field:input field="seuilComande" label="stock alert" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" validationMessageCode="field_invalid_integer" z="4f/ES3d9TyL7w8Br1piLgLR2kI0="/>
+                    <field:input field="plafondStock" id="c_org_adorsys_adpharma_domain_Produit_plafondStock" validationMessageCode="field_invalid_integer" z="DPR1QqMyvQB+RqYN+gwAtskwqYU="/>
+                    <LEGEND> Infos appro / Vente</LEGEND> 
+                    <field:input field="tauxRemiseMax" label="Remise Max (%)" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>
+                    <div>
+                      <label   for="tvaProduit">TVA : </label>
+                        <springform:select  id="tvaProduit" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tvaProduit"  items="${tvas}"/>                 
+                   </div> 
+                   <BR /> 
+                    <div>
+                      <label   for="_tauxDeMarge">Marge (%) : </label>
+                        <springform:select  id="tauxDeMarge" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tauxDeMarge"  items="${tauxmarges}"/>                 
+                   </div> 
+                   <BR />                
+               </td>
+            </tr>
+        </table>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Produit" render="${not empty dependencies}" z="n4/IjG6lu5Bj/dySKMFveULZa44="/>
+	    	
+		
+	
+ </div>      
+</span>

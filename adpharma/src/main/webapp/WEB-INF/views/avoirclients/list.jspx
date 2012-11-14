@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_org_adorsys_adpharma_domain_AvoirClient" items="${avoirclients}" z="bV/HVGsV8bxBBokQUfipi0JeGLA=">
-        <table:table data="${avoirclients}" id="l_org_adorsys_adpharma_domain_AvoirClient" path="/avoirclients" update="false" z="user-managed">
+        <table:table delete="false" data="${avoirclients}" id="l_org_adorsys_adpharma_domain_AvoirClient" path="/avoirclients" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_AvoirClient_numero" property="numero" z="3W6+9afW573FZbcPpynXW9ehiS0="/>
             <table:column date="true" dateTimePattern="${avoirClient_dateedition_date_format}" id="c_org_adorsys_adpharma_domain_AvoirClient_dateEdition" property="dateEdition" z="zkvNF+jSP59sIMzhc/X9RzckVT8="/>
             <table:column id="c_org_adorsys_adpharma_domain_AvoirClient_agent" property="agent" z="MtRb8HuwBIrts0U6gqqreB0hdcA="/>

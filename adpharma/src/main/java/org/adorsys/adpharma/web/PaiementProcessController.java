@@ -353,7 +353,7 @@ public class PaiementProcessController {
 			String remoteAddr = httpServletRequest.getRemoteAddr();
 			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
 			String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
-		
+
 			TicketPrinter.buildTicket(paiement,Boolean.TRUE);
 			PrintService.silentPrint(TicketPrinter.TICKET_FILE) ;
 
@@ -366,7 +366,7 @@ public class PaiementProcessController {
 		/*if (PrintService.print(TicketPrinter.TICKET_FILE , httpServletRequest)) {
 			return "redirect:/paiementprocess/encaisser?form";
 		}
-		*/
+		 */
 		return "redirect:/paiementprocess/encaisser?form";
 
 	}
@@ -386,17 +386,17 @@ public class PaiementProcessController {
 			//String remoteAddr = httpServletRequest.getRemoteAddr();
 			//List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
 			//String printerName = printers.isEmpty()?null:printers.iterator().next().getPrinterName();
-		
+
 			TicketPrinter.buildTicket(paiement,Boolean.TRUE);
-            PrintService.silentPrint(TicketPrinter.TICKET_FILE);
+			PrintService.silentPrint(TicketPrinter.TICKET_FILE);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("eereur d'impression de ticket !");
 			System.out.println(e.getMessage());
 			return "ticketPdfDocView";
 		}
-		
-		
+
+
 		return "redirect:/paiementprocess/encaisser?form";
 	}
 
@@ -568,15 +568,15 @@ public class PaiementProcessController {
 				mouvementStock.setSite(facture.getSite());
 				mouvementStock.setAgentCreateur(facture.getVendeur().getUserName());
 				LigneApprovisionement ligneApprovisionement = ligne.getProduit();
+				mouvementStock.setQteInitiale(ligneApprovisionement.getQuantieEnStock());
 				Produit prd = ligneApprovisionement.getProduit() ;
 				ligneApprovisionement.setQuantiteVendu(ligneApprovisionement.getQuantiteVendu().add(ligne.getQuantiteCommande()));
 				ligneApprovisionement.CalculeQteEnStock();
 				ligneApprovisionement.merge();
-				mouvementStock.setQteInitiale(prd.getQuantiteEnStock());
-				//prd.setQuantiteEnStock(prd.getQuantiteEnStock().subtract(ligne.getQuantiteCommande()));
-				prd.setTrueStockValue();
+				prd.setQuantiteEnStock(prd.getQuantiteEnStock().subtract(ligne.getQuantiteCommande()));
+				//prd.setTrueStockValue();
 				prd.setDateDerniereSortie(new Date());
-				mouvementStock.setQteFinale(prd.getQuantiteEnStock());
+				mouvementStock.setQteFinale(ligneApprovisionement.getQuantieEnStock());
 				mouvementStock.setPVenteTotal(ligne.getPrixTotal().subtract(ligne.getTotalRemise()).toBigInteger());
 				mouvementStock.setPAchatTotal(ligne.getQuantiteCommande().multiply(ligneApprovisionement.getPrixAchatUnitaire().toBigInteger()));
 				mouvementStock.setRemiseTotal(ligne.getTotalRemise().toBigInteger());

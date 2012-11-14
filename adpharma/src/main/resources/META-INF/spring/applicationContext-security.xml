@@ -13,10 +13,12 @@
 			authentication-success-handler-ref="authentificationFilter"
 			login-page="/login" authentication-failure-url="/login?login_error=t" />
 		<logout logout-url="/resources/j_spring_security_logout" />
-		<!-- <security:session-management invalid-session-url="/login"> <security:concurrency-control 
-			error-if-maximum-exceeded="true" max-sessions="1" expired-url="/login" session-registry-ref="sessionRegistry" 
-			/> </security:session-management> -->
-
+		<!-- use to control concurente connection for the same user 
+		<security:session-management invalid-session-url="/login"> 
+		 <security:concurrency-control  max-sessions="1"  /> 
+			
+			</security:session-management> 
+			 -->
 		<!-- for all ressources -->
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/pharmausers/userInfos" access="permitAll" />
@@ -114,6 +116,5 @@
 			</password-encoder>
 		</authentication-provider>
 	</authentication-manager>
-	<global-method-security secured-annotations="enabled"
-		pre-post-annotations="enabled" />
+	<global-method-security secured-annotations="enabled"	pre-post-annotations="enabled" />
 </beans:beans>

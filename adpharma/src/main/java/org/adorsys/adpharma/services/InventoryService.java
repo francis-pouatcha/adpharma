@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.TypeMouvement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class InventoryService {
 	}
 
 	/**
-	 * use to resotre stock quantity to up 
+	 * use to restore stock quantity to up 
 	 * @param produit
 	 * @param quantity
 	 */
@@ -79,7 +80,6 @@ public class InventoryService {
 		if(produit == null || quantity == null ) throw  new IllegalArgumentException(" produit or quantity arguments is required ")	;
 		if(quantity.intValue() <= 0) return ;
 		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockLessThanAndCipEquals(BigInteger.ONE, produit.getCip()).setMaxResults(100).getResultList();
-		LOG.debug(resultList.toString());
 		if(!resultList.isEmpty()){
 			for (LigneApprovisionement line : resultList) {
 				if(quantity.intValue() <= 0) break ;
@@ -87,6 +87,11 @@ public class InventoryService {
 			}
 		}
 
+	}
+	
+	
+	public static void generateStockMouvement(LigneApprovisionement line ,BigInteger qte,TypeMouvement type){
+		
 	}
 
 

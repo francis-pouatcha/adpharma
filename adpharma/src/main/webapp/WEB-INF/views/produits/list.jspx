@@ -7,9 +7,9 @@
             <table:column id="c_org_adorsys_adpharma_domain_Produit_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_produitNumber" render="false" property="produitNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_cip" property="cip" z="lwxQZw1IKddvNjeg0GSHUNNrti0="/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" label="Date Entree" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" maxLength="-1" property="dateDerniereEntre" z="user-managed"/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" label="Date Sortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" maxLength="-1" property="dateDerniereSortie" z="user-managed"/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" label="Date Rupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" maxLength="-1" property="dateDerniereRupture" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" label="Date Entree" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" maxLength="-1" property="dateDerniereEntre" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" label="Date Sortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" maxLength="-1" property="dateDerniereSortie" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" render="false" label="Date Rupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" maxLength="-1" property="dateDerniereRupture" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_designation" maxLength="-1" property="designation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" label="Qte Stock" property="quantiteEnStock" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_Produit_seuilComande" label="Seuil" property="seuilComande" z="ttj2H7NDmMWmIJuHe7fmZhDOzXo="/>

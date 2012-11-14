@@ -1,7 +1,11 @@
 package org.adorsys.adpharma.domain;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
@@ -10,15 +14,14 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.adorsys.adpharma.security.SecurityUtil;
-import org.adorsys.adpharma.utils.CipMgenerator;
-import org.adorsys.adpharma.utils.Contract;
-import org.adorsys.adpharma.utils.NumberGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+
 import antlr.collections.List;
-import java.math.BigDecimal;
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 @RooJavaBean
 @RooToString
@@ -66,6 +69,8 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 
     private BigDecimal prixAchatMin;
     
+    private BigDecimal prixAVenteMin;
+    
     private BigDecimal prixAchatTotal;
 
     @Override
@@ -73,6 +78,7 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
         agentSaisie = SecurityUtil.getUserName();
         cip = produit.getCip();
         designation = produit.getDesignation();
+        dateSaisie= new Date();
         calculPrixTotal();
         
     }
@@ -109,5 +115,30 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
     	
     	
     }
+
+	public BigDecimal getPrixAVenteMin() {
+		return prixAVenteMin;
+	}
+
+	public void setPrixAVenteMin(BigDecimal prixAVenteMin) {
+		this.prixAVenteMin = prixAVenteMin;
+	}
+	
+	
+	 public String toJson() {
+	        return new JSONSerializer().exclude("*.class").serialize(this);
+	    }
+	    
+	    public static LigneCmdFournisseur fromJsonToProduit(String json) {
+	        return new JSONDeserializer<LigneCmdFournisseur>().use(null, Produit.class).deserialize(json);
+	    }
+	    
+	    public static String toJsonArray(Collection<LigneCmdFournisseur> collection) {
+	        return new JSONSerializer().exclude("*.class").serialize(collection);
+	    }
+	    
+	   
+    
+    
     
 }

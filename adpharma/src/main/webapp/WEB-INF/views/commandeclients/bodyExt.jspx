@@ -18,7 +18,7 @@
 	<spring:url value="/clients?form" var="create_cliet_url" />
 	
 	<script type="text/javascript">
-	function clearClientTable(){
+	function clearClientTables(){
 		$('#results').html(
 				'<tr>
 	<th  align="center" valign="top" >CODE</th>
@@ -35,7 +35,7 @@
 	$(function(){
 		$('form#persons').submit
 		(function(){
-			 clearClientTable();
+			clearClientTables();
 				$.getJSON( '${find_cliet_url}',
 						$('#persons').serialize(),
 			                function(data){
@@ -81,7 +81,7 @@
 		// Dialog	find client		
 		$('#findClients').dialog({
 			open:function(){
-				// clearClientTable();
+				// clearClientTables();
 			},
 			autoOpen: false,
 			width: 1000,

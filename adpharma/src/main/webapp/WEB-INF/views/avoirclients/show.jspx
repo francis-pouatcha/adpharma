@@ -2,7 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show1 clientLinks="showLink.jspx" update="false" id="ps_org_adorsys_adpharma_domain_AvoirClient" object="${avoirclient}" path="/avoirclients" z="user-managed">
+    <page:show1  delete="false" clientLinks="showLink.jspx" update="false" id="ps_org_adorsys_adpharma_domain_AvoirClient" object="${avoirclient}" path="/avoirclients" z="user-managed">
         <field:display field="numero" id="s_org_adorsys_adpharma_domain_AvoirClient_numero" object="${avoirclient}" z="tnll08Ds9koyZjHZknItpQu4p+8="/>
         <field:display date="true" dateTimePattern="${avoirClient_dateedition_date_format}" field="dateEdition" id="s_org_adorsys_adpharma_domain_AvoirClient_dateEdition" object="${avoirclient}" z="XHsvTHzSKgR+9/2eTjvzn+9TseU="/>
         <field:display field="clientName" id="s_org_adorsys_adpharma_domain_AvoirClient_clientName" object="${avoirclient}" z="tkVBzA3Y0CQPkbTcfn1OhNKCJ1k="/>

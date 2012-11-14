@@ -40,6 +40,7 @@ import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -58,6 +59,7 @@ public class SaleProcessController {
 	public String newCommand(Model uiModel,HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = initCmdClient();
 		commandeClient.persist() ;
+		uiModel.asMap().clear();
 		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest)+"/edit";
 	}
 
@@ -81,11 +83,11 @@ public class SaleProcessController {
 		List<Facture> resultList = Facture.findFacturesByFactureNumberEquals(factureNumber).getResultList();
 		if (!resultList.isEmpty()) {
 			Facture next = resultList.iterator().next();
+			uiModel.asMap().clear();
 			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment( next.getCommande().getId().toString(), httpServletRequest);
 
-		}else {
-
-		}
+		}else
+		uiModel.asMap().clear();
 		uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
@@ -96,11 +98,11 @@ public class SaleProcessController {
 		List<Paiement> resultList = Paiement.findPaiementsByInvoiceNumberEquals(factureNumber).getResultList();
 		if (!resultList.isEmpty()) {
 			Paiement next = resultList.iterator().next();
+			uiModel.asMap().clear();
 			return "redirect:/paiementprocess/printTicket/"+next.getId().toString()+".pdf";
 
-		}else {
-
 		}
+		uiModel.asMap().clear();
 		uiModel.addAttribute("apMessage","AUCUNE TICKET TROUVEE");
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
@@ -150,6 +152,7 @@ public class SaleProcessController {
 		commandeClient.setTypeCommande(TypeCommande.VENTE_PROFORMAT);
 		commandeClient.setClient(Client.findClient(new Long(1)));
 		commandeClient.persist() ;
+		uiModel.asMap().clear();
 		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest)+"/edit";
 	}
 
@@ -161,6 +164,7 @@ public class SaleProcessController {
 		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 		uiModel.addAttribute("saleProcess",saleProcess);
 		uiModel.addAttribute("apMessage", httpServletRequest.getAttribute("apMessage"));
+		
 		return "saleprocess/edit";
 	}
 

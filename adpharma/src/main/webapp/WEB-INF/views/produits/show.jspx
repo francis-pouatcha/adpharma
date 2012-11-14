@@ -21,7 +21,7 @@
                
                     <field:display date="true" dateTimePattern="${produit_datederniereentre_date_format}" field="dateDerniereEntre" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" object="${produit}" z="7HegU+woMZU7pIXrHn5QSDUkoHA="/>
                     <field:display date="true" dateTimePattern="${produit_datedernieresortie_date_format}" field="dateDerniereSortie" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" object="${produit}" z="e8nx4GIdX7MI8EFB4SB2x59CMtU="/>
-                    <field:display date="true" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" z="Nla3nRvDq/fjDKAkDL7+XR2qGmo="/>
+                    <field:display date="true" render="false" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" z="Nla3nRvDq/fjDKAkDL7+XR2qGmo="/>
                     <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" render="false" z="user-managed"/>
                     <field:display field="produitCompose" id="s_org_adorsys_adpharma_domain_Produit_produitCompose" object="${produit}" z="l8hp4tbrBuJO9qine3ebYqA+NaQ="/>
                     <field:display field="tvaProduit" id="s_org_adorsys_adpharma_domain_Produit_tvaProduit" object="${produit}" z="1i5yC65dBnRNrYKXCevxDiMzlv8="/>

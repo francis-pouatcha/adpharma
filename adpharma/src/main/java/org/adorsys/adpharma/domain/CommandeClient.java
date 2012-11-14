@@ -44,15 +44,15 @@ public class CommandeClient extends AdPharmaBaseEntity {
 	private String cmdNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateCreation;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateAnullation;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateRestoration;
 
 	public Date getDateAnullation() {
@@ -97,7 +97,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
 	private BigDecimal remise = BigDecimal.ZERO;
 
 	private BigDecimal otherRemise = BigDecimal.ZERO;
-	
+
 	private String anullerPar ;
 
 	public String getAnullerPar() {
@@ -197,7 +197,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		}
 		return valider;
 	}
-	
+
 
 	public boolean validaterRemiseGlobale(Model uiModel, BigDecimal remise) {
 		boolean valider = true;
@@ -257,7 +257,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		return null;
 	}
 
-	
+
 	public void annulerCommande(String userName) {
 		if (factureId != null) {
 			Facture facture = Facture.findFacture(factureId);
@@ -459,17 +459,17 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		q.setParameter("encaisse", Boolean.FALSE);
 		return q;
 	}
-	
 
-	 public static List<Long> findUnpayCloseSales(Etat status , Boolean encaisser, Boolean annuler,TypeCommande typeCommande) {
-	        EntityManager em = CommandeClient.entityManager();
-	        Query q = em.createQuery("SELECT  COUNT(distinct o.id) FROM CommandeClient AS o WHERE o.status = :status AND o.encaisse IS :encaisse  AND o.annuler IS :annuler AND  o.typeCommande != :typeCommande   ");
-	        q.setParameter("status", status);
-	        q.setParameter("encaisse", encaisser);
-	        q.setParameter("annuler", annuler);
-	        q.setParameter("typeCommande", typeCommande);
-	        return q.getResultList();
-	    }
+
+	public static List<Long> findUnpayCloseSales(Etat status , Boolean encaisser, Boolean annuler,TypeCommande typeCommande) {
+		EntityManager em = CommandeClient.entityManager();
+		Query q = em.createQuery("SELECT  COUNT(distinct o.id) FROM CommandeClient AS o WHERE o.status = :status AND o.encaisse IS :encaisse  AND o.annuler IS :annuler AND  o.typeCommande != :typeCommande   ");
+		q.setParameter("status", status);
+		q.setParameter("encaisse", encaisser);
+		q.setParameter("annuler", annuler);
+		q.setParameter("typeCommande", typeCommande);
+		return q.getResultList();
+	}
 
 
 	public static List<CommandeClient> findCommandeClientEntries(int firstResult, int maxResults) {
@@ -505,6 +505,38 @@ public class CommandeClient extends AdPharmaBaseEntity {
 			q.setParameter("minDateCreation", minDate);
 			q.setParameter("maxDateCreation", maxDate);
 			return q.getResultList();
+		}
+	}
+
+	public static TypedQuery<CommandeClient> searchTypeQuery(String cmdNumber, Etat status, Date minDate, Date maxDate, Client client, TypeCommande typeCommande) {
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM CommandeClient AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
+		minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		if (StringUtils.isNotBlank(cmdNumber)) {
+			return entityManager().createQuery("SELECT o FROM CommandeClient AS o WHERE  o.cmdNumber = :cmdNumber ", CommandeClient.class).setParameter("cmdNumber", "CMD-" + cmdNumber);
+		} else {
+			if (!typeCommande.equals(TypeCommande.ALL)) {
+				searchQuery.append(" AND o.typeCommande = :typeCommande ");
+			}
+			if (!status.equals(Etat.ALL)) {
+				searchQuery.append(" AND o.status = :status ");
+			}
+			if (client != null) {
+				searchQuery.append(" AND o.client = :client ");
+			}
+			TypedQuery<CommandeClient> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id DESC").toString(), CommandeClient.class);
+			if (!status.equals(Etat.ALL)) {
+				q.setParameter("status", status);
+			}
+			if (client != null) {
+				q.setParameter("client", client);
+			}
+			if (!typeCommande.equals(TypeCommande.ALL)) {
+				q.setParameter("typeCommande", typeCommande);
+			}
+			q.setParameter("minDateCreation", minDate);
+			q.setParameter("maxDateCreation", maxDate);
+			return q ;
 		}
 	}
 }

@@ -171,6 +171,7 @@
   <li><a href="#" onclick="window.location='${cai_enc_url}' ">Encaisser Une Facture</a></li>
   <li><a href="#" onclick="window.location='${groupe_enc_url}' ">Effecture un Encaissement Groupe</a></li>
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+   <li><a href="#" onclick="window.location='${etat_jour_caisse_url}' ">Etat Journalier des Caisses</a></li>
   <li><a href="#" onclick="window.location='${etat_caisse_url}' ">Etat des Caisses</a></li>
   <li><a href="#" onclick="window.location='${cai_pays_url}' ">Rechercher Un Payement</a></li>
   <li><a href="#" onclick="window.location='${caisse_list_url}' ">Rechercher Une Caisse</a></li>'

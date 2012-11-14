@@ -37,11 +37,11 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
     private String cmdNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
     private Date dateCreation;
      
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
     private Date dateLimiteLivraison;
 
     @NotNull
@@ -95,7 +95,6 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 
     @PostPersist
     public void postPersit() {
-    	
         cmdNumber = NumberGenerator.getNumber("CF-", getId(), 4);
 
     }

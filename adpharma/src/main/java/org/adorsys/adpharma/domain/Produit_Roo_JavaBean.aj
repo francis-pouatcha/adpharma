@@ -50,6 +50,14 @@ privileged aspect Produit_Roo_JavaBean {
         this.rayon = rayon;
     }
     
+    public Boolean Produit.getActif() {
+        return this.actif;
+    }
+    
+    public void Produit.setActif(Boolean actif) {
+        this.actif = actif;
+    }
+    
     public FamilleProduit Produit.getFamilleProduit() {
         return this.familleProduit;
     }

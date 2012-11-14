@@ -38,7 +38,7 @@ public class CommandeFournisseurController {
 	//redirige la requette vers un autre show
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") String id, Model uiModel , HttpServletRequest httpServletRequest) {
-
+    uiModel.asMap().clear();
 		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(id, httpServletRequest)+"/enregistrerCmd";
 	}
 

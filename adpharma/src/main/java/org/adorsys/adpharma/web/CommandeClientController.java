@@ -5,8 +5,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -37,6 +39,8 @@ import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.DateConfig;
+import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -72,6 +76,24 @@ public class CommandeClientController {
 
 		return "saleprocess/showCmd";
 	}
+	
+	@RequestMapping(value = "/find=venteJournalier", method = RequestMethod.GET)
+	public String venteJournalier(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date()) ;
+        TypedQuery<CommandeClient> typeQuery = CommandeClient.searchTypeQuery(null,Etat.ALL, period.getBegin(), period.getEnd(), null, TypeCommande.ALL) ;
+        List<CommandeClient> resultList = typeQuery.getResultList();
+        int maxResults = resultList.size();
+		if (page != null || size != null) {
+            int sizeNo = size == null ? 100 : size.intValue();
+            uiModel.addAttribute("commandeclients", typeQuery.setMaxResults(sizeNo).setFirstResult(page == null ? 0 : (page.intValue() - 1) * sizeNo).getResultList());
+            float nrOfPages = (float) maxResults/ sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+        } else {
+            uiModel.addAttribute("commandeclients",resultList);
+        }
+        addDateTimeFormatPatterns(uiModel);
+        return "commandeclients/list";
+    }
 
 	@Transactional
 	@RequestMapping(value = "/annulerCmd/{cmdId}", method = RequestMethod.GET)
@@ -409,6 +431,14 @@ public class CommandeClientController {
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
 
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)){
+			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente a credit !");
+			return show(commandeClient.getId(), uiModel, request);
+		}
+		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_PROFORMAT)){
+			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
+			return show(commandeClient.getId(), uiModel, request);
+		}
 		AvoirClient bonClient = commandeClient.getBonClient();
 		if (bonClient!=null) {
 			bonClient.setImprimer(false);

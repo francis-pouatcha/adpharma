@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.adorsys.adpharma.utils.DateConfig;
+import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 
 import javassist.expr.NewArray;
@@ -174,7 +176,7 @@ public class CaisseController {
 	}
 
 	@RequestMapping(params = "find=ByEtatCaisse", method = RequestMethod.GET)
-	public String ByEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
+	public String byEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateOuverture, Model uiModel) {
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList();
 		if (caisses.isEmpty()) {
 			uiModel.addAttribute("appMessage", "aucun etat trouve !");
@@ -182,7 +184,23 @@ public class CaisseController {
 			return "caisses/ByEtatCaisse";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
-			uiModel.addAttribute("periode",PharmaDateUtil.format(minDateOuverture, "dd-MM-yyyy HH:mm")+" Au "+ PharmaDateUtil.format(maxDateOuverture, "dd-MM-yyyy HH:mm"));
+			uiModel.addAttribute("periode",PharmaDateUtil.format(minDateOuverture, "dd-MM-yyyy hh:mm")+" Au "+ PharmaDateUtil.format(maxDateOuverture, "dd-MM-yyyy hh:mm"));
+			return "bordereauCaissePdfDocView";
+		}
+	}
+	
+	
+	@RequestMapping(params = "find=etatJournalier", method = RequestMethod.GET)
+	public String etatJournalier(Model uiModel) {
+		DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date());
+		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(period.getBegin(), period.getEnd()).getResultList();
+		if (caisses.isEmpty()) {
+			uiModel.addAttribute("appMessage", "aucun etat trouve !");
+			ProcessHelper.addDateTimeFormatPatterns(uiModel);
+			return "caisses/ByEtatCaisse";
+		}else {
+			uiModel.addAttribute("caisses", caisses);
+			uiModel.addAttribute("periode",PharmaDateUtil.format(period.getBegin(), "dd-MM-yyyy hh:mm")+" Au "+ PharmaDateUtil.format(period.getEnd(), "dd-MM-yyyy hh:mm"));
 			return "bordereauCaissePdfDocView";
 		}
 	}

@@ -13,6 +13,7 @@
         <slf4j.version>1.6.1</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring-security.version>3.0.5.RELEASE</spring-security.version>
+     <hibernate.version>4.1.0.Final</hibernate.version>
     </properties>
     <repositories>
         <repository>
@@ -242,7 +243,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.1.0.Final</version>
+            <version>${hibernate.version}</version>
             <classifier/>
             <exclusions>
                 <exclusion>
@@ -472,13 +473,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.6.4.Final</version>
+            <version>${hibernate.version}</version>
             <classifier/>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.6.4.Final</version>
+            <version>${hibernate.version}</version>
             <classifier/>
             <exclusions>
                 <exclusion>
@@ -500,7 +501,7 @@
         <dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-ehcache</artifactId>
-		    <version>3.6.0.Final</version>
+		    <version>${hibernate.version}</version>
 		    <exclusions>
             	<exclusion>
                 	<groupId>net.sf.ehcache</groupId>

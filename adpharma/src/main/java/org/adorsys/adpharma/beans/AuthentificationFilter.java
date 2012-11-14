@@ -30,6 +30,7 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 			Authentication authentication) throws IOException, ServletException{
 		HttpSession session = request.getSession();
 		//String siteId = request.getParameter("j_site");
+		//System.out.println(siteId);
 		Site findSite = Site.findSite(new Long(1));
 		SessionBean sessionBean = new SessionBean(findSite);
 		if(!sessionBean.isAbleToConnect(SecurityUtil.getPharmaUser())){

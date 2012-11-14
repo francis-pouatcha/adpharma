@@ -18,7 +18,6 @@
 		<c:choose>
 		 <c:when test="${empty paiementProcess.factureSelected}">
 		 				<spring:url value="/paiementprocess/factureSuivante/0"  var="next_facture_url"/>
-		 
 		 </c:when>
 		 <c:otherwise>
 		 				<spring:url value="/paiementprocess/factureSuivante/${paiementProcess.factureSelected.id}"  var="next_facture_url"/>
@@ -278,14 +277,12 @@ $(function(){
 				$.get( '${find_bon_url}',
 						$('#findbonForm').serialize(),
 			                function(data){
-					        if(data != 'ok'){
-					       $('#infos').html(data);
-					       $('#infos').show();
+					        if(data != "ok"){
+					        	alert(data);
 					        }else{
 					        var valbon =	parseInt($('#valeurBon').val());
 					        var montant =	parseInt($('#montant').val());
 					        var reste = valbon - montant;
-					        	$('#infos').hide();
 					        	$('#numeroBon').val($('#numero').val());
 					        	$('#montantBon').val($('#valeurBon').val());
 					        	 $('#bondiv').show();
@@ -422,7 +419,7 @@ $(function(){
                 <springform:hidden id="compenser" path="compenser" />
                <field:select field="quiPaye" id="c_org_adorsys_adpharma_domain_Paiement_quiPaye" items="${quipayes}" path="quipayes" z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q="/>
                  
-                  <div>
+       <div>
       <label  style="font-weight: bold; font-size: 18px; text-transform: uppercase;" for="_typePaiement">Mode Paiement : </label>
       <springform:select  id="typePaiement" cssStyle=" width: 212px; height: 25px;" path="typePaiement"  items="${typepaiements}"/>                 
        </div> 
@@ -556,10 +553,7 @@ $(function(){
                  <P>
                 <LABEL for="montant"> Montant du Bon :</LABEL> <INPUT onKeyPress="return scanTouche(event)" id="valeurBon" type="text" name="montant" />
                 </P>
-                
-                 <P id="infos" style="display: none; color: red; font-weight: bold;">
-               
-                </P>
+                <BR />
               
         </form>
 </div>
