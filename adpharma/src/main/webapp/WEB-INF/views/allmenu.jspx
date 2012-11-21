@@ -512,7 +512,7 @@
                 <spring:url value="/printerconfigurations?page=1&amp;size=${empty param.size ? 50 : param.size}" var="printer_list"/>
                 <spring:url value="/printerconfigurations?form" var="creer_printer"/>
                       <spring:url value="/licenceentitys/1?form" var="licence_update"/>
-                        <spring:url value="/configurations/1" var="other_config"/>
+                        <spring:url value="/configurations/1?form" var="other_config"/>
       
                            <security:authorize ifAnyGranted="ROLE_SUPER_ADMIN">
     			<li>

@@ -102,9 +102,9 @@ privileged aspect CommandeClientController_Roo_Controller {
     }
     
     void CommandeClientController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("commandeClient_dateanullation_date_format", "dd-MM-yyyy HH:mm");
-        uiModel.addAttribute("commandeClient_daterestoration_date_format", "dd-MM-yyyy HH:mm");
-        uiModel.addAttribute("commandeClient_datecreation_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("commandeClient_dateanullation_date_format", "dd-MM-yyyy hh:mm");
+        uiModel.addAttribute("commandeClient_daterestoration_date_format", "dd-MM-yyyy hh:mm");
+        uiModel.addAttribute("commandeClient_datecreation_date_format", "dd-MM-yyyy hh:mm");
     }
     
     String CommandeClientController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

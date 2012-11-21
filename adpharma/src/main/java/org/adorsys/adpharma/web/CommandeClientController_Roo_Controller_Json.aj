@@ -95,7 +95,7 @@ privileged aspect CommandeClientController_Roo_Controller_Json {
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation) {
+    public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/text; charset=utf-8");
         return new ResponseEntity<String>(CommandeClient.toJsonArray(CommandeClient.findCommandeClientsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList()), headers, HttpStatus.OK);
@@ -103,7 +103,7 @@ privileged aspect CommandeClientController_Roo_Controller_Json {
     
     @RequestMapping(params = "find=ByStatusAndDateCreationBetween", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByStatusAndDateCreationBetween(@RequestParam("status") Etat status, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation) {
+    public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByStatusAndDateCreationBetween(@RequestParam("status") Etat status, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/text; charset=utf-8");
         return new ResponseEntity<String>(CommandeClient.toJsonArray(CommandeClient.findCommandeClientsByStatusAndDateCreationBetween(status, minDateCreation, maxDateCreation).getResultList()), headers, HttpStatus.OK);

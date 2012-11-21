@@ -72,7 +72,7 @@ public class ProduitController {
 	@RequestMapping(value="/findProductApByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductApByCipAjax(@PathVariable("cip") String cip,Model uiModel) {
-		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(200).getResultList();
+		List<Produit> produits = Produit.findProduitsByCipEqualsAndVenteAutorise(cip,Boolean.TRUE).setMaxResults(200).getResultList();
 		Produit prd = new Produit() ;
 		if (!produits.isEmpty()) {
 			prd = produits.iterator().next();

@@ -36,7 +36,7 @@
                 <field:select field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" style="width: 100%; font-size: 18px;font-style: italic; height:500px;" z="user-managed"/>
             </div>
         </div>
-        <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" z="5nw46nkWKf5V2pDvz2Gmb3bTmeY="/>
+        <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" render="false" z="user-managed"/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_PharmaUser" render="${not empty dependencies}" z="jW5xSNjpH6A5VKgKa3Qyy8uuHo4="/>
     <script type="text/javascript">

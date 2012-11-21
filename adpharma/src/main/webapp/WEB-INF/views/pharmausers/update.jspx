@@ -35,8 +35,8 @@
                 <field:select field="roleNames" id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" items="${rolenames}" multiple="true" path="rolenames" style="width: 100%; font-size: 18px;font-style: italic; height:500px;" z="user-managed"/>
             </div>
         </div>
-        <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" z="5nw46nkWKf5V2pDvz2Gmb3bTmeY="/>
-        <field:checkbox field="accountLocked" id="c_org_adorsys_adpharma_domain_PharmaUser_accountLocked" z="4+y7cLZzHxryg8ewcWqLVJSFN44="/>
+        <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" render="false" z="user-managed"/>
+        <field:checkbox field="accountLocked" id="c_org_adorsys_adpharma_domain_PharmaUser_accountLocked" render="false" z="user-managed"/>
     </form:update>
     <script type="text/javascript">
  $('#tabset').tabs();

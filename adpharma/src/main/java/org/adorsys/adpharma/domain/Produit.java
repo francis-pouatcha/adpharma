@@ -202,6 +202,15 @@ public class Produit extends AdPharmaBaseEntity {
 
 	}
 
+	
+	 public static TypedQuery<Produit> findProduitsByCipEqualsAndVenteAutorise(String cip ,Boolean venteAutorise ) {
+	        if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
+	        EntityManager em = Produit.entityManager();
+	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.cip = :cip AND  o.venteAutorise = :venteAutorise", Produit.class);
+	        q.setParameter("cip", cip);
+	        q.setParameter("venteAutorise", venteAutorise);
+	        return q;
+	    }
 	public void calculTransientPrice() {
 
 		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, cip).getResultList();

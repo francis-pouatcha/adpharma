@@ -99,6 +99,7 @@ public class ApprovisionementProcessController {
 		approvisonementProcess.setEtat(Etat.CLOS);
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 	}
 

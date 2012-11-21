@@ -12,10 +12,10 @@
                         <c:when test="${hasrole}">
                             <spring:url value="/approvisionements/${ligneapprovisionement.approvisionement.id }" var="app_url"/>
                             <spring:url value="/produits/${ligneapprovisionement.produit.id }" var="cip_url"/>
-                            <a href="${app_url }" style="color: blue;" title="Visualiser L'approvisionnement">
+                            <a href="${app_url }" style="color: blue; text-decoration: underline; " title="Visualiser L'approvisionnement">
                                 <field:display field="approvisionement" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" object="${ligneapprovisionement}" z="M4J9mpNnDpgrTJIKBsOxmXVj+jY="/>
                             </a>
-                            <a href="${ cip_url}" style="color: blue;" title="visualiser le Produit(CIP)">
+                            <a href="${ cip_url}" style="color: blue; text-decoration: underline;" title="visualiser le Produit(CIP)">
                                 <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_produit" object="${ligneapprovisionement}" z="juToyiiyPPyXEqfZCBik8pZ+7BA="/>
                             </a>
                         </c:when>

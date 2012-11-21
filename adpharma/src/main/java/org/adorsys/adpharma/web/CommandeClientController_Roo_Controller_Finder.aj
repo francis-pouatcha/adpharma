@@ -22,7 +22,7 @@ privileged aspect CommandeClientController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET)
-    public String CommandeClientController.findCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String CommandeClientController.findCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandeclients/list";
@@ -36,7 +36,7 @@ privileged aspect CommandeClientController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByStatusAndDateCreationBetween", method = RequestMethod.GET)
-    public String CommandeClientController.findCommandeClientsByStatusAndDateCreationBetween(@RequestParam("status") Etat status, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String CommandeClientController.findCommandeClientsByStatusAndDateCreationBetween(@RequestParam("status") Etat status, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientsByStatusAndDateCreationBetween(status, minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandeclients/list";

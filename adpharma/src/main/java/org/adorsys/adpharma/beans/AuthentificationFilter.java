@@ -33,12 +33,13 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 		//System.out.println(siteId);
 		Site findSite = Site.findSite(new Long(1));
 		SessionBean sessionBean = new SessionBean(findSite);
+		sessionBean.setConfiguration(Configuration.findConfiguration(new Long(1)));
 		if(!sessionBean.isAbleToConnect(SecurityUtil.getPharmaUser())){
 			//session.invalidate();
 			session.setAttribute("sessionBean", sessionBean) ;
 
 		}else {
-			
+			session.setAttribute("sessionBean", sessionBean) ;
 		}
 		super.onAuthenticationSuccess(request, response, authentication);
 		return;
@@ -47,6 +48,7 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 	@Override
 	public  void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException{
+		//TODO:
 		return ;
 	}
 

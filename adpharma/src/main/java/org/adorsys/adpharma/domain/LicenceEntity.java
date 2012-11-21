@@ -73,6 +73,7 @@ public class LicenceEntity {
 
 	public boolean isValidLicence(){
 		if(transtientEnd !=null){
+			System.out.println(PharmaDateUtil.format(transtientEnd, "dd-MM yyyy hh:mm"));
 			return new Date().before(transtientEnd);
 		}
 		return false;

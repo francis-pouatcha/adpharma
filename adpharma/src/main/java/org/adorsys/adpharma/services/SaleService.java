@@ -2,11 +2,15 @@ package org.adorsys.adpharma.services;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.RoleName;
 import org.springframework.stereotype.Service;
 
 
@@ -84,7 +88,7 @@ public class SaleService {
 		if (qteAfterUpdate.intValue()>0 && !resultList.isEmpty()) {
 
 			for (LigneApprovisionement line : resultList) {		
-                if(qteAfterUpdate.intValue()<=0) break;
+				if(qteAfterUpdate.intValue()<=0) break;
 				BigInteger enStock = line.getQuantieEnStock();
 				if (enStock.intValue()>=qteAfterUpdate.intValue()) {
 					LigneCmdClient generateLigne = generateLigneCmd(line, qteAfterUpdate, remise, commandeClient);
@@ -158,6 +162,19 @@ public class SaleService {
 
 
 	}
+	
+	
+	public static boolean enableSaleCash(Configuration conf,PharmaUser user){
+		ArrayList<RoleName> enableRole = new ArrayList<RoleName>();
+		enableRole.add(RoleName.ROLE_CASHIER);
+		enableRole.add(RoleName.ROLE_SITE_MANAGER);
+		if(conf==null || user==null)throw new IllegalArgumentException("conf or user are required !");
+		if(!conf.getSaleCash().booleanValue()) return false;
+		if(!user.hasAnyRole(enableRole)) return false ;
+		return true ;
+	}
+	
+	
 
 
 }

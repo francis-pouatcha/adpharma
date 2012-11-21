@@ -7,17 +7,17 @@
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
-           <field:input  field="commandeNumber" id="f_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
-           <field:input  field="cipm" label="CIPM" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+           <field:input  field="commandeNumber" label="Commande No"  titleMessage="Saisir le code de l'approvisionnement" id="f_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
+           <field:input  field="cipm" label="Code Barre (Cipm)" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
            <field:input  field="designation" label="Designation" id="f_org_adorsys_adpharma_domain_CommandeClient_client" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-           <field:checkbox  field="anuller" label="Anuller ?" id="f_org_adorsys_adpharma_domain_CommandeClient_client" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+           <field:checkbox  field="anuller" label="Anuller ?"  id="f_org_adorsys_adpharma_domain_CommandeClient_client" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
           
           </td>
                 <td style="border: none;" >
                  <field:select disableFormBinding="true" field="etat" id="f_org_adorsys_adpharma_domain_CommandeClient_status" items="${etats}" path="/etats" required="false" z="Mq5rXZiL5qXI3AJacVGqG2nMQKg="/>
                <field:select field="pharmaUser" label="Vendeur" disableFormBinding="true" id="c_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
           <field:select disableFormBinding="true" field="typeCommande" id="f_org_adorsys_adpharma_domain_CommandeClient_typeCommande" items="${typecommandes}" path="/typecommandes" required="false" z="Mq5rXZiL5qXI3AJacVGqG2nMQKg="/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" label="Date Edition Min" disableFormBinding="true" field="dateCreation" id="f_org_adorsys_adpharma_domain_CommandeClient_maxDateCreation" required="false" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" label="Date Edition Min" disableFormBinding="true" field="dateCreation" id="f_org_adorsys_adpharma_domain_CommandeClient_maxDateCreation" required="false" z="user-managed"/>
          </td>
             </tr>
         </table>
@@ -31,11 +31,13 @@
 	
 	</c:if>
     <c:if test="${ not empty results}">
+  
      <page:list id="pl_org_adorsys_adpharma_domain_CommandeClient" items="${results}" z="ylUPGUNgBKiWW2gsK7MC+X6hsLg=">
+        <div style=" overflow: auto;  height: 650px;">
         <table:table data="${results}" delete="false" create="false" id="l_org_adorsys_adpharma_domain_CommandeClient" path="/commandeclients" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" maxLength="-1" property="cmdNumber" z="user-managed"/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm"  id="c_org_adorsys_adpharma_domain_CommandeClient_dateCreation" maxLength="-1" property="dateCreation" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_cmdNumber" label="Commande No" maxLength="-1" property="cmdNumber" z="user-managed"/>
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm"  id="c_org_adorsys_adpharma_domain_CommandeClient_dateCreation" maxLength="-1" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_client" maxLength="-1" property="client" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_vendeur" maxLength="-1" property="vendeur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_status" maxLength="-1" property="status" z="user-managed"/>
@@ -45,10 +47,13 @@
              <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_remise" maxLength="-1" property="remise" z="HulsEz/zEwXPNFJ2ummaPR/8pEs="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_typeCommande" maxLength="-1" property="typeCommande" z="ozIbptIQoRzJbYbyk5MoY7yVHP8="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_annuler"  maxLength="-1" property="annuler" z="7biv80U8/x1sKgUlVxKcPSSphJ8="/>
+            <!--  
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_otherRemise" property="anullerPar" label="Anuller Par" z="Z+OYkqBqKf8C9nCZmypk9bVsyww="/>
-          
+          -->
         </table:table>
-    </page:list>
+         </div>
+        </page:list>
+  
      <jsp:include page="commandeDetail.jspx" />
   </c:if> 
 </div>

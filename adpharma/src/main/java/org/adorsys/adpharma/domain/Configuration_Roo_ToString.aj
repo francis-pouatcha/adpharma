@@ -13,6 +13,7 @@ privileged aspect Configuration_Roo_ToString {
         sb.append("CloseCashUnpaySale: ").append(getCloseCashUnpaySale()).append(", ");
         sb.append("RestoreCancelSale: ").append(getRestoreCancelSale()).append(", ");
         sb.append("SaleForce: ").append(getSaleForce());
+        sb.append("SaleCash: ").append(getSaleCash());
         return sb.toString();
     }
     

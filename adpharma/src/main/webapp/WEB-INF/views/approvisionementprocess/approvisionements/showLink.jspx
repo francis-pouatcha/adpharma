@@ -48,11 +48,14 @@ if(Check == false){
    </c:if>
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
    
-    <c:if test="${ approvisionement.cloturer}">
+    <c:if test="${ approvisionement.cloturer and sessionBean.configuration.editCloseSupply}">
          <spring:url value="/approvisionementprocess/${itemId}/specialEdit"  var="edit_url" />
     
    
-     <span><a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Modifier detail" title="modifier le detail" /></a></span>
+     <span>  <a href="${ edit_url}" style="text-decoration: none;">
+          <INPUT class="submits" type="button" value="Modifier detail" title="Modifier le Contenu" />
+            </a>
+    </span>
     
    </c:if>
    </security:authorize>

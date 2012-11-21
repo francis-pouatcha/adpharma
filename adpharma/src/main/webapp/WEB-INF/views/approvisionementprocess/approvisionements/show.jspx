@@ -33,15 +33,6 @@
     <HR />
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Approvisionement_footPrint" object="${approvisionement}" z="WbG+G4m13H6S9Ftd8862TqXvUpA="/>
     <HR style="margin-top:-12px;"/>
-     <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bievenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
-
- 
-</div>
-</div>
+    
     
 </div>

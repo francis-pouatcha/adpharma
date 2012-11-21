@@ -135,7 +135,7 @@ function(data){
 				
 				<form id="main-search" action="#" method="get">
 							<label for="search-field" id="search-field-label">Search</label>
-		<input  type="text" tabindex="1" maxlength="255" style="text-align:center; color:green; "  value="${licenceKey }"  id="search-field" name="licenceKey" class="search" />
+		<input  type="text" tabindex="1" maxlength="255" style="text-align:center; color:green; "   value="${licenceKey }"  id="search-field" name="licenceKey" class="search" />
 							<input type="image" alt="Search" value="Search" src="${search}" id="search-button" class="search" style="text-transform: uppercase;" />  
 				</form>
 			</div>

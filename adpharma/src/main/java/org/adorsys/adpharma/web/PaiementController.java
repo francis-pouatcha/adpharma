@@ -41,11 +41,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/paiements")
 @Controller
 public class PaiementController {
-	
+
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		addDateTimeFormatPatterns(uiModel);
-		
+
 		uiModel.addAttribute("pharmausers", PharmaUser.findAllPharmaUsers());
 
 		uiModel.addAttribute("paiement", new Paiement());
@@ -93,8 +93,8 @@ public class PaiementController {
 		uiModel.addAttribute("results", Paiement.findPaiementsByInvoiceNumberEquals("FAC-"+ StringUtils.remove(invoiceNumber, "FAC-")).getResultList());
 		return "paiements/findPaiementOfInvoice";
 	}
-	
-	
+
+
 
 	@RequestMapping(value = "/encaissementGroupe" ,params = "form", method = RequestMethod.GET)
 	public String encaissementGroupeForm( Model uiModel, HttpServletRequest httpServletRequest) {
@@ -133,7 +133,7 @@ public class PaiementController {
 		uiModel.addAttribute("clientfound", Client.findClientsByNomCompletLike(nomComplet).getResultList());
 		return "paiements/rechercheClient";
 	}
-	
+
 	@RequestMapping( value="/findMyPaiements", method = RequestMethod.GET)
 	public String findMyPaiements(Model uiModel) {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
@@ -207,42 +207,42 @@ public class PaiementController {
 		Client client = Client.findClient(clientId);
 		Set<DetteClient> dettesSoldees = new HashSet<DetteClient>();
 		/*client.calculeTotalDette();
-		
+
 		if (paiement.validatePaiementGlobal(uiModel , client.getTotalDette())){
 			System.out.println("paiement invalide");
 			return "redirect:/paiements/selectclient/" + ProcessHelper.encodeUrlPathSegment(client.getId().toString(), httpServletRequest);
 
 		} */
-                   // BigDecimal montant = paiement.getMontant();
-		         BigDecimal montant = paiement.getSommeRecue() ;
-                    if (montant.intValue() > 0) {
-                    	for (DetteClient detteClient : listeDette) {
-                			Facture facture = Facture.findFacture(detteClient.getFactureId());
-                			BigInteger reste = detteClient.getReste();
-                			
-                			if (reste.intValue() <=  montant.intValue()) {
-                			 montant = montant.subtract(new BigDecimal(reste));
-                			 facture.avancerPaiement(reste);
-                			 detteClient.avancer(reste);
-                		    	facture.merge();
-                		    	DetteClient merge = (DetteClient) detteClient.merge();
-                		    	dettesSoldees.add(merge);
-                			}else {
-                				facture.avancerPaiement(montant.toBigInteger());
-                   			    detteClient.avancer(montant.toBigInteger());
-                   		    	facture.merge();
-                   		    	DetteClient merge = (DetteClient) detteClient.merge();
-                   		    	dettesSoldees.add(merge);
-                   		    	break;
-								
-							}
-                		}   
-                    	
-                    	
-                    	
-                    	
-					}
-	
+		// BigDecimal montant = paiement.getMontant();
+		BigDecimal montant = paiement.getSommeRecue() ;
+		if (montant.intValue() > 0) {
+			for (DetteClient detteClient : listeDette) {
+				Facture facture = Facture.findFacture(detteClient.getFactureId());
+				BigInteger reste = detteClient.getReste();
+
+				if (reste.intValue() <=  montant.intValue()) {
+					montant = montant.subtract(new BigDecimal(reste));
+					facture.avancerPaiement(reste);
+					detteClient.avancer(reste);
+					facture.merge();
+					DetteClient merge = (DetteClient) detteClient.merge();
+					dettesSoldees.add(merge);
+				}else {
+					facture.avancerPaiement(montant.toBigInteger());
+					detteClient.avancer(montant.toBigInteger());
+					facture.merge();
+					DetteClient merge = (DetteClient) detteClient.merge();
+					dettesSoldees.add(merge);
+					break;
+
+				}
+			}   
+
+
+
+
+		}
+
 		client.calculeTotalDette();
 		Client merge = (Client) client.merge();
 		PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
@@ -252,72 +252,72 @@ public class PaiementController {
 		return "paiements/encaissementGroupe";
 
 	}
-	
+
 	@RequestMapping("/printTicket/{ticketId}.pdf")
 	public String print(@PathVariable("ticketId")Long ticketId, Model uiModel,HttpServletRequest httpServletRequest){
 		Paiement paiement = Paiement.findPaiement(ticketId);
-		
+
 		if (!paiement.getTicketImprimer()) {
 			paiement.setTicketImprimer(true);
 			paiement.merge();
 		}
 		uiModel.addAttribute("paiement", paiement);
-		
-	  return "ticketPdfDocView";
-		
+
+		return "ticketPdfDocView";
+
 
 	}
-	
+
 	@RequestMapping( value="/printByCmd/{cmdId}",params="doc")
 	public String printByCmd(@PathVariable("cmdId")Long cmdId, @RequestParam("doc") String doc, Model uiModel,HttpServletRequest httpServletRequest){
-		 CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
-		 if (StringUtils.equals("ticket.pdf", doc)) {
-			 Paiement paiement = commande.getPaiements();
-			 uiModel.addAttribute("paiement", paiement);
-			 return "ticketPdfDocView";
+		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
+		if (StringUtils.equals("ticket.pdf", doc)) {
+			Paiement paiement = commande.getPaiements();
+			uiModel.addAttribute("paiement", paiement);
+			return "ticketPdfDocView";
 		}else {
 			Facture facture = commande.getFacture();
 			uiModel.addAttribute("facture", facture);
 			return "facturePdfDocViews";
 		}
-		 
+
 
 	}
-	
 
-    @ModelAttribute("caisses")
-    public Collection<Caisse> populateCaisses() {
-        return new ArrayList<Caisse>();
-    }
-    
-    @ModelAttribute("factures")
-    public Collection<Facture> populateFactures() {
-    	return new ArrayList<Facture>();
-    }
-    
-    @ModelAttribute("paiements")
-    public Collection<Paiement> populatePaiements() {
-    	return new ArrayList<Paiement>();
-    }
-    
-    @ModelAttribute("pharmausers")
-    public Collection<PharmaUser> populatePharmaUsers() {
-    	return new ArrayList<PharmaUser>();
-    }
-    
-    @ModelAttribute("quipayes")
-    public Collection<QuiPaye> populateQuiPayes() {
-        return Arrays.asList(QuiPaye.class.getEnumConstants());
-    }
-    
-    @ModelAttribute("sites")
-    public Collection<Site> populateSites() {
-        return Site.findAllSites();
-    }
-    
-    @ModelAttribute("typepaiements")
-    public Collection<TypePaiement> populateTypePaiements() {
-        return Arrays.asList(TypePaiement.class.getEnumConstants());
-    }
+
+	@ModelAttribute("caisses")
+	public Collection<Caisse> populateCaisses() {
+		return new ArrayList<Caisse>();
+	}
+
+	@ModelAttribute("factures")
+	public Collection<Facture> populateFactures() {
+		return new ArrayList<Facture>();
+	}
+
+	@ModelAttribute("paiements")
+	public Collection<Paiement> populatePaiements() {
+		return new ArrayList<Paiement>();
+	}
+
+	@ModelAttribute("pharmausers")
+	public Collection<PharmaUser> populatePharmaUsers() {
+		return new ArrayList<PharmaUser>();
+	}
+
+	@ModelAttribute("quipayes")
+	public Collection<QuiPaye> populateQuiPayes() {
+		return Arrays.asList(QuiPaye.class.getEnumConstants());
+	}
+
+	@ModelAttribute("sites")
+	public Collection<Site> populateSites() {
+		return Site.findAllSites();
+	}
+
+	@ModelAttribute("typepaiements")
+	public Collection<TypePaiement> populateTypePaiements() {
+		return Arrays.asList(TypePaiement.class.getEnumConstants());
+	}
 
 }

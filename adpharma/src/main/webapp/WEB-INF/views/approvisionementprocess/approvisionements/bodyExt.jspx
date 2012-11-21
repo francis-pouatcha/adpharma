@@ -11,7 +11,7 @@
 		<br/>
         <form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${approvisionement.ligneApprivisionement}" z="user-managed" 
     		label="Detail D'approvisionement" objectName="Ligne Approvisionement" openPane="true">
-<div style="overflow: auto; height: 300px;" ></div>
+<div style="overflow-y: auto; height: 600px;" ></div>
 		  <table>
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>

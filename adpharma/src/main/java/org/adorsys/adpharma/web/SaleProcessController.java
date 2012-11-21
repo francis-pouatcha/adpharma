@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.beans.PaiementProcess;
 import org.adorsys.adpharma.beans.SaleProcess;
 import org.adorsys.adpharma.beans.SessionBean;
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
@@ -31,16 +29,14 @@ import org.adorsys.adpharma.domain.LigneFacture;
 import org.adorsys.adpharma.domain.Ordonnancier;
 import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.domain.PharmaUser;
-import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
-import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -87,8 +83,8 @@ public class SaleProcessController {
 			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment( next.getCommande().getId().toString(), httpServletRequest);
 
 		}else
-		uiModel.asMap().clear();
 		uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
+		uiModel.asMap().clear();
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
 	}
@@ -260,6 +256,7 @@ public class SaleProcessController {
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrer", method = RequestMethod.GET)
 	public String enregistrerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpServletRequest httpServletRequest) {
+		SessionBean	  sessionBean = (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean");
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		Caisse caisse = PaiementProcess.getOpenCaisse();
 		if (caisse==null) {
@@ -276,8 +273,14 @@ public class SaleProcessController {
 		if (!commandeClient.getStatus().equals(Etat.CLOS)) {
 			saveAndCloseCmd(commandeClient ,caisse,SecurityUtil.getPharmaUser(null));
 		}
+		uiModel.asMap().clear();
+		if(SaleService.enableSaleCash(sessionBean.getConfiguration(),SecurityUtil.getPharmaUser())){
+			return "redirect:/paiementprocess/factureSuivante/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getFacture().getId().toString(), httpServletRequest);
+		}else {
+			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
+		}
 
-		return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
+		
 	}
 
 
@@ -336,7 +339,8 @@ public class SaleProcessController {
 		if (!commandeClient.getStatus().equals(Etat.CLOS)) {
 			saveAndCloseCmd(commandeClient ,caisse,pharmaUser);
 		}
-
+		uiModel.asMap().clear();
+		
 		return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
 	}
 
@@ -637,14 +641,10 @@ public class SaleProcessController {
 		if (commandeClient.getAnnuler()|| commandeClient.getEncaisse()||commandeClient.getStatus().equals(Etat.CLOS)) {
 			httpServletRequest.setAttribute("apMessage","impossible d'effectuer cette Operation : commande annuler Ou Encaisse Ou CLOS");
 			return "forward:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
-
-
 		}
 		else{
 			LigneCmdClient.findLigneCmdClient(lnId).remove();
-
 		} 
-
 		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
 
 	}

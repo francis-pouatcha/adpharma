@@ -1,9 +1,13 @@
 package org.adorsys.adpharma.services;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.RoleName;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +49,17 @@ public class SupplyService {
 		}
 
 	}
+	
+	
+	public static boolean enableCloseSupplyEdition(Configuration configuration,PharmaUser user){
+		 ArrayList<RoleName> enableRole = new ArrayList<RoleName>();
+		 enableRole.add(RoleName.ROLE_SITE_MANAGER);
+		if(configuration==null || user==null)throw new IllegalArgumentException("conf or user are required !");
+		if(!configuration.getEditCloseSupply()) return false;
+		if(!user.hasAnyRole(enableRole)) return false ;
+		return true ;
+	}
+	
+	
 
 }
