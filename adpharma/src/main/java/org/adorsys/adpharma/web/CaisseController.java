@@ -195,9 +195,8 @@ public class CaisseController {
 		DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date());
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(period.getBegin(), period.getEnd()).getResultList();
 		if (caisses.isEmpty()) {
-			uiModel.addAttribute("appMessage", "aucun etat trouve !");
-			ProcessHelper.addDateTimeFormatPatterns(uiModel);
-			return "caisses/ByEtatCaisse";
+			uiModel.addAttribute("apMessage", "aucun etat trouve  !");
+			return "caisses/infos";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
 			uiModel.addAttribute("periode",PharmaDateUtil.format(period.getBegin(), "dd-MM-yyyy hh:mm")+" Au "+ PharmaDateUtil.format(period.getEnd(), "dd-MM-yyyy hh:mm"));

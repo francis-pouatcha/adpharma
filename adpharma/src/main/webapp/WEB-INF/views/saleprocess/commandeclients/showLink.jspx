@@ -68,7 +68,7 @@ function restoreCmd(){
    
             <span>
                <a href="${ vente_public_url}" style="text-decoration: none;">
-                 <INPUT class="submits" type="button" value="Vente Au Comptant" title="Imprimer Facture de Caisse" />
+                 <INPUT class="submits" type="button" value="Effectuer une vente" title="Effectuer une Vente au comptant" />
                </a>
             </span>
   
@@ -84,12 +84,12 @@ function restoreCmd(){
    <c:when test="${commandeclient.status != etat }">
        <span>
              <a href="${ edit_url}" style="text-decoration: none;">
-                  <INPUT class="submits" type="button" value="Modifier Detail" title="Imprimer Facture de Caisse" />
+                  <INPUT class="submits" type="button" value="Modifier le  Detail" title="Imprimer Facture de Caisse" />
              </a>
        </span>
        <span>
               <a href="${ enr_cmd_url}" style="text-decoration: none;" onclick="return closeFact();">
-                  <INPUT class="submits"  type="button" value="CLOTURER" title="cloturer la commande" />
+                  <INPUT class="submits"  type="button" value="Cloturer la vente" title="cloturer la commande" />
              </a>
      </span>
    </c:when>
@@ -114,16 +114,16 @@ function restoreCmd(){
     </security:authorize>
     
      <security:authorize ifAnyGranted="ROLE_OPEN_SALE_SESSION">
-     <span ><a href="#" onclick="anullerByKey();" style="text-decoration: none;"  ><INPUT class="submits"  style="color: red ; " type="button" value="Anuller " title="Anuller la Commande" /></a></span>
+     <span ><a href="#" onclick="anullerByKey();" style="text-decoration: none;"  ><INPUT class="submits"  style="color: red ; " type="button" value="Anuller La vente  " title="Anuller la Commande" /></a></span>
     </security:authorize>
    </c:if> 
                <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR">
    
     <c:if test="${ commandeclient.encaisse and not commandeclient.annuler   }">
         <security:authorize ifAnyGranted="ROLE_RETOUR_PRODUIT ,ROLE_SITE_MANAGER">
-     <span ><a id="butRetout" href="${ anuller_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Retour Produit " title="retourner Des Produit" /></a></span>
+     <span ><a id="butRetout" href="${ anuller_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Retourner Des Produits " title="retourner Des Produits" /></a></span>
       </security:authorize>
-       <span ><a id="butAnnulerRet"  href="${ anuller_cmd_url}" style="text-decoration: none; display: none; "><INPUT class="submits" style="color: red;" type="button" value="Annuler " title="annuler " /></a></span>
+       <span ><a id="butAnnulerRet"  href="${ anuller_cmd_url}" style="text-decoration: none; display: none; "><INPUT class="submits" style="color: red;" type="button" value="Terminer le retour " title="annuler " /></a></span>
   
    </c:if> 
    </security:authorize>

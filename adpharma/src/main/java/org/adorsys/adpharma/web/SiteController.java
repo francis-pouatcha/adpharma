@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/sites")
 @Controller
 public class SiteController {
+	
 }

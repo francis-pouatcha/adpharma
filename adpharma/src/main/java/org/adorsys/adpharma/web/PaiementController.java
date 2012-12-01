@@ -268,15 +268,17 @@ public class PaiementController {
 
 	}
 
-	@RequestMapping( value="/printByCmd/{cmdId}",params="doc")
-	public String printByCmd(@PathVariable("cmdId")Long cmdId, @RequestParam("doc") String doc, Model uiModel,HttpServletRequest httpServletRequest){
+	@RequestMapping( value="/printByCmd/{cmdId}")
+	public String printByCmd(@PathVariable("cmdId")Long cmdId, @RequestParam("doc") String doc,@RequestParam(value="withRem",required=false) Boolean withRem , Model uiModel,HttpServletRequest httpServletRequest){
 		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
 		if (StringUtils.equals("ticket.pdf", doc)) {
 			Paiement paiement = commande.getPaiements();
+			if(withRem!=null) paiement.setReduction(withRem);
 			uiModel.addAttribute("paiement", paiement);
 			return "ticketPdfDocView";
 		}else {
 			Facture facture = commande.getFacture();
+			if(withRem!=null) facture.setPrintWithReduction(withRem);
 			uiModel.addAttribute("facture", facture);
 			return "facturePdfDocViews";
 		}

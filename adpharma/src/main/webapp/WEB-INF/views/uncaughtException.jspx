@@ -2,7 +2,7 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
   <spring:message var="title" code="error_uncaughtexception_title" htmlEscape="false" />
-      <spring:url var="error" value="/resources/images/error.jpeg"/>
+      <spring:url var="error" value="/resources/images/erreur404.jpeg"/>
   
   <util:panel id="title" title="${title}">
 <center>   <h2>${fn:escapeXml(title)}</h2>

@@ -25,6 +25,8 @@
         </table>
         <field:textarea field="messageTiket" id="c_org_adorsys_adpharma_domain_Site_messageTiket" z="12ztZ0ZCDMBnHcPk3rQN1YiWrU4="/>
         <field:input field="numeroRegistre" id="c_org_adorsys_adpharma_domain_Site_numeroRegistre" z="LNGtzDmi8xTASm4wSpixJI2ltJw="/>
+        <field:input field="platformBaseUrl" id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" z="NvRzcK07/uNT5h9xVyJ0W5CzqsQ="/>
+        <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Site" render="${not empty dependencies}" z="Iz5J2tR/uNhz0TCAiK64mYX4D+U="/>
 </div>

@@ -9,17 +9,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.domain.Caisse;
-import org.adorsys.adpharma.domain.Client;
-import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
-import org.adorsys.adpharma.domain.TypeCommande;
+import org.adorsys.adpharma.platform.rest.SImplePlatformRestService;
+import org.adorsys.adpharma.platform.rest.exchanges.AdpHarmaExchangeParser;
+import org.adorsys.adpharma.platform.rest.exchanges.ExchangeData;
 import org.adorsys.adpharma.utils.ProcessHelper;
-import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +35,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CommandeFournisseurController {
 
+	@Autowired
+	AdpHarmaExchangeParser exchangeParser ;
+
+	
+	SImplePlatformRestService exchangeService = new SImplePlatformRestService();
 	//redirige la requette vers un autre show
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") String id, Model uiModel , HttpServletRequest httpServletRequest) {
-    uiModel.asMap().clear();
+		uiModel.asMap().clear();
 		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(id, httpServletRequest)+"/enregistrerCmd";
 	}
+
+	@RequestMapping(value = "/sendToPlatform/{id}", method = RequestMethod.GET)
+	public String sendToPlatform(@PathVariable("id") Long id, Model uiModel , HttpServletRequest httpServletRequest) {
+		CommandeFournisseur order = CommandeFournisseur.findCommandeFournisseur(id);
+		ExchangeData exchangeData = new ExchangeData();
+		if(order != null) {
+			exchangeData = exchangeParser.parseToTransferableFormat(order);
+		}
+		ExchangeData postData = exchangeService.postData(exchangeData, exchangeService.POST_DATA_URI, MediaType.APPLICATION_JSON);
+		uiModel.addAttribute("apMessage", postData.getRemoteMessage() );
+		return new CommandProcessController().enregistrer(id, uiModel) ;
+	}
+
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public String update(@Valid CommandeFournisseur commandeFournisseur, 

@@ -6,13 +6,15 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
-                    <field:input disabled="true" field="siteNumber" id="c_org_adorsys_adpharma_domain_Site_siteNumber" z="user-managed"/>
+                    <field:display hiddenfield="true" object="${site}" field="siteNumber" id="c_org_adorsys_adpharma_domain_Site_siteNumber" z="user-managed"/>
                     <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Site_displayName" required="true" z="PgG36TLnLR3cljhYfFOhnYFSPZw="/>
-                    <field:input field="numeroRegistre" id="c_org_adorsys_adpharma_domain_Site_numeroRegistre" z="LNGtzDmi8xTASm4wSpixJI2ltJw="/>
+                    <field:input field="numeroRegistre" id="c_org_adorsys_adpharma_domain_Site_numeroRegistre" label="No Contribuable" z="user-managed"/>
                     <field:input field="phone" id="c_org_adorsys_adpharma_domain_Site_phone" z="+5yNcJKclAXy8kET2iex4AL5sLA="/>
                     <field:input field="ville" id="c_org_adorsys_adpharma_domain_Site_ville" z="2H2JpvWI72fES+2RkGllwrvK1bM="/>
                     <field:input field="Pays" id="c_org_adorsys_adpharma_domain_Site_Pays" z="wD0ubAhqka3FapCAMGDyyHLgaVY="/>
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
+                                      <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
+                
                 </td>
                 <td class="tbcreate">
                     <field:input field="siteManager" id="c_org_adorsys_adpharma_domain_Site_siteManager" required="true" z="RS3JPJNTpbicmh1hQISTW4PNauU="/>
@@ -22,8 +24,10 @@
                     <field:input field="fax" id="c_org_adorsys_adpharma_domain_Site_fax" z="NuVh2zbHEPocB9tqsaEHaERSGj8="/>
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Site_footPrint" render="false" z="user-managed"/>
                     <field:textarea field="messageTiket" id="c_org_adorsys_adpharma_domain_Site_messageTiket" z="user-managed"/>
+                    <field:input field="platformBaseUrl" id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" z="NvRzcK07/uNT5h9xVyJ0W5CzqsQ="/>
                 </td>
             </tr>
         </table>
+        
     </form:update>
 </div>

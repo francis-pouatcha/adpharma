@@ -15,6 +15,10 @@ body,div,td {
 	
 }
 
+.headMenu{
+	
+}
+
 input#prm{
 	color: silver;
 	
@@ -100,13 +104,26 @@ font-size: 1em;
 	font-size: 20px;
 }
 
-#top-bar {
-	background: #1b5790; /* Digg Blue */
+.top-bar {
+	background-color: #1b5790; /* Digg Blue */
 	min-height: 55px;
-	padding: 0 10px;
+	padding: 0 5px;
 	font-size: 1.3em;
 	font-weight: bold;
 }
+.tbleft {
+	background-color: #1b5790;/* Digg Blue */
+	border: none;
+	width: 25%;
+	
+}
+.tbrigth {
+	background-color: #1b5790;/* Digg Blue */
+	border: none;
+	width: 75%;
+	
+}
+
 
 .search tr:hover {
 	background-color: rgb(51, 204, 255);
@@ -237,6 +254,7 @@ p.appMessage {
 	margin-bottom: 0px;
 	background-color: #33CCFF;
 	padding: 5px;
+	
 }
 
 #_topmenu {
@@ -958,7 +976,9 @@ a:hover {
 
 #right-side {
 	float: right;
-	padding-top: 15px;
+	vertical-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 
 #right-side img {
@@ -979,7 +999,6 @@ a:hover {
 
 form#main-search {
 	display: inline;
-	position: relative;
 	padding-right: 10px;
 	margin-left: 10px;
 }

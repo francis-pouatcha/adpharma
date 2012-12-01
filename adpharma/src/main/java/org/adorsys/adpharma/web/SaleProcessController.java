@@ -664,13 +664,16 @@ public class SaleProcessController {
 
 	// imprime les factures 
 	@RequestMapping(value = "/print/{invId}.pdf", method = RequestMethod.GET)
-	public String print(@RequestParam(value = "nom", required = false) String nom,  @PathVariable("invId")Long invId, Model uiModel){
+	public String print(@RequestParam(value = "nom", required = false) String nom, @RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
 		Facture facture = Facture.findFacture(invId);
+		if(remise!=null){
+			facture.setPrintWithReduction(remise);
+		}else {
+			facture.setPrintWithReduction(Boolean.FALSE);
+		}
 		uiModel.addAttribute("facture", facture);
 		uiModel.addAttribute("nom", nom);
-
 		return "facturePdfDocViews";
-
 	}
 
 

@@ -15,6 +15,7 @@ import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.InventoryService;
 import org.adorsys.adpharma.utils.Contract;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 
@@ -58,7 +59,7 @@ public class ApprovisonementProcess {
 
 
 	public void closeApprovisionement(){
-		
+
 		Contract.notNull("apId", apId);
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList();
@@ -88,6 +89,7 @@ public class ApprovisonementProcess {
 			//ligneApprovisionement.merge();
 			produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mis a jou du stock de produit 
 			ligneApprovisionement.compenserStock();
+			produit.setQuantiteEnStock(InventoryService.stock(produit));
 			produit.merge();
 			mouvementStock.setQteFinale(produit.getQuantiteEnStock());
 			mouvementStock.persist();

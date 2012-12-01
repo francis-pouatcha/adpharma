@@ -465,6 +465,16 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("cip", cip);
 		return q;
 	}
+	
+	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByQuantieEnStockNotEqualsAndCipEquals(BigInteger quantieEnStock, String cip) {
+		if (quantieEnStock == null) throw new IllegalArgumentException("The quantieEnStock argument is required");
+		if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock AND o.cip = :cip order by o.id ASC", LigneApprovisionement.class);
+		q.setParameter("quantieEnStock", quantieEnStock);
+		q.setParameter("cip", cip);
+		return q;
+	}
 
 	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByQuantieEnStockLessThanAndCipEquals(BigInteger quantieEnStock, String cip) {
 		if (quantieEnStock == null) throw new IllegalArgumentException("The quantieEnStock argument is required");

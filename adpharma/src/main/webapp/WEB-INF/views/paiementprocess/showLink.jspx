@@ -9,15 +9,13 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
       <spring:url value="/paiementprocess/updatePaiement/${paiement.id}"  var="update_paiement" />
-      <spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf"  var="print_ticket_url" />
        <spring:url value="/saleprocess/print/${paiementProcess.factureId}.pdf"  var="print_inv_url" />
-             <spring:url value="/paiementprocess/printTicketWithourReduce/${paiement.id}.pdf"  var="print_ticketnr_url" />
+        <spring:url value="/paiementprocess/printTicketWithourReduce/${paiement.id}.pdf"  var="print_ticketnr_url" />
        
        
        
         
-   <span><a href="${print_ticket_url}"  style="text-decoration: none;"><INPUT class="submits" type="button" value="TICKET DE CAISSE" title="Imprimer le ticket de caisse" /></a></span>
-        <span><a href="${print_ticketnr_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Ticket Sans Remise" title="Imprimer le ticket Sans remise" /> </a></span>
+   <span><a href="#"   onclick="printTicketConf() ;"  style="text-decoration: none;"><INPUT  class="submits" type="button" value=" IMPRIMER LE TICKET " title="Imprimer le ticket de caisse" /></a></span>
        <span><a href="${ print_inv_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="FACTURE DE CAISSE" title="Modifier le paiement" /></a></span>
   
  

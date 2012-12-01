@@ -35,10 +35,10 @@
 		<span class="nextTab unselectedTab">
 		<c:choose>
 		<c:when test="${not empty saleprocess.produit}">
-		<a href="javascript:history.back()">RECHERCHE FACTURE</a>
+		<a href="javascript:history.back()">RECHERCHE FACTUREs</a>
 		</c:when>
 		<c:otherwise>
-		<a href="${ find_product_url}">RECHERCHE FACTURE</a>
+		<a href="${ find_product_url}">RECHERCHE FACTUREss</a>
 		</c:otherwise>
 		</c:choose>
 		</span>

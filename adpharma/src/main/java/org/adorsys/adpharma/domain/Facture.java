@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -65,8 +66,19 @@ public class Facture extends AdPharmaBaseEntity {
 
     @ManyToOne
     private CommandeClient commande;
+    
+    @Value("true")
+    private transient Boolean printWithReduction;
 
-    @Enumerated
+    public Boolean getPrintWithReduction() {
+		return printWithReduction;
+	}
+
+	public void setPrintWithReduction(Boolean printWithReduction) {
+		this.printWithReduction = printWithReduction;
+	}
+
+	@Enumerated
     private TypeCommande typeCommande;
 
     private BigInteger montantTotal = BigInteger.ZERO;

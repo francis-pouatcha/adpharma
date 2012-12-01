@@ -10,6 +10,8 @@
     <jsp:output omit-xml-declaration="yes"/>
      <spring:url value="/commandprocesses/${itemId}/editCommand?form"  var="edit_url" />
       <spring:url value="/commandprocesses/${itemId}/closeCommand"  var="close_url" />
+      <spring:url value="/commandefournisseurs/sendToPlatform/${itemId}"  var="send_url" />
+      
       <spring:url value="/commandprocesses/${itemId}/print/${commandefournisseur.cmdNumber}.pdf"  var="print_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
       <spring:url value="/resources/images/print.png"  var="print" />
@@ -42,25 +44,35 @@ function annulercmd(){
 </script>
        <c:choose>
     <c:when test="${not empty apId }">
-   <span><INPUT onclick="javascript:history.back();" style="border-color:  blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Retour" title="Annuler La commande" /></span>
+   <span>
+   <INPUT onclick="javascript:history.back();" class="submits" type="button" value="Retour" title="Annuler La commande" /></span>
   
     </c:when>
     <c:otherwise>
    <c:choose>
    <c:when test="${commandefournisseur.etatCmd == etat}">
-                 <span><a href="${ edit_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="MODIFIER DETAIL" title="modifier le detail de la commande" /></a></span>
-                <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="CLOTURER" title="cloturer la commande" /></a></span>
-    </c:when>
+                 <span><a href="${ edit_url}" style="text-decoration: none;">
+                 <INPUT class="submits" type="button" value="MODIFIER LA PREPARATION" title="modifier le detail de la commande" /></a></span>
+                <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
+                <INPUT class="submits" type="button" value="CLOTURER LA PREPARATION" title="cloturer la commande" /></a></span>
+        
+    </c:when> 
      <c:otherwise>
-               <span><a href="${print_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Imprimer le Bon de Commande" title="imprimer le bon de commande" /></a></span>
+               <span><a href="${print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer le Bon de Commande" title="imprimer le bon de commande" /></a></span>
      
       </c:otherwise>
    </c:choose>
       <c:if test="${commandefournisseur.etatCmd eq 'CLOS' and not commandefournisseur.annuler}">
- <span><a href="${delete_cmd_url}" style="text-decoration: none;"><INPUT onclick="return annulercmd();" style="border-color:  blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Annuler La Commande" title="Annuler La commande" /></a></span>
-	
+        <span><a href="${delete_cmd_url}" style="text-decoration: none;">
+        <INPUT onclick="return annulercmd();" class="submits" type="button" value="Annuler La PREPARATION" title="Annuler La commande" /></a></span>
 		</c:if>
    
+   
+   
+	</c:otherwise>
+   </c:choose>
+                  <span><a href="${ send_url}" style="text-decoration: none;" >
+                  <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
    
    <c:if test="${not empty appMessages}">
 		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
@@ -70,7 +82,11 @@ function annulercmd(){
 		</c:forEach>
 	</center>
 	</c:if>
-	</c:otherwise>
-   </c:choose>
+	<c:if test="${not empty apMessage}">
+		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
+	<center>
+			<p class="appMessage" style="color: green; margin-bottom: -18px;font-weight: bold;font-size: 16px;">${apMessage}</p>
+	</center>
+	</c:if>
 </span>
 

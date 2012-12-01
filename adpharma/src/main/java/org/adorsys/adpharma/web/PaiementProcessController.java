@@ -391,7 +391,7 @@ public class PaiementProcessController {
 			PrintService.silentPrint(TicketPrinter.TICKET_FILE);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("eereur d'impression de ticket !");
+			System.out.println("erreur d'impression de ticket !");
 			System.out.println(e.getMessage());
 			return "ticketPdfDocView";
 		}

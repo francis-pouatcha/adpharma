@@ -2,6 +2,7 @@ package org.adorsys.adpharma.domain;
 
 import javax.persistence.Column;
 import javax.persistence.PostPersist;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.adorsys.adpharma.utils.NumberGenerator;
@@ -17,6 +18,10 @@ public class Site extends AdPharmaBaseEntity {
 
     @NotNull
     private String displayName;
+    
+    private String platformBaseUrl = "";
+    
+    private String drugstoreKey = "";
 
     @Size(max = 256)
     private String adresse;
@@ -57,7 +62,24 @@ public class Site extends AdPharmaBaseEntity {
         siteNumber = NumberGenerator.getNumber("S-", getId(), 4);
     }
 
-    public static void initSite() {
+    
+    public String getPlatformBaseUrl() {
+		return platformBaseUrl;
+	}
+
+	public void setPlatformBaseUrl(String platformBaseUrl) {
+		this.platformBaseUrl = platformBaseUrl;
+	}
+
+	public String getDrugstoreKey() {
+		return drugstoreKey;
+	}
+
+	public void setDrugstoreKey(String drugstoreKey) {
+		this.drugstoreKey = drugstoreKey;
+	}
+
+	public static void initSite() {
         if (Site.countSites() <= 0) {
             System.out.println("[ initialisation des Sites ]");
             Site site = new Site();
@@ -85,5 +107,12 @@ public class Site extends AdPharmaBaseEntity {
         sb.append("Phone: ").append(getPhone()).append(", ");
         sb.append("SiteManager: ").append(getSiteManager()).append(", ");
         return sb.toString();
+    }
+    
+    
+    public static TypedQuery<Site> findSiteByDrugstoreKey(String drugstoreKey) {
+    	TypedQuery<Site> q = entityManager().createQuery("SELECT o FROM Site o WHERE o.drugstoreKey =:drugstoreKey ", Site.class) ;
+        q.setParameter("drugstoreKey", drugstoreKey);
+    	return  q;
     }
 }

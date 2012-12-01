@@ -222,7 +222,7 @@ public class CommandProcessController {
 
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrerCmd", method = RequestMethod.GET)
-	public String enregistrer(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpSession session) {
+	public String enregistrer(@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId) ;
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);

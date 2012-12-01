@@ -232,19 +232,21 @@ return( false );
      
      <div id="facture" style="display: none; margin-bottom: 10px; height: 50px; ">
     <center>
-     <form action="${print_inv_url}" style="width: 40%; "  method="GET" id="facture"
+     <form action="${print_inv_url}" style="width: 50%; "  method="GET" id="facture"
 					name="factures" >
 					<table>
 						<tr>
+						    <th style="text-align: center;">AVEC REMISE ?</th>
 							<th style="text-align: center;">NOM COMPLET DU CLIENT</th>
 							<th style="text-align: center;" >ACTION</th>
 						</tr>
 						<tr>
 							
-							<td><INPUT type="text" name="nom" id="nom" class="autres"
-								value=""
-								style=" text-align: center;" />
-
+							<td>
+							<INPUT type="checkbox" name="remise" id="remise" class="autres" checked="checked"  style=" text-align: center;" />
+							</td>
+							<td>
+							<INPUT type="text" name="nom" id="nom" class="autres" value="" style=" text-align: center;" />
 							</td>
 							<td align="center">
 
@@ -256,6 +258,7 @@ return( false );
 						</tr>
 					</table>
 	</form>
+	<BR />
  </center>    
      </div>
      
@@ -263,17 +266,6 @@ return( false );
     <HR />
          <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeClient_footPrint" object="${commandeclient}" z="LQWn8oa0XqGxMaqd1ehaq3tttj4="/>
     <HR style="margin-top: -12px" />
-    
-     <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
-
- 
-</div>
-</div>
     
 </div>
        

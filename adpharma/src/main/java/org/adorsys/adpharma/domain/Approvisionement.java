@@ -39,7 +39,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar dateBordereau;
+    private Calendar dateBordereau ;
 
     @ManyToOne
     private PharmaUser agentCreateur;
@@ -63,11 +63,11 @@ public class Approvisionement extends AdPharmaBaseEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date dateCommande;
+    private Date dateCommande = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date dateLivraison;
+    private Date dateLivraison= new Date();
 
     @NotNull
     @ManyToOne
@@ -90,7 +90,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date dateCreation;
+    private Date dateCreation = new Date();
 
     @Value("false")
     private Boolean urgence;

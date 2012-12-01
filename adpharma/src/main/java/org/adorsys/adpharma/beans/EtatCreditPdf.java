@@ -116,7 +116,7 @@ public class EtatCreditPdf  extends   AbstractPdfView {
 		adressTable.addCell(emptyCell);// 1:2
 		
 		PdfPCell regCell = new PdfPCell(cellBorderlessStyle);
-		regCell.setPhrase(new Phrase(new Chunk("Numero Registre : "+site.getNumeroRegistre(), boddyStyle)));
+		regCell.setPhrase(new Phrase(new Chunk("No Contribuable : "+site.getNumeroRegistre(), boddyStyle)));
 		regCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(regCell);
 		

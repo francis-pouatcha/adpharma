@@ -49,6 +49,22 @@ public class InventoryService {
 		}
 		return trueStock ;
 	}
+	
+	/**
+	 * @param produit
+	 * @return the true value of stock
+	 */
+	public static BigInteger stock(Produit produit){
+		BigInteger trueStock = BigInteger.ZERO;
+		if(produit == null) return trueStock ;
+		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockNotEqualsAndCipEquals(BigInteger.ZERO, produit.getCip()).getResultList();
+		if (!resultList.isEmpty()) {
+			for (LigneApprovisionement line : resultList) {
+				trueStock = trueStock.add(line.getQuantieEnStock());
+			}
+		}
+		return trueStock ;
+	}
 
 
 	/**

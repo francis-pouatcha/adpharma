@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.Size;
 
 import org.adorsys.adpharma.utils.NumberGenerator;
@@ -19,6 +20,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class Fournisseur extends AdPharmaBaseEntity {
 
     private String fournisseurNumber;
+    
+    private String providerKey;
 
     private String name;
 
@@ -84,7 +87,16 @@ public class Fournisseur extends AdPharmaBaseEntity {
 
     }
     
-    public String displayShotName(){
+    
+    public String getProviderKey() {
+		return providerKey;
+	}
+
+	public void setProviderKey(String providerKey) {
+		this.providerKey = providerKey;
+	}
+
+	public String displayShotName(){
     	String name2 = getName();
     	if (StringUtils.isBlank(name2))name2 = "FOUR DIVER";
     	if (name2.length() > 10) {
@@ -109,6 +121,12 @@ public class Fournisseur extends AdPharmaBaseEntity {
     }
     public static List<Fournisseur> findAllFournisseurs() {
         return entityManager().createQuery("SELECT o FROM Fournisseur o ORDER BY o.name ASC ", Fournisseur.class).getResultList();
+    }
+    
+    public static TypedQuery<Fournisseur> findFournisseurByProviderKey(String providerKey) {
+    	TypedQuery<Fournisseur> q = entityManager().createQuery("SELECT o FROM Fournisseur o WHERE o.providerKey =:providerKey ", Fournisseur.class) ;
+        q.setParameter("providerKey", providerKey);
+    	return  q;
     }
     
 }

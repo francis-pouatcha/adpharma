@@ -4,8 +4,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:find finderName="ByEtatCaisse" label="Etat Des Caisses" utilMessage="Etat Des Caisses"   id="ff_org_adorsys_adpharma_domain_Caisse" path="/caisses" z="MvwoQZFbE8XZs+PQcTpShHN+aTk=">
-        <field:datetime dateTimePattern="${caisse_mindateouverture_date_format}" disableFormBinding="true" field="minDateOuverture" id="f_org_adorsys_adpharma_domain_Caisse_minDateOuverture" required="true" z="vR8/o2t8sfl90XtFRLxMLzekeCM="/>
-        <field:datetime dateTimePattern="${caisse_maxdateouverture_date_format}" disableFormBinding="true" field="maxDateOuverture" id="f_org_adorsys_adpharma_domain_Caisse_maxDateOuverture" required="true" z="4LAE7T8s1Rrmgk0wEGrjfD0J6AI="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" disableFormBinding="true" field="minDateOuverture" id="f_org_adorsys_adpharma_domain_Caisse_minDateOuverture" required="true" z="vR8/o2t8sfl90XtFRLxMLzekeCM="/>
+        <field:datetime dateTimePattern="dd-MM-yyy hh:mm" disableFormBinding="true" field="maxDateOuverture" id="f_org_adorsys_adpharma_domain_Caisse_maxDateOuverture" required="true" z="4LAE7T8s1Rrmgk0wEGrjfD0J6AI="/>
     </form:find>
        <c:if test="${not empty appMessage}">
 		<hr/>

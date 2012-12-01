@@ -10,7 +10,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   
   <spring:url value="/resources/images/userconn.png" var="users" />
   
-  <util:panel id="title" title="Connexion ADGESCOM">
+  <util:panel id="title" title="Connexion ADPahrma">
     <c:if test="${not empty param.login_error}">
       <div class="errors">
         <p style="text-align: center; margin-right: 90px;">
@@ -29,7 +29,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     </c:if>
     <spring:url value="/resources/j_spring_security_check" var="form_url" />
     
- <div style="margin-left: 400px;"> 
+ <div style="height:500px; text-align: center;"> 
     <form name="f" action="${fn:escapeXml(form_url)}" method="POST">
     
     <fieldset style="width: 360px; height:200px; border: none; display: block; margin: 80px 0 100px 50px;" class="style_login">

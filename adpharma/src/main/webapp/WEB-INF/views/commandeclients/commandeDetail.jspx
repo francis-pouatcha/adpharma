@@ -12,6 +12,28 @@
                <spring:url value="/paiements/printByCmd/" var="print_url" />
               
   <script>
+  function printTicketConf(cmdId){
+	   Check = confirm("Imprimer le ticket Avec Remise ? ");
+	   if(Check == false){
+		   var url =  '${print_url}'+cmdId+"?doc=ticket.pdf&amp;withRem=false";
+	     	window.location = url ;
+	   	
+	   }else{
+		   url ='${print_url}'+cmdId+"?doc=ticket.pdf&amp;withRem=true";
+		     window.location= url ;
+	   }
+} 
+  function printInvoiceConf(cmdId){
+	   Check = confirm("Imprimer la Facture Avec Remise ? ");
+	   if(Check == false){
+		   var url =  '${print_url}'+cmdId+"?doc=facture.pdf&amp;withRem=false";
+	     	window.location = url ;
+	   	
+	   }else{
+		   url ='${print_url}'+cmdId+"?doc=facture.pdf&amp;withRem=true";
+		     window.location= url ;
+	   }
+} 
   function clearDetailTable(){
 		$('#detailTable').html(
 				'<tr>
@@ -56,8 +78,14 @@ $('tr.list').each(function(){
 								getCmdDetails(this.id);
 								container.slideDown(1000);
 								}
-								$('#ticket').attr("href",'${print_url}'+this.id+"?doc=ticket.pdf");
-								$('#facture').attr("href",'${print_url}'+this.id+"?doc=facture.pdf");
+								$('#ticket').click(function(){
+									printTicketConf(current.id);
+									});
+								$('#facture').click(function(){
+									printInvoiceConf(current.id);
+								});
+
+								
 								return false;
 							};
 							});
@@ -88,11 +116,7 @@ $('tr.list').each(function(){
                 <a href="#" id="facture" style="color: blue;font-weight: bold;"   title="Imprimer La Facture de Caisse">
                  facture De Caisse
                 </a>
-                |
-                <a href="#" style="color: blue;font-weight: bold;"   title="Imprimer Le Borderau de Livraison">
-                 Borderau de Livraison
-                </a>
-               
+                
 </span>
  
 </div>

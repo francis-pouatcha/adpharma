@@ -63,7 +63,7 @@
 
 <ul class="dropdown">
  <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
-		<li><a href="#">Gestion du Stock</a>
+		<li><a  style="text-transform: capitalize;" class="headMenu" href="#">Gestion du Stock</a>
         		<ul class="sub_menu">
         			 <li>
         				<a href="#">Entree En Stock </a>
@@ -131,7 +131,7 @@
         					<li><a href="${vente_credit_url}">Vente a Credit</a></li>
         					<li><a href="${vente_proformat_url}">Facture Proformat</a></li>
         				    <li><a href="${search_url}">Rechercher une vente</a></li>
-        				    <li><a href="${vente_jour_url}">Lite Des Ventes Du jour</a></li>	
+        				    <li><a href="${vente_jour_url}">Etat Journalier Des Ventes</a></li>	
         					<li><a href="${list_url}">Lister Les Ventes</a></li>	
         					
         					
@@ -193,8 +193,35 @@
 		        			 </li> -->
 		        			 
 		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
- <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
+                           <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
 		        			 
+		        			  <!--  menu facturation-->
+    
+     <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
+                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
+            <spring:url value="/factures?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_fact_url"/>
+            
+                              <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
+          <li>  
+            <a href="#">Facturation</a>
+        			 	<ul class="sub_menu">
+        			 		<li><a href="${find_pay_url}">paiements Facture</a></li>
+        			 	    <li><a href="${conf_fdp_url}"> Rechercher factures</a></li>
+        			 		
+        					<!-- <li>
+		        				<a href="#">Rechercher factures</a>
+		        					<ul>
+		        						<li><a href="${conf_fdp_url}"> search</a></li>
+		        						<li><a href="${dette_clients_url}">Par client</a></li>
+		        						<li><a href="${conf_fip_url}">Soldees ?</a></li>
+		        						<li><a href="${conf_list_fact_url}">Lister</a></li>	
+		        					</ul>
+		        			 </li>
+		        			 -->
+		        	    </ul> 
+		</li>
 		        			 </security:authorize>
 		        		</ul>
                 
@@ -270,13 +297,26 @@
             <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 50 : param.size}" var="usr_list_url"/>
             <spring:url value="/pharmausers?find=ByUserNameLike&amp;form" var="usr_name_url"/>
            
-            <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+            <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN" >
 			<li>
         		<a href="#">Utilisateurs</a>
         			 	<ul class="sub_menu">
+        		 <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN" >
         					<li><a href="${usr_cree_url}">Ajouter</a></li>
         					<li><a href="${usr_list_url}">liste des Utilisateurs</a></li>
         					<li><a href="${usr_name_url}">Recherche Par Nom</a></li>
+        					 <!--  menu Credential-->    
+        	   </security:authorize>
+          <spring:url value="/passwordresets?form" var="cre_pass_url"/>
+            
+            
+    
+    	        <li>
+    			<a href="${cre_pass_url}">Changer Le Mot de Passe</a>
+        			 
+        		</li>
+    
+         
         				</ul>
         	</li>
        
@@ -300,7 +340,7 @@
 				<li>
         		<a href="#">Catalogues</a>
         			 	<ul class="sub_menu">
-        					<li><a href="${search_lgap_url}">Rechercher un CIPM</a></li>
+        					<li><a href="${search_lgap_url}">Rechercher un Produit (CIPM)</a></li>
         					            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
         					
         					<li>
@@ -479,35 +519,7 @@
 		        					</ul>
 		        			 </li>
     </security:authorize>
-     <!--  menu facturation-->
-            <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
     
-     <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
-                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
-                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
-                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
-            <spring:url value="/factures?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_fact_url"/>
-            
-                              <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
-          <li>  
-            <a href="#">Facturation</a>
-        			 	<ul class="sub_menu">
-        			 		<li><a href="${find_pay_url}">paiements Facture</a></li>
-        			 	    <li><a href="${conf_fdp_url}"> Rechercher factures</a></li>
-        			 		
-        					<!-- <li>
-		        				<a href="#">Rechercher factures</a>
-		        					<ul>
-		        						<li><a href="${conf_fdp_url}"> search</a></li>
-		        						<li><a href="${dette_clients_url}">Par client</a></li>
-		        						<li><a href="${conf_fip_url}">Soldees ?</a></li>
-		        						<li><a href="${conf_list_fact_url}">Lister</a></li>	
-		        					</ul>
-		        			 </li>
-		        			 -->
-		        	    </ul> 
-		</li>
-        </security:authorize>
       <!--  menu database-->
                 <spring:url value="/printerconfigurations?page=1&amp;size=${empty param.size ? 50 : param.size}" var="printer_list"/>
                 <spring:url value="/printerconfigurations?form" var="creer_printer"/>
@@ -553,21 +565,7 @@
            
         
         </security:authorize>
-        
          
-          <!--  menu Credential-->    
-          <spring:url value="/passwordresets?form" var="cre_pass_url"/>
-               <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">
-    
-    	<li>
-    			<a href="#">Password</a>
-        			 	<ul class="sub_menu">
-        			 		<li><a href="${cre_pass_url}">Change Password</a></li>
-        			 	</ul>
-        		</li>
-    
-         
-        </security:authorize>
       
     	<li>
     	 <spring:url value="/manuels/sommaire-fr" var="sommaire_url"/>

@@ -126,7 +126,7 @@ public class AvoirPdfView extends   AbstractPdfView {
 		adressTable.addCell(emailCell);
 		
 		PdfPCell regCell = new PdfPCell(cellBorderlessStyle);
-		regCell.setPhrase(new Phrase(new Chunk("Num Contribuable : "+site.getNumeroRegistre(), boddyStyle)));
+		regCell.setPhrase(new Phrase(new Chunk("No Contribuable : "+site.getNumeroRegistre(), boddyStyle)));
 		regCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(regCell);
 		

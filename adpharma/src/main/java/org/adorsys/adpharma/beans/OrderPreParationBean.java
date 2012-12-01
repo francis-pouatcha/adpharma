@@ -208,6 +208,8 @@ public class OrderPreParationBean {
 		orderItems.setPrixAVenteMin(produit.getPrixVenteStock());
 		orderItems.setProduit(produit);
 		orderItems.calculPrixTotal();
+		System.out.println(produit.getPlafondStock());
+		System.out.println(produit.getQuantiteEnStock());
 		BigInteger subtract = produit.getPlafondStock().subtract(produit.getQuantiteEnStock());
 		if(subtract.intValue()>0)orderItems.setQuantiteCommande(subtract);
 		return orderItems ;
@@ -218,7 +220,6 @@ public class OrderPreParationBean {
 	public static TypedQuery<Produit> findProductForPreparation(Filiale filiale ,Rayon rayon, String beginBy,String endBy,Date beginDate,
 			Date endDate,ModeSelection modeSelection ,BigInteger qteLimit){
 		    if(qteLimit==null) qteLimit=BigInteger.ONE;
-		
 		   StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.quantiteEnStock  <= :qteLimit AND  o.quantiteEnStock >= :min");
 	        
 	        if (StringUtils.isNotBlank(endBy)) {

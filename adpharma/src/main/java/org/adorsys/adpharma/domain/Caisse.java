@@ -37,11 +37,11 @@ public class Caisse extends AdPharmaBaseEntity {
 	private Site site;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateOuverture;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
 	private Date dateFemeture;
 
 	@Value("0")
@@ -257,6 +257,17 @@ public class Caisse extends AdPharmaBaseEntity {
 		q.setParameter("fin", fin);
 		q.setParameter("filiale", filiale);
 		q.setParameter("typeMouvement", TypeMouvement.VENTE);
+		return q.getResultList();
+	}
+	
+	public static List<Object[]> findChiffreAffaireByFilialeAndTypeMvt(String filiale ,  Date debut ,Date fin,TypeMouvement typeMouvement) {
+		if (debut == null || fin == null || filiale == null||typeMouvement==null) throw new IllegalArgumentException("The debut or fin or filiale  arguments are required");
+		EntityManager em = Caisse.entityManager();
+		Query q = em.createQuery("SELECT distinct o.filiale , COUNT(distinct o.numeroTicket) ,SUM(o.pAchatTotal), SUM(o.pVenteTotal), SUM(o.remiseTotal)  FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :debut AND :fin AND o.filiale = :filiale  AND o.typeMouvement = :typeMouvement   GROUP BY o.filiale HAVING  SUM(o.pAchatTotal) >= 0 ");
+		q.setParameter("debut", debut);
+		q.setParameter("fin", fin);
+		q.setParameter("filiale", filiale);
+		q.setParameter("typeMouvement", typeMouvement);
 		return q.getResultList();
 	}
 

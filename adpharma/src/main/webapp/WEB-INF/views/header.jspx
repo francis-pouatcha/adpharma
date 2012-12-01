@@ -103,10 +103,14 @@ function(data){
       <spring:message code="security_login"  var="msg_login"/>
        <spring:message code="security_user_infos"  var="msg_user"/>
        
-  <div id="top-bar">
+  <table  style="border:none;">
+  <tr >
+    <td class="tbleft" >
  		<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
-			<img src="${img}"  alt="DZone" class="floatleft" />
+			<img src="${img}"  alt="DZone"  />
 		</a>
+	</td>
+ <td class="tbrigth">
 			<div id="right-side">
 			<c:choose>
   				<c:when test="${pageContext['request'].userPrincipal != null}">
@@ -117,7 +121,7 @@ function(data){
   			</c:choose>
 			<c:choose>
   				<c:when test="${pageContext['request'].userPrincipal != null}">
-				     <a href="${logout}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" >
+				     <a href="${logout}" style="margin-rigth: 1px;margin-left:  1px;padding-right: 1px;"  onclick="return confHeader();" >
 				     
 				    ${msg_logout}
 				    
@@ -136,10 +140,14 @@ function(data){
 				<form id="main-search" action="#" method="get">
 							<label for="search-field" id="search-field-label">Search</label>
 		<input  type="text" tabindex="1" maxlength="255" style="text-align:center; color:green; "   value="${licenceKey }"  id="search-field" name="licenceKey" class="search" />
-							<input type="image" alt="Search" value="Search" src="${search}" id="search-button" class="search" style="text-transform: uppercase;" />  
+				<!-- 
+				<input type="image" alt="Search" value="Search" src="${search}" id="search-button" class="search" style="text-transform: uppercase;" />  
+				 -->
 				</form>
 			</div>
-		</div>
+		</td>
+	</tr>
+</table>
 </div> 
 
 
