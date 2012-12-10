@@ -46,7 +46,6 @@ public class TransformationProduitController {
 		uiModel.asMap().clear();
 		if (transformationProduit.getId()!=null) {
 			transformationProduit.merge();	        	
-
 		}else {
 			transformationProduit.persist();
 		}
@@ -68,7 +67,6 @@ public class TransformationProduitController {
 			uiModel.addAttribute("transformationProduit",transformationProduit.clone() );
 		}else {
 			uiModel.addAttribute("transformationProduit",new TransformationProduit() );
-
 		}
 
 		return "transformationproduits/editTransformation";

@@ -114,14 +114,26 @@
                 <artifactId>bcprov-jdk14</artifactId>
            	<version>139</version> 
 		</dependency>
+		
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.10</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
 
 
 
-  <!--        
+       
   <dependency>
         <groupId>jasperreports</groupId>
         <artifactId>jasperreports</artifactId>
-        <version>3.7.1</version>
+        <version>4.7.0</version>
         <exclusions>
             <exclusion>
                 <groupId>commons-collections</groupId>
@@ -141,7 +153,7 @@
             </exclusion>
         </exclusions>
     </dependency>
--->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

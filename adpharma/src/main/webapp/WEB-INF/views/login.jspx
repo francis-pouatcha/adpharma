@@ -14,7 +14,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <c:if test="${not empty param.login_error}">
       <div class="errors">
         <p style="text-align: center; margin-right: 90px;">
-          Login et/ou mot de passe incorrects, essayez a nouveau
+          Login et/ou mot de passe incorrects,ou  Votre  est bloque veullez contacter l'administrateur pour plus de renseignement
           <!-- <spring:message code="security_login_unsuccessful" />
           <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />  -->
           

@@ -467,7 +467,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		tableDetail.addCell(credit);
 		
 		PdfPCell bc = new PdfPCell(cellStyle);
-		bc.setPhrase(new Phrase(new Chunk("BON-CMD", headerStyle)));
+		bc.setPhrase(new Phrase(new Chunk("Bon-Medi", headerStyle)));
 		bc.setBackgroundColor(Color.gray);
 		bc.setPaddingBottom(5);
 
@@ -475,7 +475,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 		
 		PdfPCell bclt = new PdfPCell(cellStyle);
-		bclt.setPhrase(new Phrase(new Chunk("BON-Clt", headerStyle)));
+		bclt.setPhrase(new Phrase(new Chunk("Bon-Avoir", headerStyle)));
 		bclt.setBackgroundColor(Color.gray);
 		bclt.setPaddingBottom(5);
 

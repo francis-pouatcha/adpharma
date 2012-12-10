@@ -1,13 +1,162 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:spring="http://www.springframework.org/tags" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
 xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    <spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+    <spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
+    <script type="text/javascript">
+	
+	
+	
+	function clearProductTable(){
+		$('#resultproduit').html(
+				'<tr>
+				<th>CIP</th>
+			    	<th>CIPM</th>
+		    		<th>DESIGNATION</th>
+		    		 <th>PRIX UNIT</th>
+		    		<th>QTE CIPM</th>
+		    		<th>QTE CIP</th>
+		    		<th>SAISIE LE</th>
+		    		<th>FOURNISSEUR</th>
+		    	
+				</tr>');
+	//	$('#designation').val(" ");
+		
+	}
+	
+	
+	$(function(){
+		
+		
+		
+		$('form#produitfindform').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_product_url}',
+						$('#produitfindform').serialize(),
+			                function(data){
+								$(data).each(function(){
+									
+									$('#resultproduit').append(
+									 '<tr id="'+this.id+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.cipMaison+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.prixVenteUnitaire+'</td>
+										  <td>'+this.quantieEnStock+'</td>
+										  <td>'+this.qteCip+'</td>
+										  <td>'+this.saisiele+'</td>
+										  <td>'+this.fournisseur+'</td>
+
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproduit tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										$.getJSON( '${select_product_url}/'+this.id,
+									                function(data){
+											$('#_cipM_id').val(data.cipMaison);
+											$('#findproduit').dialog("close"); 
+													});
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+		// Dialog	find produit		
+		$('#findproduit').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		
+		$('#find').click(function(){
+			$('#findproduit').dialog('open');
+			return false;
+		});
+		
+		
+		
+		
+	});
+	
+		
+		
+		//requete pour la vente
+	function requete() {
+		var cipm = document.getElementById("cipm").value;
+		var url = "${find_cipm_url}" + cipm ;
+			$.getJSON(url,
+				 function(data) {
+				var idproduct = data.cip;
+					if (!data.id) {
+						document.getElementById("cip").value = "";
+						document.getElementById("cipm").value = "";
+						document.getElementById("des").value = "";
+						document.getElementById("pu").value = "";
+						document.getElementById("pId").value = "";
+						document.getElementById("remax").value = "";
+						document.getElementById("qte").value = "";
+						document.getElementById("pt").value = "";
+						document.getElementById("rem").value = "";
+						alert("Aucun produit Trouve");
+					} else {
+						
+						document.getElementById("cip").value = data.cip;
+						document.getElementById("des").value = data.designation ;
+						document.getElementById("pu").value = data.prixVenteUnitaire;
+						document.getElementById("pId").value = data.id;
+						document.getElementById("remax").value = data.remiseMax;
+						document.getElementById("qte").value =  1 ;
+						document.getElementById("pt").value = 0 ;
+					}
+				});
+			
+			
+	}
+
+ 
+	
+	</script>
        <form:find finderName="BySearch" id="ff_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" z="user-managed">
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
-                        <field:input disableFormBinding="true" field="cipM" id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
+          <field:input buttonId="find" buttonLabel="..." titleMessage="Cliquer le button ci-contre pour rechercher le cipm !" disableFormBinding="true" field="cipM" label="Code Barre (CIPM)"  id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
         <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_MouvementStock_designation" required="false" z="user-managed"/>
         <field:select disableFormBinding="true" field="typeMouvement" id="f_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" items="${typemouvements}" path="/typemouvements" required="false" z="user-managed"/>
           </td>
@@ -33,18 +182,53 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
    <page:list id="pl_org_adorsys_adpharma_domain_MouvementStock" items="${results}" z="user-managed">
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" property="mvtNumber" z="axWyghN8Isf0UeoVN3kBjrC2rvg="/>
-                       <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
+            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" maxLength="-1" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" maxLength="-1" property="agentCreateur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" maxLength="-1" property="typeMouvement" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_designation" maxLength="-1" property="designation" z="Oxy9xJ8jH74fbm2mDw8LKT8H28I="/>
-                                  <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale"  property="qteInitiale" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale"  property="qteInitiale" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteDeplace"  property="qteDeplace" z="user-managed"/>
-                       <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" property="numeroTicket" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
              <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" render="false" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_footPrint" property="footPrint" render="false" z="user-managed"/>
           </table:table>
     </page:list>
   </c:if> 
+  
+  
+  
+  <div id="findproduit" style="display: none; width: 1000px;" title="recherche un cip maison">
+		
+		
+		
+		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input class="searchInput"  type="text" name="designation"/>
+		</p>
+		 <p>
+		<label for="rp">En Rupture ? :</label> <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
+		</p> 
+		
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIPM</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;" width="150px;">POSOLOGIE</th>
+		    		 <th style="text-align: center;" >PRIX UNIT</th>
+		    		<th style="text-align: center;">QTE CIPM</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    		<th style="text-align: center;">SAISIE LE</th>
+		    		<th style="text-align: center;">FOURNISSEUR</th>
+		    	</tr>
+		  </table>
+	</div>	
+</div>
 </div>

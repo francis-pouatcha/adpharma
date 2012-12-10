@@ -178,7 +178,7 @@ public class Client extends AdPharmaBaseEntity {
             Client client = new Client();
             client.setSexe(Genre.Neutre);
             client.setNom("CLIENT");
-            client.setPrenom("DIVER");
+            client.setPrenom("DIVERS");
             client.setCategorie(CategorieClient.findAllCategorieClients().iterator().next());
             client.persist();
         }

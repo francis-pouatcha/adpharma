@@ -9,11 +9,12 @@
   
    <spring:url value="/resources" var="source"></spring:url>
    <link rel="stylesheet" href="${source}/js/style.css" type="text/css" media="screen, projection"/>
+   	<script type="text/javascript" language="javascript" src="${source}/js/jquery.dropdownPlain.js"> <!-- required for FF3 and Opera --></script>
+   
 	<!--[if lte IE 7]>
         <link rel="stylesheet" type="text/css" href="${source}/js/ie.css" media="screen" />
     <![endif]-->
-	 	
-	<script type="text/javascript" language="javascript" src="${source}/js/jquery.dropdownPlain.js"> <!-- required for FF3 and Opera --></script>
+    	<jsp:include page="allmenuscripts.jspx" />
                           <spring:url value="/detteclients?page=1&amp;size=${empty param.size ? 100 : param.size}" var="list_dette_url"/>
                                             <spring:url value="/dataloader/load" var="load_url"/>
                                                                     <spring:url value="/produits/attributionFamile?form" var="aff_fsf_url"/>
@@ -66,7 +67,7 @@
 		<li><a  style="text-transform: capitalize;" class="headMenu" href="#">Gestion du Stock</a>
         		<ul class="sub_menu">
         			 <li>
-        				<a href="#">Entree En Stock </a>
+        				<a  href="#">Entree En Stock </a>
         				<ul>
         					<li><a href="${ap_cree_url}">Effectuer Une Entree</a></li>
         					<li><a href="${ap_list_url}">Lister Les Entrees</a></li>
@@ -519,6 +520,32 @@
 		        					</ul>
 		        			 </li>
     </security:authorize>
+    
+    
+    <!-- menu etats -->
+    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    	<spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
+    	<spring:url value="/etats/print/listingRupture.pdf" var="list_rup_url"/>
+    	<spring:url value="/etats/print/etatJournalierCaisse.pdf" var="cash_journalier_url"/>
+    	<spring:url value="/etats/print/etatValorisationStock.pdf" var="et_valeur_stock"/>
+    	<spring:url value="/etats/print/etatJournalierVente.pdf" var="et_jour_vente"/>
+    	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
+    	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
+		                                  <li><a href="#">Etats </a>
+		        							<ul>
+		        								<li><a href="${list_cat_url}">Listing Catalogue</a></li>
+		        								<li><a href="${et_valeur_stock}">Etat Valorisation du stock</a></li>
+		        								<li><a href="${et_jour_dette}">Etat Journalier des Dettes </a></li>
+		        								<li><a id="et_per_dette" href="#">Etat Periodique des Dettes </a></li>
+		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
+		        								<li><a id="et_per_cash" href="#">Etat Periodique des Caisses </a></li>
+		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
+		        								<li><a id="et_per_vente" href="#">Etat Perioque des Ventes </a></li>
+		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>	
+		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
+		        							</ul>
+		        						</li>
+  </security:authorize>
     
       <!--  menu database-->
                 <spring:url value="/printerconfigurations?page=1&amp;size=${empty param.size ? 50 : param.size}" var="printer_list"/>

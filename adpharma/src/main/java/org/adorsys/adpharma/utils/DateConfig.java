@@ -10,7 +10,6 @@ public abstract class DateConfig {
 	public static DateConfigPeriod getBegingEndOfDay(Date date){
 		Date beginDate = DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
 		Date enDate = DateUtils.addDays(beginDate, 1);
-		enDate = DateUtils.addSeconds(enDate, -1);
 		return new DateConfigPeriod(beginDate, enDate);
 	}
 	

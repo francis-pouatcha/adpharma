@@ -10,6 +10,8 @@
         <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
     <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
   </definition>
+   <definition name="etat" template="/WEB-INF/layouts/etat-layout.jspx">
+  </definition>
   <definition name="stat" template="/WEB-INF/layouts/statistic-layout.jspx">
     <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
         <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />

@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
+import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.springframework.ui.Model;
 import org.springframework.web.util.UriUtils;
@@ -146,6 +148,10 @@ public class ProcessHelper {
 		arrayList.addAll(PharmaUser.findAllPharmaUsers());
 
 		return arrayList;
+	}
+	
+	public static Collection<TypeMouvement> populateTypeMouvements() {
+	 return	Arrays.asList(TypeMouvement.class.getEnumConstants()) ;
 	}
 
 

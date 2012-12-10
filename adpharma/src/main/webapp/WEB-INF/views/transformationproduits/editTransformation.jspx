@@ -123,8 +123,8 @@
 
     <form:create id="fc_org_adorsys_adpharma_domain_TransformationProduit" label="Creation D'une Relation de Decomposition" modelAttribute="transformationProduit" path="/transformationproduits" render="${empty dependencies}" z="D7X1VLLCnYN+9CTnsCrNAjWs6x8=">
    
-               <field:input field="origineName" required="true" buttonId="orgBut" buttonLabel="Find" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
-               <field:input field="cibleName" required="true" buttonId="cibBut"  buttonLabel="Find" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
+               <field:input field="origineName" label="Prd Compose" required="true" buttonId="orgBut" buttonLabel="Rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
+               <field:input field="cibleName" label="Prd Composant" required="true" buttonId="cibBut"  buttonLabel="rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
                      <formsp:hidden id="_cibleId_id" path="cibleId" />
                      <formsp:hidden  id="_origineId_id" path="origineId" />
                      <formsp:hidden  id="_id_id" path="id" />

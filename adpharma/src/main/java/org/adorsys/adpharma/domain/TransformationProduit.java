@@ -148,6 +148,8 @@ public class TransformationProduit extends AdPharmaBaseEntity {
             }
         }
     }
+    
+   
 
     @Override
     protected void internalPrePersist() {

@@ -114,7 +114,7 @@
                     <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
                     <field:input field="nom" id="c_org_adorsys_adpharma_domain_Client_nom" required="true" z="user-managed"/>
                     <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom" required="true" z="user-managed"/>
-                                       <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
+                    <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
                     <field:input field="nomComplet" id="c_org_adorsys_adpharma_domain_Client_nomComplet" render="false" z="user-managed"/>
                     <field:input field="telephoneFixe" id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
                     <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" z="UEVz4Qi38EfJSl81OAO5fxyACeo="/>
@@ -124,7 +124,7 @@
                 </td>
                 <td class="tbcreate">
                         <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
-                    <field:input buttonId="cltId" buttonLabel="Find" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" label="Code Payeur :" z="user-managed"/>
+                    <field:input buttonId="cltId" buttonLabel="Find" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" label="Code Payeur " z="user-managed"/>
                     <field:input field="plafondCredit" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
                     <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
                     <field:datetime dateTimePattern="${client_datenaissance_date_format}" field="dateNaissance" id="c_org_adorsys_adpharma_domain_Client_dateNaissance" z="ELbkD0T3EOInbSqx5X88ctouD7g="/>
