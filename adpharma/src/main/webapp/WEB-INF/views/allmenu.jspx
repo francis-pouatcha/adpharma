@@ -540,7 +540,7 @@
 		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
 		        								<li><a id="et_per_cash" href="#">Etat Periodique des Caisses </a></li>
 		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
-		        								<li><a id="et_per_vente" href="#">Etat Perioque des Ventes </a></li>
+		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
 		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>	
 		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
 		        							</ul>

@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.beans;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -29,6 +30,8 @@ public class EtatManagerBean {
 	
 	private Filiale filiale ;
 	
+	private BigInteger  value ;
+	
 	TypeMouvement typeMouvement ;
 	
 	private Produit produit ;
@@ -48,6 +51,14 @@ public class EtatManagerBean {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
+	}
+
+	public BigInteger getValue() {
+		return value;
+	}
+
+	public void setValue(BigInteger value) {
+		this.value = value;
 	}
 
 	public PharmaUser getUser() {

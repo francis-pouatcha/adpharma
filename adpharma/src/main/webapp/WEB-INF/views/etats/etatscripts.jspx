@@ -8,13 +8,24 @@
 	style="width: 100%;overflow: auto; height: 200px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:url value="/produits/createByAjax"  var="create_prd_url" />
+    <spring:url value="/etats/print/etatPeriodiqueVente.pdf?"  var="url1" />
+    <spring:url value="/etats/print/etatPeriodiqueCaisse.pdf?"  var="url2" />
+    <spring:url value="/etats/print/etatPeriodiqueDettes.pdf?"  var="url3" />
+    <spring:url value="/etats/print/etatPeriodiqueMouvenentStock.pdf?"  var="url4" />
+    <spring:url value="/etats/print/chiffeAffaireVendeur.pdf?"  var="url5" />
+     <spring:url value="/etats/print/etatPeriodiqueTransformation.pdf?"  var="url6" />
+         
+         
+         <spring:url value="/etats/etatPeriodique?form"  var="date_form_url" />
     
  <script type="text/javascript">
- var date_form_url = 'http://localhost:8082/adpharma/etats/etatPeriodique?form' ;
-	var url1 = 'http://localhost:8082/adpharma/etats/print/etatPeriodiqueVente.pdf?' ;
-	var url2 = 'http://localhost:8082/adpharma/etats/print/etatPeriodiqueCaisse.pdf?' ;
-	var url3 = 'http://localhost:8082/adpharma/etats/print/etatPeriodiqueDettes.pdf?' ;
+ var date_form_url = '${date_form_url}' ;
+	var url1 = '${url1}' ;
+	var url2 = '${url2}' ;
+	var url3 = '${url3}' ;
+	var url4 = '${url4}' ;
+	var url5 = '${url5}' ;
+	var url6 = '${url6}' ;
 	var gotoUrl =url1 ;
 
     $(function (){
@@ -60,17 +71,18 @@
     			   
     }) ;
    $("a#et_per_vente").click(function(){
-	   openDialog(date_form_url,"Etat Periode Des Ventes",vente_Print_url);
+	  var value =  prompt("nombre de jours :");
+	  alert(value);
 	   
    }) ;
    
    $("a#et_per_cash").click(function(){
-	   openDialog(date_form_url,"Etat Periode Des Caisses",cash_Periodique_url);
+	  // openDialog(date_form_url,"Etat Periode Des Caisses",cash_Periodique_url);
 	   
    }) ;
    
    $("a#et_per_dette").click(function(){
-	   openDialog(date_form_url,"Etat Periode Des Caisses",dette_Periodique_url);
+	  // openDialog(date_form_url,"Etat Periode Des Caisses",dette_Periodique_url);
 	   
    }) ;
    
@@ -89,7 +101,10 @@
  		  if(id=="url1")gotoUrl =url1 ;
  		  if(id=="url2")gotoUrl =url2 ;
  		  if(id=="url3")gotoUrl =url3 ;
- 		  };
+ 		  if(id=="url4")gotoUrl =url4 ;
+ 	     if(id=="url5")gotoUrl =url5 ;
+ 	      if(id=="url6")gotoUrl =url6 ;
+ 		  }
     
     
 </script>

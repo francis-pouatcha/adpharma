@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.web;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,7 +52,42 @@ public class DocumentsPrinterController {
 		uiModel.addAttribute("rayons",ProcessHelper.populateRayon());
 		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale());
 		uiModel.addAttribute("typeMouvements", ProcessHelper.populateTypeMouvements());
+		uiModel.addAttribute("users", ProcessHelper.populateUsers());
 		return "etats/docpages";
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatPeriodiqueTransformation.pdf", method = RequestMethod.GET)
+	public void etatPeriodiqueTransformation(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DECOMPOSITION_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatProduitPerisable.pdf", method = RequestMethod.GET)
+	public void etatProduitPerisable(@RequestParam("value") BigInteger value ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("nombre_jour",value);
+		parameters.put("datejour",new Date());
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PRODUIT_PERISABLE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
 	}
 	
 	@Produces({"application/pdf"})
@@ -64,6 +100,41 @@ public class DocumentsPrinterController {
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_VENTE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/chiffeAffaireVendeur.pdf", method = RequestMethod.GET)
+	public void chiffeAffaireVendeur(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_CHIFFRE_AFFAIRE_VENDEUR_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatPeriodiqueMouvenentStock.pdf", method = RequestMethod.GET)
+	public void etatPeriodiqueMouvenentStock(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
