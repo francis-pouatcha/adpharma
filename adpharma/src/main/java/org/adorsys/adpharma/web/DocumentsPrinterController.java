@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ibm.icu.math.BigDecimal;
+
 @RequestMapping("/etats")
 @Controller
 public class DocumentsPrinterController {
@@ -63,7 +65,6 @@ public class DocumentsPrinterController {
 		Map parameters = new HashMap();
 		parameters.put("DateD",etatBean.getDateDebut());
 		parameters.put("DateF",etatBean.getDateFin());
-		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DECOMPOSITION_FILE_PATH);
 		} catch (Exception e) {
