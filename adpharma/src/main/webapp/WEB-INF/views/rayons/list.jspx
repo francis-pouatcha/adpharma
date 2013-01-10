@@ -5,10 +5,10 @@
     <page:list id="pl_org_adorsys_adpharma_domain_Rayon" items="${rayons}" z="B2L4tKC828dAS8LXQXdX/aXsbPk=">
         <table:table data="${rayons}" delete="false" id="l_org_adorsys_adpharma_domain_Rayon" path="/rayons" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" property="codeRayon" z="sZuk//hEqHAYdgF6w2g7Fd/8Eqs="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Rayon_name" maxLength="-1" property="name" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Rayon_displayName" label="Emplacement"  maxLength="-1" property="emplacement" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_note" label="Code Geo" maxLength="-1" property="codeGeo" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Rayon_magasin"  maxLength="-1" property="magasin" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Rayon_displayName" label="Emplacement"  maxLength="-1" property="emplacement" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Rayon_name" maxLength="-1" label="Libelle" property="name" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Rayon_magasin" render="false"   maxLength="-1" property="magasin" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_footPrint" property="footPrint" render="false" z="user-managed"/>
         </table:table>
     </page:list>

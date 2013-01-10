@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "TauxMarge")
 public class TauxMarge extends AdPharmaBaseEntity {
 	private String margeNumber;
-	
     @NotNull
     private BigDecimal margeValue;
     
@@ -39,9 +38,6 @@ public class TauxMarge extends AdPharmaBaseEntity {
     	 margeNumber= tauxMarge.getMargeNumber();
 		  footPrint = tauxMarge.getFootPrint();
 	}
-    
-   
-    
     
     public static void initTauxMarge() {
         if (TauxMarge.countTauxMarges()<=0) {

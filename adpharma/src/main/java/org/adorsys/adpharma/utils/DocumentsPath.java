@@ -3,7 +3,6 @@ package org.adorsys.adpharma.utils;
 
 public class DocumentsPath
 {
-
     public static final String ROOT_DIR = "/tools/adpharma-repports/";
     public static final String CATALOGUE_FILE_PATH = ROOT_DIR+"fiche_stock.jrxml";
     public static final String ETAT_CATALOGUE_RAYON_FILE_PATH = ROOT_DIR+"fiche_stock_rayon.jrxml";
@@ -22,6 +21,12 @@ public class DocumentsPath
     public static final String RAYON_FILE_PATH = ROOT_DIR+"liste_rayons.jrxml";
     public static final String CLIENT_FILE_PATH = ROOT_DIR+"liste_clients.jrxml";
     public static final String RELATION_FILE_PATH = ROOT_DIR+"liste_relations.jrxml";
+    public static final String FICHE_INVENTAIRE_FILE_PATH = ROOT_DIR+"fiche_inventaire.jrxml";
+    public static final String FICHE_INVENTAIRE_COMPTAGE_FILE_PATH = ROOT_DIR+"fiche_inventaire_comptage.jrxml";
+    public static final String FICHE_APPROVISIONNEMENT_FILE_PATH = ROOT_DIR+"fiche_approsionnement.jrxml";
+    public static final String BON_COMMANDE_FILE_PATH = ROOT_DIR+"bon_commande.jrxml";
+    
+    
     
     
 

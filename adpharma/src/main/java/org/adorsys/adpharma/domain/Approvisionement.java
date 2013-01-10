@@ -20,6 +20,7 @@ import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.UseItemsInterfaces;
 import org.apache.commons.lang.StringUtils;
+import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -139,6 +140,12 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public void postPersit() {
         approvisionementNumber = NumberGenerator.getNumber("AP-", getId(), 4);
     }
+    
+    public Approvisionement(CommandeFournisseur commandeFournisseur){
+    	this.agentCreateur = SecurityUtil.getPharmaUser();
+    	}
+    
+    
 
     public void protectSomeField() {
         Approvisionement approvisionement = Approvisionement.findApprovisionement(getId());
@@ -192,7 +199,6 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
         List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(this).getResultList();
         if (!resultList.isEmpty()) {
             for (LigneApprovisionement ligne : resultList) {
-            	System.out.println(ligne.getPrixAchatTotal());
              if (ligne.getPrixAchatTotal()!=null)    montant = montant.add(ligne.getPrixAchatTotal());
             }
         }
@@ -215,8 +221,9 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void close() {
-        if (commande != null) {
+        if (commande != null){
             commande.setValider(true);
+            commande.setLivre(true);
             commande.merge();
         }
         this.setCloturer(true);
@@ -252,7 +259,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
-
+    
     public static List<Approvisionement> findApprovisionementEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Approvisionement o ORDER BY o.id DESC ", Approvisionement.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }

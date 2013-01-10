@@ -84,7 +84,6 @@ public class ApprovisonementProcess {
 			mouvementStock.setQteInitiale(BigInteger.ZERO);
 			mouvementStock.setPAchatTotal(ligneApprovisionement.getPrixAchatTotal().toBigInteger());
 			mouvementStock.setPVenteTotal(ligneApprovisionement.getPrixVenteUnitaire().toBigInteger().multiply(ligneApprovisionement.getQuantiteAprovisione()));
-
 			ligneApprovisionement.setQuantieEnStock(ligneApprovisionement.getQuantiteAprovisione());//initialisation de la quantite en stock de cette ligne 
 			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mis a jour de la date de derniere entree
 			ligneApprovisionement.setVenteAutorise(produit.isVenteAutorise());
@@ -96,11 +95,6 @@ public class ApprovisonementProcess {
 			mouvementStock.setQteFinale(produit.getQuantiteEnStock());
 			mouvementStock.persist();
 			ligneApprovisionement.merge();
-		}
-		CommandeFournisseur commande = approvisionement.getCommande();
-		if (commande!=null) {
-			commande.setLivre(Boolean.TRUE);
-			commande.merge();    
 		}
 		approvisionement.close();
 		approvisionement.merge();

@@ -28,10 +28,7 @@ import org.apache.commons.collections.set.CompositeSet.SetMutator;
  * @author adorsys-clovis
  *
  */
-/**
- * @author adorsys-clovis
- *
- */
+
 @RooJavaBean
 @RooToString
 @RooEntity(finders = { "findLigneInventairesByInventaire" })
@@ -59,7 +56,7 @@ public class LigneInventaire {
 
 	@ManyToOne
 	private Produit produit;
-	
+
 
 	public void calculerEcart(){
 		ecart = qteReel.subtract(qteEnStock);
@@ -71,12 +68,12 @@ public class LigneInventaire {
 		dateSaisie = new Date();
 		calculerEcart() ;
 	}
-	
+
 	@PreUpdate
 	public void preUpdate(){
 		calculerEcart() ;
 	}
-	
+
 	/**
 	 * calculate price of product defficite ecart
 	 */
@@ -87,12 +84,12 @@ public class LigneInventaire {
 		if(!lastPrices.isEmpty()){
 			prixUnitaire = lastPrices.get(0);
 			prixTotal = prixUnitaire.multiply(BigDecimal.valueOf(ecart.longValue()));
-			
+
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 
@@ -210,8 +207,6 @@ public class LigneInventaire {
 			}else {
 				mouvementStock.setTypeMouvement(TypeMouvement.RETOUR_INVENTAIRE);
 				mouvementStock.setQteInitiale(mouvementStock.getQteFinale().subtract(quantite));
-
-
 			}
 			mouvementStock.persist();
 

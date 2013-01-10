@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.Size;
 
+import jxl.Cell;
+
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.InventoryService;
 import org.adorsys.adpharma.utils.NumberGenerator;
@@ -298,6 +300,18 @@ public class Inventaire extends AdPharmaBaseEntity {
 		
 	}
 	
+	public static LigneInventaire itemFromProduct(Produit prd ){
+		if(prd == null )return null ;
+		LigneInventaire item = new LigneInventaire();
+			item.setProduit(prd);
+			item.setQteEnStock(prd.getQuantiteEnStock());
+			item.setQteReel(prd.getQuantiteEnStock());
+			item.setDateSaisie(new Date());
+			item.calculerEcart();
+			item.caculMontantEcart();
+			return item ;
+	}
+	
 	
 
 
@@ -384,6 +398,44 @@ public class Inventaire extends AdPharmaBaseEntity {
 			}
 			if (filiale != null) {
 				q.setParameter("filiale", filiale);
+			}
+			return q.getResultList(); 
+		}
+
+	}
+	
+	public static List<Inventaire> searchInventaire(String numeroInventaire,PharmaUser agent, Etat etat,Date beginDate,Date endDate) {
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Inventaire AS o WHERE o.id IS NOT NULL ");
+		if (StringUtils.isNotBlank(numeroInventaire)) {
+			numeroInventaire = "INV-"+StringUtils.removeStart(numeroInventaire, "INV-");
+			return entityManager().createQuery("SELECT o FROM Inventaire AS o WHERE  o.numeroInventaire = :numeroInventaire ", Inventaire.class).setParameter("numeroInventaire", numeroInventaire).getResultList();
+		} else {
+			
+			if (agent != null) {
+				searchQuery.append(" AND o.agent = :agent ");
+			}
+			if (etat != null) {
+				searchQuery.append(" AND o.etat = :etat ");
+			}
+			if (beginDate != null) {
+				searchQuery.append(" AND o.dateInventaire >= :beginDate ");
+			}
+			if (endDate != null) {
+				searchQuery.append(" AND o.dateInventaire <= :endDate ");
+			}
+			TypedQuery<Inventaire> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id ASC").toString(), Inventaire.class);
+			
+			if (agent != null) {
+				q.setParameter("agent", agent);
+			}
+			if (etat != null) {
+				q.setParameter("etat", etat);
+			}
+			if (beginDate != null) {
+				q.setParameter("beginDate", beginDate);
+			}
+			if (endDate != null) {
+				q.setParameter("endDate", endDate);
 			}
 			return q.getResultList(); 
 		}

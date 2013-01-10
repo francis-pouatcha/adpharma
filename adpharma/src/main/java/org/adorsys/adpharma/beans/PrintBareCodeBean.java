@@ -15,27 +15,27 @@ import org.springframework.validation.ObjectError;
 
 public class PrintBareCodeBean {
 
-    private String bareCode;
+	private String bareCode;
 
-    @Min(0L)
-    @Max(12L)
-    private int emptyLine;
+	@Min(0L)
+	@Max(12L)
+	private int emptyLine;
 
-    @Min(0L)
-    @Max(8L)
-    private int emptyColumn;
+	@Min(0L)
+	@Max(8L)
+	private int emptyColumn;
 
-    @Value("false")
-    private Boolean printAll;
+	@Value("false")
+	private Boolean printAll;
 
-    private String cmdNumber;
+	private String cmdNumber;
 
-    private String minBarecode;
+	private String minBarecode;
 
-    private String maxBarecode;
+	private String maxBarecode;
 
-   
-    private BigInteger nombre;
+
+	private BigInteger nombre;
 
 	public String getBareCode() {
 		return bareCode;
@@ -100,22 +100,22 @@ public class PrintBareCodeBean {
 	public void setNombre(BigInteger nombre) {
 		this.nombre = nombre;
 	}
-    
-	 public void validate(BindingResult bindingResult) {
-	        if (StringUtils.isBlank(bareCode)) {
-	        	   ObjectError error = new ObjectError("bareCode", "Saisir le code bare");
-		            bindingResult.addError(error);
-	        }
-	        if (StringUtils.isNotBlank(bareCode)) {
-	        	List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(bareCode).getResultList();
-	        	 if (resultList.isEmpty()) {
-	        		 ObjectError error = new ObjectError("bareCode", "AuCun Produit Avec Ce CIPM");
-			            bindingResult.addError(error);
-				}
-	        	
-	        }
-	      
-	       
-	    }
-    
+
+	public void validate(BindingResult bindingResult) {
+		if (StringUtils.isBlank(bareCode)) {
+			ObjectError error = new ObjectError("bareCode", "Saisir le code bare");
+			bindingResult.addError(error);
+		}
+		if (StringUtils.isNotBlank(bareCode)) {
+			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(bareCode).getResultList();
+			if (resultList.isEmpty()) {
+				ObjectError error = new ObjectError("bareCode", "AuCun Produit Avec Ce CIPM");
+				bindingResult.addError(error);
+			}
+
+		}
+
+
+	}
+
 }

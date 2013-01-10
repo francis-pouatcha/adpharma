@@ -3,14 +3,15 @@
  xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:custumcreate  modelAttribute="produit" id="ff_org_adorsys_adpharma_domain_Produit" path="/inventaireProcess/search" z="Yee4XxJ5tW1cMi1p5ac3b6Xrd9M=">
+    <form:custumcreate   modelAttribute="produit" id="ff_org_adorsys_adpharma_domain_Produit" path="/inventaireProcess/search" z="Yee4XxJ5tW1cMi1p5ac3b6Xrd9M=">
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
-        <field:input disableFormBinding="true" field="cip" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
-       <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+                   <field:input disableFormBinding="true" field="cip" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
+                   <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+              <!-- 
               <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="Date Rupture Min" field="dateDerniereRupture"  id="f_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-           
+            -->
            </td>
             <td style="border: none;">
             <field:select disableFormBinding="true" field="rayon" id="f_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayon}" path="/rayons" required="true" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
