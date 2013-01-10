@@ -9,7 +9,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
      <spring:url value="/commandprocesses/${itemId}/editCommand?form"  var="edit_url" />
-      <spring:url value="/commandprocesses/${itemId}/closeCommand"  var="close_url" />
+      <spring:url value="/approvisionementprocess/convertOrderToAppro/${itemId}"  var="close_url" />
       <spring:url value="/commandefournisseurs/sendToPlatform/${itemId}"  var="send_url" />
       
       <spring:url value="/commandprocesses/${itemId}/printBonCommande.pdf"  var="print_url" />
@@ -24,7 +24,7 @@
  
  <script type="text/javascript">
 function closecmd(){
-Check = confirm("Voulez vous vraiment cloturer cette commande? Apres la cloture il ne serra  plus possible de modifier les details. ");
+Check = confirm("Voulez vous vraiment Convertir  cette commande? Apres la convertion il ne serra  plus possible de modifier les details. ");
 if(Check == false){
 	return false;
 	
@@ -55,7 +55,7 @@ function annulercmd(){
                  <span><a href="${ edit_url}" style="text-decoration: none;">
                  <INPUT class="submits" type="button" value="MODIFIER LA PREPARATION" title="modifier le detail de la commande" /></a></span>
                 <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
-                <INPUT class="submits" type="button" value="CLOTURER LA PREPARATION" title="cloturer la commande" /></a></span>
+                <INPUT class="submits" type="button" value="CONVERTIR EN ENTREE" title="cloturer la commande" /></a></span>
         
     </c:when> 
    </c:choose>

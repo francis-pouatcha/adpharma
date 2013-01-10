@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.web;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -8,13 +9,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.beans.PrintBareCodeBean;
@@ -25,6 +33,7 @@ import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
@@ -274,13 +283,40 @@ public class ApprovisionementProcessController {
 
 		@RequestMapping(value = "/{apId}/recupererCmd/{cmId}",  method = RequestMethod.GET)
 		public String recupererCmd(@PathVariable("cmId") Long cmId,@PathVariable("apId") Long apId, Model uiModel) {
+			
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
-			CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
-			approvisionement.calculateMontant();
-			approvisionement.merge();
+			if(approvisionement!=null){
+				CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
+				approvisionement.calculateMontant();
+				approvisionement.merge();
+			}else {
+				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
+			}
+			
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
 			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			initProcurementViewDependencies(uiModel);
+			return "approvisionementprocess/edit";
+		}
+		
+		@RequestMapping(value = "/convertOrderToAppro/{cmId}",  method = RequestMethod.GET)
+		public String convertOrderToAppro(@PathVariable("cmId") Long cmId, Model uiModel) {
+			CommandeFournisseur cmd = CommandeFournisseur.findCommandeFournisseur(cmId);
+			Approvisionement approvisionement = new Approvisionement(cmd);
+			approvisionement.persist();
+			if(approvisionement!=null){
+				CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
+				approvisionement.calculateMontant();
+				approvisionement.merge();
+			}else {
+				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
+			}
+			
+			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(approvisionement.getId());
+			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
+			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			initProcurementViewDependencies(uiModel);
 			return "approvisionementprocess/edit";
 		}
 
@@ -366,6 +402,50 @@ public class ApprovisionementProcessController {
 			parameters.put("approvisionementid",apId);
 			try {
 				jasperPrintService.printDocument(parameters, response, DocumentsPath.FICHE_APPROVISIONNEMENT_FILE_PATH);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
+		}
+		
+		@Produces({""})
+		@Consumes({""})
+		@RequestMapping(value = "/{apId}/exporto/{ficheApId}.xls", method = RequestMethod.GET)
+		public void exportoxls(@PathVariable("apId") Long apId  ,HttpServletRequest request,HttpServletResponse response) {
+			Approvisionement ap = Approvisionement.findApprovisionement(apId);
+			String fournisseur = ap.getFounisseur().getName();
+			String site = ap.getMagasin().getDisplayName();
+			Set<LigneApprovisionement> ligneap = ap.getLigneApprivisionement();
+			try {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				WritableWorkbook workbook = Workbook.createWorkbook(baos);
+				WritableSheet sheet = workbook.createSheet(ap.getApprovisionementNumber(),0);
+				int i = 0 ;
+				for (LigneApprovisionement line : ligneap) {
+					int stock = line.getQuantieEnStock().intValue();
+					for (int j = i; j < i+stock; j++) {
+						Label cip= new Label(0, j, line.getCipMaison());
+						sheet.addCell(cip);
+						Label des = new Label(1, j, line.getProduit().getDesignation());
+						sheet.addCell(des);
+						Label pv = new Label(2, j, line.getPrixVenteUnitaire().longValue()+"");
+						sheet.addCell(pv);
+						Label four = new Label(3, j, fournisseur);
+						sheet.addCell(four);
+						Label magasin = new Label(4, j, site);
+						sheet.addCell(magasin);
+					}
+					i = i+stock ;
+				}
+
+				workbook.write();
+				workbook.close();
+				response.setContentLength(baos.size());
+				ServletOutputStream out1 = response.getOutputStream();
+				baos.writeTo(out1);
+				out1.flush();
+				return ;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

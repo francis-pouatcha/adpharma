@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PostPersist;
+import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,7 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.UseItemsInterfaces;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Value;
@@ -111,7 +113,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     @Value("false")
     private Boolean cloturer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "approvisionement")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "approvisionement",orphanRemoval=true)
     private Set<LigneApprovisionement> ligneApprivisionement = new HashSet<LigneApprovisionement>();
 
     @Enumerated
@@ -143,6 +145,14 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     
     public Approvisionement(CommandeFournisseur commandeFournisseur){
     	this.agentCreateur = SecurityUtil.getPharmaUser();
+    	this.bordereauNumber = RandomStringUtils.randomAlphanumeric(6);
+    	this.commande= commandeFournisseur;
+    	this.dateReglement = new Date();
+    	this.devise = Devise.findDevise(new Long(1));
+    	this.etat = Etat.EN_COUR ;
+    	this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
+    	this.founisseur = commandeFournisseur.getFournisseur();
+    	
     	}
     
     
@@ -231,11 +241,10 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void deleteAllLine() {
-        System.out.println("debut deleteall ");
-        for (LigneApprovisionement ligne : ligneApprivisionement) {
-            ligne.remove();
-        }
-        ligneApprivisionement = new HashSet<LigneApprovisionement>();
+       // for (LigneApprovisionement ligne : ligneApprivisionement) {
+         //   ligne.remove();
+       // }
+        ligneApprivisionement.clear();
     }
 
     public String toString() {
@@ -259,6 +268,8 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
+    
+   
     
     public static List<Approvisionement> findApprovisionementEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Approvisionement o ORDER BY o.id DESC ", Approvisionement.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

@@ -17,6 +17,7 @@ import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.ModeSelection;
+import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
@@ -190,9 +191,14 @@ public class OrderPreParationBean {
 			return search.getResultList();
 		}
 		if(modeSelection.equals(ModeSelection.PLUS_VENDU)){
-			TypedQuery<Produit> preparation = findProductForPreparation(filiale, rayon, beginBy, endBy, beginDate, endDate, modeSelection, minStock);
-			if(productSelectionQuantity!=null) preparation.setMaxResults(productSelectionQuantity.intValue());
-			return preparation.getResultList();
+			List<Object[]> produitAndQuantiteVendue = MouvementStock.findProduitAndQuantiteVendue(null, null, beginBy, endBy, beginDate, endDate, rayon, filiale);
+			if(!produitAndQuantiteVendue.isEmpty()){
+				ArrayList<Produit> arrayList = new ArrayList<Produit>();
+				for (Object[] objects : produitAndQuantiteVendue) {
+					arrayList.add((Produit)objects[0]);
+				}
+				return arrayList ;
+			}
 		}
 		return new ArrayList<Produit>();
 	}

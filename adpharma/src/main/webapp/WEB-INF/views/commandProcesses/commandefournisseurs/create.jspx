@@ -16,9 +16,14 @@
                         <field:datetime label="Date Livraison" dateTimePattern="dd-MM-yyyy hh:mm" field="deliveryDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
                             <label  style="font-weight: bold; font-size: 12px;" for="_modeSelection">Mode Preparation : </label>
                             <springform:select   id="_modeSelection_id" cssStyle=" width: 212px; height: 25px;" path="modeSelection"  items="${modeselections}"/> <BR />                
-                       <field:input field="productSelectionQuantity" titleMessage="Quantite Maximal de Produit A secletionner !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Qte A Selectioner"  />
-                       <field:input field="minStock" titleMessage="Stock A partir du quel les produits seront commandable !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Stock Limit"  />
+                       <field:input field="productSelectionQuantity"  titleMessage="Quantite Maximal de Produit A secletionner !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Qte A Selectioner"  />
+                       <field:input field="minStock" render="false" titleMessage="Stock A partir du quel les produits seront commandable !"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Stock Limit"  />
                
+                </div>
+                <div id="periode" style="display: none;">
+                        <legend>Periode  des Ventes</legend>
+                         <field:datetime label="Date debut" dateTimePattern="dd-MM-yyyy hh:mm" field="beginDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
+                         <field:datetime label="Date Fin" dateTimePattern="dd-MM-yyyy hh:mm" field="endDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
                 </div>
                  </td>
                  <td valign="top">
@@ -32,11 +37,7 @@
                          <field:input field="beginBy" titleMessage="Produit dont le nom Commance Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Commancant Par"  />
                          <field:input field="endBy"  titleMessage="Produit dont le nom se Termise  Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Se terminant Par"  />
                 </div>
-                <div id="periode" style="display: none;">
-                        <legend>Periode  des Ventes</legend>
-                         <field:datetime label="Date debut" dateTimePattern="dd-MM-yyyy hh:mm" field="beginDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
-                         <field:datetime label="Date Fin" dateTimePattern="dd-MM-yyyy hh:mm" field="endDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
-                </div>
+                
                  
                 </td>
              </tr>

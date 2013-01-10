@@ -59,8 +59,9 @@
 		var="delete_cmd_url" />
 	<div style="margin-bottom: 6px; margin-top: 9px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">APPROVISIONNEMENT</a></span>
-
+<!-- 
 		<span class="nextTab unselectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span> 
+ -->		
 		<span><a href="${ enr_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
 	    <span><a href="${ delete_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Annuler" title="Annuler L'approvisionnement" /></a></span>
 	     <span><a  id="findprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="Recherche Un Produit" title="Rechercher Un produit " /></a></span>

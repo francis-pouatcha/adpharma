@@ -123,15 +123,15 @@
 
     <form:create id="fc_org_adorsys_adpharma_domain_TransformationProduit" label="Creation D'une Relation de Decomposition" modelAttribute="transformationProduit" path="/transformationproduits" render="${empty dependencies}" z="D7X1VLLCnYN+9CTnsCrNAjWs6x8=">
    
-               <field:input field="origineName" label="Prd Compose" required="true" buttonId="orgBut" buttonLabel="Rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
-               <field:input field="cibleName" label="Prd Composant" required="true" buttonId="cibBut"  buttonLabel="rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
+               <field:input field="origineName" label="Prd Compose" style="width: 40%;" required="true" buttonId="orgBut" buttonLabel="Rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
+               <field:input field="cibleName" label="Prd Composant" style="width: 40%;" required="true" buttonId="cibBut"  buttonLabel="rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
                      <formsp:hidden id="_cibleId_id" path="cibleId" />
                      <formsp:hidden  id="_origineId_id" path="origineId" />
                      <formsp:hidden  id="_id_id" path="id" />
                      <formsp:hidden  id="_version_id" path="version" />
              
-              <field:input field="qteCible" id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" min="1" required="true" validationMessageCode="field_invalid_integer" z="5BSGAhOJnFTxQSId2/qz+ifSlv4="/>
-        <field:input field="prixVente" id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" min="0" required="true" validationMessageCode="field_invalid_number" z="2zampRApzekzajlMi21QHZ8swuw="/>
+              <field:input field="qteCible" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" min="1" required="true" validationMessageCode="field_invalid_integer" z="5BSGAhOJnFTxQSId2/qz+ifSlv4="/>
+        <field:input field="prixVente" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" min="0" required="true" validationMessageCode="field_invalid_number" z="2zampRApzekzajlMi21QHZ8swuw="/>
                          <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" z="BxnqXpc+Hewrkb1dQ0/fJCndu0A="/>
      </form:create>
      
@@ -157,22 +157,9 @@
 		    		<th style="text-align: center;">FILIALE</th>
 		    		<th style="text-align: center;">CODE RAYON</th>
 		  		    <th style="text-align: center;">T MARGE</th>
-		  
-		    
 		    	</tr>
 		  </table>
 	</div>	 
    
 </div> 
-     <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bievenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
-
- 
-</div>
-</div>
-     
 </div>

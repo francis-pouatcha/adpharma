@@ -57,11 +57,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/commandprocesses")
 @Controller
 public class CommandProcessController {
-	
+
 
 	@Autowired
 	private JasperPrintService jasperPrintService ;
-	
+
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(@Valid CommandeFournisseur commandeFournisseur, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,HttpSession session) {
@@ -75,7 +75,7 @@ public class CommandProcessController {
 		commandeFournisseur.persist();
 		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(commandeFournisseur.getId().toString(), httpServletRequest)+"/editCommand";
 	}
-	
+
 
 	@Produces({"application/pdf"})
 	@Consumes({""})
@@ -91,7 +91,7 @@ public class CommandProcessController {
 			return ;
 		}
 	}
-	
+
 	@Produces({""})
 	@Consumes({""})
 	@RequestMapping(value = "/{cmdId}/exporto.xls", method = RequestMethod.GET)
@@ -110,14 +110,14 @@ public class CommandProcessController {
 				sheet.addCell(qtec);
 				i++;
 			}
-			
+
 			workbook.write();
 			workbook.close();
 			response.setContentLength(baos.size());
-	        ServletOutputStream out1 = response.getOutputStream();
-	        baos.writeTo(out1);
-	        out1.flush();
-	        return ;
+			ServletOutputStream out1 = response.getOutputStream();
+			baos.writeTo(out1);
+			out1.flush();
+			return ;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,12 +153,12 @@ public class CommandProcessController {
 	public String preparedOrder(@Valid OrderPreParationBean preparedBean ,Model uiModel,HttpSession session,HttpServletRequest httpServletRequest) {
 		CommandeFournisseur order = null;
 		List<Produit> productList = preparedBean.getPreparedProductList();
-			order = preparedBean.generateOrder();
-			order.persist();
-			for (Produit prd : productList) {
-				LigneCmdFournisseur orderItemm = OrderPreParationBean.getOrderItemm(prd, preparedBean.getFournisseur(), preparedBean.getModeSelection(),preparedBean.getMinStock());
-				orderItemm.setCommande(order);
-				orderItemm.persist();
+		order = preparedBean.generateOrder();
+		order.persist();
+		for (Produit prd : productList) {
+			LigneCmdFournisseur orderItemm = OrderPreParationBean.getOrderItemm(prd, preparedBean.getFournisseur(), preparedBean.getModeSelection(),preparedBean.getMinStock());
+			orderItemm.setCommande(order);
+			orderItemm.persist();
 		}
 		if(order!=null){
 			uiModel.asMap().clear();
@@ -170,15 +170,15 @@ public class CommandProcessController {
 		}
 
 	}
-//
-//	@RequestMapping(value = "/editPreparedOrder/{orderId}", method = RequestMethod.GET)
-//	public String editPreparedOrder(@PathVariable("orderId") Long orderId, Model uiModel,HttpSession session) {
-//		ProcessHelper.addDateTimeFormatPatterns(uiModel); 
-//		uiModel.addAttribute("order", CommandeFournisseur.findCommandeFournisseur(orderId));
-//		return "commandprocesses/editPreparedOrder";
-//
-//	}
-	
+	//
+	//	@RequestMapping(value = "/editPreparedOrder/{orderId}", method = RequestMethod.GET)
+	//	public String editPreparedOrder(@PathVariable("orderId") Long orderId, Model uiModel,HttpSession session) {
+	//		ProcessHelper.addDateTimeFormatPatterns(uiModel); 
+	//		uiModel.addAttribute("order", CommandeFournisseur.findCommandeFournisseur(orderId));
+	//		return "commandprocesses/editPreparedOrder";
+	//
+	//	}
+
 	@RequestMapping(value = "/{cmdId}/showProduct/{pId}", method = RequestMethod.GET)
 	public String showProduct(@PathVariable("cmdId") Long cmdId,@PathVariable("pId") Long pId, Model uiModel,HttpSession session) {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
@@ -187,7 +187,7 @@ public class CommandProcessController {
 		return "commandprocesses/showProduct";
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/{cmdId}/deleteLine/{lineId}",method = RequestMethod.GET)
 	public String unselectLine(@PathVariable("cmdId") Long cmdId, @PathVariable("lineId") Long lineId ,Model uiModel, HttpServletRequest httpServletRequest) {
@@ -196,7 +196,7 @@ public class CommandProcessController {
 			line.remove();
 			return "ok";
 		}
-		
+
 		//return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/editCommand";
 		return "ko";
 	}
@@ -212,7 +212,7 @@ public class CommandProcessController {
 		//commandeProcess.setLineToUpdate(LigneCmdFournisseur.findLigneCmdFournisseur(lineId));
 		//uiModel.addAttribute("commandeProcess",commandeProcess);
 		if(line == null) return null ;
-		
+
 		return line.toJson();
 	}
 
@@ -261,7 +261,7 @@ public class CommandProcessController {
 				commandeFournisseur.getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess",commandeProcess);
 		uiModel.addAttribute("ligneCmdFournisseur",new LigneCmdFournisseur());
-		
+
 		return "commandprocesses/editCommand";
 	}
 
@@ -356,7 +356,7 @@ public class CommandProcessController {
 
 	@ModelAttribute("filiales")
 	public Collection<Filiale> populateFiliales() {
-		return ProcessHelper.populateAllFiliale();
+		return ProcessHelper.populateFiliale();
 	}
 
 	@ModelAttribute("rayons")

@@ -16,6 +16,8 @@
       <spring:url value="/resources/images/print.png"  var="print" />
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
+            <spring:url value="/approvisionementprocess/${itemId}/exporto/${approvisionement.approvisionementNumber}.xls"  var="print_xls_url" />
+      
       <c:set value="CLOS" var="etat" />
       
       <script type="text/javascript">
@@ -31,8 +33,9 @@ if(Check == false){
 </script>
    <c:choose>
       <c:when test="${approvisionement.etat == etat}">
-   <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
-       <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare" title="Imprimer la fiche de code bare" /></a></span>
+        <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
+        <span><a href="${ print_xls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche EXCEL" title="Imprimer la fiche d approvisionnement au format excel" /></a></span>
+        <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare" title="Imprimer la fiche de code bare" /></a></span>
      
       </c:when>
       <c:otherwise>

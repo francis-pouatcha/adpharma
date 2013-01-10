@@ -34,6 +34,7 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.adorsys.adpharma.services.SupplyService;
 
@@ -338,6 +339,13 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		}
 		prixVenteUnitaire = new BigDecimal(ProcessHelper.roundMoney(prixVenteUnitaire.toBigInteger()));
 	}
+	
+	@Transactional
+	 public static int  deleteAllItems(Approvisionement approvisionement) {
+         Query query = entityManager().createQuery("DELETE FROM LigneApprovisionement o WHERE  o.approvisionement = :approvisionement  ");
+               query.setParameter("approvisionement", approvisionement);
+         return query.executeUpdate() ;
+    }
 
 	public void protectSomeField() {
 		LigneApprovisionement ligne = LigneApprovisionement.findLigneApprovisionement(getId());

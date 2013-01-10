@@ -96,7 +96,78 @@
 			}
 
 		};
-		
+		function saveLine(){
+			$.getJSON( '${update_url}',
+					$('#editLineForm').serialize(),
+		                function(data){
+				if(data!=null){
+					var rowId = "tr#"+$('#_id_id').val()+" td";
+					var int = parseInt('0');
+					$(rowId).each(function(){
+						if(int==3)	$(this).html(data.quantiteCommande);
+						if(int==4)	$(this).html(data.prixAchatMin);
+						if(int==5)	$(this).html(data.prixAVenteMin);
+						int++ ;
+					});
+					  
+					  $('#editLineDiv').dialog('close');
+				}else{
+					alert('la ligne est introuvable !');
+				}
+				         
+						});
+		};
+		function setFormInfos(rowId ,qte,pa,pv){
+			  $('#_cip_id').val('cip');
+			  $('#_id_id').val(rowId);
+			  $('#_designation_id').val('des');
+			  $('#_quantiteCommande_id').val(qte);
+			  $('#_prixAchatMin_id').val(pa);
+			  $('#_prixAVenteMin_id').val(pv);
+			  $('#_agentSaisie_id').val('agent');
+		};
+		function saveChange(rowId){
+			var tbs = "tr#"+rowId+" td";
+			var int = parseInt('0');
+			var qte='';
+			var pa='';
+			var pv='';
+			$(tbs).each(function(){
+				if(int==3){
+				if($(this).children().is('input')){
+		        	var put =  $(this).children();
+		        	qte = $(put).val() ;
+		        	$(this).html( qte) ;
+		          }
+				
+				}
+				if(int==4)	{
+					if($(this).children().is('input')){
+				        	var put =  $(this).children();
+				        	pa = $(put).val() ;
+					        $(this).html( pa) ;
+				          }
+				}
+				if(int==5)	{
+					if($(this).children().is('input')){
+				        	var put =  $(this).children();
+				            pv = $(put).val() ;
+					        $(this).html( pv) ;
+				      }
+				}
+				
+				 
+				if(int==7)	{
+					var put =  $(this).children();
+		            $(put).hide() ;
+				}
+				int++ ;
+			});
+
+			setFormInfos(rowId ,qte,pa,pv)
+			 saveLine();
+			 
+		};
 		function getLineById(lineId){
 				$.getJSON( '${update_line_url}'+lineId,
 			                function(data){
@@ -148,37 +219,17 @@
 			});
 			
 			
-			function saveLine(){
-				$.getJSON( '${update_url}',
-						$('#editLineForm').serialize(),
-			                function(data){
-					if(data!=null){
-						var rowId = "tr#"+$('#_id_id').val()+" td";
-						var int = parseInt('0');
-						$(rowId).each(function(){
-							if(int==3)	$(this).html(data.quantiteCommande);
-							if(int==4)	$(this).html(data.prixAchatMin);
-							if(int==5)	$(this).html(data.prixAVenteMin);
-							int++ ;
-						});
-						  
-						  $('#editLineDiv').dialog('close');
-					}else{
-						alert('la ligne est introuvable !');
-					}
-					         
-							});
-			}
+			
 			
 			$('input#false').click(function(){
 				$('#editLineDiv').dialog('close');
 				return false;
 			});
 			
-			$('tr.list').dblclick(function(){
+			$('tr.list').click(function(){
 				var rwoId =$(this).attr('id');
 				if( isSavable(rwoId)){
-					saveChange(rwoId)
+					
 				}else{
 					toggleToinput(rwoId) ;
 				}
@@ -187,17 +238,11 @@
 			});
 			
 			
-			function setFormInfos(rowId ,qte,pa,pv){
-				  $('#_cip_id').val('cip');
-				  $('#_id_id').val(rowId);
-				  $('#_designation_id').val('des');
-				  $('#_quantiteCommande_id').val(qte);
-				  $('#_prixAchatMin_id').val(pa);
-				  $('#_prixAVenteMin_id').val(pv);
-				  $('#_agentSaisie_id').val('agent');
-			}
+			
 			function toggleToinput(rowId){
 				var tbs = "tr#"+rowId+" td";
+				var savebtn = "#"+rowId+"save";
+				
 				var int = parseInt('0');
 				$(tbs).each(function(){
 					if(int==3){
@@ -218,9 +263,13 @@
 						if(!$(this).children().is('input')){
 							var text=	$(this).text();
 						    var input = '<input type="text"  class="autres"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
-						   $(this).html(input);
-				          }
+						    $(this).html(input);
+						    $(savebtn).show();
+				          }else{
+				        	  $(savebtn).hide();
+					          }
 					}
+					
 					int++ ;
 				});
 				
@@ -240,44 +289,6 @@
 				});
 				return result ;
 			}
-			function saveChange(rowId){
-				var tbs = "tr#"+rowId+" td";
-				var int = parseInt('0');
-				var qte='';
-				var pa='';
-				var pv='';
-				
-				$(tbs).each(function(){
-					if(int==3){
-					if($(this).children().is('input')){
-			        	var put =  $(this).children();
-			        	qte = $(put).val() ;
-			        	$(this).html( qte) ;
-			          }
-					
-					}
-					if(int==4)	{
-						if($(this).children().is('input')){
-					        	var put =  $(this).children();
-					        	pa = $(put).val() ;
-						        $(this).html( pa) ;
-					          }
-					}
-					if(int==5)	{
-						if($(this).children().is('input')){
-					        	var put =  $(this).children();
-					            pv = $(put).val() ;
-						        $(this).html( pv) ;
-					      }
-					}
-					int++ ;
-				});
-				 setFormInfos(rowId ,qte,pa,pv)
-				 saveLine();
-			};
-			
-			
-			
 			
 			
 			
@@ -371,7 +382,7 @@
 					<th style="text-align: center;">Prix achat</th>
 					<th style="text-align: center;">Prix Vente</th>
 					<th style="text-align: center;">Agent</th>
-					<th style="text-align: center;">ACTION</th>
+					<th colspan="2" style="text-align: center;">ACTION</th>
 				</tr>
 
 				<c:forEach items="${commandeProcess.productSelected}"
@@ -395,12 +406,19 @@
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.agentSaisie}"></c:out></td>
 
-						<td class="utilbox"><spring:url
+                         <td class="utilbox">
+						<spring:url value="/resources/images/update.png" var="update_image_url" />
+							<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
+							src="${ update_image_url}" title=" Supprimer la selection"
+							onclick="saveChange(this.alt);" />
+						</td>
+						<td class="utilbox">
+						<spring:url
 								value="/resources/images/delete.png" var="delete_image_url" />
-
 							<img alt="${ligneCommande.id}" class="image"
-							src="${ delete_image_url}" title=" Spprimer la selection"
-							onclick="hideRow(this.alt);" /></td>
+							src="${ delete_image_url}" title=" Supprimer la selection"
+							onclick="hideRow(this.alt);" />
+						</td>
 					</tr>
 				</c:forEach>
 
