@@ -31,6 +31,9 @@
 	      .sidebar-nav {
 	        padding: 9px 0;
 	      }
+	      h3{
+	      		color: #0088CC;
+	      }
 	    </style>
 	    
 	    <link rel="SHORTCUT ICON" href="${favicon}" />
