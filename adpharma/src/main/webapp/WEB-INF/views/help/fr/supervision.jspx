@@ -1,0 +1,87 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Supervision</h1>
+  <p class="lead">Supervision</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#stat">Visualiser des courbes statistiques</a></li>
+      <li><a href="#devise">Gerer les devises</a></li>
+      <li><a href="#marge">Gerer les taux de marges</a></li>
+      <li><a href="#mode">Gerer les modes de conditionnements</a></li>
+      <li><a href="#ordo">Gerer les ordonanciers</a></li>
+      <li><a href="#filiale">Gerer les filiales</a></li>
+      <li><a href="#site">Gerer les sites</a></li>
+    </ul>
+  </div>
+</header>
+<section id="stat">
+  <div class="page-header">
+    <h1>Visualiser des courbes statistiques <small>Visualiser des courbes statistiques</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="devise">
+  <div class="page-header">
+    <h1>Gerer les devises <small>Gerer les devises</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="marge">
+  <div class="page-header">
+    <h1>Gerer les taux de marges <small>Gerer les taux de marges</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="mode">
+  <div class="page-header">
+    <h1>Gerer les modes de conditionnements <small>Gerer les modes de conditionnements</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="ordo">
+  <div class="page-header">
+    <h1>Gerer les ordonanciers <small>Gerer les ordonanciers</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="filiale">
+  <div class="page-header">
+    <h1>Gerer les filiales <small>Gerer les filiales</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="site">
+  <div class="page-header">
+    <h1>Gerer les sites <small>Gerer les sites</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+</div>

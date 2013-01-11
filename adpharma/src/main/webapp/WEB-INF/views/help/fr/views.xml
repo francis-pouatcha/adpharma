@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="help" name="help/main">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/main.jspx"/>
+    </definition>
+    
+    <definition extends="help" name="help/introduction">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/introduction.jspx"/>
+    </definition>
+    
+    <definition extends="help" name="help/utilisateur">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/utilisateur.jspx"/>
+    </definition>
+    <definition extends="help" name="help/produit">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/produit.jspx"/>
+    </definition>
+    <definition extends="help" name="help/stock">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/stock.jspx"/>
+    </definition>
+    <definition extends="help" name="help/vente">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/vente.jspx"/>
+    </definition>
+    <definition extends="help" name="help/caisse">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/caisse.jspx"/>
+    </definition>
+    <definition extends="help" name="help/inventaire">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/inventaire.jspx"/>
+    </definition>
+    <definition extends="help" name="help/clientelle">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/clientelle.jspx"/>
+    </definition>
+    <definition extends="help" name="help/supervision">
+        <put-attribute name="body" value="/WEB-INF/views/help/fr/supervision.jspx"/>
+    </definition>
+
+</tiles-definitions>

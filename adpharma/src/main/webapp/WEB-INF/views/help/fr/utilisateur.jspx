@@ -1,0 +1,95 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Gestion Des Utilisateurs</h1>
+  <p class="lead">La gestion des utilisateurs consiste a : ajouter, supprimer, modifier et rechercher un utilisateur</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#gerer">Gerer des comptes Utilisateur</a></li>
+      <li><a href="#changer">Changer son mot de passe</a></li>
+      <li><a href="#visualiser">Visualiser les infos Utilisateurs</a></li>
+    </ul>
+  </div>
+</header>
+
+<section id="gerer">
+  <div class="page-header">
+    <h1>Gerer des comptes Utilisateur <small>La gestion des utilisateurs consiste a : ajouter, supprimer, modifier et rechercher un utilisateur</small></h1>
+  </div>
+  
+    <ul>
+    		<div class="row">
+		    	<div class="span6">	
+			      	<li><h3>Ajouter un compte</h3></li>
+			      	<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+			      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+			      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			    </div>
+			    <div class="span6">
+					<li><h3>Rechercher un compter</h3></li>
+					<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+			      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+			      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			     </div>
+			</div>
+			<div class="row">
+		    	<div class="span6">
+					<li><h3>Suspendre un compte</h3></li>
+					<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+			      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+			      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			     </div>
+			    <div class="span6">
+			      	 <li><h3>Retablir un compte Suspendu </h3></li>
+					<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+			      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+			      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			     </div>
+			   </div>
+			   <div class="row">
+			      	 <li><h3>Mettre a jour un mot de passe oublier</h3></li>
+					<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+			      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+			      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      	 	 </div>
+      </ul> 
+</section>
+
+<section id="changer">
+  <div class="page-header">
+    <h1>Changer son mot de passe <small>Changer son mot de passe</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span6">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+    <div class="span6">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+<section id="visualiser">
+  <div class="page-header">
+    <h1>Visualiser les infos Utilisateurs <small>Visualiser les infos Utilisateurs</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span6">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+    <div class="span6">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+</div>

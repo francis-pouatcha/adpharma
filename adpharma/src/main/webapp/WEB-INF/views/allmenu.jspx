@@ -624,7 +624,8 @@
          
       
     	<li>
-    	 <spring:url value="/manuels/sommaire-fr" var="sommaire_url"/>
+    	 <!-- <spring:url value="/manuels/sommaire-fr" var="sommaire_url"/> -->
+    	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
     		<a  href="${sommaire_url}" style="color: blue; font-weight: bold;">AIDE</a>
        </li>
   	

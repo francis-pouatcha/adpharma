@@ -1,0 +1,9 @@
+td.ui-button td.ui-widget td.ui-state-default td.ui-corner-all td.ui-button-text-only{
+	height: 100px;
+}
+.btn1{
+	background: none
+    border: none
+    color: none
+    font-weight: none;
+}
