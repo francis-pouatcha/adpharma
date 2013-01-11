@@ -6,12 +6,14 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
-                    <field:input disabled="true" field="codeRayon" id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" z="user-managed"/>
-                    <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" required="true" z="AX8sReiVtNBlvteTyyJnccYXYWA="/>
-                    <field:input field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
+                    <field:display  hiddenfield="true" object="${rayon}" field="codeRayon" id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" z="user-managed"/>
+                    <field:input field="codeGeo" label="code Geo" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
+                    <field:input field="emplacement" label="Emplacement" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
+                    <field:input field="name" label="Libelle" id="c_org_adorsys_adpharma_domain_Rayon_name" required="true" z="AX8sReiVtNBlvteTyyJnccYXYWA="/>
                     <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Rayon_magasin" itemValue="id" items="${sites}" path="/sites" required="true" z="rdptbcN+MpGx9ZXhWDAmw/JS/Po="/>
-                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Rayon_footPrint" render="false" z="user-managed"/>
-                    <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Rayon_displayName" z="YCT8igt0kShAqccU6MzmAW6uMVg="/>
+                                        <field:input field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
+                    <field:input field="footPrint"  id="c_org_adorsys_adpharma_domain_Rayon_footPrint" render="false" z="user-managed"/>
+                    <field:input field="displayName" render="false" id="c_org_adorsys_adpharma_domain_Rayon_displayName" z="YCT8igt0kShAqccU6MzmAW6uMVg="/>
                 </td>
             </tr>
         </table>

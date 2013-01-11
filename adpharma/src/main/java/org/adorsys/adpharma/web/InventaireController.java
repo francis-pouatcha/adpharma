@@ -23,6 +23,8 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
+import org.adorsys.adpharma.utils.ProcessHelper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,23 @@ import org.springframework.web.multipart.MultipartFile;
 public class InventaireController {
 	@Autowired
 	private LigneInventaireImportExportService ligneinventaireImportExportService ;
+	
+	
+	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
+	public String Search(Model uiModel) {
+		uiModel.addAttribute("pharmausers", ProcessHelper.populateUsers());
+		uiModel.addAttribute("inventaire",new Inventaire() );
+		return "inventaire/search";
+	}
+
+	@RequestMapping(value="/search", method = RequestMethod.GET)
+	public String Search(Inventaire inventaire , Model uiModel) {
+		uiModel.addAttribute("results", inventaire.searchInventaire(inventaire.getNumeroInventaire(), inventaire.getAgent(), inventaire.getEtat() ,inventaire.getDateDebut(), inventaire.getDateFin()));
+		uiModel.addAttribute("pharmausers", ProcessHelper.populateUsers());
+		uiModel.addAttribute("inventaire",inventaire);
+		return "inventaire/search";
+	}
+	
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
 		
@@ -62,6 +81,11 @@ public class InventaireController {
 		 Workbook workbook = null;
 		try {
 			workbook = Workbook.getWorkbook(fichier.getInputStream());
+			if(workbook != null){
+				 List<LigneInventaire> importListFromSheet = ligneinventaireImportExportService.importListFromSheet(workbook.getSheet(0), inventaire);
+				 inventaire.getLigneInventaire().addAll(importListFromSheet);
+				 inventaire.calculateMontantEcart();
+				}
 		} catch (BiffException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,11 +93,19 @@ public class InventaireController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(workbook != null){
-		 List<LigneInventaire> importListFromSheet = ligneinventaireImportExportService.importListFromSheet(workbook.getSheet(0), inventaire);
-		 inventaire.getLigneInventaire().addAll(importListFromSheet);
-		 inventaire.calculateMontantEcart();
+		List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
+		for (Produit produit : search) {
+			if(!inventaire.contientProduit(produit)){
+				LigneInventaire itemFromProduct = Inventaire.itemFromProduct(produit);
+				if(itemFromProduct!=null){
+					itemFromProduct.setInventaire(inventaire);
+					itemFromProduct.persist();
+				}
+			}
+			
+			
 		}
+		
 		inventaire = (Inventaire) inventaire.merge();
 		}
 		return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
@@ -197,8 +229,7 @@ public class InventaireController {
 	    
 	    @ModelAttribute("rayons")
 	    public Collection<Rayon> populateRayons() {
-	       // return Rayon.findAllRayons();
-	    	return new ArrayList<Rayon>();
+	    	return ProcessHelper.populateRayon();
 	    }
 	    
 	    @ModelAttribute("sites")

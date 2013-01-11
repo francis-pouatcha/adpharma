@@ -596,8 +596,25 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	
 	public static List<BigDecimal> findlastPrices(Produit produit) {
 		EntityManager em = LigneApprovisionement.entityManager();
-		 Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id = (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit ) ") ;
+		 Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit ) ") ;
 		 q.setParameter("produit",produit);
+		  List<Object[]> resultList = q.getResultList();
+		  ArrayList<BigDecimal> arrayList = new ArrayList<BigDecimal>();
+		 if(!resultList.isEmpty())
+	        {
+	            System.out.println((BigDecimal)((Object[])resultList.get(0))[0]);
+	            System.out.println((BigDecimal)((Object[])resultList.get(0))[1]);
+	            arrayList.add((BigDecimal)((Object[])resultList.get(0))[0]);
+	            arrayList.add((BigDecimal)((Object[])resultList.get(0))[1]);
+	        }
+	        return arrayList;
+	}
+	
+	public static List<BigDecimal> findlastPrices(Produit produit,Fournisseur fournisseur) {
+		EntityManager em = LigneApprovisionement.entityManager();
+		 Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit  and p.approvisionement.founisseur = :founisseur) ") ;
+		 q.setParameter("produit",produit);
+		 q.setParameter("founisseur",fournisseur);
 		  List<Object[]> resultList = q.getResultList();
 		  ArrayList<BigDecimal> arrayList = new ArrayList<BigDecimal>();
 		 if(!resultList.isEmpty())
@@ -688,7 +705,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		if (qteStock != null) {
 			searchQuery.append(" AND o.quantieEnStock  >= :quantieEnStock ");
 		}
-		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.toString(), LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.cip , o.id").toString(), LigneApprovisionement.class);
 		if (StringUtils.isNotBlank(designation)) {
 			q.setParameter("designation", designation);
 		}
@@ -705,7 +722,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
-		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.toString(), LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.cip , o.id ").toString(), LigneApprovisionement.class);
 		if (StringUtils.isNotBlank(designation)) {
 			q.setParameter("designation", designation);
 		}

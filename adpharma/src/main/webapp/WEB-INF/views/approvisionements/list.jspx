@@ -7,7 +7,7 @@
     </security:authorize>
     <page:list id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${approvisionements}" z="Vu8tVf5zR8Fdp2O+lPcd5jnQivg=">
         <table:table create="false" data="${approvisionements}" delete="false" id="l_org_adorsys_adpharma_domain_Approvisionement" path="/approvisionements" update="${hasrole }" z="user-managed">
-            <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_devise" property="devise" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_devise" render="false" property="devise" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" property="bordereauNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_approvisionementNumber" maxLength="-1" property="approvisionementNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_founisseur" maxLength="-1" property="founisseur" z="04y62ITc7RA0QHY55iwJYI6KMBQ="/>
@@ -21,7 +21,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_commande" property="commande" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_filiale" property="filiale" z="ABf1HiPaL1vmBMO967p21Xmq7Vg="/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_filiales" property="filiales" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_footPrint" property="footPrint" z="9TEwQjKizhYUyo7nSOTZaKnWSUI="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_footPrint" render="false" property="footPrint" z="9TEwQjKizhYUyo7nSOTZaKnWSUI="/>
         </table:table>
     </page:list>
 </div>

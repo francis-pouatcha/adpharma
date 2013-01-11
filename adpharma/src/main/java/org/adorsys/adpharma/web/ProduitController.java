@@ -38,7 +38,7 @@ public class ProduitController {
 	@RequestMapping(value="/findByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductByCip(@PathVariable("cip") String cip,Model uiModel) {
-		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(50).getResultList();
+		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(100).getResultList();
 		Produit prd = null ;
 		String reponse = "Aucun produit Trouve" ;
 		if (!produits.isEmpty()) {
@@ -107,9 +107,8 @@ public class ProduitController {
 	@ResponseBody
 	public String findByCipmAjax(@PathVariable("cipm") String cipm,Model uiModel) {
 		String	cipMaison = cipm;
-		cipMaison = StringUtils.removeStart(cipMaison, "0");
-
-		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(50).getResultList();
+		//cipMaison = StringUtils.removeStart(cipMaison, "0");
+		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(100).getResultList();
 		if (!lines.isEmpty()) {
 			return lines.iterator().next().clone().toJson();
 		}else {

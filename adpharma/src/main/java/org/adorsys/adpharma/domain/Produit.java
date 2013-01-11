@@ -2,6 +2,7 @@ package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -347,27 +348,16 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public void getFournisseurPrice(Fournisseur fournisseur) {
-		List<Long> maxId = LigneApprovisionement.findLigneApprovisionementsByFourAndCip(cip, fournisseur);
-		LigneApprovisionement ligne = new LigneApprovisionement();
-		if (!maxId.isEmpty()) {
-			ligne = LigneApprovisionement.findLigneApprovisionement(maxId.iterator().next());
-			if (ligne!=null) {
-				setPrixAchatSTock(ligne.getPrixAchatUnitaire());
-				setPrixVenteStock(ligne.getPrixVenteUnitaire());
-			}
-
+		List<BigDecimal> lastPrices = new ArrayList<BigDecimal>();
+		lastPrices= LigneApprovisionement.findlastPrices(this,fournisseur);
+		lastPrices = lastPrices.isEmpty()?LigneApprovisionement.findlastPrices(this):lastPrices;
+		if(!lastPrices.isEmpty()){
+			setPrixAchatSTock(lastPrices.get(0));
+			setPrixVenteStock(lastPrices.get(1));
 		}else {
-			List<Long> maxId2 = LigneApprovisionement.findLigneApprovisionementsByFourAndCip(cip, null);
-			if (!maxId2.isEmpty()) {
-				ligne = LigneApprovisionement.findLigneApprovisionement(maxId2.iterator().next());
-				if (ligne!=null) {
-					setPrixAchatSTock(ligne.getPrixAchatUnitaire());
-					setPrixVenteStock(ligne.getPrixVenteUnitaire());
-				}
-
-			}
+			setPrixAchatSTock(BigDecimal.ZERO);
+			setPrixVenteStock(BigDecimal.ZERO);
 		}
-
 
 	}
 
@@ -480,10 +470,10 @@ public class Produit extends AdPharmaBaseEntity {
 		return q;
 	}
 
-	public static List<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture) {
+	public static TypedQuery<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture,BigInteger qte) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.id IS NOT NULL ");
 		if (StringUtils.isNotBlank(cip)) {
-			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip).getResultList();
+			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip);
 		}
 		if (StringUtils.isNotBlank(designation)) {
 			designation =  "%"+designation + "%";
@@ -514,7 +504,10 @@ public class Produit extends AdPharmaBaseEntity {
 		}
 
 		if (dateDerniereRupture != null) {
-			searchQuery.append(" AND o.dateDerniereRupture >= :dateDerniereRupture AND o.quantiteEnStock <= :qteRup  ");
+			searchQuery.append(" AND o.dateDerniereRupture >= :dateDerniereRupture  ");
+		}
+		if (qte != null) {
+			searchQuery.append("  AND o.quantiteEnStock <= :qteRup  ");
 		}
 		TypedQuery<Produit> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
 		if (StringUtils.isNotBlank(designation)) {
@@ -546,8 +539,10 @@ public class Produit extends AdPharmaBaseEntity {
 
 		if (dateDerniereRupture != null) {
 			q.setParameter("dateDerniereRupture", dateDerniereRupture);
-			q.setParameter("qteRup", BigInteger.ZERO);
 		}
-		return q.getResultList();
+		if (qte != null) {
+			q.setParameter("qteRup", qte);
+		}
+		return q;
 	}
 }

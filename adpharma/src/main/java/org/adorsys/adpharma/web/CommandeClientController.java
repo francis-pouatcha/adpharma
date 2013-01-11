@@ -431,10 +431,12 @@ public class CommandeClientController {
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
 
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		/*
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente a credit !");
 			return show(commandeClient.getId(), uiModel, request);
 		}
+		*/
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_PROFORMAT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
 			return show(commandeClient.getId(), uiModel, request);

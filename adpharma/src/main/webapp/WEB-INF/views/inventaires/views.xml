@@ -35,5 +35,10 @@
      <definition extends="print" name="inventaires/ficheSuivieStock">
         <put-attribute name="body" value="/WEB-INF/views/inventaires/ficheSuivieStock.jspx"/>
     </definition>
+      <definition extends="inventaire" name="inventaire/search">
+        <put-attribute name="body" value="/WEB-INF/views/inventaires/search.jspx"/>
+    </definition>
+    
+    
     
 </tiles-definitions>

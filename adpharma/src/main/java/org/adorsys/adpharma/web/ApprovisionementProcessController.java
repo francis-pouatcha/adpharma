@@ -5,11 +5,16 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.beans.PrintBareCodeBean;
@@ -26,10 +31,13 @@ import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.JasperPrintService;
+import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +51,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/approvisionementprocess")
 @Controller
 public class ApprovisionementProcessController {
+	
+	@Autowired
+	private JasperPrintService jasperPrintService ;
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
@@ -346,13 +357,20 @@ public class ApprovisionementProcessController {
 		}
 
 		// imprime la fiche d 'approvisionenment
-		@RequestMapping("/{apId}/printFicheAp/{ficheApId}.pdf")
-		public String printFicheApprov( @PathVariable("apId")Long apId, @PathVariable("ficheApId")String ficheApId, Model uiModel){
-			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
-
-			uiModel.addAttribute("approvisionement", approvisionement);
-			return "ficheApprovisionementPdfDocView";
-
+		
+		@Produces({"application/pdf"})
+		@Consumes({""})
+		@RequestMapping(value = "/{apId}/printFicheAp/{ficheApId}.pdf", method = RequestMethod.GET)
+		public void printFicheApprov(@PathVariable("apId") Long apId  ,HttpServletRequest request,HttpServletResponse response) {
+			Map parameters = new HashMap();
+			parameters.put("approvisionementid",apId);
+			try {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.FICHE_APPROVISIONNEMENT_FILE_PATH);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
 		}
 
 

@@ -7,8 +7,6 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
 	style="margin: 10px;"> 
 	<jsp:directive.page contentType="text/html;charset=UTF-8" /> <jsp:output omit-xml-declaration="yes" /> 
-		
-		
 		<script type="text/javascript">
 		$(function(){
 		$('#_modeSelection_id').change(function(){
@@ -17,6 +15,16 @@
 				$('#periode').show();
 			}else{
 				$('#periode').hide();
+				$('#plage').show();
+				$('#zone').show();
+			}
+			if(mode=='MANUELLE'){
+				$('#periode').hide();
+				$('#plage').hide();
+				$('#zone').hide();
+			}else{
+				$('#plage').show();
+				$('#plage').show();
 			}
 			
 				return false;
