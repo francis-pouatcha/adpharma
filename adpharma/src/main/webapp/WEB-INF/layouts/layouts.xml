@@ -93,4 +93,9 @@
   <definition name="dialog" template="/WEB-INF/layouts/dialog.jspx">
      </definition>
 
+<definition name="help" template="/WEB-INF/layouts/help.jspx">
+    <put-attribute name="header" value="/WEB-INF/views/help/header.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/views/help/footer.jspx" />
+ </definition>
+
 </tiles-definitions>

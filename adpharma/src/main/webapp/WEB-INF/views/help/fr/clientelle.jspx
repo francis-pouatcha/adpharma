@@ -1,0 +1,72 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Suivi de la clientelle</h1>
+  <p class="lead">Suivi de la clientelle</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#client">Gestions des clients</a></li>
+      <li><a href="#dette">Gestion des Dettes</a></li>
+      <li><a href="#avoir">Gestion des Avoir</a></li>
+    </ul>
+  </div>
+</header>
+<section id="client">
+  <div class="page-header">
+    <h1>Gestions des clients <small>Gestions des clients</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span4">
+      <h3>Creer un Client</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    </div>
+    <div class="span4">
+      <h3>Rechercher un client</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	</div>
+   	<div class="span4">
+   	  <h3>Creer une categorie de client</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	</div>
+  </div>   
+</section>
+
+<section id="dette">
+  <div class="page-header">
+    <h1>Gestions des dettes <small>Gestions des dettes</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span4">
+      <h3>Visualiser Les dettes d'un client</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    </div>
+    <div class="span4">
+      <h3>Editer un etat detaille des dette d'un client</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	</div>
+   	<div class="span4">
+   	  <h3>Encaisser un etat de credit</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	</div>
+  </div>  
+</section>
+<section id="avoir">
+  <div class="page-header">
+    <h1>Gestions des avoirs <small>Gestions des avoirs</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span4">
+      <h3>Visualisation des Avoirs</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    </div>
+    <div class="span4">
+      <h3>Creation des Avoirs</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	</div>
+   	<div class="span4">
+   	  <h3>Annulation des Avoirs</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	</div>
+  </div>
+    
+</section>
+</div>
