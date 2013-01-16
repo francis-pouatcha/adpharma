@@ -115,8 +115,6 @@
 				modal : true,
 				hide : 'fade',
 				show : 'slide'
-				
-
 			});
 			
 			$('input#proceed').click(function(){
@@ -143,7 +141,6 @@
 					}else{
 						alert('la ligne est introuvable !');
 					}
-					         
 							});
 			}
 			

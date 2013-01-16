@@ -27,6 +27,7 @@
                 </td>
             </tr>
         </table>
+        <field:display field="providerKey" id="s_org_adorsys_adpharma_domain_Fournisseur_providerKey" object="${fournisseur}" z="wvICCkQRbQ+TDUZ4+HqgM+XxzsY="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Fournisseur_footPrint" object="${fournisseur}" z="qhIf9P6Y33xHj0ClvoJqsiNy1GQ="/>

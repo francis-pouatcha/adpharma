@@ -115,12 +115,12 @@ function clearCreateForm(){
                     <LEGEND> Infos appro / Vente</LEGEND> 
                     <field:input field="tauxRemiseMax" label="Remise Max (%)" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>
                     <div>
-                      <label   for="tvaProduit">TVA : </label>
+                      <label for="tvaProduit">TVA : </label>
                         <springform:select  id="tvaProduit" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tvaProduit"  items="${tvas}"/>                 
                    </div> 
                    <BR /> 
                     <div>
-                      <label   for="_tauxDeMarge">Marge (%) : </label>
+                      <label for="_tauxDeMarge">Marge (%) : </label>
                         <springform:select  id="tauxDeMarge" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tauxDeMarge"  items="${tauxmarges}"/>                 
                    </div> 
                    <BR />                

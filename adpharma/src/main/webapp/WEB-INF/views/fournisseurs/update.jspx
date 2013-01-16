@@ -28,5 +28,6 @@
                 </td>
             </tr>
         </table>
+        <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
     </form:update>
 </div>

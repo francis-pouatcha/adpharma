@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.platform.rest.exchanges.ExchangeData;
+import org.adorsys.adpharma.platform.rest.exchanges.PlatformRestException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
@@ -55,10 +56,8 @@ public class SImplePlatformRestService implements PlatformRestService {
 		this.restTemplate = new RestTemplate();
 		messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		MappingJacksonHttpMessageConverter jacksonHttpMessageConverter = new MappingJacksonHttpMessageConverter();
-		HttpMessageConverter<?> formHttpMessageConverter = new FormHttpMessageConverter();
 		HttpMessageConverter<?> stringHttpMessageConverter = new StringHttpMessageConverter();
 		messageConverters.add(jacksonHttpMessageConverter);
-		messageConverters.add(formHttpMessageConverter);
 		messageConverters.add(stringHttpMessageConverter);
 		restTemplate.setMessageConverters(messageConverters);
 		return restTemplate;
@@ -69,14 +68,28 @@ public class SImplePlatformRestService implements PlatformRestService {
 		if (mediaType == null || StringUtils.isBlank(uri) || data == null)
 			throw new IllegalArgumentException("data uri ,mediaType are all required !");
 		String url = getBaseUrl() + uri;
+		System.out.println("Base Url: "+getBaseUrl()); 
 		System.out.println("sent To :" + url);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(mediaType);
 		HttpEntity<ExchangeData> entity = new HttpEntity<ExchangeData>(data,httpHeaders);
-		ResponseEntity<ExchangeData> responseEntity = restTemplate.postForEntity(url,entity, ExchangeData.class);
-		System.out.println("result"+responseEntity.getBody());
-		ExchangeData exchangeData =responseEntity.getBody();
-		return exchangeData;
+		ResponseEntity<ExchangeData> responseEntity= null;
+		try{
+		 responseEntity = restTemplate.postForEntity(url,entity, ExchangeData.class);
+		 System.out.println("Successfuly send...");
+		}catch (Exception e) {
+			System.out.println("Send error: " +e.getMessage());
+			ExchangeData exchangeDataForException = createExchangeBeanWhenExceptionOccured();
+			return exchangeDataForException;
+		}
+		return responseEntity.getBody();
+	}
+
+	private ExchangeData createExchangeBeanWhenExceptionOccured() {
+		ExchangeData exchangeDataForException = new ExchangeData();
+		List<PlatformRestException> postingExceptions = new ArrayList<PlatformRestException>();
+		postingExceptions.add(PlatformRestException.UNKNOW_EXCEPTION);
+		exchangeDataForException.setPlatformRestException(postingExceptions);
+		return exchangeDataForException;
 	}
 
 	@Override

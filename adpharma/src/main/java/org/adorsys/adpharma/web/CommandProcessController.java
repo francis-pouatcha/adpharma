@@ -227,7 +227,7 @@ public class CommandProcessController {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 		uiModel.addAttribute("itemId",cmdId);
-		commandeFournisseur.merge();
+		commandeFournisseur.merge();	
 		return "commandprocesses/show";
 	}
 
