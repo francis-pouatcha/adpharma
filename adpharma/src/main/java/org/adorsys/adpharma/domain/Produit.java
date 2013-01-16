@@ -122,7 +122,7 @@ public class Produit extends AdPharmaBaseEntity {
 	@Value("0")
 	private BigInteger seuilComande;
 
-	@Value("15")
+	@Value("5")
 	private BigDecimal tauxRemiseMax;
 
 	@Value("0")
@@ -355,8 +355,8 @@ public class Produit extends AdPharmaBaseEntity {
 			setPrixAchatSTock(lastPrices.get(0));
 			setPrixVenteStock(lastPrices.get(1));
 		}else {
-			setPrixAchatSTock(BigDecimal.ZERO);
-			setPrixVenteStock(BigDecimal.ZERO);
+			setPrixAchatSTock(prixAchatU != null ?prixAchatU :BigDecimal.ZERO);
+			setPrixVenteStock(prixVenteU != null ?prixVenteU :BigDecimal.ZERO);
 		}
 
 	}
@@ -438,7 +438,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public static TypedQuery<Produit> findProduitsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = "%"+designation + "%";
+		designation = designation + "%";
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation) order By  o.designation ASC ", Produit.class);
 		q.setParameter("designation", designation);
@@ -476,7 +476,7 @@ public class Produit extends AdPharmaBaseEntity {
 			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip);
 		}
 		if (StringUtils.isNotBlank(designation)) {
-			designation =  "%"+designation + "%";
+			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.designation) LIKE LOWER(:designation) ");
 		} 
 

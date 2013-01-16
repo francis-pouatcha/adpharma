@@ -24,6 +24,8 @@ public class Fournisseur extends AdPharmaBaseEntity {
     private String providerKey;
 
     private String name;
+    
+    private String shortname;
 
     private String phone;
 
@@ -58,7 +60,7 @@ public class Fournisseur extends AdPharmaBaseEntity {
         if (Fournisseur.countFournisseurs()<=0) {
             System.out.println("[ initialisation des fournisseur ]");
             Fournisseur fournisseur = new Fournisseur() ;
-            fournisseur.setName("DIVER AUTRE FOURNISSEUR");
+            fournisseur.setName("FOURNISSEUR DIVERS");
             fournisseur.persist();
         }
     }
@@ -115,7 +117,15 @@ public class Fournisseur extends AdPharmaBaseEntity {
 
     }
     
-    public String toString() {
+    public String getShortname() {
+		return shortname;
+	}
+
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
+
+	public String toString() {
         
         return displayName() ;
     }

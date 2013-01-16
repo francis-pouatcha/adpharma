@@ -38,7 +38,7 @@ public class Filiale extends AdPharmaBaseEntity {
     public static void initFiliale() {
         if (Filiale.countFiliales() <= 0) {
             System.out.println("[ initialisation des filiales  ]");
-            for (int i = 0; i <= 4; i++) {
+            for (int i = 1; i <= 2; i++) {
                 Filiale filiale = new Filiale();
                 filiale.setLibelle("CLASSE(" + i + ")");
                 filiale.persist();

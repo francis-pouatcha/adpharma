@@ -161,6 +161,17 @@ public class SaleProcess {
 	public static  void addline(Long lineId , BigInteger quantite ,BigDecimal remise ,CommandeClient commandeClient){
 		new SaleService().addline(lineId, quantite, remise, commandeClient);
 	}
+	
+	public static  void addToExistingline(Long lineId , BigInteger quantite ,BigDecimal remise ,CommandeClient commandeClient){
+		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(lineId);
+		LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
+		if(sameCipM !=null) {
+			sameCipM.increaseCmdQte(quantite, remise);
+		}else {
+			LigneCmdClient generateLigneCmd = new SaleService().generateLigneCmd(ligneApp, quantite, remise, commandeClient);
+			generateLigneCmd.persist();
+		}
+	}
 
 	public static void addlineForcer(Long lineId , BigInteger quantite ,BigDecimal remise ,CommandeClient commandeClient){
 		

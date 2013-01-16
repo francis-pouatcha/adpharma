@@ -217,15 +217,19 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 				ligneApprovisionement.setDesignation(line.getProduit().getDesignation());
 				ligneApprovisionement.setIndexLine(getNewIndex());
 				ligneApprovisionement.setPrixAchatUnitaire(line.getPrixAchatMin());
+				ligneApprovisionement.setPrixVenteUnitaire(line.getPrixAVenteMin());
 				ligneApprovisionement.setQuantiteAprovisione(line.getQuantiteCommande());
 				ligneApprovisionement.setProduit(line.getProduit());
 				ligneApprovisionement.setPrixAchatTotal(line.getPrixAchatTotal());
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
+				ligneApprovisionement.CalculeQteEnStock();
 				ligneApprovisionement.persist();
+				approvisionement.getLigneApprivisionement().add(ligneApprovisionement);
 			}
 		}
 		approvisionement.setFounisseur(this.getFournisseur());
 		approvisionement.setCommande(this);
+		
 	}
 
 	public String toString() {

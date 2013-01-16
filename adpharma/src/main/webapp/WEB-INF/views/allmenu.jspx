@@ -121,8 +121,7 @@
 						</security:authorize>
 						<li><a href="#">Produits approvisionnes</a>
 							<ul>
-								<security:authorize
-									ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
+								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
 									<li><a href="${ap_trans_url}">Decomposer un produit (CIPM)</a></li>
 								</security:authorize>
 								<security:authorize
@@ -133,7 +132,9 @@
 								<li><a href="${search_lgap_url}">rechercher un produit (CIPM)</a></li>
 								<li><a href="${lap_list_url}">lister les produits (CIPM)</a></li>
 							</ul></li>
+						<security:authorize ifAnyGranted="ROLE_IMPRESSION_CODE_BARE ,ROLE_SITE_MANAGER">
 						<li><a href="${imp_code_url}">Impression Code Bare</a></li>
+						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_PREPARATION_CMD ,ROLE_SITE_MANAGER">
 							<li><a href="#">Preparation des Commandes</a>
@@ -178,6 +179,7 @@
 
 				<li><a href="#">Ventes</a>
 					<ul class="sub_menu">
+							<li><a id="rapidesearch" href="#">Recherche Produit</a></li>
 						<security:authorize
 							ifAnyGranted="ROLE_VENTE_COMPTANT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
 							<li><a href="${vente_public_url}">Vente Au Comptant</a></li>

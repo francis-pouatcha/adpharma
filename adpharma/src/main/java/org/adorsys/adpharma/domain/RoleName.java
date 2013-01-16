@@ -26,7 +26,12 @@ public enum RoleName {
      ROLE_VENTE_PROFORMAT("EDITION PROFORMAT", "Permet d'editer les proformats "),
      ROLE_VENTE_VISU("VISUALISATION VENTE", "Permet de visualiser des ventes  "),
      ROLE_GESTION_CATALOGUE("GESTION DU CATALOGUE", "Permet de creer modifier les produits du catalogues "),
-     ROLE_RELATION_TRANSFORMATION("RELATION TRANSFORMATION ", "permet de gerer les relations de transformations  ");
+     ROLE_RELATION_TRANSFORMATION("RELATION TRANSFORMATION ", "permet de gerer les relations de transformations  "),
+	 ROLE_VENTE_FORCEE(" VENTE FORCEE ", "permet de gerer d'effectuer les ventes forcees"),
+	 ROLE_IMPRESSION_CODE_BARE("IMPRESSION CODE BARE ", "permet d'effectuer les impression de code barre "),
+	 ROLE_VENTE_DESIGNATION("VENTE PAR DESIGNATION ", "permet d'effectuer les ventes par designation ");
+	     
+	 
    
 
 	private String nameFr ;

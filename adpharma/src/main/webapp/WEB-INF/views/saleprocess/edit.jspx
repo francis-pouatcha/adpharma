@@ -36,8 +36,10 @@ function annCmd(){
 		var="edit_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct"   var="find_product_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/selectProduct"   var="select_product_url" />
-
+<!-- 
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
+ -->
+ <spring:url value="/produits/${saleProcess.cmdId}/findByCipmAjax/" var="find_cipm_url" />
 	<c:choose>
 		<c:when test="${forcer}">
 			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLineForcer"
@@ -94,8 +96,13 @@ function annCmd(){
 				type="button" value="Cloturer La Vente"
 				title="Enregistrer La Commande" /></a></span>
 				</security:authorize>
+				<!-- 
+				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-				
+				</security:authorize>
+				 -->
+				 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+				 
 				 <span><a
 			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
 				class="submits" type="button" value="Annuler La Vente"
@@ -392,7 +399,7 @@ $('#updateClient').dialog("close");
 						document.getElementById("qte").value = "";
 						document.getElementById("pt").value = "";
 						document.getElementById("rem").value = "";
-						alert("Aucun produit Trouve");
+						alert(data.viewMsg);
 					} else {
 						
 						document.getElementById("cip").value = data.cip;
@@ -868,7 +875,7 @@ $('#updateClient').dialog("close");
 		
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 		<p>
-		<label for="designation">Designation :</label> <input class="searchInput"  type="text" name="designation"/>
+		<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;"  type="text" name="designation"/>
 		</p>
 		 <p>
 		<label for="rp">En Rupture ? :</label> <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
@@ -895,17 +902,5 @@ $('#updateClient').dialog("close");
 	</div>	 
    
 </div>
- <div id="container">
-<div id="inner" style="overflow: scroll; height: 300px;">
-<a class="aide" href="#" style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br/>
-<center style="text-transform: uppercase; "> <H1>Bienvenue dans l'aide D'adPharma</H1> </center>
-L'aide Pour cette Page est en cour de redaction <br/>
-Merci pour Votre Comprehension <br/>
-
- 
-</div>
-</div>
-
-	
 
 </div>

@@ -237,7 +237,7 @@ public class MouvementStock extends AdPharmaBaseEntity {
         if (filiale != null) {
         	searchQuery.append("  AND p.filiale = :filiale  ");
   		}
-        Query q= em.createQuery(searchQuery.append("  GROUP BY p  ORDER BY  qte DESC").toString());
+        Query q= em.createQuery(searchQuery.append("  GROUP BY p  ORDER BY  o.designation").toString());
         if (StringUtils.isNotBlank(cip)) q.setParameter("cip", cip);
         if (StringUtils.isNotBlank(designation)) q.setParameter("designation", designation);
         if (StringUtils.isNotBlank(beginDes)) q.setParameter("beginDes", beginDes);

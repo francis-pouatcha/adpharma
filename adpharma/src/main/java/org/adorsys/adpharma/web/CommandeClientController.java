@@ -124,7 +124,7 @@ public class CommandeClientController {
 
 		}else if (pharmaUser == null) {
 			uiModel.addAttribute("apMessage", "aucun utilisateur trouve avec cette cle !");
-		}else if (pharmaUser.hasAnyRole(RoleName.ROLE_OPEN_SALE_SESSION)) {
+		}else if (!pharmaUser.hasAnyRole(RoleName.ROLE_VENDEUR)) {
 			uiModel.addAttribute("apMessage", "Desole Vous n'avez pas les droits neccessaires pour Anuller !");
 		}else{
 			commandeClient.annulerCommande(pharmaUser.getUserName());

@@ -113,7 +113,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     @Value("false")
     private Boolean cloturer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "approvisionement",orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "approvisionement")
     private Set<LigneApprovisionement> ligneApprivisionement = new HashSet<LigneApprovisionement>();
 
     @Enumerated
@@ -152,6 +152,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     	this.etat = Etat.EN_COUR ;
     	this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
     	this.founisseur = commandeFournisseur.getFournisseur();
+    	this.magasin = commandeFournisseur.getSite() ;
     	
     	}
     
@@ -241,10 +242,9 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void deleteAllLine() {
-       // for (LigneApprovisionement ligne : ligneApprivisionement) {
-         //   ligne.remove();
-       // }
-        ligneApprivisionement.clear();
+      for (LigneApprovisionement ligne : ligneApprivisionement) {
+            ligne.remove();
+        }
     }
 
     public String toString() {

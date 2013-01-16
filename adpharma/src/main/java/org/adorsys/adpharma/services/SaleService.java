@@ -10,6 +10,7 @@ import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
 import org.springframework.stereotype.Service;
 
@@ -162,8 +163,8 @@ public class SaleService {
 
 
 	}
-	
-	
+
+
 	public static boolean enableSaleCash(Configuration conf,PharmaUser user){
 		ArrayList<RoleName> enableRole = new ArrayList<RoleName>();
 		enableRole.add(RoleName.ROLE_CASHIER);
@@ -173,8 +174,37 @@ public class SaleService {
 		if(!user.hasAnyRole(enableRole)) return false ;
 		return true ;
 	}
-	
-	
+
+	/**
+	 * usefful method for generating list of product for a PARTICULAR CIPM order by datesaisie
+	 * @param produit
+	 * @param cmd
+	 * @return list of oldcipm
+	 */
+	public static List<LigneApprovisionement> getoldProductLisForSale(Produit  produit , CommandeClient cmd){
+		List<LigneApprovisionement> oldProductsList = new ArrayList<LigneApprovisionement>() ;
+		if(produit == null || cmd==null) return oldProductsList ;
+		List<LigneApprovisionement> resultList = LigneApprovisionement.findOldLigneApprovisionementsByQteStockAndProduit(produit, BigInteger.ONE).getResultList();
+		if(!resultList.isEmpty()){
+			oldProductsList = new ArrayList<LigneApprovisionement>(resultList) ;
+			for (LigneApprovisionement orderItem : resultList) {
+				LigneCmdClient sameCipm = cmd.getItemHasSameCipm(orderItem.getCipMaison());
+				if(sameCipm!=null){
+					if(sameCipm.getQuantiteCommande().equals(orderItem.getQuantieEnStock())){
+						oldProductsList.remove(orderItem);
+					}else {
+						return oldProductsList ;
+					}
+				}else {
+					return oldProductsList ;
+				}
+
+			}
+		}
+		return oldProductsList ;
+
+	}
+
 
 
 }

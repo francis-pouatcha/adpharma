@@ -81,7 +81,7 @@ public class AvoirClientController {
 	@RequestMapping(value = "/findByNumberAjax", method = RequestMethod.GET)
 	@ResponseBody
     public String findByNumberAjax(@RequestParam("numero") String numero,@RequestParam("montant") BigDecimal montant, Model uiModel) {
- List<AvoirClient> avoirClients= AvoirClient.search(null,numero, null, null, null, null, null).getResultList();
+ List<AvoirClient> avoirClients= AvoirClient.findAvoirClientsByNumeroEquals(numero).getResultList();
         if (avoirClients.isEmpty()) return "Informations Du bon Incorrect !" ;
 	     AvoirClient avoirClient =	avoirClients.iterator().next();	
 	    if (avoirClient.getAnnuler()) return " Ce Bon Est Annuller ! " ;

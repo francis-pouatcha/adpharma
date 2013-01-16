@@ -15,6 +15,7 @@ import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TauxMarge;
+import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 
 	@Override
 	public List<String> useFieldName() {
-		String[] fieldNames = {"cip","designation","rayon"} ;
+		String[] fieldNames = {"cip","designation","pa","pv","rayon"} ;
 	    return	Arrays.asList(fieldNames);
 		
 	}
@@ -36,11 +37,9 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 				Cell[] row = sheet.getRow(i);
 				Produit itemFromSheetRow = itemFromSheetRow(row);
 				if(itemFromSheetRow!=null){
-					System.out.println(i+" "+itemFromSheetRow);
 				if(rayon!=null)itemFromSheetRow.setRayon(rayon);
 				if(itemFromSheetRow.existe())continue;
-				
-				itemFromSheetRow.persist();
+					itemFromSheetRow.persist();
 				items.add(itemFromSheetRow);
 				}
 			}
@@ -55,15 +54,22 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 		if(StringUtils.isNotBlank(cells[1].getContents())){
 			Produit prd = new Produit();
 			prd.setActif(Boolean.TRUE);
-			prd.setCip(cells[0].getContents());
+			prd.setCip(cells[0].getContents().trim());
 			prd.setCommander(Boolean.TRUE);
 			prd.setDesignation(cells[1].getContents());
 			prd.setFabricant("-//-");
 			prd.setFiliale(Filiale.findFiliale(new Long(1)));
-			prd.setRayon(Rayon.findRayon(new Long(1)));
+			List<Rayon> resultList = Rayon.findRayonsByEmplacement(cells[4].getContents()).getResultList();
+			if(!resultList.isEmpty()){
+				prd.setRayon(resultList.iterator().next());
+			}else {
+				prd.setRayon(Rayon.findRayon(new Long(1)));
+			}
+			prd.setPrixAchatU(ProcessHelper.stringToBigDecimal(cells[2].getContents()));
+			prd.setPrixVenteU(ProcessHelper.stringToBigDecimal(cells[3].getContents()));
 			prd.setPlafondStock(new BigInteger("50"));
 			prd.setTauxDeMarge(TauxMarge.findTauxMarge(new Long(1)));
-			prd.setTauxRemiseMax(BigDecimal.valueOf(5));
+			prd.setTauxRemiseMax(BigDecimal.valueOf(2));
 			return prd ;
 		}
 		return null ;

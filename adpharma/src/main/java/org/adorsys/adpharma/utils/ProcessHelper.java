@@ -21,6 +21,7 @@ import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
@@ -180,6 +181,34 @@ public class ProcessHelper {
 
 
 
+	}
+	
+	public static BigDecimal stringToBigDecimal(String value){
+		if(StringUtils.isNotBlank(value)){
+			try {
+				BigDecimal bigDecimal = new BigDecimal(value) ;
+				return bigDecimal ;
+			} catch (Exception e) {
+				System.out.println(value);
+				return BigDecimal.ZERO ;
+			}
+			
+		}
+		return BigDecimal.ZERO ;
+		
+	}
+	public static BigInteger stringToBigInteger(String value){
+		if(StringUtils.isNotBlank(value)){
+			try {
+				BigInteger bigDecimal = new BigInteger(value) ;
+				return bigDecimal ;
+			} catch (Exception e) {
+				System.out.println(value);
+				return BigInteger.ZERO ;
+			}
+			
+		}
+		return BigInteger.ZERO ;
 	}
 
 	public static BigInteger roundMoney(BigInteger money){

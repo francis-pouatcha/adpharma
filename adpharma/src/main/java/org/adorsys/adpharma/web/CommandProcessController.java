@@ -41,6 +41,7 @@ import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.ProcessHelper;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -152,14 +153,17 @@ public class CommandProcessController {
 	@RequestMapping(value = "/preparedOrder", method = RequestMethod.POST)
 	public String preparedOrder(@Valid OrderPreParationBean preparedBean ,Model uiModel,HttpSession session,HttpServletRequest httpServletRequest) {
 		CommandeFournisseur order = null;
-		List<Produit> productList = preparedBean.getPreparedProductList();
 		order = preparedBean.generateOrder();
 		order.persist();
-		for (Produit prd : productList) {
-			LigneCmdFournisseur orderItemm = OrderPreParationBean.getOrderItemm(prd, preparedBean.getFournisseur(), preparedBean.getModeSelection(),preparedBean.getMinStock());
-			orderItemm.setCommande(order);
-			orderItemm.persist();
+		List<Object[]> listItems = new ArrayList<Object[]>();
+		if(order.getModeDeSelection().equals(ModeSelection.PLUS_VENDU)){
+			listItems = CommandeProcess.findProduitAndQuantiteVendue(preparedBean.getBeginBy(), preparedBean.getEndBy(),
+					preparedBean.getBeginDate(), preparedBean.getEndDate()
+					, preparedBean.getRayon(),preparedBean.getFiliale(), preparedBean.getMinStock());
+		}else {
+			listItems = CommandeProcess.findProduitAndRuptureOrAlert(preparedBean.getBeginBy(), preparedBean.getBeginBy(), preparedBean.getRayon(), preparedBean.getFiliale(), preparedBean.getModeSelection());
 		}
+		preparedBean.getOrderItemm(order, listItems ,preparedBean.getModeSelection());
 		if(order!=null){
 			uiModel.asMap().clear();
 			return "redirect:/commandefournisseurs/" + ProcessHelper.encodeUrlPathSegment(order.getId().toString(), httpServletRequest);

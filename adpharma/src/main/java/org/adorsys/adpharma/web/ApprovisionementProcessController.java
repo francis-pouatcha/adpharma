@@ -414,27 +414,39 @@ public class ApprovisionementProcessController {
 		@RequestMapping(value = "/{apId}/exporto/{ficheApId}.xls", method = RequestMethod.GET)
 		public void exportoxls(@PathVariable("apId") Long apId  ,HttpServletRequest request,HttpServletResponse response) {
 			Approvisionement ap = Approvisionement.findApprovisionement(apId);
-			String fournisseur = ap.getFounisseur().getName();
-			String site = ap.getMagasin().getDisplayName();
+			String fournisseur = ap.getFounisseur().getShortname();
+			String site =ap.getMagasin()==null? Site.findSite(new Long(1)).displayName() : ap.getMagasin().getDisplayName();
+		    site =	StringUtils.removeStartIgnoreCase(site, "PHARMACIE");
 			Set<LigneApprovisionement> ligneap = ap.getLigneApprivisionement();
 			try {
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				WritableWorkbook workbook = Workbook.createWorkbook(baos);
 				WritableSheet sheet = workbook.createSheet(ap.getApprovisionementNumber(),0);
-				int i = 0 ;
+				Label ciph= new Label(0, 0,"cipm" );
+				sheet.addCell(ciph);
+				Label desh = new Label(1, 0, "designation");
+				sheet.addCell(desh);
+				Label pvh = new Label(2, 0, "pv");
+				sheet.addCell(pvh);
+				Label fourh = new Label(3, 0, "fournisseur");
+				sheet.addCell(fourh);
+				Label magasinh = new Label(4, 0, "site");
+				sheet.addCell(magasinh);
+				int i = 1 ;
 				for (LigneApprovisionement line : ligneap) {
 					int stock = line.getQuantieEnStock().intValue();
 					for (int j = i; j < i+stock; j++) {
-						Label cip= new Label(0, j, line.getCipMaison());
-						sheet.addCell(cip);
-						Label des = new Label(1, j, line.getProduit().getDesignation());
-						sheet.addCell(des);
-						Label pv = new Label(2, j, line.getPrixVenteUnitaire().longValue()+"");
-						sheet.addCell(pv);
-						Label four = new Label(3, j, fournisseur);
-						sheet.addCell(four);
-						Label magasin = new Label(4, j, site);
-						sheet.addCell(magasin);
+							Label cip= new Label(0, j, line.getCipMaison());
+							sheet.addCell(cip);
+							Label des = new Label(1, j, line.getProduit().getDesignation());
+							sheet.addCell(des);
+							Label pv = new Label(2, j, line.getPrixVenteUnitaire().longValue()+"F CFA");
+							sheet.addCell(pv);
+							Label four = new Label(3, j, fournisseur);
+							sheet.addCell(four);
+							Label magasin = new Label(4, j, site);
+							sheet.addCell(magasin);
+						
 					}
 					i = i+stock ;
 				}

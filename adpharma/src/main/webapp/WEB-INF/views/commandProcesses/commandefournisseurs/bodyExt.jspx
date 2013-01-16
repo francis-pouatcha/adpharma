@@ -17,10 +17,10 @@
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">qte Commande</th>
-		            <th style="text-align: center;">Prix achat Unitaire</th>
-		            <th style="text-align: center;">Prix achat Total</th>
-		            
+		    		<th style="text-align: center;">qte Com </th>
+		    		<th style="text-align: center;">Prix Vente</th>
+		            <th style="text-align: center;">Prix AChat</th>
+		            <th style="text-align: center;">Prix AChat Total</th>
 		    	</tr>
 		    	<c:forEach items="${commandefournisseur.ligneCommande}" var="ligneCommande">
 		    		<tr>
@@ -37,6 +37,10 @@
 		    			
 		    				<c:out value="${ligneCommande.quantiteCommande}"></c:out>
 		    		
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
+		     		    				<c:out value="${ligneCommande.prixAVenteMin}"></c:out>
+
 		    			</td>
 		    			<td style="text-align: right;padding-right: 20px;">
 		     		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>

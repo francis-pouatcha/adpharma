@@ -178,8 +178,8 @@ public class PharmaUser extends AdPharmaBaseEntity {
             System.out.println("[ initialisation des comptes utilisateurs ]");
             PharmaUser admin = new PharmaUser();
             admin.setUserName("admin");
-            admin.setFirstName("gakam");
-            admin.setLastName("clovis");
+            admin.setFirstName("admin");
+            admin.setLastName("admin");
             admin.setAccountLocked(Boolean.FALSE);
             admin.setDisableLogin(Boolean.FALSE);
             admin.setGender(Genre.Neutre);

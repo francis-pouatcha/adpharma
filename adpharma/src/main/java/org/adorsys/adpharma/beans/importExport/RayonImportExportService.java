@@ -33,7 +33,6 @@ public class RayonImportExportService extends ImportExportService<Rayon>{
 				Cell[] row = sheet.getRow(i);
 				Rayon itemFromSheetRow = itemFromSheetRow(row);
 				if(itemFromSheetRow!=null){
-					System.out.println("rayon "+i+" "+rayons);
 				if(itemFromSheetRow.existe())continue ;
 				itemFromSheetRow.persist();
 				rayons.add(itemFromSheetRow);

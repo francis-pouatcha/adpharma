@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.beans;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -190,7 +191,8 @@ public class OrderPreParationBean {
 			if(productSelectionQuantity!=null)search.setMaxResults(productSelectionQuantity.intValue()) ;
 			return search.getResultList();
 		}
-		if(modeSelection.equals(ModeSelection.PLUS_VENDU)){
+		/*
+		 if(modeSelection.equals(ModeSelection.PLUS_VENDU)){
 			List<Object[]> produitAndQuantiteVendue = MouvementStock.findProduitAndQuantiteVendue(null, null, beginBy, endBy, beginDate, endDate, rayon, filiale);
 			if(!produitAndQuantiteVendue.isEmpty()){
 				ArrayList<Produit> arrayList = new ArrayList<Produit>();
@@ -199,7 +201,7 @@ public class OrderPreParationBean {
 				}
 				return arrayList ;
 			}
-		}
+		}*/
 		return new ArrayList<Produit>();
 	}
 
@@ -223,9 +225,41 @@ public class OrderPreParationBean {
 		orderItems.setPrixAVenteMin(produit.getPrixVenteStock());
 		orderItems.setProduit(produit);
 		orderItems.calculPrixTotal();
-		BigInteger subtract = produit.getPlafondStock().subtract(produit.getQuantiteEnStock());
+		BigInteger plafond = produit.getPlafondStock()==null ? BigInteger.valueOf(50):produit.getPlafondStock();
+		BigInteger subtract = plafond.subtract(produit.getQuantiteEnStock());
 		if(subtract.intValue()>0)orderItems.setQuantiteCommande(subtract);
 		return orderItems ;
+
+	}
+	
+	public static List<LigneCmdFournisseur>  getOrderItemm(CommandeFournisseur order,List<Object[]> itemifos , ModeSelection modeSelection){
+		 ArrayList<LigneCmdFournisseur> arrayList = new ArrayList<LigneCmdFournisseur>();
+		if (itemifos == null) return arrayList ;
+		
+//		if(itemifos.isEmpty() ) return arrayList ;
+		for (Object[] objects : itemifos) {
+			Produit prd = (Produit) objects[0];
+			BigInteger qte = (BigInteger) objects[1];
+			BigDecimal pa = (BigDecimal) objects[2];
+			BigDecimal pv = (BigDecimal) objects[3];
+			LigneCmdFournisseur orderItems = new LigneCmdFournisseur();
+			orderItems.setPrixAchatMin(pa);
+			orderItems.setPrixAVenteMin(pv);
+			orderItems.setProduit(prd);
+			orderItems.calculPrixTotal();
+			if (modeSelection.equals(ModeSelection.PLUS_VENDU)) {
+				orderItems.setQuantiteCommande(qte);
+			}else {
+				BigInteger plafond = prd.getPlafondStock()==null ? BigInteger.valueOf(50):prd.getPlafondStock();
+				BigInteger subtract = plafond.subtract(prd.getQuantiteEnStock());
+				if(subtract.intValue()>0)orderItems.setQuantiteCommande(subtract);
+			}
+			orderItems.setCommande(order);
+			orderItems.persist();
+			arrayList.add(orderItems) ;
+		}
+		return arrayList ;
+		
 
 	}
 

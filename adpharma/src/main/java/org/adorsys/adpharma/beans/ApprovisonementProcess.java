@@ -91,6 +91,8 @@ public class ApprovisonementProcess {
 			produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mis a jou du stock de produit 
 			ligneApprovisionement.compenserStock();
 			produit.setQuantiteEnStock(InventoryService.stock(produit));
+			produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
+			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
 			produit.merge();
 			mouvementStock.setQteFinale(produit.getQuantiteEnStock());
 			mouvementStock.persist();

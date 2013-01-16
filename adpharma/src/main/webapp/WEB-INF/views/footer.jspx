@@ -15,5 +15,7 @@
 		<span style="float: right; font-weight: bold; color: white;">Languages | <util:language locale="fr" label="francaise"/> <util:language locale="en" label="anglaise"/></span>
 		</center>
 </div>
+
+<jsp:include page="ajaxSearchProductForm.jspx" />
   
 </div>
