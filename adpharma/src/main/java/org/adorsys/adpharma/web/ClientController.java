@@ -137,5 +137,15 @@ public class ClientController {
 	@ModelAttribute("clients")
 	public Collection<Client> populateClients() {
 		return new ArrayList<Client>();
+		
+		
 	}
+	
+
+    @ModelAttribute("categorieclients")
+    public Collection<CategorieClient> populateCategorieClients() {
+        return ProcessHelper.populateCategorieCLients();
+    }
+    
+   
 }

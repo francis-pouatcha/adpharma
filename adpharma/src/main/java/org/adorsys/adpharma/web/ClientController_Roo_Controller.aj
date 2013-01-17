@@ -70,10 +70,7 @@ privileged aspect ClientController_Roo_Controller {
         return "redirect:/clients";
     }
     
-    @ModelAttribute("categorieclients")
-    public Collection<CategorieClient> ClientController.populateCategorieClients() {
-        return CategorieClient.findAllCategorieClients();
-    }
+    
     
     @ModelAttribute("genres")
     public Collection<Genre> ClientController.populateGenres() {

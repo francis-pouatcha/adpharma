@@ -224,7 +224,8 @@ public class InventaireProcessController {
 
 	@RequestMapping(value = "/ficheSuivieStock", method = RequestMethod.GET)
 	public String ficheSuivieStock(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
-		if (inp.isCipm()) {
+	if(!inp.isDoNotSelectAnyProduct()){
+		if (inp.isInventoryBycipm()) {
 			inp.setLigneApprovisionements(LigneApprovisionement.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),inp.getDesignation(), null, inp.getRayon(), inp.getBeginBy(), inp.getEndBy(), inp.getFiliale(), null, null,null,null).getResultList());
 
 		}else {
@@ -237,6 +238,9 @@ public class InventaireProcessController {
 
 			}
 		}
+	}else {
+		inp.setProduits(new ArrayList<Produit>());
+	}
 
 
 		uiModel.addAttribute("inventaire", inp);

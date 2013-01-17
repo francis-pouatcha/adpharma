@@ -109,7 +109,7 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
-                    <field:display field="clientNumber" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Client_clientNumber" object="${client}" z="user-managed"/>
+                    <field:display field="clientNumber" label="Code Client" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Client_clientNumber" object="${client}" z="user-managed"/>
                     <field:select field="typeClient" id="c_org_adorsys_adpharma_domain_Client_typeClient" items="${typeclients}" path="typeclients" z="lbsOvplF4uFPTMaHqzP5byR90Ow="/>
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Client_footPrint" render="false" z="user-managed"/>
                     <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
@@ -160,7 +160,5 @@
             </table>
         </div>
     </div>
-    <form:update id="fu_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/clients" versionField="Version" z="Il6d8I6l1DUYb7NswUqvws6qXoM=">
-        <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
-    </form:update>
+   
 </div>

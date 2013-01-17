@@ -103,6 +103,18 @@ public class Inventaire extends AdPharmaBaseEntity {
 	private transient String endBy;
 
 	private transient String cipProduct;
+	
+	private transient String cipmProduct;
+	
+	
+
+	public String getCipmProduct() {
+		return cipmProduct;
+	}
+
+	public void setCipmProduct(String cipmProduct) {
+		this.cipmProduct = cipmProduct;
+	}
 
 	public String getCipProduct() {
 		return cipProduct;
@@ -190,20 +202,30 @@ public class Inventaire extends AdPharmaBaseEntity {
 		this.endBy = endBy;
 	}
 
-	public Boolean getCip() {
-		return cip;
+	
+
+	public Boolean getInventoryBycip() {
+		return inventoryBycip;
 	}
 
-	public void setCip(Boolean cip) {
-		this.cip = cip;
+	public void setInventoryBycip(Boolean inventoryBycip) {
+		inventoryBycip = inventoryBycip;
 	}
 
-	public boolean isCipm() {
-		return cipm;
+	public boolean isDoNotSelectAnyProduct() {
+		return doNotSelectAnyProduct;
 	}
 
-	public void setCipm(boolean cipm) {
-		this.cipm = cipm;
+	public void setDoNotSelectAnyProduct(boolean doNotSelectAnyProduct) {
+		this.doNotSelectAnyProduct = doNotSelectAnyProduct;
+	}
+
+	public boolean isInventoryBycipm() {
+		return inventoryBycipm;
+	}
+
+	public void setInventoryBycipm(boolean inventoryBycipm) {
+		inventoryBycipm = inventoryBycipm;
 	}
 
 	public Boolean getpAchat() {
@@ -241,9 +263,11 @@ public class Inventaire extends AdPharmaBaseEntity {
 		this.ligneApprovisionements = new ArrayList<LigneApprovisionement>();
 	}
 
-	private transient Boolean cip = true ;
+	private transient Boolean inventoryBycip = true ;
 
-	private transient boolean cipm  = false;
+	private transient boolean inventoryBycipm  = false;
+	
+	private transient boolean doNotSelectAnyProduct  = false;
 
 	private transient Boolean pAchat  = false;
 
