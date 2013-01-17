@@ -2,6 +2,7 @@ package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +60,10 @@ public class Produit extends AdPharmaBaseEntity {
 	private SousFamilleProduit SousfamilleProduit;
 
 	private BigInteger quantiteEnStock = BigInteger.ZERO;
+	
+	private  BigDecimal prixAchatU = BigDecimal.ZERO;
+
+	private  BigDecimal prixVenteU = BigDecimal.ZERO;
 
 	private transient BigDecimal prixAchatSTock = BigDecimal.ZERO;
 
@@ -69,6 +74,27 @@ public class Produit extends AdPharmaBaseEntity {
 	public BigDecimal getPrixAchatSTock() {
 		return prixAchatSTock;
 	}
+	
+
+	public BigDecimal getPrixAchatU() {
+		return prixAchatU;
+	}
+
+
+	public void setPrixAchatU(BigDecimal prixAchatU) {
+		this.prixAchatU = prixAchatU;
+	}
+
+
+	public BigDecimal getPrixVenteU() {
+		return prixVenteU;
+	}
+
+
+	public void setPrixVenteU(BigDecimal prixVenteU) {
+		this.prixVenteU = prixVenteU;
+	}
+
 
 	public void setPrixAchatSTock(BigDecimal prixAchatSTock) {
 		this.prixAchatSTock = prixAchatSTock;
@@ -89,11 +115,14 @@ public class Produit extends AdPharmaBaseEntity {
 	public void setQtevendu(BigInteger qtevendu) {
 		this.qtevendu = qtevendu;
 	}
+	
+
+
 
 	@Value("0")
 	private BigInteger seuilComande;
 
-	@Value("15")
+	@Value("5")
 	private BigDecimal tauxRemiseMax;
 
 	@Value("0")
@@ -239,6 +268,10 @@ public class Produit extends AdPharmaBaseEntity {
 	public boolean isOut(){
 		return quantiteEnStock.intValue() <= 0 ;
 	}
+	
+	public boolean existe(){
+	return	!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty() ;
+	}
 
 	public boolean isAlert(){
 		if (quantiteEnStock == null || seuilComande == null) return true ;
@@ -315,27 +348,16 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public void getFournisseurPrice(Fournisseur fournisseur) {
-		List<Long> maxId = LigneApprovisionement.findLigneApprovisionementsByFourAndCip(cip, fournisseur);
-		LigneApprovisionement ligne = new LigneApprovisionement();
-		if (!maxId.isEmpty()) {
-			ligne = LigneApprovisionement.findLigneApprovisionement(maxId.iterator().next());
-			if (ligne!=null) {
-				setPrixAchatSTock(ligne.getPrixAchatUnitaire());
-				setPrixVenteStock(ligne.getPrixVenteUnitaire());
-			}
-
+		List<BigDecimal> lastPrices = new ArrayList<BigDecimal>();
+		lastPrices= LigneApprovisionement.findlastPrices(this,fournisseur);
+		lastPrices = lastPrices.isEmpty()?LigneApprovisionement.findlastPrices(this):lastPrices;
+		if(!lastPrices.isEmpty()){
+			setPrixAchatSTock(lastPrices.get(0));
+			setPrixVenteStock(lastPrices.get(1));
 		}else {
-			List<Long> maxId2 = LigneApprovisionement.findLigneApprovisionementsByFourAndCip(cip, null);
-			if (!maxId2.isEmpty()) {
-				ligne = LigneApprovisionement.findLigneApprovisionement(maxId2.iterator().next());
-				if (ligne!=null) {
-					setPrixAchatSTock(ligne.getPrixAchatUnitaire());
-					setPrixVenteStock(ligne.getPrixVenteUnitaire());
-				}
-
-			}
+			setPrixAchatSTock(prixAchatU != null ?prixAchatU :BigDecimal.ZERO);
+			setPrixVenteStock(prixVenteU != null ?prixVenteU :BigDecimal.ZERO);
 		}
-
 
 	}
 
@@ -406,10 +428,17 @@ public class Produit extends AdPharmaBaseEntity {
 		q.setParameter("rayon", rayon);
 		return q;
 	}
+	public static TypedQuery<Produit> findProduitsByCip(String cip) {
+		if (cip == null) throw new IllegalArgumentException("The cip argument is required");
+		EntityManager em = Produit.entityManager();
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.cip = :cip ", Produit.class);
+		q.setParameter("cip", cip);
+		return q;
+	}
 
 	public static TypedQuery<Produit> findProduitsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = "%"+designation + "%";
+		designation = designation + "%";
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation) order By  o.designation ASC ", Produit.class);
 		q.setParameter("designation", designation);
@@ -441,13 +470,13 @@ public class Produit extends AdPharmaBaseEntity {
 		return q;
 	}
 
-	public static List<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture) {
+	public static TypedQuery<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture,BigInteger qte) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.id IS NOT NULL ");
 		if (StringUtils.isNotBlank(cip)) {
-			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip).getResultList();
+			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip);
 		}
 		if (StringUtils.isNotBlank(designation)) {
-			designation =  "%"+designation + "%";
+			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.designation) LIKE LOWER(:designation) ");
 		} 
 
@@ -475,7 +504,10 @@ public class Produit extends AdPharmaBaseEntity {
 		}
 
 		if (dateDerniereRupture != null) {
-			searchQuery.append(" AND o.dateDerniereRupture >= :dateDerniereRupture AND o.quantiteEnStock <= :qteRup  ");
+			searchQuery.append(" AND o.dateDerniereRupture >= :dateDerniereRupture  ");
+		}
+		if (qte != null) {
+			searchQuery.append("  AND o.quantiteEnStock <= :qteRup  ");
 		}
 		TypedQuery<Produit> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
 		if (StringUtils.isNotBlank(designation)) {
@@ -507,8 +539,10 @@ public class Produit extends AdPharmaBaseEntity {
 
 		if (dateDerniereRupture != null) {
 			q.setParameter("dateDerniereRupture", dateDerniereRupture);
-			q.setParameter("qteRup", BigInteger.ZERO);
 		}
-		return q.getResultList();
+		if (qte != null) {
+			q.setParameter("qteRup", qte);
+		}
+		return q;
 	}
 }

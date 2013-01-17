@@ -9,21 +9,73 @@
   <spring:url value="/resources/spring/Spring.js" var="spring_url" />
   <spring:url value="/resources/spring/Spring-Dojo.js" var="spring_dojo_url" />
   <spring:url value="/resources/images/favicon.ico" var="favicon" />
-  <link rel="stylesheet" type="text/css" href="${tundra_url}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="${roo_css_url}" />
+  <spring:url value="/resources/styles/style.css" var="style_newLayout" />
+  
+   <link rel="stylesheet" type="text/css" href="${style_newLayout}"><!-- required for FF3 and Opera --></link>
+  <link rel="stylesheet" type="text/css" href="${tundra_url}"><!-- required for FF3 and Opera --></link>
+  <link rel="stylesheet" type="text/css" media="screen" href="${roo_css_url}"><!-- required for FF3 and Opera --></link>
   <link rel="SHORTCUT ICON" href="${favicon}" />
+  <spring:url value="/resources/js/jquery-1.7.1.min.js" var="jquery_url" />
+   <spring:url value="/resources/js/edit.js" var="ajax_url" />
+   <spring:url value="/resources/js/jquery-ui-1.8.18.custom.min.js" var="jqueryui_url" />
+    <spring:url value="/resources/js/jquery.contextmenu.js" var="jquerymenu_url" />
+      <spring:url value="/resources/js/jquerycssmenu.js" var="hmenujs_url" /> 
+   <spring:url value="/resources/js/jquery.print.js" var="print_url" />
+   <spring:url value="/resources/css/ui-lightness/jquery-ui-1.8.18.custom.css" var="jquerycss_url" />
+    <spring:url value="/resources/css/hmenu/jquerycssmenu.css" var="hmenucss_url" />
+     <spring:url value="/resources/js/menu.js" var="menu_url" />
+    
+     <link type="text/css" href="${jquerycss_url}" rel="stylesheet" />	
+  <link type="text/css" href="${hmenucss_url}" rel="stylesheet" />	
 
+<script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqueryui_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jquerymenu_url}"><!-- required for FF3 and Opera --></script>
+  <script type="text/javascript" src="${hmenujs_url}"><!-- required for FF3 and Opera --></script>
+    <script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
+    <script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
+    
+    
+      
+   <spring:url value="/resources/js/jquery.jqplot.min.js" var="jqpl1" />
+      <spring:url value="/resources/js/plugins/jqplot.logAxisRenderer.min.js" var="jqpl2" />
+         <spring:url value="/resources/js/plugins/jqplot.canvasTextRenderer.min.js" var="jqpl3" />
+            <spring:url value="/resources/js/plugins/jqplot.canvasAxisLabelRenderer.min.js" var="jqpl4" />
+               <spring:url value="/resources/js/plugins/jqplot.canvasAxisTickRenderer.min.js" var="jqpl5" />
+                  <spring:url value="/resources/js/plugins/jqplot.dateAxisRenderer.min.js" var="jqpl6" />
+                     <spring:url value="/resources/js/plugins/jqplot.categoryAxisRenderer.min.js" var="jqpl7" />
+                        <spring:url value="/resources/js/plugins/jqplot.barRenderer.min.js" var="jqpl8" />
+                           <spring:url value="/resources/js/jquery.jqplot.min.css" var="jqpl9" />
+   
+<script type="text/javascript" src="${jqpl1 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl2 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl3 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl4 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl5 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl6 }"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl7}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl8}"><!-- required for FF3 and Opera --></script>
+  <link type="text/css" href="${jqpl9}" rel="stylesheet" />	
+   
+  
   <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
   <c:set var="userLocale">
-    <c:set var="plocale">${pageContext.response.locale}</c:set>
-    <c:out value="${fn:replace(plocale, '_', '-')}" default="en" />
+    <c:out value="${fn:replace(pageContext.response.locale, '_', '-')}" default="en" />
   </c:set>
 
-  <script type="text/javascript">var djConfig = {parseOnLoad: false, isDebug: false, locale: '${fn:toLowerCase(userLocale)}'};</script>
+  <script type="text/javascript">var djConfig = {parseOnLoad: true, isDebug: true, locale: '${fn:toLowerCase(userLocale)}'};</script>
 
   <script src="${dojo_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
   <script src="${spring_url}" type="text/javascript"><!-- /required for FF3 and Opera --></script>
   <script src="${spring_dojo_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.parser");</script>
-
+   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.DateTextBox");</script>
+    <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.TextBox");</script>
+    
+    
+    <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>
+  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.TabContainer");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dojo.fx");</script>
+    
 </jsp:root>

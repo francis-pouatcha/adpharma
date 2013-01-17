@@ -112,12 +112,13 @@
 
 	
 	<!-- allows for integration of file upload functionality -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+	   <property name="maxUploadSize" value="30000000"/>
+	</bean>
 		<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
 			id="beanNameViewResolver">
 		</bean>
-		<bean
-			class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-			id="multipartResolver" />
+		
 		<bean
 			class="org.adorsys.adpharma.web.ApplicationConversionServiceFactoryBean"
 			id="applicationConversionService" />

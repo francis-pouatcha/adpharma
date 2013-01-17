@@ -1,0 +1,70 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Gestion Des Ventes </h1>
+  <p class="lead">Gestion Des Ventes </p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#vente">Effectuer une vente</a></li>
+      <li><a href="#facture">Imprimer une facture</a></li>
+      <li><a href="#produit">Effectuer un retour de Produit</a></li>
+    </ul>
+  </div>
+</header>
+
+<section id="vente">
+  <div class="page-header">
+    <h1>Effectuer une vente <small>Effectuer une vente</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+      <ul>
+      	<li><h3>Vente Au Comptant</h3></li>
+      	<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		<li><h3>Vente a credit</h3></li>
+		<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		<li><h3>Editer une proformat</h3></li>
+		<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      	 <li><h3>Recherche une Vente</h3></li>
+		<p>Nullam quis risus eget urna mollis ornare vel eu leo.
+      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
+      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </ul>
+    </div>
+  </div>  
+</section>
+
+<section id="facture">
+  <div class="page-header">
+    <h1>Imprimer une facture <small>Imprimer une facture</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+<section id="produit">
+  <div class="page-header">
+    <h1>Effectuer un retour de Produit <small>Effectuer un retour de Produit</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+</div>

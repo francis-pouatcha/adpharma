@@ -171,7 +171,7 @@ public class TransformationProduit extends AdPharmaBaseEntity {
     }
     
     public static TypedQuery<TransformationProduit>  search(Produit produitOrigine, Produit produitCible,String origineName, String cibleName,  Boolean actif) {
-        StringBuilder searchQuery = new StringBuilder("SELECT o FROM TransformationProduit AS o WHERE o.actif IS :actif ");
+        StringBuilder searchQuery = new StringBuilder("SELECT o FROM TransformationProduit AS o WHERE o.actif IS :actif  ");
         actif = actif == null ? Boolean.TRUE : actif;
         
         
@@ -196,7 +196,7 @@ public class TransformationProduit extends AdPharmaBaseEntity {
 			}
             
           
-            TypedQuery<TransformationProduit> q = entityManager().createQuery(searchQuery.toString(), TransformationProduit.class);
+            TypedQuery<TransformationProduit> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.produitOrigine.designation ").toString(), TransformationProduit.class);
           
             if (produitOrigine != null) {
                 q.setParameter("produitOrigine", produitOrigine);

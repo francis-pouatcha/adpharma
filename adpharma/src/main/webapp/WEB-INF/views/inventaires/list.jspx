@@ -17,11 +17,6 @@
             <table:column date="true" dateTimePattern="${inventaire_datefin_date_format}" id="c_org_adorsys_adpharma_domain_Inventaire_dateFin" property="dateFin" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_rayon" property="rayon" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_filiale" property="filiale" render="false" z="user-managed"/>
-           <!--  
-            <table:column date="true" dateTimePattern="${inventaire_daterupture_date_format}" id="c_org_adorsys_adpharma_domain_Inventaire_dateRupture" property="dateRupture" z="sZvn88zMayoS4f8Qq/r4170goFM="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" property="familleProduit" z="qeYdrlMZVGaJWb7uwv8ESzLnkpE="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" property="sousFamilleProduit" z="xwS9t37FHoJMHuItbv6wkY3GS7E="/>
-        -->
         </table:table>
     </page:list>
 </div>

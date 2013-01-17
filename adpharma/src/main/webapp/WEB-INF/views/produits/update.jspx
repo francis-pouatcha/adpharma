@@ -25,8 +25,8 @@
                 <LEGEND> Infos Stock</LEGEND>   
                     <field:input field="seuilComande" label="stock alert" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" validationMessageCode="field_invalid_integer" z="4f/ES3d9TyL7w8Br1piLgLR2kI0="/>
                     <field:input field="plafondStock" id="c_org_adorsys_adpharma_domain_Produit_plafondStock" validationMessageCode="field_invalid_integer" z="DPR1QqMyvQB+RqYN+gwAtskwqYU="/>
-                    <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits" render="false" z="user-managed"/>
-                    <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits" render="false" z="user-managed"/>
+                    <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits"  z="user-managed"/>
+                    <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits"  z="user-managed"/>
                     <field:display hiddenfield="true" object="${produit }" field="quantiteEnStock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock"  z="user-managed"/>
                     <field:datetime dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" render="false" z="user-managed"/>
                     <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" disabled="true" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" render="false" z="user-managed"/>

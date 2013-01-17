@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PostPersist;
+import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -18,7 +19,10 @@ import javax.validation.constraints.NotNull;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.adorsys.adpharma.utils.UseItemsInterfaces;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -30,7 +34,7 @@ import org.adorsys.adpharma.domain.Filiale;
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Approvisionement", finders = { "findApprovisionementsByDateCreationBetween" })
-public class Approvisionement extends AdPharmaBaseEntity {
+public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInterfaces {
 
     private String approvisionementNumber;
 
@@ -39,7 +43,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar dateBordereau ;
+    private Calendar dateBordereau = Calendar.getInstance();
 
     @ManyToOne
     private PharmaUser agentCreateur;
@@ -76,7 +80,7 @@ public class Approvisionement extends AdPharmaBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateReglement;
-
+    
     @NotNull
     private BigDecimal montantHt = BigDecimal.ZERO;
  
@@ -92,6 +96,17 @@ public class Approvisionement extends AdPharmaBaseEntity {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateCreation = new Date();
 
+     public Approvisionement() {
+		
+	}
+     public Approvisionement(Fournisseur fournisseur,String bordereau,Devise devise,String filiale,Site magasin) {
+ 		this.founisseur = fournisseur;
+ 		this.bordereauNumber = bordereau;
+ 		this.devise = devise;
+ 		this.filiale= filiale;
+ 		this.magasin = magasin ;
+ 		agentCreateur = SecurityUtil.getPharmaUser();
+ 	}
     @Value("false")
     private Boolean urgence;
 
@@ -127,6 +142,21 @@ public class Approvisionement extends AdPharmaBaseEntity {
     public void postPersit() {
         approvisionementNumber = NumberGenerator.getNumber("AP-", getId(), 4);
     }
+    
+    public Approvisionement(CommandeFournisseur commandeFournisseur){
+    	this.agentCreateur = SecurityUtil.getPharmaUser();
+    	this.bordereauNumber = RandomStringUtils.randomAlphanumeric(6);
+    	this.commande= commandeFournisseur;
+    	this.dateReglement = new Date();
+    	this.devise = Devise.findDevise(new Long(1));
+    	this.etat = Etat.EN_COUR ;
+    	this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
+    	this.founisseur = commandeFournisseur.getFournisseur();
+    	this.magasin = commandeFournisseur.getSite() ;
+    	
+    	}
+    
+    
 
     public void protectSomeField() {
         Approvisionement approvisionement = Approvisionement.findApprovisionement(getId());
@@ -180,7 +210,6 @@ public class Approvisionement extends AdPharmaBaseEntity {
         List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(this).getResultList();
         if (!resultList.isEmpty()) {
             for (LigneApprovisionement ligne : resultList) {
-            	System.out.println(ligne.getPrixAchatTotal());
              if (ligne.getPrixAchatTotal()!=null)    montant = montant.add(ligne.getPrixAchatTotal());
             }
         }
@@ -203,8 +232,9 @@ public class Approvisionement extends AdPharmaBaseEntity {
     }
 
     public void close() {
-        if (commande != null) {
+        if (commande != null){
             commande.setValider(true);
+            commande.setLivre(true);
             commande.merge();
         }
         this.setCloturer(true);
@@ -212,11 +242,9 @@ public class Approvisionement extends AdPharmaBaseEntity {
     }
 
     public void deleteAllLine() {
-        System.out.println("debut deleteall ");
-        for (LigneApprovisionement ligne : ligneApprivisionement) {
+      for (LigneApprovisionement ligne : ligneApprivisionement) {
             ligne.remove();
         }
-        ligneApprivisionement = new HashSet<LigneApprovisionement>();
     }
 
     public String toString() {
@@ -240,7 +268,9 @@ public class Approvisionement extends AdPharmaBaseEntity {
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
-
+    
+   
+    
     public static List<Approvisionement> findApprovisionementEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Approvisionement o ORDER BY o.id DESC ", Approvisionement.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
@@ -289,4 +319,10 @@ public class Approvisionement extends AdPharmaBaseEntity {
         
         return valider;
     }
+
+	@Override
+	public boolean hasItems() {
+		if(ligneApprivisionement==null) return false ;
+		return !ligneApprivisionement.isEmpty();
+	}
 }

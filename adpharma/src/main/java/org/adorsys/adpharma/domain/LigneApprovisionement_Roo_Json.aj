@@ -4,7 +4,6 @@
 package org.adorsys.adpharma.domain;
 
 import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,16 +12,8 @@ import org.adorsys.adpharma.domain.LigneApprovisionement;
 
 privileged aspect LigneApprovisionement_Roo_Json {
     
-    public String LigneApprovisionement.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
     public static LigneApprovisionement LigneApprovisionement.fromJsonToLigneApprovisionement(String json) {
         return new JSONDeserializer<LigneApprovisionement>().use(null, LigneApprovisionement.class).deserialize(json);
-    }
-    
-    public static String LigneApprovisionement.toJsonArray(Collection<LigneApprovisionement> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
     }
     
     public static Collection<LigneApprovisionement> LigneApprovisionement.fromJsonArrayToLigneApprovisionements(String json) {

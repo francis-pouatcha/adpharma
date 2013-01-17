@@ -11,15 +11,15 @@
                     <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" render="false" z="user-managed"/>
                     <field:input field="designation" style="width: 60%;" id="c_org_adorsys_adpharma_domain_Produit_designation" required="true" z="QU7r5zqGZMyMej7Tr9SkqPafDG8="/>
                     <field:input field="cip" id="c_org_adorsys_adpharma_domain_Produit_cip" render="${cip}" required="true" z="user-managed"/>
-               <!-- <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits"  z="user-managed"/>
+                <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits"  z="user-managed"/>
                     <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits"  z="user-managed"/>
-                --> 
+               
                     <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant"  z="user-managed"/>
                     <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
                     <field:select field="modeConditionement" id="c_org_adorsys_adpharma_domain_Produit_modeConditionement" itemValue="id" items="${modeconditionements}" path="/modeconditionements" render="false" z="user-managed"/>
                   <LEGEND> Infos Emplacement</LEGEND>  
-                    <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
-                    <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
+                    <field:select field="rayon" style="width: 60%;" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
+                    <field:select field="filiale" style="width: 30%;" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
                 
                        </td>
                 <td valign="top">

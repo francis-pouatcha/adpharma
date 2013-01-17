@@ -21,6 +21,7 @@ import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
@@ -117,7 +118,6 @@ public class ProcessHelper {
 	}  
 
 	public static Collection<Filiale> populateAllFiliale() {
-
 		return Filiale.findAllActifFiliales();
 
 	}  
@@ -156,18 +156,7 @@ public class ProcessHelper {
 
 
 	public static Collection<RoleName> populateRoleNames() {
-		ArrayList<RoleName> arrayList = new ArrayList<RoleName>() ;
-		arrayList.add(RoleName.ROLE_ADMIN);
-		arrayList.add(RoleName.ROLE_CASHIER);
-		arrayList.add(RoleName.ROLE_SITE_MANAGER);
-		arrayList.add(RoleName.ROLE_STOCKER);
-		arrayList.add(RoleName.ROLE_INVENTAIRE);
-		arrayList.add(RoleName.ROLE_VENDEUR);
-		arrayList.add(RoleName.ROLE_OPEN_SALE_SESSION);
-		arrayList.add(RoleName.ROLE_GESTION_DETTE);
-		arrayList.add(RoleName.ROLE_RETOUR_PRODUIT);
-
-		return arrayList;
+		 return	Arrays.asList(RoleName.class.getEnumConstants()) ;
 	}
 
 	public static Long getRemise( LigneApprovisionement ligneApprovisionement){ 
@@ -192,6 +181,34 @@ public class ProcessHelper {
 
 
 
+	}
+	
+	public static BigDecimal stringToBigDecimal(String value){
+		if(StringUtils.isNotBlank(value)){
+			try {
+				BigDecimal bigDecimal = new BigDecimal(value) ;
+				return bigDecimal ;
+			} catch (Exception e) {
+				System.out.println(value);
+				return BigDecimal.ZERO ;
+			}
+			
+		}
+		return BigDecimal.ZERO ;
+		
+	}
+	public static BigInteger stringToBigInteger(String value){
+		if(StringUtils.isNotBlank(value)){
+			try {
+				BigInteger bigDecimal = new BigInteger(value) ;
+				return bigDecimal ;
+			} catch (Exception e) {
+				System.out.println(value);
+				return BigInteger.ZERO ;
+			}
+			
+		}
+		return BigInteger.ZERO ;
 	}
 
 	public static BigInteger roundMoney(BigInteger money){

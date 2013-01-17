@@ -1,0 +1,44 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Gestion Des Caisses</h1>
+  <p class="lead">Gestion Des Caisses</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#editer">Editer une fiche de suivie du stock</a></li>
+      <li><a href="#effectuer">Effectuer un inventaire</a></li>
+      <li><a href="#rechercher">Rechercher un Inventaire</a></li>
+    </ul>
+  </div>
+</header>
+        
+<section id="editer">
+  <div class="page-header">
+    <h1>Editer une fiche de suivie du stock <small>Editer une fiche de suivie du stock</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="effectuer">
+  <div class="page-header">
+    <h1> Effectuer un inventaire <small> Effectuer un inventaire</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+<section id="rechercher">
+  <div class="page-header">
+    <h1>Rechercher un Inventaire <small>Rechercher un Inventaire</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+</div>

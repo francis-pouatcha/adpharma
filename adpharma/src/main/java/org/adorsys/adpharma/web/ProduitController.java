@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.web;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
@@ -16,6 +19,7 @@ import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
+import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
@@ -38,7 +42,7 @@ public class ProduitController {
 	@RequestMapping(value="/findByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductByCip(@PathVariable("cip") String cip,Model uiModel) {
-		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(50).getResultList();
+		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(100).getResultList();
 		Produit prd = null ;
 		String reponse = "Aucun produit Trouve" ;
 		if (!produits.isEmpty()) {
@@ -103,18 +107,47 @@ public class ProduitController {
 
 
 	//retourne les information apres un ajax request
+
 	@RequestMapping(value="/findByCipmAjax/{cipm}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findByCipmAjax(@PathVariable("cipm") String cipm,Model uiModel) {
 		String	cipMaison = cipm;
-		cipMaison = StringUtils.removeStart(cipMaison, "0");
-
-		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(50).getResultList();
+		//cipMaison = StringUtils.removeStart(cipMaison, "0");
+		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(10).getResultList();
 		if (!lines.isEmpty()) {
 			return lines.iterator().next().clone().toJson();
 		}else {
 			return new LigneApprovisionement().toJson();
 		}	
+
+	}
+
+
+	@RequestMapping(value="/{saleId}/findByCipmAjax/{cipm}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel) {
+		String	cipMaison = cipm;
+		Configuration config = Configuration.findConfiguration(new Long(1));
+		if(config.getOnlySaleOld()){
+			CommandeClient sale = CommandeClient.findCommandeClient(saleId);
+			List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(10).getResultList();
+			if (!lines.isEmpty()) {
+				LigneApprovisionement next = lines.iterator().next();
+				List<LigneApprovisionement> oldcimplist = SaleService.getoldProductLisForSale(next.getProduit(), sale);
+				if(next.isOldItem(oldcimplist)){
+					return lines.iterator().next().clone().toJson();
+				}else {
+					LigneApprovisionement item = new LigneApprovisionement() ;
+					item.setViewMsg("veullez saisir le cipm le plus ancien !") ;
+					return item.toJson() ;
+				}
+			}else {
+				LigneApprovisionement item = new LigneApprovisionement() ;
+				item.setViewMsg("Aucun produit trouve !") ;
+				return item.toJson() ;
+			}	
+		}
+		return findByCipmAjax(cipMaison, uiModel) ;
 
 	}
 
@@ -132,7 +165,7 @@ public class ProduitController {
 		produit.persist();
 		return "redirect:/produits/" + encodeUrlPathSegment(produit.getId().toString(), httpServletRequest);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value="/createByAjax",method = RequestMethod.GET)
 	public String create( @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -183,7 +216,7 @@ public class ProduitController {
 	}
 
 
-	
+
 
 
 	@ModelAttribute("produits")

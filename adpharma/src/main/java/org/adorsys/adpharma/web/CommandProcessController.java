@@ -1,34 +1,48 @@
 package org.adorsys.adpharma.web;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 
-import org.adorsys.adpharma.beans.ApprovisonementProcess;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+
 import org.adorsys.adpharma.beans.CommandeProcess;
 import org.adorsys.adpharma.beans.OrderPreParationBean;
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
-import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
-import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.ModeSelection;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
-import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.adorsys.adpharma.services.JasperPrintService;
+import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.ProcessHelper;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -44,6 +58,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/commandprocesses")
 @Controller
 public class CommandProcessController {
+
+
+	@Autowired
+	private JasperPrintService jasperPrintService ;
+
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(@Valid CommandeFournisseur commandeFournisseur, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,HttpSession session) {
@@ -58,9 +77,58 @@ public class CommandProcessController {
 		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(commandeFournisseur.getId().toString(), httpServletRequest)+"/editCommand";
 	}
 
+
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/{cmdId}/printBonCommande.pdf", method = RequestMethod.GET)
+	public void printFicheApprov(@PathVariable("cmdId") Long cmdId  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("commandeid",cmdId);
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.BON_COMMANDE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+
+	@Produces({""})
+	@Consumes({""})
+	@RequestMapping(value = "/{cmdId}/exporto.xls", method = RequestMethod.GET)
+	public void printFicheApprovXls(@PathVariable("cmdId") Long cmdId  ,HttpServletRequest request,HttpServletResponse response) {
+		CommandeFournisseur commande = CommandeFournisseur.findCommandeFournisseur(cmdId);
+		Set<LigneCmdFournisseur> ligneCommande = commande.getLigneCommande();
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			WritableWorkbook workbook = Workbook.createWorkbook(baos);
+			WritableSheet sheet = workbook.createSheet(commande.getCmdNumber(),0);
+			int i = 0 ;
+			for (LigneCmdFournisseur ligneCmdFournisseur : ligneCommande) {
+				Label cip = new Label(0, i, ligneCmdFournisseur.getCip());
+				sheet.addCell(cip);
+				Label qtec = new Label(1, i, ligneCmdFournisseur.getQuantiteCommande()+"");
+				sheet.addCell(qtec);
+				i++;
+			}
+
+			workbook.write();
+			workbook.close();
+			response.setContentLength(baos.size());
+			ServletOutputStream out1 = response.getOutputStream();
+			baos.writeTo(out1);
+			out1.flush();
+			return ;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
-			@RequestParam BigDecimal pa ,Model uiModel,HttpSession session) {
+			@RequestParam BigDecimal pa ,@RequestParam BigDecimal pv,Model uiModel,HttpSession session) {
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		Produit produit = Produit.findProduit(pId);
 		if (commandeFournisseur.contientProduit(produit)) {
@@ -69,6 +137,7 @@ public class CommandProcessController {
 			LigneCmdFournisseur line = new LigneCmdFournisseur();
 			line.setCommande(commandeFournisseur);
 			line.setPrixAchatMin(pa);
+			line.setPrixAVenteMin(pv);
 			line.setProduit(produit);
 			line.setQuantiteCommande(qte);
 			line.persist();
@@ -76,6 +145,7 @@ public class CommandProcessController {
 		CommandeProcess commandeProcess = new CommandeProcess(cmdId, LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(),
 				CommandeFournisseur.findCommandeFournisseur(cmdId).getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess",commandeProcess);
+		uiModel.addAttribute("ligneCmdFournisseur",new LigneCmdFournisseur());
 		return "commandprocesses/editCommand";
 
 	}
@@ -83,38 +153,36 @@ public class CommandProcessController {
 	@RequestMapping(value = "/preparedOrder", method = RequestMethod.POST)
 	public String preparedOrder(@Valid OrderPreParationBean preparedBean ,Model uiModel,HttpSession session,HttpServletRequest httpServletRequest) {
 		CommandeFournisseur order = null;
-		List<Produit> productList = preparedBean.getPreparedProductList();
-		if(!productList.isEmpty()){
-			order = preparedBean.generateOrder();
-			order.persist();
-			for (Produit prd : productList) {
-				LigneCmdFournisseur orderItemm = OrderPreParationBean.getOrderItemm(prd, preparedBean.getFournisseur(), preparedBean.getModeSelection(),preparedBean.getMinStock());
-				orderItemm.setCommande(order);
-				orderItemm.persist();
-
-			}
-
+		order = preparedBean.generateOrder();
+		order.persist();
+		List<Object[]> listItems = new ArrayList<Object[]>();
+		if(order.getModeDeSelection().equals(ModeSelection.PLUS_VENDU)){
+			listItems = CommandeProcess.findProduitAndQuantiteVendue(preparedBean.getBeginBy(), preparedBean.getEndBy(),
+					preparedBean.getBeginDate(), preparedBean.getEndDate()
+					, preparedBean.getRayon(),preparedBean.getFiliale(), preparedBean.getMinStock());
+		}else {
+			listItems = CommandeProcess.findProduitAndRuptureOrAlert(preparedBean.getBeginBy(), preparedBean.getBeginBy(), preparedBean.getRayon(), preparedBean.getFiliale(), preparedBean.getModeSelection());
 		}
+		preparedBean.getOrderItemm(order, listItems ,preparedBean.getModeSelection());
 		if(order!=null){
 			uiModel.asMap().clear();
 			return "redirect:/commandefournisseurs/" + ProcessHelper.encodeUrlPathSegment(order.getId().toString(), httpServletRequest);
 
 		}else {
-			
 			uiModel.addAttribute("orderPreParationBean", new OrderPreParationBean());
 			return "commandprocesses/create";
 		}
 
 	}
-//
-//	@RequestMapping(value = "/editPreparedOrder/{orderId}", method = RequestMethod.GET)
-//	public String editPreparedOrder(@PathVariable("orderId") Long orderId, Model uiModel,HttpSession session) {
-//		ProcessHelper.addDateTimeFormatPatterns(uiModel); 
-//		uiModel.addAttribute("order", CommandeFournisseur.findCommandeFournisseur(orderId));
-//		return "commandprocesses/editPreparedOrder";
-//
-//	}
-	
+	//
+	//	@RequestMapping(value = "/editPreparedOrder/{orderId}", method = RequestMethod.GET)
+	//	public String editPreparedOrder(@PathVariable("orderId") Long orderId, Model uiModel,HttpSession session) {
+	//		ProcessHelper.addDateTimeFormatPatterns(uiModel); 
+	//		uiModel.addAttribute("order", CommandeFournisseur.findCommandeFournisseur(orderId));
+	//		return "commandprocesses/editPreparedOrder";
+	//
+	//	}
+
 	@RequestMapping(value = "/{cmdId}/showProduct/{pId}", method = RequestMethod.GET)
 	public String showProduct(@PathVariable("cmdId") Long cmdId,@PathVariable("pId") Long pId, Model uiModel,HttpSession session) {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
@@ -123,7 +191,7 @@ public class CommandProcessController {
 		return "commandprocesses/showProduct";
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/{cmdId}/deleteLine/{lineId}",method = RequestMethod.GET)
 	public String unselectLine(@PathVariable("cmdId") Long cmdId, @PathVariable("lineId") Long lineId ,Model uiModel, HttpServletRequest httpServletRequest) {
@@ -132,7 +200,7 @@ public class CommandProcessController {
 			line.remove();
 			return "ok";
 		}
-		
+
 		//return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/editCommand";
 		return "ko";
 	}
@@ -148,7 +216,7 @@ public class CommandProcessController {
 		//commandeProcess.setLineToUpdate(LigneCmdFournisseur.findLigneCmdFournisseur(lineId));
 		//uiModel.addAttribute("commandeProcess",commandeProcess);
 		if(line == null) return null ;
-		
+
 		return line.toJson();
 	}
 
@@ -197,7 +265,7 @@ public class CommandProcessController {
 				commandeFournisseur.getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess",commandeProcess);
 		uiModel.addAttribute("ligneCmdFournisseur",new LigneCmdFournisseur());
-		
+
 		return "commandprocesses/editCommand";
 	}
 
@@ -292,7 +360,7 @@ public class CommandProcessController {
 
 	@ModelAttribute("filiales")
 	public Collection<Filiale> populateFiliales() {
-		return ProcessHelper.populateAllFiliale();
+		return ProcessHelper.populateFiliale();
 	}
 
 	@ModelAttribute("rayons")

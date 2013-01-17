@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"  xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0" style="overflow: auto; height: 500px;">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+   
+    <spring:url value="/dataloader/loadproduit"  var="load_Form_url" />
+<!-- load file div  -->
+<util:panel title="Chargement des Produits" id="1">
+ <div id="loadfilediv"  title="charger le fichier des Produits (format xls uniquement) ">
+		
+		<form action="${load_Form_url}" id="loadfileform" method="post" enctype="multipart/form-data">
+		<LABEL> Code Geo id :</LABEL>
+            <input size="50" type="text" name="rayon" /> <br /><br />
+       
+		<LABEL> Fichier Produits :</LABEL>
+            <input size="50" type="file" name="fichier" /> <br /><br />
+           <input type="submit" class="submits" value="Charger Le Fichier" />
+       </form>
+</div>
+</util:panel>
+    
+  <jsp:include page="list.jspx" />
+    
+    
+    
+</div>

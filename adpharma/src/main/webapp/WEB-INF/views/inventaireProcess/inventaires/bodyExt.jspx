@@ -15,12 +15,12 @@
 		    	<tr>
 		    		<th >CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th >Qte En Stock</th>
-		    		<th >Qte Reel</th>
+		    		<th >Stock Virtuel</th>
+		    		<th >Stock Reel</th>
 		            <th >Ecart</th>
-		            <th >Prix Total</th>
+		            <th >Montant Ecart</th>
 		            <th>Agent Saisie</th>
-		           <th>Date Saisie</th>
+		            <th>Date Saisie</th>
 		            
 		    	</tr>
 		    	<c:forEach items="${inventaire.ligneInventaire}" var="ligneCommande">

@@ -3,19 +3,15 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_Fournisseur" modelAttribute="fournisseur" path="/fournisseurs" versionField="Version" z="VJdw5D608/PHTSkr4FIvwnk48BY=">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
-                    <field:input disabled="true" field="fournisseurNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" z="user-managed"/>
-                    <field:input field="name" id="c_org_adorsys_adpharma_domain_Fournisseur_name" z="5jBGemLv5dbNBA2RD967AzWN8Lw="/>
+                    <field:display object="${fournisseur}" hiddenfield="true" field="fournisseurNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" z="user-managed"/>
+                    <field:input field="name" label="Nom"  style="width: 50%;" id="c_org_adorsys_adpharma_domain_Fournisseur_name" z="5jBGemLv5dbNBA2RD967AzWN8Lw="/>
+                    <field:input field="shortname" label="Nom Abrege" id="c_org_adorsys_adpharma_domain_Fournisseur_name" z="5jBGemLv5dbNBA2RD967AzWN8Lw="/>
                     <field:input field="phone" id="c_org_adorsys_adpharma_domain_Fournisseur_phone" z="clWsGA9+0gr2BSF0jiVYI/bPYrY="/>
                     <field:input field="mobile" id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" z="UPhP+OmmLci9A+9kkPMO4g3q/GQ="/>
                     <field:input field="fax" id="c_org_adorsys_adpharma_domain_Fournisseur_fax" z="meBrVAHPdpbwoYW7Cqv2R5ahovk="/>
                     <field:input field="email" id="c_org_adorsys_adpharma_domain_Fournisseur_email" validationMessageCode="field_invalid_email" z="Y6r1ZCO9dFhD/aRzin/P+NZ5vfs="/>
                     <field:input field="adresse" id="c_org_adorsys_adpharma_domain_Fournisseur_adresse" z="kXMkuJg+pScuBxYYZRvOnWsgH6c="/>
                     <field:input field="siteInternet" id="c_org_adorsys_adpharma_domain_Fournisseur_siteInternet" z="y6KHhfNPvHttvcT0ARrn5UdGS94="/>
-                </td>
-                <td class="tbcreate">
                     <field:input field="responsable" id="c_org_adorsys_adpharma_domain_Fournisseur_responsable" z="6KLFIrNCRmNbZMB045Lxos0qcpo="/>
                     <field:input field="chiffreAffaire" id="c_org_adorsys_adpharma_domain_Fournisseur_chiffreAffaire" validationMessageCode="field_invalid_number" z="LN8KCinIDuo45+zMf+bewQkeJdk="/>
                     <field:input field="ville" id="c_org_adorsys_adpharma_domain_Fournisseur_ville" z="WKhtxtl2WVGrVQqaK2xPBhqyRrs="/>

@@ -70,13 +70,13 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 	@ManyToOne
 	private CommandeFournisseur commande;
 
-	private BigDecimal prixAchatMin;
+	private BigDecimal prixAchatMin =BigDecimal.ZERO;
 	
-	private BigDecimal prixFourniMin;
+	private BigDecimal prixFourniMin=BigDecimal.ZERO;
 
-	private BigDecimal prixAVenteMin;
+	private BigDecimal prixAVenteMin=BigDecimal.ZERO;
 
-	private BigDecimal prixAchatTotal;
+	private BigDecimal prixAchatTotal=BigDecimal.ZERO;
 
 	@Override
 	protected void internalPrePersist() {

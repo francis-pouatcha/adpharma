@@ -158,7 +158,7 @@ public class TicketPdfDocView  extends   AbstractPdfView {
 			caiCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(caiCell1);
 			PdfPCell salCell2 = new PdfPCell(cellBorderlessStyle);
-			salCell2.setPhrase(new Phrase(new Chunk("VENDEUR: "+pay.getFacture().getVendeur().getDisplayName(), boddyStyle)));
+			salCell2.setPhrase(new Phrase(new Chunk("VENDEUR: "+pay.getFacture().getVendeur().getUserName(), boddyStyle)));
 			salCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(salCell2);
 		

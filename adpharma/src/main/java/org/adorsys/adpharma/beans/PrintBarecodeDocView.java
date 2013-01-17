@@ -178,7 +178,7 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 			}
 			
 			textcell.setPhrase(new Phrase(new Chunk(designation.toUpperCase()+"\n" +
-					filiale+ligneApprovisionement.getApprovisionement().getFounisseur().displayCodeName()+ligneApprovisionement.getPrixVenteUnitaire().longValueExact()+" F", boddyStyles)));
+					filiale+ligneApprovisionement.getApprovisionement().getFounisseur().displayCodeName()+ligneApprovisionement.getPrixVenteUnitaire().longValueExact()+" FCFA", boddyStyles)));
 			textcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			PdfPTable imgTable = new PdfPTable(1);
 			imgTable.setWidthPercentage(100);
@@ -195,15 +195,8 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
-		document.setPageSize(PageSize.A4);
+		document.setPageSize(PageSize.LETTER);
 		document.setMargins(1,1, 2, 2);
-		/*Font boddyStyle = new Font();
-		HeaderFooter footer = new HeaderFooter(new Phrase(new Chunk(" Page" , boddyStyle)), true);
-		footer.setAlignment(Element.ALIGN_CENTER);
-		HeaderFooter header = new HeaderFooter(new Phrase(new Chunk("Fiche Etiquette Code Bare  Aprovisionnement N0 : "+model.get("apNumber") , boddyStyle)), false);
-		header.setAlignment(Element.ALIGN_CENTER);
-		*/
-
 		super.buildPdfMetadata(model, document, request);
 	}
 

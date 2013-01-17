@@ -30,6 +30,14 @@ public class Configuration {
 	
 	@Value("false")
 	private Boolean enableLicence;
+	
+	@Value("false")
+	private Boolean onlySaleOld;
+	
+	@Value("false")
+	private Boolean forceToSameLine;
+	
+	
 
 
 	public static void init(){
@@ -67,6 +75,26 @@ public class Configuration {
 
 	public void setEnableLicence(Boolean enableLicence) {
 		this.enableLicence = enableLicence;
+	}
+
+
+	public Boolean getOnlySaleOld() {
+		return onlySaleOld;
+	}
+
+
+	public void setOnlySaleOld(Boolean onlySaleOld) {
+		this.onlySaleOld = onlySaleOld;
+	}
+
+
+	public Boolean getForceToSameLine() {
+		return forceToSameLine;
+	}
+
+
+	public void setForceToSameLine(Boolean forceToSameLine) {
+		this.forceToSameLine = forceToSameLine;
 	}
 
 

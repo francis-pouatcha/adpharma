@@ -19,4 +19,9 @@
 <definition extends="default" name="rayons/findRayonsByNameEquals">
         <put-attribute name="body" value="/WEB-INF/views/rayons/findRayonsByNameEquals.jspx"/>
     </definition>
+    <definition extends="default" name="dataloader/loadrayon">
+        <put-attribute name="body" value="/WEB-INF/views/rayons/loadrayons.jspx"/>
+    </definition>
+    
+    
 </tiles-definitions>

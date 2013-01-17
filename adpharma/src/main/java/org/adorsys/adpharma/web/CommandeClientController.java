@@ -124,7 +124,7 @@ public class CommandeClientController {
 
 		}else if (pharmaUser == null) {
 			uiModel.addAttribute("apMessage", "aucun utilisateur trouve avec cette cle !");
-		}else if (pharmaUser.hasAnyRole(RoleName.ROLE_OPEN_SALE_SESSION)) {
+		}else if (!pharmaUser.hasAnyRole(RoleName.ROLE_VENDEUR)) {
 			uiModel.addAttribute("apMessage", "Desole Vous n'avez pas les droits neccessaires pour Anuller !");
 		}else{
 			commandeClient.annulerCommande(pharmaUser.getUserName());
@@ -431,10 +431,12 @@ public class CommandeClientController {
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
 
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		/*
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente a credit !");
 			return show(commandeClient.getId(), uiModel, request);
 		}
+		*/
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_PROFORMAT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
 			return show(commandeClient.getId(), uiModel, request);

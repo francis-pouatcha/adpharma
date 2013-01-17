@@ -23,11 +23,12 @@ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:spring="http://www.springfra
   <jsp:directive.attribute name="customPath" type="java.lang.String" required="false" rtexprvalue="true" description="Custom command path" />
   <jsp:directive.attribute name="customLabel" type="java.lang.String" required="false" rtexprvalue="true" description="Custom command label" />
   <jsp:directive.attribute name="customCommands" type="java.util.Collection" required="false" rtexprvalue="true" description="The collection command to be included in the table" />
-   <jsp:directive.attribute name="contextMenuLink" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
+  <jsp:directive.attribute name="contextMenuLink" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
   <jsp:directive.attribute name="custom" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Activating custom behavior" />
-      <jsp:directive.attribute name="tableId" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
-     
-       <spring:url value="${path}/" var="jq_show_url" />
+  <jsp:directive.attribute name="tableId" type="java.lang.String" required="false" rtexprvalue="false" description="The client template allow the insersion of additional commands" />
+    <jsp:directive.attribute name="printLink" type="java.lang.String" required="false"  description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  
+  <spring:url value="${path}/" var="jq_show_url" />
 
 <script>
 	$(function() {
@@ -36,10 +37,7 @@ $('tr.list').each(function(){
 							this.ondblclick = function(event) {
 								window.location = '${jq_show_url}'+this.id ;
 								return false;
-							
-								
 							};
-							
 							});
 	})
 	</script>
@@ -85,7 +83,7 @@ $('tr.list').each(function(){
     <table id="${tableId }"  title="double click to Show " >
     
       <thead>
-        <tr >
+        <tr>
           <c:forTokens items="${columnLabels}" delims="," var="columnHeading">
             <th>
               <c:out value="${columnHeading}" />
@@ -102,18 +100,25 @@ $('tr.list').each(function(){
             <th></th>
             <spring:eval var="colCounter" expression="colCounter  + 1" />
           </c:if>
+           <c:set var="actionrow"  value="0" />
           <c:if test="${show}">
-            <th></th>
+           <c:set var="actionrow"  value="${actionrow + 1 }" />
+           
             <spring:eval var="colCounter" expression="colCounter  + 1" />
           </c:if>
+          
           <c:if test="${update}">
-            <th></th>
+          <c:set var="actionrow"  value="${actionrow + 1 }" />
+           
             <spring:eval var="colCounter" expression="colCounter  + 1" />
           </c:if>
           <c:if test="${delete}">
-            <th></th>
+          <c:set var="actionrow"  value="${actionrow + 1 }" />
+            
             <spring:eval var="colCounter" expression="colCounter  + 1" />
           </c:if>
+          
+          <th colspan="${actionrow ==0 ? 1 : actionrow}"> <a href="${printLink }" > <center style="color: blue; font-weight: bold;">PDF</center></a></th>
         </tr>
       </thead>
       
@@ -248,38 +253,7 @@ $('tr.list').each(function(){
                  <jsp:include page="${contextMenuLink}"/>
                 </c:when>
                 <c:otherwise>
-                  <script type="text/javascript">
-			$(document).ready( function() {
-				// Show menu when #myDiv is clicked
-				$("#myDiv tr").contextMenu({
-					menu: 'myMenu'
-				},
-					function(action, el, pos) {
-					var pageUrl= "";
-					if(action =="show") pageUrl = '${show_form_url}';
-					if(action =="edit") pageUrl = '${update_form_url}';
-					if(action =="delete") pageUrl = '${delete_form_url}';
-					if(action =="create") pageUrl = '${create_url}';
-					window.location = pageUrl ;
-				});
-			});
-			
-		</script>
-  <ul id="myMenu" class="contextMenu">
-   <c:if test="${empty update or update}">
-			<li class="edit"><a href="#edit">Edit</a></li>
-			</c:if>
-			 <c:if test="${empty create or create}">
-			<li class="cut separator"><a href="#create">Add</a></li>
-			</c:if>
-			<c:if test="${empty show or show}">
-			<li class="copy"><a  href="#show">show</a></li>
-			</c:if>
-			<c:if test="${empty delete or delete}">
-			<li class="delete"><a href="#delete">Delete</a></li>
-			</c:if>
-			<li class="quit separator"><a href="#quit">Quit</a></li>
-		</ul>
+  
                 </c:otherwise>
               </c:choose>
  

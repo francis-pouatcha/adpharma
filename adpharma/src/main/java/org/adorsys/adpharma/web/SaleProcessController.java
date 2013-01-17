@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -83,7 +84,7 @@ public class SaleProcessController {
 			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment( next.getCommande().getId().toString(), httpServletRequest);
 
 		}else
-		uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
+			uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
 		uiModel.asMap().clear();
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
@@ -160,7 +161,7 @@ public class SaleProcessController {
 		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 		uiModel.addAttribute("saleProcess",saleProcess);
 		uiModel.addAttribute("apMessage", httpServletRequest.getAttribute("apMessage"));
-		
+
 		return "saleprocess/edit";
 	}
 
@@ -280,7 +281,7 @@ public class SaleProcessController {
 			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
 		}
 
-		
+
 	}
 
 
@@ -340,7 +341,7 @@ public class SaleProcessController {
 			saveAndCloseCmd(commandeClient ,caisse,pharmaUser);
 		}
 		uiModel.asMap().clear();
-		
+
 		return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment(commandeClient.getId().toString(), httpServletRequest);
 	}
 
@@ -355,7 +356,9 @@ public class SaleProcessController {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(pId);
 		int remiseAutorise = ProcessHelper.getRemise(ligneApp).intValue();
-		int qteStock = ligneApp.getProduit().getQuantiteEnStock().intValue();
+		BigInteger qteStock = ligneApp.getQuantieEnStock();
+		LigneCmdClient sameCipm = commandeClient.getItemHasSameCipm(ligneApp.getCipMaison());
+		if(sameCipm !=null)qteStock = qteStock.subtract(sameCipm.getQuantiteCommande());
 		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 		BigDecimal remise = BigDecimal.ZERO ;
 		if (!"".equals(rem)) {
@@ -373,13 +376,16 @@ public class SaleProcessController {
 			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE AJOUTEE DOIT ETRE SUPERIEUR A   0  ");
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
-		}else if (ligneApp.getQuantieEnStock().intValue() < qte.intValue()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE AJOUTEE DOIT ETRE INFERIEUR LA QTE EN STOCK : "+ligneApp.getQuantieEnStock().intValue());
+		}else if (qteStock.intValue() < qte.intValue()) {
+			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE ACHETEE  DOIT ETRE INFERIEUR LA QTE EN STOCK : "+ligneApp.getQuantieEnStock().intValue());
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			if (configuration.getSaleForce()) 	uiModel.addAttribute("forcer",Boolean.TRUE);
+			if(configuration.getSaleForce()) {
+				RoleName[] roleNames = {RoleName.ROLE_VENTE_FORCEE,RoleName.ROLE_SITE_MANAGER};
+				if(SecurityUtil.getPharmaUser().hasAnyRole(Arrays.asList(roleNames)))uiModel.addAttribute("forcer",Boolean.TRUE);
+			}
 
 		}/*else if (commandeClient.contientSameCipM(ligneApp.getCipMaison())) {
 			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
@@ -394,7 +400,11 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			if (configuration.getSaleForce()) uiModel.addAttribute("forcer",Boolean.TRUE);
+			if(configuration.getSaleForce()) {
+				RoleName[] roleNames = {RoleName.ROLE_VENTE_FORCEE,RoleName.ROLE_SITE_MANAGER};
+				if(SecurityUtil.getPharmaUser().hasAnyRole(Arrays.asList(roleNames)))uiModel.addAttribute("forcer",Boolean.TRUE);
+
+			}
 
 		} else{
 			if (remiseAutorise < remise.intValue()) {
@@ -436,16 +446,14 @@ public class SaleProcessController {
 			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE ANNULEE ! ");
 		}else if (qte.intValue() == 0) {
 			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : la qte ajoute  doit etre superieur a  0  ");
-		}/*else if (qte.intValue() > ligneApp.getProduit().getQuantiteEnStock().intValue()) {
-			uiModel.addAttribute("apMessage","Vous Pouver Forcer La vente Jusqu'a :  "+ligneApp.getProduit().getQuantiteEnStock());
-		}*/
-		else{
-			/*if (qte.intValue() <= ligneApp.getQuantieEnStock().intValue()) {
-				SaleProcess.addline(pId, qte, remise, commandeClient);
+		}else{
+
+			Configuration config = Configuration.findConfiguration(new Long(1));
+			if(config.getForceToSameLine()){
+				SaleProcess.addToExistingline(pId, qte, remise, commandeClient);
 			}else {
-				SaleProcess.addlineForcer(pId, qte, remise, commandeClient);
-			}*/
-			SaleProcess.addline(pId, qte, remise, commandeClient);//ddlineForcer(pId, qte, remise, commandeClient);
+				SaleProcess.addline(pId, qte, remise, commandeClient);
+			}
 
 		}
 		saleProcess.calculPrix(commandeClient);
@@ -572,7 +580,11 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
 			uiModel.addAttribute("pt",ligneApp.getPrixVenteUnitaire().multiply(BigDecimal.valueOf(qte.intValue())).longValue());
-			if(configuration.getSaleForce())	uiModel.addAttribute("forcer",Boolean.TRUE);
+			if(configuration.getSaleForce()) {
+				RoleName[] roleNames = {RoleName.ROLE_VENTE_FORCEE,RoleName.ROLE_SITE_MANAGER};
+				if(SecurityUtil.getPharmaUser().hasAnyRole(Arrays.asList(roleNames)))uiModel.addAttribute("forcer",Boolean.TRUE);
+
+			}
 			saleProcess.calculPrix(commandeClient);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);

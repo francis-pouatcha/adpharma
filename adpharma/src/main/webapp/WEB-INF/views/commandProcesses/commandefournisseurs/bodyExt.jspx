@@ -17,18 +17,17 @@
 		    	<tr>
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">qte Commande</th>
-		            <th style="text-align: center;">Prix achat Min</th>
-		            <th style="text-align: center;">Prix achat Total</th>
-		            <th style="text-align: center;">Agent Saisie</th>
-		    		<th style="text-align: center;">Date Saisie</th>
+		    		<th style="text-align: center;">qte Com </th>
+		    		<th style="text-align: center;">Prix Vente</th>
+		            <th style="text-align: center;">Prix AChat</th>
+		            <th style="text-align: center;">Prix AChat Total</th>
 		    	</tr>
 		    	<c:forEach items="${commandefournisseur.ligneCommande}" var="ligneCommande">
 		    		<tr>
 		    		<td style="text-align: center;">
 		    				<c:out value="${ligneCommande.cip}"></c:out>
 		    			</td >
-		    			<td style=" width: 300px; text-align: left;padding-left:20px;">
+		    			<td style=" width: 450px; text-align: left;padding-left:20px;">
 		    				<c:out value="${ligneCommande.designation}"></c:out>
 		    			
 		    			</td>
@@ -40,6 +39,10 @@
 		    		
 		    			</td>
 		    			<td style="text-align: right;padding-right: 20px;">
+		     		    				<c:out value="${ligneCommande.prixAVenteMin}"></c:out>
+
+		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;">
 		     		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>
 
 		    			</td>
@@ -47,12 +50,8 @@
 		     		    				<c:out value="${ligneCommande.prixAchatTotal}"></c:out>
 
 		    			</td>
-		    			<td style="text-align: center;">
-		    				<c:out value="${ligneCommande.agentSaisie}"></c:out>
-		    
-		    			</td>
-		    			<td style="text-align: center;">
-						 <fmt:formatDate value="${ligneCommande.dateSaisie}" pattern="dd-MM-yyyy HH:mm"/> </td>
+		    			
+		    			
 												
 		    		</tr>
 		    	</c:forEach>

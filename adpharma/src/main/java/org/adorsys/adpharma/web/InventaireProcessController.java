@@ -2,11 +2,16 @@ package org.adorsys.adpharma.web;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 
 import org.adorsys.adpharma.beans.InventaireProcess;
 import org.adorsys.adpharma.domain.Etat;
@@ -15,10 +20,13 @@ import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.Contract;
+import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,6 +39,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/inventaireProcess")
 @Controller
 public class InventaireProcessController {
+	@Autowired
+	private JasperPrintService jasperPrintService ;
+
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/{invId}/ficheDeComptage.pdf", method = RequestMethod.GET)
+	public void ficheDeComptage(@PathVariable("invId") Long invId  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("inventaireid",invId);
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.FICHE_INVENTAIRE_COMPTAGE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+
+
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/{invId}/ficheInventaire.pdf", method = RequestMethod.GET)
+	public void ficheInventaire(@PathVariable("invId") Long invId  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("inventaireid",invId);
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.FICHE_INVENTAIRE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
 
 	@RequestMapping(value = "/{invId}/editInventaire", method = RequestMethod.GET)
 	public String editCommand(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
@@ -127,8 +168,6 @@ public class InventaireProcessController {
 		inventaire.merge();
 		return "inventaireProcess/show";
 	}
-
-
 	@Transactional
 	@RequestMapping(value = "/{invId}/annulerInv", method = RequestMethod.GET)
 	public String annuler(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
@@ -189,7 +228,7 @@ public class InventaireProcessController {
 			inp.setLigneApprovisionements(LigneApprovisionement.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),inp.getDesignation(), null, inp.getRayon(), inp.getBeginBy(), inp.getEndBy(), inp.getFiliale(), null, null,null,null).getResultList());
 
 		}else {
-			List<Produit> resultList = Produit.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),null, inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(), inp.getRayon(), inp.getFiliale(),inp.getDateRupture());
+			List<Produit> resultList = Produit.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),null, inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(), inp.getRayon(), inp.getFiliale(),inp.getDateRupture(),null).getResultList();
 			if (!resultList.isEmpty()) {
 				for (Produit produit : resultList) {
 					produit.calculTransientPrice();
@@ -222,43 +261,26 @@ public class InventaireProcessController {
 	@RequestMapping(value = "/ficheSuivieQte.pdf", method = RequestMethod.GET)
 	public String inventaireFicheQte(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
 		List<Produit> result = new ArrayList<Produit>();
-		if (inp.isFindall()) {
-			List<Object[]> etatVente = MouvementStock.getQteVenduByCip(inp.getCipProduct(), inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(),inp.getDateDebut(), inp.getDateFin());
-			if (!etatVente.isEmpty()) {
-				for (Object[] obj : etatVente) {
-					List<Produit> resultList = Produit.findProduitsByCipEquals((String)obj[0]).getResultList();
-					if (!resultList.isEmpty()) {
-						Produit produit = resultList.iterator().next();
-						produit.setQtevendu((BigInteger)obj[2]);
-						result.add(produit);
-					}
-				}
-
-			}
-		}else {
-			List<Produit> search = Produit.search(null ,null,inp.getCipProduct(), inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(), inp.getRayon(), inp.getFiliale(),inp.getDateRupture());
-			if (!search.isEmpty()) {
-				for (Produit produit : search) {
-					produit.calculQteVendue(inp.getDateDebut(), inp.getDateFin());
-					if (produit.getQtevendu().intValue()!=0) result.add(produit);
-
-				}
+		List<Object[]> etatVente = MouvementStock.findProduitAndQuantiteVendue(inp.getCipProduct(), inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(),inp.getDateDebut(), inp.getDateFin(),inp.getRayon(),inp.getFiliale());
+		if (!etatVente.isEmpty()) {
+			for (Object[] obj : etatVente) {
+				Produit produit =  (Produit)obj[0]  ; 
+				produit.setQtevendu((BigInteger)obj[1]);
+				result.add(produit);
 			}
 
-			inp.setProduits(result);
 		}
-
 		uiModel.addAttribute("listeProduit", result);
 		uiModel.addAttribute("headTexte", "Fiche De Suivie de Quantitee Du "+PharmaDateUtil.format(inp.getDateDebut(), PharmaDateUtil.DATETIME_PATTERN_LONG)+" AU :" +
 				"" +PharmaDateUtil.format(inp.getDateFin(), PharmaDateUtil.DATETIME_PATTERN_LONG));
 		return "ficheSuivieQtePdf";
 	}
+
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		uiModel.addAttribute("rayon", ProcessHelper.populateRayon());
 		uiModel.addAttribute("filiale", ProcessHelper.populateFiliale());
 		uiModel.addAttribute("produit",new Produit() );
-
 		return "produits/search";
 	}
 
@@ -268,7 +290,7 @@ public class InventaireProcessController {
 			return "redirect:/produits?page=1" ;
 
 		}
-		uiModel.addAttribute("results", Produit.search(prd.getFamilleProduit(),prd.getSousfamilleProduit(),prd.getCip(), prd.getDesignation(),null,null, prd.getRayon(), prd.getFiliale() ,prd.getDateDerniereRupture() ));
+		uiModel.addAttribute("results", Produit.search(prd.getFamilleProduit(),prd.getSousfamilleProduit(),prd.getCip(), prd.getDesignation(),null,null, prd.getRayon(), prd.getFiliale() ,prd.getDateDerniereRupture(),null ).getResultList());
 		uiModel.addAttribute("rayon", ProcessHelper.populateRayon());
 		uiModel.addAttribute("filiale", ProcessHelper.populateFiliale());
 		return "produits/search";

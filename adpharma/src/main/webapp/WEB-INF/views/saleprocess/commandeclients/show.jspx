@@ -18,7 +18,6 @@ function(){
 
 $( "#cmd" ).hide('fade');
 $( "#retour" ).show('fade');
-$( "#retour" ).show('fade');
 $("#butAnnulerRet").show('fade');
 $(this).hide();
 return( false );
@@ -79,7 +78,7 @@ return( false );
 						document.getElementById("cip").value = tableau[0] //data.cip;
 						document.getElementById("des").value = tableau[2] //data.designation ;
 						document.getElementById("pu").value =tableau[3] // data.prixUnitaire;
-						document.getElementById("qte").value =  tableau[4] //1 ;
+						document.getElementById("qte").value =  tableau[4]-tableau[5] //1 ;
 						document.getElementById("qtecmd").value =  tableau[4] //data.quantiteCommande;
 						document.getElementById("qteRet").value = tableau[5] //data.quantiteRetourne;
 				

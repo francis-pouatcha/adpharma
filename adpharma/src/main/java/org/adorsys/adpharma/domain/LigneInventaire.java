@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.MvcNamespaceHandler;
 import org.adorsys.adpharma.domain.Produit;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,6 +23,11 @@ import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.apache.commons.collections.set.CompositeSet.SetMutator;
+
+/**
+ * @author adorsys-clovis
+ *
+ */
 
 @RooJavaBean
 @RooToString
@@ -51,6 +57,7 @@ public class LigneInventaire {
 	@ManyToOne
 	private Produit produit;
 
+
 	public void calculerEcart(){
 		ecart = qteReel.subtract(qteEnStock);
 	}
@@ -59,6 +66,30 @@ public class LigneInventaire {
 	public void prePersit(){
 		agentSaisie = SecurityUtil.getPharmaUser().getDisplayName();
 		dateSaisie = new Date();
+		calculerEcart() ;
+	}
+
+	@PreUpdate
+	public void preUpdate(){
+		calculerEcart() ;
+	}
+
+	/**
+	 * calculate price of product defficite ecart
+	 */
+	public void caculMontantEcart(){
+		List<BigDecimal> lastPrices = LigneApprovisionement.findlastPrices(produit);
+		prixUnitaire = BigDecimal.ZERO;
+		prixTotal = BigDecimal.ZERO;
+		if(!lastPrices.isEmpty()){
+			prixUnitaire = lastPrices.get(0);
+			prixTotal = prixUnitaire.multiply(BigDecimal.valueOf(ecart.longValue()));
+
+		}
+
+
+
+
 	}
 
 
@@ -116,11 +147,6 @@ public class LigneInventaire {
 						ligne.CalculeQteEnStock();
 						ligne.CalculeMontantStock();
 						ligne.merge();
-						/*Produit produit2 = ligne.getProduit() ;
-						//produit2.setQuantiteEnStock(produit2.getQuantiteEnStock().add(qte));
-						produit2.setQuantiteEnStock(qteReel);
-						produit2.setDateDerniereSortie(new  Date());
-						produit2.merge();*/
 						genereMvt(ligne, qte, false);
 
 						break;
@@ -181,8 +207,6 @@ public class LigneInventaire {
 			}else {
 				mouvementStock.setTypeMouvement(TypeMouvement.RETOUR_INVENTAIRE);
 				mouvementStock.setQteInitiale(mouvementStock.getQteFinale().subtract(quantite));
-
-
 			}
 			mouvementStock.persist();
 

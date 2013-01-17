@@ -26,7 +26,6 @@
 			<spring:url  value="/approvisionementprocess/${approvisonementProcess.apId}/enregistrer"  var="enr_cmd_url" />
 		 <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"  var="delete_cmd_url" />
 		<span class="firstTab unselectedTab"><a href="${ edit_url}">APPROVISIONNEMENT</a></span>
-		<span class="nextTab unselectedTab"><a href="${ find_product_url}">RECHERCHE PRODUIT</a></span>
 		<span class="nextTab selectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span>
 
 	   <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>

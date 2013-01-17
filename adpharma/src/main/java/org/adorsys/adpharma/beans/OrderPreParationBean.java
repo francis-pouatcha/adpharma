@@ -1,6 +1,8 @@
 package org.adorsys.adpharma.beans;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.ModeSelection;
+import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
@@ -28,8 +31,8 @@ import org.springframework.ui.ModelMap;
  * @author gakam clovis
  */
 public class OrderPreParationBean {
-	
-	
+
+
 	private CommandeFournisseur commandeFournisseur ;
 
 	private Filiale filiale ;
@@ -181,14 +184,28 @@ public class OrderPreParationBean {
 		this.magasin = magasin;
 	}
 
-    
+
 	public  List<Produit> getPreparedProductList(){
-		TypedQuery<Produit> preparation = findProductForPreparation(filiale, rayon, beginBy, endBy, beginDate, endDate, modeSelection, minStock);
-		 if(productSelectionQuantity!=null) preparation.setMaxResults(productSelectionQuantity.intValue());
-		 return preparation.getResultList();
+		if(modeSelection.equals(ModeSelection.RUPTURE_STOCK)){
+			TypedQuery<Produit> search = Produit.search(null, null, null, null, beginBy, endBy, rayon, filiale, null,BigInteger.ZERO);
+			if(productSelectionQuantity!=null)search.setMaxResults(productSelectionQuantity.intValue()) ;
+			return search.getResultList();
+		}
+		/*
+		 if(modeSelection.equals(ModeSelection.PLUS_VENDU)){
+			List<Object[]> produitAndQuantiteVendue = MouvementStock.findProduitAndQuantiteVendue(null, null, beginBy, endBy, beginDate, endDate, rayon, filiale);
+			if(!produitAndQuantiteVendue.isEmpty()){
+				ArrayList<Produit> arrayList = new ArrayList<Produit>();
+				for (Object[] objects : produitAndQuantiteVendue) {
+					arrayList.add((Produit)objects[0]);
+				}
+				return arrayList ;
+			}
+		}*/
+		return new ArrayList<Produit>();
 	}
-	
-	
+
+
 	public CommandeFournisseur generateOrder(){
 		CommandeFournisseur order = new CommandeFournisseur();
 		order.setDateLimiteLivraison(getDeliveryDate());
@@ -199,8 +216,8 @@ public class OrderPreParationBean {
 		order.setLivre(Boolean.FALSE);
 		return order;
 	}
-	
-	
+
+
 	public static LigneCmdFournisseur  getOrderItemm(Produit produit, Fournisseur fournisseur,ModeSelection modeSelection,BigInteger minStock){
 		produit.getFournisseurPrice(fournisseur);
 		LigneCmdFournisseur orderItems = new LigneCmdFournisseur();
@@ -208,63 +225,93 @@ public class OrderPreParationBean {
 		orderItems.setPrixAVenteMin(produit.getPrixVenteStock());
 		orderItems.setProduit(produit);
 		orderItems.calculPrixTotal();
-		System.out.println(produit.getPlafondStock());
-		System.out.println(produit.getQuantiteEnStock());
-		BigInteger subtract = produit.getPlafondStock().subtract(produit.getQuantiteEnStock());
+		BigInteger plafond = produit.getPlafondStock()==null ? BigInteger.valueOf(50):produit.getPlafondStock();
+		BigInteger subtract = plafond.subtract(produit.getQuantiteEnStock());
 		if(subtract.intValue()>0)orderItems.setQuantiteCommande(subtract);
 		return orderItems ;
-		
+
 	}
 	
-	
+	public static List<LigneCmdFournisseur>  getOrderItemm(CommandeFournisseur order,List<Object[]> itemifos , ModeSelection modeSelection){
+		 ArrayList<LigneCmdFournisseur> arrayList = new ArrayList<LigneCmdFournisseur>();
+		if (itemifos == null) return arrayList ;
+		
+//		if(itemifos.isEmpty() ) return arrayList ;
+		for (Object[] objects : itemifos) {
+			Produit prd = (Produit) objects[0];
+			BigInteger qte = (BigInteger) objects[1];
+			BigDecimal pa = (BigDecimal) objects[2];
+			BigDecimal pv = (BigDecimal) objects[3];
+			LigneCmdFournisseur orderItems = new LigneCmdFournisseur();
+			orderItems.setPrixAchatMin(pa);
+			orderItems.setPrixAVenteMin(pv);
+			orderItems.setProduit(prd);
+			orderItems.calculPrixTotal();
+			if (modeSelection.equals(ModeSelection.PLUS_VENDU)) {
+				orderItems.setQuantiteCommande(qte);
+			}else {
+				BigInteger plafond = prd.getPlafondStock()==null ? BigInteger.valueOf(50):prd.getPlafondStock();
+				BigInteger subtract = plafond.subtract(prd.getQuantiteEnStock());
+				if(subtract.intValue()>0)orderItems.setQuantiteCommande(subtract);
+			}
+			orderItems.setCommande(order);
+			orderItems.persist();
+			arrayList.add(orderItems) ;
+		}
+		return arrayList ;
+		
+
+	}
+
+
 	public static TypedQuery<Produit> findProductForPreparation(Filiale filiale ,Rayon rayon, String beginBy,String endBy,Date beginDate,
 			Date endDate,ModeSelection modeSelection ,BigInteger qteLimit){
-		    if(qteLimit==null) qteLimit=BigInteger.ONE;
-		   StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.quantiteEnStock  <= :qteLimit AND  o.quantiteEnStock >= :min");
-	        
-	        if (StringUtils.isNotBlank(endBy)) {
-	        	endBy = endBy + "%";
-	            searchQuery.append(" AND  LOWER(o.designation) <= LOWER(:endBy) ");
-	        }
-	        
-	        if (StringUtils.isNotBlank(beginBy)) {
-	        	beginBy = beginBy + "%";
-	            searchQuery.append(" AND  LOWER(o.designation) >= LOWER(:beginBy) ");
-	        }
-	      
-	        if (rayon != null) {
-	            searchQuery.append(" AND o.rayon = :rayon ");
-	        }
-	        if (filiale != null) {
-	            searchQuery.append(" AND o.filiale = :filiale ");
-	        }
-	        EntityManager em = Produit.entityManager();
-	        TypedQuery<Produit> q = em.createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
-	       
-	        if (StringUtils.isNotBlank(endBy)) {
-	            q.setParameter("endBy", endBy);
+		if(qteLimit==null) qteLimit=BigInteger.ONE;
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.quantiteEnStock  <= :qteLimit AND  o.quantiteEnStock >= :min");
 
-	        }
-	        
-	        if (StringUtils.isNotBlank(beginBy)) {
-	            q.setParameter("beginBy", beginBy);
+		if (StringUtils.isNotBlank(endBy)) {
+			endBy = endBy + "%";
+			searchQuery.append(" AND  LOWER(o.designation) <= LOWER(:endBy) ");
+		}
 
-	        }
-	       
-	        if (rayon != null) {
-	            q.setParameter("rayon", rayon);
-	        }
-	       
-	        if (filiale != null) {
-	            q.setParameter("filiale", filiale);
-	        }
-	        q.setParameter("qteLimit", qteLimit);
-	        q.setParameter("min", BigInteger.ZERO);
-	       
-	        return q;
-	    }
-		
+		if (StringUtils.isNotBlank(beginBy)) {
+			beginBy = beginBy + "%";
+			searchQuery.append(" AND  LOWER(o.designation) >= LOWER(:beginBy) ");
+		}
+
+		if (rayon != null) {
+			searchQuery.append(" AND o.rayon = :rayon ");
+		}
+		if (filiale != null) {
+			searchQuery.append(" AND o.filiale = :filiale ");
+		}
+		EntityManager em = Produit.entityManager();
+		TypedQuery<Produit> q = em.createQuery(searchQuery.append(" ORDER BY o.designation ASC").toString(), Produit.class);
+
+		if (StringUtils.isNotBlank(endBy)) {
+			q.setParameter("endBy", endBy);
+
+		}
+
+		if (StringUtils.isNotBlank(beginBy)) {
+			q.setParameter("beginBy", beginBy);
+
+		}
+
+		if (rayon != null) {
+			q.setParameter("rayon", rayon);
+		}
+
+		if (filiale != null) {
+			q.setParameter("filiale", filiale);
+		}
+		q.setParameter("qteLimit", qteLimit);
+		q.setParameter("min", BigInteger.ZERO);
+
+		return q;
 	}
+
+}
 
 
 

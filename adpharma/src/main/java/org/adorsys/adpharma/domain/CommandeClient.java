@@ -166,6 +166,20 @@ public class CommandeClient extends AdPharmaBaseEntity {
 			return "";
 		}
 	}
+	
+	public Boolean isAllItemToSale(LigneApprovisionement line){
+	    	LigneCmdClient sameCipM = this.getSameCipM(line.getCipMaison());
+	    	if(sameCipM !=null){
+	    		if(sameCipM.getQuantiteCommande().equals(line.getQuantieEnStock())){
+	    			return true ;
+	    		}else {
+					return false ;
+				}
+	    	}
+	    	return false ;
+	}
+	
+	
 
 	public BigInteger getPartClient() {
 		if (typeCommande.equals(TypeCommande.VENTE_A_CREDIT)) {
@@ -315,6 +329,15 @@ public class CommandeClient extends AdPharmaBaseEntity {
 			}
 		}
 		return listOfSameCip;
+	}
+	
+	public LigneCmdClient getItemHasSameCipm(String cipm) {
+		if (!lineCommande.isEmpty()) {
+			for (LigneCmdClient ligneCmd : lineCommande) {
+				if (StringUtils.equals(ligneCmd.getCipM(),cipm)) return ligneCmd ;
+			}
+		}
+		return null ;
 	}
 	public Facture getFacture(){
 		List<Facture> resultList = Facture.findFacturesByCommande(this).getResultList();

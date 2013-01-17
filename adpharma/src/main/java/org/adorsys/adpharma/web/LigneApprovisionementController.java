@@ -144,7 +144,6 @@ public class LigneApprovisionementController {
 
 		if("byCipm".equals(mode)){
 			String cipm = request.getParameter("cipm");
-			cipm = StringUtils.removeStart(cipm, "0");
 			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipm).getResultList();
 			if (!resultList.isEmpty()) {
 				LigneApprovisionement line = resultList.iterator().next();
@@ -171,9 +170,8 @@ public class LigneApprovisionementController {
 
 			}
 		}
-
-
-		return "redirect:/ligneapprovisionements/sortieProduit";
+		uiModel.asMap().clear();
+		return sortieProduit(mode, uiModel);
 	}  
 
 	public void pushLineOut(LigneApprovisionement line ,BigInteger qte ,String raison ){

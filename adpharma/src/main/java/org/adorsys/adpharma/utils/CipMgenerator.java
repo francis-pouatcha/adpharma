@@ -16,14 +16,8 @@ import org.bouncycastle.jce.provider.JDKDSASigner.stdDSA;
 public class CipMgenerator {
 	@SuppressWarnings("deprecation")
 	public static final String getCipM(String suffix){
-		Date date = new Date();
-		int year = date.getYear(); 
-		 int annee = year-100 ;
-		  String month = formatNumber(""+(date.getMonth()+1), 2) ;
-		
-		// String month = formatNumber(""+Calendar.MONTH, 2) ;
-		//suffix="5000";
-		 return  new StringBuffer().append(annee).append(month).append(CipMgenerator.formatNumber(suffix, 6)).toString();
+		String dateString = PharmaDateUtil.format(new Date(), PharmaDateUtil.DATE_PATTERN_TRIM);
+		 return  new StringBuffer().append(dateString).append(CipMgenerator.formatNumber(suffix, 6)).toString();
 	 }
 	
 	public static String formatNumber(String stringToFormat , int patern){

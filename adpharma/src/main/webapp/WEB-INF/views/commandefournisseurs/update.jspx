@@ -3,29 +3,21 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="commandeFournisseur" path="/commandefournisseurs" versionField="Version" z="O7uGylH0b9wdwB0TRPs2nlCxEqM=">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
-                    <field:input disabled="true" field="cmdNumber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" z="user-managed"/>
-                    <field:datetime dateTimePattern="${commandeFournisseur_datecreation_date_format}" disabled="true" field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" z="user-managed"/>
+                    <field:display  object="${commandeFournisseur}" hiddenfield="true" field="cmdNumber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" z="user-managed"/>
+                    <field:display  object="${commandeFournisseur}" hiddenfield="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}"  field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" z="user-managed"/>
                     <field:datetime dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="o/NC7N9COcOihDsFpVfUoOpijdY="/>
                     <field:select field="fournisseur" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="Ko+h/8rs62Jv7Du7SyHBRUVaAeE="/>
                     <field:select disabled="true" field="ModeDeSelection" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" items="${modeselections}" path="modeselections" z="user-managed"/>
                     <field:select disabled="true" field="site" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_site" itemValue="id" items="${sites}" path="/sites" z="user-managed"/>
                     <field:select disabled="true" field="creePar" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
                     <field:select disabled="true" field="etatCmd" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" items="${etats}" path="etats" z="user-managed"/>
-                </td>
-                <td class="tbcreate">
                     <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" render="false" z="user-managed"/>
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" render="false" z="user-managed"/>
                     <field:simple field="ligneCommande" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ligneCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Fournisseur" render="false" z="user-managed"/>
                     <field:checkbox field="livre" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_livre" render="false" z="user-managed"/>
-                    <field:input disabled="true" field="montantHt" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt" validationMessageCode="field_invalid_number" z="user-managed"/>
-                    <field:input disabled="true" field="montantTva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva" validationMessageCode="field_invalid_number" z="user-managed"/>
-                    <field:input disabled="true" field="montantTtc" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc" validationMessageCode="field_invalid_number" z="user-managed"/>
+                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantHt" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt"  z="user-managed"/>
+                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantTva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva"  z="user-managed"/>
+                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantTtc" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc"  z="user-managed"/>
                     <field:select disabled="true" field="tva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_tva" itemValue="id" items="${tvas}" path="/tvas" z="user-managed"/>
-                </td>
-            </tr>
-        </table>
     </form:update>
 </div>

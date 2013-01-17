@@ -1,0 +1,73 @@
+<div>
+<header class="jumbotron subhead" id="overview">
+  <h1>Gestion Du Stock </h1>
+  <p class="lead">Gestion Du Stock </p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#approvisionnemnt">Approvisionnemnt</a></li>
+      <li><a href="#stock">Mouvement de Stock</a></li>
+      <li><a href="#fournisseur">Commande Fournisseur</a></li>
+    </ul>
+  </div>
+</header>
+    
+<section id="approvisionnemnt">
+  <div class="page-header">
+    <h1>Approvisionnemnt <small>Approvisionnemnt</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+      <h3>Creer un Approvisionnement</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Rechercher Un Approvisionnement</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Lister les Approvisionnements</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Decomposer un produit Approvisionne</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Sortir du stock un produit Approvisionne</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher un produit Approvisionne</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+       <h3>Impression du code Barre d'un produit Approvisionne</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+     
+    </div>
+  </div>  
+</section>
+  
+<section id="stock">
+  <div class="page-header">
+    <h1>Mouvement de Stock <small>Mouvement de Stock</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span12">
+      <h3>Visualiser Les Mouvements de stock</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Visualiser la fiche detaillee d'un produit par CIPM</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher un Mouvement</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+  </div>  
+</section>
+    
+     
+<section id="fournisseur">
+  <div class="page-header">
+    <h1>Commande Fournisseur <small>Commande Fournisseur</small></h1>
+  </div>
+  <div class="row">
+     <div class="span12">
+      <h3>Editer une fiche de suivi de quantite</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Effectuer Une Commande Fournisseur</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher une commande</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+</div>

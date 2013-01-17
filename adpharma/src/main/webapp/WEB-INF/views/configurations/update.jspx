@@ -8,7 +8,9 @@
         <field:checkbox field="closeCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" z="X/fLML/P1TS2xrQyhPalHoqQwLU="/>
         <field:checkbox field="restoreCancelSale" label="Restorer Les Ventes Anullees ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:checkbox field="saleCash" label="Autoriser La vente directe ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-           <field:checkbox field="editCloseSupply" label="Editer Les Entrees Clos ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="editCloseSupply" label="Editer Les Entrees Clos ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="onlySaleOld" label="Toujour Ventre Les Plus Ancien ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="forceToSameLine" label="Forcer Les ventes SUr le meme CIPM ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
    
     </form:update>
 </div>

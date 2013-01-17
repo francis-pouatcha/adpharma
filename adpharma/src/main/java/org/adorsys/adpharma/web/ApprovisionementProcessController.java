@@ -1,15 +1,28 @@
 package org.adorsys.adpharma.web;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.beans.PrintBareCodeBean;
@@ -20,16 +33,20 @@ import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.JasperPrintService;
+import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +60,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/approvisionementprocess")
 @Controller
 public class ApprovisionementProcessController {
+	
+	@Autowired
+	private JasperPrintService jasperPrintService ;
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
@@ -131,8 +151,12 @@ public class ApprovisionementProcessController {
 				uiModel.addAttribute("apMessage", "La date de Peremtion de ce produit Doit etre Superieure a la date du jour !");
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
+			
 			ligneApprovisionement.setProduit(produit);
 			ligneApprovisionement.persist();
+			produit.setPrixAchatU(ligneApprovisionement.getPrixVenteUnitaire());
+			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
+			produit.merge();
 			approvisionement.increaseMontant(ligneApprovisionement.getPrixAchatTotal());
 			approvisionement.merge();
 			return initViewContent(approvisionement, tvaj, uiModel);
@@ -259,13 +283,40 @@ public class ApprovisionementProcessController {
 
 		@RequestMapping(value = "/{apId}/recupererCmd/{cmId}",  method = RequestMethod.GET)
 		public String recupererCmd(@PathVariable("cmId") Long cmId,@PathVariable("apId") Long apId, Model uiModel) {
+			
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
-			CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
-			approvisionement.calculateMontant();
-			approvisionement.merge();
+			if(approvisionement!=null){
+				CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
+				approvisionement.calculateMontant();
+				approvisionement.merge();
+			}else {
+				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
+			}
+			
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
 			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			initProcurementViewDependencies(uiModel);
+			return "approvisionementprocess/edit";
+		}
+		
+		@RequestMapping(value = "/convertOrderToAppro/{cmId}",  method = RequestMethod.GET)
+		public String convertOrderToAppro(@PathVariable("cmId") Long cmId, Model uiModel) {
+			CommandeFournisseur cmd = CommandeFournisseur.findCommandeFournisseur(cmId);
+			Approvisionement approvisionement = new Approvisionement(cmd);
+			approvisionement.persist();
+			if(approvisionement!=null){
+				CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
+				approvisionement.calculateMontant();
+				approvisionement.merge();
+			}else {
+				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
+			}
+			
+			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(approvisionement.getId());
+			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
+			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			initProcurementViewDependencies(uiModel);
 			return "approvisionementprocess/edit";
 		}
 
@@ -342,13 +393,76 @@ public class ApprovisionementProcessController {
 		}
 
 		// imprime la fiche d 'approvisionenment
-		@RequestMapping("/{apId}/printFicheAp/{ficheApId}.pdf")
-		public String printFicheApprov( @PathVariable("apId")Long apId, @PathVariable("ficheApId")String ficheApId, Model uiModel){
-			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+		
+		@Produces({"application/pdf"})
+		@Consumes({""})
+		@RequestMapping(value = "/{apId}/printFicheAp/{ficheApId}.pdf", method = RequestMethod.GET)
+		public void printFicheApprov(@PathVariable("apId") Long apId  ,HttpServletRequest request,HttpServletResponse response) {
+			Map parameters = new HashMap();
+			parameters.put("approvisionementid",apId);
+			try {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.FICHE_APPROVISIONNEMENT_FILE_PATH);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
+		}
+		
+		@Produces({""})
+		@Consumes({""})
+		@RequestMapping(value = "/{apId}/exporto/{ficheApId}.xls", method = RequestMethod.GET)
+		public void exportoxls(@PathVariable("apId") Long apId  ,HttpServletRequest request,HttpServletResponse response) {
+			Approvisionement ap = Approvisionement.findApprovisionement(apId);
+			String fournisseur = ap.getFounisseur().getShortname();
+			String site =ap.getMagasin()==null? Site.findSite(new Long(1)).displayName() : ap.getMagasin().getDisplayName();
+		    site =	StringUtils.removeStartIgnoreCase(site, "PHARMACIE");
+			Set<LigneApprovisionement> ligneap = ap.getLigneApprivisionement();
+			try {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				WritableWorkbook workbook = Workbook.createWorkbook(baos);
+				WritableSheet sheet = workbook.createSheet(ap.getApprovisionementNumber(),0);
+				Label ciph= new Label(0, 0,"cipm" );
+				sheet.addCell(ciph);
+				Label desh = new Label(1, 0, "designation");
+				sheet.addCell(desh);
+				Label pvh = new Label(2, 0, "pv");
+				sheet.addCell(pvh);
+				Label fourh = new Label(3, 0, "fournisseur");
+				sheet.addCell(fourh);
+				Label magasinh = new Label(4, 0, "site");
+				sheet.addCell(magasinh);
+				int i = 1 ;
+				for (LigneApprovisionement line : ligneap) {
+					int stock = line.getQuantieEnStock().intValue();
+					for (int j = i; j < i+stock; j++) {
+							Label cip= new Label(0, j, line.getCipMaison());
+							sheet.addCell(cip);
+							Label des = new Label(1, j, line.getProduit().getDesignation());
+							sheet.addCell(des);
+							Label pv = new Label(2, j, line.getPrixVenteUnitaire().longValue()+"F CFA");
+							sheet.addCell(pv);
+							Label four = new Label(3, j, fournisseur);
+							sheet.addCell(four);
+							Label magasin = new Label(4, j, site);
+							sheet.addCell(magasin);
+						
+					}
+					i = i+stock ;
+				}
 
-			uiModel.addAttribute("approvisionement", approvisionement);
-			return "ficheApprovisionementPdfDocView";
-
+				workbook.write();
+				workbook.close();
+				response.setContentLength(baos.size());
+				ServletOutputStream out1 = response.getOutputStream();
+				baos.writeTo(out1);
+				out1.flush();
+				return ;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
 		}
 
 

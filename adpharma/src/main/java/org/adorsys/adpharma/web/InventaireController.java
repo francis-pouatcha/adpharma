@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,6 +9,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
+import org.adorsys.adpharma.beans.importExport.LigneInventaireImportExportService;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Inventaire;
@@ -17,6 +23,9 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
+import org.adorsys.adpharma.utils.ProcessHelper;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,24 +34,38 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @RooWebScaffold(path = "inventaires", formBackingObject = Inventaire.class)
 @RequestMapping("/inventaires")
 @Controller
 public class InventaireController {
+	@Autowired
+	private LigneInventaireImportExportService ligneinventaireImportExportService ;
+	
+	
+	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
+	public String Search(Model uiModel) {
+		uiModel.addAttribute("pharmausers", ProcessHelper.populateUsers());
+		uiModel.addAttribute("inventaire",new Inventaire() );
+		return "inventaire/search";
+	}
+
+	@RequestMapping(value="/search", method = RequestMethod.GET)
+	public String Search(Inventaire inventaire , Model uiModel) {
+		uiModel.addAttribute("results", inventaire.searchInventaire(inventaire.getNumeroInventaire(), inventaire.getAgent(), inventaire.getEtat() ,inventaire.getDateDebut(), inventaire.getDateFin()));
+		uiModel.addAttribute("pharmausers", ProcessHelper.populateUsers());
+		uiModel.addAttribute("inventaire",inventaire);
+		return "inventaire/search";
+	}
+	
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
-		/*List<Inventaire> resultList = Inventaire.findInventairesByEtat(Etat.EN_COUR).getResultList();
-		if (!resultList.isEmpty()) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer cette Operation Un inventaire est deja en cour !");
-			return "caisses/infos";
-
-		}else {*/
+		
 			uiModel.addAttribute("inventaire", new Inventaire());
 			addDateTimeFormatPatterns(uiModel);
 			return "inventaires/create";
-
-		//}
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid Inventaire inventaire, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -53,8 +76,68 @@ public class InventaireController {
 		}
 		uiModel.asMap().clear();
 		inventaire.persist();
+		MultipartFile fichier = inventaire.getFichier();
+		if(fichier!=null){
+		 Workbook workbook = null;
+		try {
+			workbook = Workbook.getWorkbook(fichier.getInputStream());
+			if(workbook != null){
+				 List<LigneInventaire> importListFromSheet = ligneinventaireImportExportService.importListFromSheet(workbook.getSheet(0), inventaire);
+				 inventaire.getLigneInventaire().addAll(importListFromSheet);
+				 inventaire.calculateMontantEcart();
+				}
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
+		for (Produit produit : search) {
+			if(!inventaire.contientProduit(produit)){
+				LigneInventaire itemFromProduct = Inventaire.itemFromProduct(produit);
+				if(itemFromProduct!=null){
+					itemFromProduct.setInventaire(inventaire);
+					itemFromProduct.persist();
+				}
+			}
+			
+			
+		}
+		
+		inventaire = (Inventaire) inventaire.merge();
+		}
 		return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
 	}
+	
+	@RequestMapping(value="/loadfile/{id}",method = RequestMethod.POST)
+	  public String loadfile(@PathVariable("id")Long id, @RequestParam("fichier")MultipartFile fichier, Model uiModel, HttpServletRequest httpServletRequest)
+	    {
+	        Inventaire inventaire = Inventaire.findInventaire(id);
+	        try
+	        {
+	            Workbook workbook = Workbook.getWorkbook(fichier.getInputStream());
+	            Sheet sheet = workbook.getSheet(0);
+	                ligneinventaireImportExportService.mergeFromWorkbook(inventaire, sheet);
+	                inventaire.calculateMontantEcart();
+	                inventaire.merge();
+	        }
+	        catch(BiffException e)
+	        {
+	            e.printStackTrace();
+	        }
+	        catch(IOException e)
+	        {
+	            e.printStackTrace();
+	        }
+	        uiModel.asMap().clear();
+			return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
+	    }
+	  
+	  
+	  
+	  
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") Long id, Model uiModel) {
 		addDateTimeFormatPatterns(uiModel);
@@ -146,8 +229,7 @@ public class InventaireController {
 	    
 	    @ModelAttribute("rayons")
 	    public Collection<Rayon> populateRayons() {
-	       // return Rayon.findAllRayons();
-	    	return new ArrayList<Rayon>();
+	    	return ProcessHelper.populateRayon();
 	    }
 	    
 	    @ModelAttribute("sites")

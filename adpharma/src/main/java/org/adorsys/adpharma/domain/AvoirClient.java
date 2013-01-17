@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.PostPersist;
 import javax.persistence.Temporal;
@@ -262,4 +263,7 @@ reste = montant;
         q.setParameter("annuler", annuler);
         return q;
     }
+    
+    
+    
 }

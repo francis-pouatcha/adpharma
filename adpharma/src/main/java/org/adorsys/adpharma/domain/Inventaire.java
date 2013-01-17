@@ -1,50 +1,45 @@
 package org.adorsys.adpharma.domain;
 
-import org.springframework.roo.addon.entity.RooEntity;
-import org.springframework.roo.addon.javabean.RooJavaBean;
-import org.springframework.roo.addon.tostring.RooToString;
-import org.adorsys.adpharma.domain.PharmaUser;
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import org.adorsys.adpharma.domain.Etat;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.Size;
-
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.adorsys.adpharma.domain.Site;
-import java.util.Set;
-import org.adorsys.adpharma.domain.LigneInventaire;
+import jxl.Cell;
+
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.InventoryService;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.HashSet;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.roo.addon.entity.RooEntity;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.web.multipart.MultipartFile;
 
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Inventaire", finders = { "findInventairesByDateInventaireBetween", "findInventairesByEtat", "findInventairesByAgentAndDateInventaireBetween" })
 public class Inventaire extends AdPharmaBaseEntity {
 
-
 	private String numeroInventaire;
-
+	
+	private Long aproId;
 	@ManyToOne
 	private PharmaUser agent;
 
@@ -62,11 +57,25 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 	@ManyToOne
 	private Site site;
+	
+   transient MultipartFile fichier ;
 
 	/*
 	 * champ utili  pour l'edition des fiches d'inventaires
 	 */
 	private transient FamilleProduit familleProduit  ;
+
+	public Approvisionement associateAppro(){
+		return Approvisionement.findApprovisionement(aproId);
+	}
+	
+	public MultipartFile getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(MultipartFile fichier) {
+		this.fichier = fichier;
+	}
 
 	public FamilleProduit getFamilleProduit() {
 		return familleProduit;
@@ -242,7 +251,14 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 	private transient List<LigneApprovisionement> ligneApprovisionements = new ArrayList<LigneApprovisionement>() ;	
 	private transient List<Produit> produits = new ArrayList<Produit>() ;
-
+   
+	 public LigneInventaire hasItem(LigneInventaire item){
+	        if(ligneInventaire.isEmpty())return null;
+	        for (LigneInventaire line : ligneInventaire) {
+				if(item.getProduit().equals(line.getProduit()))return line;
+			}
+	        return null;
+	    }
 
 
 	@PrePersist
@@ -274,6 +290,30 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "inventaire")
 	private Set<LigneInventaire> ligneInventaire = new HashSet<LigneInventaire>();
+   
+	public void calculateMontantEcart(){
+		montant = BigDecimal.ZERO ;
+		for (LigneInventaire item : ligneInventaire) {
+			montant = montant.add(item.getPrixTotal());
+			
+		}
+		
+	}
+	
+	public static LigneInventaire itemFromProduct(Produit prd ){
+		if(prd == null )return null ;
+		LigneInventaire item = new LigneInventaire();
+			item.setProduit(prd);
+			item.setQteEnStock(prd.getQuantiteEnStock());
+			item.setQteReel(prd.getQuantiteEnStock());
+			item.setDateSaisie(new Date());
+			item.calculerEcart();
+			item.caculMontantEcart();
+			return item ;
+	}
+	
+	
+
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -358,6 +398,44 @@ public class Inventaire extends AdPharmaBaseEntity {
 			}
 			if (filiale != null) {
 				q.setParameter("filiale", filiale);
+			}
+			return q.getResultList(); 
+		}
+
+	}
+	
+	public static List<Inventaire> searchInventaire(String numeroInventaire,PharmaUser agent, Etat etat,Date beginDate,Date endDate) {
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Inventaire AS o WHERE o.id IS NOT NULL ");
+		if (StringUtils.isNotBlank(numeroInventaire)) {
+			numeroInventaire = "INV-"+StringUtils.removeStart(numeroInventaire, "INV-");
+			return entityManager().createQuery("SELECT o FROM Inventaire AS o WHERE  o.numeroInventaire = :numeroInventaire ", Inventaire.class).setParameter("numeroInventaire", numeroInventaire).getResultList();
+		} else {
+			
+			if (agent != null) {
+				searchQuery.append(" AND o.agent = :agent ");
+			}
+			if (etat != null) {
+				searchQuery.append(" AND o.etat = :etat ");
+			}
+			if (beginDate != null) {
+				searchQuery.append(" AND o.dateInventaire >= :beginDate ");
+			}
+			if (endDate != null) {
+				searchQuery.append(" AND o.dateInventaire <= :endDate ");
+			}
+			TypedQuery<Inventaire> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id ASC").toString(), Inventaire.class);
+			
+			if (agent != null) {
+				q.setParameter("agent", agent);
+			}
+			if (etat != null) {
+				q.setParameter("etat", etat);
+			}
+			if (beginDate != null) {
+				q.setParameter("beginDate", beginDate);
+			}
+			if (endDate != null) {
+				q.setParameter("endDate", endDate);
 			}
 			return q.getResultList(); 
 		}

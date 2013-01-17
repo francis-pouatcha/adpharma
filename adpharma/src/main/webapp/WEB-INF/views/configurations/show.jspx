@@ -7,5 +7,12 @@
         <field:display label="Fermer Les Caisse Avec Factures Impayees ?" field="closeCashUnpaySale"  id="s_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" object="${configuration}" z="L2nUf0USRoPEtsRSmkZr4JQj5/Y="/>
         <field:display field="closeCancelSale" label="Autoriser L.anullation des Ventes  ?"  id="s_org_adorsys_adpharma_domain_Configuration_closeCancelSale" object="${configuration}" z="U8pWWPsh3exmcj4TySFy7FAOCj0="/>
         <field:display field="restoreCancelSale" label="Restorer Les Ventes Anuller ?" id="s_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="VFY87oo7rbZvtwaC3yYfDW0wt/0="/>
+        <field:display field="saleCash" label="Autoriser La vente directe ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:display field="editCloseSupply" label="Editer Les Entrees Clos ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:display field="onlySaleOld" label="Toujour Ventre Les Plus Ancien ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:display field="forceToSameLine" label="Forcer Les ventes SUr le meme CIPM ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+   
+   
+   
     </page:show>
 </div>

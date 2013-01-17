@@ -179,7 +179,7 @@ public class MouvementStock extends AdPharmaBaseEntity {
         if (debut == null) throw new IllegalArgumentException("The debut arguments are required");
         fin = fin ==null?new Date():fin;
         EntityManager em = MouvementStock.entityManager();
-        StringBuilder searchQuery = new StringBuilder("SELECT   o.cip , o.designation  ,SUM(o.qteDeplace)  FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement ");
+        StringBuilder searchQuery = new StringBuilder("SELECT   o.cip , o.designation  ,SUM(o.qteDeplace) as qte FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement ");
 
 
         if (StringUtils.isNotBlank(cip)) {
@@ -197,12 +197,53 @@ public class MouvementStock extends AdPharmaBaseEntity {
         	endDes = endDes + "%";
         	searchQuery.append("  AND  LOWER(o.designation) <= LOWER(:endDes)  ");
   		}
-        Query q= em.createQuery(searchQuery.append("  GROUP BY o.cip  ORDER BY  o.designation ASC").toString());
+        Query q= em.createQuery(searchQuery.append("  GROUP BY o.cip  ORDER BY  qte ASC").toString());
         if (StringUtils.isNotBlank(cip)) q.setParameter("cip", cip);
         if (StringUtils.isNotBlank(designation)) q.setParameter("designation", designation);
         if (StringUtils.isNotBlank(beginDes)) q.setParameter("beginDes", beginDes);
         if (StringUtils.isNotBlank(endDes)) q.setParameter("endDes", endDes);
+        q.setParameter("debut", debut);
+        q.setParameter("fin", fin);
+        q.setParameter("typeMouvement", TypeMouvement.VENTE);
+        return q.getResultList();
+    }
+    
+    
+    public static List<Object[]> findProduitAndQuantiteVendue(String cip,String designation,String beginDes,String endDes,Date debut ,Date fin,Rayon rayon , Filiale filiale) {
+        if (debut == null) throw new IllegalArgumentException("The debut arguments are required");
+        fin = fin ==null?new Date():fin;
+        EntityManager em = MouvementStock.entityManager();
+        StringBuilder searchQuery = new StringBuilder("SELECT p , SUM(o.qteDeplace) as qte FROM MouvementStock AS o , Produit AS p WHERE o.cip = p.cip AND o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement ");
 
+        if (StringUtils.isNotBlank(cip)) {
+        	searchQuery.append(" AND o.cip = :cip  ");
+		}
+        if (StringUtils.isNotBlank(designation)) {
+        	  designation =  "%"+designation + "%";
+        	searchQuery.append("  AND  LOWER(o.designation) LIKE LOWER(:designation)  ");
+		}
+        if (StringUtils.isNotBlank(beginDes)) {
+        	beginDes = beginDes + "%";
+      	searchQuery.append("  AND  LOWER(o.designation) >= LOWER(:beginDes)  ");
+		}
+        if (StringUtils.isNotBlank(endDes)) {
+        	endDes = endDes + "%";
+        	searchQuery.append("  AND  LOWER(o.designation) <= LOWER(:endDes)  ");
+  		}
+        
+        if (rayon != null) {
+        	searchQuery.append("  AND p.rayon = :rayon  ");
+  		}
+        if (filiale != null) {
+        	searchQuery.append("  AND p.filiale = :filiale  ");
+  		}
+        Query q= em.createQuery(searchQuery.append("  GROUP BY p  ORDER BY  o.designation").toString());
+        if (StringUtils.isNotBlank(cip)) q.setParameter("cip", cip);
+        if (StringUtils.isNotBlank(designation)) q.setParameter("designation", designation);
+        if (StringUtils.isNotBlank(beginDes)) q.setParameter("beginDes", beginDes);
+        if (StringUtils.isNotBlank(endDes)) q.setParameter("endDes", endDes);
+        if (rayon!=null) q.setParameter("rayon", rayon);
+        if (filiale!=null) q.setParameter("filiale", filiale);
         q.setParameter("debut", debut);
         q.setParameter("fin", fin);
         q.setParameter("typeMouvement", TypeMouvement.VENTE);
