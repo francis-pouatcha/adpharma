@@ -14,6 +14,18 @@
 	<!--[if lte IE 7]>
         <link rel="stylesheet" type="text/css" href="${source}/js/ie.css" media="screen" />
     <![endif]-->
+    
+     <script type="text/javascript">
+function fermer(){
+Check = confirm("Voulez vous vraiment Fermer votre caisse ? ");
+if(Check == false){
+	return false;
+	
+}else{
+	return true;
+}
+}
+</script>
 
 	<jsp:include page="allmenuscripts.jspx" />
 	<spring:url
@@ -240,7 +252,7 @@
 				<li><a href="#">Caisses</a>
 					<ul class="sub_menu">
 						<li><a href="${cai_cree_url}">Ouvrir</a></li>
-						<li><a href="${delete_caisse_url}">Fermer</a></li>
+						<li><a href="${delete_caisse_url}" onclick="return  fermer();">Fermer</a></li>
 						<li><a href="${cai_enc_url}">Encaisser</a></li>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 							<li><a href="${etat_jour_caisse_url}">Etat Journalier
@@ -411,8 +423,9 @@
 				<li>
         		<a href="#">Catalogues</a>
         			 	<ul class="sub_menu">
+        			 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_RECHERCHE_PAR_CIPM">
         					<li><a href="${search_lgap_url}">Rechercher un Produit (CIPM)</a></li>
-        					            
+        			    </security:authorize>          
         					            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
         					<li>
 		        				<a href="#">produits</a>

@@ -29,8 +29,9 @@ public enum RoleName {
      ROLE_RELATION_TRANSFORMATION("RELATION TRANSFORMATION ", "permet de gerer les relations de transformations  "),
 	 ROLE_VENTE_FORCEE(" VENTE FORCEE ", "permet de gerer d'effectuer les ventes forcees"),
 	 ROLE_IMPRESSION_CODE_BARE("IMPRESSION CODE BARE ", "permet d'effectuer les impression de code barre "),
-	 ROLE_VENTE_DESIGNATION("VENTE PAR DESIGNATION ", "permet d'effectuer les ventes par designation ");
-	     
+	 ROLE_VENTE_DESIGNATION("VENTE PAR DESIGNATION ", "permet d'effectuer les ventes par designation "),
+	 ROLE_RECHERCHE_PAR_CIPM("RECHERCHE PRD PAR CIPM ", "permet d'effectuer la recherche de produit par cipm ");
+	    
 	 
    
 

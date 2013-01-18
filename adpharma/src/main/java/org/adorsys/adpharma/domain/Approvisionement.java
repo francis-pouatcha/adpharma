@@ -212,8 +212,10 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
              if (ligne.getPrixAchatTotal()!=null)    montant = montant.add(ligne.getPrixAchatTotal());
             }
         }
-        montantHt = montantNap ;
-        montantTtc = montantNap ;
+       
+        montantHt = montant ;
+        montantTtc = montant ;
+        montantNap = montantHt.subtract(montantRemise) ;
     }
 
     public boolean CommandeContientProduit(Produit produit) {
