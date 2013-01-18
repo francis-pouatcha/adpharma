@@ -45,6 +45,8 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date traitmentDate;
 
+	private Long approvisionnementId ;
+	
 	private String commercialKey;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -142,6 +144,16 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 
 	public void setExchangeBeanState(ExchangeBeanState exchangeBeanState) {
 		this.exchangeBeanState = exchangeBeanState;
+	}
+	
+	
+
+	public Long getApprovisionnementId() {
+		return approvisionnementId;
+	}
+
+	public void setApprovisionnementId(Long approvisionnementId) {
+		this.approvisionnementId = approvisionnementId;
 	}
 
 	public void protectSomeField() {

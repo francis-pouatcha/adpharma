@@ -153,7 +153,6 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     	this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
     	this.founisseur = commandeFournisseur.getFournisseur();
     	this.magasin = commandeFournisseur.getSite() ;
-    	
     	}
     
     
@@ -213,6 +212,8 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
              if (ligne.getPrixAchatTotal()!=null)    montant = montant.add(ligne.getPrixAchatTotal());
             }
         }
+        montantHt = montantNap ;
+        montantTtc = montantNap ;
     }
 
     public boolean CommandeContientProduit(Produit produit) {
@@ -232,10 +233,13 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void close() {
-        if (commande != null){
-            commande.setValider(true);
-            commande.setLivre(true);
-            commande.merge();
+    	
+        if (getCommande() != null){
+        	getCommande().setValider(true); // check the process of validation of command according to livraison 
+            getCommande().setLivre(true);
+            getCommande().setEtatCmd(Etat.CLOS) ;
+            getCommande().setApprovisionnementId(getId());
+            getCommande().merge();
         }
         this.setCloturer(true);
         this.setEtat(Etat.CLOS);
@@ -274,6 +278,11 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public static List<Approvisionement> findApprovisionementEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Approvisionement o ORDER BY o.id DESC ", Approvisionement.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+    
+    public static List<Approvisionement> findApprovisionementByCommandeFournisseur(CommandeFournisseur commande) {
+    	if(commande == null ) throw new IllegalArgumentException("commande argument is required ") ;
+        return  entityManager().createQuery("SELECT o FROM Approvisionement o WHERE o.commande = :commande ORDER BY o.id DESC ", Approvisionement.class).setParameter("commande", commande).getResultList() ;
+    }
 
     public static List<Approvisionement> search(String apNumber, Etat etat, Date minDate, Date maxDate, Fournisseur fournisseur ,PharmaUser user) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM Approvisionement AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
@@ -295,6 +304,8 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
             return q.getResultList();
         }
     }
+    
+    
 
     public boolean isValide(Model uiModel) {
         boolean valider = true;
