@@ -240,6 +240,21 @@ public class Produit extends AdPharmaBaseEntity {
 	        q.setParameter("venteAutorise", venteAutorise);
 	        return q;
 	    }
+	 public static TypedQuery<Produit> findNextProduits(Long id ) {
+	        if (id == null ) throw new IllegalArgumentException("The id argument is required");
+	        EntityManager em = Produit.entityManager();
+	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id > :id ORDER BY o.id ", Produit.class);
+	        q.setParameter("id", id);
+	        return q;
+	    }
+	 public static TypedQuery<Produit> findPreviousProduits(Long id ) {
+	        if (id == null ) throw new IllegalArgumentException("The id argument is required");
+	        EntityManager em = Produit.entityManager();
+	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id < :id ORDER BY o.id DESC", Produit.class);
+	        q.setParameter("id", id);
+	        return q;
+	    }
+	 
 	public void calculTransientPrice() {
 
 		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, cip).getResultList();

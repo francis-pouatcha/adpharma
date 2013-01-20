@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.FamilleProduit;
@@ -59,6 +61,50 @@ public class ProduitController {
 		uiModel.addAttribute("produit", new Produit());
 		return "produits/attributionfsf";
 	}
+	
+	 @RequestMapping(method = RequestMethod.PUT)
+	    public String update(@Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+	        if (bindingResult.hasErrors()) {
+	            uiModel.addAttribute("produit", produit);
+	            addDateTimeFormatPatterns(uiModel);
+	            return "produits/update";
+	        }
+	        Produit merge = (Produit) produit.merge();
+	        Long nextProductId = produit.getId() ;
+	        uiModel.addAttribute("apMessage", merge.getDesignation() +" mis a jour avec succes ! ") ;
+	        List<Produit> results = Produit.findNextProduits(produit.getId()).setMaxResults(5).getResultList();
+	        if(!results.isEmpty()) {
+	        	nextProductId = results.iterator().next().getId();
+	        }
+	       
+	        return  updateForm(nextProductId, uiModel) ;
+	    }
+	    
+	    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
+	    public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+	        uiModel.addAttribute("produit", Produit.findProduit(id));
+	        addDateTimeFormatPatterns(uiModel);
+	        return "produits/update";
+	    }
+	    
+	    @RequestMapping(value = "selectProduct/{id}", params = "action", method = RequestMethod.GET)
+	    public String selectProductToUpdate(@RequestParam("action") String action, @PathVariable("id") Long id,Model uiModel) {
+	    	 Long nextProductId = id ;
+	    	 List<Produit> resultList = new ArrayList<Produit>() ;
+	    	if(StringUtils.equalsIgnoreCase(action, "next")){
+	        	 resultList = Produit.findNextProduits(id).setMaxResults(5).getResultList();
+	        }else {
+	        	resultList = Produit.findPreviousProduits(id).setMaxResults(5).getResultList();
+			}
+	    	if(!resultList.isEmpty()){
+	    		nextProductId = resultList.iterator().next().getId() ;
+	    	}
+	        return updateForm(nextProductId, uiModel);
+	    }
+	    @RequestMapping(value = "updateProduct", params = "form", method = RequestMethod.GET)
+	    public String selectProductToUpdate(Model uiModel) {
+	        return updateForm(new Long(1), uiModel);
+	    }
 
 	@RequestMapping(value="/setFamilleAndSousFamille",method = RequestMethod.GET)
 	public String setFamilleAndSousFamille(@RequestParam("rem") BigDecimal rem ,@RequestParam("lineId") Long lineId,@RequestParam(value="famille" ,required = false) Long familleId ,@RequestParam(value="sfamille" ,required = false) Long sfamilleId, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -92,7 +138,6 @@ public class ProduitController {
 	public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
 		String des = httpServletRequest.getParameter("designation");
 		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(200).getResultList();
-		System.out.println("in");
 		return Produit.toJsonArray(resultList);
 	}
 
@@ -128,6 +173,7 @@ public class ProduitController {
 	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel) {
 		String	cipMaison = cipm;
 		Configuration config = Configuration.findConfiguration(new Long(1));
+		LigneApprovisionement item = new LigneApprovisionement() ;
 		if(config.getOnlySaleOld()){
 			CommandeClient sale = CommandeClient.findCommandeClient(saleId);
 			List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(10).getResultList();
@@ -137,12 +183,10 @@ public class ProduitController {
 				if(next.isOldItem(oldcimplist)){
 					return lines.iterator().next().clone().toJson();
 				}else {
-					LigneApprovisionement item = new LigneApprovisionement() ;
 					item.setViewMsg("veullez saisir le cipm le plus ancien !") ;
 					return item.toJson() ;
 				}
 			}else {
-				LigneApprovisionement item = new LigneApprovisionement() ;
 				item.setViewMsg("Aucun produit trouve !") ;
 				return item.toJson() ;
 			}	

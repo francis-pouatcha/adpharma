@@ -131,6 +131,8 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
 	public void setFiliales(Filiale filiales) {
 		this.filiales = filiales;
 	}
+	
+	
 
 	@Override
     protected void internalPrePersist() {
@@ -213,9 +215,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
             }
         }
        
-        montantHt = montant ;
-        montantTtc = montant ;
-        montantNap = montantHt.subtract(montantRemise) ;
+        
     }
 
     public boolean CommandeContientProduit(Produit produit) {

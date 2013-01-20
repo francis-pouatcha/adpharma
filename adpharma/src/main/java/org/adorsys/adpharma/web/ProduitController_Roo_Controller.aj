@@ -52,24 +52,7 @@ privileged aspect ProduitController_Roo_Controller {
         return "produits/list";
     }
     
-    @RequestMapping(method = RequestMethod.PUT)
-    public String ProduitController.update(@Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("produit", produit);
-            addDateTimeFormatPatterns(uiModel);
-            return "produits/update";
-        }
-        uiModel.asMap().clear();
-        produit.merge();
-        return "redirect:/produits/" + encodeUrlPathSegment(produit.getId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String ProduitController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("produit", Produit.findProduit(id));
-        addDateTimeFormatPatterns(uiModel);
-        return "produits/update";
-    }
+   
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String ProduitController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {

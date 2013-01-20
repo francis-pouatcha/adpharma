@@ -307,7 +307,7 @@
 							<th style="text-align: center;">Stock alert</th>
 							<th style="text-align: center;">qte cmd</th>
 							<th style="text-align: center;">Prix achat</th>
-							<th style="text-align: center;">Agent</th>
+							<th style="text-align: center;">Prix Vente</th>
 							<th style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>

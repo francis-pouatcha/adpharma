@@ -313,6 +313,8 @@ public class ApprovisionementProcessController {
 			approvisionement.persist();
 			CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
 			approvisionement.calculateMontant();
+			approvisionement.setMontantHt(approvisionement.getMontant());
+			approvisionement.setMontantTtc(approvisionement.getMontant());
 			approvisionement.merge();
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(approvisionement.getId());
 			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
@@ -368,9 +370,19 @@ public class ApprovisionementProcessController {
 		public String annuler(@PathVariable("apId") Long apId, Model uiModel) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			if (approvisionement.getEtat().equals(Etat.EN_COUR)) {
+				CommandeFournisseur commande = approvisionement.getCommande();
+				if(commande!=null){
+					commande.setApprovisionnementId(null);
+					commande.setLivre(false);
+					commande.setValider(false);
+					commande.setEtatCmd(Etat.EN_COUR);
+					commande.merge();
+				}
 				approvisionement.remove();
 			}
-			return "redirect:/";
+			uiModel.addAttribute("Approvisionnement suprimee avec sucess !");
+
+			return "caisses/infos";
 		}
 
 

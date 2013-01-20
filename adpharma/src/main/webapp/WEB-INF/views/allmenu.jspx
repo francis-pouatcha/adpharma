@@ -7,7 +7,8 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8"  />
   <jsp:output omit-xml-declaration="yes" />
   
-   <spring:url value="/resources" var="source"></spring:url>
+   <spring:url value="/resources" var="source" />
+   <spring:url value="/produits/updateProduct?form"  var="up_prd_url" />
    <link rel="stylesheet" href="${source}/js/style.css" type="text/css" media="screen, projection"/>
    	<script type="text/javascript" language="javascript" src="${source}/js/jquery.dropdownPlain.js"> <!-- required for FF3 and Opera --></script>
    
@@ -432,8 +433,11 @@ if(Check == false){
 		        					<ul>
 		        						<li><a href="${prd_cip_url}"> Creer Un Produit Avec C.I.P</a></li>
 		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
+		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
+		        						
 		        						<li><a href="${prd_list_url}"> Lister les produits(CIP)</a></li>
-		        					    <li><a href="${aff_fsf_url}"> Affectation Familles et Sous Familles</a></li>
+		        						
+		        					    <li><a href="${aff_fsf_url}"> Affectation Familles </a></li>
 		        						<li><a href="${prdf_des_url}"> Rechercher un Produit(CIP)</a></li>	
 		        					</ul>
 		        			 </li>

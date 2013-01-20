@@ -243,6 +243,18 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		approvisionement.setCommande(this);
 		
 	}
+	
+	public void increaseMontant(BigDecimal montant) {
+		montantHt = montantHt ==null ?BigDecimal.ZERO:montantHt ;
+		montantHt = montantHt.add(montant);
+		montantTtc = montantHt ;
+    }
+
+    public void decreaseMontant(BigDecimal montant) {
+    	montantHt = montantHt ==null ?BigDecimal.ZERO:montantHt ;
+		montantHt = montantHt.subtract(montant) ;
+		montantTtc = montantHt ;
+    }
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
