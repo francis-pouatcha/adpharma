@@ -52,6 +52,14 @@ privileged aspect LigneCmdFournisseur_Roo_JavaBean {
         this.agentSaisie = agentSaisie;
     }
     
+    public boolean LigneCmdFournisseur.isIsValid() {
+        return this.isValid;
+    }
+    
+    public void LigneCmdFournisseur.setIsValid(boolean isValid) {
+        this.isValid = isValid;
+    }
+    
     public CommandeFournisseur LigneCmdFournisseur.getCommande() {
         return this.commande;
     }

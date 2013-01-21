@@ -209,16 +209,12 @@
 				modal : true,
 				hide : 'fade',
 				show : 'slide'
-				
-
 			});
 			
 			$('input#proceed').click(function(){
 				saveLine();
 				return false;
 			});
-			
-			
 			
 			
 			$('input#false').click(function(){

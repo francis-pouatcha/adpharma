@@ -21,5 +21,9 @@
                     <field:input field="numRegistreComerce" id="c_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" z="dfmtcQ6DknxTgIVmRQc/6OFcmE4="/>
                     <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Fournisseur_note" z="dqqWaxQVPZSbqUz4p/Wy2x88NC0="/>
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" render="false" z="user-managed"/>
+                </td>
+            </tr>
+        </table>
+        <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
     </form:update>
 </div>

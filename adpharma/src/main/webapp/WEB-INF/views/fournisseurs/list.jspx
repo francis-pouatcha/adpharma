@@ -10,10 +10,10 @@
             
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_phone" property="phone" z="DNvUAMSqIB2RWyvVrQkYXs7xWdA="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" property="mobile" z="poyttcAmyjlbIu0BV3YqIpkf35Q="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fax" property="fax" z="/iL/q3K53JAdqqtlA4AEB+ll5Mc="/>
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_adresse" property="adresse" z="11ZJApOPx4pGj4sbIBjHcuwUUho="/>
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_responsable" maxLength="-1" property="responsable" z="Z/8iqdXaW5w05Sxh4+86wX+thjg="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" property="providerKey" z="0CZM1t4VW1SFo675N18/XLwtNwc="/>
         </table:table>
     </page:list>
 </div>

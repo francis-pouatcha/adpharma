@@ -17,11 +17,16 @@ privileged aspect LigneCmdFournisseur_Roo_ToString {
         sb.append("FootPrint: ").append(getFootPrint()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");
         sb.append("IndexLine: ").append(getIndexLine()).append(", ");
+        sb.append("PrixAVenteMin: ").append(getPrixAVenteMin()).append(", ");
         sb.append("PrixAchatMin: ").append(getPrixAchatMin()).append(", ");
         sb.append("PrixAchatTotal: ").append(getPrixAchatTotal()).append(", ");
+        sb.append("PrixFourniMin: ").append(getPrixFourniMin()).append(", ");
         sb.append("Produit: ").append(getProduit()).append(", ");
         sb.append("QuantiteCommande: ").append(getQuantiteCommande()).append(", ");
-        sb.append("Version: ").append(getVersion());
+        sb.append("QuantiteFournie: ").append(getQuantiteFournie()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("IsValid: ").append(isIsValid()).append(", ");
+        sb.append("Valid: ").append(isValid());
         return sb.toString();
     }
     
