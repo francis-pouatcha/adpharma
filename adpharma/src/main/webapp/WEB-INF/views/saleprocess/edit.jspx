@@ -170,6 +170,11 @@ function annCmd(){
 	
 	$(function(){
 		
+		$('#pu').click(function(){
+	 		console.log("toto");
+	 		$('#pu').removeAttr("disabled"); 
+	 	});
+		
 		$('#cipm').focus();
 		
 		
@@ -415,7 +420,7 @@ $('#updateClient').dialog("close");
 			
 	}
 
- 
+ 	
 	
 	</script>
 
@@ -508,6 +513,7 @@ $('#updateClient').dialog("close");
 			</util:panel>
 		</c:when>
 		<c:otherwise>
+		<!--formulaire de vente proprement dit  -->
 			<util:panel title="saisir le CIP du Produit" id="cip">
 				<form action="${addLine_url}" method="POST" id="formulaire"
 					name="formulaire" onSubmit="return verif_formulaire()">
@@ -552,9 +558,24 @@ $('#updateClient').dialog("close");
 								style="color: blue; text-align: center;" disabled="disabled" />
 
 							</td>
-							<td><INPUT type="text" name="pu" id="pu" class="autres"
-								value="${saleProcess.produit.prixVenteUnitaire}"
-								style="color: blue; text-align: center;" disabled="disabled" />
+							<td>
+							<!--portion de code permettant sur la vue de changer le prix dun produit dependant si on a le droit ou pas  -->
+								<c:set  var="changePrice" value="true"   />
+								<security:authorize ifAnyGranted="ROLE_CHANGER_PRIX_VENTE" >
+									
+									<INPUT type="text" name="pu" id="pu" class="autres"
+										value="${saleProcess.produit.prixVenteUnitaire}"
+										style="color: blue; text-align: center;" onkeyup="calculePt()" 
+										onKeyPress="return scanTouche(event)" />
+											
+									<c:set  var="changePrice" value="false"   />		
+								</security:authorize>
+								<c:if test="${changePrice}">
+									<INPUT type="text" name="pu" id="pu" class="autres"
+										value="${saleProcess.produit.prixVenteUnitaire}" disabled="disabled"
+										style="color: blue; text-align: center;" onkeyup="calculePt()" 
+										onKeyPress="return scanTouche(event)" />
+								</c:if>
 							</td>
 							<td><INPUT type="text" name="qte" id="qte"
 								onkeyup="calculePt()" value="${qte}" class="autres"
