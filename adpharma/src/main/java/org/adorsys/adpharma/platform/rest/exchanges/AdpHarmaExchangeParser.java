@@ -38,7 +38,7 @@ public class AdpHarmaExchangeParser {
 	}
 
 	/**
-	 * usefull method for transform exchange data t existing  commande
+	 * usefull method for transform exchange data to existing  commande
 	 * @author adorsys-clovis
 	 * 
 	 * @param data
@@ -84,10 +84,10 @@ public class AdpHarmaExchangeParser {
 	public ExchangeData parseToTransferableFormat( CommandeFournisseur order){
 		ExchangeData data = new ExchangeData();
 		if( data == null) throw new IllegalArgumentException("data is required");
-		data.setOrderKey("ord-0001"); //data.setOrderKey(order.getCmdNumber());
-		data.setCommercialKey("com-0001"); //data.setCommercialKey(order.getCommercialKey());
-		data.setDrugStoreKey("drug-0001");
-		data.setProviderKey("prov-0001");
+		data.setOrderKey(order.getCmdNumber());
+		data.setCommercialKey(order.getCommercialKey()); 
+		data.setDrugStoreKey(order.getSite().getDrugstoreKey());
+		data.setProviderKey(order.getFournisseur().getProviderKey());
 		data.setExchangeBeanState(ExchangeBeanState.SUBMIT); //data.setExchangeBeanState(order.getExchangeBeanState());
 		data.setSubmitionDate(order.getSubmitionDate());
 		data.setTraitmentDate(order.getTraitmentDate());

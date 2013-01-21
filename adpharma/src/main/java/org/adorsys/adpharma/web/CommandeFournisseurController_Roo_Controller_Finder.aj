@@ -36,7 +36,7 @@ privileged aspect CommandeFournisseurController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetweenAndEtatCmd", method = RequestMethod.GET)
-    public String CommandeFournisseurController.findCommandeFournisseursByDateCreationBetweenAndEtatCmd(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, @RequestParam("etatCmd") Etat etatCmd, Model uiModel) {
+    public String CommandeFournisseurController.findCommandeFournisseursByDateCreationBetweenAndEtatCmd(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, @RequestParam("etatCmd") Etat etatCmd, Model uiModel) {
         uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCommandeFournisseursByDateCreationBetweenAndEtatCmd(minDateCreation, maxDateCreation, etatCmd).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandefournisseurs/list";
@@ -49,7 +49,7 @@ privileged aspect CommandeFournisseurController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateLimiteLivraisonBetween", method = RequestMethod.GET)
-    public String CommandeFournisseurController.findCommandeFournisseursByDateLimiteLivraisonBetween(@RequestParam("minDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateLimiteLivraison, @RequestParam("maxDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateLimiteLivraison, Model uiModel) {
+    public String CommandeFournisseurController.findCommandeFournisseursByDateLimiteLivraisonBetween(@RequestParam("minDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateLimiteLivraison, @RequestParam("maxDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateLimiteLivraison, Model uiModel) {
         uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCommandeFournisseursByDateLimiteLivraisonBetween(minDateLimiteLivraison, maxDateLimiteLivraison).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandefournisseurs/list";
@@ -63,7 +63,7 @@ privileged aspect CommandeFournisseurController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByFournisseurAndDateCreationBetween", method = RequestMethod.GET)
-    public String CommandeFournisseurController.findCommandeFournisseursByFournisseurAndDateCreationBetween(@RequestParam("fournisseur") Fournisseur fournisseur, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String CommandeFournisseurController.findCommandeFournisseursByFournisseurAndDateCreationBetween(@RequestParam("fournisseur") Fournisseur fournisseur, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCommandeFournisseursByFournisseurAndDateCreationBetween(fournisseur, minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandefournisseurs/list";

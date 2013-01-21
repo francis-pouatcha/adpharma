@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RooWebScaffold(path = "commandefournisseurs", formBackingObject = CommandeFournisseur.class)
 @RequestMapping("/commandefournisseurs")
@@ -46,17 +49,19 @@ public class CommandeFournisseurController {
 		uiModel.asMap().clear();
 		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(id, httpServletRequest)+"/enregistrerCmd";
 	}
-
+    
 	@RequestMapping(value = "/sendToPlatform/{id}", method = RequestMethod.GET)
 	public String sendToPlatform(@PathVariable("id") Long id, Model uiModel , HttpServletRequest httpServletRequest) {
 		CommandeFournisseur order = CommandeFournisseur.findCommandeFournisseur(id);
 		ExchangeData exchangeData = new ExchangeData();
+		ExchangeData postData= null;
 		if(order != null) {
 			exchangeData = exchangeParser.parseToTransferableFormat(order);
 		}
-		ExchangeData postData = exchangeService.postData(exchangeData, exchangeService.POST_DATA_URI, MediaType.APPLICATION_JSON);
-		uiModel.addAttribute("apMessage", postData.getRemoteMessage() );
-		return new CommandProcessController().enregistrer(id, uiModel) ;
+		postData = exchangeService.postData(exchangeData, exchangeService.POST_DATA_URI, MediaType.APPLICATION_JSON);
+		System.out.println("REMOTE MESSAGE: "+postData.getRemoteMessage());
+		uiModel.addAttribute("apMessage", postData.getRemoteMessage());
+		return new CommandProcessController().enregistrer(id, uiModel);
 	}
 
 

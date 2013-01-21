@@ -288,8 +288,6 @@ function requete(){
 			  					$("#pa").val(data.prixAchatSTock);
 			  					$("#pv").val(data.prixVenteStock);
 			  					$("#rayon").val(data.rayon.codeRayon);
-			  					
-			  					
 			  				}
 			  			
 			  			});
