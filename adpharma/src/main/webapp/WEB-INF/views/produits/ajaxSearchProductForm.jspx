@@ -8,7 +8,6 @@
 	style="width: 100%;overflow: auto; height: 200px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-             
               <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
               <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
