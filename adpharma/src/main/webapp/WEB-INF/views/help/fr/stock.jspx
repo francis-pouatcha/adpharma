@@ -4,16 +4,19 @@
   <p class="lead">Gestion Du Stock </p>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#approvisionnemnt">Approvisionnemnt</a></li>
-      <li><a href="#stock">Mouvement de Stock</a></li>
-      <li><a href="#fournisseur">Commande Fournisseur</a></li>
+      <li><a href="#entree">Gestion des Entrees</a></li>
+      <li><a href="#cipm">Produits Approvisionnes</a></li>
+      <li><a href="#cmd">Preparation des commandes</a></li>
+      <li><a href="#rayon">Gestion des Emplacements</a></li>
+      <li><a href="#fournisseur">Gestion des Fournisseurs</a></li>
+      <li><a href="#mvt">Gestion des MVTS de Stock</a></li>
     </ul>
   </div>
 </header>
     
-<section id="approvisionnemnt">
+<section id="entree">
   <div class="page-header">
-    <h1>Approvisionnemnt <small>Approvisionnemnt</small></h1>
+    <h1>Gestion des entrees <small>conserne la saisie des produits approvisionnes</small></h1>
   </div>
   <div class="row">
   	<div class="span12">
@@ -36,9 +39,9 @@
   </div>  
 </section>
   
-<section id="stock">
+<section id="cipm">
   <div class="page-header">
-    <h1>Mouvement de Stock <small>Mouvement de Stock</small></h1>
+    <h1>Gestion des produits approvisionnes<small>...</small></h1>
   </div>
   <div class="row">
   	<div class="span12">
@@ -53,9 +56,60 @@
 </section>
     
      
+<section id="cmd">
+  <div class="page-header">
+    <h1>Preparation des commandes  <small>modules de preparation automatique des commandes</small></h1>
+  </div>
+  <div class="row">
+     <div class="span12">
+      <h3>Editer une fiche de suivi de quantite</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Effectuer Une Commande Fournisseur</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher une commande</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+<section id="rayon">
+  <div class="page-header">
+    <h1>Gestion des Emplacement<small>Configuration des emplacements </small></h1>
+  </div>
+  <div class="row">
+     <div class="span12">
+      <h3>Editer une fiche de suivi de quantite</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Effectuer Une Commande Fournisseur</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher une commande</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
 <section id="fournisseur">
   <div class="page-header">
-    <h1>Commande Fournisseur <small>Commande Fournisseur</small></h1>
+    <h1>Gestion des  Fournisseur <small>Configuration des fournisseurs</small></h1>
+  </div>
+  <div class="row">
+     <div class="span12">
+      <h3>Editer une fiche de suivi de quantite</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Effectuer Une Commande Fournisseur</h3>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <h3>Rechercher une commande</h3>
+   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+   
+  </div>  
+</section>
+
+<section id="mvt">
+  <div class="page-header">
+    <h1>Gestion des MVTS de stoc <small>...</small></h1>
   </div>
   <div class="row">
      <div class="span12">
