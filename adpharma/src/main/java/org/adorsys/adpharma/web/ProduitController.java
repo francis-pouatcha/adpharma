@@ -76,7 +76,6 @@ public class ProduitController {
 	        if(!results.isEmpty()) {
 	        	nextProductId = results.iterator().next().getId();
 	        }
-	       
 	        return  updateForm(nextProductId, uiModel) ;
 	    }
 	    
@@ -101,6 +100,7 @@ public class ProduitController {
 	    	}
 	        return updateForm(nextProductId, uiModel);
 	    }
+	    
 	    @RequestMapping(value = "updateProduct", params = "form", method = RequestMethod.GET)
 	    public String selectProductToUpdate(Model uiModel) {
 	        return updateForm(new Long(1), uiModel);

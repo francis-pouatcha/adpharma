@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div  xmlns:c="http://java.sun.com/jsp/jstl/core"
+ xmlns:spring="http://www.springframework.org/tags"  xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_LigneApprovisionement" modelAttribute="ligneApprovisionement" path="/ligneapprovisionements" versionField="Version" z="LYxExYJW9sRDTRyXshzA5Tn5xiM=">
+        <spring:url value="/ligneapprovisionements/selectProduct/${ligneApprovisionement.id}"  var="next_prd_url" />
+       
         <c:if test="${not empty apMessage}">
             <hr/>
             <p class="appMessage" style="color: green; margin-bottom: 1px; text-align: center;">${apMessage}</p>
             <hr/>
         </c:if>
         <table border="0" class="tblog">
-            <tr>
+         <tr>
+               <td colspan="2" align="left"> 
+                    <span> 
+                             <INPUT id="update_search_prd" class="submits" type="button" value="Rechercher un produit (CIPM)" title="Rechercher le produit a modifier " /> 
+                   
+                   </span>
+               </td>
+         </tr>
+            <tr style="background-color: white;">
                 <td class="tblog">
                     <field:display field="cip" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cip" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:select field="produit" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit" itemValue="id" items="${produits}" path="/produits" render="false" required="true" z="user-managed"/>
                     <field:display field="lotNumber" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:datetime dateTimePattern="${ligneApprovisionement_datefabrication_date_format}" field="dateFabrication" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_dateFabrication" z="a4LCMrCLw/vP5XJ0AN1faUmWyUs="/>
-                    <field:datetime dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" field="datePeremtion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" z="INoStJTwF0135B0kdssoPoOk61U="/>
+                    <field:datetime dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" required="true" field="datePeremtion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" z="INoStJTwF0135B0kdssoPoOk61U="/>
                     <field:input field="indexLine" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" render="false" z="user-managed"/>
                     <field:display field="cipMaison" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" object="${ligneApprovisionement }" z="user-managed"/>
-                    <field:input field="designation" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_designation" z="user-managed"/>
+                    <field:display field="designation" hiddenfield="true" object="${ligneApprovisionement }" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_designation" z="user-managed"/>
                     <field:display field="agentSaisie" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_agentSaisie" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:display date="true" dateTimePattern="dd-MM-yyyy hh:mm" field="dateSaisie" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_venteAutorise" z="flv1gwmtH10EUVFOL/ysn9V8Zj4="/>
                 </td>
                 <td class="tblog">
-                    <field:input field="prixAchatUnitaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
-                    <field:input field="prixVenteUnitaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
-                    <field:input field="remiseMax" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_remiseMax" validationMessageCode="field_invalid_number" z="O7v6sBZU4xjcUiq8g6XLUhCTpUM="/>
+                    <field:input field="prixAchatUnitaire" style="width: 20%;" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
+                    <field:input field="prixVenteUnitaire" style="width: 20%;" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
+                    <field:input field="remiseMax" style="width: 20%;" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_remiseMax" required="true" validationMessageCode="field_invalid_number" z="O7v6sBZU4xjcUiq8g6XLUhCTpUM="/>
                     <field:display field="quantiteAprovisione" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:display field="quantiteVendu" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" object="${ligneApprovisionement }" z="user-managed"/>
                     <field:display field="quantiteSortie" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteSortie" object="${ligneApprovisionement }" z="user-managed"/>
@@ -41,7 +52,17 @@
                     <field:input field="saisiele" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_saisiele" render="false" z="user-managed"/>
                 </td>
             </tr>
+            <tr>
+               <td colspan="2" align="center"> 
+                    <span> 
+                             <a href="${next_prd_url}?action=previous" style="text-decoration: none;"> <INPUT class="submits" type="button" value="Cipm Preccedant" title="Selectionner le produit preccedant" /> </a>
+                             <a href="${next_prd_url}?action=next" style="text-decoration: none;"> <INPUT class="submits" type="button" value="Cipm Suivant" title="Selectionner le produit suivant" /> </a>
+                   
+                   </span>
+               </td>
+         </tr>
         </table>
-        <field:checkbox field="skipPriceConvertion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" z="alMTQgO0h2FiVuxQMolHz7s4yi0="/>
     </form:update>
+    
+    <jsp:include page="ajaxSearchProductForm.jspx" />
 </div>

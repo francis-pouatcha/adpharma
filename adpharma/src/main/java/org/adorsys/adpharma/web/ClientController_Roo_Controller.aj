@@ -54,12 +54,7 @@ privileged aspect ClientController_Roo_Controller {
         return "clients/list";
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String ClientController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("client", Client.findClient(id));
-        addDateTimeFormatPatterns(uiModel);
-        return "clients/update";
-    }
+    
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String ClientController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {

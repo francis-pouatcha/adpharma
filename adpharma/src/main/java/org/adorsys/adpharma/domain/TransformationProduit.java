@@ -202,7 +202,8 @@ public class TransformationProduit extends AdPharmaBaseEntity {
                 q.setParameter("produitOrigine", produitOrigine);
             }else {
             	if (StringUtils.isNotBlank(origineName)) {
-            		q.setParameter("origineName", origineName);    			}
+            		q.setParameter("origineName", origineName);    		
+            		}
 			}
             
             if (produitCible != null) {
