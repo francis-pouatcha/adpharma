@@ -170,19 +170,10 @@ function annCmd(){
 	}
 	
 	$(function(){
-<<<<<<< HEAD
-=======
-		
 		$('#pu').click(function(){
-	 		console.log("toto");
 	 		$('#pu').removeAttr("disabled"); 
 	 	});
-		
 		$('#cipm').focus();
-		
-		
-		
->>>>>>> 02782b344669f33c2a2b7d1766b097583ef44786
 		$('form#person').submit
 		(function(){
 			 clearClientTable();

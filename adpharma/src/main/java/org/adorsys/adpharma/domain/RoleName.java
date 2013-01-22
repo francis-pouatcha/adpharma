@@ -3,7 +3,7 @@ package org.adorsys.adpharma.domain;
 
 public enum RoleName {
 
-	 ROLE_ADMIN("ADMINISTRATEUR", " Gere des Utilisateurs"),
+	ROLE_ADMIN("ADMINISTRATEUR", " Gere des Utilisateurs"),
      ROLE_STOCKER("MAGASINIER", "Gere des aprovisionnements , du catalogue de produits , les mouvements de stocks"),
      ROLE_CASHIER("CAISSIER", "Gere les Encaissements "),
      ROLE_SITE_MANAGER("MANAGER", "Responsable du site a tous les profiles exclu l administration"),
