@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.UIManager;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.PaiementProcess;
@@ -350,7 +351,7 @@ public class SaleProcessController {
 	//@Transactional
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
-			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+			@RequestParam String rem, @RequestParam BigDecimal pu, Model uiModel,HttpServletRequest httpServletRequest) {
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
@@ -407,6 +408,13 @@ public class SaleProcessController {
 			}
 
 		} else{
+			if(SecurityUtil.getPharmaUser().hasAnyRole(RoleName.ROLE_CHANGER_PRIX_VENTE)){
+				if(pu.compareTo(ligneApp.getPrixAchatUnitaire())==1 || pu.compareTo(ligneApp.getPrixAchatUnitaire())==0)
+					ligneApp.setPrixVenteUnitaire(pu);
+				else
+					uiModel.addAttribute("apMessage", "Impossible de modifier le prix de vente! le prix de vente ("+pu+"cfa) est inferieur au prix d'achact ("+ligneApp.getPrixAchatUnitaire()+"cfa)");
+			}
+			
 			if (remiseAutorise < remise.intValue()) {
 				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
 				remise = BigDecimal.ZERO ;

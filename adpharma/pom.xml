@@ -153,7 +153,14 @@
             </exclusion>
         </exclusions>
     </dependency>
-
+    	<!-- apache poi dependency -->
+    	
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.6</version>
+		</dependency>
+		
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
