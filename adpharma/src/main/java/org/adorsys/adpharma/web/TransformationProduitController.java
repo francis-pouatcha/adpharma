@@ -1,32 +1,42 @@
 package org.adorsys.adpharma.web;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.adorsys.adpharma.domain.AvoirClient;
+
+import net.sf.jasperreports.components.table.DesignCell;
+
+import org.adorsys.adpharma.beans.DecomposedProductExcelRepresentation;
+import org.adorsys.adpharma.beans.importExport.ExportDecomposedProductService;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TransformationProduit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
-import org.apache.log4j.TTCCLayout;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ibm.icu.math.BigDecimal;
 
 @RooWebScaffold(path = "transformationproduits", formBackingObject = TransformationProduit.class)
 @RequestMapping("/transformationproduits")
@@ -183,7 +193,44 @@ public class TransformationProduitController {
 
 		return "transformationproduits/livre" ;
 	}
-
+	@RequestMapping(value="/produitdecomposes/exportToExcel",method=RequestMethod.POST)
+	public void  exportToExcel(@RequestParam("cipProduit")String cipProduit,
+			@RequestParam("cipMaison")String cipMaison,HttpServletResponse response) throws IOException{
+		System.out.println(cipProduit+ "- -"+ cipMaison);
+		LigneApprovisionement ligneApprovisionement = null ; 
+		try {
+			ligneApprovisionement = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			//do something
+		}
+		List<DecomposedProductExcelRepresentation> dataToExport = readDecomposedDataToExport(ligneApprovisionement);
+		if(dataToExport == null ) return ;
+		ExportDecomposedProductService exportDecomposedProductService = new ExportDecomposedProductService(dataToExport);
+		exportDecomposedProductService.setSheetName("Decomposition_"+ligneApprovisionement.getLotNumber());
+		HSSFWorkbook workbook = exportDecomposedProductService.export();
+		response.setContentType("application/vnd.ms-excel");
+		String fileName = "DecomposedProduct_"+new Date()+"_.xls";
+		response.setHeader("Content-Disposition","attachement;filename=\"" + fileName + "\"");
+		ServletOutputStream outputStream = response.getOutputStream();
+		workbook.write(outputStream);
+	}
+	private List<DecomposedProductExcelRepresentation> readDecomposedDataToExport(LigneApprovisionement ligneApprovisionement){
+		if(ligneApprovisionement == null) return null;
+		int qteApprovisionnee = ligneApprovisionement.getQuantiteAprovisione().intValue();
+		List<DecomposedProductExcelRepresentation> data = new ArrayList<DecomposedProductExcelRepresentation>();
+		for(int i = 0; i < qteApprovisionnee;i++ ){
+			DecomposedProductExcelRepresentation decomposedProductExcelRepresentation = new DecomposedProductExcelRepresentation();
+			decomposedProductExcelRepresentation.setCipMaison(ligneApprovisionement.getCipMaison());
+			decomposedProductExcelRepresentation.setDesignation(ligneApprovisionement.getDesignation());
+			decomposedProductExcelRepresentation.setSalePrice(new BigDecimal(ligneApprovisionement.getPrixVenteUnitaire()));
+			decomposedProductExcelRepresentation.setProvider(ligneApprovisionement.getApprovisionement().getMagasin().getDisplayName());
+			decomposedProductExcelRepresentation.setSite(ligneApprovisionement.getApprovisionement().getMagasin().getDisplayName());
+			data.add(decomposedProductExcelRepresentation);
+		}
+		return data;
+	}
 	@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {
 		//return Produit.findAllProduits();
