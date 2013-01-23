@@ -334,12 +334,12 @@ function verif_formulaire()
 		    			</td>
 		    			<td> 
 		    				<spring:url value="/transformationproduits/produitdecomposes/exportToExcel" var="export_url" />
-		    				<spring:url value="" var="export_image_url"/>
+		    				<spring:url value="/resources/images/download_excel.jpg" var="export_image_url"/>
 		    				
 		    				<form action="${export_url }" method="post">
 		    					<input type="hidden" value="${transforme.produit.cip}" name="cipProduit" />
 		    					<input type="hidden" value="${transforme.cipMaison}" name="cipMaison" />
-		    					<button type="submit"> <img src="${export_image_url }" alt="download img" /> </button>
+		    					<button type="submit"> <img src="${export_image_url }" alt="download img" style="width: 25px;height: 24px;" /> </button>
 		    				</form>
 		    			 </td>
 											
