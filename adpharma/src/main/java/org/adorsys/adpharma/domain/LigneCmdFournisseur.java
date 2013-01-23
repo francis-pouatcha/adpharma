@@ -117,6 +117,8 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 	}
 
 	public void calculPrixTotal(){
+		prixAchatMin = prixAchatMin==null ?BigDecimal.ZERO : prixAchatMin ;
+		quantiteCommande = quantiteCommande==null ?BigInteger.ZERO : quantiteCommande ;
 		prixAchatTotal =  prixAchatMin.multiply(BigDecimal.valueOf(quantiteCommande.longValue()));  	
 
 

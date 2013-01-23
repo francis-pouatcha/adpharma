@@ -96,12 +96,13 @@ function annCmd(){
 				type="button" value="Cloturer La Vente"
 				title="Enregistrer La Commande" /></a></span>
 				</security:authorize>
-				<!-- 
+				
 				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				</security:authorize>
+				<!-- 
+				<span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				 -->
-				 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				 
 				 <span><a
 			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
@@ -169,16 +170,10 @@ function annCmd(){
 	}
 	
 	$(function(){
-		
 		$('#pu').click(function(){
-	 		console.log("toto");
 	 		$('#pu').removeAttr("disabled"); 
 	 	});
-		
 		$('#cipm').focus();
-		
-		
-		
 		$('form#person').submit
 		(function(){
 			 clearClientTable();
@@ -532,7 +527,7 @@ $('#updateClient').dialog("close");
 							<td><INPUT type="hidden" name="pId" id="pId"
 								value="${saleProcess.produit.id}" /> <c:choose>
 									<c:when test="${forcer}">
-										<INPUT type="text" name="cipm" id="cipm" class="autres"
+										<INPUT type="text" name="cipm"  autofocus="autofocus" id="cipm" class="autres"
 											value="${saleProcess.produit.cipMaison}" readonly="readonly"
 											 onKeyPress="return scanTouche(event)"
 											  title="saisir le cipm"

@@ -16,6 +16,7 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Genre;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeClient;
 import org.adorsys.adpharma.utils.ProcessHelper;
@@ -129,13 +130,50 @@ public class ClientController {
 			addDateTimeFormatPatterns(uiModel);
 			return "clients/update";
 		}
-		uiModel.asMap().clear();
-		client.merge();
-		return "redirect:/clients/" + encodeUrlPathSegment(client.getId().toString(), httpServletRequest);
+		Client merge = (Client) client.merge();
+        Long nextProductId = merge.getId() ;
+        uiModel.addAttribute("apMessage","Le CLient No : "+ merge.getClientNumber() +" mis a jour avec succes ! ") ;
+        List<Client> results = Client.findNextClients(merge.getId()).setMaxResults(5).getResultList();
+        if(!results.isEmpty()) {
+        	nextProductId = results.iterator().next().getId();
+        }
+        return  updateForm(nextProductId, uiModel) ;
 	}
+	
+	  @RequestMapping(value = "selectClient/{id}", params = "action", method = RequestMethod.GET)
+	    public String selectClientToUpdate(@RequestParam("action") String action, @PathVariable("id") Long id,Model uiModel) {
+	    	 Long nextProductId = id ;
+	    	 List<Client> resultList = new ArrayList<Client>() ;
+	    	if(StringUtils.equalsIgnoreCase(action, "next")){
+	        	 resultList = Client.findNextClients(id).setMaxResults(5).getResultList();
+	        }else {
+	        	resultList = Client.findPreviousClients(id).setMaxResults(5).getResultList();
+			}
+	    	if(!resultList.isEmpty()){
+	    		nextProductId = resultList.iterator().next().getId() ;
+	    	}
+	        return updateForm(nextProductId, uiModel);
+	    }
+	
+	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
+    public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+        uiModel.addAttribute("client", Client.findClient(id));
+        addDateTimeFormatPatterns(uiModel);
+        return "clients/update";
+    }
 
+	
+	
+	
 	@ModelAttribute("clients")
 	public Collection<Client> populateClients() {
 		return new ArrayList<Client>();
+		
 	}
+    @ModelAttribute("categorieclients")
+    public Collection<CategorieClient> populateCategorieClients() {
+        return ProcessHelper.populateCategorieCLients();
+    }
+    
+   
 }

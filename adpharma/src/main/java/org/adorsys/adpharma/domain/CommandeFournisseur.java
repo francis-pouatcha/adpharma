@@ -45,6 +45,8 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date traitmentDate;
 
+	private Long approvisionnementId ;
+	
 	private String commercialKey;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -143,6 +145,16 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	public void setExchangeBeanState(ExchangeBeanState exchangeBeanState) {
 		this.exchangeBeanState = exchangeBeanState;
 	}
+	
+	
+
+	public Long getApprovisionnementId() {
+		return approvisionnementId;
+	}
+
+	public void setApprovisionnementId(Long approvisionnementId) {
+		this.approvisionnementId = approvisionnementId;
+	}
 
 	public void protectSomeField() {
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(getId());
@@ -231,6 +243,18 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		approvisionement.setCommande(this);
 		
 	}
+	
+	public void increaseMontant(BigDecimal montant) {
+		montantHt = montantHt ==null ?BigDecimal.ZERO:montantHt ;
+		montantHt = montantHt.add(montant);
+		montantTtc = montantHt ;
+    }
+
+    public void decreaseMontant(BigDecimal montant) {
+    	montantHt = montantHt ==null ?BigDecimal.ZERO:montantHt ;
+		montantHt = montantHt.subtract(montant) ;
+		montantTtc = montantHt ;
+    }
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

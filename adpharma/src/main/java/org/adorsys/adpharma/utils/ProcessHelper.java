@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
@@ -115,7 +116,19 @@ public class ProcessHelper {
 		arrayList.addAll(Filiale.findAllActifFiliales());
 
 		return arrayList;
-	}  
+	} 
+	
+	public static Collection<CategorieClient> populateCategorieCLients() {
+		CategorieClient cat = new CategorieClient();
+		cat.setLibelle("TOUTES");
+		cat.setCategorieNumber("C-0000");
+		cat.setId(Long.valueOf(0));
+		ArrayList<CategorieClient> arrayList = new ArrayList<CategorieClient>();
+		arrayList.add(cat);
+		arrayList.addAll(CategorieClient.findAllCategorieClients());
+
+		return arrayList;
+	} 
 
 	public static Collection<Filiale> populateAllFiliale() {
 		return Filiale.findAllActifFiliales();

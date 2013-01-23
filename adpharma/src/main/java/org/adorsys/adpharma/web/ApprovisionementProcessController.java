@@ -312,16 +312,19 @@ public class ApprovisionementProcessController {
 		@RequestMapping(value = "/convertOrderToAppro/{cmId}",  method = RequestMethod.GET)
 		public String convertOrderToAppro(@PathVariable("cmId") Long cmId, Model uiModel) {
 			CommandeFournisseur cmd = CommandeFournisseur.findCommandeFournisseur(cmId);
+			List<Approvisionement> appro = Approvisionement.findApprovisionementByCommandeFournisseur(cmd);
+			if(!appro.isEmpty()){
+				Approvisionement next = appro.iterator().next();
+				uiModel.addAttribute("apMessage", "Cette Commande a deja ete Convertie Voir L'approvisionnement No : "+next.getApprovisionementNumber());
+				return new CommandProcessController().enregistrer(cmId, uiModel);
+			}
 			Approvisionement approvisionement = new Approvisionement(cmd);
 			approvisionement.persist();
-			if(approvisionement!=null){
-				CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
-				approvisionement.calculateMontant();
-				approvisionement.merge();
-			}else {
-				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
-			}
-			
+			CommandeFournisseur.findCommandeFournisseur(cmId).convertToLineAprov(approvisionement);
+			approvisionement.calculateMontant();
+			approvisionement.setMontantHt(approvisionement.getMontant());
+			approvisionement.setMontantTtc(approvisionement.getMontant());
+			approvisionement.merge();
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(approvisionement.getId());
 			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
@@ -376,9 +379,19 @@ public class ApprovisionementProcessController {
 		public String annuler(@PathVariable("apId") Long apId, Model uiModel) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			if (approvisionement.getEtat().equals(Etat.EN_COUR)) {
+				CommandeFournisseur commande = approvisionement.getCommande();
+				if(commande!=null){
+					commande.setApprovisionnementId(null);
+					commande.setLivre(false);
+					commande.setValider(false);
+					commande.setEtatCmd(Etat.EN_COUR);
+					commande.merge();
+				}
 				approvisionement.remove();
 			}
-			return "redirect:/";
+			uiModel.addAttribute("Approvisionnement suprimee avec sucess !");
+
+			return "caisses/infos";
 		}
 
 

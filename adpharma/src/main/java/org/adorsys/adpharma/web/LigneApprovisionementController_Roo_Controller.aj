@@ -71,13 +71,6 @@ privileged aspect LigneApprovisionementController_Roo_Controller {
         return "ligneapprovisionements/list";
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String LigneApprovisionementController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("ligneApprovisionement", LigneApprovisionement.findLigneApprovisionement(id));
-        addDateTimeFormatPatterns(uiModel);
-        return "ligneapprovisionements/update";
-    }
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String LigneApprovisionementController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         LigneApprovisionement.findLigneApprovisionement(id).remove();

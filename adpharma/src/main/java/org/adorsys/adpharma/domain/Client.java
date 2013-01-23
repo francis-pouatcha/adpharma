@@ -221,6 +221,21 @@ public class Client extends AdPharmaBaseEntity {
         return q;
     }
     
+    public static TypedQuery<Client> findNextClients(Long id ) {
+        if (id == null ) throw new IllegalArgumentException("The id argument is required");
+        EntityManager em = Client.entityManager();
+        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE o.id > :id ORDER BY o.id ", Client.class);
+        q.setParameter("id", id);
+        return q;
+    }
+ public static TypedQuery<Client> findPreviousClients(Long id ) {
+        if (id == null ) throw new IllegalArgumentException("The id argument is required");
+        EntityManager em = Client.entityManager();
+        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE o.id < :id ORDER BY o.id DESC", Client.class);
+        q.setParameter("id", id);
+        return q;
+    }
+    
    
     public static List<Client> search(String clientNumber, String nom, String employeur, Client clientPayeur, CategorieClient categorie, TypeClient typeClient ,BigInteger totalDette) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM Client AS o WHERE o.totalDette >= :totalDette ");

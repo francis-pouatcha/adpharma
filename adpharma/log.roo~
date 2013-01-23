@@ -152,6 +152,7 @@ json add
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-29 15:36:01
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-29 15:41:16
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-08-30 19:15:32
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-08-30 19:17:24
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-03 11:46:56
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-07 14:28:26
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-09-14 11:31:00
@@ -167,7 +168,6 @@ web mvc scaffold --class ~.web.ConfigurationController
 help web mvc contrller
 help web mvc controller
 quit
-<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-09-24 13:02:45
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-04 15:11:52
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-04 15:22:36
@@ -198,13 +198,21 @@ quit
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-30 15:12:12
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-30 20:47:29
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-03 08:47:45
+<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-19 11:43:26
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-28 12:27:15
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-12-28 18:59:22
+=======
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-02-07 07:19:55
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-02-07 07:59:40
+<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-01-06 20:50:51
+=======
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-10 10:18:17
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-01-10 10:23:05
-// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-23 10:02:33
+>>>>>>> 282026b41d6df3900e78b9b953c43f56339c9d5f
+<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-21 09:47:59
+=======
+>>>>>>> 227d33466cd4ebbacb68f1a21006889ab45405d6
+>>>>>>> a20de0bab98162369f5ece23519eb7f8bb9ea865

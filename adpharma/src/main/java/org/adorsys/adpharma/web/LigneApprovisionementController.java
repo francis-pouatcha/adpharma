@@ -46,10 +46,38 @@ public class LigneApprovisionementController {
 			addDateTimeFormatPatterns(uiModel);
 			return "ligneapprovisionements/update";
 		}
-		uiModel.asMap().clear();
-		ligneApprovisionement.merge();
-		return "redirect:/ligneapprovisionements/" + encodeUrlPathSegment(ligneApprovisionement.getId().toString(), httpServletRequest);
+		LigneApprovisionement merge = (LigneApprovisionement)ligneApprovisionement.merge();
+		Long nextProductId = merge.getId() ;
+		uiModel.addAttribute("apMessage", merge.getCipMaison() +" mis a jour avec succes ! ") ;
+		List<LigneApprovisionement> results = LigneApprovisionement.findNextProduits(nextProductId).setMaxResults(5).getResultList();
+		if(!results.isEmpty()) {
+			nextProductId = results.iterator().next().getId();
+		}
+		return  updateForm(nextProductId, uiModel) ;
 	}
+
+	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
+	public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+		uiModel.addAttribute("ligneApprovisionement", LigneApprovisionement.findLigneApprovisionement(id));
+		addDateTimeFormatPatterns(uiModel);
+		return "ligneapprovisionements/update";
+	}
+	
+
+    @RequestMapping(value = "selectProduct/{id}", params = "action", method = RequestMethod.GET)
+    public String selectProductToUpdate(@RequestParam("action") String action, @PathVariable("id") Long id,Model uiModel) {
+    	 Long nextProductId = id ;
+    	 List<LigneApprovisionement> resultList = new ArrayList<LigneApprovisionement>() ;
+    	if(StringUtils.equalsIgnoreCase(action, "next")){
+        	 resultList = LigneApprovisionement.findNextProduits(id).setMaxResults(5).getResultList();
+        }else {
+        	resultList = LigneApprovisionement.findPreviousProduits(id).setMaxResults(5).getResultList();
+		}
+    	if(!resultList.isEmpty()){
+    		nextProductId = resultList.iterator().next().getId() ;
+    	}
+        return updateForm(nextProductId, uiModel);
+    }
 
 	@RequestMapping(params = { "find=ByDes", "form" }, method = RequestMethod.GET)
 	public String findByDesForm(Model uiModel) {
