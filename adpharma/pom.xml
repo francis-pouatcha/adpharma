@@ -679,7 +679,7 @@
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>
                     <connectors>
-			            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+			            <!-- <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 			                <port>8080</port>
 			                <maxIdleTime>60000</maxIdleTime>
 			            </connector>
@@ -689,7 +689,7 @@
 			                <keystore>${project.build.directory}/jetty-ssl.keystore</keystore>
 			                <password>jetty7</password>
 			                <keyPassword>jetty7</keyPassword>
-			            </connector>
+			            </connector> -->
 			        </connectors>
                 </configuration>
             </plugin>

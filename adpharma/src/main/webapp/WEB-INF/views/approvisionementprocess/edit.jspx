@@ -102,6 +102,7 @@
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">CipM</th>
 							<th style="text-align: center;">Quantite</th>
+							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 
 							<th style="text-align: center;">Prix Achat</th>
@@ -133,9 +134,13 @@
 								maxlength="7" autofocus="autofocus" id="cip" /></td>
 							<td><input type="text" name="qte" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}"
-								onkeypress="return scanTouche(event)" width="50px;"
+								onkeypress="return scanTouche(event)" width="30px;"
 								title="saisir la Quantite" maxlength="4" id="qte" /></td>
-
+								
+							<td><input type="text" name="qteug" class="autres"
+								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
 
 							<td><input type="text" name="pv" id="pv" class="autres"
 								value="${approvisonementProcess.lineToUpdate.prixVenteUnitaire}"
@@ -187,6 +192,7 @@
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">Marge(%)</th>
 							<th style="text-align: center;">Quantite</th>
+							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 
 							<th style="text-align: center;">Prix Achat</th>
@@ -214,9 +220,13 @@
 								title="Taux De Marge" style="color: blue; text-align: center;"
 								disabled="disabled" id="mrg" /></td>
 							<td><input type="text" name="qte" class="autres"
-								onkeypress="return scanTouche(event)" width="50px;"
+								onkeypress="return scanTouche(event)" width="30px;"
 								title="saisir la Quantite" id="qte" /></td>
-
+							
+							<td><input type="text" name="qteug" class="autres"
+								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
 
 							<td><input type="text" name="pv" class="autres"
 								onkeypress="return scanTouche(event)"
@@ -292,6 +302,7 @@
 				<th style="text-align: center;">Marge</th>
 				<th style="text-align: center;">PAUnit</th>
 				<th style="text-align: center;">Quantite</th>
+				<th style="text-align: center;">Qte UG</th>
 				<th style="text-align: center;">PA Total</th>
 				<th style="text-align: center;">PV Unit</th>
 				<th style="text-align: center;">Date Perm</th>
@@ -316,6 +327,8 @@
 							value="${ligne.prixAchatUnitaire}" /></td>
 					<td style="text-align: right; padding-right: 20px;"><c:out
 							value="${ligne.quantiteAprovisione}"></c:out></td>
+							<td style="text-align: right; padding-right: 20px;"><c:out
+							value="${ligne.quantiteUniteGratuite}"></c:out></td>
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber
 							value="${ligne.prixAchatTotal}" /></td>
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber
