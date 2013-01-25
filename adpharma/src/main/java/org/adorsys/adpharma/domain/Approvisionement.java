@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -307,7 +308,14 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
         }
     }
     
-    
+    public static TypedQuery<Approvisionement> findApproByFournisseurLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = Approvisionement.entityManager();
+        TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE LOWER(o.founisseur.name) LIKE LOWER(:nom) ORDER BY o.id DESC", Approvisionement.class);
+        q.setParameter("nom", nom);
+        return q;
+    }  
 
     public boolean isValide(Model uiModel) {
         boolean valider = true;

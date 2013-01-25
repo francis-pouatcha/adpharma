@@ -108,6 +108,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private Date dateSaisie = new Date();
 
 	private BigInteger quantiteAprovisione;
+	
+	private BigInteger quantiteUniteGratuite = BigInteger.ZERO;
 
 	private BigInteger quantiteVendu = BigInteger.ZERO;
 
@@ -251,7 +253,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public void CalculePaTotal() {
 		Contract.notNull("qte approvisionne", prixAchatUnitaire);
 		Contract.notNull("Quantite Aprovisionnee", quantiteAprovisione);
-		prixAchatTotal = BigDecimal.valueOf(prixAchatUnitaire.multiply(BigDecimal.valueOf(quantiteAprovisione.longValue())).longValue());
+		prixAchatTotal = BigDecimal.valueOf(prixAchatUnitaire.multiply(BigDecimal.valueOf(quantiteAprovisione.longValue()-quantiteUniteGratuite.longValue())).longValue());
 	}
 
 	public BigInteger pushProductsOutForInventory(BigInteger amount){

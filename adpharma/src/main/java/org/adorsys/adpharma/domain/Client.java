@@ -97,13 +97,11 @@ public class Client extends AdPharmaBaseEntity {
     
     public String toJson() {
 		return new JSONSerializer().include("id","nom","clientPayeur.nomComplet","clientPayeur.id","tauxCouverture","clientPayeurNumber","categorie.categorieNumber","typeClient","clientNumber","nomComplet","telephoneFixe","telephoneMobile","employeur","totalDette","creditAutorise").exclude("*.class","*").serialize(this);
-		//return new JSONSerializer().exclude("*.class").serialize(this);
 
     }
     
     public static String toJsonArray(Collection<Client> collection) {
 		return new JSONSerializer().include("id","nom","clientPayeur.nomComplet","clientPayeur.id","tauxCouverture","clientPayeurNumber","categorie.categorieNumber","typeClient","clientNumber","nomComplet","telephoneFixe","telephoneMobile","employeur","totalDette","creditAutorise").exclude("*.class","*").serialize(collection);
-		//return new JSONSerializer().exclude("*.class").serialize(collection);
 
     }
     @Override
@@ -229,6 +227,15 @@ public class Client extends AdPharmaBaseEntity {
         return q;
     }
     
+    public static TypedQuery<Client> findClientsByNomLikeAndPayeurLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = Client.entityManager();
+        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) OR LOWER(o.clientPayeur.nom) LIKE LOWER(:nom) ORDER BY o.nom ASC", Client.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
+    
     public static TypedQuery<Client> findNextClients(Long id ) {
         if (id == null ) throw new IllegalArgumentException("The id argument is required");
         EntityManager em = Client.entityManager();
@@ -294,4 +301,6 @@ public class Client extends AdPharmaBaseEntity {
             q.setParameter("totalDette", totalDette);
         return q.getResultList();
     }
+
+    
 }

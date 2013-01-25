@@ -31,10 +31,8 @@
 <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqueryui_url}"><!-- required for FF3 and Opera --></script>
-<script type="text/javascript" src="${jquerymenu_url}"><!-- required for FF3 and Opera --></script>
-  <script type="text/javascript" src="${hmenujs_url}"><!-- required for FF3 and Opera --></script>
     <script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
-    <script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
+ 
     
     
       

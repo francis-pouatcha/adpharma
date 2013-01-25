@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.CommandeCredit;
+import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.CategorieClient;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
@@ -56,6 +59,23 @@ public class ClientController {
 			arrayList.add(client);
 		}
 		return  Client.toJsonArray(arrayList);
+	}
+	
+	@RequestMapping(value = "/searchCustomer", method = RequestMethod.GET)
+	public String searchCustomer(@RequestParam("name") String  name,  Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("clients", Client.findClientEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) Client.countClients() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<Client> list = Client.findClientsByNomLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("clients", list);
+		}
+		return "clients/list";
 	}
 
 	@RequestMapping(value = "/{cmdId}/addClientByAjax/{clientId}", method = RequestMethod.GET)

@@ -84,6 +84,14 @@ privileged aspect LigneApprovisionement_Roo_JavaBean {
         this.quantiteAprovisione = quantiteAprovisione;
     }
     
+    public BigInteger LigneApprovisionement.getQuantiteUniteGratuite() {
+        return this.quantiteUniteGratuite;
+    }
+    
+    public void LigneApprovisionement.setQuantiteUniteGratuite(BigInteger quantiteUniteGratuite) {
+        this.quantiteUniteGratuite = quantiteUniteGratuite;
+    }
+    
     public BigInteger LigneApprovisionement.getQuantieEnStock() {
         return this.quantieEnStock;
     }

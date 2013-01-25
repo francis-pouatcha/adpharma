@@ -16,6 +16,8 @@ import net.sf.jasperreports.components.table.DesignCell;
 
 import org.adorsys.adpharma.beans.DecomposedProductExcelRepresentation;
 import org.adorsys.adpharma.beans.importExport.ExportDecomposedProductService;
+import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.MouvementStock;
@@ -42,6 +44,26 @@ import com.ibm.icu.math.BigDecimal;
 @RequestMapping("/transformationproduits")
 @Controller
 public class TransformationProduitController {
+
+
+	
+	@RequestMapping(value = "/searchTrans", method = RequestMethod.GET)
+	public String searchAppro(@RequestParam("name") String  name,  Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("transformationproduits", TransformationProduit.findTransformationProduitEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) TransformationProduit.countTransformationProduits() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<TransformationProduit> list = TransformationProduit.findTransformationProduitByProduitCibleLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("transformationproduits", list);
+		}
+		return "transformationproduits/list";
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid TransformationProduit transformationProduit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		transformationProduit.setProduitOrigine(Produit.findProduit(transformationProduit.getOrigineId()));

@@ -4,7 +4,7 @@ $(function(){
     
         $(this).addClass("hover");
         $('ul:first',this).css('visibility', 'visible');
-    
+        console.log("toto");
     }, function(){
     
         $(this).removeClass("hover");

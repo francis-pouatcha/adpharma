@@ -1,4 +1,12 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<spring:url value="/resources/images/documentation/create_a_customer.jpg" var="create_a_customer_img" />
+<spring:url value="/resources/images/documentation/Create_Etat_Credit.jpg" var="Create_Etat_Credit_img" />
+<spring:url value="/resources/images/documentation/Find_Cutomer.jpg" var="Find_Cutomer_img" />
+<spring:url value="/resources/images/documentation/Find_Etat_Credit.jpg" var="Find_Etat_Credit_img" />
+<spring:url value="/resources/images/documentation/Find_Liabilities.jpg" var="Find_Liabilities_img" />
+<spring:url value="/resources/images/documentation/List_Customer.jpg" var="List_Customer_img" />
+<spring:url value="/resources/images/documentation/List_Liabilities.jpg" var="List_Liabilities_img" />
 <header class="jumbotron subhead" id="overview">
   <h1>Suivi de la clientelle</h1>
   <p class="lead">Suivi de la clientelle</p>
@@ -17,19 +25,90 @@
   <div class="row">
   	<div class="span4">
       <h3>Creer un Client</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>
+      	
+      	Pour creer un client faire : 
+      		<ul type="disc">
+      			<li>Suivie  Clients > Creer Un Client</li>
+      			<li>Remplir le formulaire</li>
+      			<li>Cliquer sur enregistrer</li>
+      		</ul>
+      		<div>
+      			<i>Choisissez la categorie de client pour determiner le taux de remise qui sera applique a ce dernier.</i>
+      		</div>
+      		<div>
+      		<img alt="create_a_customer_img" src="${create_a_customer_img }" style="width:auto;  height: auto;" /></div>
+      </p>
+    </div>
+    
+  	<div class="span4">
+      <h3>Details d'un Client</h3>
+      <p>
+      	Pour Voir les Details un client faire : 
+      		<ul type="disc">
+      			<li>Suivie  Clients > Lister Les Clients</li>
+      			<li>Double Cliquer sur un client de la liste</li>
+      		</ul>
+      </p>
+    </div>
+    <div class="span4">
+      <h3>Modifier un Client</h3>
+      <p>
+      	
+      	Pour Modifier un client, faire : 
+      		<ul type="disc">
+      			<li>Suivie  Clients > Lister Les Clients</li>
+      			<li>Double Cliquer sur un client de la liste</li>
+      			<li>Cliquer sur le button "update"" (feuille de papier + crayon)</li>
+      			<li>Modifier les champs. Vous pouvez aussi rechercher un client a partir du button (rechercher un client)</li>
+      			<li>Cliquer sur Enregistrer</li>
+      		</ul>
+      </p>
     </div>
     <div class="span4">
       <h3>Rechercher un client</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+      <p>
+      	Pour Rechercher un client, faire : 
+      		<ul type="disc">
+      			<li>Suivie  Clients > Rechercher Un Clients</li>
+      			<li>Remplir les champs du formulaire. <i>Aucun champs n'est obligatoire</i></li>
+      			<li>Cliquer sur le button Enregistrer</li>
+      		</ul>
+      </p>
+      		<div>
+      		<img alt="Find_Cutomer_img" src="${Find_Cutomer_img }" style="width:auto;  height: auto;" /></div>
    	</div>
-   	<div class="span4">
-   	  <h3>Creer une categorie de client</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-  	</div>
   </div>   
 </section>
-
+<section id="categories">
+	<div class="page-header">
+    <h1>Gestion Des Categories <small>Gestion Des Categories</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<h3>Creer une categorie</h3>
+  		<p>
+  			Pour Creer Une Categorie de Client :
+  			<ul type="disc">
+  				<li>Suivie Clients > Categories > Creer</li>
+  				<li>Remplir le Formulaire</li>
+  				<li>Cliquer sur Enregistrer </li>
+  			</ul>
+  		</p>
+  	</div>
+  	<div class="span4">
+  		<h3>Lister les Categories</h3>
+  		<p>
+  			Pour Lister les Categories de Client :
+  			<ul type="disc">
+  				<li>Suivie Clients > Categories > Lister</li>
+  			</ul>
+  		</p>
+  		<div> <i>A partir de la liste, <b>double-cliquer</b> pour voir les details d'une categorie, 
+  		Ou cliquer sur l'image <b>"modifier"</b> d'une categorie pour la modifier.</i></div>
+  	</div>
+  </div>
+</section>
 <section id="dette">
   <div class="page-header">
     <h1>Gestions des dettes <small>Gestions des dettes</small></h1>
@@ -37,34 +116,178 @@
   <div class="row">
   	<div class="span4">
       <h3>Visualiser Les dettes d'un client</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>
+      	Pour Visualiser les dettes, Faire : 
+      	<ul>
+      		<li>Suivi Client > Dettes Clients > Lister Les Dettes</li>
+      	</ul>
+      </p>
+  		<div>
+      		<img alt="List_Liabilities_img" src="${List_Liabilities_img }" style="width:auto;  height: auto;" /></div>
+    </div>
+  	<div class="span4">
+      <h3>Visualiser Les Details d'une Dette</h3>
+      <p>
+      	Pour Visualiser Details d'une Dette, Faire : 
+      	<ul>
+      		<li>Suivi Client > Dettes Clients > Lister Les Dettes</li>
+      		<li>Double Cliquer sur une Dette</li>
+      	</ul>
+      </p>
     </div>
     <div class="span4">
-      <h3>Editer un etat detaille des dette d'un client</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+      <h3>Rechercher Une Dette</h3>
+      <p>
+      	Pour Rechercher Une Dette, Faire : 
+      	<ul>
+      		<li>Suivi Client > Dettes Clients > Rechercher Une Dette</li>
+      		<li>Remplir Le Formulaire</li>
+      		<li>Cliquer Sur Enregister</li>
+      	</ul>
+      </p>
+      
+  		<div>
+      		<img alt="Find_Liabilities_img" src="${Find_Liabilities_img }" style="width:auto;  height: auto;" /></div>
+      		
    	</div>
-   	<div class="span4">
-   	  <h3>Encaisser un etat de credit</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-  	</div>
+    <div class="span4">
+      <h3>Annuler Une Dette</h3>
+      <p>
+      	Pour Annuler Une Dette, Faire : 
+      	<ul>
+      		<li>Suivi Client > Etat des Credits Clients > Lister Les Etats Credits</li>
+      		<li>Double Cliquer Sur Un Etat Credit</li>
+      		<li>Cliquer sur <b>Annuler</b> Dans la Liste des Dettes</li>
+      	</ul>
+      </p>
+   	</div>
   </div>  
+</section>
+<section id="credits">
+	
+  <div class="page-header">
+    <h1>Gestions des Etats Credits <small>Gestions des Etats Credits</small></h1>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<h3>Creer Un Etat Credit </h3>
+  		<p>
+  			Pour Creer Un Etat Credit, Faire :
+  			<ul>
+  				<li>Suivie Client > Etats Credits > Edition Etat Credits</li>
+  				<li>Remplir Le Formulaire</li>
+  				<li>Cliquer sur <b>Enregistrer</b></li>
+  			</ul>
+  		</p>
+  		<div>
+      		<img alt="Create_Etat_Credit_img" src="${Create_Etat_Credit_img }" style="width:auto;  height: auto;" /></div>
+  	</div>
+  	<div class="span4">
+  		<h3>Rechercher Un Etat Credit </h3>
+  		<p>
+  			Pour Rechercher Un Etat Credit, Faire :
+  			<ul>
+  				<li>Suivie Client > Etats Credits > Rechercher Etats Credits</li>
+  				<li>Remplir Le Formulaire</li>
+  				<li>Cliquer sur <b>Enregistrer</b></li>
+  			</ul>
+  		</p>
+  		<div>
+      		<img alt="Find_Etat_Credit_img" src="${Find_Etat_Credit_img }" style="width:auto;  height: auto;" /></div>
+  		
+  	</div>
+  	<div class="span4">
+  		<h3>Lister les Etats Credits </h3>
+  		<p>
+  			Pour Lister les Etats Credits, Faire :
+  			<ul>
+  				<li>Suivie Client > Etats Credits > Lister Etats Credits</li>
+  			</ul>
+  		</p>
+  	</div>
+  	<div class="span4">
+  		<h3>Details D'un Etat Credit</h3>
+  		<p>
+  			Pour Afficher les Details d'un Etat Credit, Faire :
+  			<ul>
+  				<li> Lister les Etats Credits</li>
+  				<li> <b>Double Cliquer</b> Sur un Etat Credit contenu dans la liste, et voila !</li>
+  			</ul>
+  		</p>
+  	</div>
+  	<div class="span4">
+  		<h3>Imprimer L'Etat, Imprimer La Facture Globale</h3>
+  		<p>
+  			Pour Imprimer L'Etat ou Imprimer La Facture Globale, Faire :
+  			<ul>
+  				<li> Afficher les Details d'un Etat Credit</li>
+  				<li> Cliquer soit sur <b>Imprimer L'Etat</b> ou <b>Imprimer la Facture Globale</b> pour soit imprimer l'Etat soit  imprimer la facture totale</li>
+  			</ul>
+  		</p>
+  	</div>
+  	<div class="span4">
+  		<h3>Encaisser</h3>
+  		<ul>
+  				<li> Afficher les Details d'un Etat Credit</li>
+  				<li>Cliquer <b>Encaisser</b></li>
+  				<li>Remplir le Formulaire </li>
+  				<li>Enregister</li>
+  		</ul>
+  	</div>
+  	<div class="span4">
+  		<h3>Annuler L'Etat</h3>
+  		<ul>
+  				<li> Afficher les Details d'un Etat Credit</li>
+  				<li>Cliquer <b>Annuler L'Etat</b></li>
+  		</ul>
+  	</div>
+  </div>
 </section>
 <section id="avoir">
   <div class="page-header">
     <h1>Gestions des avoirs <small>Gestions des avoirs</small></h1>
   </div>
   <div class="row">
-  	<div class="span4">
-      <h3>Visualisation des Avoirs</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-    </div>
     <div class="span4">
       <h3>Creation des Avoirs</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+      <p>
+      	Pour Creer un Avoir, Faire :
+      	<ul>
+      		<li>Suivie Client > Avoir Client > Creer Un Avoir</li>
+      		<li>Remplir Le Formulaire</li>
+      		<li> Cliquer sur <b>Enregister</b></li>
+      	</ul>
+      </p>
    	</div>
+  	<div class="span4">
+      <h3>Lister Les Avoirs</h3>
+      <p>
+      	Pour Creer un Avoir, Faire :
+      	<ul>
+      		<li>Suivie Client > Avoirs Clients > Lister Avoir Clients</li>
+      	</ul>
+      </p>
+    </div>
    	<div class="span4">
    	  <h3>Annulation des Avoirs</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+   	  <p>
+   	  	Pour Annuler un avoir, Faire :
+   	  	<ul>
+   	  		<li> Lister Les Avoirs</li>
+   	  		<li>Double cliquer sur Un Avoir</li>
+   	  	</ul>
+   	  </p>
+  	</div>
+   	<div class="span4">
+   	  <h3>Annulation des Avoirs</h3>
+   	  <p>
+   	  	Pour Annuler un avoir, Faire :
+   	  	<ul>
+   	  		<li> Lister Les Avoirs</li>
+   	  		<li>Double cliquer sur Un Avoir</li>
+   	  		<li>Cliquer sur <b>annuler</b></li>
+   	  	</ul>
+   	  </p>
   	</div>
   </div>
     
