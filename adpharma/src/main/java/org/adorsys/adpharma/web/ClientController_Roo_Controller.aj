@@ -54,8 +54,6 @@ privileged aspect ClientController_Roo_Controller {
         return "clients/list";
     }
     
-    
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String ClientController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         Client.findClient(id).remove();
@@ -64,8 +62,6 @@ privileged aspect ClientController_Roo_Controller {
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/clients";
     }
-    
-    
     
     @ModelAttribute("genres")
     public Collection<Genre> ClientController.populateGenres() {

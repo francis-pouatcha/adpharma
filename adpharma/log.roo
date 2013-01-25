@@ -208,3 +208,5 @@ quit
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-01-10 10:23:05
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-23 10:02:33
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-21 09:47:59
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-25 15:48:31
+finder list --class org.adorsys.adpharma.domain.Approvisionement

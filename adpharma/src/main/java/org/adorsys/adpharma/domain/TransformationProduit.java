@@ -10,6 +10,7 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.StringUtils;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.TypedQuery;
@@ -216,5 +217,14 @@ public class TransformationProduit extends AdPharmaBaseEntity {
             q.setParameter("actif", actif);
             return q;
         }
+    
+    public static TypedQuery<TransformationProduit> findTransformationProduitByProduitCibleLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = TransformationProduit.entityManager();
+        TypedQuery<TransformationProduit> q = em.createQuery("SELECT o FROM TransformationProduit AS o WHERE LOWER(o.produitCible.designation) LIKE LOWER(:nom) ORDER BY o.produitOrigine.designation", TransformationProduit.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
 
 }

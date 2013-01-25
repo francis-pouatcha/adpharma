@@ -27,6 +27,7 @@ import jxl.write.WritableWorkbook;
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.beans.PrintBareCodeBean;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.Etat;
@@ -488,6 +489,24 @@ public class ApprovisionementProcessController {
 		}
 
 
+		@RequestMapping(value = "/searchAppro", method = RequestMethod.GET)
+		public String searchAppro(@RequestParam("name") String  name,  Model uiModel) {
+			
+			if("".equals(name)){
+				Integer page = 1;
+				Integer size = 50;
+				int sizeNo = size == null ? 10 : size.intValue();
+	            uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+	            float nrOfPages = (float) Approvisionement.countApprovisionements() / sizeNo;
+	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			}else{
+				List<Approvisionement> list = Approvisionement.findApproByFournisseurLike(name).setMaxResults(50).getResultList();
+			    uiModel.addAttribute("approvisionements", list);
+			}
+			
+			return "approvisionements/list";
+		}
+		
 		// imprime la fiche de code bare
 		@RequestMapping("/{apId}/printFicheCodeBare/{ficheCodebarId}.pdf")
 		public String printFicheCodeBar( @PathVariable("apId")Long apId, @PathVariable("ficheCodebarId")String ficheCodebarId, Model uiModel){
