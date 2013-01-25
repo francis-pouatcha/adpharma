@@ -1,4 +1,12 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<spring:url value="/resources/images/documentation/create_a_customer.jpg" var="create_a_customer_img" />
+<spring:url value="/resources/images/documentation/Create_Etat_Credit.jpg" var="Create_Etat_Credit_img" />
+<spring:url value="/resources/images/documentation/Find_Cutomer.jpg" var="Find_Cutomer_img" />
+<spring:url value="/resources/images/documentation/Find_Etat_Credit.jpg" var="Find_Etat_Credit_img" />
+<spring:url value="/resources/images/documentation/Find_Liabilities.jpg" var="Find_Liabilities_img" />
+<spring:url value="/resources/images/documentation/List_Customer.jpg" var="List_Customer_img" />
+<spring:url value="/resources/images/documentation/List_Liabilities.jpg" var="List_Liabilities_img" />
 <header class="jumbotron subhead" id="overview">
   <h1>Suivi de la clientelle</h1>
   <p class="lead">Suivi de la clientelle</p>
@@ -28,6 +36,8 @@
       		<div>
       			<i>Choisissez la categorie de client pour determiner le taux de remise qui sera applique a ce dernier.</i>
       		</div>
+      		<div>
+      		<img alt="create_a_customer_img" src="${create_a_customer_img }" style="width:auto;  height: auto;" /></div>
       </p>
     </div>
     
@@ -65,6 +75,8 @@
       			<li>Cliquer sur le button Enregistrer</li>
       		</ul>
       </p>
+      		<div>
+      		<img alt="Find_Cutomer_img" src="${Find_Cutomer_img }" style="width:auto;  height: auto;" /></div>
    	</div>
   </div>   
 </section>
@@ -110,6 +122,8 @@
       		<li>Suivi Client > Dettes Clients > Lister Les Dettes</li>
       	</ul>
       </p>
+  		<div>
+      		<img alt="List_Liabilities_img" src="${List_Liabilities_img }" style="width:auto;  height: auto;" /></div>
     </div>
   	<div class="span4">
       <h3>Visualiser Les Details d'une Dette</h3>
@@ -131,6 +145,10 @@
       		<li>Cliquer Sur Enregister</li>
       	</ul>
       </p>
+      
+  		<div>
+      		<img alt="Find_Liabilities_img" src="${Find_Liabilities_img }" style="width:auto;  height: auto;" /></div>
+      		
    	</div>
     <div class="span4">
       <h3>Annuler Une Dette</h3>
@@ -161,6 +179,8 @@
   				<li>Cliquer sur <b>Enregistrer</b></li>
   			</ul>
   		</p>
+  		<div>
+      		<img alt="Create_Etat_Credit_img" src="${Create_Etat_Credit_img }" style="width:auto;  height: auto;" /></div>
   	</div>
   	<div class="span4">
   		<h3>Rechercher Un Etat Credit </h3>
@@ -172,6 +192,9 @@
   				<li>Cliquer sur <b>Enregistrer</b></li>
   			</ul>
   		</p>
+  		<div>
+      		<img alt="Find_Etat_Credit_img" src="${Find_Etat_Credit_img }" style="width:auto;  height: auto;" /></div>
+  		
   	</div>
   	<div class="span4">
   		<h3>Lister les Etats Credits </h3>
