@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -111,19 +112,26 @@ public class Client extends AdPharmaBaseEntity {
 
     @PostPersist
     public void postPersit() {
+    	plafondCredit = plafondCredit ==null?BigDecimal.ZERO:plafondCredit;
         clientNumber = NumberGenerator.getNumber("CL-", getId(), 4);
         if (clientPayeur == null) {
             clientPayeur = this;
             clientPayeurNumber = clientNumber;
             tauxCouverture = BigDecimal.valueOf(100);
+            
         }
+    }
+    @PreUpdate
+    public void preUpdate() {
+    	plafondCredit = plafondCredit ==null?BigDecimal.ZERO:plafondCredit;
     }
 
     
 
     public boolean estCredible(BigInteger amount) {
         if (creditAutorise) {
-            if (plafondCredit.intValue() > 0) {
+        	plafondCredit = plafondCredit ==null ?BigDecimal.ZERO:plafondCredit;
+        			if (plafondCredit.intValue() > 0) {
                 calculeTotalDette();
                 merge();
                 return totalDette.add(amount).intValue() < plafondCredit.intValue();

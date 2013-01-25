@@ -40,9 +40,10 @@ public class ExportDecomposedProductService {
 		return workbook ;
 	}
 	private void insertDataIntheSheet(HSSFSheet sheet,int firstDataRowNum){
-		for(int i = firstDataRowNum; i < data.size(); i++){
+		for(int i = 0; i < data.size(); i++){
+			int j = i+1;
 			DecomposedProductExcelRepresentation rowData = data.get(i);
-			HSSFRow row = sheet.createRow(i);
+			HSSFRow row = sheet.createRow(j);
 			row.createCell(FIRST_COLUMN_NUM ).setCellValue(rowData.getCipMaison());
 			row.createCell(SECOND_COLUMN_NUM).setCellValue(rowData.getDesignation());
 			row.createCell(THIRD_COLUMN_NUM).setCellValue(rowData.getSalePriceAsCFA());

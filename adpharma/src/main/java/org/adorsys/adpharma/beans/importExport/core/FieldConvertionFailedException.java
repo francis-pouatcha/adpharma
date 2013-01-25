@@ -6,7 +6,7 @@ public class FieldConvertionFailedException extends Exception {
 	private Class clazz ;
 	
 	public FieldConvertionFailedException(Object value ,Class clazz) {
-		super(value+"can not be converte to "+ clazz.getName());
+		super(value+"can not be converted to "+ clazz.getName());
 		this.value = value ;
 		this.clazz = clazz ;
 		

@@ -81,8 +81,8 @@ privileged aspect CaisseController_Roo_Controller {
     }
     
     void CaisseController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("caisse_dateouverture_date_format", "dd-MM-yyyy HH:mm");
-        uiModel.addAttribute("caisse_datefemeture_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("caisse_dateouverture_date_format", "dd-MM-yyyy hh:mm");
+        uiModel.addAttribute("caisse_datefemeture_date_format", "dd-MM-yyyy hh:mm");
     }
     
     String CaisseController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

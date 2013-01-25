@@ -267,7 +267,7 @@ public class Inventaire extends AdPharmaBaseEntity {
 
 	private transient boolean inventoryBycipm  = false;
 	
-	private transient boolean doNotSelectAnyProduct  = false;
+	private transient boolean doNotSelectAnyProduct  = true;
 
 	private transient Boolean pAchat  = false;
 

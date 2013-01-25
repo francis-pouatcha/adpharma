@@ -215,10 +215,12 @@ public class CommandeClient extends AdPharmaBaseEntity {
 
 	public boolean validaterRemiseGlobale(Model uiModel, BigDecimal remise) {
 		boolean valider = true;
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		if(pharmaUser==null) return false;
+		BigDecimal taux = pharmaUser.getTauxRemise()==null? BigDecimal.ZERO: pharmaUser.getTauxRemise();
 		BigDecimal actualRemise = remise.add(getRemise());
-		BigDecimal remiseAdmicible = BigDecimal.ZERO;
-		if (client.getRemiseAutorise()) remiseAdmicible = (getMontantHt().multiply(getClient().getCategorie().getTauxRemiseMax())).divide(BigDecimal.valueOf(100));
-		if (remiseAdmicible.doubleValue() == 0) {
+		BigDecimal remiseAdmicible = getMontantHt().multiply(taux).divide(BigDecimal.valueOf(100));
+		if (remiseAdmicible.doubleValue() <= 0) {
 			uiModel.addAttribute("apMessage", "Ce client n'est pas autorise a obtenir une remise ! ");
 			return false;
 		}

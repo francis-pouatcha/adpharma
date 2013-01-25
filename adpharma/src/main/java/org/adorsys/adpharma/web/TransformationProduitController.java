@@ -42,8 +42,6 @@ import com.ibm.icu.math.BigDecimal;
 @RequestMapping("/transformationproduits")
 @Controller
 public class TransformationProduitController {
-
-
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid TransformationProduit transformationProduit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		transformationProduit.setProduitOrigine(Produit.findProduit(transformationProduit.getOrigineId()));
@@ -225,8 +223,8 @@ public class TransformationProduitController {
 			decomposedProductExcelRepresentation.setCipMaison(ligneApprovisionement.getCipMaison());
 			decomposedProductExcelRepresentation.setDesignation(ligneApprovisionement.getDesignation());
 			decomposedProductExcelRepresentation.setSalePrice(new BigDecimal(ligneApprovisionement.getPrixVenteUnitaire()));
-			decomposedProductExcelRepresentation.setProvider(ligneApprovisionement.getApprovisionement().getMagasin().getDisplayName());
-			decomposedProductExcelRepresentation.setSite(ligneApprovisionement.getApprovisionement().getMagasin().getDisplayName());
+			decomposedProductExcelRepresentation.setProvider("PHMK");
+			decomposedProductExcelRepresentation.setSite("MAKEPE");
 			data.add(decomposedProductExcelRepresentation);
 		}
 		return data;

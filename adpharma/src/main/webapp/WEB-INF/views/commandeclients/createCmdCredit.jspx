@@ -101,7 +101,6 @@
 		// Dialog	find client		
 		$('#findClient').dialog({
 			open:function(){
-		   //clearClientTable();
 			},
 			autoOpen: false,
 			width: 1000,
@@ -145,11 +144,11 @@
 		modelAttribute="commandeCredit" path="/commandeclients/cmdCredit"
 		render="${empty dependencies}" z="user-managed">
 		<field:input field="clientName" style="color:blue;" createBut="creer" 
-			buttonId="findclt" buttonLabel="Rechercher"
+			buttonId="findclt" buttonLabel="..."
 			id="c_org_adorsys_adpharma_domain_CommandeClient_client"
 			required="true" z="user-managed" />
 		<field:input field="payeurName" style="color:blue;"  
-			buttonId="findpayeur" buttonLabel="Rechercher"
+			buttonId="findpayeur" buttonLabel="..."
 			id="c_org_adorsys_adpharma_domain_CommandeClient_clientPaiyeur"
 			z="user-managed" />
 		<field:input field="taux" style="color:red;"

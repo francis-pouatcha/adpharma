@@ -21,10 +21,11 @@ body,div,td {
 
 input#prm{
 	color: silver;
-	
 	 
 	 
 }
+
+
 
 select option{
 	margin-bottom: 10px;
@@ -428,6 +429,15 @@ input {
 	text-align: center;
 	font-weight: bold;
 	color: blue;
+}
+
+.tbcell {
+	width: 120px;
+	text-align: center;
+	font-weight: bold;
+	border-color:green;
+	color: black ;
+	font-size: 16px;
 }
 
 .autres:focus {

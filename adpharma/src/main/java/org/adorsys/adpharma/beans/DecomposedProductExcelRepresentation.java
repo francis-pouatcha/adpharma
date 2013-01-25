@@ -53,7 +53,7 @@ public class DecomposedProductExcelRepresentation {
 	}
 	
 	public String getSalePriceAsCFA() {
-		return this.salePrice.doubleValue()+" CFA";
+		return this.salePrice.doubleValue()+" F CFA";
 	}
 	public String getProvider() {
 		return provider;
