@@ -131,7 +131,7 @@ public class ApprovisionementProcessController {
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		Produit produit = Produit.findProduit(pId);
-
+		qteug = StringUtils.isBlank(qteug)?"0":qteug;
 		if (approvisionement.contientProduit(produit)) {
 			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			return initViewContent(approvisionement, tvaj, uiModel);

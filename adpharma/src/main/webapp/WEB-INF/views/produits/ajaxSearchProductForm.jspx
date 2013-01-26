@@ -80,7 +80,8 @@ var isfusion = false;
 											}
 											
 										}else{
-											window.location='${current_prd_url}'+current.id+'?form' ;
+											//$("#up").load('${current_prd_url}'+current.id+'?form'+" #up");
+											window.location= '${current_prd_url}'+current.id+'?form';
 											$('#findproduits_up').dialog("close");
 									    }
 										

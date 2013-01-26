@@ -35,8 +35,6 @@
     	$("#search").keypress( function(evt) { 
     		if(evt.keyCode==13){
 	    		var val = this.value;
-	    		
-	    		
 	    		$("#myDiv").load("${search_url}?name="+val+" #myDiv");
 	   
 	    		/* $.get("${search_url}", { name: val }, function(data){
@@ -70,7 +68,7 @@
         <c:when test="${not empty items}">
         <div class="printable" >
          <c:if test="${not empty search or search}">
-        	<input type="text" name="search" placeholder="${placeholder}" id="search" />
+        	<input type="text" class="tbcell" style="width: 30%;" name="search" placeholder="${placeholder}" id="search" />
         </c:if>
          <IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;margin-left: 400px;" />
           <jsp:doBody />
