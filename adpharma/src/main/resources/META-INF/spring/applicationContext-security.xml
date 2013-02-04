@@ -86,7 +86,7 @@
 		<intercept-url pattern="/commandefournisseurs/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" />
 		<intercept-url pattern="/commandefournisseurs/sendToPlatform/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" requires-channel="https" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')"  />
 		
 		<intercept-url pattern="/pharmausers/**"
 			access="hasAnyRole('ROLE_ADMIN','ROLE_SUPER_ADMIN')" />

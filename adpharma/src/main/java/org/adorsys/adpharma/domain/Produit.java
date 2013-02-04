@@ -339,7 +339,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public String generateDefaultCip() {
 		String cip = null;
-		cip = "9" + RandomStringUtils.randomNumeric(5) + "9";
+		cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
 		while (!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty()) {
 			cip = "9" + RandomStringUtils.randomNumeric(5) + "9";
 		}
@@ -457,7 +457,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public static TypedQuery<Produit> findProduitsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = designation + "%";
+		designation ="%"+designation + "%";
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  And o.actif =:actif  order By  o.designation ASC ", Produit.class);
 		q.setParameter("designation", designation);

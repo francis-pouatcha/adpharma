@@ -252,7 +252,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public void CalculePaTotal() {
 		Contract.notNull("qte approvisionne", prixAchatUnitaire);
-		Contract.notNull("Quantite Aprovisionnee", quantiteAprovisione);
+		Contract.notNull("Quantite Aprovisionnee", quantiteAprovisione); 
+		quantiteUniteGratuite = quantiteUniteGratuite==null?BigInteger.ZERO:quantiteUniteGratuite;
 		prixAchatTotal = BigDecimal.valueOf(prixAchatUnitaire.multiply(BigDecimal.valueOf(quantiteAprovisione.longValue()-quantiteUniteGratuite.longValue())).longValue());
 	}
 
@@ -589,7 +590,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = designation + "%";
+		designation = "%"+designation + "%";
 		EntityManager em = LigneApprovisionement.entityManager();
 		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE LOWER(o.produit.designation) LIKE LOWER(:designation) ORDER BY o.designation ASC", LigneApprovisionement.class);
 		q.setParameter("designation", designation);
@@ -645,6 +646,12 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("founisseur", fournisseur);
 		return (List<Long>) q.getResultList();
 	}
+	public static TypedQuery<LigneApprovisionement>  findLastLigneApprovisionementsByCip(String cip) {
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o  FROM LigneApprovisionement AS o WHERE o.produit.cip = :cip ORDER BY o.id DESC" ,LigneApprovisionement.class);
+		q.setParameter("cip", cip);
+		return q;
+	}
 
 	public static BigInteger findTrueStocK(String cip) {
 		if(StringUtils.isBlank(cip)) throw new IllegalArgumentException("cip must not be null or empty");
@@ -665,14 +672,12 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static List<BigDecimal> findlastPrices(Produit produit) {
 		EntityManager em = LigneApprovisionement.entityManager();
-		Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit ) ") ;
+		Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select p.id from LigneApprovisionement as p where p.produit = :produit  ) ") ;
 		q.setParameter("produit",produit);
 		List<Object[]> resultList = q.getResultList();
 		ArrayList<BigDecimal> arrayList = new ArrayList<BigDecimal>();
 		if(!resultList.isEmpty())
 		{
-			System.out.println((BigDecimal)((Object[])resultList.get(0))[0]);
-			System.out.println((BigDecimal)((Object[])resultList.get(0))[1]);
 			arrayList.add((BigDecimal)((Object[])resultList.get(0))[0]);
 			arrayList.add((BigDecimal)((Object[])resultList.get(0))[1]);
 		}
@@ -681,15 +686,13 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static List<BigDecimal> findlastPrices(Produit produit,Fournisseur fournisseur) {
 		EntityManager em = LigneApprovisionement.entityManager();
-		Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select MAX(p.id) from LigneApprovisionement as p where p.produit = :produit  and p.approvisionement.founisseur = :founisseur) ") ;
+		Query q = em.createQuery("SELECT o.prixAchatUnitaire ,o.prixVenteUnitaire  FROM LigneApprovisionement AS o WHERE   o.id IN (select p.id from LigneApprovisionement as p where p.produit = :produit  and p.approvisionement.founisseur = :founisseur ) ") ;
 		q.setParameter("produit",produit);
 		q.setParameter("founisseur",fournisseur);
 		List<Object[]> resultList = q.getResultList();
 		ArrayList<BigDecimal> arrayList = new ArrayList<BigDecimal>();
 		if(!resultList.isEmpty())
 		{
-			System.out.println((BigDecimal)((Object[])resultList.get(0))[0]);
-			System.out.println((BigDecimal)((Object[])resultList.get(0))[1]);
 			arrayList.add((BigDecimal)((Object[])resultList.get(0))[0]);
 			arrayList.add((BigDecimal)((Object[])resultList.get(0))[1]);
 		}
@@ -708,7 +711,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE  o.cipMaison = :cipMaison ", LigneApprovisionement.class).setParameter("cipMaison", cipMaison);
 		}
 		if (StringUtils.isNotBlank(designation)) {
-			designation = designation + "%";
+			designation = "%"+designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		} else {
 			beginBy = StringUtils.isBlank(beginBy) ? "A" : beginBy;
@@ -768,7 +771,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		etat = etat != null ? etat : Etat.CLOS;
 		if (StringUtils.isNotBlank(designation)) {
-			designation = designation + "%";
+			designation = "%"+designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
 		if (qteStock != null) {
@@ -788,7 +791,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public static TypedQuery<LigneApprovisionement> fatalSearchAJAX(String designation) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		if (StringUtils.isNotBlank(designation)) {
-			designation = designation + "%";
+			designation = "%"+designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
 		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.cip , o.id ").toString(), LigneApprovisionement.class);

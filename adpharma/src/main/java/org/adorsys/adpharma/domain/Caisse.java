@@ -37,11 +37,11 @@ public class Caisse extends AdPharmaBaseEntity {
 	private Site site;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date dateOuverture;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date dateFemeture;
 
 	@Value("0")

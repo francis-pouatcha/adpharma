@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Fournisseur;
+import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.utils.Contract;
 import org.adorsys.adpharma.utils.ProcessHelper;
@@ -37,14 +38,18 @@ public class ApprovisionementProcessFindProductController {
 	@RequestMapping(value="/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductApByCipAjax(@PathVariable("cip") String cip,@PathVariable("apId") Long apId , Model uiModel) {
-		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(50).getResultList();
+		List<LigneApprovisionement> lastlineAp = LigneApprovisionement.findLastLigneApprovisionementsByCip(cip).setMaxResults(1).getResultList();
 		Produit prd = new Produit() ;
-		if (!produits.isEmpty()) {
-			prd = produits.iterator().next();
-			Approvisionement approvisionement =	Approvisionement.findApprovisionement(apId);
-			Fournisseur fournisseur = null;
-			if (approvisionement!=null)  fournisseur = approvisionement.getFounisseur();
-			prd.getFournisseurPrice(fournisseur);
+		if (!lastlineAp.isEmpty()) {
+			LigneApprovisionement next = lastlineAp.iterator().next();
+			 prd = next.getProduit();
+			 prd.setPrixAchatSTock(next.getPrixAchatUnitaire());
+			 prd.setPrixVenteStock(next.getPrixVenteUnitaire());
+		}else {
+			List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(1).getResultList();
+            if (!produits.isEmpty()) {
+				 prd = produits.iterator().next() ;
+			}
 		}
 
 		return prd.toJson();

@@ -577,7 +577,7 @@ $('#updateClient').dialog("close");
 							</td>
 							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt()" value="${qte}" class="autres"
-								onKeyPress="return scanTouche(event)" width="50px;" readonly="readonly"
+								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="saisir la Quantite"  /></td>
 							<td><INPUT type="hidden" name="remax" id="remax"
 								value="${saleProcess.produit.remiseMax}" /> <INPUT type="text"

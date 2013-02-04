@@ -35,19 +35,19 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	private Client client;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date dateEdition;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private transient Date minDateDette ;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private transient Date maxDateDette ;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date datePaiement;
 
 	private transient Long clientId;
@@ -74,6 +74,18 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 	@Value("false")
 	private Boolean consommerAvoir;
+	
+	private Boolean addAllUnbilledInvoices = Boolean.FALSE;
+	
+	
+
+	public Boolean getAddAllUnbilledInvoices() {
+		return addAllUnbilledInvoices;
+	}
+
+	public void setAddAllUnbilledInvoices(Boolean addAllUnbilledInvoices) {
+		this.addAllUnbilledInvoices = addAllUnbilledInvoices;
+	}
 
 	private transient List<DetteClient> listeDettes = new ArrayList<DetteClient>();
 
@@ -93,7 +105,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				sortListeDettes();
+			//	sortListeDettes();
 
 			}
 		}).start();
@@ -340,7 +352,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy"));
+		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy HH:mm"));
 		return sb.toString();
 	}
 }
