@@ -22,16 +22,18 @@ privileged aspect Produit_Roo_Finder {
     public static TypedQuery<Produit> Produit.findProduitsByDesignationEquals(String designation) {
         if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
         EntityManager em = Produit.entityManager();
-        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.designation = :designation", Produit.class);
+        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.designation = :designation AND o.actif =:actif ", Produit.class);
         q.setParameter("designation", designation);
+        q.setParameter("actif", Boolean.TRUE);
         return q;
     }
     
     public static TypedQuery<Produit> Produit.findProduitsByFamilleProduit(FamilleProduit familleProduit) {
         if (familleProduit == null) throw new IllegalArgumentException("The familleProduit argument is required");
         EntityManager em = Produit.entityManager();
-        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.familleProduit = :familleProduit", Produit.class);
+        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.familleProduit = :familleProduit AND o.actif =:actif ", Produit.class);
         q.setParameter("familleProduit", familleProduit);
+        q.setParameter("actif", Boolean.TRUE);
         return q;
     }
     

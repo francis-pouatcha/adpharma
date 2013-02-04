@@ -54,18 +54,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @RequestMapping("/commandprocesses")
 @Controller
 public class CommandProcessController {
-
-
 	@Autowired
-	private JasperPrintService jasperPrintService ;
+	private JasperPrintService jasperPrintService;
 
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
-	public String createCommande(@Valid CommandeFournisseur commandeFournisseur, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,HttpSession session) {
+	public String createCommande(
+			@Valid CommandeFournisseur commandeFournisseur,
+			BindingResult bindingResult, Model uiModel,
+			HttpServletRequest httpServletRequest, HttpSession session) {
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("commandeFournisseur", commandeFournisseur);
 			ProcessHelper.addDateTimeFormatPatterns(uiModel);
@@ -74,40 +74,48 @@ public class CommandProcessController {
 		uiModel.asMap().clear();
 		session.setAttribute("productResult", Produit.findAllProduits());
 		commandeFournisseur.persist();
-		return "redirect:/commandprocesses/" + ProcessHelper.encodeUrlPathSegment(commandeFournisseur.getId().toString(), httpServletRequest)+"/editCommand";
+		return "redirect:/commandprocesses/"
+				+ ProcessHelper.encodeUrlPathSegment(commandeFournisseur
+						.getId().toString(), httpServletRequest)
+				+ "/editCommand";
 	}
 
-
-	@Produces({"application/pdf"})
-	@Consumes({""})
+	@Produces({ "application/pdf" })
+	@Consumes({ "" })
 	@RequestMapping(value = "/{cmdId}/printBonCommande.pdf", method = RequestMethod.GET)
-	public void printFicheApprov(@PathVariable("cmdId") Long cmdId  ,HttpServletRequest request,HttpServletResponse response) {
+	public void printFicheApprov(@PathVariable("cmdId") Long cmdId,
+			HttpServletRequest request, HttpServletResponse response) {
 		Map parameters = new HashMap();
-		parameters.put("commandeid",cmdId);
+		parameters.put("commandeid", cmdId);
 		try {
-			jasperPrintService.printDocument(parameters, response, DocumentsPath.BON_COMMANDE_FILE_PATH);
+			jasperPrintService.printDocument(parameters, response,
+					DocumentsPath.BON_COMMANDE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return ;
+			return;
 		}
 	}
 
-	@Produces({""})
-	@Consumes({""})
+	@Produces({ "" })
+	@Consumes({ "" })
 	@RequestMapping(value = "/{cmdId}/exporto.xls", method = RequestMethod.GET)
-	public void printFicheApprovXls(@PathVariable("cmdId") Long cmdId  ,HttpServletRequest request,HttpServletResponse response) {
-		CommandeFournisseur commande = CommandeFournisseur.findCommandeFournisseur(cmdId);
+	public void printFicheApprovXls(@PathVariable("cmdId") Long cmdId,
+			HttpServletRequest request, HttpServletResponse response) {
+		CommandeFournisseur commande = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		Set<LigneCmdFournisseur> ligneCommande = commande.getLigneCommande();
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			WritableWorkbook workbook = Workbook.createWorkbook(baos);
-			WritableSheet sheet = workbook.createSheet(commande.getCmdNumber(),0);
-			int i = 0 ;
+			WritableSheet sheet = workbook.createSheet(commande.getCmdNumber(),
+					0);
+			int i = 0;
 			for (LigneCmdFournisseur ligneCmdFournisseur : ligneCommande) {
 				Label cip = new Label(0, i, ligneCmdFournisseur.getCip());
 				sheet.addCell(cip);
-				Label qtec = new Label(1, i, ligneCmdFournisseur.getQuantiteCommande()+"");
+				Label qtec = new Label(1, i,
+						ligneCmdFournisseur.getQuantiteCommande() + "");
 				sheet.addCell(qtec);
 				i++;
 			}
@@ -118,26 +126,30 @@ public class CommandProcessController {
 			ServletOutputStream out1 = response.getOutputStream();
 			baos.writeTo(out1);
 			out1.flush();
-			return ;
+			return;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return ;
+			return;
 		}
 	}
 
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
-	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
-			@RequestParam BigDecimal pa ,@RequestParam BigDecimal pv,Model uiModel,HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
+	public String addLine(@PathVariable("cmdId") Long cmdId,
+			@RequestParam Long pId, @RequestParam BigInteger qte,
+			@RequestParam BigDecimal pa, @RequestParam BigDecimal pv,
+			Model uiModel, HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		Produit produit = Produit.findProduit(pId);
-		pa = pa == null?BigDecimal.ZERO :pa ; 
-		pv = pv == null?BigDecimal.ZERO :pv ; 
-		qte = qte == null?BigInteger.ONE :qte ; 
+		pa = pa == null ? BigDecimal.ZERO : pa;
+		pv = pv == null ? BigDecimal.ZERO : pv;
+		qte = qte == null ? BigInteger.ONE : qte;
 		BigDecimal pt = pa.multiply(new BigDecimal(qte));
 		if (commandeFournisseur.contientProduit(produit)) {
-			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
-		}else{
+			uiModel.addAttribute("apMessage",
+					"Ce produit est deja dans la liste ");
+		} else {
 			LigneCmdFournisseur line = new LigneCmdFournisseur();
 			line.setCommande(commandeFournisseur);
 			line.setPrixAchatMin(pa);
@@ -148,42 +160,58 @@ public class CommandProcessController {
 			line.persist();
 			commandeFournisseur.increaseMontant(pt);
 			System.out.println(pt);
-			commandeFournisseur.merge() ;
+			commandeFournisseur.merge();
 		}
-		CommandeProcess commandeProcess = new CommandeProcess(cmdId, LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(),
-				CommandeFournisseur.findCommandeFournisseur(cmdId).getFournisseur().getName());
-		uiModel.addAttribute("commandeProcess",commandeProcess);
-		uiModel.addAttribute("ligneCmdFournisseur",new LigneCmdFournisseur());
+		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
+				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
+						commandeFournisseur).getResultList(),
+				CommandeFournisseur.findCommandeFournisseur(cmdId)
+						.getFournisseur().getName());
+		uiModel.addAttribute("commandeProcess", commandeProcess);
+		uiModel.addAttribute("ligneCmdFournisseur", new LigneCmdFournisseur());
 		return "commandprocesses/editCommand";
 
 	}
 
 	@RequestMapping(value = "/preparedOrder", method = RequestMethod.POST)
-	public String preparedOrder(@Valid OrderPreParationBean preparedBean ,Model uiModel,HttpSession session,HttpServletRequest httpServletRequest) {
+	public String preparedOrder(@Valid OrderPreParationBean preparedBean,
+			Model uiModel, HttpSession session,
+			HttpServletRequest httpServletRequest) {
 		CommandeFournisseur order = null;
 		order = preparedBean.generateOrder();
 		order.persist();
 		List<Object[]> listItems = new ArrayList<Object[]>();
-		if(order.getModeDeSelection().equals(ModeSelection.PLUS_VENDU)){
-			listItems = CommandeProcess.findProduitAndQuantiteVendue(preparedBean.getBeginBy(), preparedBean.getEndBy(),
-					preparedBean.getBeginDate(), preparedBean.getEndDate()
-					, preparedBean.getRayon(),preparedBean.getFiliale(), preparedBean.getMinStock());
-		}else {
-			listItems = CommandeProcess.findProduitAndRuptureOrAlert(preparedBean.getBeginBy(), preparedBean.getBeginBy(), preparedBean.getRayon(), preparedBean.getFiliale(), preparedBean.getModeSelection());
+		if (order.getModeDeSelection().equals(ModeSelection.PLUS_VENDU)) {
+			listItems = CommandeProcess.findProduitAndQuantiteVendue(
+					preparedBean.getBeginBy(), preparedBean.getEndBy(),
+					preparedBean.getBeginDate(), preparedBean.getEndDate(),
+					preparedBean.getRayon(), preparedBean.getFiliale(),
+					preparedBean.getMinStock());
+		} else {
+			listItems = CommandeProcess.findProduitAndRuptureOrAlert(
+					preparedBean.getBeginBy(), preparedBean.getBeginBy(),
+					preparedBean.getRayon(), preparedBean.getFiliale(),
+					preparedBean.getModeSelection());
 		}
-		preparedBean.getOrderItemm(order, listItems ,preparedBean.getModeSelection());
-		if(order!=null){
+		preparedBean.getOrderItemm(order, listItems,
+				preparedBean.getModeSelection());
+		if (order != null) {
 			uiModel.asMap().clear();
-			return "redirect:/commandefournisseurs/" + ProcessHelper.encodeUrlPathSegment(order.getId().toString(), httpServletRequest);
+			return "redirect:/commandefournisseurs/"
+					+ ProcessHelper.encodeUrlPathSegment(order.getId()
+							.toString(), httpServletRequest);
 
-		}else {
-			uiModel.addAttribute("orderPreParationBean", new OrderPreParationBean());
+		} else {
+			uiModel.addAttribute("orderPreParationBean",
+					new OrderPreParationBean());
 			return "commandprocesses/create";
 		}
 
 	}
+
 	@RequestMapping(value = "/{cmdId}/showProduct/{pId}", method = RequestMethod.GET)
-	public String showProduct(@PathVariable("cmdId") Long cmdId,@PathVariable("pId") Long pId, Model uiModel,HttpSession session) {
+	public String showProduct(@PathVariable("cmdId") Long cmdId,
+			@PathVariable("pId") Long pId, Model uiModel, HttpSession session) {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("produit", Produit.findProduit(pId));
 		uiModel.addAttribute("itemId", pId);
@@ -192,53 +220,67 @@ public class CommandProcessController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/{cmdId}/deleteLine/{lineId}",method = RequestMethod.GET)
-	public String unselectLine(@PathVariable("cmdId") Long cmdId, @PathVariable("lineId") Long lineId ,Model uiModel, HttpServletRequest httpServletRequest) {
-		LigneCmdFournisseur line = LigneCmdFournisseur.findLigneCmdFournisseur(lineId) ;
+	@RequestMapping(value = "/{cmdId}/deleteLine/{lineId}", method = RequestMethod.GET)
+	public String unselectLine(@PathVariable("cmdId") Long cmdId,
+			@PathVariable("lineId") Long lineId, Model uiModel,
+			HttpServletRequest httpServletRequest) {
+		LigneCmdFournisseur line = LigneCmdFournisseur.findLigneCmdFournisseur(lineId);
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
-		if(line!=null){
+		if (line != null) {
 			commandeFournisseur.decreaseMontant(line.getPrixAchatTotal());
 			line.remove();
-			commandeFournisseur.merge() ;
+			commandeFournisseur.merge();
 			return "ok";
 		}
 		return "ko";
 	}
 
-
 	@ResponseBody
 	@RequestMapping(value = "/{cmdId}/updateLine/{lineId}", method = RequestMethod.GET)
-	public String updateLineForm(@PathVariable("cmdId") Long cmdId, @PathVariable("lineId") Long lineId  ,Model uiModel, HttpServletRequest httpServletRequest) {
+	public String updateLineForm(@PathVariable("cmdId") Long cmdId,
+			@PathVariable("lineId") Long lineId, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 		LigneCmdFournisseur line = LigneCmdFournisseur.findLigneCmdFournisseur(lineId);
-		if(line == null) return null ;
+		if (line == null)
+			return null;
 		return line.toJson();
 	}
 
-
 	@RequestMapping(value = "/{cmdId}/selectProduct/{pId}", method = RequestMethod.GET)
-	public String selectProduct(@PathVariable("cmdId") Long cmdId, @PathVariable("pId") Long pId  ,Model uiModel, HttpServletRequest httpServletRequest) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
+	public String selectProduct(@PathVariable("cmdId") Long cmdId,
+			@PathVariable("pId") Long pId, Model uiModel,
+			HttpServletRequest httpServletRequest) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		Produit produit = Produit.findProduit(pId);
-		CommandeProcess commandeProcess = new CommandeProcess(cmdId, LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(),
-	   CommandeFournisseur.findCommandeFournisseur(cmdId).getFournisseur().getName());
+		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
+				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
+						commandeFournisseur).getResultList(),
+				CommandeFournisseur.findCommandeFournisseur(cmdId)
+						.getFournisseur().getName());
 		commandeProcess.setProduit(produit);
-		uiModel.addAttribute("commandeProcess",commandeProcess);
+		uiModel.addAttribute("commandeProcess", commandeProcess);
 		return "commandprocesses/editCommand";
 	}
 
-
 	@ResponseBody
 	@RequestMapping(value = "/{cmdId}/updateLineByAjax", method = RequestMethod.GET)
-	public String updateLine(@PathVariable("cmdId") Long cmdId, LigneCmdFournisseur orderItem	,Model uiModel, HttpServletRequest httpServletRequest) {
-		LigneCmdFournisseur line = LigneCmdFournisseur.findLigneCmdFournisseur(orderItem.getId());
-		if(line == null) return null ;
-		BigDecimal pv = orderItem.getPrixAVenteMin() == null?BigDecimal.ZERO :orderItem.getPrixAVenteMin() ; 
+	public String updateLine(@PathVariable("cmdId") Long cmdId,
+			LigneCmdFournisseur orderItem, Model uiModel,
+			HttpServletRequest httpServletRequest) {
+		LigneCmdFournisseur line = LigneCmdFournisseur
+				.findLigneCmdFournisseur(orderItem.getId());
+		if (line == null)
+			return null;
+		BigDecimal pv = orderItem.getPrixAVenteMin() == null ? BigDecimal.ZERO
+				: orderItem.getPrixAVenteMin();
 		line.setQuantiteCommande(orderItem.getQuantiteCommande());
 		line.setPrixAchatMin(orderItem.getPrixAchatMin());
 		line.setPrixAVenteMin(pv);
 		line.calculPrixTotal();
 		line.merge();
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		commandeFournisseur.increaseMontant(line.getPrixAchatTotal());
 		commandeFournisseur.merge();
 		return line.toJson();
@@ -250,36 +292,46 @@ public class CommandProcessController {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		List dependencies = new ArrayList();
 		if (Fournisseur.countFournisseurs() == 0) {
-			dependencies.add(new String[]{"fournisseur", "fournisseurs"});
+			dependencies.add(new String[] { "fournisseur", "fournisseurs" });
 		}
 		uiModel.addAttribute("dependencies", dependencies);
 		return "commandprocesses/create";
 	}
 
 	@RequestMapping(value = "/{cmdId}/editCommand", method = RequestMethod.GET)
-	public String editCommand(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId) ;
-		CommandeProcess commandeProcess = new CommandeProcess(cmdId, LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(),
+	public String editCommand(@PathVariable("cmdId") Long cmdId, Model uiModel,
+			HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
+		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
+				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
+						commandeFournisseur).getResultList(),
 				commandeFournisseur.getFournisseur().getName());
-		uiModel.addAttribute("commandeProcess",commandeProcess);
-		uiModel.addAttribute("ligneCmdFournisseur",new LigneCmdFournisseur());
+		uiModel.addAttribute("commandeProcess", commandeProcess);
+		uiModel.addAttribute("ligneCmdFournisseur", new LigneCmdFournisseur());
 
 		return "commandprocesses/editCommand";
 	}
 
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/closeCommand", method = RequestMethod.GET)
-	public String closeCommand(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId) ;
+	public String closeCommand(@PathVariable("cmdId") Long cmdId,
+			Model uiModel, HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		if (commandeFournisseur.getLigneCommande().isEmpty()) {
-			uiModel.addAttribute("appMessages",Arrays.asList("Impossible de cloturer Cette Commande ! Car ne contient Aucun Produit "));
+			uiModel.addAttribute(
+					"appMessages",
+					Arrays.asList("Impossible de cloturer Cette Commande ! Car ne contient Aucun Produit "));
 
-		}else {
+		} else {
 			commandeFournisseur.setEtatCmd(Etat.CLOS);
-			uiModel.addAttribute("appMessages",Arrays.asList("Commande cloturer avec succes "));
+			uiModel.addAttribute("appMessages",
+					Arrays.asList("Commande cloturer avec succes "));
 
 		}
-		CommandeFournisseur merge = (CommandeFournisseur) commandeFournisseur.merge();
+		CommandeFournisseur merge = (CommandeFournisseur) commandeFournisseur
+				.merge();
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", merge);
 		uiModel.addAttribute("itemId", merge.getId());
@@ -289,35 +341,41 @@ public class CommandProcessController {
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrerCmd", method = RequestMethod.GET)
 	public String enregistrer(@PathVariable("cmdId") Long cmdId, Model uiModel) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId) ;
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
-		uiModel.addAttribute("itemId",cmdId);
-		commandeFournisseur.merge();	
+		uiModel.addAttribute("itemId", cmdId);
+		commandeFournisseur.merge();
 		return "commandprocesses/show";
 	}
 
-
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/annulerCmd", method = RequestMethod.GET)
-	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId) ;
+	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel,
+			HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		session.removeAttribute("productResult");
-		if (commandeFournisseur!=null) {
-			if (commandeFournisseur.getEtatCmd().equals(Etat.CLOS) || ! commandeFournisseur.getLivre()) {
+		if (commandeFournisseur != null) {
+			if (commandeFournisseur.getEtatCmd().equals(Etat.CLOS)
+					|| !commandeFournisseur.getLivre()) {
 				commandeFournisseur.setAnnuler(true);
 				commandeFournisseur.merge();
-				uiModel.addAttribute("appMessages",Arrays.asList("Commande  Annuler Avec Succes ! "));
+				uiModel.addAttribute("appMessages",
+						Arrays.asList("Commande  Annuler Avec Succes ! "));
 				uiModel.addAttribute("commandefournisseur", commandeFournisseur);
-				uiModel.addAttribute("itemId",cmdId);
+				uiModel.addAttribute("itemId", cmdId);
 				return "commandprocesses/show";
 
-			}else {
-				commandeFournisseur.remove() ;
-				uiModel.addAttribute("appMessages",Arrays.asList("Commande Supprimee avec Success ! "));
+			} else {
+				commandeFournisseur.remove();
+				uiModel.addAttribute("appMessages",
+						Arrays.asList("Commande Supprimee avec Success ! "));
 			}
-		}else {
-			uiModel.addAttribute("appMessages",Arrays.asList("Commande  deja Supprimee ou inexistant ! "));
+		} else {
+			uiModel.addAttribute("appMessages",
+					Arrays.asList("Commande  deja Supprimee ou inexistant ! "));
 
 		}
 		return "caisses/infos";
@@ -325,15 +383,16 @@ public class CommandProcessController {
 
 	// imprime le bon de commande
 	@RequestMapping("/{cmdId}/print/{bonCmdId}.pdf")
-	public String print( @PathVariable("cmdId")Long cmdId, @PathVariable("bonCmdId")String invoiceNumber, Model uiModel){
-		CommandeFournisseur commande = CommandeFournisseur.findCommandeFournisseur(cmdId);
+	public String print(@PathVariable("cmdId") Long cmdId,
+			@PathVariable("bonCmdId") String invoiceNumber, Model uiModel) {
+		CommandeFournisseur commande = CommandeFournisseur
+				.findCommandeFournisseur(cmdId);
 		uiModel.addAttribute("commande", commande);
 		return "commandProsessDocView";
 
 	}
 
-
-	//necessaire pour les vues 
+	// necessaire pour les vues
 
 	@ModelAttribute("fournisseurs")
 	public Collection<Fournisseur> populateFournisseurs() {
@@ -344,7 +403,6 @@ public class CommandProcessController {
 	public Collection<ModeSelection> populateModeSelections() {
 		return Arrays.asList(ModeSelection.class.getEnumConstants());
 	}
-
 
 	@ModelAttribute("sites")
 	public Collection<Site> populateSites() {
@@ -363,9 +421,7 @@ public class CommandProcessController {
 
 	@ModelAttribute("rayons")
 	public Collection<Rayon> populateRayons() {
-		return  ProcessHelper.populateRayon() ;
+		return ProcessHelper.populateRayon();
 	}
-
-
 
 }

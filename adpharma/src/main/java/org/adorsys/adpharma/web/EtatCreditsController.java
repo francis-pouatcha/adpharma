@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/etatcreditses")
 @Controller
 public class EtatCreditsController {
-	@Transactional
+	//@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid EtatCredits etatCredits, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Client findClient = Client.findClient(etatCredits.getClientId());
@@ -83,10 +83,10 @@ public class EtatCreditsController {
 				List<DetteClient> listeDettes = etatCredits.getListeDettes();
 				if (!listeDettes.isEmpty()) {
 					for (DetteClient detteClient : listeDettes) {
-						 detteClient.setEtatCredit(null);
-						 detteClient.merge();
-						 detteClient.flush();
-						
+						detteClient.setEtatCredit(null);
+						detteClient.merge();
+						detteClient.flush();
+
 					}
 				}
 				etatCredits.remove();
@@ -128,7 +128,7 @@ public class EtatCreditsController {
 		return initShowView(uiModel, etatCredits);
 	}
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/encaisser/{id}", method = RequestMethod.POST)
 	public String encaisser( Paiement paiement,@PathVariable("id") Long id, Model uiModel ,HttpServletRequest httpServletRequest) {
 		addDateTimeFormatPatterns(uiModel);

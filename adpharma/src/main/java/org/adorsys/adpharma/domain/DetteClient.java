@@ -221,7 +221,7 @@ public class DetteClient extends AdPharmaBaseEntity {
         if (solder != null) {
             searchQuery.append(" AND o.solder = :solder ");
         }
-        TypedQuery<DetteClient> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.dateCreation ASC").toString(), DetteClient.class);
+        TypedQuery<DetteClient> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id ASC ").toString(), DetteClient.class);
         if (clientId != null) {
             q.setParameter("clientId", clientId);
         }

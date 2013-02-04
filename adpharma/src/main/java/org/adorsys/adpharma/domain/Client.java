@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -96,13 +97,11 @@ public class Client extends AdPharmaBaseEntity {
     
     public String toJson() {
 		return new JSONSerializer().include("id","nom","clientPayeur.nomComplet","clientPayeur.id","tauxCouverture","clientPayeurNumber","categorie.categorieNumber","typeClient","clientNumber","nomComplet","telephoneFixe","telephoneMobile","employeur","totalDette","creditAutorise").exclude("*.class","*").serialize(this);
-		//return new JSONSerializer().exclude("*.class").serialize(this);
 
     }
     
     public static String toJsonArray(Collection<Client> collection) {
 		return new JSONSerializer().include("id","nom","clientPayeur.nomComplet","clientPayeur.id","tauxCouverture","clientPayeurNumber","categorie.categorieNumber","typeClient","clientNumber","nomComplet","telephoneFixe","telephoneMobile","employeur","totalDette","creditAutorise").exclude("*.class","*").serialize(collection);
-		//return new JSONSerializer().exclude("*.class").serialize(collection);
 
     }
     @Override
@@ -111,19 +110,26 @@ public class Client extends AdPharmaBaseEntity {
 
     @PostPersist
     public void postPersit() {
+    	plafondCredit = plafondCredit ==null?BigDecimal.ZERO:plafondCredit;
         clientNumber = NumberGenerator.getNumber("CL-", getId(), 4);
         if (clientPayeur == null) {
             clientPayeur = this;
             clientPayeurNumber = clientNumber;
             tauxCouverture = BigDecimal.valueOf(100);
+            
         }
+    }
+    @PreUpdate
+    public void preUpdate() {
+    	plafondCredit = plafondCredit ==null?BigDecimal.ZERO:plafondCredit;
     }
 
     
 
     public boolean estCredible(BigInteger amount) {
         if (creditAutorise) {
-            if (plafondCredit.intValue() > 0) {
+        	plafondCredit = plafondCredit ==null ?BigDecimal.ZERO:plafondCredit;
+        			if (plafondCredit.intValue() > 0) {
                 calculeTotalDette();
                 merge();
                 return totalDette.add(amount).intValue() < plafondCredit.intValue();
@@ -221,6 +227,15 @@ public class Client extends AdPharmaBaseEntity {
         return q;
     }
     
+    public static TypedQuery<Client> findClientsByNomLikeAndPayeurLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = Client.entityManager();
+        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) OR LOWER(o.clientPayeur.nom) LIKE LOWER(:nom) ORDER BY o.nom ASC", Client.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
+    
     public static TypedQuery<Client> findNextClients(Long id ) {
         if (id == null ) throw new IllegalArgumentException("The id argument is required");
         EntityManager em = Client.entityManager();
@@ -286,4 +301,6 @@ public class Client extends AdPharmaBaseEntity {
             q.setParameter("totalDette", totalDette);
         return q.getResultList();
     }
+
+    
 }

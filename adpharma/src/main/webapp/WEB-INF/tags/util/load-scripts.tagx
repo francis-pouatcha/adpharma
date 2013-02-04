@@ -42,7 +42,8 @@
 <script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jquery_token}"><!-- required for FF3 and Opera --></script>
-    
+<script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
+ 
     
       
    <spring:url value="/resources/js/jquery.jqplot.min.js" var="jqpl1" />

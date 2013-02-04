@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,9 @@ import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.apache.commons.collections.set.CompositeSet.SetMutator;
+
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 /**
  * @author adorsys-clovis
@@ -91,7 +95,13 @@ public class LigneInventaire {
 
 
 	}
+	public String toJson() {
+		return new JSONSerializer().exclude("*.class").serialize(this);
+	}
 
+	public static String toJsonArray(Collection<LigneInventaire> collection) {
+		return new JSONSerializer().exclude("*.class").serialize(collection);
+	}
 
 	@Transactional
 	public void restoreEcart(){

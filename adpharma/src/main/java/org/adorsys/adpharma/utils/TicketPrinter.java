@@ -137,7 +137,7 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		telCell.setPhrase(new Phrase(new Chunk("Tel: "+site.getPhone() +" Fax : "+ site.getFax(), boddyStyle)));
 		telCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(telCell);
-		
+		/*
 		PdfPCell emailCell = new PdfPCell(cellBorderlessStyle);
 		emailCell.setPhrase(new Phrase(new Chunk("Email : "+site.getEmail(), boddyStyle)));
 		emailCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -147,7 +147,7 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		regCell.setPhrase(new Phrase(new Chunk("Num Contribuable : "+site.getNumeroRegistre(), boddyStyle)));
 		regCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(regCell);
-		
+		*/
 		PdfPCell lineCellh = new PdfPCell(cellBorderlessStyle);
 		lineCellh.setPhrase(new Phrase(new Chunk("-----------------------------------------------", boddyStyle)));
 		lineCellh.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -163,11 +163,12 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		caiCell1.setPhrase(new Phrase(new Chunk("CAISSIER: "+pay.getCassier().getDisplayName(), boddyStyle)));
 		caiCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(caiCell1);
+		/*
 		PdfPCell salCell2 = new PdfPCell(cellBorderlessStyle);
 		salCell2.setPhrase(new Phrase(new Chunk("VENDEUR: "+pay.getFacture().getVendeur().getDisplayName(), boddyStyle)));
 		salCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(salCell2);
-	
+	*/
 		PdfPCell clienCell = new PdfPCell(cellBorderlessStyle);
 		clienCell.setPhrase(new Phrase(new Chunk("CLIENT : "+commande.getClient().displayName(), boddyStyle)));
 		clienCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -497,11 +498,11 @@ payTable.addCell(diffCell2);
 		bonTable.addCell(addCell1);
 		bonTable.addCell(addCell2);
 		bonTable.addCell(telCell);
-		
+		/*
 		bonTable.addCell(emailCell);
 		
 		bonTable.addCell(regCell);
-		
+		*/
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
 		emptyCell.setPhrase(new Phrase(new Chunk("   ", boddyStyle)));
 		emptyCell.setHorizontalAlignment(Element.ALIGN_CENTER);

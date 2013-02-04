@@ -13,10 +13,12 @@ import javax.persistence.PreUpdate;
 
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.IdGenerator;
+import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,7 +115,7 @@ public void protectSomeField(){
 			return getClass().getSimpleName() + " " + getBusinessKey();
 		}
 // custum merge method 
-	    @Transactional
+	    @Transactional(readOnly=true ,propagation=Propagation.REQUIRED)
 	    public AdPharmaBaseEntity merge() {
              protectSomeField() ;
 	    	 gatherFootPrint();

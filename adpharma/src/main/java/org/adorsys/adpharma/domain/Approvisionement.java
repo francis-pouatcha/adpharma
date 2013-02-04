@@ -305,6 +305,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
         }
     }
     
+    
     // Find approvisionement for reclamations
     public static TypedQuery<Approvisionement> findApprovisionementsByFounisseurAndDateCreationBetweenAndReclamationsNot(Fournisseur founisseur, Date minDateCreation, Date maxDateCreation, Boolean reclamation) {
         if (founisseur == null) throw new IllegalArgumentException("The founisseur argument is required");
@@ -326,6 +327,16 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
         q.setParameter("reclamations", reclamation);
         return q;
     }
+
+
+    public static TypedQuery<Approvisionement> findApproByFournisseurLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = Approvisionement.entityManager();
+        TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE LOWER(o.founisseur.name) LIKE LOWER(:nom) ORDER BY o.id DESC", Approvisionement.class);
+        q.setParameter("nom", nom);
+        return q;
+    }  
 
     public boolean isValide(Model uiModel) {
         boolean valider = true;

@@ -87,6 +87,7 @@
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">CipM</th>
 							<th style="text-align: center;">Quantite</th>
+							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 
 							<th style="text-align: center;">Prix Achat</th>
@@ -116,17 +117,21 @@
 								onkeypress="return scanTouche(event)" onkeyup="requete();"
 								title="saisir le cip" style="color: blue; "
 								maxlength="7" autofocus="autofocus" id="cip" /></td>
-							<td><input type="text" name="qte" class="autres"
+							<td><input type="text" name="qte" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}"
-								onkeypress="return scanTouche(event)" width="50px;"
+								onkeypress="return scanTouche(event)" width="30px;"
 								title="saisir la Quantite" maxlength="4" id="qte" /></td>
+								
+							<td><input type="text" name="qteug" class="autres"
+								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
 
-
-							<td><input type="text" name="pv" id="pv" class="autres"
+							<td><input type="text" name="pv" id="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.prixVenteUnitaire}"
 								onkeypress="return scanTouche(event)" maxlength="7"
 								title="saisir le Prix De Vente Unitaire" /></td>
-							<td><input type="text" name="pa" id="pa" class="autres"
+							<td><input type="text" name="pa" id="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.prixAchatUnitaire}"
 								onkeypress="return scanTouche(event)" maxlength="7"
 								title="saisir le Prix D'achat unitaire" /></td>
@@ -173,11 +178,10 @@
 							<th style="text-align: center;">Marge(%)</th>
 							<th style="text-align: center;">Quantite</th>
 							<th style="text-align: center;">Qte Reclamee</th>
+							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
-
 							<th style="text-align: center;">Prix Achat</th>
 							<th style="text-align: center;">T.Mul</th>
-
 							<th style="text-align: center;">Date Per.</th>
 							<th colspan="2" style="text-align: center;">ACTIONS</th>
 						</tr>
@@ -185,7 +189,7 @@
 							<td><input type="hidden" name="tvaj" id="tvaj"
 								value="${approvisonementProcess.taux}" /> <input type="hidden"
 								name="pId" id="pId" value="${approvisonementProcess.produit.id}" />
-								<input type="text" name="cip" class="autres"
+								<input type="text" name="cip" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.produit.cip}"
 								onkeypress="return scanTouche(event)" onchange="requete();"
 								title="saisir le cip" style="padding-left: 0px; width: 100px; display: block; margin: auto;"
@@ -213,7 +217,21 @@
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix De Vente Unitaire" id="pv" /></td>
 								
-							<td><input type="text" name="pa" class="autres prixClass"
+							<td><input type="text" name="qte" class="autres"
+							    onmouseover="this.select();" onfocus="this.select();"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" id="qte" /></td>
+							
+							<td><input type="text" name="qteug" class="autres"
+								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
+
+							<td><input type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								onkeypress="return scanTouche(event)"
+								title="saisir le Prix De Vente Unitaire" id="pv" /></td>
+							
+							<td><input type="text" name="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix D'achat unitaire" id="pa" /></td>
 								
@@ -283,6 +301,7 @@
 				<th style="text-align: center;">PAUnit</th>
 				<th style="text-align: center;">Quantite</th>
 				<th style="text-align: center;">Qte Reclamée</th>
+				<th style="text-align: center;">Qte UG</th>
 				<th style="text-align: center;">PA Total</th>
 				<th style="text-align: center;">PV Unit</th>
 				<th style="text-align: center;">Date Perm</th>
@@ -307,6 +326,8 @@
 							value="${ligne.prixAchatUnitaire}" /></td>
 					<td style="text-align: right; padding-right: 20px;"><c:out
 							value="${ligne.quantiteAprovisione}"></c:out></td>
+							<td style="text-align: right; padding-right: 20px;"><c:out
+							value="${ligne.quantiteUniteGratuite}"></c:out></td>
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber
 							value="${ligne.quantiteReclame}" /></td>
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber

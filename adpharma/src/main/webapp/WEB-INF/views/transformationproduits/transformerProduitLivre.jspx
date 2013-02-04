@@ -278,6 +278,7 @@ function verif_formulaire()
  		    
 
      	<!-- afficher ce formulaire ppour l ajout de produit -->
+     	
 	<util:panel title="resultat tranformation" id="lg" openPane="true">
 		    <table>
 		    	<tr>
@@ -333,14 +334,17 @@ function verif_formulaire()
 		    					
 		    			</td>
 		    			<td> 
+		    			<c:if test="${transforme != null }">
+		    				
 		    				<spring:url value="/transformationproduits/produitdecomposes/exportToExcel" var="export_url" />
-		    				<spring:url value="" var="export_image_url"/>
+		    				<spring:url value="/resources/images/download_excel.jpg" var="export_image_url"/>
 		    				
 		    				<form action="${export_url }" method="post">
 		    					<input type="hidden" value="${transforme.produit.cip}" name="cipProduit" />
 		    					<input type="hidden" value="${transforme.cipMaison}" name="cipMaison" />
-		    					<button type="submit"> <img src="${export_image_url }" alt="download img" /> </button>
+		    					<button type="submit"  > <img  src="${export_image_url }" alt="download img" style="width: 25px;height: 24px;" /> </button>
 		    				</form>
+		    			</c:if>
 		    			 </td>
 											
 		    		</tr>

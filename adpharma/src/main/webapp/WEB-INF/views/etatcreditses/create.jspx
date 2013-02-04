@@ -112,11 +112,10 @@
         <formsp:hidden id="_clientNumber_id" path="clientId"/>
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" render="false" z="user-managed"/>
         <field:input field="agent" id="c_org_adorsys_adpharma_domain_EtatCredits_agent" render="false" z="user-managed"/>
-        <field:datetime dateTimePattern="${etatCredits_dateedition_date_format}" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" render="false" z="user-managed"/>
-               <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="minDateDette" label="Date Dette Min" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" z="user-managed"/>
-               <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="maxDateDette" label="Date Dette Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
-       
-        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" required="true" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" render="false" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="minDateDette" label="Date Dette Min" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" z="user-managed"/>
+       <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="maxDateDette" label="Date Dette Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" required="true" z="user-managed"/>
         <field:input field="avance" id="c_org_adorsys_adpharma_domain_EtatCredits_avance" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="solde" id="c_org_adorsys_adpharma_domain_EtatCredits_solde" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="montantAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>

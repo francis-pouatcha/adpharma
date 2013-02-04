@@ -29,7 +29,8 @@
     <spring:url value="/inventaireProcess/print/${inventaireProcess.invId}/ficheDeComptage.pdf"  var="fiche_comp_url" />
      <spring:url value="/produits/findProductApByCipAjax/"  var="find_cip_url" />
      <spring:url value="/inventaireProcess/${inventaireProcess.invId}/annulerInv"  var="delete_cmd_url" />
-	
+	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/deleteLine/" var="delete_line_url" />
+	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/updateLineByAjax" var="update_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL INVENTAIRE</a></span>
 		<span ><a href="#" style="text-decoration: none;" id="findcip"> <INPUT type="button" class="submits" value="rechercher un produit"/></a></span>
@@ -45,6 +46,115 @@
 	
  
 <script type="text/javascript">
+function deleteRow(row) {
+	$.get('${delete_line_url}' + row, function(data) {
+		if (data == "ok") {
+			var rowId = "tr#" + row;
+			$(rowId).hide();
+		} else {
+			alert('une erreur est survenue durant la supression !');
+		}
+	});
+};
+
+function hideRow(rowId) {
+	if (conf()) {
+		deleteRow(rowId);
+	}
+
+};
+function saveLine(rowId ){
+	var tbs = "tr#"+rowId+" td";
+	var qter = $(tbs).get(3);
+	var ecart = $(tbs).get(4);
+	var montant_ecart = $(tbs).get(5);
+	var current_savebt = $(tbs).get(7);
+	if( isSavable(rowId)){
+		var saveUrl = '${update_url}/'+rowId+'?qte='+$(qter).children().val() ; 
+		$.getJSON(saveUrl,function(data){
+			if(data!=null){
+						$(qter).html(data.qteReel);
+						$(ecart).html(data.ecart);
+						$(montant_ecart).html(data.prixTotal);
+			}else{
+				alert('la ligne est introuvable !');
+			}
+			         
+		});
+	}else{
+		//$(current_savebt).hide();
+	}
+	
+};
+
+function getLineById(lineId){
+		$.getJSON( '${update_line_url}'+lineId,
+	                function(data){
+			if(data!=null){
+				  $('#_cip_id').val(data.cip);
+				  $('#_id_id').val(data.id);
+				  $('#_designation_id').val(data.designation);
+				  $('#_quantiteCommande_id').val(data.quantiteCommande);
+				  $('#_prixAchatMin_id').val(data.prixAchatMin);
+				  $('#_prixAVenteMin_id').val(data.prixAVenteMin);
+				  $('#_agentSaisie_id').val(data.agentSaisie);
+				  $('#editLineDiv').dialog('open');
+			}else{
+				alert('la ligne est introuvable !');
+			}
+			         
+					});
+		return false ;
+} ;
+
+	
+	$('input#proceed').click(function(){
+		saveLine();
+		return false;
+	});
+	
+	
+	$('input#false').click(function(){
+		$('#editLineDiv').dialog('close');
+		return false;
+	});
+	
+	$('tr.list').click(function(){
+		var rwoId =$(this).attr('id');
+		if( isSavable(rwoId)){
+		}else{
+			toggleToinput(rwoId) ;
+		}
+		  
+		return false;
+	});
+	
+	
+	
+	function toggleToinput(rowId){
+		var tbs = "tr#"+rowId+" td";
+		var savebtn = "#"+rowId+"save";
+		var current_td = $(tbs).get(3); 
+		if(!$(current_td).children().is('input')){
+			var text=	$(current_td).text();
+		    var input = '<input type="text"  class="tbcell" autofocus="autofocus" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+		    $(current_td).html(input);
+		    $(savebtn).show();
+          }
+	};
+	function isSavable(rowId){
+		var tbs = "tr#"+rowId+" td";
+		var result = false ;
+		var int = parseInt('0');
+		var current_td = $(tbs).get(3); 
+		if($(current_td).children().is('input'))result = true ;
+		return result ;
+	};
+
+	
+	
+	
+
   
   function conf(){
 	  Check = confirm("Voulez vous vraiment supprimer la ligne? ");
@@ -175,11 +285,9 @@ function verif_formulaire()
 		    		 <th>FILIALE</th>
 
 				</tr>');
-	//	$('#designation').val(" ");
-		
 	}
 	$(function(){
-		
+	    $("#cip").focus();
 		$('form#produitfindform').submit
 		(function(){
 			clearProductTable();
@@ -284,68 +392,7 @@ function verif_formulaire()
 	</script>
 
 
-<c:choose>
-<c:when test="${not empty inventaireProcess.lineToUpdate }">
-     	<!-- afficher ce formulaire pour la mis a jour des ligne -->
- 
- <util:panel title="Mettre a jour Les Informations" id="upline">
- <form action="${find_upd_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
-		    <table>
-		    	<tr>
-		    		<th style="text-align: center;">CiP</th>
-		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Stock Virtuel</th>
-		    		<th style="text-align: center;">Stock Reel</th>
-		            <th style="text-align: center;">Ecart</th>
-		            <th style="text-align: center;">Prix Total</th>
-		             
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
-		 </tr>
-		    		<tr>
-		    			<td>
-		    		<INPUT type="hidden" name="lineId" id="lineId" value="${inventaireProcess.lineToUpdate.id}" />	
-		    		<INPUT type="text" name="cip" class="autres" value="${inventaireProcess.lineToUpdate.produit.cip}"   style=" text-align: center;"  disabled="disabled" id="cip" />
-		    			</td>
-		    			<td>
-		 	<INPUT type="text" name="des" class="des" title="Designation" value="${inventaireProcess.lineToUpdate.produit.designation}" style="color: blue; text-align: center;" disabled="disabled" id="des" />
-		    			</td>
-		    			<td >
-		    		<INPUT type="text"  name="qtes" class="autres" value="${inventaireProcess.lineToUpdate.qteEnStock}" disabled="disabled"      style="color: blue; "  id="qtes" />
-
-		    			</td>
-		    			<td>
-		    			
-		   	<INPUT type="text" name="qte" onkeyup="calculEcart();" onKeyPress="return scanTouche(event)"  maxlength="7" autofocus="autofocus"  title=" saisir la quantite  reel"  class="autres" value="${inventaireProcess.lineToUpdate.qteReel }"     id="qte" />
-		    			</td>
-
-		    			<td>
-		    			
-		   	<INPUT type="text" name="ec" style="color: red;" disabled="disabled" class="autres" value="${inventaireProcess.lineToUpdate.ecart}"   id="ec" />
-		    		
-		    			</td>
-		    			<td>
-		     <INPUT type="text" name="pt" class="autres" value="${inventaireProcess.lineToUpdate.prixTotal}" style="color: blue;"  disabled="disabled" id="pt" />
-		    			</td>
-		    				
-						<td class="utilbox">
-							<INPUT type="submit" class="submits"  value="Modifier"  />
-						</td>
-						<td class="utilbox">
-						     <INPUT type="button" class="submits"  value="Annuler" onclick="javascript:history.back()" />
-						</td>						
-		    		</tr>
-		    </table>
-</form>
-
-		     <BR />
-		     		  <b style="color: red; text-align: center;">   ${apMessage} </b>  
-		     
-		    	  
-</util:panel> 
-  <BR />     
-</c:when>
-<c:otherwise>
-     	<!-- afficher ce formulaire ppour l ajout de produit -->
+     	<!-- afficher ce formulaire pour l ajout de produit -->
 
  <util:panel title="saisir le CIP du Produit" id="cip">
  <form action="${cmd_add_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
@@ -363,7 +410,7 @@ function verif_formulaire()
 		    			<td>
 		    				
 		    		<INPUT type="hidden" name="pId" id="pId" value="${inventaireProcess. produit.id}" />	
-		    		<INPUT type="text" name="cip" onchange="requete();" autofocus="autofocus" class="autres" value="${inventaireProcess.produit.cip}" onKeyPress="return scanTouche(event)"   style=" text-align: center;"   id="cip" />
+		    		<INPUT type="text" name="cip" onmouseover="this.select();" onfocus="this.select();" onchange="requete();" autofocus="autofocus" class="autres" value="${inventaireProcess.produit.cip}" onKeyPress="return scanTouche(event)"   style=" text-align: center;"   id="cip" />
 		    			</td>
 		    			<td>
 		 	<INPUT type="text" name="des" class="des" title="Designation" value="${inventaireProcess.produit.designation}" style="color: blue; text-align: center;" disabled="disabled" id="des" />
@@ -376,7 +423,7 @@ function verif_formulaire()
 		    		
 		    			<td>
 		    			
-		   	<INPUT type="text" name="qte" class="autres" style=" text-align: center;" onkeyup="calculEcart();" onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
+		   	<INPUT type="text" name="qte" onmouseover="this.select();" onfocus="this.select();" class="autres" style=" text-align: center;" onkeyup="calculEcart();" onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
 		    		
 		    			</td>
 		    			<td>
@@ -398,10 +445,10 @@ function verif_formulaire()
 </util:panel> 
   <BR />     
 
-</c:otherwise>
-
-</c:choose>
-  		
+  		<center>
+		<IMG alt="loading ..." src="${loadimage }" class="loadimage"
+			style="display: none;" />
+	</center>
     	
     	<form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${inventaireProcess.productSelected}" z="user-managed" 
     		label="Liste Des Produits Inventories" objectName="Ligne Inventaire" openPane="${not empty  inventaireProcess.productSelected}">
@@ -416,11 +463,10 @@ function verif_formulaire()
 		            <th style="text-align: center;">Ecart</th>
 		            <th style="text-align: center;">Montant Ecart</th>
 		            <th style="text-align: center;">Agent Saisie</th>
-		           <th style="text-align: center;">Date Saisie</th>
 		    		<th colspan="2" style="text-align: center;">ACTION</th>
 		    	</tr>
 		    	<c:forEach items="${inventaireProcess.productSelected}" var="ligneCommande">
-		    		<tr>
+		    		<tr onclick="toggleToinput(this.id);" class="list" id="${ ligneCommande.id}">
 		    		<td style="text-align: center;">
 		    				<c:out value="${ligneCommande.produit.cip}"></c:out>
 		    			</td >
@@ -450,25 +496,18 @@ function verif_formulaire()
 		    				<c:out value="${ligneCommande.agentSaisie}"></c:out>
 		    
 		    			</td>
-		    			<td style="text-align: center;">
-		    					 <fmt:formatDate value="${ligneCommande.dateSaisie}" pattern="dd-MM-yyyy HH:mm"/>	
-		    			
-		    			</td>
 		    				<td class="utilbox">
 						<spring:url value="/resources/images/update.png" var="update_image_url" />
-		        <spring:url value="/inventaireProcess/${inventaireProcess.invId}/updateLine/${ligneCommande.id} " var="update_line_url" />
-								<a href="${update_line_url}" alt="update" title="update">								
-								<img alt="update" class="image" src="${ update_image_url}" title="mettre a jour la commande "/>
-                              </a>
+							<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
+							src="${ update_image_url}" title=" Supprimer la selection"
+							onclick="saveLine(this.alt);" />
 						</td>
 						<td class="utilbox">
-						  <spring:url value="/resources/images/delete.png" var="delete_image_url" />
-						 <spring:url value="/inventaireProcess/${inventaireProcess.invId}/deleteLine/${ligneCommande.id}" var="delete_line_url" />
-						  
-								<a href="${ delete_line_url}" alt="Remove" title="Remove">								
-								<img alt="Unselect" class="image" src="${ delete_image_url}" title=" Spprimer la selection" onclick="return conf()"/>
-                              </a>
-							
+						<spring:url
+								value="/resources/images/delete.png" var="delete_image_url" />
+							<img alt="${ligneCommande.id}" class="image"
+							src="${ delete_image_url}" title=" Supprimer la selection"
+							onclick="hideRow(this.alt);" />
 						</td>							
 		    		</tr>
 		    	</c:forEach>

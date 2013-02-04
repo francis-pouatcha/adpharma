@@ -27,6 +27,7 @@ import jxl.write.WritableWorkbook;
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
 import org.adorsys.adpharma.beans.PrintBareCodeBean;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.Etat;
@@ -130,17 +131,23 @@ public class ApprovisionementProcessController {
 	}
 
 	@RequestMapping(value = "/{apId}/addLine", method = RequestMethod.POST)
-	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteReclam,
+	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteReclam,@RequestParam String qteug,
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
+		
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		Produit produit = Produit.findProduit(pId);
-
-		   if (approvisionement.contientProduit(produit)) {
+		qteug = StringUtils.isBlank(qteug)?"0":qteug;
+		
+		if (approvisionement.contientProduit(produit)) {
 			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			return initViewContent(approvisionement, tvaj, uiModel);
 		    }
 			if (approvisionement.CommandeContientProduit(produit)) {
 				uiModel.addAttribute("apMessage", "Ce produit ne fait Pas partie de la commande recuperer !");
+				return initViewContent(approvisionement, tvaj, uiModel);
+			}
+			if ((new BigInteger(qteug)).compareTo(new BigInteger(qte))==1) {
+				uiModel.addAttribute("apMessage", "les unites gratuites sont superieur a la quantite approvisione !");
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
 			
@@ -161,13 +168,13 @@ public class ApprovisionementProcessController {
 			ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 			ligneApprovisionement.setApprovisionement(approvisionement);
 			ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
+			ligneApprovisionement.setQuantiteUniteGratuite(new BigInteger(qteug.trim()));
 			ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
 			if (StringUtils.isNotBlank(pv)) ligneApprovisionement.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
 			if(!new Date().before(ligneApprovisionement.getDatePeremtion())){
 				uiModel.addAttribute("apMessage", "La date de Peremtion de ce produit Doit etre Superieure a la date du jour !");
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
-			
 			ligneApprovisionement.setProduit(produit);
 			ligneApprovisionement.persist();
 			produit.setPrixAchatU(ligneApprovisionement.getPrixVenteUnitaire());
@@ -176,8 +183,6 @@ public class ApprovisionementProcessController {
 			approvisionement.increaseMontant(ligneApprovisionement.getPrixAchatTotal());
 			approvisionement.merge();
 			return initViewContent(approvisionement, tvaj, uiModel);
-
-
 		}
 
 	//usefful method for preparing approvisionnement content view
@@ -195,7 +200,7 @@ public class ApprovisionementProcessController {
 		
 		@Transactional
 		@RequestMapping(value = "/{apId}/specialaddLine", method = RequestMethod.POST)
-		public String specialaddLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte,
+		public String specialaddLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteug,
 				@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 
@@ -205,11 +210,14 @@ public class ApprovisionementProcessController {
 				uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			}else if (approvisionement.CommandeContientProduit(produit)) {
 				uiModel.addAttribute("apMessage", "Ce produit ne fait Pas partie de la commande recuperer !");
+			}else if((new BigInteger(qteug)).compareTo(new BigInteger(qte))==1) {
+				uiModel.addAttribute("apMessage", "les unites gratuites sont superieur a la quantite approvisione !");		
 			}else{
 				LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 				ligneApprovisionement.setApprovisionement(approvisionement);
 				ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
+				ligneApprovisionement.setQuantiteUniteGratuite(new BigInteger(qteug.trim()));
 				ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2) );
 				if (!"".equals(pv)) {
@@ -235,13 +243,14 @@ public class ApprovisionementProcessController {
 		}
 
 		@RequestMapping(value = "/{apId}/updateLine", method = RequestMethod.POST)
-		public String updatedLine(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte,
+		public String updatedLine(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte, @RequestParam BigInteger qteug,
 				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			LigneApprovisionement line = LigneApprovisionement.findLigneApprovisionement(lineId);
 			
 			if (!approvisionement.getEtat().equals(Etat.CLOS)) {
 				line.setQuantiteAprovisione(qte);
+				line.setQuantiteUniteGratuite(qteug);
 				line.setPrixAchatUnitaire(pa);
 				if (!"".equals(pv)) {
 					line.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
@@ -501,6 +510,24 @@ public class ApprovisionementProcessController {
 		}
 
 
+		@RequestMapping(value = "/searchAppro", method = RequestMethod.GET)
+		public String searchAppro(@RequestParam("name") String  name,  Model uiModel) {
+			
+			if("".equals(name)){
+				Integer page = 1;
+				Integer size = 50;
+				int sizeNo = size == null ? 10 : size.intValue();
+	            uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+	            float nrOfPages = (float) Approvisionement.countApprovisionements() / sizeNo;
+	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			}else{
+				List<Approvisionement> list = Approvisionement.findApproByFournisseurLike(name).setMaxResults(50).getResultList();
+			    uiModel.addAttribute("approvisionements", list);
+			}
+			
+			return "approvisionements/list";
+		}
+		
 		// imprime la fiche de code bare
 		@RequestMapping("/{apId}/printFicheCodeBare/{ficheCodebarId}.pdf")
 		public String printFicheCodeBar( @PathVariable("apId")Long apId, @PathVariable("ficheCodebarId")String ficheCodebarId, Model uiModel){

@@ -167,6 +167,45 @@ web mvc scaffold --class ~.web.ConfigurationController
 help web mvc contrller
 help web mvc controller
 quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-09-24 13:02:45
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-04 15:11:52
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-04 15:22:36
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-06 11:33:26
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-10-06 15:02:00
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-10-30 10:53:18
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-10-30 11:49:23
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-03 13:58:40
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-03 17:51:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-04 00:14:59
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-05 12:07:37
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-06 14:05:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-06 16:21:58
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-08 09:54:53
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-08 10:55:52
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-12 10:48:13
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-14 14:24:40
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-14 14:25:21
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-20 14:16:57
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-21 09:35:18
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-21 10:11:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-27 12:14:35
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-27 13:39:47
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-27 19:30:54
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-27 20:51:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-28 11:45:51
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-28 11:54:09
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-11-30 15:12:12
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-11-30 20:47:29
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-03 08:47:45
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-19 11:43:26
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2012-12-28 12:27:15
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2012-12-28 18:59:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-02-07 07:19:55
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-02-07 07:59:40
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2009-01-06 20:50:51
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-10 10:18:17
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-01-10 10:23:05
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-23 10:02:33
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-21 09:47:59
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-23 11:16:01
 q
@@ -204,3 +243,8 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-28 08:39:52
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-01-28 15:38:29
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-23 21:58:46
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-01-25 15:48:31
+finder list --class org.adorsys.adpharma.domain.Approvisionement
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-04 13:12:30
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-04 14:52:34

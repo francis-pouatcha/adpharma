@@ -93,6 +93,8 @@ public class InventaireController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+		if(!inventaire.isDoNotSelectAnyProduct()){
 		List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
 		for (Produit produit : search) {
 			if(!inventaire.contientProduit(produit)){
@@ -105,9 +107,9 @@ public class InventaireController {
 			
 			
 		}
-		
-		inventaire = (Inventaire) inventaire.merge();
 		}
+		inventaire = (Inventaire) inventaire.merge();
+		
 		return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
 	}
 	

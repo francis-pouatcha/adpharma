@@ -265,7 +265,6 @@ public class DocumentsPrinterController {
 		}
 	}
 	
-	
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/etatJournalierCaisse.pdf", method = RequestMethod.GET)

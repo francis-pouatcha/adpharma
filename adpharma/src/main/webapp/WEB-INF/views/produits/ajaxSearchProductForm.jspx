@@ -12,6 +12,7 @@
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
               <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
               <spring:url value="/produits/"  var="current_prd_url" />
+              <spring:url value="/produits/${produit.id }/makeFusionWith/"  var="fusion_prd_url" />
       <c:choose>
 		  <c:when test="${empty approvisonementProcess.apId}">
               <spring:url value="/approvisionementprocess/0/findProduct/"  var="find_cip_url" />
@@ -20,9 +21,21 @@
               <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct/" var="find_cip_url" />
 		</c:otherwise>
 	</c:choose>
-  
+   <script type="text/javascript">
+function confirmation(){
+Check = confirm("Voulez vous vraiment Fusionner ces Produits . La fusion n\'est pas reversible ");
+if(Check == false){
+	return false;
+	
+}else{
+	return true;
+}
+}
+</script>
 <script type="text/javascript">
+var isfusion = false;
 	$(function(){
+		
 		function clearProductTable(){
 			$('#resultproduits_up').html(
 					'<tr>
@@ -60,8 +73,19 @@
 								$('table#resultproduits_up tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {
-										window.location='${current_prd_url}'+current.id+'?form' ;
-										$('#findproduits_up').dialog("close");
+										if(isfusion){
+											if(confirmation()){
+												window.location='${fusion_prd_url}'+current.id ;
+												$('#findproduits_up').dialog("close");
+											}
+											
+										}else{
+											//$("#up").load('${current_prd_url}'+current.id+'?form'+" #up");
+											window.location= '${current_prd_url}'+current.id+'?form';
+											$('#findproduits_up').dialog("close");
+									    }
+										
+										
 									};
 									});
 
@@ -100,6 +124,12 @@
 		});
 		
 		$('#update_search_prd').click(function(){
+			 isfusion = false;
+			$('#findproduits_up').dialog('open');
+			return false;
+		});
+		$('#fusion_search_prd').click(function(){
+			 isfusion = true;
 			$('#findproduits_up').dialog('open');
 			return false;
 		});

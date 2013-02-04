@@ -5,7 +5,7 @@
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
         <c:set value="true" var="hasrole"/>
     </security:authorize>
-    <page:list id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${approvisionements}" z="Vu8tVf5zR8Fdp2O+lPcd5jnQivg=">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${approvisionements}" z="user-managed" url="/approvisionementprocess/searchAppro" search="true" placeholder="Rechercher par fournisseur" >
         <table:table create="false" data="${approvisionements}" delete="false" id="l_org_adorsys_adpharma_domain_Approvisionement" path="/approvisionements" update="${hasrole }" z="user-managed">
             <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_devise" property="devise" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" property="bordereauNumber" z="user-managed"/>
@@ -23,5 +23,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_filiales" property="filiales" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_footPrint" property="footPrint" render="false" z="user-managed"/>
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

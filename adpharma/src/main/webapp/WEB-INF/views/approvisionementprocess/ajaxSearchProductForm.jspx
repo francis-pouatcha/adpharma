@@ -179,6 +179,7 @@ function requete(){
 
   }
 	$(function(){
+		$('#cip').select();
 		function clearProductTable(){
 			$('#resultproduit').html(
 					'<tr>
@@ -195,7 +196,7 @@ function requete(){
 		
 
 
-		$('#cip').focus();
+		
 		$('form#produitfindform').submit
 		(function(){
 			clearProductTable();

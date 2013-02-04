@@ -117,7 +117,7 @@ public class ProcessHelper {
 
 		return arrayList;
 	} 
-	
+
 	public static Collection<CategorieClient> populateCategorieCLients() {
 		CategorieClient cat = new CategorieClient();
 		cat.setLibelle("TOUTES");
@@ -162,31 +162,24 @@ public class ProcessHelper {
 
 		return arrayList;
 	}
-	
+
 	public static Collection<TypeMouvement> populateTypeMouvements() {
-	 return	Arrays.asList(TypeMouvement.class.getEnumConstants()) ;
+		return	Arrays.asList(TypeMouvement.class.getEnumConstants()) ;
 	}
 
 
 	public static Collection<RoleName> populateRoleNames() {
-		 return	Arrays.asList(RoleName.class.getEnumConstants()) ;
+		return	Arrays.asList(RoleName.class.getEnumConstants()) ;
 	}
 
 	public static Long getRemise( LigneApprovisionement ligneApprovisionement){ 
 		BigDecimal remise = BigDecimal.ZERO ;
 		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
 		if (ligneApprovisionement.getRemiseAutorise()) {
-			if (pharmaUser == null) {
-				return remise .longValue();
-			}else{
-				BigDecimal tauxRemise = pharmaUser.getTauxRemise();
-				if (tauxRemise == null ) {
-					return remise.longValue() ;
-				}else {
-					return (ligneApprovisionement.getPrixVenteUnitaire().multiply(tauxRemise.divide( BigDecimal.valueOf(100)))).longValue() ;
-				}
-
-			}
+			if (pharmaUser == null) return remise .longValue();
+			BigDecimal tauxRemise = pharmaUser.getTauxRemise();
+			if (tauxRemise == null ) return remise.longValue() ;
+			return (ligneApprovisionement.getPrixVenteUnitaire().multiply(tauxRemise.divide( BigDecimal.valueOf(100)))).longValue() ;
 		}else {
 			return remise .longValue();
 		}
@@ -195,7 +188,7 @@ public class ProcessHelper {
 
 
 	}
-	
+
 	public static BigDecimal stringToBigDecimal(String value){
 		if(StringUtils.isNotBlank(value)){
 			try {
@@ -205,10 +198,10 @@ public class ProcessHelper {
 				System.out.println(value);
 				return BigDecimal.ZERO ;
 			}
-			
+
 		}
 		return BigDecimal.ZERO ;
-		
+
 	}
 	public static BigInteger stringToBigInteger(String value){
 		if(StringUtils.isNotBlank(value)){
@@ -219,7 +212,7 @@ public class ProcessHelper {
 				System.out.println(value);
 				return BigInteger.ZERO ;
 			}
-			
+
 		}
 		return BigInteger.ZERO ;
 	}

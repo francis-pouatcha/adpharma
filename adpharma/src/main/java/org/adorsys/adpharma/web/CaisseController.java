@@ -176,7 +176,7 @@ public class CaisseController {
 	}
 
 	@RequestMapping(params = "find=ByEtatCaisse", method = RequestMethod.GET)
-	public String byEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateOuverture, Model uiModel) {
+	public String byEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList();
 		if (caisses.isEmpty()) {
 			uiModel.addAttribute("appMessage", "aucun etat trouve !");
@@ -184,7 +184,7 @@ public class CaisseController {
 			return "caisses/ByEtatCaisse";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
-			uiModel.addAttribute("periode",PharmaDateUtil.format(minDateOuverture, "dd-MM-yyyy hh:mm")+" Au "+ PharmaDateUtil.format(maxDateOuverture, "dd-MM-yyyy hh:mm"));
+			uiModel.addAttribute("periode",PharmaDateUtil.format(minDateOuverture, "dd-MM-yyyy HH:mm")+" Au "+ PharmaDateUtil.format(maxDateOuverture, "dd-MM-yyyy HH:mm"));
 			return "bordereauCaissePdfDocView";
 		}
 	}
@@ -199,7 +199,7 @@ public class CaisseController {
 			return "caisses/infos";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
-			uiModel.addAttribute("periode",PharmaDateUtil.format(period.getBegin(), "dd-MM-yyyy hh:mm")+" Au "+ PharmaDateUtil.format(period.getEnd(), "dd-MM-yyyy hh:mm"));
+			uiModel.addAttribute("periode",PharmaDateUtil.format(period.getBegin(), "dd-MM-yyyy HH:mm")+" Au "+ PharmaDateUtil.format(period.getEnd(), "dd-MM-yyyy HH:mm"));
 			return "bordereauCaissePdfDocView";
 		}
 	}

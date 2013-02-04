@@ -94,7 +94,7 @@ public class ApprovisonementProcess {
 			produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
 			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
 			produit.merge();
-			mouvementStock.setQteFinale(produit.getQuantiteEnStock());
+			mouvementStock.setQteFinale(mouvementStock.getQteInitiale().add(mouvementStock.getQteDeplace()));
 			mouvementStock.persist();
 			ligneApprovisionement.merge();
 		}

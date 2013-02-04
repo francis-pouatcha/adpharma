@@ -440,8 +440,9 @@ if(Check == false){
 		        					<ul>
 		        						<li><a href="${prd_cip_url}"> Creer Un Produit Avec C.I.P</a></li>
 		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
+		        						<!-- 
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
-		        						
+		        						 -->
 		        						<li><a href="${prd_list_url}"> Lister les produits(CIP)</a></li>
 		        						
 		        					    <li><a href="${aff_fsf_url}"> Affectation Familles </a></li>

@@ -52,7 +52,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	
 	
-	public Boolean actif = Boolean.FALSE ;
+	public Boolean actif = Boolean.TRUE ;
 	@ManyToOne
 	private FamilleProduit familleProduit;
 
@@ -118,7 +118,6 @@ public class Produit extends AdPharmaBaseEntity {
 		this.qtevendu = qtevendu;
 	}
 	
-
 
 
 	@Value("0")
@@ -245,15 +244,17 @@ public class Produit extends AdPharmaBaseEntity {
 	 public static TypedQuery<Produit> findNextProduits(Long id ) {
 	        if (id == null ) throw new IllegalArgumentException("The id argument is required");
 	        EntityManager em = Produit.entityManager();
-	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id > :id ORDER BY o.id ", Produit.class);
+	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id > :id And o.actif =:actif ORDER BY o.id  ", Produit.class);
 	        q.setParameter("id", id);
+	        q.setParameter("actif", Boolean.TRUE);
 	        return q;
 	    }
 	 public static TypedQuery<Produit> findPreviousProduits(Long id ) {
 	        if (id == null ) throw new IllegalArgumentException("The id argument is required");
 	        EntityManager em = Produit.entityManager();
-	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id < :id ORDER BY o.id DESC", Produit.class);
+	        TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.id < :id  And o.actif =:actif  ORDER BY o.id DESC", Produit.class);
 	        q.setParameter("id", id);
+	        q.setParameter("actif", Boolean.TRUE);
 	        return q;
 	    }
 	 
@@ -340,7 +341,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public String generateDefaultCip() {
 		String cip = null;
-		cip = "9" + RandomStringUtils.randomNumeric(5) + "9";
+		cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
 		while (!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty()) {
 			cip = "9" + RandomStringUtils.randomNumeric(5) + "9";
 		}
@@ -405,8 +406,9 @@ public class Produit extends AdPharmaBaseEntity {
 	public static TypedQuery<Produit> findProduitsByQuantiteEnStock(BigInteger quantiteEnStock) {
 		if (quantiteEnStock == null) throw new IllegalArgumentException("The quantiteEnStock argument is required");
 		EntityManager em = Produit.entityManager();
-		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.quantiteEnStock <= :quantiteEnStock ORDER BY o.designation ASC", Produit.class);
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.quantiteEnStock <= :quantiteEnStock  And o.actif =:actif  ORDER BY o.designation ASC", Produit.class);
 		q.setParameter("quantiteEnStock", quantiteEnStock);
+		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
 
@@ -419,7 +421,7 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public static List<Produit> findProduitEntries(int firstResult, int maxResults) {
-		return entityManager().createQuery("SELECT o FROM Produit o ORDER BY o.designation ASC", Produit.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+		return entityManager().createQuery("SELECT o FROM Produit o WHERE o.actif =:actif  ORDER BY o.designation ASC", Produit.class).setParameter("actif", Boolean.TRUE).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
 
 	public static TypedQuery<Produit> findProduitsByOrdreAlphabetique(String debut, String fin) {
@@ -428,9 +430,10 @@ public class Produit extends AdPharmaBaseEntity {
 		debut = debut + "%";
 		fin = fin + "%";
 		EntityManager em = Produit.entityManager();
-		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) BETWEEN LOWER(:debut) AND LOWER(:fin)  ORDER BY o.designation ASC ", Produit.class);
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) BETWEEN LOWER(:debut) AND LOWER(:fin)  And o.actif =:actif ORDER BY o.designation ASC ", Produit.class);
 		q.setParameter("debut", debut);
 		q.setParameter("fin", fin);
+		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
 
@@ -441,8 +444,9 @@ public class Produit extends AdPharmaBaseEntity {
 	public static TypedQuery<Produit> findProduitsByRayon(Rayon rayon) {
 		if (rayon == null) throw new IllegalArgumentException("The rayon argument is required");
 		EntityManager em = Produit.entityManager();
-		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.rayon = :rayon ORDER BY o.designation ASC", Produit.class);
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.rayon = :rayon And o.actif =:actif  ORDER BY o.designation ASC", Produit.class);
 		q.setParameter("rayon", rayon);
+		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
 	public static TypedQuery<Produit> findProduitsByCip(String cip) {
@@ -455,10 +459,11 @@ public class Produit extends AdPharmaBaseEntity {
 
 	public static TypedQuery<Produit> findProduitsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = designation + "%";
+		designation ="%"+designation + "%";
 		EntityManager em = Produit.entityManager();
-		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation) order By  o.designation ASC ", Produit.class);
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  And o.actif =:actif  order By  o.designation ASC ", Produit.class);
 		q.setParameter("designation", designation);
+		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
 
@@ -488,7 +493,7 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public static TypedQuery<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture,BigInteger qte) {
-		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE o.id IS NOT NULL ");
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE  o.actif =:actif ");
 		if (StringUtils.isNotBlank(cip)) {
 			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip);
 		}
@@ -560,6 +565,7 @@ public class Produit extends AdPharmaBaseEntity {
 		if (qte != null) {
 			q.setParameter("qteRup", qte);
 		}
+		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
 }

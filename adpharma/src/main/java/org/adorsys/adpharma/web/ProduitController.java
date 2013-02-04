@@ -21,10 +21,13 @@ import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
+import org.adorsys.adpharma.services.InventoryService;
 import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +42,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/produits")
 @Controller
 public class ProduitController {
+	@Autowired
+	InventoryService inventoryService ;
 
 	//a redefinir
 	@RequestMapping(value="/findByCipAjax/{cip}", method = RequestMethod.GET)
@@ -130,6 +135,16 @@ public class ProduitController {
 		}
 
 		return prd.toJson();
+	}
+	
+	@RequestMapping(value="/{prdId}/makeFusionWith/{fusionId}", method = RequestMethod.GET)
+	public String makeFusionWith(@PathVariable("prdId") Long prdId,@PathVariable("fusionId") Long fusionId,Model uiModel) {
+		Produit product =Produit.findProduit(prdId);
+		Produit mergeWith =(Produit) Produit.findProduit(fusionId);
+		inventoryService.mergeProduct(product, mergeWith);
+		Produit merge = (Produit)product.merge();
+	    uiModel.addAttribute("apMessage", " Fusion Effectuee avec  succes ! ") ;
+	   	return updateForm(merge.getId(), uiModel) ;
 	}
 
 	//a redefinir
@@ -258,10 +273,6 @@ public class ProduitController {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		return "produits/create";
 	}
-
-
-
-
 
 	@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {

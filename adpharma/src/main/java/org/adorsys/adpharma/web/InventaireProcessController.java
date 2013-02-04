@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/inventaireProcess")
 @Controller
@@ -118,46 +119,52 @@ public class InventaireProcessController {
 			LigneInventaire ligneInventaire = new LigneInventaire();
 			ligneInventaire.setInventaire(inventaire);
 			ligneInventaire.setProduit(produit);
-			ligneInventaire.setPrixTotal(produit.getPrixTotalStock());
 			ligneInventaire.setQteEnStock(produit.getQuantiteEnStock());
 			ligneInventaire.setQteReel(qte);
 			ligneInventaire.calculerEcart();
+			ligneInventaire.caculMontantEcart();
 			ligneInventaire.persist();
-
-
 		}
 		InventaireProcess inventaireProcess = new InventaireProcess(invId, LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList());
 		uiModel.addAttribute("inventaireProcess",inventaireProcess);
 		return "inventaireProcess/editInventaire";
 
 	}
-
+	@ResponseBody
 	@RequestMapping(value = "/{invId}/deleteLine/{lineId}",method = RequestMethod.GET)
 	public String unselectLine(@PathVariable("invId") String invId, @PathVariable("lineId") Long lineId ,Model uiModel, HttpServletRequest httpServletRequest) {
 		LigneInventaire ligneInventaire = LigneInventaire.findLigneInventaire(lineId);
-		ligneInventaire.remove();
-		return "redirect:/inventaireProcess/" + ProcessHelper.encodeUrlPathSegment(invId, httpServletRequest)+"/editInventaire";
+		if(ligneInventaire!=null){
+			ligneInventaire.remove();
+			return "ok" ;
+		}
+		return "ko";
 	}
 
 
+	@ResponseBody
 	@RequestMapping(value = "/{invId}/updateLine/{lineId}", method = RequestMethod.GET)
 	public String updateLineForm(@PathVariable("invId") Long invId, @PathVariable("lineId") Long lineId  ,Model uiModel, HttpServletRequest httpServletRequest) {
 		Inventaire inventaire = Inventaire.findInventaire(invId);
 		LigneInventaire ligneInventaire = LigneInventaire.findLigneInventaire(lineId);
-		InventaireProcess inventaireProcess = new InventaireProcess(invId, LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList());
-		inventaireProcess.setLineToUpdate(ligneInventaire);
-		uiModel.addAttribute("inventaireProcess",inventaireProcess);
-		return "inventaireProcess/editInventaire";
+		//InventaireProcess inventaireProcess = new InventaireProcess(invId, LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList());
+		//inventaireProcess.setLineToUpdate(ligneInventaire);
+		//uiModel.addAttribute("inventaireProcess",inventaireProcess);
+		if (ligneInventaire == null) return null;
+		return ligneInventaire.toJson();
 	}
 
-	@RequestMapping(value = "/{invId}/updateLine/{lineId}", method = RequestMethod.POST)
+	@ResponseBody
+	@RequestMapping(value = "/{invId}/updateLineByAjax/{lineId}", method = RequestMethod.GET)
 	public String updateLine(@PathVariable("invId") String invId, @PathVariable("lineId") Long lineId , @RequestParam BigInteger qte, Model uiModel, HttpServletRequest httpServletRequest) {
 		LigneInventaire ligneInventaire = LigneInventaire.findLigneInventaire(lineId);
 		ligneInventaire.setQteReel(qte);
 		ligneInventaire.calculerEcart();
-		ligneInventaire.merge();
-		return "redirect:/inventaireProcess/" + ProcessHelper.encodeUrlPathSegment(invId, httpServletRequest)+"/editInventaire";
+		ligneInventaire.caculMontantEcart();
+	    LigneInventaire merge = (LigneInventaire)	ligneInventaire.merge();
+		return merge.toJson();
 	}
+	
 	@Transactional
 	@RequestMapping(value = "/{invId}/enregistrerInv", method = RequestMethod.GET)
 	public String enregistrer(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
@@ -165,6 +172,7 @@ public class InventaireProcessController {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("inventaire", inventaire);
 		uiModel.addAttribute("itemId",invId);
+		inventaire.calculateMontantEcart();
 		inventaire.merge();
 		return "inventaireProcess/show";
 	}

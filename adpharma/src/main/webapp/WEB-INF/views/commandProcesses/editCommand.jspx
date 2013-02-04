@@ -20,32 +20,15 @@
 	</div>
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form"
-		var="edit_url" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/findProduct?form"
-		var="find_product_url" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/enregistrerCmd"
-		var="enr_cmd_url" />
-	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/addLine"
-		var="cmd_add_url" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/showProduct/"
-		var="show_prd_url" />
-
-	<spring:url value="/approvisionementprocess/1/findProduct/"
-		var="find_cip_url" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd"
-		var="delete_cmd_url" />
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/printBonCommande.pdf"
-		var="bon_cmd_url" />
-		<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/exporto.xls"
-		var="xls_cmd_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form" var="edit_url" />
+	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/findProduct?form"	var="find_product_url" />
+	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/enregistrerCmd"	var="enr_cmd_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/addLine"	var="cmd_add_url" />
+	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/showProduct/"  var="show_prd_url" />
+	<spring:url value="/approvisionementprocess/1/findProduct/"	var="find_cip_url" />
+	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd" var="delete_cmd_url" />
+	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/printBonCommande.pdf" var="bon_cmd_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/exporto.xls"	var="xls_cmd_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL PREPARATION</a></span>
 		<span><a href="${ enr_cmd_url}" style="text-decoration: none;">
@@ -74,9 +57,7 @@
 		var="update_url" />
 	<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
 
-	<spring:url
-		value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/"
-		var="delete_line_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/" var="delete_line_url" />
 
 	<script type="text/javascript">
 		function deleteRow(row) {
@@ -199,6 +180,7 @@
 		//Dialog	find client		
 		
 		$(function() {
+			$('#cip').focus() ;
 			$('#editLineDiv').dialog({
 				open : function() {
 				},
@@ -221,7 +203,6 @@
 				$('#editLineDiv').dialog('close');
 				return false;
 			});
-			
 			$('tr.list').click(function(){
 				var rwoId =$(this).attr('id');
 				if( isSavable(rwoId)){
@@ -244,21 +225,21 @@
 					if(int==3){
 					if(!$(this).children().is('input')){
 						var text=	$(this).text();
-					    var input = '<input type="text" class="autres"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+					    var input = '<input type="text" class="tbcell" onmouseover="this.select();" onfocus="this.select();"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
 					   $(this).html(input);
 			          }
 					}
 					if(int==4)	{
 						if(!$(this).children().is('input')){
 							var text=	$(this).text();
-						    var input = '<input type="text" class="autres"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+						    var input = '<input type="text" class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
 						   $(this).html(input);
 				          }
 					}
 					if(int==5)	{
 						if(!$(this).children().is('input')){
 							var text=	$(this).text();
-						    var input = '<input type="text"  class="autres"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+						    var input = '<input type="text"  class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
 						    $(this).html(input);
 						    $(savebtn).show();
 				          }else{
@@ -309,7 +290,7 @@
 						<tr>
 							<td><INPUT type="hidden" name="pId" id="pId"
 								value="${commandeProcess. produit.id}" /> <INPUT type="text"
-								name="cip" onchange="requete();" autofocus="autofocus"
+								name="cip" onchange="requete();" autofocus="autofocus" onmouseover="this.select();" onfocus="this.select();"
 								class="autres" value="${commandeProcess.produit.cip}"
 								onKeyPress="return scanTouche(event)"
 								style="color: blue; text-align: center;" maxlength="7" id="cip" />
@@ -326,17 +307,17 @@
 								class="autres" value="${commandeProcess.produit.seuilComande }"
 								disabled="disabled" id="sc" /></td>
 
-							<td><INPUT type="text" name="qte" class="autres"
+							<td><INPUT type="text" name="qte" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								style="color: black; text-align: center;"
 								onKeyPress="return scanTouche(event)" maxlength="7"
 								title="quantite a Commander" id="qte" /></td>
-							<td><INPUT type="text" name="pa" class="autres"
+							<td><INPUT type="text" name="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								onKeyPress="return scanTouche(event)"
 								style="color: black; text-align: center;"
 								title="saisir le Prix D'Achat Unitaire" id="pa" />
 							</td>
 							<td>
-							<INPUT type="text" name="pv" class="autres"
+							<INPUT type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								onKeyPress="return scanTouche(event)"
 								style="color: black; text-align: center;"
 								title="saisir le Prix De Vente Unitaire" id="pv" />

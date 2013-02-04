@@ -96,13 +96,16 @@ function annCmd(){
 				type="button" value="Cloturer La Vente"
 				title="Enregistrer La Commande" /></a></span>
 				</security:authorize>
-				
+				 <!--
 				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				</security:authorize>
-				<!-- 
-				<span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+				
+				
 				 -->
+				 								<span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+				 
+				
 				 
 				 <span><a
 			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
@@ -113,11 +116,11 @@ function annCmd(){
 				title="editer un ordonnancier pour cette commande" id="btOrdo" onclick="return showform();" /></a></span>
 
 		<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
-			<span><a href="#"
-				style="text-decoration: none;"><INPUT id="infosclient" class="submits"
+			<span><a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
 					type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
 		</c:if>
-		<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
+		
+<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
 <span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
 </c:if> -->
 	</div>
@@ -170,10 +173,11 @@ function annCmd(){
 	}
 	
 	$(function(){
+		$('#cipm').focus();
 		$('#pu').click(function(){
 	 		$('#pu').removeAttr("disabled"); 
 	 	});
-		$('#cipm').focus();
+		
 		$('form#person').submit
 		(function(){
 			 clearClientTable();
@@ -462,14 +466,14 @@ $('#updateClient').dialog("close");
 								style="color: blue; text-align: center;" disabled="disabled" />
 
 							</td>
-							<td><INPUT type="text" name="pu" id="pu"
+							<td><INPUT type="text" name="pu" id="pu"  onmouseover="this.select();" onfocus="this.select();" 
 								disabled="disabled" class="autres"
 								value="${saleProcess.lineToUpdate.prixUnitaire}"
 								onKeyPress="return scanTouche(event)" title="saisir le cip"
 								style="color: blue; padding-left: 0px;"  />
 
 							</td>
-							<td><INPUT type="text" name="qte" id="qte" class="autres"
+							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
 								onkeyup="calculePt()"
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
@@ -527,15 +531,15 @@ $('#updateClient').dialog("close");
 							<td><INPUT type="hidden" name="pId" id="pId"
 								value="${saleProcess.produit.id}" /> <c:choose>
 									<c:when test="${forcer}">
-										<INPUT type="text" name="cipm"  autofocus="autofocus" id="cipm" class="autres"
+										<INPUT type="text" name="cipm" maxlength="-1"  autofocus="autofocus" id="cipm" class="autres"
 											value="${saleProcess.produit.cipMaison}" readonly="readonly"
 											 onKeyPress="return scanTouche(event)"
 											  title="saisir le cipm"
 											/>
 
 									</c:when>
-									<c:otherwise>
-										<INPUT type="text" name="cipm" maxlength="-1" id="cipm"  class="autres"
+									<c:otherwise> 
+										<INPUT type="text" name="cipm" maxlength="-1" id="cipm"  class="autres"  onmouseover="this.select();" onfocus="this.select();" 
 											value="${saleProcess.produit.cipMaison}" 
 											onKeyPress="return scanTouche(event)"  onchange="requete();"
 											title="saisir le cipm" 
@@ -545,7 +549,7 @@ $('#updateClient').dialog("close");
 								</c:choose></td>
 							<td><INPUT type="text" name="cip" id="cip" class="autres"
 								value="${saleProcess.produit.cip}"
-								style="color: blue; text-align: center;" disabled="disabled" />
+								style="color: blue; text-align: center;"  />
 
 							</td>
 							<td><INPUT type="text" name="des" class="des" id="des"
@@ -562,19 +566,18 @@ $('#updateClient').dialog("close");
 										value="${saleProcess.produit.prixVenteUnitaire}"
 										style="color: blue; text-align: center;" onkeyup="calculePt()" 
 										onKeyPress="return scanTouche(event)" />
-											
 									<c:set  var="changePrice" value="false"   />		
 								</security:authorize>
 								<c:if test="${changePrice}">
-									<INPUT type="text" name="pu" id="pu" class="autres"
+									<INPUT type="text" name="pu" id="pu" class="autres"  onmouseover="this.select();" onfocus="this.select();" 
 										value="${saleProcess.produit.prixVenteUnitaire}" disabled="disabled"
 										style="color: blue; text-align: center;" onkeyup="calculePt()" 
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte"
+							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt()" value="${qte}" class="autres"
-								onKeyPress="return scanTouche(event)" width="50px;"
+								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="saisir la Quantite"  /></td>
 							<td><INPUT type="hidden" name="remax" id="remax"
 								value="${saleProcess.produit.remiseMax}" /> <INPUT type="text"
@@ -777,14 +780,13 @@ $('#updateClient').dialog("close");
 								 <fmt:formatNumber value="${ligne.remise }"/>
 								</td>
 
-						<td class="utilbox"><spring:url
-								value="/resources/images/update.png" var="update_image_url" />
-							<spring:url
-								value="/saleprocess/${saleProcess.cmdId}/updateLine/${ligne.id}"
-								var="update_line_url" /> <a href="${update_line_url}"
-							alt="update" title="update"> <img alt="update" class="image"
-								src="${ update_image_url}" title="mettre a jour la commande " />
-						</a></td>
+						<td class="utilbox">
+						 
+						<spring:url value="/resources/images/update.png" var="update_image_url" />
+						<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine/${ligne.id}" var="update_line_url" />
+						 <a href="${update_line_url}" alt="update" title="update"> <img alt="update" class="image" src="${ update_image_url}" title="mettre a jour la commande " /></a>
+						 
+						</td>
 						<td class="utilbox"><spring:url
 								value="/resources/images/delete.png" var="delete_image_url" />
 							<spring:url

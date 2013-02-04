@@ -13,7 +13,7 @@ privileged aspect LigneInventaire_Roo_Finder {
     public static TypedQuery<LigneInventaire> LigneInventaire.findLigneInventairesByInventaire(Inventaire inventaire) {
         if (inventaire == null) throw new IllegalArgumentException("The inventaire argument is required");
         EntityManager em = LigneInventaire.entityManager();
-        TypedQuery<LigneInventaire> q = em.createQuery("SELECT o FROM LigneInventaire AS o WHERE o.inventaire = :inventaire", LigneInventaire.class);
+        TypedQuery<LigneInventaire> q = em.createQuery("SELECT o FROM LigneInventaire AS o WHERE o.inventaire = :inventaire ORDER BY o.id DESC", LigneInventaire.class);
         q.setParameter("inventaire", inventaire);
         return q;
     }

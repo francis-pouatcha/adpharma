@@ -491,7 +491,8 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 	// contenu
 		PdfPCell fontc = new PdfPCell(cellStyle);
-		fontc.setPhrase(new Phrase(new Chunk(""+caisse.getFondCaisse().intValue(), headerStyles)));
+		BigDecimal fond = caisse.getFondCaisse()==null?BigDecimal.ZERO:caisse.getFondCaisse();
+		fontc.setPhrase(new Phrase(new Chunk(""+fond.intValue(), headerStyles)));
 		fontc.setPaddingBottom(5);
 		tableDetail.addCell(fontc );
 
@@ -552,7 +553,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbsolde = new PdfPCell(cellStyle);
-		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.getTotalEncaissement().add(caisse.getFondCaisse()).intValue(), headerStyles)));
+		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.getTotalEncaissement().add(fond).intValue(), headerStyles)));
 		tbsolde.setPaddingBottom(5);
 
 		tableDetail.addCell(tbsolde);

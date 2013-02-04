@@ -3,24 +3,25 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show delete="false" id="ps_org_adorsys_adpharma_domain_Fournisseur" object="${fournisseur}" path="/fournisseurs" z="user-managed">
-                    <field:display field="fournisseurNumber" id="s_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" object="${fournisseur}" z="/G72g0tlvxyIPMoov43tPN/M3n4="/>
-                    <field:display field="name" label="Nom" id="s_org_adorsys_adpharma_domain_Fournisseur_name" object="${fournisseur}" z="DTY8HGsCzMJwA26zH4iT2Wz6gO4="/>
-                    <field:display field="shortname" label="Nom Abrege" id="s_org_adorsys_adpharma_domain_Fournisseur_name" object="${fournisseur}" z="DTY8HGsCzMJwA26zH4iT2Wz6gO4="/>
-                    <field:display field="phone" id="s_org_adorsys_adpharma_domain_Fournisseur_phone" object="${fournisseur}" z="uYUrkugLWZ7UuRu7hTiyYDjSTzE="/>
-                    <field:display field="mobile" id="s_org_adorsys_adpharma_domain_Fournisseur_mobile" object="${fournisseur}" z="gl4PholD7gW6Py0z6rT6x8AtF50="/>
-                    <field:display field="fax" id="s_org_adorsys_adpharma_domain_Fournisseur_fax" object="${fournisseur}" z="2fWoe+Vh1uXUvJ4VOOmu7oEo8A4="/>
-                    <field:display field="email" id="s_org_adorsys_adpharma_domain_Fournisseur_email" object="${fournisseur}" z="lJXxOdI/USsOoSU2aGiFnOBbvGg="/>
-                    <field:display field="adresse" id="s_org_adorsys_adpharma_domain_Fournisseur_adresse" object="${fournisseur}" z="11ZJApOPx4pGj4sbIBjHcuwUUho="/>
-                    <field:display field="siteInternet" id="s_org_adorsys_adpharma_domain_Fournisseur_siteInternet" object="${fournisseur}" z="rwPRLYWaZX+Bg5WGzlUPiCUdSGM="/>
-                    <field:display field="responsable" id="s_org_adorsys_adpharma_domain_Fournisseur_responsable" object="${fournisseur}" z="Z/8iqdXaW5w05Sxh4+86wX+thjg="/>
-                    <field:display field="chiffreAffaire" id="s_org_adorsys_adpharma_domain_Fournisseur_chiffreAffaire" object="${fournisseur}" z="9gz7oMPlhytnW93XC+1F69rsajg="/>
-                    <field:display field="ville" id="s_org_adorsys_adpharma_domain_Fournisseur_ville" object="${fournisseur}" z="knCollsoAm2J3PVp2ej1B3HDh7s="/>
-                    <field:display field="pays" id="s_org_adorsys_adpharma_domain_Fournisseur_pays" object="${fournisseur}" z="/DpgZC1JPNhhAphW8vtGdWXOg94="/>
-                    <field:display field="codePostal" id="s_org_adorsys_adpharma_domain_Fournisseur_codePostal" object="${fournisseur}" z="W72PdQX3quSaa+JiFWZ/RJSJyVM="/>
-                    <field:display field="contribuableNumber" id="s_org_adorsys_adpharma_domain_Fournisseur_ContribuableNumber" object="${fournisseur}" z="areOisKe9wx4Rj5P/33Dj0XhKzY="/>
-                    <field:display field="numRegistreComerce" id="s_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" object="${fournisseur}" z="B0xEfwWuQZ+OkBYxUsIoG++hy4w="/>
-                    <field:display field="note" id="s_org_adorsys_adpharma_domain_Fournisseur_note" object="${fournisseur}" z="TT+oqkjQvyZtTPRn7/3PKH03/Us="/>
+        <field:display field="fournisseurNumber" id="s_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" object="${fournisseur}" z="/G72g0tlvxyIPMoov43tPN/M3n4="/>
+        <field:display field="name" id="s_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom" object="${fournisseur}" z="user-managed"/>
+        <field:display field="shortname" id="s_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom Abrege" object="${fournisseur}" z="DTY8HGsCzMJwA26zH4iT2Wz6gO4="/>
+        <field:display field="phone" id="s_org_adorsys_adpharma_domain_Fournisseur_phone" object="${fournisseur}" z="uYUrkugLWZ7UuRu7hTiyYDjSTzE="/>
+        <field:display field="mobile" id="s_org_adorsys_adpharma_domain_Fournisseur_mobile" object="${fournisseur}" z="gl4PholD7gW6Py0z6rT6x8AtF50="/>
+        <field:display field="fax" id="s_org_adorsys_adpharma_domain_Fournisseur_fax" object="${fournisseur}" z="2fWoe+Vh1uXUvJ4VOOmu7oEo8A4="/>
+        <field:display field="email" id="s_org_adorsys_adpharma_domain_Fournisseur_email" object="${fournisseur}" z="lJXxOdI/USsOoSU2aGiFnOBbvGg="/>
+        <field:display field="adresse" id="s_org_adorsys_adpharma_domain_Fournisseur_adresse" object="${fournisseur}" z="11ZJApOPx4pGj4sbIBjHcuwUUho="/>
+        <field:display field="siteInternet" id="s_org_adorsys_adpharma_domain_Fournisseur_siteInternet" object="${fournisseur}" z="rwPRLYWaZX+Bg5WGzlUPiCUdSGM="/>
+        <field:display field="responsable" id="s_org_adorsys_adpharma_domain_Fournisseur_responsable" object="${fournisseur}" z="Z/8iqdXaW5w05Sxh4+86wX+thjg="/>
+        <field:display field="chiffreAffaire" id="s_org_adorsys_adpharma_domain_Fournisseur_chiffreAffaire" object="${fournisseur}" z="9gz7oMPlhytnW93XC+1F69rsajg="/>
+        <field:display field="ville" id="s_org_adorsys_adpharma_domain_Fournisseur_ville" object="${fournisseur}" z="knCollsoAm2J3PVp2ej1B3HDh7s="/>
+        <field:display field="pays" id="s_org_adorsys_adpharma_domain_Fournisseur_pays" object="${fournisseur}" z="/DpgZC1JPNhhAphW8vtGdWXOg94="/>
+        <field:display field="codePostal" id="s_org_adorsys_adpharma_domain_Fournisseur_codePostal" object="${fournisseur}" z="W72PdQX3quSaa+JiFWZ/RJSJyVM="/>
+        <field:display field="contribuableNumber" id="s_org_adorsys_adpharma_domain_Fournisseur_ContribuableNumber" object="${fournisseur}" z="areOisKe9wx4Rj5P/33Dj0XhKzY="/>
+        <field:display field="numRegistreComerce" id="s_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" object="${fournisseur}" z="B0xEfwWuQZ+OkBYxUsIoG++hy4w="/>
+        <field:display field="note" id="s_org_adorsys_adpharma_domain_Fournisseur_note" object="${fournisseur}" z="TT+oqkjQvyZtTPRn7/3PKH03/Us="/>
         <field:display field="providerKey" id="s_org_adorsys_adpharma_domain_Fournisseur_providerKey" object="${fournisseur}" z="wvICCkQRbQ+TDUZ4+HqgM+XxzsY="/>
+        <field:display field="shortname" id="s_org_adorsys_adpharma_domain_Fournisseur_shortname" object="${fournisseur}" z="KorHWFXuBJwBTfMO5D3Hsnx/g1Y="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Fournisseur_footPrint" object="${fournisseur}" z="qhIf9P6Y33xHj0ClvoJqsiNy1GQ="/>
