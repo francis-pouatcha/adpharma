@@ -40,6 +40,7 @@ import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.ClaimsService;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -63,6 +64,9 @@ public class ApprovisionementProcessController {
 	
 	@Autowired
 	private JasperPrintService jasperPrintService ;
+	
+	@Autowired
+	private ClaimsService reclamationsService;
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
@@ -126,12 +130,12 @@ public class ApprovisionementProcessController {
 	}
 
 	@RequestMapping(value = "/{apId}/addLine", method = RequestMethod.POST)
-	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte,
+	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteReclam,
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		Produit produit = Produit.findProduit(pId);
 
-		if (approvisionement.contientProduit(produit)) {
+		   if (approvisionement.contientProduit(produit)) {
 			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			return initViewContent(approvisionement, tvaj, uiModel);
 		    }
@@ -141,11 +145,23 @@ public class ApprovisionementProcessController {
 			}
 			
 			LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
+			if(prm==""){
+			       if(!produit.isPerissable()){
+			    	   ligneApprovisionement.setDatePeremtion(new DateUtils().addYears(new Date(), 5));
+			       }else{
+			    	   uiModel.addAttribute("apMessage", "Veuillez entrer la date de peremption du produit");
+			    	   return initViewContent(approvisionement, tvaj, uiModel);
+			       }
+			}else{
+				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2));
+			}
+			if(qteReclam!=""){
+				ligneApprovisionement.setQuantiteReclame(new BigInteger(qteReclam));
+			}
 			ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 			ligneApprovisionement.setApprovisionement(approvisionement);
 			ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
 			ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
-			ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2) );
 			if (StringUtils.isNotBlank(pv)) ligneApprovisionement.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
 			if(!new Date().before(ligneApprovisionement.getDatePeremtion())){
 				uiModel.addAttribute("apMessage", "La date de Peremtion de ce produit Doit etre Superieure a la date du jour !");
@@ -360,6 +376,12 @@ public class ApprovisionementProcessController {
 		@RequestMapping(value = "/{apId}/enregistrer", method = RequestMethod.GET)
 		public String enregistrer(@PathVariable("apId") Long apId, Model uiModel) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+			boolean hasReclamations = reclamationsService.hasReclamations(approvisionement);
+			if (hasReclamations==true) {
+				approvisionement.setReclamations(Boolean.TRUE);
+				approvisionement.merge();
+			}
+			
 			ProcessHelper.addDateTimeFormatPatterns(uiModel);
 			uiModel.addAttribute("approvisionement", approvisionement);
 			uiModel.addAttribute("itemId",apId);
@@ -489,7 +511,17 @@ public class ApprovisionementProcessController {
 			return "ficheCodeBarePdfDocView";
 
 		}
-
+		
+		// Formulaire d'impression des listes de reclamations
+		@RequestMapping(value="/reclamations", params="form", method=RequestMethod.GET)
+		public String ReclamationsForm(Model uiModel, HttpServletRequest httpServletRequest){
+			
+			List<Fournisseur> fournisseurs = Fournisseur.findAllFournisseurs();
+			String array = Fournisseur.toJsonArray(fournisseurs);
+			uiModel.addAttribute("listefournisseurs", array);
+			return "reclamations/create";
+		}
+		
 
 
 		/*

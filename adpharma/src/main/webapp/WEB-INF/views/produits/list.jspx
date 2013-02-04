@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
-    <page:list  id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="pflhPv0p8vJNvA1CYdS/OUraM4M=">
-        <table:table printLink="${list_cat_url }" create="false" data="${produits}" delete="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" z="user-managed">
+    <page:list id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="pflhPv0p8vJNvA1CYdS/OUraM4M=">
+        <table:table create="false" data="${produits}" delete="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" printLink="${list_cat_url }" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Produit_produitNumber" render="false" property="produitNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Produit_produitNumber" property="produitNumber" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_cip" property="cip" z="lwxQZw1IKddvNjeg0GSHUNNrti0="/>
-           <!--  
+            <!--  
             <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" label="Date Entree" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" maxLength="-1" property="dateDerniereEntre" z="user-managed"/>
-          --> 
-            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" render="false" label="Date Rupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" maxLength="-1" property="dateDerniereRupture" z="user-managed"/>
+          -->
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" label="Date Rupture" maxLength="-1" property="dateDerniereRupture" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_designation" maxLength="-1" property="designation" z="user-managed"/>
-                       <table:column maxLength="-1" id="c_org_adorsys_adpharma_domain_Produit_rayon"  property="rayon" z="user-managed"/>
-            
+            <table:column id="c_org_adorsys_adpharma_domain_Produit_rayon" maxLength="-1" property="rayon" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" label="Qte Stock" property="quantiteEnStock" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_Produit_seuilComande" label="Seuil" property="seuilComande" z="ttj2H7NDmMWmIJuHe7fmZhDOzXo="/>
             <table:column id="s_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" label="Taux Rem" property="tauxRemiseMax" z="xf63jZLaSXC0RyyN11qwq8KStqI="/>
@@ -26,8 +24,9 @@ xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/W
             <table:column id="c_org_adorsys_adpharma_domain_Produit_prixAchatSTock" property="prixAchatSTock" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_prixVenteStock" property="prixVenteStock" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_qtevendu" property="qtevendu" render="false" z="user-managed"/>
-                   <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" label="Date Sortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" maxLength="-1" property="dateDerniereSortie" z="user-managed"/>
-       
+            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" label="Date Sortie" maxLength="-1" property="dateDerniereSortie" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" property="prixAchatU" z="nb0FzJ5f7goXfNv/phgEiGkfy/0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" property="prixVenteU" z="nzQyPVfWA23dw/8aFbb4SL/j8yg="/>
         </table:table>
     </page:list>
 </div>

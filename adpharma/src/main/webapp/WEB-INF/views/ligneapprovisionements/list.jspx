@@ -24,6 +24,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_qteCip" property="qteCip" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_fournisseur" property="fournisseur" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" property="skipPriceConvertion" z="f4bYocMiuI/hEHaE3xaj2yXuk/s="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" property="viewMsg" z="wIyJj8YDIgmA9SVk5e11t8oajaM="/>
         </table:table>
     </page:list>
 </div>

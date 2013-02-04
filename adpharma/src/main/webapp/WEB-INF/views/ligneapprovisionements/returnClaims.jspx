@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:form="http://www.springframework.org/tags/form" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:url value="/ligneapprovisionements/findByCipm/"  var="find_cipm_url" />
+    <spring:url value="/ligneapprovisionements/reclamation/retour" var="returnClaims_url" />
+    
+    
+    <style type="text/css">
+         .title{text-align: center; font-size: 25px; color:#fff; height:50px; font-weight: bold; background:#ccc; text-align:center; vertical-align:middle; text-shadow: 2px 2px 2px #333; margin: 0 0 10px 0;}
+         #edit_form { border: none;}
+         #edit_form td{border: none;}
+         #edit_form th{text-align: center;}
+         #edit_form1 { border: none; text-align: center;}
+         #edit_form1 td{border: none;}
+         #edit_form1 th{text-align: center;}
+         fieldset{border: 1px solid #ccc; border-radius: 5px;}
+         .others{width: 130px; color: blue;}
+         .qties{width: 100px; color: blue;}
+        .inputText{background: white;}
+    </style>
+    
+    <SCRIPT type="text/javascript">
+           $(document).ready(function(){
+        	   document.getElementById("cipm").focus();
+           });
+           
+           function findLine() {
+       		var cipm = document.getElementById("cipm").value;
+       		var url = "${find_cipm_url}" + cipm ;
+       			$.getJSON(url, function(data) {
+       					if (data!=null) {
+       						document.getElementById("cipm").value = data.cipMaison;
+       						document.getElementById("cip").value = data.cip;
+       						document.getElementById("des").value = data.designation;
+       						document.getElementById("pa").value = data.prixAchatUnitaire;
+       						document.getElementById("qte").value = data.quantieEnStock;
+       						document.getElementById("reclam").value = data.quantiteReclame;
+       					} else {
+       						alert("Aucun produit trouve correspondant a ce cipm...");
+       					}
+       				});
+       	       }
+           
+    
+    </SCRIPT>
+    
+   
+<util:panel title="Entree des reclamations fournisseur" id="return_reclam_id">
+   <div class="title">ENTREE DES RECLAMATIONS FOURNISSEUR</div>
+   <form:form commandName="reclamation" method="POST" action="${returnClaims_url}">
+    <div style="margin: -15px 0 0 0;">
+      <util:panel title="Lignes de reclamations" id="reclam_lines">
+         <table id="edit_form" style="width: 100%;">
+               <tr>
+                   <th>Cipm</th>
+                   <th>Cip</th>
+                   <th>Designation</th>
+                   <th>P.A. Unitaire</th>
+                   <th>Qte lot</th>
+                   <th>Qte reclamee</th>
+                   <th>Qte retour</th>
+                   <th>Action</th>
+               </tr>
+               <tr>
+                   <td> <form:input path="cipm" class="inputText" cssClass="others" id="cipm" onchange="findLine();" /> </td>
+                   <td> <form:input path="cip" class="inputText" cssClass="others" disabled="true" id="cip"/> </td>
+                   <td> <form:input path="designation" class="inputText" cssStyle="width:300px; color:blue;" disabled="true" id="des"/> </td>
+                   <td> <form:input path="prixAchat" class="inputText" cssClass="others" disabled="true" id="pa"/> </td>
+                   <td> <form:input path="qteStock" class="inputText" cssClass="qties" disabled="true" id="qte" /> </td>
+                   <td> <form:input path="reclamQuantity" class="inputText" cssClass="qties" disabled="true" id="reclam" /> </td>
+                   <td> <form:input path="returnQuantity" class="inputText" cssClass="qties" id="retour"  /> </td>
+                   <td colspan="2"> 
+                       <input type="submit" value="Retourner" class="submits" /> 
+                       <input type="reset" value="Annuler" class="submits" /> 
+                   </td>
+               </tr>
+          </table> 
+        </util:panel>
+      </div>        
+   </form:form>
+   
+   <util:panel title="Liste des entrees de reclamations" id="in_reclam">
+   <table id="edit_form1" style="width: 100%;">
+               <tr>
+                   <th>Cipm</th>
+                   <th>Cip</th>
+                   <th>Designation</th>
+                   <th>P.A. Unitaire</th>
+                   <th>Qte lot</th>
+                   <th>Qte reclamee</th>
+               </tr>
+               <tr>
+                    <td> <c:out value="${ligneRetourne.cipMaison}" /> </td>
+                    <td> <c:out value="${ligneRetourne.cip}" /> </td>
+                    <td> <c:out value="${ligneRetourne.designation}" /> </td>
+                    <td> <c:out value="${ligneRetourne.prixAchatUnitaire}" /> </td>
+                    <td> <c:out value="${ligneRetourne.quantieEnStock}" /> </td>
+                    <td> <c:out value="${ligneRetourne.quantiteReclame}" /> </td>
+               </tr>
+    </table>           
+   </util:panel>
+
+</util:panel>    
+
+
+
+</div>    

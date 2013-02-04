@@ -6,48 +6,48 @@
         <c:set value="true" var="hasrole"/>
     </security:authorize>
     <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_LigneApprovisionement" object="${ligneapprovisionement}" path="/ligneapprovisionements" z="user-managed">
-        
-                    <field:display field="lotNumber" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" object="${ligneapprovisionement}" z="1HLvUyv7NfuHb8Gr5Cbmqfsk06g="/>
-                    <c:choose>
-                        <c:when test="${hasrole}">
-                            <spring:url value="/approvisionements/${ligneapprovisionement.approvisionement.id }" var="app_url"/>
-                            <spring:url value="/produits/${ligneapprovisionement.produit.id }" var="cip_url"/>
-                            <a href="${app_url }" style="color: blue; text-decoration: underline; " title="Visualiser L'approvisionnement">
-                                <field:display field="approvisionement" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" object="${ligneapprovisionement}" z="M4J9mpNnDpgrTJIKBsOxmXVj+jY="/>
-                            </a>
-                            <a href="${ cip_url}" style="color: blue; text-decoration: underline;" title="visualiser le Produit(CIP)">
-                                <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_produit" object="${ligneapprovisionement}" z="juToyiiyPPyXEqfZCBik8pZ+7BA="/>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <field:display field="approvisionement" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" object="${ligneapprovisionement}" z="M4J9mpNnDpgrTJIKBsOxmXVj+jY="/>
-                            <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_produit" object="${ligneapprovisionement}" z="juToyiiyPPyXEqfZCBik8pZ+7BA="/>
-                        </c:otherwise>
-                    </c:choose>
-                    <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_designation" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-                    <field:display date="true" dateTimePattern="${ligneApprovisionement_datefabrication_date_format}" field="dateFabrication" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_dateFabrication" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-                    <field:display date="true" dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" field="datePeremtion" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" object="${ligneapprovisionement}" z="5iQ0LdWGtN/TvTcaeouHdx3Y2vU="/>
-                    <field:display field="agentSaisie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_agentSaisie" object="${ligneapprovisionement}" z="+VzzTMdQk+zivqrOoLXGNq8zxCc="/>
-                    <field:display date="true" dateTimePattern="${ligneApprovisionement_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie" object="${ligneapprovisionement}" z="IQk5WiCq5L8zmGGNqu5KpT/doBg="/>
-                    <field:display field="quantiteAprovisione" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" object="${ligneapprovisionement}" z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>
-                    <field:display field="quantieEnStock" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" object="${ligneapprovisionement}" z="U1bqJlzV7lqmOkmpqTQDEESiFGQ="/>
-                    <field:display field="prixAchatUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" object="${ligneapprovisionement}" z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
-                    <field:display field="prixAchatTotal" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatTotal" object="${ligneapprovisionement}" z="z9BKOmYFVkChmdCFQRLuyuLNkqo="/>
-              
-                    <field:display field="margeBrute" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_margeBrute" object="${ligneapprovisionement}" z="+nBkIo7u7DU1baue4Vud3MHKamk="/>
-                    <field:display field="cipMaison" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" object="${ligneapprovisionement}" z="fXq7ZCyK356fUT03LojOZ+RU434="/>
-                    <field:display field="prixVenteUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" object="${ligneapprovisionement}" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
-                    <field:display field="venteAutorise" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_venteAutorise" object="${ligneapprovisionement}" z="p9IjanENJ+iW6+bz+psqTz66lIU="/>
-                    <field:display field="quantiteSortie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteSortie" object="${ligneapprovisionement}" z="A07vvkOcTdaMnP0hkIpRBTFrsTM="/>
-                    <field:display field="indexLine" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" object="${ligneapprovisionement}" z="liUNw72wYa4o6F6ua4uVMvboUqA="/>
-                    <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cip" object="${ligneapprovisionement}" z="ZLforGwfkVMsAmJQ86H3YJle18g="/>
-                    <field:display field="remiseMax" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_remiseMax" object="${ligneapprovisionement}" z="shov+Y/txQhKnbQBxcnfH8alB6E="/>
-                    <field:display field="quantiteVendu" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" object="${ligneapprovisionement}" z="/rtV73/iyIzsDsMQmt12fvOQSGE="/>
-                    <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_remiseAutorise" object="${ligneapprovisionement}" z="MT1QcPRsrh6lfHshofYMdkQW2Ms="/>
-                    <field:display field="qteCip" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_qteCip" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-                    <field:display field="fournisseur" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_fournisseur" object="${ligneapprovisionement}" render="false" z="user-managed"/>
-             
+        <field:display field="lotNumber" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" object="${ligneapprovisionement}" z="1HLvUyv7NfuHb8Gr5Cbmqfsk06g="/>
+        <c:choose>
+            <c:when test="${hasrole}">
+                <spring:url value="/approvisionements/${ligneapprovisionement.approvisionement.id }" var="app_url"/>
+                <spring:url value="/produits/${ligneapprovisionement.produit.id }" var="cip_url"/>
+                <a href="${app_url }" style="color: blue; text-decoration: underline; " title="Visualiser L'approvisionnement">
+                    <field:display field="approvisionement" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" object="${ligneapprovisionement}" z="M4J9mpNnDpgrTJIKBsOxmXVj+jY="/>
+                </a>
+                <a href="${ cip_url}" style="color: blue; text-decoration: underline;" title="visualiser le Produit(CIP)">
+                    <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_produit" object="${ligneapprovisionement}" z="juToyiiyPPyXEqfZCBik8pZ+7BA="/>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <field:display field="approvisionement" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" object="${ligneapprovisionement}" z="M4J9mpNnDpgrTJIKBsOxmXVj+jY="/>
+                <field:display field="produit" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_produit" object="${ligneapprovisionement}" z="juToyiiyPPyXEqfZCBik8pZ+7BA="/>
+            </c:otherwise>
+        </c:choose>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_designation" object="${ligneapprovisionement}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${ligneApprovisionement_datefabrication_date_format}" field="dateFabrication" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_dateFabrication" object="${ligneapprovisionement}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" field="datePeremtion" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" object="${ligneapprovisionement}" z="5iQ0LdWGtN/TvTcaeouHdx3Y2vU="/>
+        <field:display field="agentSaisie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_agentSaisie" object="${ligneapprovisionement}" z="+VzzTMdQk+zivqrOoLXGNq8zxCc="/>
+        <field:display date="true" dateTimePattern="${ligneApprovisionement_datesaisie_date_format}" field="dateSaisie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie" object="${ligneapprovisionement}" z="IQk5WiCq5L8zmGGNqu5KpT/doBg="/>
+        <field:display field="quantiteAprovisione" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" object="${ligneapprovisionement}" z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>
+        <field:display field="quantieEnStock" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" object="${ligneapprovisionement}" z="U1bqJlzV7lqmOkmpqTQDEESiFGQ="/>
+        <field:display field="prixAchatUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" object="${ligneapprovisionement}" z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
+        <field:display field="prixAchatTotal" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatTotal" object="${ligneapprovisionement}" z="z9BKOmYFVkChmdCFQRLuyuLNkqo="/>
+        <field:display field="margeBrute" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_margeBrute" object="${ligneapprovisionement}" z="+nBkIo7u7DU1baue4Vud3MHKamk="/>
+        <field:display field="cipMaison" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" object="${ligneapprovisionement}" z="fXq7ZCyK356fUT03LojOZ+RU434="/>
+        <field:display field="prixVenteUnitaire" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" object="${ligneapprovisionement}" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
+        <field:display field="venteAutorise" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_venteAutorise" object="${ligneapprovisionement}" z="p9IjanENJ+iW6+bz+psqTz66lIU="/>
+        <field:display field="quantiteSortie" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteSortie" object="${ligneapprovisionement}" z="A07vvkOcTdaMnP0hkIpRBTFrsTM="/>
+        <field:display field="indexLine" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" object="${ligneapprovisionement}" z="liUNw72wYa4o6F6ua4uVMvboUqA="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cip" object="${ligneapprovisionement}" z="ZLforGwfkVMsAmJQ86H3YJle18g="/>
+        <field:display field="remiseMax" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_remiseMax" object="${ligneapprovisionement}" z="shov+Y/txQhKnbQBxcnfH8alB6E="/>
+        <field:display field="quantiteVendu" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" object="${ligneapprovisionement}" z="/rtV73/iyIzsDsMQmt12fvOQSGE="/>
+        <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_remiseAutorise" object="${ligneapprovisionement}" z="MT1QcPRsrh6lfHshofYMdkQW2Ms="/>
+        <field:display field="qteCip" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_qteCip" object="${ligneapprovisionement}" render="false" z="user-managed"/>
+        <field:display field="fournisseur" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_fournisseur" object="${ligneapprovisionement}" render="false" z="user-managed"/>
         <field:display field="skipPriceConvertion" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" object="${ligneapprovisionement}" z="UCo1vg46KF/sxbA2buLyMZhcC84="/>
+        <field:display field="viewMsg" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" object="${ligneapprovisionement}" z="PwsrLxqWSzzSCY75axuAnbuIHNw="/>
+        <field:display field="saisiele" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_saisiele" object="${ligneapprovisionement}" z="D9ZXSKzC5PVvTUxjrGPVcnmHdlg="/>
+        <field:display field="quantiteReclame" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" object="${ligneapprovisionement}" z="DbikkAwvRmAwu4yaSVwQ2NW9Z+0="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" object="${ligneapprovisionement}" z="9XRvYfBWuf7prrLbwUkRP29+bEk="/>

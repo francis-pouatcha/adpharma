@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.beans.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
@@ -20,9 +21,11 @@ import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.ClaimsService;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -32,11 +35,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RooWebScaffold(path = "ligneapprovisionements", formBackingObject = LigneApprovisionement.class)
 @RequestMapping("/ligneapprovisionements")
 @Controller
 public class LigneApprovisionementController {
+	
+	@Autowired
+	private ClaimsService reclamationService;
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public String update(@Valid() LigneApprovisionement ligneApprovisionement, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -61,6 +68,19 @@ public class LigneApprovisionementController {
 		uiModel.addAttribute("ligneApprovisionement", LigneApprovisionement.findLigneApprovisionement(id));
 		addDateTimeFormatPatterns(uiModel);
 		return "ligneapprovisionements/update";
+	}
+	
+	
+	// Recherche d'une ligne d'approvisionement ayant une reclamation
+	@RequestMapping(value="/findByCipm/{cipm}", method=RequestMethod.GET)
+	@ResponseBody
+	public String findLigneApprovisionementByCipmAndReclamation(@PathVariable("cipm")String cipm){
+		   LigneApprovisionement ligne = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEqualsAndReclamations(cipm).getResultList().iterator().next(); 
+		   if(ligne!=null){
+			   return ligne.toJson2();
+		   }else{
+			   return null;
+		   }
 	}
 	
 
@@ -252,6 +272,31 @@ public class LigneApprovisionementController {
 
 		return "ligneapprovisionements/search";
 	}
+	
+	
+	// Formulaire d'entree des reclamations fournisseurs
+	@RequestMapping(value="/reclamations", params="form", method=RequestMethod.GET)
+	public String returnOfReclamationsForm(Model uiModel, HttpServletRequest httpServletRequest){
+	    uiModel.addAttribute("reclamation", new ReclamationBean());
+		return "ligneapprovisionements/reclamations";
+	}
+	
+	@RequestMapping(value="/reclamation/retour", method=RequestMethod.POST)
+	public String returnOfReclamations(@ModelAttribute("reclamation")ReclamationBean reclamation, Model uiModel){
+		System.out.println("Quantite retournee: "+reclamation.getReturnQuantity());
+		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEqualsAndReclamations(reclamation.getCipm()).getResultList().iterator().next();
+		reclamationService.setQteRetour(reclamation.getReturnQuantity());
+		System.out.println("Qte Retour: "+reclamationService.getQteRetour());
+		reclamationService.updateStock(ligneApprovisionement);
+		uiModel.addAttribute("ligneRetourne", ligneApprovisionement);
+		System.out.println("Ligne approvisionement: "+ligneApprovisionement);
+		return "ligneapprovisionements/reclamations";
+	}
+	
+	
+	
+	
+	
 	@ModelAttribute("approvisionements")
 	public Collection<Approvisionement> populateApprovisionements() {
 		return new ArrayList<Approvisionement>();	    }

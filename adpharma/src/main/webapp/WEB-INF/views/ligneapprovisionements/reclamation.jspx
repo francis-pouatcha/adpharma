@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:url value="/etats/print/ficheReclamations.pdf" var="reclamation_url" />
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+        	$("#provider").tokenInput(${listefournisseurs}, {
+        		theme: "facebook",
+        		hintText: "Saisissez le nom d'un fournisseur",
+                noResultsText: "Aucun fournisseur trouve!",
+                searchingText: "Recherche en cours..."
+        });
+        });
+          
+        function validateForm(){
+        	var provider= document.getElementById("provider").value;
+        	var date_min= document.getElementById("date_min").value;
+        	var date_max= document.getElementById("date_max").value;
+        	if(provider==""){
+        		alert("Veuillez entrer le nom du fournisseur");
+        		return false;
+        	}
+        	if(date_min==""){
+        		alert("Veuillez entrer la date minimum");
+        		return false;
+        	}
+        	if(date_max==""){
+        		alert("Veuillez entrer la date maximum");
+        		return false;
+        	};
+        };
+        
+        
+    </script>     
+    
+    <style type="text/css">
+          .title{text-align: center; font-size: 25px; color:#fff; height:50px; font-weight: bold; background:#ccc; text-align:center; vertical-align:middle; text-shadow: 2px 2px 2px #333; margin: 0 0 10px 0;}
+          .box_form{width: 600px; height: 300px; border-radius:7px; border: 1px solid #ccc; box-shadow: 4px 3px 4px #ccc; margin: auto; background: #eee;}
+          #table_form{border: none; background: none; }
+          #table_form tr{background: none; }
+          #table_form td{border: none; padding: 20px 0 20px 0;}
+          #table_form label{font-size: 16px;}
+    </style>
+    
+ <util:panel title="Fiche de reclamation fournisseur" id="reclam_id">
+  <div class="title">EDITION DE LA FICHE DE RECLAMATION FOURNISSEUR</div>
+  <div class="box_form"> 
+    <form action="${reclamation_url}" method="get" enctype="application/x-www-form-urlencoded" accept-charset="UTF-8" onsubmit="return validateForm();"> 
+     <table id="table_form">
+           <tr>
+               <td><LABEL>Nom Fournisseur: </LABEL></td>
+               <td> <INPUT type="text" id="provider" name="provider_id"/> </td>
+           </tr>    
+           <tr>
+               <td><LABEL>Periode Minimum: </LABEL></td>
+               <td><INPUT type="text" name="date_min" dojoType="dijit.form.DateTextBox" id="date_min"  constraints="{datePattern:'dd-MM-yyyy'}" style="width: 300px;" required="true" promptMessage= "Saisir la date minimum" /></td>
+           </tr>
+           <tr>
+               <td><LABEL>Periode maximum: </LABEL></td>
+               <td><INPUT type="text" name="date_max" dojoType="dijit.form.DateTextBox" id="date_max" constraints="{datePattern:'dd-MM-yyyy'}" style="width: 300px;" required="true" promptMessage= "Saisir la date maximum" /></td>
+           </tr>
+     </table><BR />
+        <div style="margin: 0 0 0 250px;">
+         <INPUT type="submit" value="Imprimer" class="submits" style="margin: 0 10px 0 0;" />
+         <INPUT type="reset" value="Annuler" class="submits"/>
+        </div>
+    </form>
+   </div> <br/>
+ 
+ 
+</util:panel>
+
+</div>    

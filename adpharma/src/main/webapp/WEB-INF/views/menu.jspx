@@ -48,6 +48,8 @@
                     <menu:item id="i_approvisionement_new" messageCode="global_menu_new" render="false" url="/approvisionements?form" z="user-managed"/>
                     <menu:item id="i_approvisionement_list" messageCode="global_menu_list" url="/approvisionements?page=1&amp;size=${empty param.size ? 10 : param.size}" z="q/AfJqoOK6qBd5C+NORomLlax94="/>
                     <menu:item id="fi_approvisionement_datecreationbetween" messageCode="global_menu_find" url="/approvisionements?find=ByDateCreationBetween&amp;form" z="h1RRdgTsytWGf7cz+Uth6tSyf6M="/>
+                    <menu:item id="fi_approvisionement_founisseuranddatecreationbetween" messageCode="global_menu_find" url="/approvisionements?find=ByFounisseurAndDateCreationBetween&amp;form" z="hGxIoNGiixLfRNqSdkb22I7ogKA="/>
+                    <menu:item id="fi_approvisionement_reclamationsnot" messageCode="global_menu_find" url="/approvisionements?find=ByReclamationsNot&amp;form" z="0VRAsY64AavPz3jfzKMPMDlVRpc="/>
                 </menu:category>
             </security:authorize>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">

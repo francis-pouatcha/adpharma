@@ -5,15 +5,14 @@
     <page:list id="pl_org_adorsys_adpharma_domain_Fournisseur" items="${fournisseurs}" z="f4MLoC0zhVL2D1iCjWYXGB3C0j4=">
         <table:table data="${fournisseurs}" delete="false" id="l_org_adorsys_adpharma_domain_Fournisseur" path="/fournisseurs" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" property="fournisseurNumber" z="vt5qh/Ndv1Fov03/fWFaonr77yU="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_name" maxLength="-1" property="name" label="Nom" z="user-managed"/>
-                        <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fax" property="shortname" label="Nom Abrege" z="/iL/q3K53JAdqqtlA4AEB+ll5Mc="/>
-            
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom" maxLength="-1" property="name" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fax" label="Nom Abrege" property="shortname" z="/iL/q3K53JAdqqtlA4AEB+ll5Mc="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_phone" property="phone" z="DNvUAMSqIB2RWyvVrQkYXs7xWdA="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" property="mobile" z="poyttcAmyjlbIu0BV3YqIpkf35Q="/>
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_adresse" property="adresse" z="11ZJApOPx4pGj4sbIBjHcuwUUho="/>
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_responsable" maxLength="-1" property="responsable" z="Z/8iqdXaW5w05Sxh4+86wX+thjg="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" property="providerKey" z="0CZM1t4VW1SFo675N18/XLwtNwc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" property="shortname" z="Be1e6Smmrx5vh4/VOwz0abNDv48="/>
         </table:table>
     </page:list>
 </div>

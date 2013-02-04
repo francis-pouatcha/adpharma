@@ -20,6 +20,7 @@
 		    		<th style="text-align: center;">Marge </th>
 		    		<th style="text-align: center;">PAUnit</th>
 		    		<th style="text-align: center;">Qte Approv</th>
+		    		<th style="text-align: center;">Qte reclamee</th>
 		    		<th style="text-align: center;">PA Total</th>
 		            <th style="text-align: center;">PV Unit</th>
 		            <th style="text-align: center;">Date Perm</th>
@@ -31,58 +32,31 @@
 		
 		   <c:forEach items="${approvisionement.ligneApprivisionement}" var="ligne">
 		    		<tr>
-		    			<td style="text-align: center;">
-		    			<c:out value="${ligne.produit.cip}"></c:out>
+		    			<td style="text-align: center;"> <c:out value="${ligne.produit.cip}"></c:out> </td>
 		    			
-		    			</td>
-		    			<td style=" width: 250px; text-align: left;padding-left: 20px;">
+		    			<td style=" width: 250px; text-align: left;padding-left: 20px;"> <c:out value="${ligne.designation}"></c:out> </td>
 		    			
-		    		<c:out value="${ligne.designation}"></c:out>
+		    			<td style="text-align: center;"> <c:out value="${ligne.cipMaison}"></c:out> </td>
 		    			
-		    			</td>
-		    			<td style="text-align: center;">
-		    			<c:out value="${ligne.cipMaison}"></c:out>
-
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    			    			<c:out value="${ligne.margeBrute}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    				    			    		<c:out value="${ligne.prixAchatUnitaire}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    			    		<c:out value="${ligne.quantiteAprovisione}"></c:out>
-		    	
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    		  <c:out value="${ligne.prixAchatTotal}"></c:out>
-		    
-		    
-		    			</td>
-		    		<td style="text-align: right;padding-right: 20px;">
-		    				    		  <c:out value="${ligne.prixVenteUnitaire}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: center;">
-		    							         <fmt:formatDate value="${ligne.datePeremtion}" pattern="dd-MM-yyyy"/>
-		    					
-		    			</td>
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.margeBrute}"></c:out> </td>
 		    			
-								<td style="text-align: right;padding-right: 20px;">
-										    				    		  <c:out value="${ligne.quantiteVendu}"></c:out>
-								
-							</td>
-							<td style="text-align: right;padding-right: 20px;">
-										    				    		  <c:out value="${ligne.quantiteSortie}"></c:out>
-								
-							</td>
-						<td style="text-align: right;padding-right: 20px;">
-																    				    		  <c:out value="${ligne.quantieEnStock}"></c:out>
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixAchatUnitaire}"></c:out> </td>
+		    			
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteAprovisione}"></c:out> </td>
+		    			
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteReclame}"></c:out> </td>
+		    			
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixAchatTotal}"></c:out> </td>
+		    			
+		    		    <td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixVenteUnitaire}"></c:out> </td>
+		    		    
+		    			<td style="text-align: center;"> <fmt:formatDate value="${ligne.datePeremtion}" pattern="dd-MM-yyyy"/> </td>
+		    			
+						<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteVendu}"></c:out> </td>
 						
-							
-						</td>							
+						<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteSortie}"></c:out> </td>
+						
+						<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantieEnStock}"></c:out> </td>							
 		    		</tr>
 		    	</c:forEach>
 		    </table>

@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.OrderBy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -54,7 +55,7 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	private Date dateCreation;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm", iso=DateTimeFormat.ISO.TIME)
 	private Date dateLimiteLivraison;
 
 	@Enumerated

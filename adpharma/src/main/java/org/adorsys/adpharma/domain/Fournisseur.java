@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.PostPersist;
@@ -12,10 +13,15 @@ import org.adorsys.adpharma.utils.NumberGenerator;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
+
+import flexjson.JSONSerializer;
 
 @RooJavaBean
 @RooToString
+@RooJson
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Fournisseur")
 public class Fournisseur extends AdPharmaBaseEntity {
 
@@ -129,6 +135,16 @@ public class Fournisseur extends AdPharmaBaseEntity {
         
         return displayName() ;
     }
+	
+	public String toJson() {
+        return new JSONSerializer().include("name", "id").exclude("*","*.class").serialize(this);
+    }
+	
+	public static String toJsonArray(Collection<Fournisseur> collection) {
+        return new JSONSerializer().include("name", "id").exclude("*","*.class").serialize(collection);
+    }
+	
+	@Transactional(readOnly=true)
     public static List<Fournisseur> findAllFournisseurs() {
         return entityManager().createQuery("SELECT o FROM Fournisseur o ORDER BY o.name ASC ", Fournisseur.class).getResultList();
     }

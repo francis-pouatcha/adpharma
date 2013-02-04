@@ -138,6 +138,14 @@ privileged aspect Approvisionement_Roo_JavaBean {
         this.dateCreation = dateCreation;
     }
     
+    public Boolean Approvisionement.getReclamations() {
+        return this.reclamations;
+    }
+    
+    public void Approvisionement.setReclamations(Boolean reclamations) {
+        this.reclamations = reclamations;
+    }
+    
     public Boolean Approvisionement.getUrgence() {
         return this.urgence;
     }

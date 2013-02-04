@@ -8,7 +8,7 @@
                 <td class="tbcreate">
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Approvisionement_footPrint" render="false" z="user-managed"/>
                     <field:input field="approvisionementNumber" id="c_org_adorsys_adpharma_domain_Approvisionement_approvisionementNumber" render="false" z="user-managed"/>
-                    <field:input field="bordereauNumber"  id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" required="true" z="VqUolVYHLRQBzTeiXXePY0sVfek="/>
+                    <field:input field="bordereauNumber" id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" required="true" z="VqUolVYHLRQBzTeiXXePY0sVfek="/>
                     <field:select field="founisseur" id="c_org_adorsys_adpharma_domain_Approvisionement_founisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="nyTC0NH/LjANknw3u0vQf0mwIk8="/>
                     <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Approvisionement_magasin" itemValue="id" items="${sites}" path="/sites" z="YDh4ZffXiBxcRPJgS2njDh4Uitc="/>
                     <field:datetime dateTimePattern="${approvisionement_datecommande_date_format}" field="dateCommande" id="c_org_adorsys_adpharma_domain_Approvisionement_dateCommande" z="F7eGHPUr0qlsBWtvTZHpTQY7emk="/>
@@ -35,6 +35,7 @@
         <field:input field="montant" id="c_org_adorsys_adpharma_domain_Approvisionement_montant" validationMessageCode="field_invalid_number" z="7+LaV7JMlowBJF3Vtx3dMiCQplo="/>
         <field:input field="filiale" id="c_org_adorsys_adpharma_domain_Approvisionement_filiale" z="kwThw2pEIUzTAYpRswZZA5fnkfE="/>
         <field:select field="filiales" id="c_org_adorsys_adpharma_domain_Approvisionement_filiales" itemValue="id" items="${filiales}" path="/filiales" z="3R6ZvF7a8X7vOPmRjiPpzyaD/a4="/>
+        <field:checkbox field="reclamations" id="c_org_adorsys_adpharma_domain_Approvisionement_reclamations" z="Vz0lV5uhNWPCh/jUNRveExwrQis="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Approvisionement" render="${not empty dependencies}" z="LPI4PXUGeq+wjGjSKh/AmsTeGlU="/>
 </div>

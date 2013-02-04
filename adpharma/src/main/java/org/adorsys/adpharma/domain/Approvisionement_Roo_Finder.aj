@@ -3,10 +3,12 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Boolean;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Fournisseur;
 
 privileged aspect Approvisionement_Roo_Finder {
     
@@ -17,6 +19,26 @@ privileged aspect Approvisionement_Roo_Finder {
         TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation", Approvisionement.class);
         q.setParameter("minDateCreation", minDateCreation);
         q.setParameter("maxDateCreation", maxDateCreation);
+        return q;
+    }
+    
+    public static TypedQuery<Approvisionement> Approvisionement.findApprovisionementsByFounisseurAndDateCreationBetween(Fournisseur founisseur, Date minDateCreation, Date maxDateCreation) {
+        if (founisseur == null) throw new IllegalArgumentException("The founisseur argument is required");
+        if (minDateCreation == null) throw new IllegalArgumentException("The minDateCreation argument is required");
+        if (maxDateCreation == null) throw new IllegalArgumentException("The maxDateCreation argument is required");
+        EntityManager em = Approvisionement.entityManager();
+        TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE o.founisseur = :founisseur AND o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation", Approvisionement.class);
+        q.setParameter("founisseur", founisseur);
+        q.setParameter("minDateCreation", minDateCreation);
+        q.setParameter("maxDateCreation", maxDateCreation);
+        return q;
+    }
+    
+    public static TypedQuery<Approvisionement> Approvisionement.findApprovisionementsByReclamationsNot(Boolean reclamations) {
+        if (reclamations == null) throw new IllegalArgumentException("The reclamations argument is required");
+        EntityManager em = Approvisionement.entityManager();
+        TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE o.reclamations IS NOT :reclamations", Approvisionement.class);
+        q.setParameter("reclamations", reclamations);
         return q;
     }
     

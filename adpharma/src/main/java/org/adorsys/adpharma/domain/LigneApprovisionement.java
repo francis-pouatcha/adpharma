@@ -99,8 +99,6 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date datePeremtion = DateUtils.addYears(new Date(), 10);
 
-
-
 	private String agentSaisie;
 	@JsonIgnore
 	@Temporal(TemporalType.TIMESTAMP)
@@ -110,6 +108,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private BigInteger quantiteAprovisione;
 
 	private BigInteger quantiteVendu = BigInteger.ZERO;
+	
+	private BigInteger quantiteReclame= BigInteger.ZERO;
 
 	public Produit getProduit() {
 		return produit;
@@ -226,8 +226,13 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public String toJson() {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip").exclude("*","*.class").serialize(this);
+		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip").exclude("*","*.class").serialize(this);
 	}
+	
+	public String toJson2() {
+		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","prixAchatUnitaire","designation","quantiteAprovisione","quantiteReclame","quantieEnStock","fournisseur","qteCip").exclude("*","*.class").serialize(this);
+	}
+	
 	public static String toJsonArray(Collection<LigneApprovisionement> collection) {
 		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip").exclude("*","*.class").serialize(collection);
 	}
@@ -796,4 +801,17 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("etat", Etat.CLOS);
 		return q;
 	}
+	
+	
+	 public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEqualsAndReclamations(String cipMaison) {
+	        if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
+	        EntityManager em = LigneApprovisionement.entityManager();
+	        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison AND o.quantiteReclame > :qteReclame", LigneApprovisionement.class);
+	        q.setParameter("cipMaison", cipMaison);
+	        q.setParameter("qteReclame", BigInteger.ZERO);
+	        return q;
+	    }
+	
+	
+	
 }

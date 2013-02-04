@@ -3,35 +3,38 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Produit" object="${produit}" path="/produits" z="user-managed">
-                                              <field:display field="designation"   id="s_org_adorsys_adpharma_domain_Produit_designation" object="${produit}" z="hNKyyhgRvKWUliyhOCuxR5LgCws="/>
-                          
-                            <field:display field="cip" id="s_org_adorsys_adpharma_domain_Produit_cip" object="${produit}" z="SOM6jdpsRy9JB/MEx/EH3JlTAIQ="/>
-        
-                    <field:display field="produitNumber" id="s_org_adorsys_adpharma_domain_Produit_produitNumber" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Produit_filiale" object="${produit}" z="hVo/DOOExcJcq64AZNm3IxxzRnU="/>
-                    <field:display field="fabricant" id="s_org_adorsys_adpharma_domain_Produit_fabricant" object="${produit}" z="sGC1vo6bYdeV13aaLAr0+2eKhSI="/>
-                    <field:display field="rayon" id="s_org_adorsys_adpharma_domain_Produit_rayon" object="${produit}" z="tsDOyfP8KpCRnWAGYQ4Nq3/3z+Y="/>
-                    <field:display field="familleProduit" id="s_org_adorsys_adpharma_domain_Produit_familleProduit" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="sousfamilleProduit" id="s_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="quantiteEnStock" id="s_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit}" z="Prxk0u2nzzyy8pBVuhPMb7xAAuA="/>
-                    <field:display field="seuilComande" id="s_org_adorsys_adpharma_domain_Produit_seuilComande" object="${produit}" z="ttj2H7NDmMWmIJuHe7fmZhDOzXo="/>
-                    <field:display field="tauxRemiseMax" id="s_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" object="${produit}" z="xf63jZLaSXC0RyyN11qwq8KStqI="/>
-                    <field:display field="prixTotalStock" id="s_org_adorsys_adpharma_domain_Produit_prixTotalStock" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="plafondStock" id="s_org_adorsys_adpharma_domain_Produit_plafondStock" object="${produit}" render="false" z="user-managed"/>
-               
-                    <field:display date="true" dateTimePattern="${produit_datederniereentre_date_format}" field="dateDerniereEntre" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" object="${produit}" z="7HegU+woMZU7pIXrHn5QSDUkoHA="/>
-                    <field:display date="true" dateTimePattern="${produit_datedernieresortie_date_format}" field="dateDerniereSortie" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" object="${produit}" z="e8nx4GIdX7MI8EFB4SB2x59CMtU="/>
-                    <field:display date="true" render="false" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" z="Nla3nRvDq/fjDKAkDL7+XR2qGmo="/>
-                    <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="produitCompose" id="s_org_adorsys_adpharma_domain_Produit_produitCompose" object="${produit}" z="l8hp4tbrBuJO9qine3ebYqA+NaQ="/>
-                    <field:display field="tvaProduit" id="s_org_adorsys_adpharma_domain_Produit_tvaProduit" object="${produit}" z="1i5yC65dBnRNrYKXCevxDiMzlv8="/>
-                    <field:display field="tauxDeMarge" id="s_org_adorsys_adpharma_domain_Produit_tauxDeMarge" object="${produit}" z="is3q8xIpM81WFt/KGDSvJwv2UME="/>
-                    <field:display field="modeConditionement" id="s_org_adorsys_adpharma_domain_Produit_modeConditionement" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="venteAutorise" id="s_org_adorsys_adpharma_domain_Produit_venteAutorise" object="${produit}" z="iZnqZl6ZOOny8wxPDzo2iW6lw2Y="/>
-                    <field:display field="prixAchatSTock" id="s_org_adorsys_adpharma_domain_Produit_prixAchatSTock" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_Produit_prixVenteStock" object="${produit}" render="false" z="user-managed"/>
-                    <field:display field="qtevendu" id="s_org_adorsys_adpharma_domain_Produit_qtevendu" object="${produit}" render="false" z="user-managed"/>
-           
+        <field:display field="prixAchatSTock" id="s_org_adorsys_adpharma_domain_Produit_prixAchatSTock" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_Produit_prixVenteStock" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="qtevendu" id="s_org_adorsys_adpharma_domain_Produit_qtevendu" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="designation" id="s_org_adorsys_adpharma_domain_Produit_designation" object="${produit}" z="hNKyyhgRvKWUliyhOCuxR5LgCws="/>
+        <field:display field="cip" id="s_org_adorsys_adpharma_domain_Produit_cip" object="${produit}" z="SOM6jdpsRy9JB/MEx/EH3JlTAIQ="/>
+        <field:display field="produitNumber" id="s_org_adorsys_adpharma_domain_Produit_produitNumber" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Produit_filiale" object="${produit}" z="hVo/DOOExcJcq64AZNm3IxxzRnU="/>
+        <field:display field="fabricant" id="s_org_adorsys_adpharma_domain_Produit_fabricant" object="${produit}" z="sGC1vo6bYdeV13aaLAr0+2eKhSI="/>
+        <field:display field="rayon" id="s_org_adorsys_adpharma_domain_Produit_rayon" object="${produit}" z="tsDOyfP8KpCRnWAGYQ4Nq3/3z+Y="/>
+        <field:display field="familleProduit" id="s_org_adorsys_adpharma_domain_Produit_familleProduit" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="sousfamilleProduit" id="s_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="quantiteEnStock" id="s_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit}" z="Prxk0u2nzzyy8pBVuhPMb7xAAuA="/>
+        <field:display field="seuilComande" id="s_org_adorsys_adpharma_domain_Produit_seuilComande" object="${produit}" z="ttj2H7NDmMWmIJuHe7fmZhDOzXo="/>
+        <field:display field="tauxRemiseMax" id="s_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" object="${produit}" z="xf63jZLaSXC0RyyN11qwq8KStqI="/>
+        <field:display field="prixTotalStock" id="s_org_adorsys_adpharma_domain_Produit_prixTotalStock" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="plafondStock" id="s_org_adorsys_adpharma_domain_Produit_plafondStock" object="${produit}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${produit_datederniereentre_date_format}" field="dateDerniereEntre" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" object="${produit}" z="7HegU+woMZU7pIXrHn5QSDUkoHA="/>
+        <field:display date="true" dateTimePattern="${produit_datedernieresortie_date_format}" field="dateDerniereSortie" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" object="${produit}" z="e8nx4GIdX7MI8EFB4SB2x59CMtU="/>
+        <field:display field="produitCompose" id="s_org_adorsys_adpharma_domain_Produit_produitCompose" object="${produit}" z="l8hp4tbrBuJO9qine3ebYqA+NaQ="/>
+        <field:display field="tvaProduit" id="s_org_adorsys_adpharma_domain_Produit_tvaProduit" object="${produit}" z="1i5yC65dBnRNrYKXCevxDiMzlv8="/>
+        <field:display field="tauxDeMarge" id="s_org_adorsys_adpharma_domain_Produit_tauxDeMarge" object="${produit}" z="is3q8xIpM81WFt/KGDSvJwv2UME="/>
+        <field:display field="modeConditionement" id="s_org_adorsys_adpharma_domain_Produit_modeConditionement" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="venteAutorise" id="s_org_adorsys_adpharma_domain_Produit_venteAutorise" object="${produit}" z="iZnqZl6ZOOny8wxPDzo2iW6lw2Y="/>
+        <field:display field="perissable" id="s_org_adorsys_adpharma_domain_Produit_perissable" object="${produit}" z="user-managed"/>
+        <field:display field="prixAchatU" id="s_org_adorsys_adpharma_domain_Produit_prixAchatU" object="${produit}" z="xWIDDEDqkEEpjei+zLnSpA3LHWY="/>
+        <field:display field="prixVenteU" id="s_org_adorsys_adpharma_domain_Produit_prixVenteU" object="${produit}" z="jSgGBMFbEwkhYa/C5klhjMqLT9s="/>
+        <field:display field="actif" id="s_org_adorsys_adpharma_domain_Produit_actif" object="${produit}" z="jbKtamh+Xs/K5bAze7wKhQ2zrUM="/>
+        <field:display field="posologie" id="s_org_adorsys_adpharma_domain_Produit_posologie" object="${produit}" z="gPKvPCUmN4Xseq4YXRdVxfzkpGM="/>
+        <field:display field="principeActif" id="s_org_adorsys_adpharma_domain_Produit_principeActif" object="${produit}" z="+UORiI07q3v/ZUCbCW3GTOnVy9I="/>
+        <field:display field="observation" id="s_org_adorsys_adpharma_domain_Produit_observation" object="${produit}" z="2OnzMv6w45/J0vIPypqSXyLqZY0="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Produit_footPrint" object="${produit}" z="sTmGDG3gdH1etdXs7ozgmjuXQDE="/>

@@ -82,6 +82,14 @@ privileged aspect Produit_Roo_JavaBean {
         this.quantiteEnStock = quantiteEnStock;
     }
     
+    public boolean Produit.isPerissable() {
+        return this.perissable;
+    }
+    
+    public void Produit.setPerissable(boolean perissable) {
+        this.perissable = perissable;
+    }
+    
     public BigInteger Produit.getSeuilComande() {
         return this.seuilComande;
     }

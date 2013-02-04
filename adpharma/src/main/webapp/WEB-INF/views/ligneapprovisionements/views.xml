@@ -52,5 +52,12 @@
      <definition extends="approvisionnement" name="dataloader/loadentree">
         <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/loadentree.jspx"/>
     </definition>
+    <definition extends="approvisionnement" name="reclamations/create">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/reclamation.jspx"/>
+    </definition>
+    
+    <definition extends="approvisionnement" name="ligneapprovisionements/reclamations">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/returnClaims.jspx"/>
+    </definition>
     
 </tiles-definitions>

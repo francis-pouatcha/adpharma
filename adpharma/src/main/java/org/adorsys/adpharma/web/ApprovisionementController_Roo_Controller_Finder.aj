@@ -3,9 +3,11 @@
 
 package org.adorsys.adpharma.web;
 
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.Date;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Fournisseur;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,31 @@ privileged aspect ApprovisionementController_Roo_Controller_Finder {
     public String ApprovisionementController.findApprovisionementsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
+        return "approvisionements/list";
+    }
+    
+    @RequestMapping(params = { "find=ByFounisseurAndDateCreationBetween", "form" }, method = RequestMethod.GET)
+    public String ApprovisionementController.findApprovisionementsByFounisseurAndDateCreationBetweenForm(Model uiModel) {
+        uiModel.addAttribute("fournisseurs", Fournisseur.findAllFournisseurs());
+        addDateTimeFormatPatterns(uiModel);
+        return "approvisionements/findApprovisionementsByFounisseurAndDateCreationBetween";
+    }
+    
+    @RequestMapping(params = "find=ByFounisseurAndDateCreationBetween", method = RequestMethod.GET)
+    public String ApprovisionementController.findApprovisionementsByFounisseurAndDateCreationBetween(@RequestParam("founisseur") Fournisseur founisseur, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+        uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementsByFounisseurAndDateCreationBetween(founisseur, minDateCreation, maxDateCreation).getResultList());
+        addDateTimeFormatPatterns(uiModel);
+        return "approvisionements/list";
+    }
+    
+    @RequestMapping(params = { "find=ByReclamationsNot", "form" }, method = RequestMethod.GET)
+    public String ApprovisionementController.findApprovisionementsByReclamationsNotForm(Model uiModel) {
+        return "approvisionements/findApprovisionementsByReclamationsNot";
+    }
+    
+    @RequestMapping(params = "find=ByReclamationsNot", method = RequestMethod.GET)
+    public String ApprovisionementController.findApprovisionementsByReclamationsNot(@RequestParam(value = "reclamations", required = false) Boolean reclamations, Model uiModel) {
+        uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementsByReclamationsNot(reclamations == null ? new Boolean(false) : reclamations).getResultList());
         return "approvisionements/list";
     }
     

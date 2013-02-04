@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,7 +34,7 @@ import org.adorsys.adpharma.domain.Filiale;
 
 @RooJavaBean
 @RooToString
-@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Approvisionement", finders = { "findApprovisionementsByDateCreationBetween" })
+@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Approvisionement", finders = { "findApprovisionementsByDateCreationBetween", "findApprovisionementsByFounisseurAndDateCreationBetween", "findApprovisionementsByReclamationsNot" })
 public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInterfaces {
 
     private String approvisionementNumber;
@@ -71,7 +72,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date dateLivraison= new Date();
+    private Date dateLivraison = new Date();
 
     @NotNull
     @ManyToOne
@@ -80,10 +81,10 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateReglement;
-    
+
     @NotNull
     private BigDecimal montantHt = BigDecimal.ZERO;
- 
+
     private BigDecimal montantTtc = BigDecimal.ZERO;
 
     private BigDecimal montantRemise = BigDecimal.ZERO;
@@ -96,17 +97,23 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateCreation = new Date();
 
-     public Approvisionement() {
-		
-	}
-     public Approvisionement(Fournisseur fournisseur,String bordereau,Devise devise,String filiale,Site magasin) {
- 		this.founisseur = fournisseur;
- 		this.bordereauNumber = bordereau;
- 		this.devise = devise;
- 		this.filiale= filiale;
- 		this.magasin = magasin ;
- 		agentCreateur = SecurityUtil.getPharmaUser();
- 	}
+    /**
+     * Used to verified if an Approvisionement contains a reclamations of products or not
+     */
+    private Boolean reclamations = Boolean.FALSE;
+
+    public Approvisionement() {
+    }
+
+    public Approvisionement(Fournisseur fournisseur, String bordereau, Devise devise, String filiale, Site magasin) {
+        this.founisseur = fournisseur;
+        this.bordereauNumber = bordereau;
+        this.devise = devise;
+        this.filiale = filiale;
+        this.magasin = magasin;
+        agentCreateur = SecurityUtil.getPharmaUser();
+    }
+
     @Value("false")
     private Boolean urgence;
 
@@ -125,16 +132,14 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     private transient Filiale filiales;
 
     public Filiale getFiliales() {
-		return filiales;
-	}
+        return filiales;
+    }
 
-	public void setFiliales(Filiale filiales) {
-		this.filiales = filiales;
-	}
-	
-	
+    public void setFiliales(Filiale filiales) {
+        this.filiales = filiales;
+    }
 
-	@Override
+    @Override
     protected void internalPrePersist() {
         agentCreateur = SecurityUtil.getPharmaUser();
         dateCreation = new Date();
@@ -144,20 +149,18 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public void postPersit() {
         approvisionementNumber = NumberGenerator.getNumber("AP-", getId(), 4);
     }
-    
-    public Approvisionement(CommandeFournisseur commandeFournisseur){
-    	this.agentCreateur = SecurityUtil.getPharmaUser();
-    	this.bordereauNumber = RandomStringUtils.randomAlphanumeric(6);
-    	this.commande= commandeFournisseur;
-    	this.dateReglement = new Date();
-    	this.devise = Devise.findDevise(new Long(1));
-    	this.etat = Etat.EN_COUR ;
-    	this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
-    	this.founisseur = commandeFournisseur.getFournisseur();
-    	this.magasin = commandeFournisseur.getSite() ;
-    	}
-    
-    
+
+    public Approvisionement(CommandeFournisseur commandeFournisseur) {
+        this.agentCreateur = SecurityUtil.getPharmaUser();
+        this.bordereauNumber = RandomStringUtils.randomAlphanumeric(6);
+        this.commande = commandeFournisseur;
+        this.dateReglement = new Date();
+        this.devise = Devise.findDevise(new Long(1));
+        this.etat = Etat.EN_COUR;
+        this.filiale = Filiale.findFiliale(new Long(1)).getFilialeNumber();
+        this.founisseur = commandeFournisseur.getFournisseur();
+        this.magasin = commandeFournisseur.getSite();
+    }
 
     public void protectSomeField() {
         Approvisionement approvisionement = Approvisionement.findApprovisionement(getId());
@@ -211,11 +214,9 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
         List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(this).getResultList();
         if (!resultList.isEmpty()) {
             for (LigneApprovisionement ligne : resultList) {
-             if (ligne.getPrixAchatTotal()!=null)    montant = montant.add(ligne.getPrixAchatTotal());
+                if (ligne.getPrixAchatTotal() != null) montant = montant.add(ligne.getPrixAchatTotal());
             }
         }
-       
-        
     }
 
     public boolean CommandeContientProduit(Produit produit) {
@@ -235,11 +236,10 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void close() {
-    	
-        if (getCommande() != null){
-        	getCommande().setValider(true); // check the process of validation of command according to livraison 
+        if (getCommande() != null) {
+            getCommande().setValider(true);
             getCommande().setLivre(true);
-            getCommande().setEtatCmd(Etat.CLOS) ;
+            getCommande().setEtatCmd(Etat.CLOS);
             getCommande().setApprovisionnementId(getId());
             getCommande().merge();
         }
@@ -248,7 +248,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
 
     public void deleteAllLine() {
-      for (LigneApprovisionement ligne : ligneApprivisionement) {
+        for (LigneApprovisionement ligne : ligneApprivisionement) {
             ligne.remove();
         }
     }
@@ -274,19 +274,17 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
-    
-   
-    
+
     public static List<Approvisionement> findApprovisionementEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Approvisionement o ORDER BY o.id DESC ", Approvisionement.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
-    
+
     public static List<Approvisionement> findApprovisionementByCommandeFournisseur(CommandeFournisseur commande) {
-    	if(commande == null ) throw new IllegalArgumentException("commande argument is required ") ;
-        return  entityManager().createQuery("SELECT o FROM Approvisionement o WHERE o.commande = :commande ORDER BY o.id DESC ", Approvisionement.class).setParameter("commande", commande).getResultList() ;
+        if (commande == null) throw new IllegalArgumentException("commande argument is required ");
+        return entityManager().createQuery("SELECT o FROM Approvisionement o WHERE o.commande = :commande ORDER BY o.id DESC ", Approvisionement.class).setParameter("commande", commande).getResultList();
     }
 
-    public static List<Approvisionement> search(String apNumber, Etat etat, Date minDate, Date maxDate, Fournisseur fournisseur ,PharmaUser user) {
+    public static List<Approvisionement> search(String apNumber, Etat etat, Date minDate, Date maxDate, Fournisseur fournisseur, PharmaUser user) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM Approvisionement AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
         minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010", PharmaDateUtil.DATE_PATTERN_LONG);
         maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050", PharmaDateUtil.DATE_PATTERN_LONG);
@@ -300,14 +298,34 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
             TypedQuery<Approvisionement> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id DESC").toString(), Approvisionement.class);
             if (!etat.equals(Etat.ALL)) q.setParameter("etat", etat);
             if (fournisseur != null) q.setParameter("founisseur", fournisseur);
-            if (user != null)  q.setParameter("user", user);
+            if (user != null) q.setParameter("user", user);
             q.setParameter("minDateCreation", minDate);
             q.setParameter("maxDateCreation", maxDate);
             return q.getResultList();
         }
     }
     
-    
+    // Find approvisionement for reclamations
+    public static TypedQuery<Approvisionement> findApprovisionementsByFounisseurAndDateCreationBetweenAndReclamationsNot(Fournisseur founisseur, Date minDateCreation, Date maxDateCreation, Boolean reclamation) {
+        if (founisseur == null) throw new IllegalArgumentException("The founisseur argument is required");
+        if (minDateCreation == null) throw new IllegalArgumentException("The minDateCreation argument is required");
+        if (maxDateCreation == null) throw new IllegalArgumentException("The maxDateCreation argument is required");
+        if(reclamation == null) throw new IllegalArgumentException("The reclamation argument is required");
+        
+        StringBuilder query= new StringBuilder();
+        query.append("SELECT o FROM Approvisionement AS o WHERE o.founisseur = :founisseur");
+        query.append(" AND o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation");
+        query.append(" AND o.reclamations IS NOT :reclamations");
+        query.append(" ORDER BY o.dateCreation ASC");
+        
+        EntityManager em = Approvisionement.entityManager();
+        TypedQuery<Approvisionement> q = em.createQuery(query.toString(), Approvisionement.class);
+        q.setParameter("founisseur", founisseur);
+        q.setParameter("minDateCreation", minDateCreation);
+        q.setParameter("maxDateCreation", maxDateCreation);
+        q.setParameter("reclamations", reclamation);
+        return q;
+    }
 
     public boolean isValide(Model uiModel) {
         boolean valider = true;
@@ -323,19 +341,21 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
             return false;
         }
         if (pharmaUser.hasAnyRole(RoleName.ROLE_SITE_MANAGER)) {
-           return true;
+            return true;
         }
         if (getMontant().intValue() != getMontantHt().intValue()) {
             uiModel.addAttribute("appMessage", "Impossible de cloturer !  LE MontantHt est different du montant Saisie  ");
             return false;
         }
-        
         return valider;
     }
+    
+    
+    
 
-	@Override
-	public boolean hasItems() {
-		if(ligneApprivisionement==null) return false ;
-		return !ligneApprivisionement.isEmpty();
-	}
+    @Override
+    public boolean hasItems() {
+        if (ligneApprivisionement == null) return false;
+        return !ligneApprivisionement.isEmpty();
+    }
 }

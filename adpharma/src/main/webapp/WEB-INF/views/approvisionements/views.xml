@@ -21,4 +21,10 @@
         <put-attribute name="body" value="/WEB-INF/views/approvisionements/search.jspx"/>
     </definition>
     
+<definition extends="default" name="approvisionements/findApprovisionementsByFounisseurAndDateCreationBetween">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/findApprovisionementsByFounisseurAndDateCreationBetween.jspx"/>
+    </definition>
+<definition extends="default" name="approvisionements/findApprovisionementsByReclamationsNot">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionements/findApprovisionementsByReclamationsNot.jspx"/>
+    </definition>
 </tiles-definitions>

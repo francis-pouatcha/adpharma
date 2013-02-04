@@ -70,6 +70,8 @@ public class Produit extends AdPharmaBaseEntity {
 	private transient BigDecimal prixVenteStock = BigDecimal.ZERO;
 
 	private transient BigInteger qtevendu = BigInteger.ZERO;
+	
+	private boolean perissable;
 
 	public BigDecimal getPrixAchatSTock() {
 		return prixAchatSTock;

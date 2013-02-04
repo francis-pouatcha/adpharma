@@ -26,6 +26,7 @@
         <field:display field="montant" id="s_org_adorsys_adpharma_domain_Approvisionement_montant" object="${approvisionement}" z="vuFy5j7OMh91sHzX0Ut5VAW3UnQ="/>
         <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Approvisionement_filiale" object="${approvisionement}" z="KUnqXP0c9Fwrbw5jeZJkKc4FF+0="/>
         <field:display field="filiales" id="s_org_adorsys_adpharma_domain_Approvisionement_filiales" object="${approvisionement}" z="Q2ZihPzdBZ7h0xZcrLeBZMVYj70="/>
+        <field:display field="reclamations" id="s_org_adorsys_adpharma_domain_Approvisionement_reclamations" object="${approvisionement}" z="qVRVUNjucqoVgIvJbLHlBJ+uyDs="/>
     </page:show>
     <HR/>
     <HR/>

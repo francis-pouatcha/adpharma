@@ -93,6 +93,9 @@ if(Check == false){
 			var="ap_trans_url" />
 		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm"
 			var="ap_sortir_url" />
+		<spring:url value="/ligneapprovisionements/reclamations?form"
+			var="ap_inreclam_url" />	
+			
 		<spring:url value="/ligneapprovisionements/correctionCipm"
 			var="ap_correct_url" />
 		<spring:url
@@ -134,6 +137,10 @@ if(Check == false){
 								<security:authorize
 									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
 									<li><a href="${ap_sortir_url}">Sortir du Stock (CIPM)</a></li>
+								</security:authorize>
+								<security:authorize
+									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
+									<li><a href="${ap_inreclam_url}">Entree des Reclamations</a></li>
 								</security:authorize>
 								<!--  <li><a href="${ap_correct_url}">Compenser Le Stock CIPM</a></li>-->
 								<li><a href="${search_lgap_url}">rechercher un produit (CIPM)</a></li>
@@ -621,6 +628,7 @@ if(Check == false){
     	<spring:url value="/etats/print/etatJournalierVente.pdf" var="et_jour_vente"/>
     	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
     	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
+    	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
 		                                  <li><a href="#">Etats </a>
 		        							<ul>
 		        								<li><a href="${list_rayon_url}">Listing Rayons</a></li>
@@ -631,7 +639,8 @@ if(Check == false){
 		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
 		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
 		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
-		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>	
+		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>
+		        								<li><a href="${list_reclam_url}">Etat des reclamations fournisseurs </a></li>	
 		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
 		        							</ul>
 		        						</li>

@@ -24,17 +24,24 @@
    <spring:url value="/resources/css/ui-lightness/jquery-ui-1.8.18.custom.css" var="jquerycss_url" />
     <spring:url value="/resources/css/hmenu/jquerycssmenu.css" var="hmenucss_url" />
      <spring:url value="/resources/js/menu.js" var="menu_url" />
+     
+     <spring:url value="/resources/js/JqueryTokenInput/jquery.tokeninput.js" var="jquery_token" />
+     <spring:url value="/resources/js/JqueryTokenInput/token-input.css" var="token_css" />
+     <spring:url value="/resources/js/JqueryTokenInput/token-input-facebook.css" var="tokenfacebook_css" />
+     
     
-     <link type="text/css" href="${jquerycss_url}" rel="stylesheet" />	
-  <link type="text/css" href="${hmenucss_url}" rel="stylesheet" />	
+     <link type="text/css" href="${jquerycss_url}" rel="stylesheet" media="all" />	
+     <link type="text/css" href="${token_css}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${tokenfacebook_css}" rel="stylesheet" media="all" />	
 
 <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqueryui_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jquerymenu_url}"><!-- required for FF3 and Opera --></script>
-  <script type="text/javascript" src="${hmenujs_url}"><!-- required for FF3 and Opera --></script>
-    <script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
-    <script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${hmenujs_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jquery_token}"><!-- required for FF3 and Opera --></script>
     
     
       
@@ -72,6 +79,7 @@
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.parser");</script>
    <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.DateTextBox");</script>
     <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.TextBox");</script>
+    <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.ComboBox");</script>
     
     
     <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>

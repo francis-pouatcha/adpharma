@@ -35,5 +35,6 @@
                 </td>
             </tr>
         </table>
+        <field:checkbox field="reclamations" id="c_org_adorsys_adpharma_domain_Approvisionement_reclamations" z="Vz0lV5uhNWPCh/jUNRveExwrQis="/>
     </form:update>
 </div>

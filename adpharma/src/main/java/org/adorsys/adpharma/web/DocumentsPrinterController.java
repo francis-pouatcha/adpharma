@@ -3,13 +3,16 @@ package org.adorsys.adpharma.web;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
@@ -19,11 +22,16 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
 import org.adorsys.adpharma.beans.EtatManagerBean;
+import org.adorsys.adpharma.beans.ReclamationBean;
+import org.adorsys.adpharma.beans.ReclamationForm;
+import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.DocumentsPath;
+import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -355,6 +363,27 @@ public class DocumentsPrinterController {
 			return ;
 		}
 	}
+	
+	         // Impression de la fiche de reclamations
+			@RequestMapping(value="/print/ficheReclamations.pdf", method=RequestMethod.GET)
+			public String ficheReclamation(@Valid ReclamationForm data, Model uiModel){
+				Fournisseur fournisseur = Fournisseur.findFournisseur(new Long(data.getProvider_id()));
+				System.out.println("Fournisseur:"+fournisseur);
+				Date dateMin = PharmaDateUtil.parseToDate(data.getDate_min(), PharmaDateUtil.DATE_PATTERN_LONG2);
+				System.out.println("Date minimum: "+dateMin);
+				Date dateMax = PharmaDateUtil.parseToDate(data.getDate_max(), PharmaDateUtil.DATE_PATTERN_LONG2);
+				System.out.println("Date Maximum:"+dateMax);
+				List<Approvisionement> approvisionements = Approvisionement.findApprovisionementsByFounisseurAndDateCreationBetweenAndReclamationsNot(fournisseur, dateMin, dateMax, Boolean.FALSE).getResultList();
+				List<ReclamationBean> reclamations= new ArrayList<ReclamationBean>();
+				if(!approvisionements.isEmpty()){
+					 reclamations = ReclamationBean.prepareReclamations(approvisionements);
+				}
+				uiModel.addAttribute("reclamations", reclamations);
+				uiModel.addAttribute("fournisseur", fournisseur);
+				uiModel.addAttribute("dateMin", dateMin);
+				uiModel.addAttribute("dateMax", dateMax);
+				return "reclamationsPdfView";
+			}
 
 
 

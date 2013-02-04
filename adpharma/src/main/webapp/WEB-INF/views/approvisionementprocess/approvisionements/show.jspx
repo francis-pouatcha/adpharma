@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:security="http://www.springframework.org/security/tags" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:security="http://www.springframework.org/security/tags" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
      <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
     <c:set value="true" var="hasrole" />
     </security:authorize>
@@ -25,6 +29,7 @@
         <field:display field="devise" id="s_org_adorsys_adpharma_domain_Approvisionement_devise" object="${approvisionement}" z="xivrKI2JAlYIqv7t6L8iI5hJGKs="/>
         <field:display field="agentCreateur" id="s_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" object="${approvisionement}" z="gHy5fBxq1OjpdT7lBvn9AMu4Qis="/>
         <field:display field="filiale" id="s_org_adorsys_adpharma_domain_Approvisionement_filiale" object="${approvisionement}" z="Zq4ByrXtYv32l29QVT1dvzshxUQ="/>
+        <field:display field="reclamations" id="s_org_adorsys_adpharma_domain_Approvisionement_reclamations" object="${approvisionement}" z="user-managed"/>
   
     </td>
             </tr>
