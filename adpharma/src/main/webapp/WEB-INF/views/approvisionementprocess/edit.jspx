@@ -89,13 +89,10 @@
 							<th style="text-align: center;">Quantite</th>
 							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
-
 							<th style="text-align: center;">Prix Achat</th>
 							<th style="text-align: center;">TMul</th>
-
-
 							<th style="text-align: center;">Date Per</th>
-							<th colspan="2" style="text-align: center;">ACTION</th>
+							<th colspan="1" style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
 							<td><input type="hidden" name="tvaj" id="tvaj"
@@ -183,7 +180,7 @@
 							<th style="text-align: center;">Prix Achat</th>
 							<th style="text-align: center;">T.Mul</th>
 							<th style="text-align: center;">Date Per.</th>
-							<th colspan="2" style="text-align: center;">ACTIONS</th>
+							<th colspan="1" style="text-align: center;">ACTIONS</th>
 						</tr>
 						<tr>
 							<td><input type="hidden" name="tvaj" id="tvaj"
@@ -210,27 +207,28 @@
 								onkeypress="return scanTouche(event)"
 								title="saisir la Quantite" id="qte" /></td>
 								
+							<!-- <td><input type="text" name="qte" class="autres"
+							    onmouseover="this.select();" onfocus="this.select();"
+								onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" id="qte" /></td> -->
+								
 							<td><input type="text" name="qteReclam" class="autres qteClass"
 								title="saisir la Quantite Reclamee" id="qteRec" /></td>	
 
-							<td><input type="text" name="pv" class="autres prixClass"
-								onkeypress="return scanTouche(event)"
-								title="saisir le Prix De Vente Unitaire" id="pv" /></td>
-								
-							<td><input type="text" name="qte" class="autres"
-							    onmouseover="this.select();" onfocus="this.select();"
-								onkeypress="return scanTouche(event)" width="30px;"
-								title="saisir la Quantite" id="qte" /></td>
-							
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
 								onkeypress="return scanTouche(event)" width="30px;"
 								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
-
-							<td><input type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								
+							<td><input type="text" name="pv" class="autres prixClass"
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix De Vente Unitaire" id="pv" /></td>
-							
+								
+							<!-- <td><input type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								onkeypress="return scanTouche(event)"
+								title="saisir le Prix De Vente Unitaire" id="pv" /></td> -->
+								
+								
 							<td><input type="text" name="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix D'achat unitaire" id="pa" /></td>
@@ -239,15 +237,19 @@
 								onkeyup=" calculPriceTva();" class="tva" id="tva"
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix D'achat unitaire" /></td>
-
+								
 							<td><input type="text" name="prm" class="autres" style="width: 70px; display: block; margin: auto;"
 								title="format (MMYY)" placeholder="MMYY" id="prm" />
-
 							</td>
+							
+							
 
-							<td colspan="2">
+							
+								
+
+
+							<td colspan="1">
 							     <input class="submits" type="submit" value="Ajouter" style=" margin:0px; float: left;" />
-							     <!--  <input type="reset" class="submits" value="Effacer" style="margin: 0 0 0 3px;" />-->
 							</td>
 
 						</tr>
