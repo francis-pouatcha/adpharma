@@ -423,6 +423,10 @@ public class Produit extends AdPharmaBaseEntity {
 	public static List<Produit> findProduitEntries(int firstResult, int maxResults) {
 		return entityManager().createQuery("SELECT o FROM Produit o WHERE o.actif =:actif  ORDER BY o.designation ASC", Produit.class).setParameter("actif", Boolean.TRUE).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
+	
+	public static List<Produit> findProduitEntries1(int firstResult, int maxResults) {
+		return entityManager().createQuery("SELECT o FROM Produit o ORDER BY o.designation ASC", Produit.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+	}
 
 	public static TypedQuery<Produit> findProduitsByOrdreAlphabetique(String debut, String fin) {
 		debut = StringUtils.isBlank(debut) ? "A" : debut;

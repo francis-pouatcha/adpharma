@@ -244,13 +244,15 @@ public class ApprovisionementProcessController {
 
 		@RequestMapping(value = "/{apId}/updateLine", method = RequestMethod.POST)
 		public String updatedLine(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte, @RequestParam BigInteger qteug,
-				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
+				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj,@RequestParam String prm, 
+				@RequestParam BigInteger qterecl, Model uiModel,HttpSession session) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			LigneApprovisionement line = LigneApprovisionement.findLigneApprovisionement(lineId);
 			
 			if (!approvisionement.getEtat().equals(Etat.CLOS)) {
 				line.setQuantiteAprovisione(qte);
 				line.setQuantiteUniteGratuite(qteug);
+				line.setQuantiteReclame(qterecl);
 				line.setPrixAchatUnitaire(pa);
 				if (!"".equals(pv)) {
 					line.setPrixVenteUnitaire(new BigDecimal(pv.trim()));

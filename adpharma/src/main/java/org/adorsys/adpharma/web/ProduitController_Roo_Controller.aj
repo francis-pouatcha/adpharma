@@ -36,20 +36,6 @@ privileged aspect ProduitController_Roo_Controller {
         return "produits/show";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String ProduitController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("produits", Produit.findProduitEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) Produit.countProduits() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("produits", Produit.findAllProduits());
-        }
-        addDateTimeFormatPatterns(uiModel);
-        return "produits/list";
-    }
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String ProduitController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         Produit.findProduit(id).remove();

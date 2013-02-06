@@ -19,11 +19,11 @@
 		    	    <th style="text-align: center;">CipM</th>
 		    		<th style="text-align: center;">Marge </th>
 		    		<th style="text-align: center;">PAUnit</th>
+		            <th style="text-align: center;">PV Unit</th>
 		    		<th style="text-align: center;">Qte Approv</th>
 		    		<th style="text-align: center;">Qte reclamee</th>
 		    		<th style="text-align: center;">Qte UG</th>
 		    		<th style="text-align: center;">PA Total</th>
-		            <th style="text-align: center;">PV Unit</th>
 		            <th style="text-align: center;">Date Perm</th>
 		            <th style="text-align: center;">Qte Vendu </th>
 		            <th style="text-align: center;">Qte sortie</th>
@@ -43,47 +43,15 @@
 		    			
 		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixAchatUnitaire}"></c:out> </td>
 		    			
+		    		    <td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixVenteUnitaire}"></c:out> </td>
+		    		    
 		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteAprovisione}"></c:out> </td>
-		    			</td>
-		    			<td style="text-align: center;">
-		    			<c:out value="${ligne.cipMaison}"></c:out>
-
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    			    			<c:out value="${ligne.margeBrute}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    				    			    		<c:out value="${ligne.prixAchatUnitaire}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    			    		<c:out value="${ligne.quantiteAprovisione}"></c:out>
-		    	
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    			    		<c:out value="${ligne.quantiteUniteGratuite}"></c:out>
-		    	
-		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
-		    		  <c:out value="${ligne.prixAchatTotal}"></c:out>
-		    
-		    
-		    			</td>
-		    		<td style="text-align: right;padding-right: 20px;">
-		    				    		  <c:out value="${ligne.prixVenteUnitaire}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align: center;">
-		    							         <fmt:formatDate value="${ligne.datePeremtion}" pattern="dd-MM-yyyy"/>
-		    					
-		    			</td>
 		    			
 		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteReclame}"></c:out> </td>
 		    			
-		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixAchatTotal}"></c:out> </td>
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteUniteGratuite}"></c:out> </td>
 		    			
-		    		    <td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixVenteUnitaire}"></c:out> </td>
+		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.prixAchatTotal}"></c:out> </td>
 		    		    
 		    			<td style="text-align: center;"> <fmt:formatDate value="${ligne.datePeremtion}" pattern="dd-MM-yyyy"/> </td>
 		    			

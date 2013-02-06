@@ -1,0 +1,585 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0xb4b9c0ae, pid=4028, tid=1956719472
+#
+# JRE version: 6.0_22-b22
+# Java VM: OpenJDK Server VM (20.0-b11 mixed mode linux-x86 )
+# Derivative: IcedTea6 1.10.6
+# Distribution: Ubuntu 11.04, package 6b22-1.10.6-0ubuntu1
+# Problematic frame:
+# J  org.springframework.roo.metadata.DefaultMetadataService.getInternal(Ljava/lang/String;ZZ)Lorg/springframework/roo/metadata/MetadataItem;
+#
+# If you would like to submit a bug report, please include
+# instructions how to reproduce the bug and visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-6/
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x09bfa000):  JavaThread "FelixDispatchQueue" [_thread_in_Java, id=4040, stack(0x749c2000,0x74a13000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=128 (), si_addr=0x00000000
+
+Registers:
+EAX=0x74a11770, EBX=0x7da8d750, ECX=0x00000000, EDX=0x00000290
+ESP=0x74a10240, EBP=0x00000001, ESI=0x000000c0, EDI=0x00000030
+EIP=0xb4b9c0ae, EFLAGS=0x00210293, CR2=0x00000004
+
+Top of Stack: (sp=0x74a10240)
+0x74a10240:   a4a22b00 a4a22d90 00000030 a4a22af0
+0x74a10250:   a4a22d68 7da8d750 a4a22808 09bfa000
+0x74a10260:   7da8dce8 00000032 a4a22d80 00000001
+0x74a10270:   74a1027c 00000001 00000002 00000003
+0x74a10280:   a4a21a60 75ae8068 74a10288 75ae79cd
+0x74a10290:   74a102b4 75ae7f40 7647b270 75ae79f0
+0x74a102a0:   00000000 74a102b0 74a102d8 b4850047
+0x74a102b0:   a4a22288 a4a21a60 00000001 b4b49730 
+
+Instructions: (pc=0xb4b9c0ae)
+0xb4b9c08e:   6c 24 2c 85 ed 0f 84 68 49 00 00 8b 5c 24 14 8b
+0xb4b9c09e:   4b 38 89 4c 24 20 8b 01 8b c8 83 e1 07 83 f9 05
+0xb4b9c0ae:   0f 85 fe 45 00 00 b9 58 aa 5e 75 8b 49 64 8b e9
+0xb4b9c0be:   8b 5c 24 1c 0b eb 8b dd 33 d8 f7 c3 87 ff ff ff 
+
+Register to memory mapping:
+
+EAX=0x74a11770 is pointing into the stack for thread: 0x09bfa000
+EBX=0x7da8d750 is an oop
+org.springframework.roo.metadata.DefaultMetadataService 
+ - klass: 'org/springframework/roo/metadata/DefaultMetadataService'
+ECX=0x00000000 is an unknown value
+EDX=0x00000290 is an unknown value
+ESP=0x74a10240 is pointing into the stack for thread: 0x09bfa000
+EBP=0x00000001 is an unknown value
+ESI=0x000000c0 is an unknown value
+EDI=0x00000030 is an unknown value
+
+
+Stack: [0x749c2000,0x74a13000],  sp=0x74a10240,  free space=312k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+J  org.springframework.roo.metadata.DefaultMetadataService.getInternal(Ljava/lang/String;ZZ)Lorg/springframework/roo/metadata/MetadataItem;
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x74236400 JavaThread "Timer-2" daemon [_thread_blocked, id=4101, stack(0x72cc9000,0x72d1a000)]
+  0x74237000 JavaThread "Timer-1" daemon [_thread_blocked, id=4094, stack(0x72d1a000,0x72d6b000)]
+  0x73ce6800 JavaThread "Synchronizer (Spring UAA/1.0.2)" daemon [_thread_blocked, id=4088, stack(0x72dbc000,0x72e0d000)]
+  0x73df9400 JavaThread "Timer-0" daemon [_thread_blocked, id=4069, stack(0x72e5e000,0x72eaf000)]
+  0x7423c800 JavaThread "Spring Roo JLine Flash Message Manager" daemon [_thread_blocked, id=4067, stack(0x72e0d000,0x72e5e000)]
+  0x7402a400 JavaThread "Spring Roo JLine Shell" daemon [_thread_in_native, id=4057, stack(0x7450d000,0x7455e000)]
+  0x734f1c00 JavaThread "Spring Roo Process Manager Background Polling Thread" daemon [_thread_blocked, id=4056, stack(0x72eaf000,0x72f00000)]
+  0x09bc9800 JavaThread "Thread-2" daemon [_thread_blocked, id=4055, stack(0x7455e000,0x745af000)]
+  0x09c07c00 JavaThread "SCR Component Actor" daemon [_thread_blocked, id=4052, stack(0x745af000,0x74600000)]
+  0x09c09800 JavaThread "Thread-1" daemon [_thread_blocked, id=4051, stack(0x7470d000,0x7475e000)]
+  0x74881400 JavaThread "FelixPackageAdmin" daemon [_thread_blocked, id=4050, stack(0x7475e000,0x747af000)]
+  0x74880800 JavaThread "FelixStartLevel" daemon [_thread_blocked, id=4049, stack(0x747af000,0x74800000)]
+=>0x09bfa000 JavaThread "FelixDispatchQueue" [_thread_in_Java, id=4040, stack(0x749c2000,0x74a13000)]
+  0x09ab3000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=4038, stack(0x74a94000,0x74ae5000)]
+  0x09aafc00 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=4037, stack(0x74ae5000,0x74b66000)]
+  0x09aad800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=4036, stack(0x74b66000,0x74be7000)]
+  0x09aac400 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=4035, stack(0x74be7000,0x74c38000)]
+  0x09a99800 JavaThread "Finalizer" daemon [_thread_blocked, id=4034, stack(0x74e38000,0x74e89000)]
+  0x09a98000 JavaThread "Reference Handler" daemon [_thread_blocked, id=4033, stack(0x74e89000,0x74eda000)]
+  0x09a0f800 JavaThread "main" [_thread_blocked, id=4029, stack(0xb784d000,0xb789e000)]
+
+Other Threads:
+  0x09a94400 VMThread [stack: 0x74eda000,0x74f5b000] [id=4032]
+  0x09ab4c00 WatcherThread [stack: 0x74a13000,0x74a94000] [id=4039]
+
+VM state:synchronizing (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x09a0d640] Safepoint_lock - owner thread: 0x09a94400
+[0x09a0d6a8] Threads_lock - owner thread: 0x09a94400
+
+Heap
+ PSYoungGen      total 94208K, used 42233K [0xa2180000, 0xa9440000, 0xb4780000)
+  eden space 94016K, 44% used [0xa2180000,0xa4a8e708,0xa7d50000)
+  from space 192K, 100% used [0xa9410000,0xa9440000,0xa9440000)
+  to   space 4352K, 0% used [0xa8bc0000,0xa8bc0000,0xa9000000)
+ PSOldGen        total 49856K, used 29961K [0x7d580000, 0x80630000, 0xa2180000)
+  object space 49856K, 60% used [0x7d580000,0x7f2c2700,0x80630000)
+ PSPermGen       total 30720K, used 15365K [0x75580000, 0x77380000, 0x7d580000)
+  object space 30720K, 50% used [0x75580000,0x76481428,0x77380000)
+
+Code Cache  [0xb484d000, 0xb4bed000, 0xb784d000)
+ total_blobs=1073 nmethods=926 adapters=100 free_code_cache=46597440 largest_free_block=13824
+
+Dynamic libraries:
+00110000-001ef000 r-xp 00000000 08:07 1055080    /usr/lib/i386-linux-gnu/libstdc++.so.6.0.14
+001ef000-001f3000 r--p 000de000 08:07 1055080    /usr/lib/i386-linux-gnu/libstdc++.so.6.0.14
+001f3000-001f4000 rw-p 000e2000 08:07 1055080    /usr/lib/i386-linux-gnu/libstdc++.so.6.0.14
+001f4000-001fb000 rw-p 00000000 00:00 0 
+001fb000-00215000 r-xp 00000000 08:07 2360157    /lib/i386-linux-gnu/libgcc_s.so.1
+00215000-00216000 r--p 00019000 08:07 2360157    /lib/i386-linux-gnu/libgcc_s.so.1
+00216000-00217000 rw-p 0001a000 08:07 2360157    /lib/i386-linux-gnu/libgcc_s.so.1
+00217000-0022a000 r-xp 00000000 08:07 2360169    /lib/i386-linux-gnu/libnsl-2.13.so
+0022a000-0022b000 r--p 00012000 08:07 2360169    /lib/i386-linux-gnu/libnsl-2.13.so
+0022b000-0022c000 rw-p 00013000 08:07 2360169    /lib/i386-linux-gnu/libnsl-2.13.so
+0022c000-0022e000 rw-p 00000000 00:00 0 
+0022e000-0023b000 r-xp 00000000 08:07 1717277    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libj2pkcs11.so
+0023b000-0023c000 r--p 0000c000 08:07 1717277    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libj2pkcs11.so
+0023c000-0023d000 rw-p 0000d000 08:07 1717277    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libj2pkcs11.so
+0023d000-00244000 r-xp 00000000 08:07 2360198    /lib/i386-linux-gnu/librt-2.13.so
+00244000-00245000 r--p 00006000 08:07 2360198    /lib/i386-linux-gnu/librt-2.13.so
+00245000-00246000 rw-p 00007000 08:07 2360198    /lib/i386-linux-gnu/librt-2.13.so
+00249000-0024a000 r-xp 00000000 00:00 0          [vdso]
+0024a000-0025b000 r-xp 00000000 08:07 2360196    /lib/i386-linux-gnu/libresolv-2.13.so
+0025b000-0025c000 r--p 00010000 08:07 2360196    /lib/i386-linux-gnu/libresolv-2.13.so
+0025c000-0025d000 rw-p 00011000 08:07 2360196    /lib/i386-linux-gnu/libresolv-2.13.so
+0025d000-0025f000 rw-p 00000000 00:00 0 
+0028c000-00296000 r-xp 00000000 08:07 2360175    /lib/i386-linux-gnu/libnss_files-2.13.so
+00296000-00297000 r--p 00009000 08:07 2360175    /lib/i386-linux-gnu/libnss_files-2.13.so
+00297000-00298000 rw-p 0000a000 08:07 2360175    /lib/i386-linux-gnu/libnss_files-2.13.so
+002ae000-002b2000 r-xp 00000000 08:07 2360173    /lib/i386-linux-gnu/libnss_dns-2.13.so
+002b2000-002b3000 r--p 00004000 08:07 2360173    /lib/i386-linux-gnu/libnss_dns-2.13.so
+002b3000-002b4000 rw-p 00005000 08:07 2360173    /lib/i386-linux-gnu/libnss_dns-2.13.so
+002d4000-002dd000 r-xp 00000000 08:07 2360179    /lib/i386-linux-gnu/libnss_nis-2.13.so
+002dd000-002de000 r--p 00008000 08:07 2360179    /lib/i386-linux-gnu/libnss_nis-2.13.so
+002de000-002df000 rw-p 00009000 08:07 2360179    /lib/i386-linux-gnu/libnss_nis-2.13.so
+002df000-003ea000 r-xp 00000000 08:07 1048863    /usr/lib/libnss3.so
+003ea000-003ed000 r--p 0010a000 08:07 1048863    /usr/lib/libnss3.so
+003ed000-003ef000 rw-p 0010d000 08:07 1048863    /usr/lib/libnss3.so
+00439000-0045c000 r-xp 00000000 08:07 1717279    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libjava.so
+0045c000-0045d000 r--p 00022000 08:07 1717279    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libjava.so
+0045d000-0045f000 rw-p 00023000 08:07 1717279    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libjava.so
+00484000-004b3000 r-xp 00000000 08:07 1052805    /usr/lib/libnspr4.so
+004b3000-004b4000 r--p 0002e000 08:07 1052805    /usr/lib/libnspr4.so
+004b4000-004b5000 rw-p 0002f000 08:07 1052805    /usr/lib/libnspr4.so
+004b5000-004b7000 rw-p 00000000 00:00 0 
+0050f000-00512000 r-xp 00000000 08:07 1052859    /usr/lib/libplc4.so
+00512000-00513000 r--p 00002000 08:07 1052859    /usr/lib/libplc4.so
+00513000-00514000 rw-p 00003000 08:07 1052859    /usr/lib/libplc4.so
+00537000-0054a000 r-xp 00000000 08:07 2360212    /lib/i386-linux-gnu/libz.so.1.2.3.4
+0054a000-0054b000 r--p 00012000 08:07 2360212    /lib/i386-linux-gnu/libz.so.1.2.3.4
+0054b000-0054c000 rw-p 00013000 08:07 2360212    /lib/i386-linux-gnu/libz.so.1.2.3.4
+005a3000-005b8000 r-xp 00000000 08:07 2360194    /lib/i386-linux-gnu/libpthread-2.13.so
+005b8000-005b9000 r--p 00015000 08:07 2360194    /lib/i386-linux-gnu/libpthread-2.13.so
+005b9000-005ba000 rw-p 00016000 08:07 2360194    /lib/i386-linux-gnu/libpthread-2.13.so
+005ba000-005bc000 rw-p 00000000 00:00 0 
+005e1000-00605000 r-xp 00000000 08:07 2360166    /lib/i386-linux-gnu/libm-2.13.so
+00605000-00606000 r--p 00023000 08:07 2360166    /lib/i386-linux-gnu/libm-2.13.so
+00606000-00607000 rw-p 00024000 08:07 2360166    /lib/i386-linux-gnu/libm-2.13.so
+00644000-00646000 r-xp 00000000 08:07 2359364    /lib/libnss_mdns4_minimal.so.2
+00646000-00647000 r--p 00001000 08:07 2359364    /lib/libnss_mdns4_minimal.so.2
+00647000-00648000 rw-p 00002000 08:07 2359364    /lib/libnss_mdns4_minimal.so.2
+006ab000-006f5000 r-xp 00000000 08:07 1048634    /usr/lib/nss/libfreebl3.so
+006f5000-006f6000 r--p 0004a000 08:07 1048634    /usr/lib/nss/libfreebl3.so
+006f6000-006f7000 rw-p 0004b000 08:07 1048634    /usr/lib/nss/libfreebl3.so
+006f7000-006fb000 rw-p 00000000 00:00 0 
+007c9000-007dc000 r-xp 00000000 08:07 1717289    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnet.so
+007dc000-007dd000 r--p 00013000 08:07 1717289    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnet.so
+007dd000-007de000 rw-p 00014000 08:07 1717289    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnet.so
+007fd000-00957000 r-xp 00000000 08:07 2360129    /lib/i386-linux-gnu/libc-2.13.so
+00957000-00958000 ---p 0015a000 08:07 2360129    /lib/i386-linux-gnu/libc-2.13.so
+00958000-0095a000 r--p 0015a000 08:07 2360129    /lib/i386-linux-gnu/libc-2.13.so
+0095a000-0095b000 rw-p 0015c000 08:07 2360129    /lib/i386-linux-gnu/libc-2.13.so
+0095b000-0095e000 rw-p 00000000 00:00 0 
+00988000-0098b000 r-xp 00000000 08:07 1853427    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/jli/libjli.so
+0098b000-0098c000 r--p 00002000 08:07 1853427    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/jli/libjli.so
+0098c000-0098d000 rw-p 00003000 08:07 1853427    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/jli/libjli.so
+00a36000-00a6d000 r-xp 00000000 08:07 1048723    /usr/lib/nss/libsoftokn3.so
+00a6d000-00a6e000 r--p 00036000 08:07 1048723    /usr/lib/nss/libsoftokn3.so
+00a6e000-00a6f000 rw-p 00037000 08:07 1048723    /usr/lib/nss/libsoftokn3.so
+00ac5000-00acb000 r-xp 00000000 08:07 2360171    /lib/i386-linux-gnu/libnss_compat-2.13.so
+00acb000-00acc000 r--p 00005000 08:07 2360171    /lib/i386-linux-gnu/libnss_compat-2.13.so
+00acc000-00acd000 rw-p 00006000 08:07 2360171    /lib/i386-linux-gnu/libnss_compat-2.13.so
+00b1d000-00b24000 r-xp 00000000 08:07 1717290    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnio.so
+00b24000-00b25000 r--p 00006000 08:07 1717290    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnio.so
+00b25000-00b26000 rw-p 00007000 08:07 1717290    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libnio.so
+00b59000-00be0000 r-xp 00000000 08:07 1055078    /usr/lib/i386-linux-gnu/libsqlite3.so.0.8.6
+00be0000-00be1000 ---p 00087000 08:07 1055078    /usr/lib/i386-linux-gnu/libsqlite3.so.0.8.6
+00be1000-00be2000 r--p 00087000 08:07 1055078    /usr/lib/i386-linux-gnu/libsqlite3.so.0.8.6
+00be2000-00be3000 rw-p 00088000 08:07 1055078    /usr/lib/i386-linux-gnu/libsqlite3.so.0.8.6
+00be3000-00be4000 rw-p 00000000 00:00 0 
+00c53000-00c5e000 r-xp 00000000 08:07 1717295    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libverify.so
+00c5e000-00c5f000 ---p 0000b000 08:07 1717295    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libverify.so
+00c5f000-00c60000 r--p 0000b000 08:07 1717295    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libverify.so
+00c60000-00c61000 rw-p 0000c000 08:07 1717295    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libverify.so
+00ce5000-00cf9000 r-xp 00000000 08:07 1048862    /usr/lib/libnssutil3.so
+00cf9000-00cfa000 ---p 00014000 08:07 1048862    /usr/lib/libnssutil3.so
+00cfa000-00cfd000 r--p 00014000 08:07 1048862    /usr/lib/libnssutil3.so
+00cfd000-00cfe000 rw-p 00017000 08:07 1048862    /usr/lib/libnssutil3.so
+00d0b000-00d27000 r-xp 00000000 08:07 2360116    /lib/i386-linux-gnu/ld-2.13.so
+00d27000-00d28000 r--p 0001b000 08:07 2360116    /lib/i386-linux-gnu/ld-2.13.so
+00d28000-00d29000 rw-p 0001c000 08:07 2360116    /lib/i386-linux-gnu/ld-2.13.so
+00e65000-00e6b000 r-xp 00000000 08:07 1717296    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libzip.so
+00e6b000-00e6c000 r--p 00005000 08:07 1717296    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libzip.so
+00e6c000-00e6d000 rw-p 00006000 08:07 1717296    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/libzip.so
+00e86000-00e88000 r-xp 00000000 08:07 1052860    /usr/lib/libplds4.so
+00e88000-00e89000 r--p 00001000 08:07 1052860    /usr/lib/libplds4.so
+00e89000-00e8a000 rw-p 00002000 08:07 1052860    /usr/lib/libplds4.so
+00f1c000-00f1e000 r-xp 00000000 08:07 2360139    /lib/i386-linux-gnu/libdl-2.13.so
+00f1e000-00f1f000 r--p 00001000 08:07 2360139    /lib/i386-linux-gnu/libdl-2.13.so
+00f1f000-00f20000 rw-p 00002000 08:07 2360139    /lib/i386-linux-gnu/libdl-2.13.so
+00f20000-015e7000 r-xp 00000000 08:07 1853431    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/server/libjvm.so
+015e7000-0162c000 r--p 006c6000 08:07 1853431    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/server/libjvm.so
+0162c000-0163b000 rw-p 0070b000 08:07 1853431    /usr/lib/jvm/java-6-openjdk/jre/lib/i386/server/libjvm.so
+0163b000-01a55000 rw-p 00000000 00:00 0 
+08048000-08051000 r-xp 00000000 08:07 1978688    /usr/lib/jvm/java-6-openjdk/jre/bin/java
+08051000-08052000 r--p 00008000 08:07 1978688    /usr/lib/jvm/java-6-openjdk/jre/bin/java
+08052000-08053000 rw-p 00009000 08:07 1978688    /usr/lib/jvm/java-6-openjdk/jre/bin/java
+09a08000-10b82000 rw-p 00000000 00:00 0          [heap]
+6c200000-6c2f5000 rw-p 00000000 00:00 0 
+6c2f5000-6c300000 ---p 00000000 00:00 0 
+6c400000-6c4f3000 rw-p 00000000 00:00 0 
+6c4f3000-6c500000 ---p 00000000 00:00 0 
+6c500000-6c600000 rw-p 00000000 00:00 0 
+6c600000-6c6e9000 rw-p 00000000 00:00 0 
+6c6e9000-6c700000 ---p 00000000 00:00 0 
+6c700000-6c7f9000 rw-p 00000000 00:00 0 
+6c7f9000-6c800000 ---p 00000000 00:00 0 
+6c800000-6c8f8000 rw-p 00000000 00:00 0 
+6c8f8000-6c900000 ---p 00000000 00:00 0 
+6c900000-6c9e4000 rw-p 00000000 00:00 0 
+6c9e4000-6ca00000 ---p 00000000 00:00 0 
+6ca00000-6cc00000 rw-p 00000000 00:00 0 
+6cc00000-6ce00000 rw-p 00000000 00:00 0 
+6ce00000-6d000000 rw-p 00000000 00:00 0 
+6d000000-6d200000 rw-p 00000000 00:00 0 
+6d200000-6d400000 rw-p 00000000 00:00 0 
+6d400000-6d600000 rw-p 00000000 00:00 0 
+6d600000-6d800000 rw-p 00000000 00:00 0 
+6d800000-6da00000 rw-p 00000000 00:00 0 
+6da00000-6dc00000 rw-p 00000000 00:00 0 
+6dc00000-6de00000 rw-p 00000000 00:00 0 
+6de00000-6e000000 rw-p 00000000 00:00 0 
+6e000000-6e200000 rw-p 00000000 00:00 0 
+6e200000-6e400000 rw-p 00000000 00:00 0 
+6e400000-6e600000 rw-p 00000000 00:00 0 
+6e600000-6e800000 rw-p 00000000 00:00 0 
+6e800000-6ea00000 rw-p 00000000 00:00 0 
+6ea00000-6ec00000 rw-p 00000000 00:00 0 
+6ec00000-6ee00000 rw-p 00000000 00:00 0 
+6ee00000-6f000000 rw-p 00000000 00:00 0 
+6f000000-6f200000 rw-p 00000000 00:00 0 
+6f200000-6f400000 rw-p 00000000 00:00 0 
+6f400000-6f600000 rw-p 00000000 00:00 0 
+6f600000-6f800000 rw-p 00000000 00:00 0 
+6f800000-6fa00000 rw-p 00000000 00:00 0 
+6fa00000-6fc00000 rw-p 00000000 00:00 0 
+6fc00000-6fe00000 rw-p 00000000 00:00 0 
+6fe00000-70000000 rw-p 00000000 00:00 0 
+70000000-70200000 rw-p 00000000 00:00 0 
+70200000-70400000 rw-p 00000000 00:00 0 
+70400000-70600000 rw-p 00000000 00:00 0 
+70600000-70800000 rw-p 00000000 00:00 0 
+70800000-70a00000 rw-p 00000000 00:00 0 
+70a00000-70c00000 rw-p 00000000 00:00 0 
+70c00000-70e00000 rw-p 00000000 00:00 0 
+70e00000-71000000 rw-p 00000000 00:00 0 
+71000000-71200000 rw-p 00000000 00:00 0 
+71200000-71400000 rw-p 00000000 00:00 0 
+71400000-71600000 rw-p 00000000 00:00 0 
+71600000-71800000 rw-p 00000000 00:00 0 
+71800000-71a00000 rw-p 00000000 00:00 0 
+71a00000-71c00000 rw-p 00000000 00:00 0 
+71c00000-71e00000 rw-p 00000000 00:00 0 
+71e00000-72000000 rw-p 00000000 00:00 0 
+72000000-72200000 rw-p 00000000 00:00 0 
+72200000-72400000 rw-p 00000000 00:00 0 
+72400000-72600000 rw-p 00000000 00:00 0 
+72600000-72800000 rw-p 00000000 00:00 0 
+72800000-72a00000 rw-p 00000000 00:00 0 
+72a00000-72b00000 rw-p 00000000 00:00 0 
+72bd6000-72bd9000 ---p 00000000 00:00 0 
+72bd9000-72c27000 rw-p 00000000 00:00 0 
+72c27000-72c2a000 ---p 00000000 00:00 0 
+72c2a000-72c78000 rw-p 00000000 00:00 0 
+72c78000-72c7b000 ---p 00000000 00:00 0 
+72c7b000-72cc9000 rw-p 00000000 00:00 0 
+72cc9000-72ccc000 ---p 00000000 00:00 0 
+72ccc000-72d1a000 rw-p 00000000 00:00 0 
+72d1a000-72d1d000 ---p 00000000 00:00 0 
+72d1d000-72d6b000 rw-p 00000000 00:00 0 
+72d6b000-72d6e000 ---p 00000000 00:00 0 
+72d6e000-72dbc000 rw-p 00000000 00:00 0 
+72dbc000-72dbf000 ---p 00000000 00:00 0 
+72dbf000-72e0d000 rw-p 00000000 00:00 0 
+72e0d000-72e10000 ---p 00000000 00:00 0 
+72e10000-72e5e000 rw-p 00000000 00:00 0 
+72e5e000-72e61000 ---p 00000000 00:00 0 
+72e61000-72eaf000 rw-p 00000000 00:00 0 
+72eaf000-72eb2000 ---p 00000000 00:00 0 
+72eb2000-72f00000 rw-p 00000000 00:00 0 
+72f00000-72fff000 rw-p 00000000 00:00 0 
+72fff000-73000000 ---p 00000000 00:00 0 
+73000000-730fc000 rw-p 00000000 00:00 0 
+730fc000-73100000 ---p 00000000 00:00 0 
+73100000-731ef000 rw-p 00000000 00:00 0 
+731ef000-73200000 ---p 00000000 00:00 0 
+73200000-732f3000 rw-p 00000000 00:00 0 
+732f3000-73300000 ---p 00000000 00:00 0 
+73300000-733fa000 rw-p 00000000 00:00 0 
+733fa000-73400000 ---p 00000000 00:00 0 
+73400000-734f2000 rw-p 00000000 00:00 0 
+734f2000-73500000 ---p 00000000 00:00 0 
+73500000-735fa000 rw-p 00000000 00:00 0 
+735fa000-73600000 ---p 00000000 00:00 0 
+73600000-736fb000 rw-p 00000000 00:00 0 
+736fb000-73700000 ---p 00000000 00:00 0 
+73700000-73900000 rw-p 00000000 00:00 0 
+73900000-73afa000 rw-p 00000000 00:00 0 
+73afa000-73b00000 ---p 00000000 00:00 0 
+73b00000-73d00000 rw-p 00000000 00:00 0 
+73d00000-73dfa000 rw-p 00000000 00:00 0 
+73dfa000-73e00000 ---p 00000000 00:00 0 
+73e00000-73efd000 rw-p 00000000 00:00 0 
+73efd000-73f00000 ---p 00000000 00:00 0 
+73f00000-73fff000 rw-p 00000000 00:00 0 
+73fff000-74000000 ---p 00000000 00:00 0 
+74000000-740fb000 rw-p 00000000 00:00 0 
+740fb000-74100000 ---p 00000000 00:00 0 
+74100000-741fb000 rw-p 00000000 00:00 0 
+741fb000-74200000 ---p 00000000 00:00 0 
+74200000-742fa000 rw-p 00000000 00:00 0 
+742fa000-74300000 ---p 00000000 00:00 0 
+74300000-74400000 rw-p 00000000 00:00 0 
+74400000-744fe000 rw-p 00000000 00:00 0 
+744fe000-74500000 ---p 00000000 00:00 0 
+7450d000-74510000 ---p 00000000 00:00 0 
+74510000-7455e000 rw-p 00000000 00:00 0 
+7455e000-74561000 ---p 00000000 00:00 0 
+74561000-745af000 rw-p 00000000 00:00 0 
+745af000-745b2000 ---p 00000000 00:00 0 
+745b2000-74600000 rw-p 00000000 00:00 0 
+74600000-746f8000 rw-p 00000000 00:00 0 
+746f8000-74700000 ---p 00000000 00:00 0 
+74700000-74707000 r--s 000fb000 08:07 1717259    /usr/lib/jvm/java-6-openjdk/jre/lib/resources.jar
+74707000-74709000 r--s 00004000 08:07 3548448    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/bundle/org.springframework.roo.uaa-1.1.5.RELEASE.jar
+74709000-7470d000 r--s 00038000 08:07 1717244    /usr/lib/jvm/java-6-openjdk/jre/lib/ext/sunpkcs11.jar
+7470d000-74710000 ---p 00000000 00:00 0 
+74710000-7475e000 rw-p 00000000 00:00 0 
+7475e000-74761000 ---p 00000000 00:00 0 
+74761000-747af000 rw-p 00000000 00:00 0 
+747af000-747b2000 ---p 00000000 00:00 0 
+747b2000-74800000 rw-p 00000000 00:00 0 
+74800000-748ff000 rw-p 00000000 00:00 0 
+748ff000-74900000 ---p 00000000 00:00 0 
+74900000-74903000 r--s 0001b000 08:07 3548497    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/bundle/org.springframework.uaa.client-1.0.2.RELEASE.jar
+74903000-74905000 r--s 00013000 08:07 1717254    /usr/lib/jvm/java-6-openjdk/jre/lib/jce.jar
+74905000-74908000 r--s 00031000 08:07 1717247    /usr/lib/jvm/java-6-openjdk/jre/lib/ext/sunjce_provider.jar
+74908000-74909000 r--s 0000a000 08:07 3549750    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle5/version0.0/bundle.jar-embedded/kxml2-2.2.2.jar
+74909000-7490a000 r--s 00001000 08:07 3549528    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle49/version0.0/bundle.jar
+7490a000-7490e000 r--s 00021000 08:07 3549393    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle34/version0.0/bundle.jar
+7490e000-74911000 r--s 0001b000 08:07 3549672    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle65/version0.0/bundle.jar
+74911000-74913000 r--s 00007000 08:07 3549492    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle45/version0.0/bundle.jar
+74913000-74915000 r--s 00002000 08:07 3549438    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle39/version0.0/bundle.jar
+74915000-74919000 r--s 00039000 08:07 3549636    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle61/version0.0/bundle.jar
+74919000-7491b000 r--s 00001000 08:07 3549767    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle7/version0.0/bundle.jar
+7491b000-7491d000 r--s 00001000 08:07 3549591    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle56/version0.0/bundle.jar
+7491d000-7491f000 r--s 00004000 08:07 3549738    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle4/version0.0/bundle.jar
+7491f000-74922000 r--s 0002c000 08:07 3549747    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle5/version0.0/bundle.jar
+74922000-74924000 r--s 00007000 08:07 3549213    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle14/version0.0/bundle.jar
+74924000-74926000 r--s 00005000 08:07 3549474    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle43/version0.0/bundle.jar
+74926000-74928000 r--s 00008000 08:07 3549186    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle11/version0.0/bundle.jar
+74928000-7492a000 r--s 00003000 08:07 3549402    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle35/version0.0/bundle.jar
+7492a000-7492b000 r--s 0000b000 08:07 3549204    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle13/version0.0/bundle.jar
+7492b000-7492d000 r--s 00002000 08:07 3549294    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle23/version0.0/bundle.jar
+7492d000-7492f000 r--s 00002000 08:07 3549276    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle21/version0.0/bundle.jar
+7492f000-74931000 r--s 00009000 08:07 3549785    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle9/version0.0/bundle.jar
+74931000-74935000 r--s 00022000 08:07 3549720    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle2/version0.0/bundle.jar
+74935000-74937000 r--s 00001000 08:07 3549776    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle8/version0.0/bundle.jar
+74937000-74939000 r--s 0000e000 08:07 3549758    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle6/version0.0/bundle.jar
+74939000-7493b000 r--s 00009000 08:07 3549618    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle59/version0.0/bundle.jar
+7493b000-7493c000 r--s 00001000 08:07 3549546    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle51/version0.0/bundle.jar
+7493c000-7493e000 r--s 00007000 08:07 3549258    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle19/version0.0/bundle.jar
+7493e000-74940000 r--s 00004000 08:07 3549519    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle48/version0.0/bundle.jar
+74940000-74941000 r--s 00003000 08:07 3549195    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle12/version0.0/bundle.jar
+74941000-74946000 r--s 00031000 08:07 3549411    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle36/version0.0/bundle.jar
+74946000-74948000 r--s 00017000 08:07 3549555    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle52/version0.0/bundle.jar
+74948000-74949000 r--s 00006000 08:07 3549348    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle29/version0.0/bundle.jar
+74949000-7494b000 r--s 00003000 08:07 3549249    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle18/version0.0/bundle.jar
+7494b000-7494c000 r--s 0000f000 08:07 3549420    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle37/version0.0/bundle.jar
+7494c000-7494d000 r--s 00002000 08:07 3549303    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle24/version0.0/bundle.jar
+7494d000-7494f000 r--s 00001000 08:07 3549240    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle17/version0.0/bundle.jar
+7494f000-74951000 r--s 00003000 08:07 3549465    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle42/version0.0/bundle.jar
+74951000-74952000 r--s 00002000 08:07 3549321    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle26/version0.0/bundle.jar
+74952000-74976000 r--s 0015e000 08:07 3549609    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle58/version0.0/bundle.jar
+74976000-74977000 r--s 00001000 08:07 3549564    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle53/version0.0/bundle.jar
+74977000-74979000 r--s 00003000 08:07 3549267    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle20/version0.0/bundle.jar
+74979000-7497b000 r--s 00015000 08:07 3549375    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle32/version0.0/bundle.jar
+7497b000-7497e000 r--s 00018000 08:07 3549702    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle1/version0.0/bundle.jar
+7497e000-74980000 r--s 00002000 08:07 3549357    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle30/version0.0/bundle.jar
+74980000-74986000 r--s 0002a000 08:07 3549222    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle15/version0.0/bundle.jar
+74986000-74988000 r--s 0000e000 08:07 3549510    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle47/version0.0/bundle.jar
+74988000-7498a000 r--s 00000000 08:07 3549456    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle41/version0.0/bundle.jar
+7498a000-7498b000 r--s 00002000 08:07 3549285    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle22/version0.0/bundle.jar
+7498b000-7498d000 r--s 00004000 08:07 3549573    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle54/version0.0/bundle.jar
+7498d000-74993000 r--s 0003e000 08:07 3549729    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle3/version0.0/bundle.jar
+74993000-74994000 r--s 00002000 08:07 3549330    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle27/version0.0/bundle.jar
+74994000-74995000 r--s 00003000 08:07 3549537    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle50/version0.0/bundle.jar
+74995000-74997000 r--s 00005000 08:07 3549483    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle44/version0.0/bundle.jar
+74997000-7499b000 r--s 00023000 08:07 3549600    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle57/version0.0/bundle.jar
+7499b000-7499d000 r--s 00000000 08:07 3549711    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle68/version0.0/bundle.jar
+7499d000-7499f000 r--s 00000000 08:07 3549582    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle55/version0.0/bundle.jar
+7499f000-749a2000 r--s 00016000 08:07 3549789    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle10/version0.0/bundle.jar
+749a2000-749a9000 r--s 000bc000 08:07 3549691    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle67/version0.0/bundle.jar
+749a9000-749ab000 r--s 00005000 08:07 3549682    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle66/version0.0/bundle.jar
+749ab000-749ac000 r--s 00004000 08:07 3549654    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle63/version0.0/bundle.jar
+749ac000-749ae000 r--s 00003000 08:07 3549231    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle16/version0.0/bundle.jar
+749ae000-749b0000 r--s 00015000 08:07 3549645    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle62/version0.0/bundle.jar
+749b0000-749b2000 r--s 00009000 08:07 3549312    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle25/version0.0/bundle.jar
+749b2000-749b4000 r--s 00001000 08:07 3549447    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle40/version0.0/bundle.jar
+749b4000-749b6000 r--s 0000b000 08:07 3549429    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle38/version0.0/bundle.jar
+749b6000-749b8000 r--s 00012000 08:07 3549501    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle46/version0.0/bundle.jar
+749b8000-749ba000 r--s 00009000 08:07 3549384    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle33/version0.0/bundle.jar
+749ba000-749bd000 r--s 0000d000 08:07 3549663    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle64/version0.0/bundle.jar
+749bd000-749be000 r--s 00006000 08:07 3549627    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle60/version0.0/bundle.jar
+749be000-749c0000 r--s 00003000 08:07 3549366    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle31/version0.0/bundle.jar
+749c0000-749c2000 r--s 0000a000 08:07 3549339    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache/bundle28/version0.0/bundle.jar
+749c2000-749c5000 ---p 00000000 00:00 0 
+749c5000-74a13000 rw-p 00000000 00:00 0 
+74a13000-74a14000 ---p 00000000 00:00 0 
+74a14000-74a94000 rw-p 00000000 00:00 0 
+74a94000-74a97000 ---p 00000000 00:00 0 
+74a97000-74ae5000 rw-p 00000000 00:00 0 
+74ae5000-74ae8000 ---p 00000000 00:00 0 
+74ae8000-74b66000 rw-p 00000000 00:00 0 
+74b66000-74b69000 ---p 00000000 00:00 0 
+74b69000-74be7000 rw-p 00000000 00:00 0 
+74be7000-74bea000 ---p 00000000 00:00 0 
+74bea000-74c38000 rw-p 00000000 00:00 0 
+74c38000-74e38000 r--p 00000000 08:07 1056376    /usr/lib/locale/locale-archive
+74e38000-74e3b000 ---p 00000000 00:00 0 
+74e3b000-74e89000 rw-p 00000000 00:00 0 
+74e89000-74e8c000 ---p 00000000 00:00 0 
+74e8c000-74eda000 rw-p 00000000 00:00 0 
+74eda000-74edb000 ---p 00000000 00:00 0 
+74edb000-74f8e000 rw-p 00000000 00:00 0 
+74f8e000-7511e000 r--s 037b3000 08:07 1717266    /usr/lib/jvm/java-6-openjdk/jre/lib/rt.jar
+7511e000-7511f000 ---p 00000000 00:00 0 
+7511f000-7519f000 rw-p 00000000 00:00 0 
+7519f000-751a0000 ---p 00000000 00:00 0 
+751a0000-7522f000 rw-p 00000000 00:00 0 
+7522f000-75260000 rw-p 00000000 00:00 0 
+75260000-75279000 rw-p 00000000 00:00 0 
+75279000-75386000 rw-p 00000000 00:00 0 
+75386000-75395000 rw-p 00000000 00:00 0 
+75395000-753c6000 rw-p 00000000 00:00 0 
+753c6000-753df000 rw-p 00000000 00:00 0 
+753df000-754ec000 rw-p 00000000 00:00 0 
+754ec000-75526000 rw-p 00000000 00:00 0 
+75526000-75528000 ---p 00000000 00:00 0 
+75528000-7557f000 rw-p 00000000 00:00 0 
+7557f000-77380000 rw-p 00000000 00:00 0 
+77380000-7d580000 rw-p 00000000 00:00 0 
+7d580000-80630000 rw-p 00000000 00:00 0 
+80630000-a2180000 rw-p 00000000 00:00 0 
+a2180000-a9440000 rw-p 00000000 00:00 0 
+a9440000-a9880000 ---p 00000000 00:00 0 
+a9880000-b4780000 rw-p 00000000 00:00 0 
+b4780000-b4783000 r--s 0007d000 08:07 1717255    /usr/lib/jvm/java-6-openjdk/jre/lib/jsse.jar
+b4783000-b4784000 r--s 00002000 08:07 3548585    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/bin/org.springframework.roo.bootstrap-1.1.5.RELEASE.jar
+b4784000-b478a000 r--s 0005a000 08:07 3548583    /tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/bin/org.apache.felix.framework-3.0.7.jar
+b478a000-b478d000 r--s 0000f000 08:07 1717249    /usr/lib/jvm/java-6-openjdk/jre/lib/ext/pulse-java.jar
+b478d000-b479c000 rw-p 00000000 00:00 0 
+b479c000-b484d000 rw-p 00000000 00:00 0 
+b484d000-b4bed000 rwxp 00000000 00:00 0 
+b4bed000-b784d000 rw-p 00000000 00:00 0 
+b784d000-b7850000 ---p 00000000 00:00 0 
+b7850000-b78a1000 rw-p 00000000 00:00 0 
+b78a1000-b78a9000 r--s 00066000 08:07 1452628    /usr/share/java/gnome-java-bridge.jar
+b78a9000-b78aa000 r--p 002a1000 08:07 1056376    /usr/lib/locale/locale-archive
+b78aa000-b78b2000 rw-s 00000000 08:07 2752723    /tmp/hsperfdata_hsimo/4028
+b78b2000-b78b3000 rw-p 00000000 00:00 0 
+b78b3000-b78b4000 ---p 00000000 00:00 0 
+b78b4000-b78b6000 rw-p 00000000 00:00 0 
+bfbef000-bfc10000 rw-p 00000000 00:00 0          [stack]
+
+VM Arguments:
+jvm_args: -Dis.apple.terminal=false -Droo.args= -DdevelopmentMode=false -Dorg.osgi.framework.storage=/tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/cache -Dfelix.auto.deploy.dir=/tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/bundle -Dfelix.config.properties=file:/tools/Configuration/springsource/spring-roo-1.1.5.RELEASE/conf/config.properties 
+java_command: org.springframework.roo.bootstrap.Main
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JRE_HOME=/user/lib/jvm/java-1.6.0-openjdk/jre
+PATH=/bin:/usr/share/tomcat6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+USERNAME=hsimo
+LD_LIBRARY_PATH=/usr/lib/jvm/java-6-openjdk/jre/lib/i386/server:/usr/lib/jvm/java-6-openjdk/jre/lib/i386:/usr/lib/jvm/java-6-openjdk/jre/../lib/i386
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x657420], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x657420], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x51d550], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: SIG_IGN, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGXFSZ: [libjvm.so+0x51d550], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x51d550], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x51d3c0], sa_mask[0]=0x00000000, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x5201b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: [libjvm.so+0x5201b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGTERM: [libjvm.so+0x5201b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x5201b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:Ubuntu 11.04 (natty)
+uname:Linux 2.6.38-8-generic #42-Ubuntu SMP Mon Apr 11 03:31:50 UTC 2011 i686
+libc:glibc 2.13 NPTL 2.13 
+rlimit: STACK 8192k, CORE 0k, NPROC infinity, NOFILE 4096, AS infinity
+load average:7.18 2.47 0.95
+
+/proc/meminfo:
+MemTotal:        3608400 kB
+MemFree:          112740 kB
+Buffers:            2208 kB
+Cached:            91220 kB
+SwapCached:        34732 kB
+Active:          2060512 kB
+Inactive:         718304 kB
+Active(anon):    2030028 kB
+Inactive(anon):   678520 kB
+Active(file):      30484 kB
+Inactive(file):    39784 kB
+Unevictable:          32 kB
+Mlocked:              32 kB
+HighTotal:       2755880 kB
+HighFree:           6024 kB
+LowTotal:         852520 kB
+LowFree:          106716 kB
+SwapTotal:       6018044 kB
+SwapFree:        5759808 kB
+Dirty:               144 kB
+Writeback:             0 kB
+AnonPages:       2650776 kB
+Mapped:           671472 kB
+Shmem:             23040 kB
+Slab:              52524 kB
+SReclaimable:      20380 kB
+SUnreclaim:        32144 kB
+KernelStack:        4504 kB
+PageTables:        15204 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     7822244 kB
+Committed_AS:    6377576 kB
+VmallocTotal:     122880 kB
+VmallocUsed:       35172 kB
+VmallocChunk:      82564 kB
+HardwareCorrupted:     0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       4096 kB
+DirectMap4k:       12280 kB
+DirectMap4M:      897024 kB
+
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 16 model 6 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnow, 3dnowext, lzcnt
+
+Memory: 4k page, physical 3608400k(112740k free), swap 6018044k(5759808k free)
+
+vm_info: OpenJDK Server VM (20.0-b11) for linux-x86 JRE (1.6.0_22-b22), built on Feb 21 2012 00:20:24 by "buildd" with gcc 4.5.2
+
+time: Wed Feb  6 14:01:39 2013
+elapsed time: 112 seconds
+

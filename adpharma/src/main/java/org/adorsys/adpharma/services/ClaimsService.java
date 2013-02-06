@@ -6,8 +6,12 @@ import java.util.Date;
 import java.util.Set;
 
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.security.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -141,6 +145,34 @@ public class ClaimsService{
 		}
 	}
 	
+
+	
+	// Generation d'un mouvement de stock pour cet approvisionement
+	public void generateMvt(LigneApprovisionement ligne){
+		try {
+			MouvementStock mouvementStock = new MouvementStock();
+			mouvementStock.setAgentCreateur(SecurityUtil.getUserName());
+			mouvementStock.setCip(ligne.getCip());
+			mouvementStock.setCipM(ligne.getCipMaison());
+			mouvementStock.setDesignation(ligne.getDesignation());
+			mouvementStock.setOrigine(DestinationMvt.FOURNISSEUR);
+			mouvementStock.setDestination(DestinationMvt.MAGASIN);
+			mouvementStock.setNote("Entree de reclamation");
+			mouvementStock.setDateCreation(new Date());
+			// Quantite initiale en stock
+			mouvementStock.setQteInitiale(ligne.getQuantieEnStock().subtract(qteRetour));
+			mouvementStock.setQteInitiale(ligne.getQuantieEnStock());
+			mouvementStock.setTypeMouvement(TypeMouvement.RETOUR_PRODUIT);
+			mouvementStock.setQteDeplace(qteRetour);
+			mouvementStock.setNumeroBordereau(ligne.getApprovisionement().getBordereauNumber());
+			mouvementStock.setPAchatTotal(ligne.getPrixAchatTotal().toBigInteger());
+			mouvementStock.persist();
+		} catch (Exception e) {
+			 System.out.println(e.getMessage());
+		}
+		
+	}
+	
 	
 	// Methode transactionelle de mise a jour du stock
 	
@@ -157,6 +189,8 @@ public class ClaimsService{
 		    updateQteEnStockProduit(ligne);
 		    
 		    updateApprovisionement(ligne);
+		    
+		    generateMvt(ligne);
 	}
 	
 	

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
     <spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
-    <page:list id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="pflhPv0p8vJNvA1CYdS/OUraM4M=">
+    
+    <page:list id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="user-managed">
         <table:table create="false" data="${produits}" delete="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" printLink="${list_cat_url }" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_produitNumber" property="produitNumber" render="false" z="user-managed"/>
@@ -29,4 +34,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" property="prixVenteU" z="nzQyPVfWA23dw/8aFbb4SL/j8yg="/>
         </table:table>
     </page:list>
+    
 </div>
