@@ -189,5 +189,7 @@
             </table>
         </div>
     </div>
-
+    <form:update id="fu_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/clients" versionField="Version" z="Il6d8I6l1DUYb7NswUqvws6qXoM=">
+        <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
+    </form:update>
 </div>
