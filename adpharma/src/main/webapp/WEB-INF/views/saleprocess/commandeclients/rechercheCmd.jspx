@@ -108,7 +108,7 @@ if(conf()){
 		    				<c:out value="${cmd.client.nomComplet}"></c:out>
 		    			</td>
 		    			<td style="text-align: center;">
-		                  <fmt:formatDate value="${cmd.dateCreation}" pattern="dd-MM-yyyy hh:mm"/>
+		                  <fmt:formatDate value="${cmd.dateCreation}" pattern="dd-MM-yyyy HH:mm"/>
 		    			
 		    			</td>
 		    			<td style="text-align: left;padding-right: 20px">

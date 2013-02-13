@@ -50,15 +50,15 @@ public class OrderPreParationBean {
 	private BigInteger minStock ;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date beginDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date deliveryDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date endDate;
 
 	private Fournisseur fournisseur ;

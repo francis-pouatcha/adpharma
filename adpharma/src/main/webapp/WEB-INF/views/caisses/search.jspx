@@ -13,8 +13,8 @@
         
            </td>
             <td style="border: none;">
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  field="dateOuverture" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateFemeture" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture"  z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  field="dateOuverture" label="Date Ouverture Min" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateFemeture" label="Date fermeture Min" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture"  z="user-managed"/>
 
    </td>
    </tr>

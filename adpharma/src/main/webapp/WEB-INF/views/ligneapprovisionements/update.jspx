@@ -62,9 +62,6 @@
                 </td>
             </tr>
         </table>
-        <field:checkbox field="skipPriceConvertion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" z="alMTQgO0h2FiVuxQMolHz7s4yi0="/>
-        <field:input field="viewMsg" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" z="HBWzHwNDjtmzsud+JbHsyPBtOuA="/>
-        <field:input field="quantiteReclame" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" validationMessageCode="field_invalid_integer" z="ioGSRuQx2cb0mnUtVm8SUsqiw1E="/>
     </form:update>
     <jsp:include page="ajaxSearchProductForm.jspx"/>
 </div>
