@@ -276,8 +276,10 @@ public class Caisse extends AdPharmaBaseEntity {
 	}
 
 	public static TypedQuery<Caisse> search(String caisseNumber, PharmaUser caissier, Date dateOuverture, Date dateFemeture, Boolean caisseOuverte) {
-		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Caisse AS o WHERE o.caisseOuverte IS :caisseOuverte ");
-		caisseOuverte = caisseOuverte == null ?caisseOuverte:Boolean.TRUE ;
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Caisse AS o WHERE o.id IS NOT NULL ");
+		if (caisseOuverte !=null) {
+			searchQuery.append(" AND  o.caisseOuverte = :caisseOuverte ");
+		}
 		if (caissier !=null) {
 			searchQuery.append(" AND  o.caissier = :caissier ");
 		}
@@ -310,9 +312,14 @@ public class Caisse extends AdPharmaBaseEntity {
 		if (dateFemeture != null) {
 			q.setParameter("dateFemeture", dateFemeture);
 		}
+
+		if (caisseOuverte != null) {
+			q.setParameter("caisseOuverte", caisseOuverte);
+		}
 		if (StringUtils.isNotBlank(caisseNumber)) {
 			q.setParameter("caisseNumber", caisseNumber);
 		}
+		
 		return q;
 	}
 }
