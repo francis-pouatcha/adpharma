@@ -21,36 +21,30 @@
     </c:if>
     <spring:message arguments="${labelPlural}" code="entity_list_all" var="title_msg" htmlEscape="false" />
     <util:panel id="${id}" title="${title_msg}" openPane="${openPane}">
-                 <c:if test="${not empty items}">
+         <!--<c:if test="${not empty items}">
                                  
-            </c:if>
-      
-    
+         </c:if>-->
       <c:choose>
-        <c:when test="${not empty items}">
-        <div class="printable" >
-          <jsp:doBody />
+         <c:when test="${not empty items}">
+          <div class="printable" >
+            <jsp:doBody />
           </div>
-        </c:when>
-        <c:otherwise>
-   
-<center >
-		<hr/>
-		<c:choose>
-        <c:when test="${not empty message}">
-       			<p class="appMessage" style="color: green; margin-bottom: 1px;">${message}</p>
-       
-        </c:when>
-        <c:otherwise>
-   			<p class="appMessage" style="color: green; margin-bottom: 1px;"><spring:message arguments="${label}" code="entity_not_found" /></p>
+         </c:when>
+         <c:otherwise>
+             <center >
+		        <hr/>
+		        <c:choose>
+                   <c:when test="${not empty message}">
+       			     <p class="appMessage" style="color: green; margin-bottom: 1px;">${message}</p>
+                  </c:when>
+                  <c:otherwise>
+   			         <p class="appMessage" style="color: green; margin-bottom: 1px;"><spring:message arguments="${label}" code="entity_not_found" /></p>
+		          </c:otherwise>
+                </c:choose>
+		        <hr/>
+             </center>
 		</c:otherwise>
-      </c:choose>
-		<hr/>
-</center>
-		
-		</c:otherwise>
-      </c:choose>
-      
+     </c:choose>
     </util:panel>
   </c:if>
 </jsp:root>

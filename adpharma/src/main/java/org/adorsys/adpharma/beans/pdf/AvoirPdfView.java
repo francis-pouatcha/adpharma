@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.pdf;
 
 import java.util.Map;
 import java.util.Set;

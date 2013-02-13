@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
-import org.adorsys.adpharma.beans.InventaireProcess;
+import org.adorsys.adpharma.beans.process.InventaireProcess;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;

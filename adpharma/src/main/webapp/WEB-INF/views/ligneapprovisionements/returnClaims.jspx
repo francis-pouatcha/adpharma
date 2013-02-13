@@ -36,7 +36,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
        		var cipm = document.getElementById("cipm").value;
        		var url = "${find_cipm_url}" + cipm ;
        			$.getJSON(url, function(data) {
-       					if (data!=null) {
+       					if (data.id!=null) {
        						document.getElementById("cipm").value = data.cipMaison;
        						document.getElementById("cip").value = data.cip;
        						document.getElementById("des").value = data.designation;

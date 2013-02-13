@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.beans.ReclamationBean;
+import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
@@ -75,11 +75,12 @@ public class LigneApprovisionementController {
 	@RequestMapping(value="/findByCipm/{cipm}", method=RequestMethod.GET)
 	@ResponseBody
 	public String findLigneApprovisionementByCipmAndReclamation(@PathVariable("cipm")String cipm){
-		   LigneApprovisionement ligne = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEqualsAndReclamations(cipm).getResultList().iterator().next(); 
-		   if(ligne!=null){
+		   List<LigneApprovisionement> liste = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEqualsAndReclamations(cipm).getResultList();
+		   if(!liste.isEmpty()){
+			   LigneApprovisionement ligne = liste.iterator().next();
 			   return ligne.toJson2();
 		   }else{
-			   return null;
+			   return new LigneApprovisionement().toJson();
 		   }
 	}
 	

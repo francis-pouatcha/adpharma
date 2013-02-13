@@ -21,9 +21,9 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
-import org.adorsys.adpharma.beans.EtatManagerBean;
-import org.adorsys.adpharma.beans.ReclamationBean;
 import org.adorsys.adpharma.beans.ReclamationForm;
+import org.adorsys.adpharma.beans.process.EtatManagerBean;
+import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;

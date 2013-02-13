@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
-import org.adorsys.adpharma.beans.DetteComparator;
+import org.adorsys.adpharma.beans.process.DetteComparator;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;

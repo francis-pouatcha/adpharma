@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.pdf;
 
 import java.awt.Color;
 import java.util.Date;

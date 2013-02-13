@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.security.SecurityUtil;

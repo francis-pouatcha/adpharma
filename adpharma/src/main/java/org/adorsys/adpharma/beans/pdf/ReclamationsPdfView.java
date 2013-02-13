@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.pdf;
 
 import java.awt.Color;
 import java.util.Date;
@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.Site;

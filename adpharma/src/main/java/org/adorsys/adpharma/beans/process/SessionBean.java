@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.process;
 
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.PharmaUser;

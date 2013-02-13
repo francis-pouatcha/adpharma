@@ -152,7 +152,7 @@ public class ProduitController {
 	@ResponseBody
 	public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
 		String des = httpServletRequest.getParameter("designation");
-		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(200).getResultList();
+		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(100).getResultList();
 		return Produit.toJsonArray(resultList);
 	}
 
@@ -273,11 +273,32 @@ public class ProduitController {
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		return "produits/create";
 	}
+	
+	
+	  @RequestMapping(method = RequestMethod.GET)
+	    public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+	        if (page != null || size != null) {
+	            int sizeNo = size == null ? 10 : size.intValue();
+	            uiModel.addAttribute("produits", Produit.findProduitEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+	            float nrOfPages = (float) Produit.countProduits() / sizeNo;
+	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+	        } else {
+	            uiModel.addAttribute("produits", Produit.findAllProduits());
+	        }
+	        addDateTimeFormatPatterns(uiModel);
+	        return "produits/list";
+	    }
 
-	@ModelAttribute("produits")
+	  
+	  @ModelAttribute("produits")
+	    public Collection<Produit> populateProduits() {
+	        return Produit.findAllProduits();
+	    }
+	  
+	/*@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {
 		return new ArrayList<Produit>();
-	}	 
+	}	 */
 
 
 }

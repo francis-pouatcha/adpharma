@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.adorsys.adpharma.beans.CommandeProcess;
+import org.adorsys.adpharma.beans.process.CommandeProcess;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Fournisseur;

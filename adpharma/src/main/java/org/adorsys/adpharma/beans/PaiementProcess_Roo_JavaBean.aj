@@ -8,6 +8,8 @@ import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+
+import org.adorsys.adpharma.beans.process.PaiementProcess;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.Facture;
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.adorsys.adpharma.beans.SaleProcess;
+import org.adorsys.adpharma.beans.process.SaleProcess;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneApprovisionement;

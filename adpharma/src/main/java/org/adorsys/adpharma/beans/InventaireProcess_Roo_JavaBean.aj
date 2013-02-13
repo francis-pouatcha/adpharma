@@ -6,6 +6,8 @@ package org.adorsys.adpharma.beans;
 import java.lang.Long;
 import java.lang.String;
 import java.util.List;
+
+import org.adorsys.adpharma.beans.process.InventaireProcess;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
