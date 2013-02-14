@@ -126,7 +126,7 @@ public class PaiementProcessController {
 
 
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/encaisser/{factureId}" , method = RequestMethod.POST)
 	public String encaisserPaiement(@PathVariable("factureId")Long factureId,@Valid Paiement paiement ,BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
@@ -260,7 +260,7 @@ public class PaiementProcessController {
 
 	}
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/annulFacture/{cmdId}" ,method = RequestMethod.GET)
 	public String annulFacture(@PathVariable("cmdId") Long cmdId ,Model uiModel,  HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
@@ -400,7 +400,7 @@ public class PaiementProcessController {
 		return "redirect:/paiementprocess/encaisser?form";
 	}
 
-	@Transactional
+	//@Transactional
 	public void encaisser( Facture facture ,Caisse caisse,Paiement paiement) {
 		CommandeClient commande = facture.getCommande();
 		TypeCommande typeCommande = commande.getTypeCommande();
@@ -418,7 +418,7 @@ public class PaiementProcessController {
 
 
 	// gere les paiements des facture a credit	
-	@Transactional
+	//@Transactional
 	public void avanceVenteCredit(Facture facture ,Caisse caisse,Paiement paiement){
 		QuiPaye quiPaye = paiement.getQuiPaye();
 		DetteClient detteClient = null ;
@@ -498,7 +498,7 @@ public class PaiementProcessController {
 		genererMvtStock(facture,caisse);
 
 	}
-	@Transactional
+	//@Transactional
 	public void genererDetteClient(Facture facture , BigInteger avance){
 		CommandeClient commande = facture.getCommande();
 		Client client = commande.getClient();
@@ -522,7 +522,7 @@ public class PaiementProcessController {
 
 	}
 
-	@Transactional
+	//@Transactional
 	public void genererDetteClientPayeur(Facture facture){
 		CommandeClient commande = facture.getCommande();
 		Client paiyeur = commande.getClientPaiyeur();
@@ -549,7 +549,7 @@ public class PaiementProcessController {
 	}
 
 	// genere les mvt de stock
-	@Transactional
+	//@Transactional
 	public void genererMvtStock(Facture facture , Caisse caisse){
 		Set<LigneCmdClient> lineCommande = facture.getCommande().getLineCommande();
 		if (!lineCommande.isEmpty()) {
@@ -599,7 +599,7 @@ public class PaiementProcessController {
 	}
 
 	//genere les operation de caisse
-	@Transactional
+	//@Transactional
 	public void genererOperationCaisse(Caisse caisse,Paiement paiement){
 		OperationCaisse operationCaisse = new OperationCaisse();
 		operationCaisse.setCaisse(caisse);

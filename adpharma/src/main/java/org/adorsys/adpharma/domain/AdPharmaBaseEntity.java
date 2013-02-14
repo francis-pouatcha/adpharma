@@ -115,7 +115,7 @@ public void protectSomeField(){
 			return getClass().getSimpleName() + " " + getBusinessKey();
 		}
 // custum merge method 
-	    @Transactional(readOnly=true ,propagation=Propagation.REQUIRED)
+	    @Transactional
 	    public AdPharmaBaseEntity merge() {
              protectSomeField() ;
 	    	 gatherFootPrint();
