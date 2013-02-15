@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.CommandeCredit;
-import org.adorsys.adpharma.beans.PaiementProcess;
-import org.adorsys.adpharma.beans.SearchSalesBean;
-import org.adorsys.adpharma.beans.SessionBean;
+import org.adorsys.adpharma.beans.process.PaiementProcess;
+import org.adorsys.adpharma.beans.process.SearchSalesBean;
+import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.CategorieClient;

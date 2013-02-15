@@ -9,7 +9,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
      <script>
   $(document).ready(function() {
 	  var s2 = ${graph1} ;
-	            var s1 =  ${graph2} ;
+	 var s1 =  ${graph2} ;
 	         
 	            plot1 = $.jqplot("chart1", [s2, s1], {
 	                // Turns on animatino for all series in this plot.
@@ -27,26 +27,9 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    show: true,
 	                },
 	                series:[
-	                    {
-	                        pointLabels: {
-	                            show: true
-	                        },
-	                        renderer: $.jqplot.BarRenderer,
-	                        showHighlight: false,
-	                        yaxis: 'y2axis',
-	                        rendererOptions: {
-	                            // Speed up the animation a little bit.
-	                            // This is a number of milliseconds.  
-	                            // Default for bar series is 3000.  
-	                            animation: {
-	                                speed: 2500
-	                            },
-	                            barWidth: 20,
-	                            barPadding: -15,
-	                            barMargin: 0,
-	                            highlightMouseOver: false
-	                        }
-	                    }, 
+                     {label:'Courbe des Achats'},
+                     {label:'Courbe des Ventes'},
+	                    
 	                    {
 	                        rendererOptions: {
 	                            // speed up the animation a little bit.
@@ -59,6 +42,12 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    }
 	                ],
 	               
+	                legend: {
+	                    show: true,
+	                    location: 'se',     // compass direction, nw, n, ne, e, se, s, sw, w.
+	                    xoffset: 10,        // pixel offset of the legend box from the x (or x2) axis.
+	                    yoffset: 10       // pixel offset of the legend box from the y (or y2) axis.
+	                },
 
 	                axesDefaults: {
 	                    pad: 0
@@ -70,41 +59,30 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                        drawMajorGridlines: false,
 	                        drawMinorGridlines: true,
 	                        drawMajorTickMarks: false,
+	                        label:'periodes considerees ', 
 	                        rendererOptions: {
 	                        tickInset: 0.5,
 	                        minorTicks: 1
 	                    }
 	                    },
+	                    
 	                    yaxis: {
 	                        tickOptions: {
-	                            formatString: " %'d"
+	                            formatString:'XAF %d'
 	                        },
 	                        rendererOptions: {
 	                            forceTickAt0: true
 	                        }
-	                    },
-	                    y2axis: {
-	                       
-	                        rendererOptions: {
-	                            // align the ticks on the y2 axis with the y axis.
-	                            alignTicks: true,
-	                            forceTickAt0: true
-	                        }
 	                    }
-	                },
-	                highlighter: {
-	                    show: true, 
-	                    showLabel: true, 
-	                    tooltipAxes: 'y',
-	                    sizeAdjust: 7.5 , tooltipLocation : 'ne'
+	                   
 	                }
 	            });
   });
   </script>
-   <table class="tblog" border="0">
+   <table  >
     	<tr>
     		
-    		<td align="left" valign="top" width="20%" class="tblog">
+    		<td align="left" valign="top" width="20%" >
     		<fieldset>
     		<legend> Saisir La Periode</legend>
     		<form:custumcreate label="Statistics" id="fc_org_adorsys_adpharma_domain_TauxMarge" modelAttribute="statistic" path="/statistics" render="${empty dependencies}" z="/v4Q5hnmI4Qeh080AqNpaqvrYEE=">
@@ -114,8 +92,8 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     </form:custumcreate>
     		</fieldset>
     		</td>
-    		<td align="center" width="80%" class="tblog">
-           <div id="chart1" style="height:400px;width:auto;"></div>
+    		<td align="center" width="80%" >
+           <div id="chart1" style="height:450px;width:auto;"></div>
     		</td>
     	</tr>
    </table>

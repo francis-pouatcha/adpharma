@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Fournisseur;
+import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.platform.rest.SImplePlatformRestService;
 import org.adorsys.adpharma.platform.rest.exchanges.AdpHarmaExchangeParser;
@@ -103,6 +104,24 @@ public class CommandeFournisseurController {
 		return "commandefournisseurs/search";
 	} 
 
+	
+	@RequestMapping(value="/searchCmd")
+	public String searchLigneApp( @RequestParam("name") String name, Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCommandeFournisseurEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) CommandeFournisseur.countCommandeFournisseurs() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				
+				uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCmdByFournisseurLike(name).
+						setMaxResults(50).getResultList());
+		}
+		return "commandefournisseurs/list";
+	}
 
 	@ModelAttribute("commandefournisseurs")
 	public Collection<CommandeFournisseur> populateCommandeFournisseurs() {

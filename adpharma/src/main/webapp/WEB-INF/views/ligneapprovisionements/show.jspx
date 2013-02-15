@@ -48,6 +48,7 @@
         <field:display field="viewMsg" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" object="${ligneapprovisionement}" z="PwsrLxqWSzzSCY75axuAnbuIHNw="/>
         <field:display field="saisiele" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_saisiele" object="${ligneapprovisionement}" z="D9ZXSKzC5PVvTUxjrGPVcnmHdlg="/>
         <field:display field="quantiteReclame" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" object="${ligneapprovisionement}" z="DbikkAwvRmAwu4yaSVwQ2NW9Z+0="/>
+        <field:display field="quantiteUniteGratuite" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteUniteGratuite" object="${ligneapprovisionement}" z="DDl6wtXvHiBNBOQbCyKGJjz+GTo="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" object="${ligneapprovisionement}" z="9XRvYfBWuf7prrLbwUkRP29+bEk="/>

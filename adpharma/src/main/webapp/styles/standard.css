@@ -52,6 +52,9 @@ body,div,td {
 .headMenu{
 	
 }
+table.jqplot-table-legend{
+	width: 250px;
+}
 
 input#prm{
 	color: silver;
@@ -269,7 +272,7 @@ p.appMessage {
 	border-radius: 3px 3px 3px 3px;
 	box-shadow: 0 1px 0 #FFFFFF;
 	color: #FFFFFF;
-	cursor: pointer;
+	ksor: pointer;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
@@ -278,6 +281,9 @@ p.appMessage {
 	text-shadow: 0 1px 1px #333333;
 	text-transform: uppercase;
 }
+
+
+
 
 .submits:hover {
 	background: 00FF66 transparent;
@@ -637,6 +643,7 @@ ul li {
 table tr:hover{
 	cursor: pointer;
 }
+
 table {
 	background: #EEEEEE;
 	margin: 2px 0 0 0;

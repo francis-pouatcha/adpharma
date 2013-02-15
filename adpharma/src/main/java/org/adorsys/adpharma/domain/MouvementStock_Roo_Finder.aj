@@ -73,6 +73,21 @@ privileged aspect MouvementStock_Roo_Finder {
         return q;
     }
     
+    public static TypedQuery<MouvementStock> MouvementStock.findMouvementStocksByDesignationLike(String designation) {
+        if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
+        designation = designation.replace('*', '%');
+        if (designation.charAt(0) != '%') {
+            designation = "%" + designation;
+        }
+        if (designation.charAt(designation.length() - 1) != '%') {
+            designation = designation + "%";
+        }
+        EntityManager em = MouvementStock.entityManager();
+        TypedQuery<MouvementStock> q = em.createQuery("SELECT o FROM MouvementStock AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)", MouvementStock.class);
+        q.setParameter("designation", designation);
+        return q;
+    }
+    
     public static TypedQuery<MouvementStock> MouvementStock.findMouvementStocksByTypeMouvementAndDateCreationBetween(TypeMouvement typeMouvement, Date minDateCreation, Date maxDateCreation) {
         if (typeMouvement == null) throw new IllegalArgumentException("The typeMouvement argument is required");
         if (minDateCreation == null) throw new IllegalArgumentException("The minDateCreation argument is required");

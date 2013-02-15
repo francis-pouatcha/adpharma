@@ -24,4 +24,10 @@
     </definition>
     
     
+<definition extends="default" name="rayons/findRayonsByDisplayNameLike">
+        <put-attribute name="body" value="/WEB-INF/views/rayons/findRayonsByDisplayNameLike.jspx"/>
+    </definition>
+<definition extends="default" name="rayons/findRayonsByNameLike">
+        <put-attribute name="body" value="/WEB-INF/views/rayons/findRayonsByNameLike.jspx"/>
+    </definition>
 </tiles-definitions>

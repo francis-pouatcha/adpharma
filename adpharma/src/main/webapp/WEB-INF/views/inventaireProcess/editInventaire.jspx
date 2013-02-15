@@ -303,12 +303,10 @@ function verif_formulaire()
 										  <td>'+this.quantiteEnStock+'</td>
 										  <td>'+this.rayon.codeRayon+'</td>
 										  <td>'+this.filiale.libelle+'</td>
-
 										  </tr>'
 										
 								);
-									
-								});
+							});
 								$('table#resultproduit tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {

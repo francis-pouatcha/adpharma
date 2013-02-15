@@ -14,7 +14,6 @@ privileged aspect EtatCredits_Roo_Entity {
     declare @type: EtatCredits: @Entity(name = "EtatCredits");
     
     declare @type: EtatCredits: @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS);
-   
     
     public static EtatCredits EtatCredits.findEtatCredits(Long id) {
         if (id == null) return null;

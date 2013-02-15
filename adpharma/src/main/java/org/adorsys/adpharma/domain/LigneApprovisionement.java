@@ -500,10 +500,15 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public void calculRemise() {
-		BigDecimal tauxRemiseMax = produit.getTauxRemiseMax();
-		if(tauxRemiseMax==null) tauxRemiseMax = BigDecimal.ZERO ;
-		remiseMax = prixVenteUnitaire.multiply(tauxRemiseMax).divide(BigDecimal.valueOf(100));
-		remiseMax =  BigDecimal.valueOf(remiseMax.longValue());
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		remiseMax = BigDecimal.ZERO;
+		if(pharmaUser != null){
+			BigDecimal tauxRemise = pharmaUser.getTauxRemise();
+			BigDecimal tauxRemiseMax = tauxRemise ==null? BigDecimal.ZERO :tauxRemise ; //produit.getTauxRemiseMax();
+			remiseMax = prixVenteUnitaire.multiply(tauxRemiseMax).divide(BigDecimal.valueOf(100));
+			remiseMax =  BigDecimal.valueOf(remiseMax.longValue());
+		}
+		
 	}
 
 	public String toString() {

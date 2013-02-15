@@ -73,6 +73,8 @@ privileged aspect EtatCreditsController_Roo_Controller {
     }
     
     void EtatCreditsController.addDateTimeFormatPatterns(Model uiModel) {
+        uiModel.addAttribute("etatCredits_mindatedette_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("etatCredits_maxdatedette_date_format", "dd-MM-yyyy HH:mm");
         uiModel.addAttribute("etatCredits_dateedition_date_format", "dd-MM-yyyy HH:mm");
         uiModel.addAttribute("etatCredits_datepaiement_date_format", "dd-MM-yyyy HH:mm");
     }

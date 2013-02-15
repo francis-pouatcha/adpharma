@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -330,5 +331,15 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		q.setParameter("providerKey", providerKey);
 		q.setParameter("commandNumber", commandNumber);
 		return  q;
+	}
+	
+	public static TypedQuery<CommandeFournisseur> findCmdByFournisseurLike(String designation) {
+		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
+		designation ="%"+designation + "%";
+		EntityManager em = CommandeFournisseur.entityManager();
+		TypedQuery<CommandeFournisseur> q = em.createQuery("SELECT o FROM CommandeFournisseur AS o WHERE LOWER(o.fournisseur.name) LIKE LOWER(:designation) order By  o.fournisseur.name ASC ", CommandeFournisseur.class);
+		q.setParameter("designation", designation);
+		
+		return q;
 	}
 }

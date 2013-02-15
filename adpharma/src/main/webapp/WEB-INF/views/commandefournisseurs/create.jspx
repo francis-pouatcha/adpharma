@@ -28,6 +28,11 @@
                 </td>
             </tr>
         </table>
+        <field:datetime dateTimePattern="${commandeFournisseur_submitiondate_date_format}" field="submitionDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" z="gnQeAUYx4iXx+MYNy0dKL2z0lhY="/>
+        <field:datetime dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" field="traitmentDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" z="hj2o7nNJBQjk5ZhhWNqqKBSFOIw="/>
+        <field:select field="exchangeBeanState" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" items="${exchangebeanstates}" path="exchangebeanstates" z="//5ju2sH+oK9iH/PlC8mXLSQj2U="/>
+        <field:input field="approvisionnementId" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" validationMessageCode="field_invalid_integer" z="caGqNWjYtD07EkqXKcvnoRUpzXM="/>
+        <field:input field="commercialKey" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" z="L4DRExT9Bl2Q3fyclyhKxyb+p/g="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeFournisseur" render="${not empty dependencies}" z="UcDvHNVInxTTrLZzTTtbd3+YIUU="/>
 </div>

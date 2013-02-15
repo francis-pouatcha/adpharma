@@ -20,14 +20,14 @@
 		    		<th style="text-align: center;">Marge </th>
 		    		<th style="text-align: center;">PAUnit</th>
 		            <th style="text-align: center;">PV Unit</th>
-		    		<th style="text-align: center;">Qte Approv</th>
-		    		<th style="text-align: center;">Qte reclamee</th>
-		    		<th style="text-align: center;">Qte UG</th>
+		    		<th style="text-align: center;">Qte AP</th>
+		    		<th style="text-align: center;">RC</th>
+		    		<th style="text-align: center;">UG</th>
 		    		<th style="text-align: center;">PA Total</th>
 		            <th style="text-align: center;">Date Perm</th>
-		            <th style="text-align: center;">Qte Vendu </th>
-		            <th style="text-align: center;">Qte sortie</th>
-		            <th style="text-align: center;">Qte en stock</th>
+		            <th style="text-align: center;">Vendu </th>
+		            <th style="text-align: center;">sortie</th>
+		            <th style="text-align: center;">Stock</th>
 		            
 		    	</tr>
 		
@@ -47,7 +47,7 @@
 		    		    
 		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteAprovisione}"></c:out> </td>
 		    			
-		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteReclame}"></c:out> </td>
+		    		   <td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteReclame}"></c:out> </td>
 		    			
 		    			<td style="text-align: right;padding-right: 20px;"> <c:out value="${ligne.quantiteUniteGratuite}"></c:out> </td>
 		    			

@@ -12,7 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.beans.PaiementProcess;
+import org.adorsys.adpharma.beans.process.PaiementProcess;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;

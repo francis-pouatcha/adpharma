@@ -21,6 +21,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 		    </script>
     <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
     <spring:url var="imgfonct" value="/resources/images/imgfonct.jpg"/>
+     <spring:url var="cloud" value="/resources/images/cloud.png"/>
     <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
     <spring:url var="imgcomp" value="/resources/images/imgfonct2.jpg"/>
     <spring:url var="userIco" value="/resources/images/user.jpeg"/>
@@ -89,14 +90,16 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     <table class="tblog" border="0"  style="margin-top:50px;">
     	<tr>
     		<td width="6%" class="tblog"></td>
-    		<td align="left" width="31%" class="tblog" >
+    		<!-- <td align="left" width="31%" class="tblog" >
 	    	    <img src="${imgfonct}"/>Gestion des commandes <br/>
 	    		<img src="${imgfonct}"/>Gestion des approvisionements<br/> 
 				<img src="${imgfonct}"/>Gestion des Ventes<br/>
 				<img src="${imgfonct}"/>Gestion de la caisse<br/>
 			    <img src="${imgfonct}"/>Suivi de la clientele<br/>
 				<img src="${imgfonct}"/>Gestion des utilisateurs<br/>
-				<img src="${imgfonct}"/>Gestion des ordonnanciers<br/>
+				<img src="${imgfonct}"/>Gestion des ordonnanciers<br/> -->
+    		<td align="left"  class="tblog" >
+    	    <img src="${cloud}"/>
     		</td>
     		<td align="center" width="30%" class="tblog">
 	    		<h2> PHARMACIE  </h2>

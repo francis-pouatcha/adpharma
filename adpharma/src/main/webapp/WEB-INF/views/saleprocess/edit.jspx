@@ -100,12 +100,8 @@ function annCmd(){
 				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				</security:authorize>
-				
-				
 				 -->
-				 								<span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-				 
-				
+    <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				 
 				 <span><a
 			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
@@ -119,7 +115,6 @@ function annCmd(){
 			<span><a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
 					type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
 		</c:if>
-		
 <!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
 <span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
 </c:if> -->

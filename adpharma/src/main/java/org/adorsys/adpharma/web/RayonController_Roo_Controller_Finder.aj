@@ -23,6 +23,17 @@ privileged aspect RayonController_Roo_Controller_Finder {
         return "rayons/list";
     }
     
+    @RequestMapping(params = { "find=ByDisplayNameLike", "form" }, method = RequestMethod.GET)
+    public String RayonController.findRayonsByDisplayNameLikeForm(Model uiModel) {
+        return "rayons/findRayonsByDisplayNameLike";
+    }
+    
+    @RequestMapping(params = "find=ByDisplayNameLike", method = RequestMethod.GET)
+    public String RayonController.findRayonsByDisplayNameLike(@RequestParam("displayName") String displayName, Model uiModel) {
+        uiModel.addAttribute("rayons", Rayon.findRayonsByDisplayNameLike(displayName).getResultList());
+        return "rayons/list";
+    }
+    
     @RequestMapping(params = { "find=ByNameEquals", "form" }, method = RequestMethod.GET)
     public String RayonController.findRayonsByNameEqualsForm(Model uiModel) {
         return "rayons/findRayonsByNameEquals";
@@ -31,6 +42,17 @@ privileged aspect RayonController_Roo_Controller_Finder {
     @RequestMapping(params = "find=ByNameEquals", method = RequestMethod.GET)
     public String RayonController.findRayonsByNameEquals(@RequestParam("name") String name, Model uiModel) {
         uiModel.addAttribute("rayons", Rayon.findRayonsByNameEquals(name).getResultList());
+        return "rayons/list";
+    }
+    
+    @RequestMapping(params = { "find=ByNameLike", "form" }, method = RequestMethod.GET)
+    public String RayonController.findRayonsByNameLikeForm(Model uiModel) {
+        return "rayons/findRayonsByNameLike";
+    }
+    
+    @RequestMapping(params = "find=ByNameLike", method = RequestMethod.GET)
+    public String RayonController.findRayonsByNameLike(@RequestParam("name") String name, Model uiModel) {
+        uiModel.addAttribute("rayons", Rayon.findRayonsByNameLike(name).getResultList());
         return "rayons/list";
     }
     

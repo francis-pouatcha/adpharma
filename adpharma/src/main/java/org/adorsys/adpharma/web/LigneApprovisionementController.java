@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.beans.ReclamationBean;
+import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
@@ -295,7 +296,23 @@ public class LigneApprovisionementController {
 	}
 	
 	
-	
+	@RequestMapping(value="/searchLigneApp")
+	public String searchLigneApp( @RequestParam("name") String name, Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("ligneapprovisionements", LigneApprovisionement.findLigneApprovisionementEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) LigneApprovisionement.countLigneApprovisionements() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				
+				uiModel.addAttribute("ligneapprovisionements", LigneApprovisionement.findLigneApprovisionementsByDesignationLike(name).
+						setMaxResults(50).getResultList());
+		}
+		return "ligneapprovisionements/list";
+	}
 	
 	
 	@ModelAttribute("approvisionements")

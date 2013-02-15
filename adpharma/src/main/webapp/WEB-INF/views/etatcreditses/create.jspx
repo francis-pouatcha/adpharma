@@ -113,8 +113,8 @@
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" render="false" z="user-managed"/>
         <field:input field="agent" id="c_org_adorsys_adpharma_domain_EtatCredits_agent" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateEdition" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" render="false" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="minDateDette" label="Date Dette Min" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" z="user-managed"/>
-       <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="maxDateDette" label="Date Dette Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="minDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" label="Date Dette Min" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="maxDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" label="Date Dette Max" z="user-managed"/>
         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement" required="true" z="user-managed"/>
         <field:input field="avance" id="c_org_adorsys_adpharma_domain_EtatCredits_avance" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="solde" id="c_org_adorsys_adpharma_domain_EtatCredits_solde" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
@@ -128,6 +128,9 @@
         <field:input field="clientId" id="c_org_adorsys_adpharma_domain_EtatCredits_clientId" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
         <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName" render="false" z="user-managed"/>
         <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser" render="false" z="user-managed"/>
+        <field:checkbox field="addAllUnbilledInvoices" id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" z="ldRPm4k4QXzewi9AI5u5p081yZ0="/>
+        <field:datetime dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" z="6STCkcyBdjcCN81d2wuKO7Js39U="/>
+        <field:datetime dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" z="4YbQBRGFQvXJUOt8mr+Xm2D44d8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_EtatCredits" render="${not empty dependencies}" z="10E+Cq5xsOk6ZfMHkSAQLAovojg="/>
     <div id="findClient" style="display: none;" title="recherche client">
@@ -135,7 +138,7 @@
         <form enctype="application/x-www-form-urlencoded" id="person">
             <p>
                 <label for="name">Nom  :</label>
-                <input name="name" type="text" class="searchInput" />
+                <input class="searchInput" name="name" type="text"/>
             </p>
         </form>
         <center>

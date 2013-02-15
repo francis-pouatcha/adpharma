@@ -265,9 +265,9 @@ public class PharmaUser extends AdPharmaBaseEntity {
     public static TypedQuery<PharmaUser> findPharmaUsersByUserNameLike(String userName) {
         if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
         userName = userName.replace('*', '%');
-        if (userName.charAt(0) != '%') {
+        /*if (userName.charAt(0) != '%') {
             userName = "%" + userName;
-        }
+        }*/
         if (userName.charAt(userName.length() - 1) != '%') {
             userName = userName + "%";
         }

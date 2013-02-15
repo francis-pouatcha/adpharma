@@ -25,7 +25,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
-import org.adorsys.adpharma.beans.PrintBareCodeBean;
+import org.adorsys.adpharma.beans.process.PrintBareCodeBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeFournisseur;

@@ -86,7 +86,7 @@
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">CipM</th>
 							<th style="text-align: center;">Quantite</th>
-							<th style="text-align: center;">Qte Reclame</th>
+							<th style="text-align: center;">Qte RC</th>
 							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 							<th style="text-align: center;">Prix Achat</th>
@@ -121,12 +121,12 @@
 								
 								<td><input type="text" name="qterecl" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteReclame}"
-								onkeypress="return scanTouche(event)" width="30px;"
+								onkeypress="return scanTouche(event)" width="30px;" onmouseover="this.select();"
 								title="saisir la Quantite reclamee" maxlength="4" id="qterecl" /></td>
 								
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
-								onkeypress="return scanTouche(event)" width="30px;"
+								onkeypress="return scanTouche(event)" width="30px;" onmouseover="this.select();"
 								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
 
 							<td><input type="text" name="pv" id="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
@@ -139,7 +139,7 @@
 								onkeypress="return scanTouche(event)" maxlength="7"
 								title="saisir le Prix D'achat unitaire" /></td>
 								
-							<td><input type="text" class="tva"
+							<td><input type="text" class="tva" onmouseover="this.select();"
 								onkeyup=" calculPriceTva();"
 								onkeypress="return scanTouche(event)" maxlength="6"
 								name="autres" id="tva" title="saisir le Prix D'achat unitaire" />
@@ -177,7 +177,7 @@
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">Marge(%)</th>
 							<th style="text-align: center;">Quantite</th>
-							<th style="text-align: center;">Qte Reclamee</th>
+							<th style="text-align: center;">Qte RC</th>
 							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 							<th style="text-align: center;">Prix Achat</th>
@@ -210,7 +210,7 @@
 								
 							<td><input type="text" name="qte" class="autres qteClass"
 								onkeypress="return scanTouche(event)"
-								title="saisir la Quantite" id="qte" /></td>
+								title="saisir la Quantite" id="qte" onmouseover="this.select();" /></td>
 								
 							<!-- <td><input type="text" name="qte" class="autres"
 							    onmouseover="this.select();" onfocus="this.select();"
@@ -218,16 +218,16 @@
 								title="saisir la Quantite" id="qte" /></td> -->
 								
 							<td><input type="text" name="qteReclam" class="autres qteClass"
-								title="saisir la Quantite Reclamee" id="qteRec" /></td>	
+								title="saisir la Quantite Reclamee" id="qteRec"  onmouseover="this.select();"/></td>	
 
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
 								onkeypress="return scanTouche(event)" width="30px;"
-								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
+								title="saisir la Quantite" maxlength="4" id="qteug" onmouseover="this.select();" /></td>
 								
 							<td><input type="text" name="pv" class="autres prixClass"
 								onkeypress="return scanTouche(event)"
-								title="saisir le Prix De Vente Unitaire" id="pv" /></td>
+								title="saisir le Prix De Vente Unitaire" onmouseover="this.select();" id="pv" /></td>
 								
 							<!-- <td><input type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								onkeypress="return scanTouche(event)"
@@ -239,7 +239,7 @@
 								title="saisir le Prix D'achat unitaire" id="pa" /></td>
 								
 							<td><input type="text" name="tva"
-								onkeyup=" calculPriceTva();" class="tva" id="tva"
+								onkeyup=" calculPriceTva();" class="tva" onmouseover="this.select();" id="tva"
 								onkeypress="return scanTouche(event)"
 								title="saisir le Prix D'achat unitaire" /></td>
 								
@@ -301,7 +301,7 @@
 				<th style="text-align: center;">Marge</th>
 				<th style="text-align: center;">PAUnit</th>
 				<th style="text-align: center;">Quantite</th>
-				<th style="text-align: center;">Qte Reclamée</th>
+				<th style="text-align: center;">Qte RC</th>
 				<th style="text-align: center;">Qte UG</th>
 				<th style="text-align: center;">PA Total</th>
 				<th style="text-align: center;">PV Unit</th>

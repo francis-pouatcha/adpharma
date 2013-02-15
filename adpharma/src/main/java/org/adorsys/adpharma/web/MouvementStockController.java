@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Rayon;
@@ -49,6 +50,23 @@ public class MouvementStockController {
 		return "mouvementstocks/search";
 	}
 	
+	@RequestMapping(value="/search")
+	public String searchLigneApp( @RequestParam("name") String name, Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStockEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) MouvementStock.countMouvementStocks() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				
+				uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDesignationLike(name).
+						setMaxResults(50).getResultList());
+		}
+		return "mouvementstocks/list";
+	}
 	 
     @ModelAttribute("mouvementstocks")
     public Collection<MouvementStock> populateMouvementStocks() {

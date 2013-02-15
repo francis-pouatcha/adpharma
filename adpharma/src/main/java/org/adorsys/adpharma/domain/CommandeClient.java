@@ -221,7 +221,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		BigDecimal actualRemise = remise.add(getRemise());
 		BigDecimal remiseAdmicible = getMontantHt().multiply(taux).divide(BigDecimal.valueOf(100));
 		if (remiseAdmicible.doubleValue() <= 0) {
-			uiModel.addAttribute("apMessage", "Ce client n'est pas autorise a obtenir une remise ! ");
+			uiModel.addAttribute("apMessage", "vous n'etes pas autorise a acorder une remise ! ");
 			return false;
 		}
 

@@ -20,7 +20,8 @@
             <table:column id="s_org_adorsys_adpharma_domain_Facture_solder" property="solder" z="llg3p70RhLSUtgaHL1QX+g7udhw="/>
             <table:column id="c_org_adorsys_adpharma_domain_Facture_cip" property="cip" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Facture_designation" property="designation" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Facture_printWithReduction" property="printWithReduction" z="0mmBZNRlfcvt1DrNuICevsLX810="/>
         </table:table>
     </page:list>
-    <jsp:include page="invoiceDetail.jspx" />
+    <jsp:include page="invoiceDetail.jspx"/>
 </div>
