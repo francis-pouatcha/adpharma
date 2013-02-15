@@ -238,6 +238,24 @@ public class MouvementStock extends AdPharmaBaseEntity {
         q.setParameter("typeMouvement", TypeMouvement.VENTE);
         return q.getResultList();
     }
+    
+    
+    
+    public static List<Object[]> courbeApprovisionement(String debut, String fin, String frequence){
+      StringBuilder query= new StringBuilder();
+      query.append("SELECT sum(p_achat_total) as pa , month(date_creation) as mo, year(date_creation) as y  FROM mouvement_stock");
+      query.append(" where type_mouvement= 1");
+      query.append(" group by y, mo ");
+      query.append(" having mo in(1,2,3,4,5,6,7,8,9,10,11,12)  And  y in (2012,2013)");
+      query.append(" order by y asc, mo asc;");
+      Query requete = entityManager().createNativeQuery(query.toString());
+      List<Object[]> liste = requete.getResultList();
+      System.out.println("Liste des objets: "+liste);
+    	return liste;
+    }
+    
+    
+    
 
     public static TypedQuery<MouvementStock> findMouvementStocksByAndCipAndTypeMouvementAndDateCreationBetween(String cip, TypeMouvement typeMouvement, Date minDateCreation, Date maxDateCreation) {
         if (typeMouvement == null) throw new IllegalArgumentException("The typeMouvement argument is required");

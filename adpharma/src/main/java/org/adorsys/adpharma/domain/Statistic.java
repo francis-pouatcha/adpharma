@@ -2,6 +2,7 @@ package org.adorsys.adpharma.domain;
 
 import java.util.Date;
 
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +22,11 @@ public class Statistic {
 	  
 	  private String statisticOfSale ;
 	  
-	  @Enumerated
+	  @Enumerated(EnumType.STRING)
 	    private Periode periode;
+	  
+	  @Enumerated(EnumType.STRING)
+	  private TypeCourbeGraphique typeCourbe;
 
 	public Date getDateDebut() {
 		return dateDebut;
@@ -46,6 +50,14 @@ public class Statistic {
 
 	public void setPeriode(Periode periode) {
 		this.periode = periode;
+	}
+	
+	public TypeCourbeGraphique getTypeCourbe() {
+		return typeCourbe;
+	}
+	
+	public void setTypeCourbe(TypeCourbeGraphique typeCourbe) {
+		this.typeCourbe = typeCourbe;
 	}
 
 	public String getStatisticOfSale() {
