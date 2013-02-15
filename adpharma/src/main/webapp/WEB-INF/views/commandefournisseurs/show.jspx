@@ -17,6 +17,11 @@
         <field:display field="montantTva" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva" object="${commandefournisseur}" z="uU0q3ucr/tAjjJmLm+bQQGIaemE="/>
         <field:display field="montantTtc" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc" object="${commandefournisseur}" z="s3Oh6qPDSHstxo/h2iBvAJLZNNM="/>
         <field:display field="tva" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_tva" object="${commandefournisseur}" z="maMaF9hld9W3nDNil8F26e82P1U="/>
+        <field:display date="true" dateTimePattern="${commandeFournisseur_submitiondate_date_format}" field="submitionDate" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" object="${commandefournisseur}" z="Vfd5SdToOU6M5oTGr15vgKRyvS0="/>
+        <field:display date="true" dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" field="traitmentDate" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" object="${commandefournisseur}" z="ZONT3pXxXYEfOHJGd8CQCwoBAhw="/>
+        <field:display field="exchangeBeanState" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" object="${commandefournisseur}" z="/V8WqWIlB0MXk6Dkva0PfeB++40="/>
+        <field:display field="approvisionnementId" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" object="${commandefournisseur}" z="Dgc4fSeh9kbPLTha7nLSBKwly2k="/>
+        <field:display field="commercialKey" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" object="${commandefournisseur}" z="X+7hky2AeYgUM16WuzhscZINOeM="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" object="${commandefournisseur}" z="83gkyuwkFVqDCHeFNQcvDUQBHPE="/>

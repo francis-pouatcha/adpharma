@@ -10,6 +10,7 @@ import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +50,7 @@ privileged aspect CommandeFournisseurController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateLimiteLivraisonBetween", method = RequestMethod.GET)
-    public String CommandeFournisseurController.findCommandeFournisseursByDateLimiteLivraisonBetween(@RequestParam("minDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateLimiteLivraison, @RequestParam("maxDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateLimiteLivraison, Model uiModel) {
+    public String CommandeFournisseurController.findCommandeFournisseursByDateLimiteLivraisonBetween(@RequestParam("minDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm", iso = ISO.TIME) Date minDateLimiteLivraison, @RequestParam("maxDateLimiteLivraison") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm", iso = ISO.TIME) Date maxDateLimiteLivraison, Model uiModel) {
         uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findCommandeFournisseursByDateLimiteLivraisonBetween(minDateLimiteLivraison, maxDateLimiteLivraison).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "commandefournisseurs/list";

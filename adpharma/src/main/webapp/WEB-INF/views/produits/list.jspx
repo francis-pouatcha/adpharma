@@ -8,7 +8,7 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     
     <spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
     
-    <page:list id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="user-managed">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Produit" items="${produits}" z="user-managed" url="/produits/search" search="true" placeholder="Rechercher par designation">
         <table:table create="false" data="${produits}" delete="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" printLink="${list_cat_url }" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_produitNumber" property="produitNumber" render="false" z="user-managed"/>
@@ -33,6 +33,6 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" property="prixAchatU" z="nb0FzJ5f7goXfNv/phgEiGkfy/0="/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" property="prixVenteU" z="nzQyPVfWA23dw/8aFbb4SL/j8yg="/>
         </table:table>
-    </page:list>
+    </page:list1>
     
 </div>

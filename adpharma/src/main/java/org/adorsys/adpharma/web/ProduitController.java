@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
+import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
@@ -299,6 +300,21 @@ public class ProduitController {
 	public Collection<Produit> populateProduits() {
 		return new ArrayList<Produit>();
 	}	 */
-
+	  @RequestMapping(value = "/search", method = RequestMethod.GET)
+		public String searchDette(@RequestParam("name") String  name,  Model uiModel) {
+			
+			if("".equals(name)){
+				Integer page = 1;
+				Integer size = 50;
+				int sizeNo = size == null ? 10 : size.intValue();
+	            uiModel.addAttribute("produits", Produit.findProduitEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+	            float nrOfPages = (float) Produit.countProduits() / sizeNo;
+	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			}else{
+					List<Produit> list = Produit.findProduitsByDesignationLike(name).setMaxResults(50).getResultList();
+					uiModel.addAttribute("produits", list);
+			}
+			return "produits/list";
+		}
 
 }

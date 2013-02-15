@@ -13,4 +13,7 @@
 <definition extends="stocker" name="fournisseurs/update">
         <put-attribute name="body" value="/WEB-INF/views/fournisseurs/update.jspx"/>
     </definition>
+<definition extends="default" name="fournisseurs/findFournisseursByNameLike">
+        <put-attribute name="body" value="/WEB-INF/views/fournisseurs/findFournisseursByNameLike.jspx"/>
+    </definition>
 </tiles-definitions>

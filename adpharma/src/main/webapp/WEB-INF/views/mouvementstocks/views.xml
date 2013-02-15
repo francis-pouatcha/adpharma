@@ -34,4 +34,7 @@
     <definition extends="default" name="mouvementstocks/search">
         <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/search.jspx"/>
     </definition>
+<definition extends="default" name="mouvementstocks/findMouvementStocksByDesignationLike">
+        <put-attribute name="body" value="/WEB-INF/views/mouvementstocks/findMouvementStocksByDesignationLike.jspx"/>
+    </definition>
 </tiles-definitions>

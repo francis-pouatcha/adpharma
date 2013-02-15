@@ -14,5 +14,9 @@
         <field:input field="prixAchatMin" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin" validationMessageCode="field_invalid_number" z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU="/>
         <field:input field="prixAchatTotal" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatTotal" validationMessageCode="field_invalid_number" z="y98nG5OPTZHhQ2sVOpOgro/n4eU="/>
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_footPrint" z="RnhJEgDOZLFWml8015gKjs0t8SE="/>
+        <field:input field="prixAVenteMin" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAVenteMin" validationMessageCode="field_invalid_number" z="XZTKnp97mp9XkPGJGCRLmrtsMKc="/>
+        <field:input field="quantiteFournie" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_quantiteFournie" validationMessageCode="field_invalid_integer" z="rqdUsflcwirVpAafstmlhmjUzFY="/>
+        <field:input field="prixFourniMin" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixFourniMin" validationMessageCode="field_invalid_number" z="o85GdELhBOUvjiOLUQlHHZlspic="/>
+        <field:checkbox field="isValid" id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_isValid" z="BTQFiR/+zPhwFpFttCEO6DpKFPk="/>
     </form:update>
 </div>

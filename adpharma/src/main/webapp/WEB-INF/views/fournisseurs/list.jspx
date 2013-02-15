@@ -2,7 +2,7 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list id="pl_org_adorsys_adpharma_domain_Fournisseur" items="${fournisseurs}" z="f4MLoC0zhVL2D1iCjWYXGB3C0j4=">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Fournisseur" items="${fournisseurs}" placeholder="Rechercher par nom" search="true" url="/fournisseurs/search" z="user-managed">
         <table:table data="${fournisseurs}" delete="false" id="l_org_adorsys_adpharma_domain_Fournisseur" path="/fournisseurs" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" property="fournisseurNumber" z="vt5qh/Ndv1Fov03/fWFaonr77yU="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom" maxLength="-1" property="name" z="user-managed"/>
@@ -14,5 +14,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" property="providerKey" z="0CZM1t4VW1SFo675N18/XLwtNwc="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" property="shortname" z="Be1e6Smmrx5vh4/VOwz0abNDv48="/>
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

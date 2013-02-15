@@ -21,6 +21,7 @@ import org.adorsys.adpharma.domain.ModeSelection;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
+import org.adorsys.adpharma.platform.rest.exchanges.ExchangeBeanState;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -107,9 +108,16 @@ privileged aspect CommandeFournisseurController_Roo_Controller {
         return TVA.findAllTVAS();
     }
     
+    @ModelAttribute("exchangebeanstates")
+    public Collection<ExchangeBeanState> CommandeFournisseurController.populateExchangeBeanStates() {
+        return Arrays.asList(ExchangeBeanState.class.getEnumConstants());
+    }
+    
     void CommandeFournisseurController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("commandeFournisseur_datecreation_date_format", "dd-MM-yyyy HH:mm");
-        uiModel.addAttribute("commandeFournisseur_datelimitelivraison_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("commandeFournisseur_submitiondate_date_format", "dd-MM-yyyy hh:mm:ss");
+        uiModel.addAttribute("commandeFournisseur_traitmentdate_date_format", "dd-MM-yyyy hh:mm:ss");
+        uiModel.addAttribute("commandeFournisseur_datecreation_date_format", "dd-MM-yyyy hh:mm");
+        uiModel.addAttribute("commandeFournisseur_datelimitelivraison_date_format", "dd-MM-yyyy hh:mm");
     }
     
     String CommandeFournisseurController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
