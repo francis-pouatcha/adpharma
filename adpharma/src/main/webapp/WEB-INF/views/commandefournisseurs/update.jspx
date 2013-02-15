@@ -3,21 +3,26 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="commandeFournisseur" path="/commandefournisseurs" versionField="Version" z="O7uGylH0b9wdwB0TRPs2nlCxEqM=">
-                    <field:display  object="${commandeFournisseur}" hiddenfield="true" field="cmdNumber" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" z="user-managed"/>
-                    <field:display  object="${commandeFournisseur}" hiddenfield="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}"  field="dateCreation" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" z="user-managed"/>
-                    <field:datetime dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="o/NC7N9COcOihDsFpVfUoOpijdY="/>
-                    <field:select field="fournisseur" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="Ko+h/8rs62Jv7Du7SyHBRUVaAeE="/>
-                    <field:select disabled="true" field="ModeDeSelection" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" items="${modeselections}" path="modeselections" z="user-managed"/>
-                    <field:select disabled="true" field="site" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_site" itemValue="id" items="${sites}" path="/sites" z="user-managed"/>
-                    <field:select disabled="true" field="creePar" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
-                    <field:select disabled="true" field="etatCmd" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" items="${etats}" path="etats" z="user-managed"/>
-                    <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" render="false" z="user-managed"/>
-                    <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" render="false" z="user-managed"/>
-                    <field:simple field="ligneCommande" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ligneCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Fournisseur" render="false" z="user-managed"/>
-                    <field:checkbox field="livre" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_livre" render="false" z="user-managed"/>
-                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantHt" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt"  z="user-managed"/>
-                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantTva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva"  z="user-managed"/>
-                    <field:display object="${commandeFournisseur}" hiddenfield="true" field="montantTtc" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc"  z="user-managed"/>
-                    <field:select disabled="true" field="tva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_tva" itemValue="id" items="${tvas}" path="/tvas" z="user-managed"/>
+        <field:display field="cmdNumber" hiddenfield="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_cmdNumber" object="${commandeFournisseur}" z="user-managed"/>
+        <field:display dateTimePattern="${commandeFournisseur_datecreation_date_format}" field="dateCreation" hiddenfield="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" object="${commandeFournisseur}" z="user-managed"/>
+        <field:datetime dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="o/NC7N9COcOihDsFpVfUoOpijdY="/>
+        <field:select field="fournisseur" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" itemValue="id" items="${fournisseurs}" path="/fournisseurs" required="true" z="Ko+h/8rs62Jv7Du7SyHBRUVaAeE="/>
+        <field:select disabled="true" field="ModeDeSelection" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ModeDeSelection" items="${modeselections}" path="modeselections" z="user-managed"/>
+        <field:select disabled="true" field="site" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_site" itemValue="id" items="${sites}" path="/sites" z="user-managed"/>
+        <field:select disabled="true" field="creePar" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
+        <field:select disabled="true" field="etatCmd" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" items="${etats}" path="etats" z="user-managed"/>
+        <field:checkbox field="annuler" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" render="false" z="user-managed"/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" render="false" z="user-managed"/>
+        <field:simple field="ligneCommande" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_ligneCommande" messageCode="entity_reference_not_managed" messageCodeAttribute="Ligne Cmd Fournisseur" render="false" z="user-managed"/>
+        <field:checkbox field="livre" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_livre" render="false" z="user-managed"/>
+        <field:display field="montantHt" hiddenfield="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt" object="${commandeFournisseur}" z="user-managed"/>
+        <field:display field="montantTva" hiddenfield="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva" object="${commandeFournisseur}" z="user-managed"/>
+        <field:display field="montantTtc" hiddenfield="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc" object="${commandeFournisseur}" z="user-managed"/>
+        <field:select disabled="true" field="tva" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_tva" itemValue="id" items="${tvas}" path="/tvas" z="user-managed"/>
+        <field:datetime dateTimePattern="${commandeFournisseur_submitiondate_date_format}" field="submitionDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" z="gnQeAUYx4iXx+MYNy0dKL2z0lhY="/>
+        <field:datetime dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" field="traitmentDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" z="hj2o7nNJBQjk5ZhhWNqqKBSFOIw="/>
+        <field:select field="exchangeBeanState" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" items="${exchangebeanstates}" path="exchangebeanstates" z="//5ju2sH+oK9iH/PlC8mXLSQj2U="/>
+        <field:input field="approvisionnementId" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" validationMessageCode="field_invalid_integer" z="caGqNWjYtD07EkqXKcvnoRUpzXM="/>
+        <field:input field="commercialKey" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" z="L4DRExT9Bl2Q3fyclyhKxyb+p/g="/>
     </form:update>
 </div>

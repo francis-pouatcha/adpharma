@@ -14,6 +14,10 @@
         <field:display field="cip" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_cip" object="${lignecmdfournisseur}" z="3LhVA+qTvdUTfSOJEw/pOXYlIRA="/>
         <field:display field="designation" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" object="${lignecmdfournisseur}" z="xtXZfRDokiSWFbnckf55zIVKCJM="/>
         <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_footPrint" object="${lignecmdfournisseur}" z="qPz5aV0TtI8AcGRWMEUwwcsbEz4="/>
+        <field:display field="prixAVenteMin" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAVenteMin" object="${lignecmdfournisseur}" z="mUPOyYAc4AydjeoGbaaFSLhXSO0="/>
+        <field:display field="quantiteFournie" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_quantiteFournie" object="${lignecmdfournisseur}" z="q3qAChjhZvix1SI1OJotkWKjSGM="/>
+        <field:display field="prixFourniMin" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixFourniMin" object="${lignecmdfournisseur}" z="uXSg9eWm4sP8BWu27Pb4gE/94H8="/>
+        <field:display field="isValid" id="s_org_adorsys_adpharma_domain_LigneCmdFournisseur_isValid" object="${lignecmdfournisseur}" z="iyBjVL7KW/HhHT6J4vGcjMC6eJo="/>
     </page:show>
     <HR/>
     <HR/>

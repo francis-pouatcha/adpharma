@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.adorsys.adpharma.domain.AvoirClient;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
@@ -113,6 +114,24 @@ public class DetteClientController {
 
 			}
 	    return	new EtatCreditsController().initShowView(uiModel, (EtatCredits)etatCredits.merge() );
+		}
+	    
+	    
+	    @RequestMapping(value = "/searchDette", method = RequestMethod.GET)
+		public String searchDette(@RequestParam("name") String  name,  Model uiModel) {
+			
+			if("".equals(name)){
+				Integer page = 1;
+				Integer size = 50;
+				int sizeNo = size == null ? 10 : size.intValue();
+	            uiModel.addAttribute("detteclients", DetteClient.findDetteClientEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+	            float nrOfPages = (float) DetteClient.countDetteClients() / sizeNo;
+	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			}else{
+					List<DetteClient> list = DetteClient.findDetteClientsByClient(name).setMaxResults(50).getResultList();
+					uiModel.addAttribute("detteclients", list);
+			}
+			return "detteclients/list";
 		}
 	    
 	    @ModelAttribute("detteclients")

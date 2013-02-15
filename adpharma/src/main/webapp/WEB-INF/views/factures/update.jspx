@@ -24,5 +24,6 @@
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Facture_footPrint" z="sufHsuSijLXxZ+NUn31zUlgdvrw="/>
         <field:input field="cip" id="c_org_adorsys_adpharma_domain_Facture_cip" z="HYXT4jPdT00B2o4wwEFAGwp4U3c="/>
         <field:input field="designation" id="c_org_adorsys_adpharma_domain_Facture_designation" z="vv63xZmLk4x9uxCV7TQfQWeyWSI="/>
+        <field:checkbox field="printWithReduction" id="c_org_adorsys_adpharma_domain_Facture_printWithReduction" z="tYAI0yiFhWMmCqVrE9hrvzLCVIM="/>
     </form:update>
 </div>

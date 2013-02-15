@@ -30,6 +30,7 @@
                 </td>
             </tr>
         </table>
+        <field:display field="printWithReduction" id="s_org_adorsys_adpharma_domain_Facture_printWithReduction" object="${facture}" z="TXuZjJSBcHazpsvU6bSV6JVngS0="/>
     </page:show1>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Facture_footPrint" object="${facture}" z="lhDxKm146YRni7/AoYGDGkOrjRQ="/>

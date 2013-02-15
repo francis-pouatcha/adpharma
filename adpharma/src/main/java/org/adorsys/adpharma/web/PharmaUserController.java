@@ -3,12 +3,14 @@ package org.adorsys.adpharma.web;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.CipMgenerator;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RooWebScaffold(path = "pharmausers", formBackingObject = PharmaUser.class)
@@ -131,5 +134,20 @@ public class PharmaUserController {
     	return ProcessHelper.populateRoleNames();
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String searchUser(@RequestParam("name") String  name,  Model uiModel) {
 		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("pharmausers", PharmaUser.findPharmaUserEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) PharmaUser.countPharmaUsers() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<PharmaUser> list = PharmaUser.findPharmaUsersByUserNameLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("pharmausers", list);
+		}
+		return "pharmausers/list";
+	}	
 }

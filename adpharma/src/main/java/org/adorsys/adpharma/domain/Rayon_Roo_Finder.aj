@@ -18,10 +18,40 @@ privileged aspect Rayon_Roo_Finder {
         return q;
     }
     
+    public static TypedQuery<Rayon> Rayon.findRayonsByDisplayNameLike(String displayName) {
+        if (displayName == null || displayName.length() == 0) throw new IllegalArgumentException("The displayName argument is required");
+        displayName = displayName.replace('*', '%');
+        if (displayName.charAt(0) != '%') {
+            displayName = "%" + displayName;
+        }
+        if (displayName.charAt(displayName.length() - 1) != '%') {
+            displayName = displayName + "%";
+        }
+        EntityManager em = Rayon.entityManager();
+        TypedQuery<Rayon> q = em.createQuery("SELECT o FROM Rayon AS o WHERE LOWER(o.displayName) LIKE LOWER(:displayName)", Rayon.class);
+        q.setParameter("displayName", displayName);
+        return q;
+    }
+    
     public static TypedQuery<Rayon> Rayon.findRayonsByNameEquals(String name) {
         if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
         EntityManager em = Rayon.entityManager();
         TypedQuery<Rayon> q = em.createQuery("SELECT o FROM Rayon AS o WHERE o.name = :name", Rayon.class);
+        q.setParameter("name", name);
+        return q;
+    }
+    
+    public static TypedQuery<Rayon> Rayon.findRayonsByNameLike(String name) {
+        if (name == null || name.length() == 0) throw new IllegalArgumentException("The name argument is required");
+        name = name.replace('*', '%');
+        if (name.charAt(0) != '%') {
+            name = "%" + name;
+        }
+        if (name.charAt(name.length() - 1) != '%') {
+            name = name + "%";
+        }
+        EntityManager em = Rayon.entityManager();
+        TypedQuery<Rayon> q = em.createQuery("SELECT o FROM Rayon AS o WHERE LOWER(o.name) LIKE LOWER(:name)", Rayon.class);
         q.setParameter("name", name);
         return q;
     }

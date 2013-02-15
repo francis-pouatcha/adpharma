@@ -24,6 +24,7 @@
         <field:select field="typeCommande" id="c_org_adorsys_adpharma_domain_Facture_typeCommande" items="${typecommandes}" path="typecommandes" z="fB7i16DWKItsft9fDIroUY4iZJI="/>
         <field:input field="cip" id="c_org_adorsys_adpharma_domain_Facture_cip" z="HYXT4jPdT00B2o4wwEFAGwp4U3c="/>
         <field:input field="designation" id="c_org_adorsys_adpharma_domain_Facture_designation" z="vv63xZmLk4x9uxCV7TQfQWeyWSI="/>
+        <field:checkbox field="printWithReduction" id="c_org_adorsys_adpharma_domain_Facture_printWithReduction" z="tYAI0yiFhWMmCqVrE9hrvzLCVIM="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Facture" render="${not empty dependencies}" z="UpH5bZM7VSECUTRw+jFNsmUSLmk="/>
 </div>

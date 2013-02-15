@@ -92,7 +92,7 @@ privileged aspect DetteClientController_Roo_Controller {
     }
     
     void DetteClientController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("detteClient_datecreation_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("detteClient_datecreation_date_format", "dd-MM-yyyy hh:mm");
         uiModel.addAttribute("detteClient_datedernierversement_date_format", "dd-MM-yyyy HH:mm");
         uiModel.addAttribute("detteClient_datepaiement_date_format", "dd-MM-yyyy HH:mm");
     }

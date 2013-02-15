@@ -49,6 +49,17 @@ privileged aspect DetteClientController_Roo_Controller_Finder {
         return "detteclients/list";
     }
     
+    @RequestMapping(params = { "find=ByClientNoLike", "form" }, method = RequestMethod.GET)
+    public String DetteClientController.findDetteClientsByClientNoLikeForm(Model uiModel) {
+        return "detteclients/findDetteClientsByClientNoLike";
+    }
+    
+    @RequestMapping(params = "find=ByClientNoLike", method = RequestMethod.GET)
+    public String DetteClientController.findDetteClientsByClientNoLike(@RequestParam("clientNo") String clientNo, Model uiModel) {
+        uiModel.addAttribute("detteclients", DetteClient.findDetteClientsByClientNoLike(clientNo).getResultList());
+        return "detteclients/list";
+    }
+    
     @RequestMapping(params = { "find=ByDateCreationBetween", "form" }, method = RequestMethod.GET)
     public String DetteClientController.findDetteClientsByDateCreationBetweenForm(Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
@@ -56,7 +67,7 @@ privileged aspect DetteClientController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET)
-    public String DetteClientController.findDetteClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String DetteClientController.findDetteClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("detteclients", DetteClient.findDetteClientsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "detteclients/list";

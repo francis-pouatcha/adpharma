@@ -486,21 +486,21 @@ if(Check == false){
   	
   	 <!--  menu configuration -->
     
-              <spring:url value="/tauxmarges?form" var="conf_mrg_url"/>
+            <spring:url value="/tauxmarges?form" var="conf_mrg_url"/>
             <spring:url value="/tauxmarges?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_mrg_url"/>
-  			   <spring:url value="/modeconditionements?form" var="conf_con_url"/>
+  			<spring:url value="/modeconditionements?form" var="conf_con_url"/>
             <spring:url value="/modeconditionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_con_url"/>
             <spring:url value="/tvas?form" var="conf_tva_url"/>
             <spring:url value="/tvas?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_tva_url"/>
-             <spring:url value="/devises?form" var="conf_dev_url"/>
+            <spring:url value="/devises?form" var="conf_dev_url"/>
             <spring:url value="/devises?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_dev_url"/>
-                 
        		<spring:url value="/filiales?form" var="create_filiale_url"/>
             <spring:url value="/sites?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_site_url"/>
-                       <spring:url value="/filiales?page=1&amp;size=${empty param.size ? 50 : param.size}" var="filiale_list_url"/>
-            		<spring:url value="/statistics?form" var="create_statis_url"/>
-               		<spring:url value="/statistics/etatvente?form" var="etat_vente_url"/>
-                    		<spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
+            <spring:url value="/filiales?page=1&amp;size=${empty param.size ? 50 : param.size}" var="filiale_list_url"/>
+            <spring:url value="/statistics?form" var="create_statis_url"/>
+            <spring:url value="/statistics/etatvente?form" var="etat_vente_url"/>
+            <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
+            <spring:url value="/statistics/new?form" var="courbes" />        		
      
            
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
@@ -512,9 +512,9 @@ if(Check == false){
 		        				<a href="#">Statistique</a>
 		        					<ul>
 		        						<li><a href="${create_statis_url }">Courbe Chiffre D'affaire</a></li>
-		        					     <li><a href="${courbe_vente_url }">Panier Moyen</a></li>	
+		        					    <li><a href="${courbe_vente_url }">Panier Moyen</a></li>	
 		        					    <li><a href="${etat_vente_url }">Etat des ventes</a></li>	
-		        							
+		        					    <li><a href="${courbes}">Courbes statistiques</a></li>		
 		        					</ul>
 		        			 </li>
 		        			 <li>
@@ -634,14 +634,14 @@ if(Check == false){
 		        							<ul>
 		        								<li><a href="${list_rayon_url}">Listing Rayons</a></li>
 		        								<li><a href="${list_clt_url}">Listing Clients</a></li>
-		        								<li><a href="${list_relation_url}">Listing Relations de decompositions</a></li>
+		        								<li><a href="${list_relation_url}">Listing Relations de decomposition</a></li>
 		        								<li><a href="${et_valeur_stock}">Etat Valorisation du stock</a></li>
 		        								<li><a href="${et_jour_dette}">Etat Journalier des Dettes </a></li>
 		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
 		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
 		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
 		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>
-		        								<li><a href="${list_reclam_url}">Etat des reclamations fournisseurs </a></li>	
+		        								<li><a href="${list_reclam_url}">Etat Reclamations </a></li>	
 		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
 		        							</ul>
 		        						</li>
@@ -700,7 +700,7 @@ if(Check == false){
       
     	<li>
     	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
-    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold;">AIDE</a>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;">AIDE</a>
        </li>
   	
  </ul> 
