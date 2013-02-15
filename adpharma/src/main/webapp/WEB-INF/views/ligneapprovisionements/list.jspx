@@ -5,7 +5,7 @@
     <security:authorize ifAnyGranted="ROLE_STOCKER,ROLE_SITE_MANAGER">
         <c:set value="true" var="permission"/>
     </security:authorize>
-    <page:list id="pl_org_adorsys_adpharma_domain_LigneApprovisionement" items="${ligneapprovisionements}" label="Produits en Stock" z="user-managed">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_LigneApprovisionement" items="${ligneapprovisionements}" label="Produits en Stock" z="user-managed" url="/ligneapprovisionements/searchLigneApp" search="true" placeholder="Rechercher par designation">
         <table:table create="false" data="${ligneapprovisionements}" delete="false" id="l_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" show="${permission }" update="${permission }" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" property="lotNumber" z="user-managed"/>
@@ -26,5 +26,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" property="skipPriceConvertion" z="f4bYocMiuI/hEHaE3xaj2yXuk/s="/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" property="viewMsg" z="wIyJj8YDIgmA9SVk5e11t8oajaM="/>
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

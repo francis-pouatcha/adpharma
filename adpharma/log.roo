@@ -256,3 +256,27 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-05 19:47:13
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-06 08:40:38
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-06 14:00:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-13 11:21:10
+focus --class ~.domain.CommandeFournisseur
+finder list 
+focus --class ~.domain.Rayon
+finder list 
+finder add findRayonsByDisplayNameLike
+focus --class ~.domain.Fournisseur
+finder list 
+finder add findFournisseursByNameLike
+focus --class ~.domain.MouvementStock
+finder list 
+finder add findMouvementStocksByDesignationLike
+focus --class ~.domain.Rayon
+finder list 
+finder add findRayonsByDisplayNameLike
+finder add findRayonsByDisplayNameLike
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-13 13:24:51
+focus --class ~domain.Rayon
+finder list
+finder add findRayonsByNameLike
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-14 09:42:55
+focus --class org.adorsys.adpharma.domain.DetteClient
+finder list 
+finder add findDetteClientsByClientNoLike

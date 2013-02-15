@@ -28,5 +28,8 @@
         <field:checkbox field="consommerAvoir" id="c_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" render="false" z="user-managed"/>
         <field:input field="agent" id="c_org_adorsys_adpharma_domain_EtatCredits_agent" render="false" z="user-managed"/>
         <field:checkbox field="encaisser" id="c_org_adorsys_adpharma_domain_EtatCredits_encaisser" render="false" z="user-managed"/>
+        <field:checkbox field="addAllUnbilledInvoices" id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" z="ldRPm4k4QXzewi9AI5u5p081yZ0="/>
+        <field:datetime dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" z="6STCkcyBdjcCN81d2wuKO7Js39U="/>
+        <field:datetime dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" z="4YbQBRGFQvXJUOt8mr+Xm2D44d8="/>
     </form:update>
 </div>

@@ -44,6 +44,21 @@ privileged aspect DetteClient_Roo_Finder {
         return q;
     }
     
+    public static TypedQuery<DetteClient> DetteClient.findDetteClientsByClientNoLike(String clientNo) {
+        if (clientNo == null || clientNo.length() == 0) throw new IllegalArgumentException("The clientNo argument is required");
+        clientNo = clientNo.replace('*', '%');
+        if (clientNo.charAt(0) != '%') {
+            clientNo = "%" + clientNo;
+        }
+        if (clientNo.charAt(clientNo.length() - 1) != '%') {
+            clientNo = clientNo + "%";
+        }
+        EntityManager em = DetteClient.entityManager();
+        TypedQuery<DetteClient> q = em.createQuery("SELECT o FROM DetteClient AS o WHERE LOWER(o.clientNo) LIKE LOWER(:clientNo)", DetteClient.class);
+        q.setParameter("clientNo", clientNo);
+        return q;
+    }
+    
     public static TypedQuery<DetteClient> DetteClient.findDetteClientsByDateCreationBetween(Date minDateCreation, Date maxDateCreation) {
         if (minDateCreation == null) throw new IllegalArgumentException("The minDateCreation argument is required");
         if (maxDateCreation == null) throw new IllegalArgumentException("The maxDateCreation argument is required");

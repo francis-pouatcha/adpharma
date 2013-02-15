@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core"  
-	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
-	xmlns:jsp="http://java.sun.com/JSP/Page"  
-	xmlns:security="http://www.springframework.org/security/tags" 
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-	xmlns:spring="http://www.springframework.org/tags"
-		xmlns:springform="http://www.springframework.org/tags/form" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
-	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
-	 version="2.0" style="margin-top: 10px;">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:security="http://www.springframework.org/security/tags" xmlns:spring="http://www.springframework.org/tags" xmlns:springform="http://www.springframework.org/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" style="margin-top: 10px;" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <script type="text/javascript">
-    <spring:url value="/etatcreditses/encaisser/${itemId}" var="encaisser_url" />
+        <spring:url value="/etatcreditses/encaisser/${itemId}" var="encaisser_url"/>
 
   
  function calculeReste()
@@ -106,75 +96,66 @@ $(function(){
 
 
 </script>
-    
-    
     <page:show1 bodyExt="bodyExt.jspx" clientLinks="showLink.jspx" delete="false" id="ps_org_adorsys_adpharma_domain_EtatCredits" object="${etatcredits}" path="/etatcreditses" z="user-managed">
-       <div id="showdiv">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
-                    <field:display field="etatNumber" id="s_org_adorsys_adpharma_domain_EtatCredits_etatNumber" object="${etatcredits}" z="58Y7mo8KuiSPNtGOdNNwj8RFvZU="/>
-                    <field:display field="client" id="s_org_adorsys_adpharma_domain_EtatCredits_client" object="${etatcredits}" z="9LJuQ+Hfv6/wH2L9pA+e2U1QB4Y="/>
-                    <field:display date="true" dateTimePattern="${etatCredits_dateedition_date_format}" field="dateEdition" id="s_org_adorsys_adpharma_domain_EtatCredits_dateEdition" object="${etatcredits}" z="QzYaxnz7GPF+uQMI1Q1vWt3BO4w="/>
-                    <field:display date="true" dateTimePattern="${etatCredits_datepaiement_date_format}" field="datePaiement" id="s_org_adorsys_adpharma_domain_EtatCredits_datePaiement" object="${etatcredits}" z="W4+lmrMAZbFj+MgXSXrlOdBWb78="/>
-                    <field:display field="consommerAvoir" id="s_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" object="${etatcredits}" z="UAeHEeIyrTccHBwo4YamE7d5IZk="/>
-                    <field:display field="agent" id="s_org_adorsys_adpharma_domain_EtatCredits_agent" object="${etatcredits}" z="pE7nL7RtsLAzQL4j3H4Ozqfxv4M="/>
-              <field:display field="encaisser" id="s_org_adorsys_adpharma_domain_EtatCredits_encaisser" object="${etatcredits}" z="Ss50gZ+xzonR1LH+ThoRHN7ljsI="/>
-                </td>
-                <td class="tbcreate">
-                    <field:display field="montantInitial" id="s_org_adorsys_adpharma_domain_EtatCredits_montantInitial" object="${etatcredits}" z="6l0C9sLBu6vodPUC1hx71OFaGGI="/>
-                    <field:display field="avance" id="s_org_adorsys_adpharma_domain_EtatCredits_avance" object="${etatcredits}" z="vq1upLvYoLUizZM//pAH4Vt8Mno="/>
-                    <field:display field="montantAvoir" id="s_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" object="${etatcredits}" z="+/GGMtgif3CEc0CN+TerEBz9Kds="/>
-                    <field:display field="reste" id="s_org_adorsys_adpharma_domain_EtatCredits_reste" object="${etatcredits}" z="fpRofeWSTIuxejzpJcScapMfFVs="/>
-                    <field:display field="solder" id="s_org_adorsys_adpharma_domain_EtatCredits_solder" object="${etatcredits}" z="5QBcj9p4V+CsbL2P9Jl9FusGhRE="/>
-                    <field:display field="annuler" id="s_org_adorsys_adpharma_domain_EtatCredits_annuler" object="${etatcredits}" z="Kbv4gs8WTrmUTLDchEuPqy1fFo8="/>
-                    <field:display field="listeDettes" id="s_org_adorsys_adpharma_domain_EtatCredits_listeDettes" object="${etatcredits}" render="false" z="user-managed"/>
-                    <field:display field="clientId" id="s_org_adorsys_adpharma_domain_EtatCredits_clientId" object="${etatcredits}" render="false" z="user-managed"/>
-                    <field:display field="clientName" id="s_org_adorsys_adpharma_domain_EtatCredits_clientName" object="${etatcredits}" render="false" z="user-managed"/>
-                     
-               
-                </td>
-            </tr>
-        </table>
+        <div id="showdiv">
+            <table class="tblog">
+                <tr>
+                    <td class="tbcreate">
+                        <field:display field="etatNumber" id="s_org_adorsys_adpharma_domain_EtatCredits_etatNumber" object="${etatcredits}" z="58Y7mo8KuiSPNtGOdNNwj8RFvZU="/>
+                        <field:display field="client" id="s_org_adorsys_adpharma_domain_EtatCredits_client" object="${etatcredits}" z="9LJuQ+Hfv6/wH2L9pA+e2U1QB4Y="/>
+                        <field:display date="true" dateTimePattern="${etatCredits_dateedition_date_format}" field="dateEdition" id="s_org_adorsys_adpharma_domain_EtatCredits_dateEdition" object="${etatcredits}" z="QzYaxnz7GPF+uQMI1Q1vWt3BO4w="/>
+                        <field:display date="true" dateTimePattern="${etatCredits_datepaiement_date_format}" field="datePaiement" id="s_org_adorsys_adpharma_domain_EtatCredits_datePaiement" object="${etatcredits}" z="W4+lmrMAZbFj+MgXSXrlOdBWb78="/>
+                        <field:display field="consommerAvoir" id="s_org_adorsys_adpharma_domain_EtatCredits_consommerAvoir" object="${etatcredits}" z="UAeHEeIyrTccHBwo4YamE7d5IZk="/>
+                        <field:display field="agent" id="s_org_adorsys_adpharma_domain_EtatCredits_agent" object="${etatcredits}" z="pE7nL7RtsLAzQL4j3H4Ozqfxv4M="/>
+                        <field:display field="encaisser" id="s_org_adorsys_adpharma_domain_EtatCredits_encaisser" object="${etatcredits}" z="Ss50gZ+xzonR1LH+ThoRHN7ljsI="/>
+                    </td>
+                    <td class="tbcreate">
+                        <field:display field="montantInitial" id="s_org_adorsys_adpharma_domain_EtatCredits_montantInitial" object="${etatcredits}" z="6l0C9sLBu6vodPUC1hx71OFaGGI="/>
+                        <field:display field="avance" id="s_org_adorsys_adpharma_domain_EtatCredits_avance" object="${etatcredits}" z="vq1upLvYoLUizZM//pAH4Vt8Mno="/>
+                        <field:display field="montantAvoir" id="s_org_adorsys_adpharma_domain_EtatCredits_montantAvoir" object="${etatcredits}" z="+/GGMtgif3CEc0CN+TerEBz9Kds="/>
+                        <field:display field="reste" id="s_org_adorsys_adpharma_domain_EtatCredits_reste" object="${etatcredits}" z="fpRofeWSTIuxejzpJcScapMfFVs="/>
+                        <field:display field="solder" id="s_org_adorsys_adpharma_domain_EtatCredits_solder" object="${etatcredits}" z="5QBcj9p4V+CsbL2P9Jl9FusGhRE="/>
+                        <field:display field="annuler" id="s_org_adorsys_adpharma_domain_EtatCredits_annuler" object="${etatcredits}" z="Kbv4gs8WTrmUTLDchEuPqy1fFo8="/>
+                        <field:display field="listeDettes" id="s_org_adorsys_adpharma_domain_EtatCredits_listeDettes" object="${etatcredits}" render="false" z="user-managed"/>
+                        <field:display field="clientId" id="s_org_adorsys_adpharma_domain_EtatCredits_clientId" object="${etatcredits}" render="false" z="user-managed"/>
+                        <field:display field="clientName" id="s_org_adorsys_adpharma_domain_EtatCredits_clientName" object="${etatcredits}" render="false" z="user-managed"/>
+                    </td>
+                </tr>
+            </table>
         </div>
-          <div id="paydiv" style="display: none;">
- <springform:form id="courseForm" name="formulaire" method="POST"  action="${encaisser_url }" onSubmit="return verif_formulaire()"  modelAttribute="paiement">
-        <div>
-      <label  style="font-weight: bold; font-size: 18px;" for="_montant">Montant : </label>
-       <springform:input path="montant" id="montant" readonly="true"  onKeyPress="return scanTouche(event)" maxlength="8" cssStyle="color:blue ; width: 212px;font-weight: bold; font-size: 40px; height: 50px;" />   
-                  <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
-       </div>   
-      
- <BR />
-
- <div>
-      <label style="font-weight: bold; font-size: 18px;" for="_sommeRecue">Somme Recue : </label>
-       <springform:input path="sommeRecue" onKeyPress="return scanTouche(event)" onkeyup="calculeReste()" onfocus="true"  id="sommeRecue" cssStyle=" width: 212px;font-weight: bold; font-size: 40px;  height: 50px;" />   
-		     		  <b style="color: red; margin-left: 20px;"> <c:out value="${msgSommeRecue}" ></c:out>  </b> 
-
-</div>   
- <BR /> 
- 
- <div>
-      <label  style="font-weight: bold; font-size: 18px;" for="_difference">Difference : </label>
-       <springform:input path="difference" id="difference" cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;"  readonly="true"/>        
-         
-</div> 
- 
- <BR /> 
-   
-
-<div>
-<input type="submit" value="Encaisser" class="submits"   />
-</div>
-</springform:form>
-       
-</div>  
- 
+        <div id="paydiv" style="display: none;">
+            <springform:form action="${encaisser_url }" id="courseForm" method="POST" modelAttribute="paiement" name="formulaire" onSubmit="return verif_formulaire()">
+                <div>
+                    <label for="_montant" style="font-weight: bold; font-size: 18px;">Montant : </label>
+                    <springform:input cssStyle="color:blue ; width: 212px;font-weight: bold; font-size: 40px; height: 50px;" id="montant" maxlength="8" onKeyPress="return scanTouche(event)" path="montant" readonly="true"/>
+                    <b style="color: red; margin-left: 20px;">
+                        <c:out value="${msgMontant}"/>
+                    </b>
+                </div>
+                <BR/>
+                <div>
+                    <label for="_sommeRecue" style="font-weight: bold; font-size: 18px;">Somme Recue : </label>
+                    <springform:input cssStyle=" width: 212px;font-weight: bold; font-size: 40px;  height: 50px;" id="sommeRecue" onKeyPress="return scanTouche(event)" onfocus="true" onkeyup="calculeReste()" path="sommeRecue"/>
+                    <b style="color: red; margin-left: 20px;">
+                        <c:out value="${msgSommeRecue}"/>
+                    </b>
+                </div>
+                <BR/>
+                <div>
+                    <label for="_difference" style="font-weight: bold; font-size: 18px;">Difference : </label>
+                    <springform:input cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;" id="difference" path="difference" readonly="true"/>
+                </div>
+                <BR/>
+                <div>
+                    <input class="submits" type="submit" value="Encaisser"/>
+                </div>
+            </springform:form>
+        </div>
+        <field:display field="addAllUnbilledInvoices" id="s_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" object="${etatcredits}" z="YUio81R1CvhyeHXDAq9DWmgLA5k="/>
+        <field:display date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_minDateDette" object="${etatcredits}" z="l0d7qmoasjIVxxHuyYpjTU1sAOM="/>
+        <field:display date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" object="${etatcredits}" z="kyGYcY12AQwGOEi/dBJ7QgJgrXk="/>
     </page:show1>
-		   <!--  formulaire de paiement -->
-		    
- 
+    <!--  formulaire de paiement -->
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_EtatCredits_footPrint" object="${etatcredits}" z="SXBzBEnkPZfr0G/qRC37AEZc/Nk="/>
     <HR/>

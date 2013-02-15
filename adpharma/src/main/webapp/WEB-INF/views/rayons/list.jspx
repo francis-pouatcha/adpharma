@@ -2,7 +2,7 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list id="pl_org_adorsys_adpharma_domain_Rayon" items="${rayons}" z="B2L4tKC828dAS8LXQXdX/aXsbPk=">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Rayon" items="${rayons}" placeholder="Rechercher par libelle" search="true" url="/rayons/searchRayon" z="user-managed">
         <table:table data="${rayons}" delete="false" id="l_org_adorsys_adpharma_domain_Rayon" path="/rayons" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" property="codeRayon" z="sZuk//hEqHAYdgF6w2g7Fd/8Eqs="/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_note" label="Code Geo" maxLength="-1" property="codeGeo" z="user-managed"/>
@@ -13,5 +13,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_emplacement" property="emplacement" z="4aRdmz2lTiO5TmpbAEs+5vJ1/go="/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" property="codeGeo" z="z0nCLqMi67/cAfCbm4+TOGCgWNg="/>
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

@@ -33,7 +33,7 @@ privileged aspect MouvementStockController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET)
-    public String MouvementStockController.findMouvementStocksByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String MouvementStockController.findMouvementStocksByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "mouvementstocks/list";
@@ -46,7 +46,7 @@ privileged aspect MouvementStockController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetweenAndAgentCreateurEquals", method = RequestMethod.GET)
-    public String MouvementStockController.findMouvementStocksByDateCreationBetweenAndAgentCreateurEquals(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, @RequestParam("agentCreateur") String agentCreateur, Model uiModel) {
+    public String MouvementStockController.findMouvementStocksByDateCreationBetweenAndAgentCreateurEquals(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, @RequestParam("agentCreateur") String agentCreateur, Model uiModel) {
         uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDateCreationBetweenAndAgentCreateurEquals(minDateCreation, maxDateCreation, agentCreateur).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "mouvementstocks/list";
@@ -59,7 +59,7 @@ privileged aspect MouvementStockController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetweenAndAgentCreateurLike", method = RequestMethod.GET)
-    public String MouvementStockController.findMouvementStocksByDateCreationBetweenAndAgentCreateurLike(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, @RequestParam("agentCreateur") String agentCreateur, Model uiModel) {
+    public String MouvementStockController.findMouvementStocksByDateCreationBetweenAndAgentCreateurLike(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, @RequestParam("agentCreateur") String agentCreateur, Model uiModel) {
         uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDateCreationBetweenAndAgentCreateurLike(minDateCreation, maxDateCreation, agentCreateur).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "mouvementstocks/list";
@@ -72,9 +72,20 @@ privileged aspect MouvementStockController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDesignationEqualsAndDateCreationBetween", method = RequestMethod.GET)
-    public String MouvementStockController.findMouvementStocksByDesignationEqualsAndDateCreationBetween(@RequestParam("designation") String designation, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String MouvementStockController.findMouvementStocksByDesignationEqualsAndDateCreationBetween(@RequestParam("designation") String designation, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDesignationEqualsAndDateCreationBetween(designation, minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
+        return "mouvementstocks/list";
+    }
+    
+    @RequestMapping(params = { "find=ByDesignationLike", "form" }, method = RequestMethod.GET)
+    public String MouvementStockController.findMouvementStocksByDesignationLikeForm(Model uiModel) {
+        return "mouvementstocks/findMouvementStocksByDesignationLike";
+    }
+    
+    @RequestMapping(params = "find=ByDesignationLike", method = RequestMethod.GET)
+    public String MouvementStockController.findMouvementStocksByDesignationLike(@RequestParam("designation") String designation, Model uiModel) {
+        uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByDesignationLike(designation).getResultList());
         return "mouvementstocks/list";
     }
     
@@ -86,7 +97,7 @@ privileged aspect MouvementStockController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByTypeMouvementAndDateCreationBetween", method = RequestMethod.GET)
-    public String MouvementStockController.findMouvementStocksByTypeMouvementAndDateCreationBetween(@RequestParam("typeMouvement") TypeMouvement typeMouvement, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
+    public String MouvementStockController.findMouvementStocksByTypeMouvementAndDateCreationBetween(@RequestParam("typeMouvement") TypeMouvement typeMouvement, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("mouvementstocks", MouvementStock.findMouvementStocksByTypeMouvementAndDateCreationBetween(typeMouvement, minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "mouvementstocks/list";

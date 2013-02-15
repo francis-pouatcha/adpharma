@@ -34,4 +34,7 @@
     <definition extends="default" name="detteclients/search">
         <put-attribute name="body" value="/WEB-INF/views/detteclients/search.jspx"/>
     </definition>
+<definition extends="default" name="detteclients/findDetteClientsByClientNoLike">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByClientNoLike.jspx"/>
+    </definition>
 </tiles-definitions>

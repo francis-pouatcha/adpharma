@@ -112,7 +112,7 @@ privileged aspect MouvementStockController_Roo_Controller {
     }
     
     void MouvementStockController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("mouvementStock_datecreation_date_format", "dd-MM-yyyy HH:mm");
+        uiModel.addAttribute("mouvementStock_datecreation_date_format", "dd-MM-yyyy hh:mm");
     }
     
     String MouvementStockController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
