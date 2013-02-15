@@ -256,3 +256,21 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-05 19:47:13
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-06 08:40:38
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-06 14:00:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-07 11:08:40
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-08 08:35:29
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-08 20:22:15
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-12 09:16:25
+enum type --class ~.domain.TypeCourbeGraphique
+enum constant --name APPROVISIONNEMENT
+enum constant --name VENTES
+enum type --class ~.domain.TypeFrequence
+enum constant --name MENSUELLE
+enum constant --name JOURNALIERE
+enum constant --name HEBDOMADAIRE
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-12 23:47:14
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-13 08:02:49
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-13 17:04:48
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-14 08:25:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-15 08:30:10

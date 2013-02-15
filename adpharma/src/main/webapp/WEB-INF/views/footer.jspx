@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core"   xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" id="footer" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"   
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" id="footer" version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <jsp:output omit-xml-declaration="yes"/>
+  
   <spring:url value="/" var="home"/>
   <spring:url value="/resources/images/adorsys-logo.png" var="logo"/>
   <spring:url value="/resources/images/home.png" var="homeimg"/>
-   <spring:url value="/resources/images/cp.png" var="cp"/>
+  <spring:url value="/resources/images/cp.png" var="cp"/>
   <spring:message code="global_sponsored" htmlEscape="false" var="sponsored"/>
-    <spring:url value="/" var="home"/>
+  <spring:url value="/" var="home"/>
+  
     <div id="footer1" >
 		<center>	
-		copyright 2011 <a href="http://adorsys.cm" > ADORSYS S.A</a>  
+		<a href="http://adorsys.cm" style="color: #eee"> ADORSYS S.A</a>  
         Phones : +237 33 42 32 44 / 99 93 99 48 
 		<span style="float: right; font-weight: bold; color: white;">Languages | <util:language locale="fr" label="francaise"/> <util:language locale="en" label="anglaise"/></span>
 		</center>
-</div>
+    </div>
 
 <jsp:include page="ajaxSearchProductForm.jspx" />
   

@@ -7,8 +7,8 @@ p                                   { margin: 15px 0; } */
 
 .menu{
 	background-color: #ccc;
-	height: 25px;
-
+	height: 30px;
+    background: url("pattern1.png") repeat-x;
 }
 
 .dropdown a{
@@ -28,17 +28,16 @@ p                                   { margin: 15px 0; } */
 .dropdown{
 	margin: 0; padding: 0;
 	margin-bottom: 1px;
-	
 }
 /* 
 	LEVEL ONE
 */
-ul.dropdown                         { position: relative;background-color: #ccc;width: 1000px; }
-ul.dropdown li                      { font-weight: bold; float: left; zoom: 1; background: #ccc; }
+ul.dropdown                         { position: relative; width: auto; }
+ul.dropdown li                      { font-weight: bold; float: left; zoom: 1; /* background: #ccc; */ }
 ul.dropdown a:hover		            { color: #000; }
 ul.dropdown a:active                { color: #ffa500; }
-ul.dropdown li a                    { display: block; padding: 4px 8px; border-right: 1px solid #333;
-	 								  color: #222; }
+ul.dropdown li a                    { display: block; padding: 7px 8px 4px 8px; border-right: 2px inset #333;
+	 								  color: #222; height: 19px; text-shadow: 2px 2px 2px #ffffff;}
 ul.dropdown li:last-child a         { border-right: none; } /* Doesn't work in IE */
 ul.dropdown li.hover,
 ul.dropdown li:hover                { background: #F3D673; color: black; position: relative; }
@@ -48,12 +47,14 @@ ul.dropdown li.hover a              { color: black; }
 /* 
 	LEVEL TWO
 */
-ul.dropdown ul 						{ width: 220px; visibility: hidden; position: absolute; top: 100%; left: 0;z-index: 1; }
+ul.dropdown ul 						{ width:250px; visibility: hidden; position: absolute; top: 100%; left: 0;z-index: 1;
+                                      border-top: 1px solid #B4B4B4; border-bottom: 1px solid #B4B4B4; }
 ul.dropdown ul li 					{ font-weight: normal; background: #f6f6f6; color: #000; 
-									  border-bottom: 1px solid #ccc; float: none; }
+									  border-bottom: 1px solid #ccc; float: none; height: 27px; 
+									  border-left: 1px solid #B4B4B4;border-right: 1px solid #B4B4B4}
 									  
                                     /* IE 6 & 7 Needs Inline Block */
-ul.dropdown ul li a					{ border-right: none; width: 100%; display: inline-block; } 
+ul.dropdown ul li a					{ border-right: none; width: 100%; display: inline-block; font-size: 11px;} 
 
 /* 
 	LEVEL THREE
