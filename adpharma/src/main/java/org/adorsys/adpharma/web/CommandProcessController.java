@@ -26,8 +26,8 @@ import jxl.write.WritableWorkbook;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 
-import org.adorsys.adpharma.beans.CommandeProcess;
-import org.adorsys.adpharma.beans.OrderPreParationBean;
+import org.adorsys.adpharma.beans.process.CommandeProcess;
+import org.adorsys.adpharma.beans.process.OrderPreParationBean;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;

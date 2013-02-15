@@ -1,8 +1,9 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.pdf;
 
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.springframework.stereotype.Component;
@@ -28,22 +30,21 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-@Component("ficheApprovisionementPdfDocView")
-
-public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
-
+@Component("ficheSuivieQtePdf")
+public class FicheSuivieQtePdf extends   AbstractPdfView {
 
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		Approvisionement approvisionement = (Approvisionement) model.get("approvisionement");
+		List<Produit>  listeProduit = (List<Produit> ) model.get("listeProduit");
+		String headTexte =  (String) model.get("headTexte");
 		Site site = Site.findSite(new Long(1));
 
-		Font headerStyle = new Font(Font.COURIER,10);
+		Font headerStyle = new Font(Font.COURIER,11);
 		headerStyle.setStyle("bold");
-		Font boddyStyle = new Font(Font.COURIER,10);
+		Font boddyStyle = new Font(Font.COURIER,9);
 		PdfPCell cellStyle = new PdfPCell();
 		cellStyle.setPadding(.3f);
 		cellStyle.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -72,43 +73,33 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 
 		// addresse de la pharmacie
 		float[] adColumnsWith = {2f, 2.4f, 2f};
-		PdfPTable adressTable = new PdfPTable(adColumnsWith);
+		PdfPTable adressTable = new PdfPTable(1);
 		adressTable.setWidthPercentage(100);
 		PdfPCell senderCell = new PdfPCell(cellBorderlessStyle);
 		senderCell.setPhrase(new Phrase(new Chunk(site.getDisplayName().toUpperCase(), headerStyle)));
-		senderCell.setColspan(2);
 		senderCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
 		adressTable.addCell(senderCell);// 1:2
-		adressTable.addCell(emptyCell);// 1:1
 		// Invoice company
 		PdfPCell addCell1 = new PdfPCell(cellBorderlessStyle);
-		addCell1.setColspan(2);
 		addCell1.setPhrase(new Phrase(new Chunk(site.getSiteManager(), headerStyle)));
 		addCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(addCell1);// 1:2
-		adressTable.addCell(emptyCell);// 1:1
 
 		PdfPCell addCell2 = new PdfPCell(cellBorderlessStyle);
 		addCell2.setPhrase(new Phrase(new Chunk(site.getAdresse(), boddyStyle)));
 		addCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
-		addCell2.setColspan(2)	;	
 		addCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(addCell2);
-		adressTable.addCell(emptyCell);// 1:2
 		PdfPCell telCell = new PdfPCell(cellBorderlessStyle);
 		telCell.setPhrase(new Phrase(new Chunk("Tel: "+site.getPhone() +   "Fax : "+site.getFax(), boddyStyle)));
-		telCell.setColspan(2);
 		telCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(telCell);
-		adressTable.addCell(emptyCell);// 1:2
-
+         adressTable.addCell(emptyCell);
 		PdfPCell emailCell = new PdfPCell(cellBorderlessStyle);
-		emailCell.setPhrase(new Phrase(new Chunk("Email : "+site.getAdresse(), boddyStyle)));
-		emailCell.setColspan(2);
-		emailCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		emailCell.setPhrase(new Phrase(new Chunk(headTexte.toUpperCase(), headerStyle)));
+		emailCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		adressTable.addCell(emailCell);
-		adressTable.addCell(emptyCell);// 1:2
 
 		document.add(adressTable);
 		PdfPTable adressTable1 = new PdfPTable(adColumnsWith);
@@ -122,7 +113,7 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 		document.add(spaceTable);
 
 		// la table d'approvisionement
-		float[] colWidths = {1.4f,1.4f,4.9f, 1.4f, 1.1f, 1.1f, 1.1f, 1.1f};
+		float[] colWidths = {1.3f,4.5f, 1.1f, 1.1f, 1.1f, 1.4f, 1.4f};
 		PdfPTable table = new PdfPTable(colWidths);
 		table.setWidthPercentage(100);
 		table.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -131,27 +122,21 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 		headerStyle.setColor(Color.WHITE);
 
 		PdfPCell cipMCell = new PdfPCell(cellStyle);
-		cipMCell.setPhrase(new Phrase(new Chunk("CIP Maison", headerStyle)));
+		cipMCell.setPhrase(new Phrase(new Chunk("C.I.P", headerStyle)));
 		cipMCell.setBackgroundColor(Color.gray);
 		cipMCell.setPaddingBottom(2);
 		table.addCell(cipMCell );
 
 		PdfPCell cipCell = new PdfPCell(cellStyle);
-		cipCell.setPhrase(new Phrase(new Chunk("C.I.P ", headerStyle)));
+		cipCell.setPhrase(new Phrase(new Chunk("DESIGNATION", headerStyle)));
 		cipCell.setBackgroundColor(Color.gray);
 		cipCell.setPaddingBottom(2);
 		table.addCell(cipCell );
 
 
-		PdfPCell desCell = new PdfPCell(cellStyle);
-		desCell.setPhrase(new Phrase(new Chunk("Designation", headerStyle)));
-		desCell.setBackgroundColor(Color.gray);
-		desCell.setPaddingBottom(2);
-
-		table.addCell(desCell);
 
 		PdfPCell datePrmCell = new PdfPCell(cellStyle);
-		datePrmCell.setPhrase(new Phrase(new Chunk("Date Prm", headerStyle)));
+		datePrmCell.setPhrase(new Phrase(new Chunk("QTE STOCK", headerStyle)));
 		datePrmCell.setBackgroundColor(Color.gray);
 		datePrmCell.setPaddingBottom(2);
 
@@ -159,19 +144,33 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 
 
 		PdfPCell paCell = new PdfPCell(cellStyle);
-		paCell.setPhrase(new Phrase(new Chunk("PA Unit ", headerStyle)));
+		paCell.setPhrase(new Phrase(new Chunk("QTE VENDUE ", headerStyle)));
 		paCell.setBackgroundColor(Color.gray);
 		paCell.setPaddingBottom(2);
 
 		table.addCell(paCell);
 
 		PdfPCell qteCell = new PdfPCell(cellStyle);
-		qteCell.setPhrase(new Phrase(new Chunk("Quantite ", headerStyle)));
+		qteCell.setPhrase(new Phrase(new Chunk("QTE CMD ", headerStyle)));
 		qteCell.setBackgroundColor(Color.gray);
 		qteCell.setPaddingBottom(2);
 		table.addCell(qteCell);
+		
+		PdfPCell desCell = new PdfPCell(cellStyle);
+		desCell.setPhrase(new Phrase(new Chunk("RAYON", headerStyle)));
+		desCell.setBackgroundColor(Color.gray);
+		desCell.setPaddingBottom(2);
 
+		table.addCell(desCell);
+		
+		PdfPCell filCell = new PdfPCell(cellStyle);
+		filCell.setPhrase(new Phrase(new Chunk("FILIALE", headerStyle)));
+		filCell.setBackgroundColor(Color.gray);
+		filCell.setPaddingBottom(2);
 
+		table.addCell(filCell);
+
+/*
 		PdfPCell pvCell = new PdfPCell(cellStyle);
 		pvCell.setPhrase(new Phrase(new Chunk("PV Unit ", headerStyle)));
 		pvCell.setBackgroundColor(Color.gray);
@@ -184,87 +183,90 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 		ptCell.setPhrase(new Phrase(new Chunk("PA Total ", headerStyle)));
 		ptCell.setBackgroundColor(Color.gray);
 		ptCell.setPaddingBottom(2);
-		table.addCell(ptCell);
+		table.addCell(ptCell);*/
 
 
-		BigDecimal totalVente = BigDecimal.ZERO;
+		/*BigDecimal totalVente = BigDecimal.ZERO;
 		BigDecimal totalAchat = BigDecimal.ZERO;
 		BigInteger totalQte =  BigInteger.ZERO;
-		BigDecimal totalPrix = BigDecimal.ZERO;
+		BigDecimal totalPrix = BigDecimal.ZERO;*/
 
-
-
-
-		Set<LigneApprovisionement> ligneApprovisionement = approvisionement.getLigneApprivisionement();
-
-		for (LigneApprovisionement line : ligneApprovisionement) {	
+		if (!listeProduit.isEmpty()) {
+	
+		for (Produit line : listeProduit) {	
 
 			//cipm
 			PdfPCell inCipm = new PdfPCell(cellBorderless);
-			inCipm.setPhrase(new Phrase(new Chunk(line.getCipMaison(), boddyStyle)));
+			inCipm.setPhrase(new Phrase(new Chunk(line.getCip(), boddyStyle)));
 			inCipm.setPaddingBottom(2);
 			table.addCell(inCipm);
 
 			//cip
 			PdfPCell inCipCell = new PdfPCell(cellBorderless);
-			inCipCell.setPhrase(new Phrase(new Chunk(line.getCip(), boddyStyle)));
-			inCipCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			inCipCell.setPhrase(new Phrase(new Chunk(line.getDesignation(), boddyStyle)));
+			inCipCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			inCipCell.setPaddingBottom(2);
 
 			table.addCell(inCipCell);
 
-			//Designation
-			PdfPCell inDesCell = new PdfPCell(cellBorderless);
-			inDesCell.setPhrase(new Phrase(new Chunk(line.getDesignation(), boddyStyle)));
-			inDesCell.setPaddingBottom(2);
-			inDesCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-			table.addCell(inDesCell);
-
-			// date Peremption
-			PdfPCell inprmCell = new PdfPCell(cellBorderless);
-			inprmCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(line.getDatePeremtion(), "dd-MM-yyyy "), boddyStyle)));
-			inprmCell.setPaddingBottom(2);
-			table.addCell(inprmCell);
-
-			// prix Achat
+			
+			
 			PdfPCell inPaCell = new PdfPCell(cellBorderless);
-			inPaCell.setPhrase(new Phrase(new Chunk(""+line.getPrixAchatUnitaire().longValue(), boddyStyle)));
-			totalAchat = totalAchat.add(line.getPrixAchatUnitaire()) ;
-			inPaCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-
-
+			inPaCell.setPhrase(new Phrase(new Chunk(""+line.getQuantiteEnStock(), boddyStyle)));
+			//totalAchat = totalAchat.add(line.getPrixAchatUnitaire()) ;
+			inPaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			inPaCell.setPaddingBottom(2);
 			table.addCell(inPaCell);
 
 			// qte
 			PdfPCell inqteCell = new PdfPCell(cellBorderless);
-			inqteCell.setPhrase(new Phrase(new Chunk(""+line.getQuantiteAprovisione(), boddyStyle)));
+			inqteCell.setPhrase(new Phrase(new Chunk(""+line.getQtevendu(), boddyStyle)));
 			inqteCell.setPaddingBottom(2);
+			inqteCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+
 			table.addCell(inqteCell);
-			totalQte= totalQte.add(line.getQuantiteAprovisione());
+			//totalQte= totalQte.add(line.getQuantiteAprovisione());
 
 			// prix vente
 			PdfPCell inPvCell = new PdfPCell(cellBorderless);
-			inPvCell.setPhrase(new Phrase(new Chunk(""+line.getPrixVenteUnitaire().longValue(), boddyStyle)));
+			inPvCell.setPhrase(new Phrase(new Chunk(" ", boddyStyle)));
 			inPvCell.setPaddingBottom(2);
 			inPvCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
 			table.addCell(inPvCell);
-			totalVente= totalVente .add(line.getPrixVenteUnitaire());
+			
+			//Designation
+			PdfPCell inDesCell = new PdfPCell(cellBorderless);
+			inDesCell.setPhrase(new Phrase(new Chunk(line.getRayon().getCodeRayon(), boddyStyle)));
+			inDesCell.setPaddingBottom(2);
+			inDesCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+			table.addCell(inDesCell);
+
+			//Designation
+			PdfPCell infilCell = new PdfPCell(cellBorderless);
+			infilCell.setPhrase(new Phrase(new Chunk(line.getFiliale().getLibelle(), boddyStyle)));
+			infilCell.setPaddingBottom(2);
+			infilCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+			table.addCell(infilCell);
+
+			//totalVente= totalVente .add(line.getPrixVenteUnitaire());
 
 			// prix total
-			PdfPCell inPtCell = new PdfPCell(cellBorderless);
+			/*PdfPCell inPtCell = new PdfPCell(cellBorderless);
 			inPtCell.setPhrase(new Phrase(new Chunk(""+line.getPrixAchatTotal().longValue(), boddyStyle)));
 			inPtCell.setPaddingBottom(2);
 			inPtCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
 			table.addCell(inPtCell);
-			totalPrix= totalPrix .add(line.getPrixAchatTotal());
+			totalPrix= totalPrix .add(line.getPrixAchatTotal());*/
 
 
 		}
-		cellStyle.setBorderWidth(0);
+		
+	}
+		/*cellStyle.setBorderWidth(0);
 		PdfPCell cipMCell1 = new PdfPCell(cellStyle);
 		cipMCell1.setPhrase(new Phrase(new Chunk("", boddyStyle)));
 		cipMCell1.setBackgroundColor(Color.gray);
@@ -326,7 +328,7 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 		paCell1.setBackgroundColor(Color.gray);
 		paCell1.setPaddingBottom(2);
 
-		table.addCell(paCell1);
+		table.addCell(paCell1);*/
 		document.add(table);
 
 	}
@@ -336,19 +338,17 @@ public class FicheApprovisionementPdfDocView extends   AbstractPdfView {
 
 			Document document, HttpServletRequest request) {
 		document.setPageSize(PageSize.A4);
-		document.setMargins(5, 5, 5, 5);
-		Approvisionement approvisionement = (Approvisionement) model.get("approvisionement");
-		Font boddyStyle = new Font(Font.COURIER,10);
+		document.setMargins(10, 10, 5, 5);
+		Font boddyStyle = new Font(Font.COURIER,8);
 
 		HeaderFooter footer = new HeaderFooter(new Phrase(new Chunk(  " Page" , boddyStyle)), true);
 		footer.setAlignment(Element.ALIGN_CENTER);
 		//document.setFooter(footer);
-		HeaderFooter header = null ;
-		header	= new HeaderFooter(new Phrase(new Chunk(""+approvisionement, boddyStyle)), false);
-		document.setHeader(header);
 
 		super.buildPdfMetadata(model, document, request);
 	}
 
+	
+	
 
 }

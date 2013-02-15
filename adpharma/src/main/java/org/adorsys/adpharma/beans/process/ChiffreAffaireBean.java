@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.beans;
+package org.adorsys.adpharma.beans.process;
 
 import java.awt.Color;
 import java.math.BigDecimal;

@@ -4,12 +4,12 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_org_adorsys_adpharma_domain_Caisse" modelAttribute="caisse" path="/caisses" render="${empty dependencies}" z="A5Ds4dsQwaRRCjXwYBYOqHQ0T+8=">
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Caisse_footPrint" render="false" z="user-managed"/>
-        <field:display hiddenfield="true" render="false" object="${caisse}" field="caisseNumber" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" z="user-managed"/>
-        <field:display hiddenfield="true" object="${caisse}"  field="caissier" isList="true" id="c_org_adorsys_adpharma_domain_Caisse_caissier" z="user-managed"/>
-        <field:display hiddenfield="true" object="${caisse}" isList="true" field="site" id="c_org_adorsys_adpharma_domain_Caisse_site"  z="user-managed"/>
-        <field:display hiddenfield="true" object="${caisse}" isList="true" date="true" dateTimePattern="${caisse_dateouverture_date_format}"  field="dateOuverture" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" z="user-managed"/>
+        <field:display field="caisseNumber" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" object="${caisse}" render="false" z="user-managed"/>
+        <field:display field="caissier" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Caisse_caissier" isList="true" object="${caisse}" z="user-managed"/>
+        <field:display field="site" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Caisse_site" isList="true" object="${caisse}" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${caisse_dateouverture_date_format}" field="dateOuverture" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" isList="true" object="${caisse}" z="user-managed"/>
         <field:datetime dateTimePattern="${caisse_datefemeture_date_format}" field="dateFemeture" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture" render="false" z="user-managed"/>
-        <field:input field="fondCaisse" required="true" id="c_org_adorsys_adpharma_domain_Caisse_fondCaisse" validationMessageCode="field_invalid_number" z="jJE5pyDxozHhGLdPMj3dk5TY0hk="/>
+        <field:input field="fondCaisse" id="c_org_adorsys_adpharma_domain_Caisse_fondCaisse" required="true" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="totalEncaissement" id="c_org_adorsys_adpharma_domain_Caisse_totalEncaissement" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="totalRetrait" id="c_org_adorsys_adpharma_domain_Caisse_totalRetrait" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>
         <field:input field="totalCash" id="c_org_adorsys_adpharma_domain_Caisse_totalCash" render="false" validationMessageCode="field_invalid_number" z="user-managed"/>

@@ -52,7 +52,7 @@ public class OrderItems {
     	 setIsValid(item.isValid());
     	 setItemIndex(item.getIndexLine());
     	 setPriceOrderd(item.getPrixAchatMin());
-    	 setPriceProvided(item.getPrixFourniMin());
+    	 setPriceProvided(item.getPrixAchatMin());
     	 setProductId("");
     	 setQtyOrdered(item.getQuantiteCommande());
     	 setQtyProvided(item.getQuantiteFournie());

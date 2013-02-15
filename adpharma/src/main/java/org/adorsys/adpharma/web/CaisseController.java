@@ -14,8 +14,8 @@ import javassist.expr.NewArray;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.adorsys.adpharma.beans.ChiffreAffaireBean;
-import org.adorsys.adpharma.beans.SessionBean;
+import org.adorsys.adpharma.beans.process.ChiffreAffaireBean;
+import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
@@ -84,10 +84,16 @@ public class CaisseController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid Caisse caisse, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("caisse", caisse);
 			addDateTimeFormatPatterns(uiModel);
 			return "caisses/create";
+		}
+		List<Caisse> list = Caisse.findCaissesByCaisseOuverteNotAndCaissier(Boolean.FALSE,pharmaUser ).getResultList();
+		if (!list.isEmpty()) {
+			uiModel.addAttribute("apMessage", "Vous avez deja une caisse ouverte veuillez la fermer avant . !  ");
+			return "caisses/infos";
 		}
 		uiModel.asMap().clear();
 		caisse.persist();
@@ -148,10 +154,6 @@ public class CaisseController {
 		uiModel.addAttribute("caisse",merge);
 		uiModel.addAttribute("itemId", merge.getId());
 		uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
-
-
-
-
 	}
 
 	@RequestMapping(value = "/fermerCaisse/{caisseId}", method = RequestMethod.GET)

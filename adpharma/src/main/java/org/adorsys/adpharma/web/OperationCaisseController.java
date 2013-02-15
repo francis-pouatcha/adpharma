@@ -2,7 +2,7 @@ package org.adorsys.adpharma.web;
 
 import java.util.ArrayList;
 
-import org.adorsys.adpharma.beans.PaiementProcess;
+import org.adorsys.adpharma.beans.process.PaiementProcess;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.security.SecurityUtil;

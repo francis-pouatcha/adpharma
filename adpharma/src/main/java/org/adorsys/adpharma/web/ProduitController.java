@@ -153,7 +153,7 @@ public class ProduitController {
 	@ResponseBody
 	public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
 		String des = httpServletRequest.getParameter("designation");
-		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(200).getResultList();
+		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(100).getResultList();
 		return Produit.toJsonArray(resultList);
 	}
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.beans.ReclamationBean;
+import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DestinationMvt;

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.beans.EtatCreditFinder;
+import org.adorsys.adpharma.beans.process.EtatCreditFinder;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.DetteClient;

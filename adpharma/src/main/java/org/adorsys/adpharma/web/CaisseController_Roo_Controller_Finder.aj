@@ -46,7 +46,7 @@ privileged aspect CaisseController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateOuvertureBetween", method = RequestMethod.GET)
-    public String CaisseController.findCaissesByDateOuvertureBetween(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateOuverture, Model uiModel) {
+    public String CaisseController.findCaissesByDateOuvertureBetween(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
         uiModel.addAttribute("caisses", Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "caisses/list";
