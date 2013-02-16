@@ -22,6 +22,8 @@
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Fournisseur_note" z="dqqWaxQVPZSbqUz4p/Wy2x88NC0="/>
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" render="false" z="user-managed"/>
         <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
+        <field:input field="distributorKey" label="DistributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
+        
         <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" z="NwdpMS3w5XjOjdB/P/asBE+TVt4="/>
     </form:update>
 </div>

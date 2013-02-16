@@ -11,7 +11,7 @@
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_adresse" property="adresse" z="11ZJApOPx4pGj4sbIBjHcuwUUho="/>
             <table:column id="s_org_adorsys_adpharma_domain_Fournisseur_responsable" maxLength="-1" property="responsable" z="Z/8iqdXaW5w05Sxh4+86wX+thjg="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" property="providerKey" z="0CZM1t4VW1SFo675N18/XLwtNwc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="DistributorKey" property="distributorKey" z="0CZM1t4VW1SFo675N18/XLwtNwc="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" property="shortname" z="Be1e6Smmrx5vh4/VOwz0abNDv48="/>
         </table:table>
     </page:list1>

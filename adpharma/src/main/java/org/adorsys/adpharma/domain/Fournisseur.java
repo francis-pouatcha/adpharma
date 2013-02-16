@@ -55,6 +55,8 @@ public class Fournisseur extends AdPharmaBaseEntity {
     private String ContribuableNumber;
 
     private String numRegistreComerce;
+    
+    private String distributorKey ;
 
     @Size(max = 256)
     private String note;
@@ -119,8 +121,18 @@ public class Fournisseur extends AdPharmaBaseEntity {
     public void setShortname(String shortname) {
         this.shortname = shortname;
     }
+    
+    
 
-    public String toString() {
+    public String getDistributorKey() {
+		return distributorKey;
+	}
+
+	public void setDistributorKey(String distributorKey) {
+		this.distributorKey = distributorKey;
+	}
+
+	public String toString() {
         return displayName();
     }
 

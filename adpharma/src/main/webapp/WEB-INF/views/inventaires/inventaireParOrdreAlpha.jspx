@@ -9,7 +9,7 @@
           <td class="tbcreate">
            <field:input field="designation" label="Designation" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
         <field:input field="beginBy" label="Debut" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy"  z="user-managed"/>
-        <field:input field="endBy" label="Fin :" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
+        <field:input field="endBy" label="Fin" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
           
           </td>
          <td class="tbcreate">
@@ -24,8 +24,8 @@
           
           <td class="tbcreate">
           
-          <field:checkbox field="cip" label="Par CIP?" id="c_org_adorsys_adpharma_domain_Inventaire_cip" z="user-managed"/>
-           <field:checkbox field="cipm" label="Par CIPM ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm" z="user-managed"/>
+          <field:checkbox field="inventoryBycip" label="Par CIP?" id="c_org_adorsys_adpharma_domain_Inventaire_cip" z="user-managed"/>
+           <field:checkbox field="inventoryBycipm" label="Par CIPM ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm" z="user-managed"/>
               <field:checkbox field="pAchat" label="Afficher le Pachat?" id="c_org_adorsys_adpharma_domain_Inventaire_pAchat" z="user-managed"/>
           <field:checkbox field="pVente" label="Afficher Le Pvente" id="c_org_adorsys_adpharma_domain_Inventaire_pVente" z="user-managed"/>
   

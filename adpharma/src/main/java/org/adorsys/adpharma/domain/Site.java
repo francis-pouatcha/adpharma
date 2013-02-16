@@ -22,6 +22,10 @@ public class Site extends AdPharmaBaseEntity {
     private String platformBaseUrl = "";
     
     private String drugstoreKey = "";
+    
+    private String orderSentPath = "";
+    
+    private String orderReceivePath = "";
 
     @Size(max = 256)
     private String adresse;
@@ -77,6 +81,22 @@ public class Site extends AdPharmaBaseEntity {
 
 	public void setDrugstoreKey(String drugstoreKey) {
 		this.drugstoreKey = drugstoreKey;
+	}
+
+	public String getOrderSentPath() {
+		return orderSentPath;
+	}
+
+	public void setOrderSentPath(String orderSentPath) {
+		this.orderSentPath = orderSentPath;
+	}
+
+	public String getOrderReceivePath() {
+		return orderReceivePath;
+	}
+
+	public void setOrderReceivePath(String orderReceivePath) {
+		this.orderReceivePath = orderReceivePath;
 	}
 
 	public static void initSite() {

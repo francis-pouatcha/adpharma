@@ -96,12 +96,13 @@ function annCmd(){
 				type="button" value="Cloturer La Vente"
 				title="Enregistrer La Commande" /></a></span>
 				</security:authorize>
-				 <!--
+				<!-- 
 				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
 				</security:authorize>
-				 -->
+ -->
     <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+
 				 
 				 <span><a
 			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT

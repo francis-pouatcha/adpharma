@@ -94,7 +94,7 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     private transient BigDecimal montant = BigDecimal.ZERO;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date dateCreation = new Date();
 
     /**

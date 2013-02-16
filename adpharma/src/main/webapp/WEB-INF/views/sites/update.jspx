@@ -13,7 +13,8 @@
                     <field:input field="ville" id="c_org_adorsys_adpharma_domain_Site_ville" z="2H2JpvWI72fES+2RkGllwrvK1bM="/>
                     <field:input field="Pays" id="c_org_adorsys_adpharma_domain_Site_Pays" z="wD0ubAhqka3FapCAMGDyyHLgaVY="/>
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
-                                      <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
+                    <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
+                    <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Order Sent Path" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                 
                 </td>
                 <td class="tbcreate">
@@ -25,6 +26,7 @@
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Site_footPrint" render="false" z="user-managed"/>
                     <field:textarea field="messageTiket" id="c_org_adorsys_adpharma_domain_Site_messageTiket" z="user-managed"/>
                     <field:input field="platformBaseUrl" id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" z="NvRzcK07/uNT5h9xVyJ0W5CzqsQ="/>
+                    <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="order Receive Path" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                 </td>
             </tr>
         </table>
