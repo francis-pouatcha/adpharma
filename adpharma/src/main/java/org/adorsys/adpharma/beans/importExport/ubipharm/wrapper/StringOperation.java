@@ -11,6 +11,6 @@ public interface StringOperation {
 	public int getStartIndex();
 	public int getEndIndex();
 	public String getStringValue();
-	public void joinAnotherString(StringOperation stringOperation);
+	public StringOperation joinAnotherString(StringOperation stringOperation);
 	public void clean();
 }

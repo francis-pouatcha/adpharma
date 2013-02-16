@@ -12,11 +12,12 @@ public abstract class UbipharmStringOperation implements StringOperation {
 	public UbipharmStringOperation (int startIndex , int endIndex){
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
+		this.size = this.endIndex -this.startIndex + 1;
 	}
 	int startIndex ;
 	int endIndex ;
 	String contains  = null;
-	int size = this.endIndex -this.startIndex;
+	int size ;
 	@Override
 	public int getStartIndex() {
 		return startIndex;
@@ -34,7 +35,7 @@ public abstract class UbipharmStringOperation implements StringOperation {
 		return contains;
 	}
 	@Override
-	public void joinAnotherString(StringOperation stringOperation) {
+	public StringOperation joinAnotherString(StringOperation stringOperation) {
 		if(stringOperation == null) throw new IllegalArgumentException("Invalid Argument, null value aren't accepted");
 		
 		this.getStringValue().concat(stringOperation.getStringValue());
@@ -45,6 +46,7 @@ public abstract class UbipharmStringOperation implements StringOperation {
 		if(isEndIndexCorrect(endIndex2)==false) 
 			throw new IllegalArgumentException("The end index Is incorrect ! Must be lower than"+getEndIndex());
 		this.contains = this.getStringValue().concat(stringOperation.getStringValue());
+		return this;
 	}
 	public boolean isStartIndexCorrect(int startIndex){
 		boolean isCorrect = false;
@@ -57,8 +59,11 @@ public abstract class UbipharmStringOperation implements StringOperation {
 		if(this.getStartIndex() == computedIndex) isCorrect = true;
 		return isCorrect;
 	}
+	public void joinString(UbipharmCommandStringSequence ...commandStringSequences ){
+		
+	}
 	public boolean isEndIndexCorrect(int endIndex){
-		return this.getEndIndex() <= endIndex;
+		return endIndex <= this.getEndIndex();
 	}
 	@Override
 	public void clean() {
