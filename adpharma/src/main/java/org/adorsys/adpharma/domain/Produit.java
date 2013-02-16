@@ -123,6 +123,7 @@ public class Produit extends AdPharmaBaseEntity {
     
 
 	public CipType getCipType() {
+		if(this.cipType == null) return CipType.CIP39;
 		return cipType;
 	}
 

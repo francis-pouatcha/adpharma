@@ -15,6 +15,7 @@ public class ProductItemLigne extends AbstractUbipharmLigneWrapper {
 	private UbipharmCommandStringSequence ligneNumber;
 	public ProductItemLigne(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
+		setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, false, "E"));
 	}
 	public UbipharmCommandStringSequence getQuantityOrdored() {
 		return quantityOrdored;

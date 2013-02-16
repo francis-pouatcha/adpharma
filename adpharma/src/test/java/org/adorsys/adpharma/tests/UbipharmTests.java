@@ -6,15 +6,25 @@ package org.adorsys.adpharma.tests;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.CommandInfo;
+
 import junit.framework.Assert;
 
 import org.adorsys.adpharma.beans.importExport.ubipharm.CommandJob;
 import org.adorsys.adpharma.beans.importExport.ubipharm.CsvImportExportUtil;
 import org.adorsys.adpharma.beans.importExport.ubipharm.FileSystemScanner;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.AbstractUbipharmLigneWrapper;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.CommandTypeLigne;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.DistributorLigne;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ProductItemLigne;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandStringSequence;
+import org.adorsys.adpharma.domain.CipType;
+import org.adorsys.adpharma.domain.CommandeFournisseur;
+import org.adorsys.adpharma.domain.LigneCmdFournisseur;
+import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.utils.CipMgenerator;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.JobBuilder;
@@ -99,4 +109,30 @@ public class UbipharmTests {
 		//add more lignes to export
 		return lignesToExport;
 	}
+	
+	@Test
+	public void testExportCommands(){
+		
+	}
+	public CommandTypeLigne convertCommand(CommandeFournisseur commandeFournisseur){
+		if(commandeFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");
+		CommandTypeLigne commandTypeLigne = new CommandTypeLigne(1, 25);
+		commandTypeLigne.setCommandType(new UbipharmCommandStringSequence(2, 4, "001"));
+		commandTypeLigne.setSeparator(new UbipharmCommandStringSequence(5, 5, "R"));
+		commandTypeLigne.setCommandReference(new UbipharmCommandStringSequence(6, 25, true, commandeFournisseur.getCmdNumber()));
+		return commandTypeLigne;
+	}
+	public ProductItemLigne convertCommandItem(LigneCmdFournisseur ligneCmdFournisseur,int ligneNumber){
+		if(ligneCmdFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");
+		ProductItemLigne itemLigne = new ProductItemLigne(1, 64);
+		itemLigne.setCodificationType(new UbipharmCommandStringSequence(2, 5, true,ligneCmdFournisseur.getProduit().getCipType().toString()));
+		itemLigne.setIsBalance(new UbipharmCommandStringSequence(59, 59, "N"));
+		itemLigne.setIsEquivalentDelivery(new UbipharmCommandStringSequence(60, 60, "N"));
+		itemLigne.setIsPartialDelivery(new UbipharmCommandStringSequence(58, 58, "N"));
+		itemLigne.setLigneNumber(new UbipharmCommandStringSequence(61, 64, CipMgenerator.formatNumber(""+ligneNumber, 4)));
+		itemLigne.setProductId(new UbipharmCommandStringSequence(8, 57,true,ligneCmdFournisseur.getCip()));
+		itemLigne.setQuantityOrdored(new UbipharmCommandStringSequence(59, 59, ligneCmdFournisseur.getQuantiteCommande().toString()));
+		return itemLigne;
+	}
 }
+
