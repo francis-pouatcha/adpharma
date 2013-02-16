@@ -77,7 +77,11 @@ public abstract class UbipharmStringOperation implements StringOperation {
 		return "UbipharmStringOperation [startIndex=" + startIndex
 				+ ", endIndex=" + endIndex + ", contains=" + contains + "]";
 	}
-	
+
+	public String[] arrayRepresentation(){
+		return new String[]{this.getStringValue()};
+	}
+
 
 }
 

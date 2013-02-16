@@ -8,7 +8,7 @@ package org.adorsys.adpharma.beans.importExport.ubipharm.wrapper;
  * @author w2b
  * Ligne du Repartiteur, correspondant a la ligne R
  */
-public class DistributorLigne extends UbipharmStringOperation{
+public class DistributorLigne extends AbstractUbipharmLigneWrapper{
 	private UbipharmStringOperation ligneIdentifier ;
 	private UbipharmStringOperation repartitor ;
 	public DistributorLigne() {
@@ -16,9 +16,6 @@ public class DistributorLigne extends UbipharmStringOperation{
 	}
 	public DistributorLigne(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
-	}
-	public UbipharmStringOperation getLigneIdentifier() {
-		return ligneIdentifier;
 	}
 	public void setLigneIdentifier(UbipharmStringOperation ligneIdentifier) {
 		this.ligneIdentifier = ligneIdentifier;

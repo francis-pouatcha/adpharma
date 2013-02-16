@@ -23,5 +23,4 @@ public abstract class AbstractUbipharmLigneWrapper extends UbipharmStringOperati
 		return "AbstractUbipharmLigneWrapper [ligneIdentifier="
 				+ ligneIdentifier + ", toString()=" + super.toString() + "]";
 	}
-	
 }
