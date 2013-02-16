@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.Query;
@@ -46,11 +48,11 @@ public class Produit extends AdPharmaBaseEntity {
 
 	private String fabricant;
 
-
 	@ManyToOne
 	private Rayon rayon;
 
-	
+	 @Enumerated(EnumType.STRING)
+	 private CipType cipType = CipType.CIP39 ;
 	
 	public Boolean actif = Boolean.TRUE ;
 	@ManyToOne
@@ -118,6 +120,17 @@ public class Produit extends AdPharmaBaseEntity {
 		this.qtevendu = qtevendu;
 	}
 	
+    
+
+	public CipType getCipType() {
+		return cipType;
+	}
+
+
+	public void setCipType(CipType cipType) {
+		this.cipType = cipType;
+	}
+
 
 
 	@Value("0")
