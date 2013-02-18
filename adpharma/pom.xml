@@ -160,7 +160,19 @@
 			<artifactId>poi</artifactId>
 			<version>3.6</version>
 		</dependency>
-		
+		<!-- opencvs dependency for cvs parsing -->
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
+		</dependency>
+            <!-- quartz schedule -->
+            <dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>2.1.6</version>
+			</dependency>
+			            
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

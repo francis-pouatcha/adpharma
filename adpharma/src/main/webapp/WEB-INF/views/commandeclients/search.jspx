@@ -17,7 +17,7 @@
                  <field:select disableFormBinding="true" field="etat" id="f_org_adorsys_adpharma_domain_CommandeClient_status" items="${etats}" path="/etats" required="false" z="Mq5rXZiL5qXI3AJacVGqG2nMQKg="/>
                <field:select field="pharmaUser" label="Vendeur" disableFormBinding="true" id="c_org_adorsys_adpharma_domain_Approvisionement_agentCreateur" itemValue="id" items="${pharmausers}" path="/pharmausers" z="user-managed"/>
           <field:select disableFormBinding="true" field="typeCommande" id="f_org_adorsys_adpharma_domain_CommandeClient_typeCommande" items="${typecommandes}" path="/typecommandes" required="false" z="Mq5rXZiL5qXI3AJacVGqG2nMQKg="/>
-        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" label="Date Edition Min" disableFormBinding="true" field="dateCreation" id="f_org_adorsys_adpharma_domain_CommandeClient_maxDateCreation" required="false" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" label="Date Edition Min" disableFormBinding="true" field="dateCreation" id="f_org_adorsys_adpharma_domain_CommandeClient_maxDateCreation" required="false" z="user-managed"/>
          </td>
             </tr>
         </table>

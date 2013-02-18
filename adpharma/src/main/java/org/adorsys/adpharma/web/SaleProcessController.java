@@ -255,7 +255,7 @@ public class SaleProcessController {
 		 return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId, httpServletRequest)+"/edit";
 	}
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrer", method = RequestMethod.GET)
 	public String enregistrerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpServletRequest httpServletRequest) {
 		SessionBean	  sessionBean = (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean");
@@ -286,7 +286,7 @@ public class SaleProcessController {
 	}
 
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrementValider",method = RequestMethod.POST)
 	public String emregistrementValider(@PathVariable("cmdId") Long cmdId, @RequestParam("cle") String key , Model uiModel, HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
