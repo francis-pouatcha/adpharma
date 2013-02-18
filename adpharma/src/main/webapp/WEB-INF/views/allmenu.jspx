@@ -645,7 +645,21 @@ if(Check == false){
 		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
 		        							</ul>
 		        						</li>
-  </security:authorize>
+      </security:authorize>
+      
+      <spring:url value="/?theme=blueTheme" var="blue_theme" />
+      <spring:url value="/?theme=standard" var="green_theme" />
+      
+      <security:authorize access="isAuthenticated()">
+            <li><a href="#">Themes</a>
+		        <ul>
+		          <li><a href="${green_theme}" title="Green Theme">Theme Vert</a></li>
+		          <li><a href="${blue_theme}" title="Blue Theme">Theme Bleu</a></li>
+		        </ul>
+		    </li>      
+      </security:authorize>
+      
+      
     
       <!--  menu database-->
                 <spring:url value="/printerconfigurations?page=1&amp;size=${empty param.size ? 50 : param.size}" var="printer_list"/>
@@ -693,14 +707,12 @@ if(Check == false){
       <!--  menu ordonnancier-->  
          <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
           <spring:url value="/sites?form" var="conf_site_url"/>
-           
-        
         </security:authorize>
          
       
     	<li>
     	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
-    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;">AIDE</a>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="Manuel ADPHARMA" target="_blank">AIDE</a>
        </li>
   	
  </ul> 

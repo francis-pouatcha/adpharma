@@ -6,7 +6,7 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
-                    <field:display hiddenfield="true" object="${site}" field="siteNumber" id="c_org_adorsys_adpharma_domain_Site_siteNumber" z="user-managed"/>
+                    <field:display field="siteNumber" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Site_siteNumber" object="${site}" z="user-managed"/>
                     <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Site_displayName" required="true" z="PgG36TLnLR3cljhYfFOhnYFSPZw="/>
                     <field:input field="numeroRegistre" id="c_org_adorsys_adpharma_domain_Site_numeroRegistre" label="No Contribuable" z="user-managed"/>
                     <field:input field="phone" id="c_org_adorsys_adpharma_domain_Site_phone" z="+5yNcJKclAXy8kET2iex4AL5sLA="/>
@@ -15,7 +15,6 @@
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
                     <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                     <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Order Sent Path" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
-                
                 </td>
                 <td class="tbcreate">
                     <field:input field="siteManager" id="c_org_adorsys_adpharma_domain_Site_siteManager" required="true" z="RS3JPJNTpbicmh1hQISTW4PNauU="/>
@@ -30,6 +29,7 @@
                 </td>
             </tr>
         </table>
-        
+        <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" z="XSlT/K1ynhmGm1x065HiZwvbhPM="/>
+        <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
     </form:update>
 </div>

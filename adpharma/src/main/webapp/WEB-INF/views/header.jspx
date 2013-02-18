@@ -5,137 +5,119 @@
 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
-  <spring:url var="banner" value="/resources/images/fakoship_logo.png" />
-  <spring:url var="ship" value="/resources/images/biglogo.png" />
-   <spring:url var="loginimage" value="/resources/images/login.png" />
-    <spring:url var="logoutimage" value="/resources/images/logout.png" />
-     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
-    
-  <spring:url var="home" value="/?lang=fr" /> 
-  <spring:message code="button_home" var="home_label" />
   
+ <spring:url var="banner" value="/resources/images/fakoship_logo.png" />
+ <spring:url var="ship" value="/resources/images/biglogo.png" />
+ <spring:url var="loginimage" value="/resources/images/login.png" />
+ <spring:url var="logoutimage" value="/resources/images/logout.png" />
+ <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
+ <spring:url var="home" value="/?lang=fr" /> 
+ <spring:message code="button_home" var="home_label" />
+ <spring:url var="user" value="/resources/images/usericon.png" />
+ <spring:url var="search" value="/resources/images/search.png" />
+ <spring:url var="dropdown" value="/resources/images/zonebar-downarrow.png" />
+ <spring:url var="logoutimage" value="/resources/images/logout.png" />
+ <spring:url var="home" value="/" />
+ <spring:url var="img" value="/resources/images/logo.png" />
+ <spring:message code="button_home" var="home_label" />
+ <spring:url value="/resources/j_spring_security_logout" var="logout"/>
+ <spring:message code="security_logout"  var="msg_logout"/>
+ <spring:message code="security_login"  var="msg_login"/>
+ <spring:message code="security_user_infos"  var="msg_user"/>
 
   
-  <script type="text/javascript">
- 
-  
-function confHeader(){
-Check = confirm("Voulez vous vraiment Ferner votre session? ");
-if(Check == false){
-	return false;
-	
-}else{
-	return true;
-}
-}
-$(function(){
-	
-$('#userInfos').click(function(){
-	
-	$('<div class="userdialog"> </div>').dialog({
-		
-		open: function(){
-			$.getJSON( '/adpharma/pharmausers/userInfos',
-					function(data){
-									$('.userdialog').html(
-											'<p> IDENTIFIANT :  '+ data.userName+'</p>'
-											+'<p>NOM COMPLET :  '+data.fullName+'</p>'
-											+'<p> TELEPHONE :   '+data.phoneNumber+'</p>'
-											+'<p> CLE DE VENTE :  '+data.saleKey+'</p>'
-											
-											);	
-						
-					});
+<script type="text/javascript">
+		function confHeader(){
+		Check = confirm("Voulez vous vraiment Ferner votre session? ");
+		if(Check == false){
+			return false;
 			
-			
-			
-		},
-		title: 'User Information',
-		width: 400,
-		resizable:true,
-		draggable :true,
-         hide:'slide',
-         show:'slide',
-         position:'center', 
-		modal:true,
-		buttons: {
-			"Reset Your Key": function() { 
-			
-			$.getJSON( '/adpharma/pharmausers/resetSaleKey',
-function(data){
-				$('.userdialog').html(
-						'<p> IDENTIFIANT :'+data.userName+'</p>'
-						+'<p> Nom Complet :'+data.fullName+'</p>'
-						+'<p> TELEPHONE :'+data.phoneNumber+'</p>'
-						+'<p> CLE DE VENTE :'+data.saleKey+'</p>'
-						
-						);	
-	
-});
-				
-			
-
-			}, 
-			"Cancel": function() { 
-				$(this).dialog("close"); 
-			} 
+		}else{
+			return true;
 		}
+		}
+		$(function(){
+			
+		$('#userInfos').click(function(){
+			
+			$('<div class="userdialog"> </div>').dialog({
+				
+				open: function(){
+					$.getJSON( '/adpharma/pharmausers/userInfos',
+							function(data){
+											$('.userdialog').html(
+													'<p> IDENTIFIANT :  '+ data.userName+'</p>'
+													+'<p>NOM COMPLET :  '+data.fullName+'</p>'
+													+'<p> TELEPHONE :   '+data.phoneNumber+'</p>'
+													+'<p> CLE DE VENTE :  '+data.saleKey+'</p>'
+													);	
+							                       });
+				},
+				title: 'User Information',
+				width: 400,
+				resizable:true,
+				draggable :true,
+		         hide:'slide',
+		         show:'slide',
+		         position:'center', 
+				modal:true,
+				buttons: {
+					"Reset Your Key": function() { 
+					
+					$.getJSON( '/adpharma/pharmausers/resetSaleKey', function(data){
+						$('.userdialog').html(
+								'<p> IDENTIFIANT :'+data.userName+'</p>'
+								+'<p> Nom Complet :'+data.fullName+'</p>'
+								+'<p> TELEPHONE :'+data.phoneNumber+'</p>'
+								+'<p> CLE DE VENTE :'+data.saleKey+'</p>'
+								
+								);	
+		              });
+					}, 
+					"Cancel": function() { 
+						$(this).dialog("close"); 
+					} 
+				}
+				});
+		
+			return false;
 		});
-
-	return false;
-});
-});
+		});
 </script>
 
- <spring:url var="user" value="/resources/images/usericon.png" />
-  <spring:url var="search" value="/resources/images/search.png" />
-   <spring:url var="dropdown" value="/resources/images/zonebar-downarrow.png" />
-    <spring:url var="logoutimage" value="/resources/images/logout.png" />
-  <spring:url var="home" value="/" />
-  <spring:url var="img" value="/resources/images/logo.png" />
-  <spring:message code="button_home" var="home_label" />
-  <spring:url value="/resources/j_spring_security_logout" var="logout"/>
-    <spring:message code="security_logout"  var="msg_logout"/>
-      <spring:message code="security_login"  var="msg_login"/>
-       <spring:message code="security_user_infos"  var="msg_user"/>
+ 
        
-  <table  style="border:none;">
-  <tr >
+<table  style="border:none;">
+  <tr>
     <td class="tbleft" >
  		<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
 			<img src="${img}"  alt="DZone"  />
 		</a>
 	</td>
- <td class="tbrigth">
+    <td class="tbrigth">
 			<div id="right-side">
-			<c:choose>
-  				<c:when test="${pageContext['request'].userPrincipal != null}">
-  			  <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
-		  		<a href="#"  > Bienvenue 	${pageContext['request'].userPrincipal.name}</a> Sur  ${sessionBean.connectedSiteName}
-		    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
-  				</c:when>
-  			</c:choose>
-			<c:choose>
-  				<c:when test="${pageContext['request'].userPrincipal != null}">
-				     <a href="${logout}" style="margin-rigth: 1px;margin-left:  1px;padding-right: 1px;"  onclick="return confHeader();" >
-				     
-				    ${msg_logout}
-				    
-				     </a> 
-				          <spring:url var="setLicence_url" value="#" />
-				     
-  				</c:when>
-  				<c:otherwise>
-  				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
-  				
-				      <spring:url value="/login" var="login"/>
-				      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" > ${msg_login}</a> 
-  				</c:otherwise>
-  			</c:choose>	
-				
-			
+				<c:choose>
+	  				<c:when test="${pageContext['request'].userPrincipal != null}">
+	  			  <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
+			  		<a href="#"  > Bienvenue 	${pageContext['request'].userPrincipal.name}</a> Sur  ${sessionBean.connectedSiteName}
+			    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
+	  				</c:when>
+	  			</c:choose>
+				<c:choose>
+	  				<c:when test="${pageContext['request'].userPrincipal != null}">
+					     <a href="${logout}" style="margin-rigth: 1px;margin-left:  1px;padding-right: 1px;"  onclick="return confHeader();" >
+					       ${msg_logout}
+					     </a> 
+					          <spring:url var="setLicence_url" value="#" />
+	  				</c:when>
+	  				<c:otherwise>
+	  				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
+					      <spring:url value="/login" var="login"/>
+					      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" > ${msg_login}</a> 
+	  				</c:otherwise>
+	  			</c:choose>	
 			</div>
-		</td>
+	  </td>
 	</tr>
 </table>
 </div> 

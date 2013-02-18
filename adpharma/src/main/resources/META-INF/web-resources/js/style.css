@@ -47,11 +47,11 @@ ul.dropdown li.hover a              { color: black; }
 /* 
 	LEVEL TWO
 */
-ul.dropdown ul 						{ width:250px; visibility: hidden; position: absolute; top: 100%; left: 0;z-index: 1;
+ul.dropdown ul 						{ width:250px; visibility: hidden; position: absolute; top: 100%; left: 0;z-index: 99;
                                       border-top: 1px solid #B4B4B4; border-bottom: 1px solid #B4B4B4; }
 ul.dropdown ul li 					{ font-weight: normal; background: #f6f6f6; color: #000; 
 									  border-bottom: 1px solid #ccc; float: none; height: 27px; 
-									  border-left: 1px solid #B4B4B4;border-right: 1px solid #B4B4B4}
+									  border-left: 1px solid #B4B4B4;border-right: 1px solid #B4B4B4; z-index: 99;}
 									  
                                     /* IE 6 & 7 Needs Inline Block */
 ul.dropdown ul li a					{ border-right: none; width: 100%; display: inline-block; font-size: 11px;} 
@@ -59,5 +59,5 @@ ul.dropdown ul li a					{ border-right: none; width: 100%; display: inline-block
 /* 
 	LEVEL THREE
 */
-ul.dropdown ul ul 					{ left: 100%; top: 0; }
+ul.dropdown ul ul 					{ left: 100%; top: 0; display:block; z-index: 99;}
 ul.dropdown li:hover > ul 			{ visibility: visible; }

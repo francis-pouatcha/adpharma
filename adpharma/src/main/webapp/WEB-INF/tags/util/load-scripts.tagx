@@ -29,10 +29,27 @@
      <spring:url value="/resources/js/JqueryTokenInput/token-input.css" var="token_css" />
      <spring:url value="/resources/js/JqueryTokenInput/token-input-facebook.css" var="tokenfacebook_css" />
      
+     <!-- Jquery Caroussel -->
+     <spring:url value="/resources/js/caroussel/carousel-0.9.3.js" var="caroussel" />
+     <spring:url value="/resources/js/caroussel/carouselani.js" var="carousselani" />
+     <spring:url value="/resources/js/caroussel/jquerycarousel.css" var="css_caroussel" />
+     
+     <!-- Jquery Accordion -->
+     <spring:url value="/resources/js/jqdropdown/jquery.accordion.2.0.js" var="accordion2" />
+     <spring:url value="/resources/js/jqdropdown/jquery.easing.min.js" var="easing" />
+     <spring:url value="/resources/js/jqdropdown/accordion.core.css" var="accore" />
+     <spring:url value="/resources/js/jqdropdown/core.css" var="core" />
+     <spring:url value="/resources/js/jqdropdown/dropdown.css" var="dropdown" />
+     <spring:url value="/resources/js/jqdropdown/reset.css" var="reset_acc" />
+     
     
      <link type="text/css" href="${jquerycss_url}" rel="stylesheet" media="all" />	
      <link type="text/css" href="${token_css}" rel="stylesheet" media="all" />
-     <link type="text/css" href="${tokenfacebook_css}" rel="stylesheet" media="all" />	
+     <link type="text/css" href="${tokenfacebook_css}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${css_caroussel}" rel="stylesheet" media="all" />
+     
+     <link type="text/css" href="${accore}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${dropdown}" rel="stylesheet" media="all" />
 
 <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
@@ -43,6 +60,11 @@
 <script type="text/javascript" src="${menu_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jquery_token}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${print_url}"><!-- required for FF3 and Opera --></script>
+
+<script type="text/javascript" src="${caroussel}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${carousselani}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${accordion2}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${easing}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
  
     
       

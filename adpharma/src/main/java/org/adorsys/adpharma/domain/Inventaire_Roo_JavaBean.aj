@@ -3,6 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.Long;
 import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,6 +21,14 @@ privileged aspect Inventaire_Roo_JavaBean {
     
     public void Inventaire.setNumeroInventaire(String numeroInventaire) {
         this.numeroInventaire = numeroInventaire;
+    }
+    
+    public Long Inventaire.getAproId() {
+        return this.aproId;
+    }
+    
+    public void Inventaire.setAproId(Long aproId) {
+        this.aproId = aproId;
     }
     
     public PharmaUser Inventaire.getAgent() {

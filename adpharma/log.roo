@@ -298,3 +298,10 @@ finder add findRayonsByNameLike
 focus --class org.adorsys.adpharma.domain.DetteClient
 finder list 
 finder add findDetteClientsByClientNoLike
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-16 08:24:24
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-16 08:48:43
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-16 12:06:16
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-16 18:33:42
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-18 08:37:35
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-18 10:02:32
