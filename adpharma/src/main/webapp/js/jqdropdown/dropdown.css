@@ -1,0 +1,55 @@
+
+/*
+ * Dropdown Sample.
+
+ */
+
+
+.loading {display: none;}
+#bloc_accordion{
+	margin: 0px 0 0 0;
+}
+.accordion {
+width:  500px;
+}
+.accordion li h3 a {
+    background:             #666;
+    background:             #666 -webkit-gradient(linear, left top, left bottom, from(#333), to(#CCC)) no-repeat;
+    background:             #666 -moz-linear-gradient(top,  #333,  #CCC) no-repeat;
+    border-bottom:          1px solid #333;
+    border-top:             1px solid #ccc;
+    color:                  #fff;
+    display:                block;
+    font-style:             normal;
+    margin:                 0;
+    padding:                3px 10px;
+    text-shadow:            0 -1px 2px #333, #ccc 0 1px 2px;
+}
+.accordion li.active h3 a {
+background:             #369;
+background:             #369 -webkit-gradient(linear, left top, left bottom, from(#58A618), to(#00FF66)) no-repeat;
+background:             #369 -moz-linear-gradient(top,  #58A618,  #00FF66) no-repeat;
+/* border-bottom:          1px solid #036;
+border-top:             1px solid #9cf; */
+border-bottom:          1px solid #ccc;
+border-top:             1px solid #ccc;
+text-shadow:            0 -1px 2px #036, #9cf 0 1px 2px;
+}
+.accordion li.locked h3 a {
+background:             #963;
+background:             #963 -webkit-gradient(linear, left top, left bottom, from(#c96), to(#963)) no-repeat;
+background:             #963 -moz-linear-gradient(top,  #c96,  #963) no-repeat;
+border-bottom:          1px solid #630;
+border-top:             1px solid #fc9;
+text-shadow:            0 -1px 2px #630, #fc9 0 1px 2px;
+}
+.accordion li h3 {
+    margin:         0;
+    padding:        0;
+}
+.accordion .panel {
+    padding: 10px;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+}

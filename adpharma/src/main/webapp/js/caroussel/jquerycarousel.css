@@ -1,0 +1,61 @@
+#carousel {
+	border: 1px solid #BBB; 
+	height: 300px;
+	margin-top:10px;
+	overflow: hidden;
+	z-index: -99;
+	}
+	
+#carousel img{
+	z-index: -99;
+}	
+
+#carouselContent_carousel {
+   z-index: 0;
+  }
+
+.cImgTitle {
+  font-size: 12px; 
+  border-top: 1px solid #bbbbbb; 
+  border-bottom: 1px solid #bbbbbb; 
+  padding-top: 1px; 
+  padding-bottom: 1px; 
+  font-family: verdana, tahoma, arial, sans-serif; 
+  background-color: #ffff99; 
+  color: #222222;
+  opacity: 1;
+}
+
+/* .cReflection{
+    visibility: hidden;
+} */
+
+.cOverlay{
+	height: 150px;
+	z-index: -99px;
+}
+
+.cBlock{
+	z-index: -99px;
+}
+
+.cOverlay:HOVER{
+	border: 1px solid #ccc;
+	box-shadow: 3px 3px 3px 3px #333;
+	
+}
+
+.carousel{
+	background: no-repeat;
+	display: block;
+    height: 100px;
+    width: 120px;
+	}
+
+
+.imageDescription {
+  font-family: verdana, tahoma, arial, sans-serif; 
+  font-size: 12px; 
+  text-align: justify;
+  font-weight: bold;
+}

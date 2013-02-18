@@ -700,7 +700,7 @@ if(Check == false){
       
     	<li>
     	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
-    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;">AIDE</a>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="Manuel ADPHARMA" target="_blank">AIDE</a>
        </li>
   	
  </ul> 

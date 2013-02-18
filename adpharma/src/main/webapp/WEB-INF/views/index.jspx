@@ -9,19 +9,9 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
   <spring:message var="app_name" code="application_name" htmlEscape="false" />
   <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
   
-<util:panel id="title" title="${title}">
- <div style="height:500px; text-align: center;" >
-		    <script type="text/javascript">
-				  function getFocus(elmt){
-					  elmt.className= "shadow";
-					  }
-				  function removeFocus(elmt){
-					  elmt.className = "insetshadow";
-					  }
-		    </script>
     <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
     <spring:url var="imgfonct" value="/resources/images/imgfonct.jpg"/>
-     <spring:url var="cloud" value="/resources/images/cloud.png"/>
+    <spring:url var="cloud" value="/resources/images/cloud.png"/>
     <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
     <spring:url var="imgcomp" value="/resources/images/imgfonct2.jpg"/>
     <spring:url var="userIco" value="/resources/images/user.jpeg"/>
@@ -37,11 +27,87 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_fact_url"/>
     <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
     <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_ord_url"/>
+    <spring:url value="/" var="home" />
     
-<security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
+    <!-- Liens des images caroussel  -->
+    <spring:url value="/resources/js/caroussel/images/img1.jpg" var="image1" />
+    <spring:url value="/resources/js/caroussel/images/img2.jpg" var="image2" />
+    <spring:url value="/resources/js/caroussel/images/img3.jpg" var="image3" />
+    <spring:url value="/resources/js/caroussel/images/img4.jpg" var="image4" />
+    <spring:url value="/resources/js/caroussel/images/img5.jpg" var="image5" />
+    <spring:url value="/resources/js/caroussel/images/img6.jpg" var="image6" />
+    <spring:url value="/resources/js/caroussel/images/img7.jpg" var="image7" />
+  
+  
+  <script type="text/javascript">
+				  function getFocus(elmt){
+					  elmt.className= "shadow";
+					  }
+				  function removeFocus(elmt){
+					  elmt.className = "insetshadow";
+					  }
+   </script>
+   <script type="text/javascript">
+			    $(document).ready(function(){  
+			      $('#carousel').jCarousel({
+			        onPicClick  : function(base, imageBlock, i) {
+			          /* showDetails(base,imageBlock, i); */
+			          if(i==1){
+			        	  window.location = '${usr_list_url}';
+			          }
+			          if(i==2){
+			        	  window.location= '${vente_public_url}';
+			          }
+			          if(i==3){
+			        	  window.location= '${cai_enc_url}';
+			          }
+			          if(i==4){
+			        	  window.location= '${list_fact_url}';
+			          }
+			          if(i==5){
+			        	  window.location= '${clt_list_url}';
+			          }
+			          if(i==6){
+			        	  window.location= '${lap_list_url}';
+			          }
+			          if(i==7){	
+			        	  window.location= '${list_ord_url}';
+			          }
+			        }, 
+			        width: 400,               // Defines the width of the carousel.
+			        height: 300,              // Defines the height of the carousel.
+			        speed: 200,               // Basic speed (no mouse over the carousel).
+			        jsonScript: null,         // The JSON script path. To load the images via JSON the path to the JSON script must be specified.
+			        maxSpeed: 2,              // Mouse-over speed. The closer the mouse is to the left or right edge of the carousel the faster it turns.
+			        perspective: 30,          // A higher value gives the carousel more depth.
+			        color: '#ffffff',        // Color of the overlayed layer.
+			        global: 0,                // Overlay of color layer for all images in the carousel.
+			        showImageTitle : true,
+			        dynamic: 50,              // Smoothness of the animation.
+			        imageTitleFontSize : 12,  // The font size of the image title.
+			        reflection: 0,          // Bottom reflection. The appearance can vary depending if the browser supports canvas technology (Firefox, Safari, Chrome, Opera) or not (IE 8).
+			        reflectionStart: 90,     // Size of the reflection at the front of the carousel. Allowed values: 0-100.
+			        reflectionEnd: 100,      // Size of the reflection at the back of the carousel. Allowed values: 0-100.
+			        
+			      });
+			    });
+   </script>
+   
+   <script type="text/javascript">
+	       $(document).ready(function(){ 
+	         $('#panel1').accordion();
+	        });
+   </script>
+  
+<util:panel id="title" title="${title}">
+ <div style="height:500px; text-align: center;" >
+            
+
+<!-- When not connected -->    
+ <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
     <table class="tblog" >
        <tr>
-    	  <td style="width: auto;" class="tblog"  valign="top" align="left">
+    	  <!--  <td style="width: auto;" class="tblog"  valign="top" align="left">
     		  <table class="tblog" style="border: 0px; ">
     	        <tr align="left" valign="top">
     	          <td class="tblog">  
@@ -74,18 +140,95 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     	          </td> 
     	        </tr>
     	     </table>
-    	   </td>
+    	   </td> -->
     	   <td align="center" width="30%" class="tblog">
-	    		<h2> PHARMACIE </h2>
-	    		<img src="${biglogo}"/>
+	    		  <div id="carousel">
+	    		    <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+				      <img src="${userIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image1" title="Lister les utilisateurs" />
+				    </security:authorize> 
+				    
+				    <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
+				      <img src="${saleIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image2" title="Effectuer une vente au comptant" /> 
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">  
+				      <img src="${caisseIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image3" title="Effectuer un encaissement" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASHIER">    
+				      <img src="${invoiceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image4" title="Lister les Factures" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+				      <img src="${clientIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image5" title="Lister les Clients" />
+				    </security:authorize>	
+				    
+				    <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">  
+				      <img src="${produitIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image6" title="Rechercher un Produit" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+				      <img src="${ordonnanceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image7" title="Lister les ordonnances" />
+				    </security:authorize> 
+                 </div>
+	    		  
     	   </td>
     	   <td align="center" width="30%" valign="center" class="tblog">
-    		   <img src="${imgcomp}" alt="img_comp"/>
+    		   <h2> <span style="color: #B4B4B4;">BIENVENU A:</span><br/> 
+    		        <span style="text-transform: capitalize; font-style: italic;">${pharmacie.displayName}</span>
+    		   </h2>
+	    	   <img src="${biglogo}" alt="Logo pharmacie"/> 
     	   </td>
+    	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">   
+    	   <td class="tblog">
+    	      <div id="bloc_accordion">
+    	        <ul id="panel1" class="accordion">
+	                <li>
+	                    <h3>Activite 1</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 1</h4>
+	                        <p>Details de la premiere activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Activite 2</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 2</h4>
+	                        <p>Details de la deuxieme activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Activite 3</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 3</h4>
+	                        <p>Details de la troisieme activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Activite 4</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 4</h4>
+	                        <p>Details de la quatrieme activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Activite 5</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 5</h4>
+	                        <p>Details de la cinquieme activite</p>
+	                    </div>
+	                </li>
+                  </ul> 
+                </div>   
+    	    </td>
+    	</security:authorize>    
        </tr>
    </table>
 </security:authorize>
 
+
+
+<!-- When connect -->
 <security:authorize ifNotGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
     <table class="tblog" border="0"  style="margin-top:50px;">
     	<tr>
