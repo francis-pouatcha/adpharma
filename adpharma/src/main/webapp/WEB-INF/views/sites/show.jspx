@@ -3,23 +3,23 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Site" object="${site}" path="/sites" z="user-managed">
-       
-                    <field:display field="displayName" id="s_org_adorsys_adpharma_domain_Site_displayName" object="${site}" z="O3ou2DJPpVrsPtxV8tU0XFyuIVU="/>
-                    <field:display field="adresse" id="s_org_adorsys_adpharma_domain_Site_adresse" object="${site}" z="Ym9F2ZGHn4uDRDdPbLUoN4hjhjo="/>
-                    <field:display field="ville" id="s_org_adorsys_adpharma_domain_Site_ville" object="${site}" z="xCCVVFYhprOfhBRcc6YZarGyuUY="/>
-                    <field:display field="pays" id="s_org_adorsys_adpharma_domain_Site_Pays" object="${site}" z="vliI1NHfd3sInIT+F2mg9fPDsFI="/>
-                    <field:display field="siteNumber" id="s_org_adorsys_adpharma_domain_Site_siteNumber" object="${site}" z="eo9tJv+cB8iCKxBB1Z70FE+XilY="/>
-                    <field:display field="numeroRegistre" id="s_org_adorsys_adpharma_domain_Site_numeroRegistre" object="${site}" z="5f5tgZC7VoFivWwr+ccYIFhmmxU="/>
-                    <field:display field="phone" id="s_org_adorsys_adpharma_domain_Site_phone" object="${site}" z="rG+rspZ1r1OhoyanP0vKf0Tqdls="/>
-                    <field:display field="siteManager" id="s_org_adorsys_adpharma_domain_Site_siteManager" object="${site}" z="5Ku5Tonr4ALeamiMZaCnExndyHU="/>
-                    <field:display field="email" id="s_org_adorsys_adpharma_domain_Site_email" object="${site}" z="cePV3ArpjzCBRV22LXNnFo7v0Mk="/>
-                    <field:display field="siteInternet" id="s_org_adorsys_adpharma_domain_Site_siteInternet" object="${site}" z="LTIk6DbHTDQ4vOeyznhSp0SXXcI="/>
-                    <field:display field="mobile" id="s_org_adorsys_adpharma_domain_Site_mobile" object="${site}" z="0vOeRLWiI33L7SyQSP13y21nV5w="/>
-                    <field:display field="fax" id="s_org_adorsys_adpharma_domain_Site_fax" object="${site}" z="8ojNpS/7JKAmdtAklhhaiFTlH1M="/>
-                    <field:display field="platformBaseUrl" id="s_org_adorsys_adpharma_domain_Site_platformBaseUrl" object="${site}" z="blAn8mC5uq4F4KXXSleDo5zVTK8="/>
-                    <field:display field="drugstoreKey" id="s_org_adorsys_adpharma_domain_Site_drugstoreKey" object="${site}" z="H/RzCyjrHqEF3zjx+UoGVC7kC3E="/>
-                       <field:display field="messageTiket" id="s_org_adorsys_adpharma_domain_Site_messageTiket" object="${site}" z="zJ+FotJBq7PsyB6KqqqYEekzB5Y="/>
-   
+        <field:display field="displayName" id="s_org_adorsys_adpharma_domain_Site_displayName" object="${site}" z="O3ou2DJPpVrsPtxV8tU0XFyuIVU="/>
+        <field:display field="adresse" id="s_org_adorsys_adpharma_domain_Site_adresse" object="${site}" z="Ym9F2ZGHn4uDRDdPbLUoN4hjhjo="/>
+        <field:display field="ville" id="s_org_adorsys_adpharma_domain_Site_ville" object="${site}" z="xCCVVFYhprOfhBRcc6YZarGyuUY="/>
+        <field:display field="pays" id="s_org_adorsys_adpharma_domain_Site_Pays" object="${site}" z="vliI1NHfd3sInIT+F2mg9fPDsFI="/>
+        <field:display field="siteNumber" id="s_org_adorsys_adpharma_domain_Site_siteNumber" object="${site}" z="eo9tJv+cB8iCKxBB1Z70FE+XilY="/>
+        <field:display field="numeroRegistre" id="s_org_adorsys_adpharma_domain_Site_numeroRegistre" object="${site}" z="5f5tgZC7VoFivWwr+ccYIFhmmxU="/>
+        <field:display field="phone" id="s_org_adorsys_adpharma_domain_Site_phone" object="${site}" z="rG+rspZ1r1OhoyanP0vKf0Tqdls="/>
+        <field:display field="siteManager" id="s_org_adorsys_adpharma_domain_Site_siteManager" object="${site}" z="5Ku5Tonr4ALeamiMZaCnExndyHU="/>
+        <field:display field="email" id="s_org_adorsys_adpharma_domain_Site_email" object="${site}" z="cePV3ArpjzCBRV22LXNnFo7v0Mk="/>
+        <field:display field="siteInternet" id="s_org_adorsys_adpharma_domain_Site_siteInternet" object="${site}" z="LTIk6DbHTDQ4vOeyznhSp0SXXcI="/>
+        <field:display field="mobile" id="s_org_adorsys_adpharma_domain_Site_mobile" object="${site}" z="0vOeRLWiI33L7SyQSP13y21nV5w="/>
+        <field:display field="fax" id="s_org_adorsys_adpharma_domain_Site_fax" object="${site}" z="8ojNpS/7JKAmdtAklhhaiFTlH1M="/>
+        <field:display field="platformBaseUrl" id="s_org_adorsys_adpharma_domain_Site_platformBaseUrl" object="${site}" z="blAn8mC5uq4F4KXXSleDo5zVTK8="/>
+        <field:display field="drugstoreKey" id="s_org_adorsys_adpharma_domain_Site_drugstoreKey" object="${site}" z="H/RzCyjrHqEF3zjx+UoGVC7kC3E="/>
+        <field:display field="messageTiket" id="s_org_adorsys_adpharma_domain_Site_messageTiket" object="${site}" z="zJ+FotJBq7PsyB6KqqqYEekzB5Y="/>
+        <field:display field="orderSentPath" id="s_org_adorsys_adpharma_domain_Site_orderSentPath" object="${site}" z="l+ZNVremc/Cjwr9IjTznxnKkzM8="/>
+        <field:display field="orderReceivePath" id="s_org_adorsys_adpharma_domain_Site_orderReceivePath" object="${site}" z="qlEqlNSStz2cC9Gub5nsvQ9J7Zo="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Site_footPrint" object="${site}" z="user-managed"/>
