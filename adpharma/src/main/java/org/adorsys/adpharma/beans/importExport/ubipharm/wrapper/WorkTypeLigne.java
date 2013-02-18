@@ -11,6 +11,7 @@ public class WorkTypeLigne extends AbstractUbipharmLigneWrapper {
 	private UbipharmCommandStringSequence workType;
 	public WorkTypeLigne(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
+		setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, false, "P"));
 	}
 	public UbipharmCommandStringSequence getWorkType() {
 		return workType;

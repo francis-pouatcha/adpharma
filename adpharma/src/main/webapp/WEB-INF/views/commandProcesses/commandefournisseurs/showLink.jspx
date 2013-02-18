@@ -19,6 +19,7 @@
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
       <spring:url value="/commandprocesses/${itemId}/annulerCmd"  var="delete_cmd_url" />
+      <spring:url value="/commandprocesses/ubipharm/${itemId}/send"  var="send_ubipharm_url" />
      
  <c:set value="EN_COUR"  var="etat"/>
  
@@ -63,8 +64,6 @@ function annulercmd(){
       <c:if test="${commandefournisseur.etatCmd eq 'EN_COUR' and not commandefournisseur.annuler}">
         <span><a href="${delete_cmd_url}" style="text-decoration: none;">
         <INPUT onclick="return annulercmd();" class="submits" type="button" value="Annuler La PREPARATION" title="Annuler La commande" /></a></span>
-		
-		
 		</c:if>
 	</c:otherwise>
    </c:choose>
@@ -78,6 +77,9 @@ function annulercmd(){
                   
                   <span><a href="${ send_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
+                  
+                  <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
+                  <INPUT class="submits" type="button" value="ENVOYER A UBIPHARM" title="Envoyer A Ubipharm" /></a></span>
    
    <c:if test="${not empty appMessages}">
 		<hr style="margin-top: 2px;margin-bottom: -13px;"/>
