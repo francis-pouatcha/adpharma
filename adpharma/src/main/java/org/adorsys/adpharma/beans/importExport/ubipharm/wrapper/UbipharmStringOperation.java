@@ -60,7 +60,10 @@ public abstract class UbipharmStringOperation implements StringOperation {
 		return isCorrect;
 	}
 	public void joinString(UbipharmCommandStringSequence ...commandStringSequences ){
-		
+		for (int i = 0; i < commandStringSequences.length; i++) {
+			UbipharmCommandStringSequence ubipharmCommandStringSequence = commandStringSequences[i];
+			this.contains = getStringValue().concat(ubipharmCommandStringSequence.getStringValue());
+		}
 	}
 	public boolean isEndIndexCorrect(int endIndex){
 		return endIndex <= this.getEndIndex();
