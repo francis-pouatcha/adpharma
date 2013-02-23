@@ -650,6 +650,7 @@ if(Check == false){
       <spring:url value="/?theme=blueTheme" var="blue_theme" />
       <spring:url value="/?theme=standard" var="green_theme" />
       
+      
       <security:authorize access="isAuthenticated()">
             <li><a href="#">Themes</a>
 		        <ul>

@@ -232,12 +232,12 @@ public class InventaireProcessController {
 
 	@RequestMapping(value = "/ficheSuivieStock", method = RequestMethod.GET)
 	public String ficheSuivieStock(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
-	if(!inp.isDoNotSelectAnyProduct()){
 		if (inp.isInventoryBycipm()) {
 			inp.setLigneApprovisionements(LigneApprovisionement.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),inp.getDesignation(), null, inp.getRayon(), inp.getBeginBy(), inp.getEndBy(), inp.getFiliale(), null, null,null,null).getResultList());
 
 		}else {
-			List<Produit> resultList = Produit.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),null, inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(), inp.getRayon(), inp.getFiliale(),inp.getDateRupture(),null).getResultList();
+			
+			List<Produit> resultList = Produit.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),null, inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(), inp.getRayon(), inp.getFiliale(),null,null).getResultList();
 			if (!resultList.isEmpty()) {
 				for (Produit produit : resultList) {
 					produit.calculTransientPrice();
@@ -246,11 +246,7 @@ public class InventaireProcessController {
 
 			}
 		}
-	}else {
-		inp.setProduits(new ArrayList<Produit>());
-	}
-
-
+		uiModel.asMap().clear();
 		uiModel.addAttribute("inventaire", inp);
 		uiModel.addAttribute("headTexte", "Fiche De Suivie de Stock Du "+PharmaDateUtil.format(inp.getDateDebut(), PharmaDateUtil.DATETIME_PATTERN_LONG)+" AU :" +
 				"" +PharmaDateUtil.format(inp.getDateFin(), PharmaDateUtil.DATETIME_PATTERN_LONG));

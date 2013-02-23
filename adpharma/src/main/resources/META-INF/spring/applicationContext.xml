@@ -73,9 +73,6 @@
 		<property name="persistenceUnitName" value="persistenceUnit" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	
-<bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" id="viewResolver">
-        <property name="basename" value="views"/>
-    </bean>
+<bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" id="viewResolver">  <property name="basename" value="views"/>
+</bean>
 </beans>

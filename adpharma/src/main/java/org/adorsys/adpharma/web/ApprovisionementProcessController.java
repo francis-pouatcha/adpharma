@@ -203,9 +203,7 @@ public class ApprovisionementProcessController {
 		public String specialaddLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteug,
 				@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
-
 			Produit produit = Produit.findProduit(pId);
-
 			if (approvisionement.contientProduit(produit)) {
 				uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			}else if (approvisionement.CommandeContientProduit(produit)) {
@@ -216,11 +214,17 @@ public class ApprovisionementProcessController {
 				LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 				ligneApprovisionement.setApprovisionement(approvisionement);
-				ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
-				ligneApprovisionement.setQuantiteUniteGratuite(new BigInteger(qteug.trim()));
-				ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
+				if (StringUtils.isNotBlank(qte)) {
+					ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
+				}
+				if (StringUtils.isNotBlank(qteug)) {
+					ligneApprovisionement.setQuantiteUniteGratuite(new BigInteger(qteug.trim()));
+				}
+				if (StringUtils.isNotBlank(pa)) {
+					ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
+				}
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2) );
-				if (!"".equals(pv)) {
+				if (StringUtils.isNotBlank(pv)) {
 					ligneApprovisionement.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
 				}
 				produit.addproduct(ligneApprovisionement.getQuantiteAprovisione());
