@@ -182,37 +182,51 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">   
     	   <td class="tblog">
     	      <div id="bloc_accordion">
-    	        <ul id="panel1" class="accordion">
+    	        <ul id="panel1" class="accordion"> 
 	                <li>
-	                    <h3>Activite 1</h3>
+	                    <h3>Produits les plus vendus</h3>
 	                    <div class="panel loading">
 	                        <h4>panel loading 1</h4>
 	                        <p>Details de la premiere activite</p>
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Activite 2</h3>
+	                    <h3>Les 10 dernières ventes</h3>
 	                    <div class="panel loading">
 	                        <h4>panel loading 2</h4>
 	                        <p>Details de la deuxieme activite</p>
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Activite 3</h3>
+	                    <h3>Etat des caisses ouvertes</h3>
 	                    <div class="panel loading">
 	                        <h4>panel loading 3</h4>
 	                        <p>Details de la troisieme activite</p>
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Activite 4</h3>
+	                    <h3>Produits en rupture de stock</h3>
 	                    <div class="panel loading">
 	                        <h4>panel loading 4</h4>
 	                        <p>Details de la quatrieme activite</p>
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Activite 5</h3>
+	                    <h3>Produits Avariés</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 5</h4>
+	                        <p>Details de la cinquieme activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Dettes clients</h3>
+	                    <div class="panel loading">
+	                        <h4>panel loading 5</h4>
+	                        <p>Details de la cinquieme activite</p>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Avoirs clients</h3>
 	                    <div class="panel loading">
 	                        <h4>panel loading 5</h4>
 	                        <p>Details de la cinquieme activite</p>

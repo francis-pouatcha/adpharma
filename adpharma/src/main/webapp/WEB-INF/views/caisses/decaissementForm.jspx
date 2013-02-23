@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:form="http://www.springframework.org/tags/form" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+<jsp:output omit-xml-declaration="yes"/>
+
+<spring:url value="/caisses/decaisser" var="decaissement_path" />
+
+<style type="text/css">
+         .space{padding: 20px 0 20px 0;}
+         .Decaissement_form{
+              -moz-box-shadow: 0 0 5px 5px #CCC;
+              -webkit-box-shadow: 0 0 5px 5px #CCC;
+               box-shadow: 0 0 5px 5px #CCC;
+               width: 600px;
+         }
+         
+         .message{
+                -webkit-background-size: 40px 40px;
+                -moz-background-size: 40px 40px;
+                background-size: 40px 40px;
+                background-image: -webkit-gradient(linear, left top, right bottom,
+                                                        color-stop(.25, rgba(255, 255, 255, .05)), color-stop(.25, transparent),
+                                                        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .05)),
+                                                        color-stop(.75, rgba(255, 255, 255, .05)), color-stop(.75, transparent),
+                                                        to(transparent));
+                background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                 -moz-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 -webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 width: auto;
+                 border: 1px solid;
+                 color: #FFFFFF;
+                 padding: 10px;
+                /*  position: fixed; */
+                 _position: absolute;
+                 text-shadow: 0 1px 0 rgba(0,0,0,.5);
+                 -webkit-animation: animate-bg 5s linear infinite;
+                 -moz-animation: animate-bg 5s linear infinite;
+                 }
+                 
+                 .error{
+	                 background-color: #de4343;
+	                 border-color: #c43d3d;
+                  }
+                  
+                  .success{ 
+	                 background-color: #61b832;
+	                 border-color: #55a12c;
+                    }
+                 
+                 .message h3 { margin: 0 0 5px 0; color: #FFFFFF; font-weight: bold; }
+                 .message p{ margin: 0; color: #FFFFFF; font-size: 12px;}
+         
+                 @-webkit-keyframes animate-bg{
+				    from {
+				        background-position: 0 0;
+				          }
+				    to {
+				       background-position: -80px 0;
+				    }
+                  }
+
+				@-moz-keyframes animate-bg{
+					    from {
+					        background-position: 0 0;
+					    }
+					    to {
+					       background-position: -80px 0;
+					    }
+					}
+         
+</style>
+
+<script type="text/javascript">
+$(function(){
+	var typeDec= $('#typeDecaissement').val();
+	$('#avoir').hide();
+	if(typeDec=='CONSOMMATION_AVOIR'){
+		$('#avoir').show();
+	}
+	
+   $('#typeDecaissement').change(function(){
+	   var select= $(this).val();
+	   if(select=='CONSOMMATION_AVOIR'){
+		   $('#avoir').show();
+	   }else{
+		   $('#avoir').hide();
+	   };
+   });
+   
+   function validateForm(id){
+	   var avoir= $('#num_avoir').val();
+	   var montant= $('#montantDecaissement').val();
+	   var type= $('#typeDecaissement').val();
+	   if((type=='CONSOMMATION_AVOIR')){
+		   if(avoir==""){
+			   alert("Veuillez saisir le mumero de l'avoir");
+			   $('#num_avoir').focus();
+			   return false;
+		   }
+		   
+	   }
+	   if(montant==""){
+		   alert("Veuillez saisir le montant a decaisser");
+		   $('#montantDecaissement').focus();
+		   return false;
+	   }
+	   return true;
+   }
+   
+   $('#dec_form').submit(function(e){
+	   if(validateForm(this)){
+		   return true;
+	   }
+	   else{
+		   return false;
+	   }
+   });
+   
+});   
+</script>
+
+<util:panel title="Effectuer un decaissement" id="decaissement">
+          <fieldset class="Decaissement_form">
+              <form:form  action="${decaissement_path}" acceptCharset="UTF-8" modelAttribute="decaissement" method="GET" id="dec_form"> 
+                <!-- Check for Error messages -->
+                <c:if test="${not empty errors}">
+                  <div class="error message">
+                    <h3>Erreur survenue!</h3>
+                    <p> <form:errors /> </p> 
+                  </div>
+                </c:if> 
+                <c:if test="${not empty sucess}">
+                    <div class="success message">
+                    <h3>Sucess operation!</h3>
+                    <p> ${sucess} </p> 
+                  </div>
+                </c:if> 
+                  <br/><br/> 
+                   
+                   <table class="tbcreate" style="background: white; width: 600px;">
+                         <tr>
+                            <td class="tblog space"> <LABEL>Date decaissement</LABEL> </td>
+                            <td class="tblog space"> <form:input path="dateDecaissement" dojoType="dijit.form.TextBox" cssStyle="color:black;" disabled="true"/> </td>
+                         </tr>
+                         <tr>
+                            <td class="tblog space"> <LABEL>Type decaissement</LABEL> </td>
+                            <td class="tblog space"> <form:select path="typeDecaissement" id="typeDecaissement" items="${typesDecaissements}" /> </td>
+                         </tr>
+                         <tr id="avoir">
+                            <td class="tblog space"><LABEL for="num_avoir">Numero Avoir</LABEL></td>
+                            <td class="tblog space"> <form:input path="numAvoir" dojoType="dijit.form.ValidationTextBox" id="num_avoir" promptMessage="Saisir le numero de l'avoir a consommer" /> </td>
+                         </tr>
+                         <tr>
+                            <td class="tblog space"> <LABEL for="montantDecaissement"> Montant decaissement </LABEL> </td>
+                            <td class="tblog"> 
+                               <form:input path="montantDecaissement" dojoType="dijit.form.ValidationTextBox" promptMessage="Saisir le montant a decaisser" /> 
+                            </td>
+                         </tr>
+                         <tr>
+                            <td class="tblog space"><LABEL for="note" style="top: -30px;">Note</LABEL></td>
+                            <td class="tblog space"> <form:textarea path="note" dojoType="dijit.form.SimpleTextarea" id="note"/> </td>
+                         </tr>
+                         <tr>
+                            <td colspan="2" class="tblog space" align="center"> <INPUT type="submit" value="Valider" class="submits" /> </td>
+                         </tr>
+                   </table>
+              </form:form>
+          
+          </fieldset>
+
+
+</util:panel>
+
+
+
+
+</div>
