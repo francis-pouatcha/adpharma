@@ -47,7 +47,6 @@ public class ClaimsService{
 			result = reclame.subtract(qteRetour);
 			ligne.setQuantiteReclame(result);
 			ligne.merge();
-			System.out.println("Qte reclamee: "+ligne.getQuantiteReclame());
 			LOGS.info("Success de mise a jour de la quantite reclamee de la ligne");
 		} catch (Exception e) {
 			LOGS.debug("Erreur de mise a jour de la quantite reclamee");
@@ -62,7 +61,6 @@ public class ClaimsService{
 			result= aprovisione.add(qteRetour);
 			ligne.setQuantiteAprovisione(result);
 			ligne.merge();
-			System.out.println("Qte Approvisionee: "+ligne.getQuantiteAprovisione());
 			LOGS.info("Succes de mise a jour de la quantite approvisionnee de la ligne");
 		} catch (Exception e) {
 			LOGS.debug("Erreur de mise a jour de la quantite approvisionnee produite a "+new Date()+ " par la classe: "+this.getClass());
@@ -74,7 +72,6 @@ public class ClaimsService{
 		try {
 			ligne.setQuantieEnStock(ligne.getQuantiteAprovisione());
 			ligne.merge();
-			System.out.println("Qte en stock: "+ligne.getQuantieEnStock());
 			LOGS.info("Succes de mise a jour de la quantite en stock de la ligne");
 		} catch (Exception e) {
 			LOGS.debug("Erreur de mise a jour de la quantite en stock de la ligne produite a "+new Date()+ " par la classe: "+this.getClass());
@@ -89,7 +86,6 @@ public class ClaimsService{
 			result = new BigDecimal(qteRetour.multiply(ligne.getPrixAchatUnitaire().toBigInteger()));
 			ligne.setPrixAchatTotal(prixAchatTotal.add(result));
 			ligne.merge();
-			System.out.println("Prix total de la ligne: "+ligne.getPrixAchatTotal());
 			LOGS.info("Succes de mise a jour du prix d'achat total de la ligne");
 		} catch (Exception e) {
 			LOGS.debug("Erreur de mise a jour du prix total de la ligne produite a "+new Date()+ " par la classe: "+this.getClass());
@@ -105,7 +101,6 @@ public class ClaimsService{
 			result = quantiteEnStock.add(qteRetour);
 			produit.setQuantiteEnStock(result);
 			produit.merge();
-			System.out.println("Qte en stock produit: "+produit.getQuantiteEnStock());
 			LOGS.info("Succes de mise a jour de la quantite en stock du produit");
 		} catch (Exception e) {
 			LOGS.info("Erreur de mise a jour de la quantite en stock du produit produite a "+new Date()+ " par la classe: "+this.getClass());

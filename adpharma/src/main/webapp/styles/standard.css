@@ -692,6 +692,7 @@ ul li {
 /* table elements */
 .tblog {
 	border: none;
+	background: none;
 }
 
 .tbcreate {

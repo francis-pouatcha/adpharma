@@ -305,3 +305,16 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-16 18:33:42
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-18 08:37:35
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-18 10:02:32
+enum type --class ~.domain.TypeDecaissement
+enum constant --name DEPENSES_COURANTES
+enum constant --name CONSOMMATION_AVOIR
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-18 18:15:17
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-21 08:44:24
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-22 05:46:57
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-22 08:22:35
+// [failed] q
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-02-22 21:12:37
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-02-23 08:30:37
