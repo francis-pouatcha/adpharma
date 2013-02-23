@@ -1,6 +1,8 @@
 package org.adorsys.adpharma.web;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +13,13 @@ import org.adorsys.adpharma.utils.PharmaDateUtil;
 
 import javassist.expr.NewArray;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.adorsys.adpharma.beans.Decaissement;
 import org.adorsys.adpharma.beans.process.ChiffreAffaireBean;
 import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
@@ -27,7 +33,9 @@ import org.adorsys.adpharma.domain.Genre;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.TypeCommande;
+import org.adorsys.adpharma.domain.TypeDecaissement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.DisbursementService;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +51,8 @@ import org.apache.log4j.spi.LoggerFactory;
 @Controller
 public class CaisseController {
 
+	@Autowired
+	private DisbursementService decaissementService;
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
@@ -50,6 +60,44 @@ public class CaisseController {
 		return "caisses/search";
 		
 	}
+	
+	// Formualire de decaissement
+	@RequestMapping(value="/decaissement", params="form", method=RequestMethod.GET)
+	public String decaissementForm(Model uiModel){
+		uiModel.addAttribute("decaissement", new Decaissement());	
+		return "caisses/decaissement";
+	}
+	
+	
+	// Action de decaissement
+	@RequestMapping(value="/decaisser", method=RequestMethod.GET)
+	public String decaissement(@Valid Decaissement decaissement, BindingResult bindingResult, Model uiModel){
+		Caisse caisse=null;
+		BigDecimal currentAmount=BigDecimal.ZERO;
+		try {
+			caisse = Decaissement.validateDisbursement(bindingResult, decaissement);
+			currentAmount=caisse.getTotalCash();
+		} catch (Exception e) {
+			 System.out.println(e.getMessage());
+		}
+		
+		if(bindingResult.hasErrors()){
+			uiModel.addAttribute("errors", "erreurs!");
+			return "caisses/decaissement";
+		}
+		
+		decaissementService.makeDisbursement(caisse, decaissement.getMontantDecaissement(), decaissement.getNote());
+		if(decaissement.getTypeDecaissement().equals(TypeDecaissement.CONSOMMATION_AVOIR.toString())){
+			AvoirClient avoirClient = AvoirClient.findAvoirClientsByNumeroEquals(decaissement.getNumAvoir()).getSingleResult();
+			avoirClient.setMontant(avoirClient.getMontant().subtract(decaissement.getMontantDecaissement()));
+			avoirClient.setMontantUtilise(avoirClient.getMontantUtilise().add(decaissement.getMontantDecaissement()));
+		}
+		uiModel.addAttribute("sucess", "Votre caisse avait un montant de: "+currentAmount+" ,vous avez decaisse la somme de: "+decaissement.getMontantDecaissement()+" ,le solde de votre caisse est de: "+caisse.getTotalCash());
+		
+		return "caisses/decaissement";
+		
+	}
+	
 
 	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
 	public String Search(Caisse caisse , Model uiModel) {
@@ -110,7 +158,7 @@ public class CaisseController {
 			return "caisses/infos";
 
 		}else {
-			caisse = new Caisse(pharmaUser) ;
+			caisse = new Caisse(pharmaUser);
 		}
 
 		uiModel.addAttribute("caisse", caisse);
@@ -240,4 +288,11 @@ public class CaisseController {
 	public Collection<Caisse> populateCaisses() {
 		return new ArrayList<Caisse>();
 	}
+	
+	@ModelAttribute("typesDecaissements")
+	public Collection<TypeDecaissement> populateTypeDecaissement(){
+		return Arrays.asList(TypeDecaissement.class.getEnumConstants());
+	}
+	
+	
 }

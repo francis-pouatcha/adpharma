@@ -218,43 +218,23 @@ if(Check == false){
 
 			<!--  menu Caisse-->
 			<spring:url value="/caisses/ouvrirCaisse?form" var="cai_cree_url" />
-			<spring:url
-				value="/caisses?page=1&amp;size=${empty param.size ? 50 : param.size}"
-				var="caisse_list_url" />
-
+			<spring:url value="/caisses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="caisse_list_url" />
 			<spring:url value="/caisses/fermerCaisse" var="delete_caisse_url" />
-
-			<spring:url
-				value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}"
-				var="ap_list_url" />
+			<spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url" />
 			<spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url" />
-			<spring:url value="/paiements/encaissementGroupe?form"
-				var="groupe_enc_url" />
+			<spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url" />
 			<spring:url value="/caisses?form" var="cai_de_url" />
-			<spring:url value="/caisses?find=ByEtatCaisse&amp;form"
-				var="etat_caisse_url" />
-			<spring:url value="/caisses?find=etatJournalier&amp;form"
-				var="etat_jour_caisse_url" />
-
-			<spring:url
-				value="/operationcaisses?find=ByDateOperationBetween&amp;form"
-				var="cai_op_url" />
-			<spring:url
-				value="/operationcaisses?page=1&amp;size=${empty param.size ? 50 : param.size}"
-				var="cai_ops_url" />
-			<spring:url value="/paiements?find=ByDateSaisieBetween&amp;form"
-				var="cai_pay_url" />
-			<spring:url value="/caisses?find=BySearch&amp;form"
-				var="caisse_search_url" />
-			<spring:url value="/paiements?find=BySearch&amp;form"
-				var="cai_pays_url" />
-
+			<spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url" />
+			<spring:url value="/caisses?find=etatJournalier&amp;form" var="etat_jour_caisse_url" />
+			<spring:url value="/operationcaisses?find=ByDateOperationBetween&amp;form" var="cai_op_url" />
+			<spring:url value="/operationcaisses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="cai_ops_url" />
+			<spring:url value="/paiements?find=ByDateSaisieBetween&amp;form" var="cai_pay_url" />
+			<spring:url value="/caisses?find=BySearch&amp;form" var="caisse_search_url" />
+			<spring:url value="/paiements?find=BySearch&amp;form" var="cai_pays_url" />
 			<spring:url value="/avoirclients?form " var="avoir_url" />
-			<spring:url value="/avoirclients?find=BySearch&amp;form"
-				var="avoir_search_url" />
-			<spring:url
-				value="/avoirclients?page=1&amp;size=${empty param.size ? 50 : param.size}"
-				var="avoir_list_url" />
+			<spring:url value="/avoirclients?find=BySearch&amp;form" var="avoir_search_url" />
+			<spring:url value="/avoirclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="avoir_list_url" />
+			<spring:url value="/caisses/decaissement?form" var="decaissement_url" />
 
 			<security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
 				<li><a href="#">Caisses</a>
@@ -284,14 +264,15 @@ if(Check == false){
 		        			 </li> -->
 		        			 
 		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
-                           <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
+                          <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
+                          <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
 		        			 
 		        			  <!--  menu facturation-->
     
-     <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
-                  <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
-                  <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
-                  <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
+            <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+            <spring:url value="/detteclients?find=BySolderNotAndClientNoEquals&amp;form" var="dette_clients_url"/>
+            <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
+            <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
             <spring:url value="/factures?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_fact_url"/>
             
                               <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
@@ -647,10 +628,10 @@ if(Check == false){
 		        						</li>
       </security:authorize>
       
+      <!-- Changing theme -->
       <spring:url value="/?theme=blueTheme" var="blue_theme" />
       <spring:url value="/?theme=standard" var="green_theme" />
-      
-      
+
       <security:authorize access="isAuthenticated()">
             <li><a href="#">Themes</a>
 		        <ul>

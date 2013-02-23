@@ -26,6 +26,8 @@ import jxl.write.WritableWorkbook;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 
+import org.adorsys.adpharma.beans.importExport.ubipharm.CsvImportExportUtil;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.AbstractUbipharmLigneWrapper;
 import org.adorsys.adpharma.beans.process.CommandeProcess;
 import org.adorsys.adpharma.beans.process.OrderPreParationBean;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
@@ -59,7 +61,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
-
+	
+	private boolean sendedToUbipharm ;
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(
@@ -347,7 +350,24 @@ public class CommandProcessController {
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 		uiModel.addAttribute("itemId", cmdId);
 		commandeFournisseur.merge();
+		if(sendedToUbipharm){
+			uiModel.addAttribute("apMessage", "Command Sended To Ubipharm.");
+			sendedToUbipharm = false;//reset value to false.
+		}
 		return "commandprocesses/show";
+	}
+	
+	@RequestMapping(value="/ubipharm/{itemId}/send", method = RequestMethod.GET)
+	public String sendToUbipharm(@PathVariable("itemId")Long cmdId, Model uiModel){
+		
+		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
+		importExportUtil.setCmdId(cmdId);
+		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
+		importExportUtil.setLignesToExport(lignesToExport);
+		importExportUtil.exportCommandsToUbipharmCsv();
+		importExportUtil.checkIfNewlyReceivedCommand();
+		sendedToUbipharm= true ;
+		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
 
 	@Transactional

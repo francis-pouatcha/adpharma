@@ -17,6 +17,7 @@ public class DistributorLigne extends AbstractUbipharmLigneWrapper{
 	public DistributorLigne(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
 	}
+	
 	public void setLigneIdentifier(UbipharmStringOperation ligneIdentifier) {
 		this.ligneIdentifier = ligneIdentifier;
 	}

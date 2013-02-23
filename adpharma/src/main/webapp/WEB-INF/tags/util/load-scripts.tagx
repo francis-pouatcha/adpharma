@@ -100,9 +100,12 @@
   <script src="${spring_url}" type="text/javascript"><!-- /required for FF3 and Opera --></script>
   <script src="${spring_dojo_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.parser");</script>
-   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.DateTextBox");</script>
-    <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.TextBox");</script>
-    <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.ComboBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.DateTextBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.TextBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.ComboBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.CurrencyTextBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.Textarea");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.SimpleTextarea");</script>
     
     
     <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>

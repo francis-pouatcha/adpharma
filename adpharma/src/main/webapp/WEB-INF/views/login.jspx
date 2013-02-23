@@ -37,7 +37,6 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
        <!--  <legend style=" display:block; "> <img alt="users" src="${users}" /> </legend>-->
        <img alt="users" src="${users}" style="display:block; margin: auto;" />
        
-      <div>
         <table class="tbcreate tbinput">
             <tr>
               <td class="tblog">
@@ -51,7 +50,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 		         <input id="j_username" type='text' name='j_username' style="width:300px; height: 20px; font-size: 15px; padding: 3px 0 3px 0;" />
 		       </td> 
 		    </tr>    
-        </table>
+        </table> <br />
         <spring:message code="security_login_form_name_message" var="name_msg" htmlEscape="false" />
         <script type="text/javascript">
           <c:set var="sec_name_msg">
@@ -59,11 +58,8 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
           </c:set>
           Spring.addDecoration(new Spring.ElementDecoration({elementId : "j_username", widgetType : "dijit.form.ValidationTextBox", widgetAttrs : {promptMessage: "${sec_name_msg}", required : true}})); 
         </script>
-        
-      </div>
-      <br />
       
-      <div>
+      
         <table class="tbcreate tbinput">
             <tr>
               <td class="tblog">
@@ -77,7 +73,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
                  <input id="j_password" type='password' name='j_password' style="width:300px; height: 20px; font-size: 15px; padding: 3px 0 3px 0;" />
                </td>
             </tr>
-         </table>         
+         </table> <br />        
         <spring:message code="security_login_form_password_message" var="pwd_msg" htmlEscape="false" />
         <script type="text/javascript">
           <c:set var="sec_pwd_msg">
@@ -85,8 +81,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
           </c:set>
           Spring.addDecoration(new Spring.ElementDecoration({elementId : "j_password", widgetType : "dijit.form.ValidationTextBox", widgetAttrs : {promptMessage: "${sec_pwd_msg}", required : true}})); 
         </script>
-      </div>
-      <br />
+      
       
       <div class="submit">
         <script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
@@ -99,10 +94,10 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 	       </tr>  
         </table>
       </div>
-      </form>
+    </form>
   </fieldset>
    
-  <div style="margin-left: 550px; width:300px; padding: 10px 0 0 0;">
+  <div style="margin-left: 550px; margin:auto; width:300px; padding: 10px 0 0 120px;">
        <img alt="logo_adorsys" src="${logo_adorsys}"/><br/>
        <span class="copyright">© Copyright 2011-2013 Adorsys SA.</span> 
   </div>

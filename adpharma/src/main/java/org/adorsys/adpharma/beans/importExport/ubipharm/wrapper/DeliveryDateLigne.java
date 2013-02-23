@@ -8,6 +8,7 @@ public class DeliveryDateLigne extends AbstractUbipharmLigneWrapper{
 	private UbipharmCommandStringSequence deliveryDate ;
 	public DeliveryDateLigne(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
+		setLigneIdentifier(new UbipharmCommandStringSequence(1, 1,"L"));
 	}
 	public UbipharmCommandStringSequence getDeliveryDate() {
 		return deliveryDate;
