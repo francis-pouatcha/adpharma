@@ -3,6 +3,7 @@
  */
 package org.adorsys.adpharma.beans.importExport.ubipharm;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,6 +22,9 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.DeliveryDateLign
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.DistributorLigne;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.EndOfCommandLigne;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ProductItemLigne;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ResponseCommandRowReference;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ResponseErrorDetailRow;
+import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ResponseProductItemRow;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandStringSequence;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.WorkTypeLigne;
 import org.adorsys.adpharma.domain.CipType;
@@ -28,9 +32,11 @@ import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.apache.commons.io.FileUtils;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
@@ -43,8 +49,8 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
  */
 public class CsvImportExportUtil {
 	private static Logger LOG = LoggerFactory.getLogger(CsvImportExportUtil.class);
-	private static  String RECEPTION_FOLDER_PATH = "file:///tools/ubipharm/receptions";
-	private static 	String SENDING_FOLDER_PATH = "/tools/ubipharm/";
+	private static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
+	private static 	String SENDING_FOLDER_PATH = "/tools/ubipharm/exports/";
 	private List<AbstractUbipharmLigneWrapper> lignesToExport= new ArrayList<AbstractUbipharmLigneWrapper>();
 	private Long cmdId = null;
 	private int numberOfEncodedLignes;
@@ -52,24 +58,122 @@ public class CsvImportExportUtil {
 	public CsvImportExportUtil() {
 	}
 	
-	public void readCsvFile(){
-		Reader reader;
-		String receptionFileName= RECEPTION_FOLDER_PATH+"reception.csv";
+	public void readCsvFile(String fileName) throws IOException{
+		List<String> receptionLines = loadReceptionLines(fileName);
+		DistributorLigne readDistributor = readDistributor(receptionLines);
+		WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
+		ResponseCommandRowReference readResponseCommandReferences = readResponseCommandReferences(receptionLines);
+		List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
+		ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
+		return ;
+	}
+	private Reader openFile(String fileName){
+		Reader reader = null;
+		String receptionFileName= RECEPTION_FOLDER_PATH+""+fileName;
 		try {
 			reader = new FileReader(receptionFileName);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to find the file : "+receptionFileName);
 		}
-		ColumnPositionMappingStrategy<CommandeFournisseur> columnPositionMappingStrategy = new ColumnPositionMappingStrategy<CommandeFournisseur>();
-		columnPositionMappingStrategy.setType(CommandeFournisseur.class);
-		String [] columnStrategy = new String[]{"",""};
-		CSVReader csvReader = new CSVReader(reader, CSVParser.NULL_CHARACTER);
+		return reader;
+	}
+
+	public List<String> loadReceptionLines(String fileName) throws IOException{
+		File file = new File(fileName);
+		List<String> readLines = FileUtils.readLines(file);
+		return readLines;
+	}
+	private List<String[]> loadLinesAsString(Reader fileReader) throws IOException{
+		CSVReader reader = new CSVReader(fileReader,CSVParser.DEFAULT_SEPARATOR);
+	    String [] nextLine = null;
+	    List<String[]> lines = new ArrayList<String[]>();
+	    reader.toString();
+	    while (reader.readNext()!= null) {
+	        // nextLine[] is an array of values from the line; normally should be of one value.
+	    	nextLine = reader.readNext();
+	    	lines.add(nextLine);
+	    }
+	    System.out.println(lines);
+	    return lines;
+	    
+	}
+	private DistributorLigne readDistributor(List<String> lines){
+		DistributorLigne distributorLigne = null ;
+		for (String lineContent : lines) {
+			if(!lineContent.startsWith("R"))
+				continue;
+			distributorLigne = new DistributorLigne(1, lineContent.length());
+			distributorLigne.setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, "R"));
+			distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, lineContent.length()+1,
+					distributorLigne.readValue(lineContent, 2, lineContent.length() + 1)));
+			break;
+		}
+		return distributorLigne;
+	}
+	private WorkTypeLigne readWorTypeLigne(List<String> lines){
+		WorkTypeLigne workTypeLigne = null;
+		for (String lineContent: lines) {
+			if(!lineContent.startsWith("P")){
+				continue;
+			}
+			workTypeLigne = new WorkTypeLigne(1, lineContent.length()+1);
+			int workTypeStartIndex = 2;
+			workTypeLigne.setWorkType(new UbipharmCommandStringSequence(2, lineContent.length(),
+					workTypeLigne.readValue(lineContent, workTypeStartIndex, lineContent.length() +1)));
+			break;
+		}
+		return workTypeLigne;
+	}
+	private ResponseCommandRowReference readResponseCommandReferences(List<String> lines){
+		ResponseCommandRowReference responseCommandRowReference = null;
+		for (String lineContent : lines) {
+			if(ResponseCommandRowReference.assertThisIsAvalidCommandRow(lineContent) == false){
+				continue;
+			}
+			responseCommandRowReference = new ResponseCommandRowReference(1, lineContent.length(), lineContent);
+			break ;
+		}
+		return responseCommandRowReference;
+	}
+	private List<ResponseProductItemRow> readResponseProductLignes(List<String> lines){
+		ResponseProductItemRow responseProductItemRow = null;
+		List<ResponseProductItemRow> results = new ArrayList<ResponseProductItemRow>();
+		for (String lineContent: lines) {
+			if(ResponseProductItemRow.assertThisIsAvalidResponseProductItemRow(lineContent) == false){
+				continue ;
+			}
+			responseProductItemRow = new ResponseProductItemRow(1, 113, lineContent);
+			results.add(responseProductItemRow);
+		}
+		return results;
+	}
+	private ResponseErrorDetailRow readResponseErrorDetail(List<String> lines){
+		ResponseErrorDetailRow responseErrorDetailRow = null;
+		for (String lineContent: lines) {
+			if(ResponseErrorDetailRow.assertItisAvalidErrorDetailRow(lineContent) == false){
+				continue ;
+			}
+			responseErrorDetailRow = new ResponseErrorDetailRow(1, 7, lineContent);
+		}
+		return responseErrorDetailRow;
+	}
+	private void convertAndSaveOrder(List<AbstractUbipharmLigneWrapper> ubipharmLines){
+		Assert.notNull(ubipharmLines, "Null values aren't accepted here");
+		for (AbstractUbipharmLigneWrapper ligneWrapper : ubipharmLines) {
+			if( ligneWrapper instanceof ResponseCommandRowReference){
+				
+			}else if(ligneWrapper instanceof ResponseProductItemRow){
+				
+			}else if(ligneWrapper instanceof ResponseErrorDetailRow){
+				
+			}
+		}
 	}
 	public void exportCommandsToUbipharmCsv(){
 		Writer writer;
 		try {
-			writer = new FileWriter(SENDING_FOLDER_PATH+loadCommandeFournisseur().getId()+".csv");
+			writer = new FileWriter(SENDING_FOLDER_PATH+getFileName(loadCommandeFournisseur()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to  find the file :"+SENDING_FOLDER_PATH);
@@ -84,6 +188,10 @@ public class CsvImportExportUtil {
 		}
 		LOG.debug("Done");
 	}
+	private String getFileName(CommandeFournisseur loadCommandeFournisseur) {
+		return loadCommandeFournisseur.getId()+".csv";
+	}
+
 	public boolean checkIfNewlyReceivedCommand(){
 		FileSystemScanner fileSystemScanner = new FileSystemScanner();
 		try {
@@ -180,6 +288,9 @@ public class CsvImportExportUtil {
 		return lignesToExport;
 	}
 	
+	public void constuctLigneToImport(){
+		
+	}
 	public List<ProductItemLigne> constructProductItemLignes(List<LigneCmdFournisseur> ligneCmdFournisseurs) {
 		List<ProductItemLigne> productLigneItems = new ArrayList<ProductItemLigne>();
 		int ligneNumber = 1;
