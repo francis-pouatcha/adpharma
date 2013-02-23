@@ -24,6 +24,7 @@ import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.utils.CipMgenerator;
+import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
@@ -99,6 +100,11 @@ public class UbipharmTests {
 		System.out.println(lignesToExport);
 		importExportUtil.exportCommandsToUbipharmCsv();
 	}
+	@Test
+	public void testDateFormat(){
+		String format = PharmaDateUtil.format(loadCommandeFournisseur().getDateLimiteLivraison()	,"yyyy-MM-dd");
+		System.out.println("Date : "+format);
+	}
 	public List<AbstractUbipharmLigneWrapper> constructLigneToExport(){
 		List<AbstractUbipharmLigneWrapper> lignesToExport = new ArrayList<AbstractUbipharmLigneWrapper>();
 		DistributorLigne distributorLigne = new DistributorLigne(1, 50);
@@ -106,7 +112,6 @@ public class UbipharmTests {
 		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true, "Rep171"));
 		distributorLigne.joinAnotherString(distributorLigne.getLigneIdentifier()).joinAnotherString(distributorLigne.getRepartitor());
 		System.out.println("here");
-//		CommandeFournisseur nextCommandeFournisseur = mockCommandeFournisseur();
 		CommandeFournisseur nextCommandeFournisseur = loadCommandeFournisseur();
 		System.out.println("and here  "+nextCommandeFournisseur.toString());
 		CommandTypeLigne commandTypeLigne = convertCommand(nextCommandeFournisseur);
@@ -136,30 +141,13 @@ public class UbipharmTests {
 	}
 	public List<LigneCmdFournisseur> loadLigneCommandFournisseurs(
 			CommandeFournisseur nextCommandeFournisseur) {
-		List<LigneCmdFournisseur> ligneCmdFournisseurs = new ArrayList<LigneCmdFournisseur>();
-		for(int i = 0; i< 5;i++){
-			ligneCmdFournisseurs.add(mockLigneCmdFournisseur());
-		}
 		return LigneCmdFournisseur.findLigneCmdFournisseursByCommande(nextCommandeFournisseur).getResultList();
-//		return ligneCmdFournisseurs;
-	}
-	public CommandeFournisseur mockCommandeFournisseur(){
-		CommandeFournisseur commandeFournisseur = new CommandeFournisseur();
-		commandeFournisseur.setCmdNumber(RandomStringUtils.randomAlphanumeric(8));
-		return commandeFournisseur;
-	}
-	public LigneCmdFournisseur mockLigneCmdFournisseur(){
-		LigneCmdFournisseur ligneCmdFournisseur = new LigneCmdFournisseur();
-		ligneCmdFournisseur.setCip(RandomStringUtils.randomAlphabetic(7));
-		ligneCmdFournisseur.setQuantiteCommande(new BigInteger(RandomStringUtils.randomNumeric(7)));
-		return ligneCmdFournisseur;
 	}
 	public CommandeFournisseur loadCommandeFournisseur() {
 		List<CommandeFournisseur> commandeFournisseurs = CommandeFournisseur.findAllCommandeFournisseurs();
 		if(commandeFournisseurs == null) throw new NullPointerException("Invalid command value, null value not required");
 		CommandeFournisseur nextCommandeFournisseur = commandeFournisseurs.iterator().next();
 		return nextCommandeFournisseur;
-//		return mockCommandeFournisseur();
 	}
 	
 	public CommandTypeLigne convertCommand(CommandeFournisseur commandeFournisseur){
