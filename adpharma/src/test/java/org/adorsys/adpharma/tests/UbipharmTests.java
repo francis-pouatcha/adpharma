@@ -127,7 +127,7 @@ public class UbipharmTests {
 		deleteFile(source);
 	}
 	@Test
-	public void testImport() throws IOException{
+	public void testImport() throws Exception{
 		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
 		csvImportExportUtil.readCsvFile("/tools/ubipharm/receptions/responseMock062.csv");
 	}
