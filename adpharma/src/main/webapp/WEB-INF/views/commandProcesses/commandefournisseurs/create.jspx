@@ -38,6 +38,10 @@
                          <field:input field="beginBy" titleMessage="Produit dont le nom Commance Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Commancant Par"  />
                          <field:input field="endBy"  titleMessage="Produit dont le nom se Termise  Par" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="Se terminant Par"  />
                 </div>
+                <div id="plage">
+                        <legend>Autres</legend>
+                         <field:select field="commandType" style="width: 60%;"  disableFormBinding="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commandType" items="${commandTypes}" path="" z="o9ACgUkDWf5k2bGayLPSDBzjHPQ="/>
+                </div>
                 
                  
                 </td>

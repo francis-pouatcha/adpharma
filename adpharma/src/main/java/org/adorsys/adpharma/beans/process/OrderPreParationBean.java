@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
+import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
@@ -70,6 +71,8 @@ public class OrderPreParationBean {
 	private String beginBy ;
 
 	private String  endBy;
+	
+	private CommandType commandType;
 
 	public OrderPreParationBean(CommandeFournisseur commandeFournisseur) {
 		this.commandeFournisseur = commandeFournisseur;
@@ -185,6 +188,14 @@ public class OrderPreParationBean {
 	}
 
 
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	public void setCommandType(CommandType commandType) {
+		this.commandType = commandType;
+	}
+
 	public  List<Produit> getPreparedProductList(){
 		if(modeSelection.equals(ModeSelection.RUPTURE_STOCK)){
 			TypedQuery<Produit> search = Produit.search(null, null, null, null, beginBy, endBy, rayon, filiale, null,BigInteger.ZERO);
@@ -214,6 +225,7 @@ public class OrderPreParationBean {
 		order.setModeDeSelection(getModeSelection());
 		order.setSite(getMagasin());
 		order.setLivre(Boolean.FALSE);
+		order.setCommandType(getCommandType());
 		return order;
 	}
 

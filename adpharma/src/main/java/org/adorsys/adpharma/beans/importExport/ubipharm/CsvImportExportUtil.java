@@ -29,6 +29,7 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ResponseProductI
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandStringSequence;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.WorkTypeLigne;
 import org.adorsys.adpharma.domain.CipType;
+import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
@@ -40,10 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import au.com.bytecode.opencsv.CSVParser;
-import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 
 /**
  * @author w2b
@@ -51,7 +49,7 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
  */
 public class CsvImportExportUtil {
 	private static Logger LOG = LoggerFactory.getLogger(CsvImportExportUtil.class);
-	private static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
+	public static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
 	private static 	String SENDING_FOLDER_PATH = "/tools/ubipharm/exports/";
 	private List<AbstractUbipharmLigneWrapper> lignesToExport= new ArrayList<AbstractUbipharmLigneWrapper>();
 	private Long cmdId = null;
@@ -91,8 +89,8 @@ public class CsvImportExportUtil {
 		TypedQuery<CommandeFournisseur> typedQuery = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.getCustomerCommandKey().getStringValue());
 		if(!typedQuery.getResultList().isEmpty()){
 			CommandeFournisseur commandeFournisseur = typedQuery.getResultList().iterator().next();
-			//erase the previous error message here : commandeFournisseur.setPreviousError(errorMessageValue); 
-			commandeFournisseur.merge();
+			commandeFournisseur.setLastestUbipharmError(errorMessageValue);
+			commandeFournisseur.merge().flush();
 		}
 	}
 
@@ -101,7 +99,10 @@ public class CsvImportExportUtil {
 		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
 			String productKey = StringUtils.trim(responseProductItemRow.getOrderingProductKey().getStringValue());
 			List<LigneCmdFournisseur> resultList = LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getResultList();
-			if(resultList.isEmpty()) continue ;
+			if(resultList.isEmpty()) {
+				LOG.error("No command Item Found With This CIP : "+productKey);
+				continue ;
+			}
 			LigneCmdFournisseur ligneCmdFournisseur = resultList.iterator().next();
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
 			ligneCmdFournisseur.merge().flush();
@@ -334,10 +335,23 @@ public class CsvImportExportUtil {
 	public CommandTypeLigne convertCommand(CommandeFournisseur commandeFournisseur){
 		if(commandeFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");
 		CommandTypeLigne commandTypeLigne = new CommandTypeLigne(1, 25);
-		commandTypeLigne.setCommandType(new UbipharmCommandStringSequence(2, 4, "001"));
+		String commandTypeValue =  getCommandTypeValue(commandeFournisseur);
+		commandTypeLigne.setCommandType(new UbipharmCommandStringSequence(2, 4, commandTypeValue));
 		commandTypeLigne.setSeparator(new UbipharmCommandStringSequence(5, 5, "R"));
 		commandTypeLigne.setCommandReference(new UbipharmCommandStringSequence(6, 25, true, commandeFournisseur.getCmdNumber()));
 		return commandTypeLigne;
+	}
+
+	private String getCommandTypeValue(CommandeFournisseur commandeFournisseur) {
+		String result = null ;
+		if(CommandType.NORMAL.equals(commandeFournisseur.getCommandType())){
+			result = "001";
+		}else if(CommandType.PACKAGED.equals(commandeFournisseur.getCommandType())){
+			result = "002";
+		}else if(CommandType.SPECIAL.equals(commandeFournisseur.getCommandType())){
+			result = "003";
+		}
+		return result;
 	}
 	public ProductItemLigne convertCommandItem(LigneCmdFournisseur ligneCmdFournisseur,int ligneNumber){
 		if(ligneCmdFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");

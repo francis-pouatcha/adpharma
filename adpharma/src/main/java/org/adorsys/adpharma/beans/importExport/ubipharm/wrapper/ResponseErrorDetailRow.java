@@ -49,7 +49,7 @@ public class ResponseErrorDetailRow extends AbstractUbipharmLigneWrapper {
 	}
 	public UbipharmCommandStringSequence readUbipharmServerError(){
 		String errorDetail = super.readValue(getStringValue(), 2, getStringValue().length());
-		return new UbipharmCommandStringSequence(7, (errorDetail.length()+2) -1, errorDetail);
+		return new UbipharmCommandStringSequence(2, (errorDetail.length()+2) -1, errorDetail);
 	}
 	public void loadDataFromRow(){
 		if(false == assertItisAvalidErrorDetailRow(getStringValue())) 

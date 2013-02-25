@@ -23,6 +23,8 @@
         <field:display field="montantHt" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt" object="${commandefournisseur}" z="lq2JekzFPRRjBNOsxvcxmWTvL1g="/>
         <field:display field="montantTva" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTva" object="${commandefournisseur}" z="uU0q3ucr/tAjjJmLm+bQQGIaemE="/>
         <field:display field="montantTtc" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_montantTtc" object="${commandefournisseur}" z="s3Oh6qPDSHstxo/h2iBvAJLZNNM="/>
+        <field:display field="commandType" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_commandType" object="${commandefournisseur}" z="s3Oh6qPDSHstxo/h2iBvAJLZNKM="/>
+        <field:display field="lastestUbipharmError" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_lastestUbipharmError" object="${commandefournisseur}" z="s3Oh6qPDSHstxo/h2iBvAJLZNNK="/>
   
      </td>
             </tr>

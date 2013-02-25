@@ -6,36 +6,30 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.adorsys.adpharma.utils.DateConfig;
-import org.adorsys.adpharma.utils.DateConfigPeriod;
-import org.adorsys.adpharma.utils.PharmaDateUtil;
 
-import javassist.expr.NewArray;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.adorsys.adpharma.beans.Decaissement;
 import org.adorsys.adpharma.beans.process.ChiffreAffaireBean;
 import org.adorsys.adpharma.beans.process.SessionBean;
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Etat;
-import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Genre;
-import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeDecaissement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.DisbursementService;
+import org.adorsys.adpharma.utils.DateConfig;
+import org.adorsys.adpharma.utils.DateConfigPeriod;
+import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.adorsys.adpharma.utils.ProcessHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,8 +38,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.adorsys.adpharma.utils.ProcessHelper ;
-import org.apache.log4j.spi.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestParam;
 @RooWebScaffold(path = "caisses", formBackingObject = Caisse.class)
 @RequestMapping("/caisses")
 @Controller
