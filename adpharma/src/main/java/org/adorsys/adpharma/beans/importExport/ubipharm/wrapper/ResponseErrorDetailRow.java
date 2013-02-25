@@ -47,14 +47,31 @@ public class ResponseErrorDetailRow extends AbstractUbipharmLigneWrapper {
 		String errorDetail = super.readValue(getStringValue(), 7, getStringValue().length());
 		return new UbipharmCommandStringSequence(7, (errorDetail.length()+7) -1, errorDetail);
 	}
+	public UbipharmCommandStringSequence readUbipharmServerError(){
+		String errorDetail = super.readValue(getStringValue(), 2, getStringValue().length());
+		return new UbipharmCommandStringSequence(7, (errorDetail.length()+2) -1, errorDetail);
+	}
 	public void loadDataFromRow(){
 		if(false == assertItisAvalidErrorDetailRow(getStringValue())) 
 			throw new IllegalArgumentException("Invalid Ligne Identifier, this might not be a valid Product Item Row");
-		setLigneIdentifier(readLigneIdentifier());
-		errorStatus = readErrorStatus();
-		errorReturningCode = readErrorReturningKey();
-		separator = readSeparator();
-		detail = readDetail();
+		this.setLigneIdentifier(readLigneIdentifier());
+		if(isErrorFromSendedFile()){
+			errorStatus = readErrorStatus();
+			errorReturningCode = readErrorReturningKey();
+			detail = readDetail();
+		}else {
+			detail = readUbipharmServerError();
+		}
+	}
+
+	private boolean isErrorFromSendedFile() {
+		try {
+			separator = readSeparator();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return true;
+		}
+		return false;
 	}
 
 	private UbipharmCommandStringSequence readLigneIdentifier(){
@@ -75,5 +92,19 @@ public class ResponseErrorDetailRow extends AbstractUbipharmLigneWrapper {
 		return null;
 	}
 
+	public UbipharmCommandStringSequence getErrorStatus() {
+		return errorStatus;
+	}
 
+	public UbipharmCommandStringSequence getErrorReturningCode() {
+		return errorReturningCode;
+	}
+
+	public UbipharmCommandStringSequence getSeparator() {
+		return separator;
+	}
+
+	public UbipharmCommandStringSequence getDetail() {
+		return detail;
+	}
 }

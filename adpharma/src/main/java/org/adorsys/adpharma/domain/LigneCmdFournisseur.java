@@ -5,15 +5,18 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import org.adorsys.adpharma.platform.rest.exchanges.OrderItems;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -187,7 +190,13 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 		this.isValid = prixAchatMin.equals(prixFourniMin) && quantiteCommande.equals(quantiteFournie);
 
    }
-
+   public static TypedQuery<LigneCmdFournisseur> findLigneCmdFournisseursByCip(String cip) {
+       if (StringUtils.isEmpty(cip)) throw new IllegalArgumentException("The commande argument is required");
+       EntityManager em = LigneCmdFournisseur.entityManager();
+       TypedQuery<LigneCmdFournisseur> q = em.createQuery("SELECT o FROM LigneCmdFournisseur AS o WHERE o.cip = :cip", LigneCmdFournisseur.class);
+       q.setParameter("cip", cip);
+       return q;
+   }
 
 
 }

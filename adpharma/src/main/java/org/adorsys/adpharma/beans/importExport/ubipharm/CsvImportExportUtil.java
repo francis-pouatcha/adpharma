@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,17 +57,58 @@ public class CsvImportExportUtil {
 	private Long cmdId = null;
 	private int numberOfEncodedLignes;
 	private int numberOfClearLignes;
+	private static final String ERROR_CODE_FROM_SENDED_FILE= "E";
+	private static final String ERROR_CODE_FROM_UBIPHARM_SERVER= "ERR";
 	public CsvImportExportUtil() {
 	}
 	
-	public void readCsvFile(String fileName) throws IOException{
-		List<String> receptionLines = loadReceptionLines(fileName);
-		DistributorLigne readDistributor = readDistributor(receptionLines);
-		WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
-		ResponseCommandRowReference readResponseCommandReferences = readResponseCommandReferences(receptionLines);
-		List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
-		ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
-		return ;
+	public void readCsvFile(String fileName) throws Exception{
+		try {
+			List<String> receptionLines = loadReceptionLines(fileName);
+			DistributorLigne readDistributor = readDistributor(receptionLines);
+			WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
+			ResponseCommandRowReference readResponseCommandReferences = readResponseCommandReferences(receptionLines);
+			ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
+			String responseErrorCode = readWorTypeLigne.getWorkType().getStringValue();
+			if(ERROR_CODE_FROM_SENDED_FILE.equals(responseErrorCode)||ERROR_CODE_FROM_UBIPHARM_SERVER.equals(responseErrorCode)){
+				saveError(readResponseErrorDetail, readResponseCommandReferences);
+			}else {
+				List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
+				saveLigneCmdFournisseurs(readResponseProductLignes);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+		}finally {
+			
+		}
+	}
+	
+	private void saveError(ResponseErrorDetailRow readResponseErrorDetail,
+			ResponseCommandRowReference readResponseCommandReferences) {
+
+		String errorMessageValue = readResponseErrorDetail.getDetail().getStringValue();
+		TypedQuery<CommandeFournisseur> typedQuery = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.getCustomerCommandKey().getStringValue());
+		if(!typedQuery.getResultList().isEmpty()){
+			CommandeFournisseur commandeFournisseur = typedQuery.getResultList().iterator().next();
+			//erase the previous error message here : commandeFournisseur.setPreviousError(errorMessageValue); 
+			commandeFournisseur.merge();
+		}
+	}
+
+	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows) {
+		Assert.notNull(productItemRows, "Null argment not required");
+		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
+			String productKey = StringUtils.trim(responseProductItemRow.getOrderingProductKey().getStringValue());
+			List<LigneCmdFournisseur> resultList = LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getResultList();
+			if(resultList.isEmpty()) continue ;
+			LigneCmdFournisseur ligneCmdFournisseur = resultList.iterator().next();
+			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
+			ligneCmdFournisseur.merge().flush();
+		}
+	}
+	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
+		return errorDetailRow != null;
 	}
 	private Reader openFile(String fileName){
 		Reader reader = null;
@@ -83,20 +126,6 @@ public class CsvImportExportUtil {
 		File file = new File(fileName);
 		List<String> readLines = FileUtils.readLines(file);
 		return readLines;
-	}
-	private List<String[]> loadLinesAsString(Reader fileReader) throws IOException{
-		CSVReader reader = new CSVReader(fileReader,CSVParser.DEFAULT_SEPARATOR);
-	    String [] nextLine = null;
-	    List<String[]> lines = new ArrayList<String[]>();
-	    reader.toString();
-	    while (reader.readNext()!= null) {
-	        // nextLine[] is an array of values from the line; normally should be of one value.
-	    	nextLine = reader.readNext();
-	    	lines.add(nextLine);
-	    }
-	    System.out.println(lines);
-	    return lines;
-	    
 	}
 	private DistributorLigne readDistributor(List<String> lines){
 		DistributorLigne distributorLigne = null ;
@@ -154,21 +183,10 @@ public class CsvImportExportUtil {
 			if(ResponseErrorDetailRow.assertItisAvalidErrorDetailRow(lineContent) == false){
 				continue ;
 			}
-			responseErrorDetailRow = new ResponseErrorDetailRow(1, 7, lineContent);
+			responseErrorDetailRow = new ResponseErrorDetailRow(1, lineContent.length(), lineContent);
+			break;
 		}
 		return responseErrorDetailRow;
-	}
-	private void convertAndSaveOrder(List<AbstractUbipharmLigneWrapper> ubipharmLines){
-		Assert.notNull(ubipharmLines, "Null values aren't accepted here");
-		for (AbstractUbipharmLigneWrapper ligneWrapper : ubipharmLines) {
-			if( ligneWrapper instanceof ResponseCommandRowReference){
-				
-			}else if(ligneWrapper instanceof ResponseProductItemRow){
-				
-			}else if(ligneWrapper instanceof ResponseErrorDetailRow){
-				
-			}
-		}
 	}
 	public void exportCommandsToUbipharmCsv(){
 		Writer writer;
