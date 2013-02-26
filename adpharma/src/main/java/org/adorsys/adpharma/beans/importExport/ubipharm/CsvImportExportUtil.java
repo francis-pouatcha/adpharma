@@ -197,7 +197,7 @@ public class CsvImportExportUtil {
 		LOG.debug("Done");
 	}
 	private String getFileName(CommandeFournisseur loadCommandeFournisseur) {
-		return loadCommandeFournisseur.getId()+".csv";
+		return "Command-"+loadCommandeFournisseur.getId()+".csv";
 	}
 
 	public void checkIfNewlyReceivedCommand(){
@@ -338,7 +338,7 @@ public class CsvImportExportUtil {
 
 	private String getCommandTypeValue(CommandeFournisseur commandeFournisseur) {
 		String result = null ;
-		if(CommandType.NORMAL.equals(commandeFournisseur.getCommandType())){
+		if(commandeFournisseur.getCommandType() == null || CommandType.NORMAL.equals(commandeFournisseur.getCommandType())){
 			result = "001";
 		}else if(CommandType.PACKAGED.equals(commandeFournisseur.getCommandType())){
 			result = "002";
