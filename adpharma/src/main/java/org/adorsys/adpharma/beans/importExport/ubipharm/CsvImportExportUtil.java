@@ -111,17 +111,6 @@ public class CsvImportExportUtil {
 	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
 		return errorDetailRow != null;
 	}
-	private Reader openFile(String fileName){
-		Reader reader = null;
-		String receptionFileName= RECEPTION_FOLDER_PATH+""+fileName;
-		try {
-			reader = new FileReader(receptionFileName);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to find the file : "+receptionFileName);
-		}
-		return reader;
-	}
 
 	public List<String> loadReceptionLines(String fileName) throws IOException{
 		File file = new File(fileName);
@@ -211,14 +200,17 @@ public class CsvImportExportUtil {
 		return loadCommandeFournisseur.getId()+".csv";
 	}
 
-	public boolean checkIfNewlyReceivedCommand(){
+	public void checkIfNewlyReceivedCommand(){
 		FileSystemScanner fileSystemScanner = new FileSystemScanner();
+		if(FileSystemScanner.FIST_SCAN_STARTED == true) {
+			return ;
+		}
 		try {
 			fileSystemScanner.startScan();
+			FileSystemScanner.FIST_SCAN_STARTED = true ;
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
-		return false;
 	}
 	/*
 	 * Construct specifics rows to match ubipharm csv format.
