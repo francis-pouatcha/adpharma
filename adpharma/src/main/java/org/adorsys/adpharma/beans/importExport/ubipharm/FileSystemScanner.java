@@ -26,6 +26,7 @@ public class FileSystemScanner {
 	public Logger LOG = LoggerFactory.getLogger(FileSystemScanner.class);
 	public Scheduler scheduler = null;
 	public JobDetail jobDetail;
+	public static boolean FIST_SCAN_STARTED ;
 	public void startScan() throws SchedulerException {
 		StdSchedulerFactory schedulerFactory = new StdSchedulerFactory();
 		 scheduler = schedulerFactory.getScheduler();

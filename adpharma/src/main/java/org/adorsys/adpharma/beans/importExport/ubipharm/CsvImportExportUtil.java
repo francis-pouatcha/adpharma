@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,20 +29,19 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ResponseProductI
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandStringSequence;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.WorkTypeLigne;
 import org.adorsys.adpharma.domain.CipType;
+import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import au.com.bytecode.opencsv.CSVParser;
-import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 
 /**
  * @author w2b
@@ -49,54 +49,73 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
  */
 public class CsvImportExportUtil {
 	private static Logger LOG = LoggerFactory.getLogger(CsvImportExportUtil.class);
-	private static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
+	public static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
 	private static 	String SENDING_FOLDER_PATH = "/tools/ubipharm/exports/";
 	private List<AbstractUbipharmLigneWrapper> lignesToExport= new ArrayList<AbstractUbipharmLigneWrapper>();
 	private Long cmdId = null;
 	private int numberOfEncodedLignes;
 	private int numberOfClearLignes;
+	private static final String ERROR_CODE_FROM_SENDED_FILE= "E";
+	private static final String ERROR_CODE_FROM_UBIPHARM_SERVER= "ERR";
 	public CsvImportExportUtil() {
 	}
 	
-	public void readCsvFile(String fileName) throws IOException{
-		List<String> receptionLines = loadReceptionLines(fileName);
-		DistributorLigne readDistributor = readDistributor(receptionLines);
-		WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
-		ResponseCommandRowReference readResponseCommandReferences = readResponseCommandReferences(receptionLines);
-		List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
-		ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
-		return ;
-	}
-	private Reader openFile(String fileName){
-		Reader reader = null;
-		String receptionFileName= RECEPTION_FOLDER_PATH+""+fileName;
+	public void readCsvFile(String fileName) throws Exception{
 		try {
-			reader = new FileReader(receptionFileName);
-		} catch (FileNotFoundException e) {
+			List<String> receptionLines = loadReceptionLines(fileName);
+			DistributorLigne readDistributor = readDistributor(receptionLines);
+			WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
+			ResponseCommandRowReference readResponseCommandReferences = readResponseCommandReferences(receptionLines);
+			ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
+			String responseErrorCode = readWorTypeLigne.getWorkType().getStringValue();
+			if(ERROR_CODE_FROM_SENDED_FILE.equals(responseErrorCode)||ERROR_CODE_FROM_UBIPHARM_SERVER.equals(responseErrorCode)){
+				saveError(readResponseErrorDetail, readResponseCommandReferences);
+			}else {
+				List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
+				saveLigneCmdFournisseurs(readResponseProductLignes);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Unable to find the file : "+receptionFileName);
+			throw new Exception(e.getMessage());
+		}finally {
+			
 		}
-		return reader;
+	}
+	
+	private void saveError(ResponseErrorDetailRow readResponseErrorDetail,
+			ResponseCommandRowReference readResponseCommandReferences) {
+
+		String errorMessageValue = readResponseErrorDetail.getDetail().getStringValue();
+		TypedQuery<CommandeFournisseur> typedQuery = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.getCustomerCommandKey().getStringValue());
+		if(!typedQuery.getResultList().isEmpty()){
+			CommandeFournisseur commandeFournisseur = typedQuery.getResultList().iterator().next();
+			commandeFournisseur.setLastestUbipharmError(errorMessageValue);
+			commandeFournisseur.merge().flush();
+		}
+	}
+
+	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows) {
+		Assert.notNull(productItemRows, "Null argment not required");
+		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
+			String productKey = StringUtils.trim(responseProductItemRow.getOrderingProductKey().getStringValue());
+			List<LigneCmdFournisseur> resultList = LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getResultList();
+			if(resultList.isEmpty()) {
+				LOG.error("No command Item Found With This CIP : "+productKey);
+				continue ;
+			}
+			LigneCmdFournisseur ligneCmdFournisseur = resultList.iterator().next();
+			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
+			ligneCmdFournisseur.merge().flush();
+		}
+	}
+	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
+		return errorDetailRow != null;
 	}
 
 	public List<String> loadReceptionLines(String fileName) throws IOException{
 		File file = new File(fileName);
 		List<String> readLines = FileUtils.readLines(file);
 		return readLines;
-	}
-	private List<String[]> loadLinesAsString(Reader fileReader) throws IOException{
-		CSVReader reader = new CSVReader(fileReader,CSVParser.DEFAULT_SEPARATOR);
-	    String [] nextLine = null;
-	    List<String[]> lines = new ArrayList<String[]>();
-	    reader.toString();
-	    while (reader.readNext()!= null) {
-	        // nextLine[] is an array of values from the line; normally should be of one value.
-	    	nextLine = reader.readNext();
-	    	lines.add(nextLine);
-	    }
-	    System.out.println(lines);
-	    return lines;
-	    
 	}
 	private DistributorLigne readDistributor(List<String> lines){
 		DistributorLigne distributorLigne = null ;
@@ -154,21 +173,10 @@ public class CsvImportExportUtil {
 			if(ResponseErrorDetailRow.assertItisAvalidErrorDetailRow(lineContent) == false){
 				continue ;
 			}
-			responseErrorDetailRow = new ResponseErrorDetailRow(1, 7, lineContent);
+			responseErrorDetailRow = new ResponseErrorDetailRow(1, lineContent.length(), lineContent);
+			break;
 		}
 		return responseErrorDetailRow;
-	}
-	private void convertAndSaveOrder(List<AbstractUbipharmLigneWrapper> ubipharmLines){
-		Assert.notNull(ubipharmLines, "Null values aren't accepted here");
-		for (AbstractUbipharmLigneWrapper ligneWrapper : ubipharmLines) {
-			if( ligneWrapper instanceof ResponseCommandRowReference){
-				
-			}else if(ligneWrapper instanceof ResponseProductItemRow){
-				
-			}else if(ligneWrapper instanceof ResponseErrorDetailRow){
-				
-			}
-		}
 	}
 	public void exportCommandsToUbipharmCsv(){
 		Writer writer;
@@ -192,14 +200,17 @@ public class CsvImportExportUtil {
 		return loadCommandeFournisseur.getId()+".csv";
 	}
 
-	public boolean checkIfNewlyReceivedCommand(){
+	public void checkIfNewlyReceivedCommand(){
 		FileSystemScanner fileSystemScanner = new FileSystemScanner();
+		if(FileSystemScanner.FIST_SCAN_STARTED == true) {
+			return ;
+		}
 		try {
 			fileSystemScanner.startScan();
+			FileSystemScanner.FIST_SCAN_STARTED = true ;
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
-		return false;
 	}
 	/*
 	 * Construct specifics rows to match ubipharm csv format.
@@ -245,16 +256,18 @@ public class CsvImportExportUtil {
 
 	public List<AbstractUbipharmLigneWrapper> constructLigneToExport(){
 		List<AbstractUbipharmLigneWrapper> lignesToExport = new ArrayList<AbstractUbipharmLigneWrapper>();
+
+		CommandeFournisseur nextCommandeFournisseur = loadCommandeFournisseur();
+		
 		DistributorLigne distributorLigne = new DistributorLigne(1, 50);
 		distributorLigne.setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, false, "R"));
-		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true, "Rep171"));
+		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true,nextCommandeFournisseur.getFournisseur().getDistributorKey()));
 		distributorLigne.joinAnotherString(distributorLigne.getLigneIdentifier()).joinAnotherString(distributorLigne.getRepartitor());
 		
 		WorkTypeLigne workTypeLigne = new WorkTypeLigne(1, 2);
 		workTypeLigne.setWorkType(new UbipharmCommandStringSequence(2, 2, "C"));
 		workTypeLigne.joinString(workTypeLigne.getLigneIdentifier(),workTypeLigne.getWorkType());
 		
-		CommandeFournisseur nextCommandeFournisseur = loadCommandeFournisseur();
 		CommandTypeLigne commandTypeLigne = convertCommand(nextCommandeFournisseur);
 		commandTypeLigne.joinString(commandTypeLigne.getLigneIdentifier(),commandTypeLigne.getCommandType(),commandTypeLigne.getSeparator(),commandTypeLigne.getCommandReference());
 
@@ -316,10 +329,23 @@ public class CsvImportExportUtil {
 	public CommandTypeLigne convertCommand(CommandeFournisseur commandeFournisseur){
 		if(commandeFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");
 		CommandTypeLigne commandTypeLigne = new CommandTypeLigne(1, 25);
-		commandTypeLigne.setCommandType(new UbipharmCommandStringSequence(2, 4, "001"));
+		String commandTypeValue =  getCommandTypeValue(commandeFournisseur);
+		commandTypeLigne.setCommandType(new UbipharmCommandStringSequence(2, 4, commandTypeValue));
 		commandTypeLigne.setSeparator(new UbipharmCommandStringSequence(5, 5, "R"));
 		commandTypeLigne.setCommandReference(new UbipharmCommandStringSequence(6, 25, true, commandeFournisseur.getCmdNumber()));
 		return commandTypeLigne;
+	}
+
+	private String getCommandTypeValue(CommandeFournisseur commandeFournisseur) {
+		String result = null ;
+		if(CommandType.NORMAL.equals(commandeFournisseur.getCommandType())){
+			result = "001";
+		}else if(CommandType.PACKAGED.equals(commandeFournisseur.getCommandType())){
+			result = "002";
+		}else if(CommandType.SPECIAL.equals(commandeFournisseur.getCommandType())){
+			result = "003";
+		}
+		return result;
 	}
 	public ProductItemLigne convertCommandItem(LigneCmdFournisseur ligneCmdFournisseur,int ligneNumber){
 		if(ligneCmdFournisseur == null) throw new IllegalArgumentException("Invalid Argument ! Null values aren't required");

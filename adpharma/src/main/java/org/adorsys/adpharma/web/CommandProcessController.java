@@ -30,6 +30,7 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.CsvImportExportUtil;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.AbstractUbipharmLigneWrapper;
 import org.adorsys.adpharma.beans.process.CommandeProcess;
 import org.adorsys.adpharma.beans.process.OrderPreParationBean;
+import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
@@ -442,6 +443,10 @@ public class CommandProcessController {
 	@ModelAttribute("rayons")
 	public Collection<Rayon> populateRayons() {
 		return ProcessHelper.populateRayon();
+	}
+	@ModelAttribute("commandTypes")
+	public Collection<CommandType> populateCommandType(){
+		return Arrays.asList(CommandType.class.getEnumConstants());
 	}
 
 }
