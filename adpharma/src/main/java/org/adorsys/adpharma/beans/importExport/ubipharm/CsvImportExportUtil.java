@@ -256,16 +256,18 @@ public class CsvImportExportUtil {
 
 	public List<AbstractUbipharmLigneWrapper> constructLigneToExport(){
 		List<AbstractUbipharmLigneWrapper> lignesToExport = new ArrayList<AbstractUbipharmLigneWrapper>();
+
+		CommandeFournisseur nextCommandeFournisseur = loadCommandeFournisseur();
+		
 		DistributorLigne distributorLigne = new DistributorLigne(1, 50);
 		distributorLigne.setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, false, "R"));
-		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true, "Rep171"));
+		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true,nextCommandeFournisseur.getFournisseur().getDistributorKey()));
 		distributorLigne.joinAnotherString(distributorLigne.getLigneIdentifier()).joinAnotherString(distributorLigne.getRepartitor());
 		
 		WorkTypeLigne workTypeLigne = new WorkTypeLigne(1, 2);
 		workTypeLigne.setWorkType(new UbipharmCommandStringSequence(2, 2, "C"));
 		workTypeLigne.joinString(workTypeLigne.getLigneIdentifier(),workTypeLigne.getWorkType());
 		
-		CommandeFournisseur nextCommandeFournisseur = loadCommandeFournisseur();
 		CommandTypeLigne commandTypeLigne = convertCommand(nextCommandeFournisseur);
 		commandTypeLigne.joinString(commandTypeLigne.getLigneIdentifier(),commandTypeLigne.getCommandType(),commandTypeLigne.getSeparator(),commandTypeLigne.getCommandReference());
 
