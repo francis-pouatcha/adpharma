@@ -26,7 +26,9 @@ public class UbipharmCommandStringSequence extends UbipharmStringOperation{
 		setContains(contains);
 	}
 	private void validateContent(String content){
-		if(content == null) throw new IllegalArgumentException("Invalid Argument Exception ! Null Value aren't Accepted");
+		if(content == null) {
+			content = StringUtils.leftPad(new String(), this.size);
+		}
 		if(content.length() > this.size) throw new IllegalArgumentException("The Item is larger than its size");
 	}
 	public void setContains(String value){
