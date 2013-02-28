@@ -4,6 +4,8 @@
 package org.adorsys.adpharma.beans.importExport.ubipharm.wrapper;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author w2b
