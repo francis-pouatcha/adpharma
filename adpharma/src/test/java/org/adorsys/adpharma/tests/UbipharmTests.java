@@ -95,10 +95,11 @@ public class UbipharmTests {
 	}
 	@Test
 	public void testExport(){
+
 		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
-		List<AbstractUbipharmLigneWrapper> lignesToExport = constructLigneToExport();
+		importExportUtil.setCmdId(new Long(14));
+		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		System.out.println(lignesToExport);
 		importExportUtil.exportCommandsToUbipharmCsv();
 	}
 	@Test
@@ -139,6 +140,14 @@ public class UbipharmTests {
 		List readLines = FileUtils.readLines(file);
 		System.out.println(readLines);
 		System.out.println(readLines.size());
+	}
+	@Test
+	public void testExportAsTxt(){
+		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
+		importExportUtil.setCmdId(new Long(14));
+		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
+		importExportUtil.setLignesToExport(lignesToExport);
+		importExportUtil.exportCommandsToUbipharmTxt();
 	}
 	public void copyFile(String source, String destination) throws IOException{
 		FileUtils.copyFileToDirectory(new File(source), new File(destination));

@@ -181,7 +181,7 @@ public class CsvImportExportUtil {
 	public void exportCommandsToUbipharmCsv(){
 		Writer writer;
 		try {
-			writer = new FileWriter(SENDING_FOLDER_PATH+getFileName(loadCommandeFournisseur()));
+			writer = new FileWriter(SENDING_FOLDER_PATH+getFileName(loadCommandeFournisseur(),"csv"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to  find the file :"+SENDING_FOLDER_PATH);
@@ -196,8 +196,24 @@ public class CsvImportExportUtil {
 		}
 		LOG.debug("Done");
 	}
-	private String getFileName(CommandeFournisseur loadCommandeFournisseur) {
-		return "Command-"+loadCommandeFournisseur.getId()+".csv";
+	public void exportCommandsToUbipharmTxt(){
+		String fileName = getFileName(loadCommandeFournisseur(), "txt");
+		File fileToSend = new File(SENDING_FOLDER_PATH+""+fileName);
+		try {
+			FileUtils.writeLines(fileToSend, convertAbstractLinesToLines(getLignesToExport()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<String> convertAbstractLinesToLines(List<AbstractUbipharmLigneWrapper> rows){
+		List<String> lines = new ArrayList<String>();
+		for (AbstractUbipharmLigneWrapper abstractUbipharmLigneWrapper : rows) {
+			lines.add(abstractUbipharmLigneWrapper.getStringValue());
+		}
+		return lines;
+	}
+	private String getFileName(CommandeFournisseur loadCommandeFournisseur,String extension) {
+		return "Command-"+loadCommandeFournisseur.getId()+"."+extension;
 	}
 
 	public void checkIfNewlyReceivedCommand(){
@@ -246,6 +262,10 @@ public class CsvImportExportUtil {
 		this.lignesToExport = lignesToExport;
 	}
 	public List<String[]> getFormattedLigneWrapperForCsv(){
+		if(this.lignesToExport == null || this.lignesToExport.isEmpty()){
+			LOG.warn("no command to export");
+			this.lignesToExport = new ArrayList<AbstractUbipharmLigneWrapper>();
+		}
 		List<String[]> stringLines = new ArrayList<String[]>(this.lignesToExport.size());
 		if(this.lignesToExport.isEmpty()) return stringLines;
 		for (AbstractUbipharmLigneWrapper ligneWrapper : this.lignesToExport) {
@@ -261,7 +281,7 @@ public class CsvImportExportUtil {
 		
 		DistributorLigne distributorLigne = new DistributorLigne(1, 50);
 		distributorLigne.setLigneIdentifier(new UbipharmCommandStringSequence(1, 1, false, "R"));
-		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true,nextCommandeFournisseur.getFournisseur().getDistributorKey()));
+		distributorLigne.setRepartitor(new UbipharmCommandStringSequence(2, 49, true,getDistributorKey(nextCommandeFournisseur)));
 		distributorLigne.joinAnotherString(distributorLigne.getLigneIdentifier()).joinAnotherString(distributorLigne.getRepartitor());
 		
 		WorkTypeLigne workTypeLigne = new WorkTypeLigne(1, 2);
@@ -301,6 +321,14 @@ public class CsvImportExportUtil {
 		return lignesToExport;
 	}
 	
+	private String getDistributorKey(CommandeFournisseur commandeFournisseur) {
+		String distributorKey = commandeFournisseur.getFournisseur().getDistributorKey();
+		if(StringUtils.isEmpty(distributorKey)){
+			distributorKey = "GRS";
+		}
+		return distributorKey;
+	}
+
 	public void constuctLigneToImport(){
 		
 	}

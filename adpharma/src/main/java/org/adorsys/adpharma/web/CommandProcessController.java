@@ -365,7 +365,7 @@ public class CommandProcessController {
 		importExportUtil.setCmdId(cmdId);
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		importExportUtil.exportCommandsToUbipharmCsv();
+		importExportUtil.exportCommandsToUbipharmTxt();
 		importExportUtil.checkIfNewlyReceivedCommand();
 		sendedToUbipharm= true ;
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
