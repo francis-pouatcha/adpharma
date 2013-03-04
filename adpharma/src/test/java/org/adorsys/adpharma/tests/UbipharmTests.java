@@ -3,11 +3,11 @@
  */
 package org.adorsys.adpharma.tests;
 
-import java.math.BigInteger;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.activation.CommandInfo;
 
 import junit.framework.Assert;
 
@@ -22,11 +22,12 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandS
 import org.adorsys.adpharma.domain.CipType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
-import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.JobBuilder;
@@ -59,7 +60,7 @@ public class UbipharmTests {
 			if(CommandJob.numberOfTime == 6){
 				System.out.println("quota riched");
 				systemScanner.REPEAT_SECONDLY_FOREVER = SimpleScheduleBuilder.repeatSecondlyForever(1);
-				JobDetail anoteherJobDetail = JobBuilder.newJob(CommandJob.class)
+				JobDetail anotherJobDetail = JobBuilder.newJob(CommandJob.class)
 						.withIdentity(new JobKey("fileReceivingOne", "fileReceiving"))
 						.build();
 				Trigger second = TriggerBuilder
@@ -68,7 +69,7 @@ public class UbipharmTests {
 						.withSchedule(systemScanner.REPEAT_SECONDLY_FOREVER)
 						.startNow().build();
 				systemScanner.scheduler.deleteJob(systemScanner.jobDetail.getKey());
-				systemScanner.scheduler.scheduleJob(anoteherJobDetail, second);
+				systemScanner.scheduler.scheduleJob(anotherJobDetail, second);
 				systemScanner.scheduler.start();
 				System.out.println("The second scheduler has started");
 				boucle = false;
@@ -94,16 +95,65 @@ public class UbipharmTests {
 	}
 	@Test
 	public void testExport(){
+
 		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
-		List<AbstractUbipharmLigneWrapper> lignesToExport = constructLigneToExport();
+		importExportUtil.setCmdId(new Long(14));
+		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		System.out.println(lignesToExport);
 		importExportUtil.exportCommandsToUbipharmCsv();
 	}
 	@Test
 	public void testDateFormat(){
 		String format = PharmaDateUtil.format(loadCommandeFournisseur().getDateLimiteLivraison()	,"yyyy-MM-dd");
 		System.out.println("Date : "+format);
+	}
+	@Test
+	public void mockAResponseFile() throws IOException{
+		String source = "responseMock"+RandomStringUtils.randomNumeric(3)+".csv";
+		FileWriter fileWriter = new FileWriter(source);
+		String backLine = "\n";
+		fileWriter.write("R"+RandomStringUtils.randomAlphabetic(8)+backLine);
+		fileWriter.write("PC" +backLine);
+		fileWriter.write("C"+RandomStringUtils.randomNumeric(4)+"R"+RandomStringUtils.randomNumeric(7)+backLine);
+		for (int i = 0; i < 4; i++) {
+			String str = "K"+CipMgenerator.formatNumber(""+RandomStringUtils.randomNumeric(2), 4)+"C1"+""
+						+StringUtils.leftPad(RandomStringUtils.randomAlphabetic(30),50 )+"R"+RandomStringUtils.randomAlphanumeric(4)+""
+						+"C1"+StringUtils.leftPad(RandomStringUtils.randomAlphanumeric(12), 49)+""+backLine;
+			System.out.println("size : "+str.length());
+			fileWriter.write(str);
+		}
+		fileWriter.write("E"+RandomStringUtils.randomAlphanumeric(4)+"D"+new String("Toute l erreure ici")+backLine);
+		fileWriter.close();
+		copyFile(source, "/tools/ubipharm/receptions");
+		deleteFile(source);
+	}
+	@Test
+	public void testImport() throws Exception{
+		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
+		csvImportExportUtil.readCsvFile("/tools/ubipharm/receptions/responseMock062.csv");
+	}
+
+	@Test
+	public void loadReceptionLines() throws IOException{
+		String fileName = "/tools/ubipharm/receptions/responseMock062.csv";
+		File file = new File(fileName);
+		List readLines = FileUtils.readLines(file);
+		System.out.println(readLines);
+		System.out.println(readLines.size());
+	}
+	@Test
+	public void testExportAsTxt(){
+		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
+		importExportUtil.setCmdId(new Long(14));
+		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
+		importExportUtil.setLignesToExport(lignesToExport);
+		importExportUtil.exportCommandsToUbipharmTxt();
+	}
+	public void copyFile(String source, String destination) throws IOException{
+		FileUtils.copyFileToDirectory(new File(source), new File(destination));
+	}
+	public void deleteFile(String fileName){
+		new File(fileName).delete();
 	}
 	public List<AbstractUbipharmLigneWrapper> constructLigneToExport(){
 		List<AbstractUbipharmLigneWrapper> lignesToExport = new ArrayList<AbstractUbipharmLigneWrapper>();

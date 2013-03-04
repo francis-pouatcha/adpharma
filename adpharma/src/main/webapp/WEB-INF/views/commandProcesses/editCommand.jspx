@@ -187,6 +187,13 @@
 		$('img.loadimage').ajaxStop(function(){
 			$(this).hide();
 		});
+
+
+		function enterKeyPressedListnerProcessor(evenement,rowId) {
+			if(evenement.keyCode == 13){
+				saveChange(rowId);
+			}
+		}
 		
 		//Dialog	find client		
 		
@@ -224,8 +231,6 @@
 				  
 				return false;
 			});
-			
-			
 			
 			function toggleToinput(rowId){
 				var tbs = "tr#"+rowId+" td";
@@ -375,7 +380,7 @@
 
 				<c:forEach items="${commandeProcess.productSelected}"
 					var="ligneCommande">
-					<tr class="list" id="${ ligneCommande.id}">
+					<tr class="list" id="${ ligneCommande.id}" onkeypress="enterKeyPressedListnerProcessor(event,this.id);">
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.produit.cip}"></c:out></td>
 						<td style="width: 300px; text-align: left; padding-left: 20px;">
@@ -396,9 +401,9 @@
 
                          <td class="utilbox">
 						<spring:url value="/resources/images/update.png" var="update_image_url" />
-							<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
+						<!-- 	<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
 							src="${ update_image_url}" title=" Supprimer la selection"
-							onclick="saveChange(this.alt);" />
+							onclick="saveChange(this.alt);" /> -->
 						</td>
 						<td class="utilbox">
 						<spring:url

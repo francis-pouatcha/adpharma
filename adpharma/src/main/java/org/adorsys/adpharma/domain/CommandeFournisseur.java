@@ -58,7 +58,11 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm", iso=DateTimeFormat.ISO.TIME)
 	private Date dateLimiteLivraison;
-
+	
+	private String lastestUbipharmError;
+	
+	private CommandType commandType ;
+	
 	@Enumerated
 	private ExchangeBeanState exchangeBeanState = ExchangeBeanState.DRUGSTORE_PROCESSING;
 
@@ -342,4 +346,22 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		
 		return q;
 	}
+
+	public String getLastestUbipharmError() {
+		return lastestUbipharmError;
+	}
+
+	public void setLastestUbipharmError(String lastestUbipharmError) {
+		this.lastestUbipharmError = lastestUbipharmError;
+	}
+
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	public void setCommandType(CommandType commandType) {
+		this.commandType = commandType;
+	}
+	
+	
 }

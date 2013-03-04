@@ -3,6 +3,8 @@
  */
 package org.adorsys.adpharma.beans.importExport.ubipharm.wrapper;
 
+import org.springframework.util.Assert;
+
 /**
  * @author w2b
  *
@@ -22,5 +24,17 @@ public abstract class AbstractUbipharmLigneWrapper extends UbipharmStringOperati
 	public String toString() {
 		return "AbstractUbipharmLigneWrapper [ligneIdentifier="
 				+ ligneIdentifier + ", toString()=" + super.toString() + "]";
+	}
+	public boolean isCorrectLigne(String ligneWrapperFromCsvFile){
+		Assert.notNull(ligneWrapperFromCsvFile, "Null Argument Not Required");
+		return ligneWrapperFromCsvFile.startsWith(getStringValue());
+	}
+	public AbstractUbipharmLigneWrapper loadAbstractLigneFromCsvFileLigne(String csvLigneRepresentation){
+		return null;
+	}
+	public String readValue(String stringValue,int start,int end){
+		start --;
+		end--;
+		return stringValue.substring(start, end);
 	}
 }
