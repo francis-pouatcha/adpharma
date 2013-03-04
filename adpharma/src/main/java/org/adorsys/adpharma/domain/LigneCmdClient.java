@@ -201,4 +201,17 @@ public class LigneCmdClient extends AdPharmaBaseEntity {
 	public static String toDeepJsonArray(Collection<LigneCmdClient> collection) {
 		return new JSONSerializer().include("id","cipM","designation","quantiteCommande","prixTotal","remise").exclude("*.class","*").serialize(collection);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.designation);
+		builder.append("|").append(this.cip);
+		builder.append("|").append(this.cipM);
+		builder.append("|").append(this.quantiteCommande);
+		builder.append("|").append(this.quantiteRetourne);
+		return builder.toString();
+	}
+	
+	
 }

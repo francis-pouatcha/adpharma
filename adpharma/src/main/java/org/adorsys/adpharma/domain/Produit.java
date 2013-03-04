@@ -12,6 +12,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.PreUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -243,7 +245,13 @@ public class Produit extends AdPharmaBaseEntity {
 		/*if (quantiteEnStock.intValue()<0) {
     		quantiteEnStock = BigInteger.ZERO ;
 		}*/
-
+	}
+	
+	@PostUpdate
+	public void preUpdateProduct(){
+		if(quantiteEnStock.intValue()==0){
+			dateDerniereRupture= new Date();
+		}
 	}
 
 	

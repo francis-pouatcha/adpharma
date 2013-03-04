@@ -77,7 +77,18 @@
 			}
 
 		};
+		
+		function test(id){
+			
+			if()
+		}
+		
 		function saveLine(){
+			
+			 // Scan touche autorisation, (if autorisation), (if press enter), [Get json and return true], (else return 
+			 
+			
+			
 			$.getJSON( '${update_url}',
 					$('#editLineForm').serialize(),
 		                function(data){
@@ -230,7 +241,7 @@
 					if(int==3){
 					if(!$(this).children().is('input')){
 						var text=	$(this).text();
-					    var input = '<input type="text" class="tbcell" onmouseover="this.select();" onfocus="this.select();"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
+					    var input = '<input type="text" class="tbcell"  onmouseover="this.select();" onfocus="this.select();"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
 					   $(this).html(input);
 			          }
 					}

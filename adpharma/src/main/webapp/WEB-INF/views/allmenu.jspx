@@ -265,7 +265,7 @@ if(Check == false){
 		        			 
 		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
                           <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
-                          <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
+                          <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
 		        			 
 		        			  <!--  menu facturation-->
     
