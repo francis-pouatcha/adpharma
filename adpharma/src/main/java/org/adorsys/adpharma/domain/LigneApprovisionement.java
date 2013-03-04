@@ -39,9 +39,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.adorsys.adpharma.services.SupplyService;
 import org.codehaus.jackson.annotate.JsonIgnore;
-
 import flexjson.JSONSerializer;
 
+/**
+ * @author adorsys-clovis
+ *
+ */
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "LigneApprovisionement", finders = { "findLigneApprovisionementsByProduit", "findLigneApprovisionementsByApprovisionement", "findLigneApprovisionementsByCipMaisonEquals", "findLigneApprovisionementsByDesignationLike", "findLigneApprovisionementsByQuantieEnStockAndDesignationLike", "findLigneApprovisionementsByQuantieEnStockAndCipEquals" })
@@ -208,6 +211,9 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		return false ;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
 	public LigneApprovisionement clone() {
 		LigneApprovisionement line = new LigneApprovisionement();
 		line.setId(id);

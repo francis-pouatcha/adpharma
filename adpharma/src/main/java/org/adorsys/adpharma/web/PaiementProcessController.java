@@ -1,5 +1,8 @@
 package org.adorsys.adpharma.web;
-
+/**
+ * @author adorsys-clovis
+ *
+ */
 import java.awt.Desktop;
 import java.io.File;
 import java.math.BigDecimal;

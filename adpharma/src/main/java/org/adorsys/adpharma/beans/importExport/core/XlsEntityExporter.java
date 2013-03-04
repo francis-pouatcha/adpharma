@@ -12,7 +12,10 @@ import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-
+/**
+ * @author adorsys-GKC
+ *
+ */
 public class XlsEntityExporter<T> {
 	public  ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 	public Class<T> entityClass ;

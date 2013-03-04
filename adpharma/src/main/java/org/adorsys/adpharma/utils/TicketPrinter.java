@@ -35,7 +35,10 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
+/**
+ * @author adorsys-clovis
+ *
+ */
 public class TicketPrinter {
 	
 public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.pdf";
