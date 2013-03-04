@@ -514,11 +514,11 @@ if (commande.getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC) ) {
 			bonTable.addCell(addCell1);
 			bonTable.addCell(addCell2);
 			bonTable.addCell(telCell);
-			/*
+			
 			bonTable.addCell(emailCell);
 			
 			bonTable.addCell(regCell);
-		 */
+		 
 			PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
 			emptyCell.setPhrase(new Phrase(new Chunk("   ", boddyStyle)));
 			emptyCell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -574,7 +574,7 @@ if (commande.getTypeCommande().equals(TypeCommande.VENTE_AU_PUBLIC) ) {
 		@Override
 		protected void buildPdfMetadata(Map<String, Object> model,
 				Document document, HttpServletRequest request) {
-			document.setPageSize(new Rectangle(0, 0, 220, 1000));
+			document.setPageSize(new Rectangle(0, 0, 235, 1000));
 			document.setMargins(5, 5, 5, 5);
 			Font boddyStyle = new Font(Font.COURIER,10);
 			boddyStyle.setStyle("bold");

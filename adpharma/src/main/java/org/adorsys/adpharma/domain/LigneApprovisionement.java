@@ -220,7 +220,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		line.setQteCip(getProduit().getQuantiteEnStock());
 		line.setFournisseur(getApprovisionement().getFounisseur().displayShotName());
 		line.setSaisiele(PharmaDateUtil.format(getDateSaisie(), PharmaDateUtil.DATETIME_PATTERN_LONG));
-		calculRemise();
+		//calculRemise();
 		line.setQteCip(produit.getQuantiteEnStock());
 		line.setViewMsg(viewMsg);
 		line.setRemiseMax(remiseMax);
@@ -600,7 +600,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation = "%"+designation + "%";
+		designation = designation + "%";
 		EntityManager em = LigneApprovisionement.entityManager();
 		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE LOWER(o.produit.designation) LIKE LOWER(:designation) ORDER BY o.designation ASC", LigneApprovisionement.class);
 		q.setParameter("designation", designation);
@@ -721,7 +721,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE  o.cipMaison = :cipMaison ", LigneApprovisionement.class).setParameter("cipMaison", cipMaison);
 		}
 		if (StringUtils.isNotBlank(designation)) {
-			designation = "%"+designation + "%";
+			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		} else {
 			beginBy = StringUtils.isBlank(beginBy) ? "A" : beginBy;
@@ -781,7 +781,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		etat = etat != null ? etat : Etat.CLOS;
 		if (StringUtils.isNotBlank(designation)) {
-			designation = "%"+designation + "%";
+			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
 		if (qteStock != null) {
@@ -801,7 +801,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public static TypedQuery<LigneApprovisionement> fatalSearchAJAX(String designation) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		if (StringUtils.isNotBlank(designation)) {
-			designation = "%"+designation + "%";
+			designation = designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
 		TypedQuery<LigneApprovisionement> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.cip , o.id ").toString(), LigneApprovisionement.class);
