@@ -31,6 +31,7 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.WorkTypeLigne;
 import org.adorsys.adpharma.domain.CipType;
 import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -39,6 +40,7 @@ import org.apache.commons.lang.StringUtils;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -70,9 +72,19 @@ public class CsvImportExportUtil {
 			String responseErrorCode = readWorTypeLigne.getWorkType().getStringValue();
 			if(ERROR_CODE_FROM_SENDED_FILE.equals(responseErrorCode)||ERROR_CODE_FROM_UBIPHARM_SERVER.equals(responseErrorCode)){
 				saveError(readResponseErrorDetail, readResponseCommandReferences);
+				return ;
+			}
+			
+			List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
+			saveLigneCmdFournisseurs(readResponseProductLignes);
+			List<CommandeFournisseur> commandFournisseurs = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.
+					getCustomerCommandKey().getStringValue()).getResultList();
+			if(commandFournisseurs.isEmpty()){
+				LOG.error("Command Not Found, Hug !");
 			}else {
-				List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
-				saveLigneCmdFournisseurs(readResponseProductLignes);
+				CommandeFournisseur commandeFournisseur = commandFournisseurs.iterator().next();
+				commandeFournisseur.setEtatCmd(Etat.RECEIVED);
+				commandeFournisseur.merge().flush();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,7 +105,7 @@ public class CsvImportExportUtil {
 			commandeFournisseur.merge().flush();
 		}
 	}
-
+	@Transactional
 	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows) {
 		Assert.notNull(productItemRows, "Null argment not required");
 		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
@@ -367,11 +379,11 @@ public class CsvImportExportUtil {
 	private String getCommandTypeValue(CommandeFournisseur commandeFournisseur) {
 		String result = null ;
 		if(commandeFournisseur.getCommandType() == null || CommandType.NORMAL.equals(commandeFournisseur.getCommandType())){
-			result = "001";
+			result = "000";
 		}else if(CommandType.PACKAGED.equals(commandeFournisseur.getCommandType())){
-			result = "002";
+			result = "001";
 		}else if(CommandType.SPECIAL.equals(commandeFournisseur.getCommandType())){
-			result = "003";
+			result = "002";
 		}
 		return result;
 	}

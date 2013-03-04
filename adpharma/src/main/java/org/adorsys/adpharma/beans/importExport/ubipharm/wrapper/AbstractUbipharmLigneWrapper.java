@@ -3,6 +3,8 @@
  */
 package org.adorsys.adpharma.beans.importExport.ubipharm.wrapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -10,6 +12,8 @@ import org.springframework.util.Assert;
  *
  */
 public abstract class AbstractUbipharmLigneWrapper extends UbipharmStringOperation {
+	static final Logger LOGGER = LoggerFactory.getLogger(AbstractUbipharmLigneWrapper.class);
+	
 	private UbipharmCommandStringSequence ligneIdentifier ;
 	public AbstractUbipharmLigneWrapper(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
@@ -34,7 +38,14 @@ public abstract class AbstractUbipharmLigneWrapper extends UbipharmStringOperati
 	}
 	public String readValue(String stringValue,int start,int end){
 		start --;
-		end--;
-		return stringValue.substring(start, end);
+//		end--;
+		String result = null;
+		try {
+			result = stringValue.substring(start, end);
+		} catch (IndexOutOfBoundsException e) {
+			result = "";
+//			LOGGER.error(e.getMessage(), e);
+		}
+		return result ;
 	}
 }
