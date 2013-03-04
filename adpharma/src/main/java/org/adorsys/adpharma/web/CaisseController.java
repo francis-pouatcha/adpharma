@@ -91,6 +91,7 @@ public class CaisseController {
 			AvoirClient avoirClient = AvoirClient.findAvoirClientsByNumeroEquals(decaissement.getNumAvoir()).getSingleResult();
 			avoirClient.setMontant(avoirClient.getMontant().subtract(decaissement.getMontantDecaissement()));
 			avoirClient.setMontantUtilise(avoirClient.getMontantUtilise().add(decaissement.getMontantDecaissement()));
+			avoirClient.merge();
 		}
 		uiModel.addAttribute("sucess", "Votre caisse avait un montant de: "+currentAmount+" ,vous avez decaisse la somme de: "+decaissement.getMontantDecaissement()+" ,le solde de votre caisse est de: "+caisse.getTotalCash());
 		

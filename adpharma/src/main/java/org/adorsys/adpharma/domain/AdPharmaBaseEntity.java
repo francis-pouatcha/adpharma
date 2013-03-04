@@ -13,6 +13,8 @@ import javax.persistence.PreUpdate;
 
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.IdGenerator;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.entity.RooEntity;

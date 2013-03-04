@@ -50,7 +50,7 @@ z-index:0;
 	margin: 0px 0 0 0;
 }
 .accordion {
-width:  500px;
+width:  auto;
 }
 .accordion li h3 a {
     background:             #666;
