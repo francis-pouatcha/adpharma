@@ -64,9 +64,7 @@ public class ResponseCommandRowReference extends AbstractUbipharmLigneWrapper {
 	}
 	
 	private int getSeparatorIndex(String rowStringValue){
-		//I'd increment (+1) here, because the ubipharm csv file is starting at 1, not at zero like StringUtils
-		//StringUtils and String
-		return StringUtils.indexOf(rowStringValue, SEPARATOR_STRING_VALUE) + 1;
+		return StringUtils.indexOf(rowStringValue, SEPARATOR_STRING_VALUE);
 	}
 	public UbipharmCommandStringSequence getCustomerCommandKey() {
 		return customerCommandKey;

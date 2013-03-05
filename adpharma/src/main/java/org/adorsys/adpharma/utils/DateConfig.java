@@ -34,7 +34,7 @@ public abstract class DateConfig {
 	}
 	
 	public static DateConfigPeriod getBegingEndOfMonth(Date date){
-		Date beginDate = DateUtils.truncate(date, Calendar.WEEK_OF_MONTH);
+		Date beginDate = DateUtils.truncate(date, Calendar.MONTH);
 		Date enDate = DateUtils.addMonths(beginDate, 1);
 		enDate = DateUtils.addSeconds(enDate, -1);
 		return new DateConfigPeriod(beginDate, enDate);

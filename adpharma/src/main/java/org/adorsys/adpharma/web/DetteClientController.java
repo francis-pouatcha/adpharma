@@ -46,7 +46,7 @@ public class DetteClientController {
        return  DetteClient.toJsonArray(detteclients);
 	 }
 
-		@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+		@RequestMapping(value = "/BySearch", method = RequestMethod.POST)
 		public String Search(DetteClient detteClient , Model uiModel) {
 			uiModel.addAttribute("results", DetteClient.search(detteClient.getClientName(),detteClient.getAssurer(), detteClient.getDateCreation(), detteClient.getSolder(), detteClient.getFactureNo()).getResultList());
 			addDateTimeFormatPatterns(uiModel);

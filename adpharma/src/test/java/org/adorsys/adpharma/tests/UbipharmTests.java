@@ -130,7 +130,7 @@ public class UbipharmTests {
 	@Test
 	public void testImport() throws Exception{
 		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
-		csvImportExportUtil.readCsvFile("/tools/ubipharm/receptions/responseMock062.csv");
+		csvImportExportUtil.readCsvFile("/tools/ubipharm/receptions/CF-0014-reponse-retour-1362146340824-1");
 	}
 
 	@Test

@@ -86,6 +86,11 @@ function scanTouche(evenement)
         var codeDecimal  = codeTouche(evenement);
         var car = String.fromCharCode(codeDecimal);
         var autorisation = reCarValides.test(car) ||  reCarSpeciaux.test(car);
+        
+        if(codeDecimal==13){
+        	alert("Entree");
+        	return false;
+        }
 
         return autorisation;
 }

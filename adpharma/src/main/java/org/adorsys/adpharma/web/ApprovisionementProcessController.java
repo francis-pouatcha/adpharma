@@ -161,6 +161,7 @@ public class ApprovisionementProcessController {
 			       }
 			}else{
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2));
+				System.out.println("Date de peremption: "+ligneApprovisionement.getDatePeremtion());
 			}
 			if(qteReclam!=""){
 				ligneApprovisionement.setQuantiteReclame(new BigInteger(qteReclam));

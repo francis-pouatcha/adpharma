@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -94,7 +95,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	private String designation;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date dateFabrication;
 
@@ -474,6 +475,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		calculRemise();
 		designation = produit.getDesignation();
 	}
+	
+	
 
 	public void augmenterQteApprovisione(BigInteger qte) {
 		setQuantiteAprovisione(quantiteAprovisione.add(qte));
