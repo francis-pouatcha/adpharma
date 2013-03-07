@@ -82,7 +82,7 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	private Boolean livre;
 
 	@OrderBy(clause = "dateSaisie DESC")
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande",fetch=FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande",fetch=FetchType.EAGER)
 	private Set<LigneCmdFournisseur> ligneCommande = new HashSet<LigneCmdFournisseur>();
 
 	@Enumerated

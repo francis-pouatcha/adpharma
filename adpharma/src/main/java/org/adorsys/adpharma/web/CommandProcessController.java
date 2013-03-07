@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.web;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -24,9 +25,8 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-import net.sf.jasperreports.engine.JasperExportManager;
-
 import org.adorsys.adpharma.beans.importExport.ubipharm.CsvImportExportUtil;
+import org.adorsys.adpharma.beans.importExport.ubipharm.FileSystemScanner;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.AbstractUbipharmLigneWrapper;
 import org.adorsys.adpharma.beans.process.CommandeProcess;
 import org.adorsys.adpharma.beans.process.OrderPreParationBean;
@@ -44,7 +44,9 @@ import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.ProcessHelper;
-import org.hibernate.annotations.OnDeleteAction;
+import org.aspectj.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +64,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
+	
+
+	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
 	
 	private boolean sendedToUbipharm ;
 	@Transactional
@@ -366,8 +371,30 @@ public class CommandProcessController {
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
 		importExportUtil.exportCommandsToUbipharmTxt();
-		importExportUtil.checkIfNewlyReceivedCommand();
+//		importExportUtil.checkIfNewlyReceivedCommand();
 		sendedToUbipharm= true ;
+		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
+	}
+	
+	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
+	public String ImportFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
+		File fileDir = new File(CsvImportExportUtil.getReceptionFolder());
+		String[] fileNames = FileUtil.listFiles(fileDir);
+		for (String fileName : fileNames) {
+			if(!FileSystemScanner.oldFiles.contains(fileName)){
+				CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
+				try {
+					LOG.warn("Start Import Of : "+fileName+" ...");
+					csvImportExportUtil.readCsvFile(CsvImportExportUtil.getReceptionFolder()+""+fileName);
+					FileSystemScanner.oldFiles.add(fileName);
+				} catch (Exception e) {
+					LOG.error("",e);
+					FileSystemScanner.oldFiles.add(fileName);
+					e.printStackTrace();
+				}
+				LOG.warn("... "+fileName+", Import Finished");
+			}
+		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
 

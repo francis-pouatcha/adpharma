@@ -3,6 +3,9 @@
  */
 package org.adorsys.adpharma.beans.importExport.ubipharm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -22,11 +25,14 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class FileSystemScanner {
-	public SimpleScheduleBuilder REPEAT_SECONDLY_FOREVER = SimpleScheduleBuilder.repeatSecondlyForever(10);
+	public SimpleScheduleBuilder REPEAT_SECONDLY_FOREVER = SimpleScheduleBuilder.repeatSecondlyForever(18000);
 	public Logger LOG = LoggerFactory.getLogger(FileSystemScanner.class);
 	public Scheduler scheduler = null;
 	public JobDetail jobDetail;
 	public static boolean FIST_SCAN_STARTED ;
+
+	public static List<String> oldFiles = new ArrayList<String>();
+	
 	public void startScan() throws SchedulerException {
 		StdSchedulerFactory schedulerFactory = new StdSchedulerFactory();
 		 scheduler = schedulerFactory.getScheduler();

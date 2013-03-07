@@ -31,6 +31,7 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.WorkTypeLigne;
 import org.adorsys.adpharma.domain.CipType;
 import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
@@ -71,6 +72,7 @@ public class CsvImportExportUtil {
 			ResponseErrorDetailRow readResponseErrorDetail = readResponseErrorDetail(receptionLines);
 			String responseErrorCode = readWorTypeLigne.getWorkType().getStringValue();
 			if(ERROR_CODE_FROM_SENDED_FILE.equals(responseErrorCode)||ERROR_CODE_FROM_UBIPHARM_SERVER.equals(responseErrorCode)){
+				LOG.error("This is an error file");
 				saveError(readResponseErrorDetail, readResponseCommandReferences);
 				return ;
 			}
@@ -105,7 +107,6 @@ public class CsvImportExportUtil {
 			commandeFournisseur.merge().flush();
 		}
 	}
-	@Transactional
 	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows) {
 		Assert.notNull(productItemRows, "Null argment not required");
 		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
@@ -117,7 +118,8 @@ public class CsvImportExportUtil {
 			}
 			LigneCmdFournisseur ligneCmdFournisseur = resultList.iterator().next();
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
-			ligneCmdFournisseur.merge().flush();
+			ligneCmdFournisseur.merge();
+			ligneCmdFournisseur.flush();
 		}
 	}
 	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
@@ -193,7 +195,7 @@ public class CsvImportExportUtil {
 	public void exportCommandsToUbipharmCsv(){
 		Writer writer;
 		try {
-			writer = new FileWriter(SENDING_FOLDER_PATH+getFileName(loadCommandeFournisseur(),"csv"));
+			writer = new FileWriter(getSendFolder()+getFileName(loadCommandeFournisseur(),"csv"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to  find the file :"+SENDING_FOLDER_PATH);
@@ -210,7 +212,7 @@ public class CsvImportExportUtil {
 	}
 	public void exportCommandsToUbipharmTxt(){
 		String fileName = getFileName(loadCommandeFournisseur(), "txt");
-		File fileToSend = new File(SENDING_FOLDER_PATH+""+fileName);
+		File fileToSend = new File(getSendFolder()+""+fileName);
 		try {
 			FileUtils.writeLines(fileToSend, convertAbstractLinesToLines(getLignesToExport()));
 		} catch (IOException e) {
@@ -232,12 +234,13 @@ public class CsvImportExportUtil {
 		FileSystemScanner fileSystemScanner = new FileSystemScanner();
 		if(FileSystemScanner.FIST_SCAN_STARTED == true) {
 			return ;
-		}
-		try {
-			fileSystemScanner.startScan();
-			FileSystemScanner.FIST_SCAN_STARTED = true ;
-		} catch (SchedulerException e) {
-			e.printStackTrace();
+		}else  {
+			try {
+				FileSystemScanner.FIST_SCAN_STARTED = true ;
+				fileSystemScanner.startScan();
+			} catch (SchedulerException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	/*
@@ -421,5 +424,22 @@ public class CsvImportExportUtil {
 	public void setCmdId(Long cmdId) {
 		this.cmdId = cmdId;
 	}
+	public static String getSendFolder(){
+		Configuration configuration = Configuration.findAllConfigurations().iterator().next();
+		String sendFolder = configuration.getSendFolder();
+		if(sendFolder == null || sendFolder.isEmpty()){
+			sendFolder = SENDING_FOLDER_PATH;
+		}
+		return sendFolder;
+	}
+	public static String getReceptionFolder(){
+		Configuration configuration = Configuration.findAllConfigurations().iterator().next();
+		String receptionFolder = configuration.getReceptionFolder();
+		if(receptionFolder == null || receptionFolder.isEmpty()){
+			receptionFolder = RECEPTION_FOLDER_PATH;
+		}
+		return receptionFolder;
+	}
+	
 }
 
