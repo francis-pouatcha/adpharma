@@ -210,7 +210,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		return entityManager().createQuery("SELECT o FROM EtatCredits o ORDER BY o.dateEdition DESC", EtatCredits.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
 	public void consommerAvoir() {
-		list<AvoirClient> resultList = AvoirClient.search(null,null, null, getClient().getClientNumber(), null, Boolean.FALSE, Boolean.FALSE).getResultList();
+		List<AvoirClient> resultList = AvoirClient.search(null,null, null, getClient().getClientNumber(), null, Boolean.FALSE, Boolean.FALSE).getResultList();
 		if (!resultList.isEmpty()) {
 			for (AvoirClient avoir : resultList) {
 				BigDecimal amount = montantInitial;

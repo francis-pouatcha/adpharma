@@ -1,0 +1,392 @@
+<div align="center" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:security="http://www.springframework.org/security/tags"
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  
+  <spring:message var="app_name" code="application_name" htmlEscape="false" />
+  <spring:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
+  
+    <spring:url value="/clients?page=1&amp;size=${empty param.size ? 10 : param.size}" var="clt_list_url"/>
+    <spring:url var="imgfonct" value="/resources/images/imgfonct.jpg"/>
+    <spring:url var="cloud" value="/resources/images/cloud.png"/>
+    <spring:url var="biglogo" value="/resources/images/biglogo.jpg"/>
+    <spring:url var="imgcomp" value="/resources/images/imgfonct2.jpg"/>
+    <spring:url var="userIco" value="/resources/images/user.jpeg"/>
+    <spring:url var="clientIco" value="/resources/images/client.jpeg"/>
+    <spring:url var="caisseIco" value="/resources/images/caisse.jpeg"/>
+    <spring:url var="invoiceIco" value="/resources/images/invoice.jpeg"/>
+    <spring:url var="saleIco" value="/resources/images/sale.jpeg"/> 
+    <spring:url var="produitIco" value="/resources/images/produit.jpeg"/> 
+    <spring:url var="ordonnanceIco" value="/resources/images/ordonnancier.jpeg"/> 
+    <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
+    <spring:url value="/pharmausers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="usr_list_url"/>
+    <spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url"/>
+    <spring:url value="/factures?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_fact_url"/>
+    <spring:url value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="lap_list_url"/>
+    <spring:url value="/ordonnanciers?page=1&amp;size=${empty param.size ? 10 : param.size}" var="list_ord_url"/>
+    <spring:url value="/" var="home" />
+    
+    <!-- Liens des images caroussel  -->
+    <spring:url value="/resources/js/caroussel/images/img1.jpg" var="image1" />
+    <spring:url value="/resources/js/caroussel/images/img2.jpg" var="image2" />
+    <spring:url value="/resources/js/caroussel/images/img3.jpg" var="image3" />
+    <spring:url value="/resources/js/caroussel/images/img4.jpg" var="image4" />
+    <spring:url value="/resources/js/caroussel/images/img5.jpg" var="image5" />
+    <spring:url value="/resources/js/caroussel/images/img6.jpg" var="image6" />
+    <spring:url value="/resources/js/caroussel/images/img7.jpg" var="image7" />
+    
+    <style type="text/css">
+        #panel1 .links{color: blue;}
+         .links:HOVER {text-decoration: underline; }
+    </style>
+  
+  
+  <script type="text/javascript">
+				  function getFocus(elmt){
+					  elmt.className= "shadow";
+					  }
+				  function removeFocus(elmt){
+					  elmt.className = "insetshadow";
+					  }
+   </script>
+   <script type="text/javascript">
+			    $(document).ready(function(){  
+			      $('#carousel').jCarousel({
+			        onPicClick  : function(base, imageBlock, i) {
+			          /* showDetails(base,imageBlock, i); */
+			          if(i==1){
+			        	  window.location = '${usr_list_url}';
+			          }
+			          if(i==2){
+			        	  window.location= '${vente_public_url}';
+			          }
+			          if(i==3){
+			        	  window.location= '${cai_enc_url}';
+			          }
+			          if(i==4){
+			        	  window.location= '${list_fact_url}';
+			          }
+			          if(i==5){
+			        	  window.location= '${clt_list_url}';
+			          }
+			          if(i==6){
+			        	  window.location= '${lap_list_url}';
+			          }
+			          if(i==7){	
+			        	  window.location= '${list_ord_url}';
+			          }
+			        }, 
+			        width: 400,               // Defines the width of the carousel.
+			        height: 300,              // Defines the height of the carousel.
+			        speed: 200,               // Basic speed (no mouse over the carousel).
+			        jsonScript: null,         // The JSON script path. To load the images via JSON the path to the JSON script must be specified.
+			        maxSpeed: 2,              // Mouse-over speed. The closer the mouse is to the left or right edge of the carousel the faster it turns.
+			        perspective: 30,          // A higher value gives the carousel more depth.
+			        color: '#ffffff',        // Color of the overlayed layer.
+			        global: 0,                // Overlay of color layer for all images in the carousel.
+			        showImageTitle : true,
+			        dynamic: 50,              // Smoothness of the animation.
+			        imageTitleFontSize : 12,  // The font size of the image title.
+			        reflection: 0,          // Bottom reflection. The appearance can vary depending if the browser supports canvas technology (Firefox, Safari, Chrome, Opera) or not (IE 8).
+			        reflectionStart: 90,     // Size of the reflection at the front of the carousel. Allowed values: 0-100.
+			        reflectionEnd: 100,      // Size of the reflection at the back of the carousel. Allowed values: 0-100.
+			        
+			      });
+			    });
+   </script>
+   
+   <script type="text/javascript">
+	       $(document).ready(function(){ 
+	         $('#panel1').accordion();
+	        });
+   </script>
+  
+<util:panel id="title" title="${title}">
+ <div style="height:500px; text-align: center;" >
+            
+<!-- When not connected -->    
+ <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
+    <table class="tblog" >
+       <tr>
+    	   <td align="center" width="30%" class="tblog">
+	    		  <div id="carousel">
+	    		    <security:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPER_ADMIN">
+				      <img src="${userIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image1" title="Lister les utilisateurs" />
+				    </security:authorize> 
+				    
+				    <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
+				      <img src="${saleIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image2" title="Effectuer une vente au comptant" /> 
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">  
+				      <img src="${caisseIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image3" title="Effectuer un encaissement" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASHIER">    
+				      <img src="${invoiceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image4" title="Lister les Factures" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+				      <img src="${clientIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image5" title="Lister les Clients" />
+				    </security:authorize>	
+				    
+				    <security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">  
+				      <img src="${produitIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image6" title="Rechercher un Produit" />
+				    </security:authorize>
+				    
+				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
+				      <img src="${ordonnanceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image7" title="Lister les ordonnances" />
+				    </security:authorize> 
+                 </div>  
+    	   </td>
+    	   
+    	   <!--  <td align="center" width="30%" valign="center" class="tblog">
+    		   <h2> <span style="color: #B4B4B4;">BIENVENU A:</span><br/> 
+    		        <span style="text-transform: capitalize; font-style: italic;">${pharmacie.displayName}</span>
+    		   </h2>
+	    	   <img src="${biglogo}" alt="Logo pharmacie"/> 
+    	   </td>-->
+    	   
+    	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">   
+    	   <td class="tblog" style="padding: 0 0 0 50px;">
+    	      <div id="bloc_accordion">
+    	        <ul id="panel1" class="accordion"> 
+	                <li>
+	                    <h3>Les 10 premiers produits les plus vendus au cours de ce mois</h3>
+	                    <div class="panel loading">
+	                        <table>
+	                             <tr>
+	                                <th style="text-align: center;">Cip</th>
+	                                <th style="text-align: center;">Designation</th>
+	                                <th style="text-align: center;">Prix Unit.</th>
+	                                <th style="text-align: center;">Qte vendue</th>
+	                                <th style="text-align: center;">Prix total</th>
+	                                <th style="text-align: center;">Total remise</th>
+	                             </tr>
+	                       <c:choose>      
+	                         <c:when test="${not empty products}">     
+	                           <c:forEach items="${products}" var="product">
+	                                <spring:url value="/produits/${product.id}" var="product_url" />  
+	                             <tr>
+	                                <td> <a href="${product_url}" class="links"> <c:out value="${product.cip}" /> </a> </td>
+	                                <td> <c:out value="${product.designation}" /> </td>
+	                                <td> <c:out value="${product.prixUnitaire}" /> </td>
+	                                <td> <c:out value="${product.qteVendue}" /> </td>
+	                                <td> <c:out value="${product.prixTotal}" /> </td>
+	                                <td> <c:out value="${product.totalRemise}" /> </td>
+	                             </tr>
+	                           </c:forEach>
+	                          </c:when>
+	                       <c:otherwise>
+	                                 <tr>
+	                                     <td colspan="6"><p style="text-align: center; color: blue;"> <c:out value="Aucune donnee trouvee" /> </p></td>
+	                                  </tr>
+	                       </c:otherwise>
+	                     </c:choose>       
+	                        </table>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Etat des caisses ouvertes du jour</h3>
+	                    <div class="panel loading">
+	                        <table>
+	                             <tr>
+	                                <th style="text-align: center;">Num. Caisse</th>
+	                                <th style="text-align: center;">Date ouverture</th>
+	                                <th style="text-align: center;">Caissier</th>
+	                                <th style="text-align: center;">Fond caisse</th>
+	                                <th style="text-align: center;">Total encaissement</th>
+	                             </tr>
+	                          <c:choose>   
+	                           <c:when test="${not empty cashs}">
+	                            <c:forEach items="${cashs}" var="cash">
+	                               <spring:url value="/caisses/${cash.id}" var="cash_url" />
+	                               <tr>
+	                                   <td> <a href="${cash_url}" class="links"> <c:out value="${cash.caisseNumber}" /> </a> </td>
+	                                   <td> <fmt:formatDate value="${cash.dateOuverture}" pattern="dd-MM-yyy HH:mm"/> </td>
+	                                   <td> <c:out value="${cash.caissier.fullName}" /> </td>
+	                                   <td> <c:out value="${cash.fondCaisse}" /> </td>
+	                                   <td> <c:out value="${cash.totalEncaissement}" /> </td>
+	                               </tr>
+	                            </c:forEach>
+	                           </c:when>
+	                           <c:otherwise>
+	                                  <tr>
+	                                     <td colspan="5"><p style="text-align: center; color: blue;"> <c:out value="Aucune caisse ouverte..." /> </p></td>
+	                                  </tr>
+	                           </c:otherwise>
+	                          </c:choose>
+	                       </table>       
+	                    </div>
+	                </li>
+	                <li> 
+	                     <h3>Les dix derniers produits en rupture de stock.</h3>
+	                     <div class="panel loading">
+	                      <table>
+	                             <tr>
+	                                <th style="text-align: center;">Cip</th>
+	                                <th style="text-align: center;">Designation</th>
+	                                <th style="text-align: center;">P.A.</th>
+	                                <th style="text-align: center;">P.V.</th>
+	                                <th style="text-align: center;">Date rupture</th>
+	                             </tr>
+	                          <c:choose>   
+	                           <c:when test="${not empty ruptures}">
+	                            <c:forEach items="${ruptures}" var="rupture">
+	                               <spring:url value="/produits/${rupture.id}" var="out_url" />
+	                               <tr>
+	                                   <td> <a href="${out_url}" class="links"> <c:out value="${rupture.cip}" /> </a> </td>
+	                                   <td> <c:out value="${rupture.designation}" /> </td>
+	                                   <td> <c:out value="${rupture.paUnit}" /> </td>
+	                                   <td> <c:out value="${rupture.pvUnit}" /> </td>
+	                                   <td> <fmt:formatDate value="${rupture.dateRupture}" pattern="dd-MM-yyyy"/> </td>
+	                               </tr>
+	                            </c:forEach>
+	                           </c:when>
+	                           <c:otherwise>
+	                                  <tr>
+	                                     <td colspan="6"><p style="text-align: center; color: blue;"> <c:out value="Aucun produit en rupture..." /> </p></td>
+	                                  </tr>
+	                           </c:otherwise>
+	                          </c:choose>
+	                     </table>           
+	                   </div>   
+	                </li>
+	                <li>
+	                    <h3>Les 10 derniers produits Avariés </h3>
+	                    <div class="panel loading">
+	                           <table>
+	                             <tr>
+	                                <th style="text-align: center;">Cip</th>
+	                                <th style="text-align: center;">Designation</th>
+	                                <th style="text-align: center;">Qte avarie</th>
+	                                <th style="text-align: center;">Date peremption</th>
+	                             </tr>
+	                          <c:choose>   
+	                           <c:when test="${not empty avaries}">
+	                            <c:forEach items="${avaries}" var="avarie">
+	                                <spring:url value="/produits/${avarie.id}" var="av_url" />
+	                                 <tr>
+	                                    <td> <a href="${av_url}" class="links"> <c:out value="${avarie.cip}" /> </a> </td>
+	                                    <td> <c:out value="${avarie.designation}" /> </td>
+	                                    <td> <c:out value="${avarie.qteStock}" /> </td>
+	                                    <td> <fmt:formatDate value="${avarie.datePeremption}" pattern="dd-MM-yyyy"/> </td>
+	                                 </tr>
+	                            </c:forEach>
+	                           </c:when>
+	                           <c:otherwise>
+	                                  <tr>
+	                                     <td colspan="3"><p style="text-align: center; color: blue;"> <c:out value="Aucun produit avarie trouve..." /> </p></td>
+	                                  </tr>
+	                           </c:otherwise>
+	                          </c:choose>
+	                         </table>  
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Les 10 dernières dettes clients de ce mois</h3>
+	                    <div class="panel loading">
+	                        <table>
+	                             <tr>
+	                                <th style="text-align: center;">Num. Dette</th>
+	                                <th style="text-align: center;">Client</th>
+	                                <th style="text-align: center;">Montant</th>
+	                                <th style="text-align: center;">Avance</th>
+	                                <th style="text-align: center;">Reste</th>
+	                                <th style="text-align: center;">Date creation</th>
+	                             </tr>
+	                          <c:choose>   
+	                           <c:when test="${not empty avoirs}">
+	                            <c:forEach items="${dettes}" var="dette">
+	                                 <spring:url value="/detteclients/${dette.id}" var="dette_url" />
+	                                 <tr>
+	                                    <td> <a href="${dette_url}" class="links">  <c:out value="${dette.id}" /> </a> </td>
+	                                    <td> <c:out value="${dette.nomClient}" /> </td>
+	                                    <td> <c:out value="${dette.montant}" /> </td>
+	                                    <td> <c:out value="${dette.avance}" /> </td>
+	                                    <td> <c:out value="${dette.reste}" /> </td>
+	                                    <td> <fmt:formatDate value="${dette.dateCreation}" pattern="dd-MM-yyyy HH:mm"/> </td>
+	                                 </tr>
+	                            </c:forEach>
+	                           </c:when>
+	                           <c:otherwise>
+	                                  <tr>
+	                                     <td colspan="6"><p style="text-align: center; color: blue;"> <c:out value="Aucune dette client trouve..." /> </p></td>
+	                                  </tr>
+	                           </c:otherwise>
+	                          </c:choose>
+	                         </table>
+	                    </div>
+	                </li>
+	                <li>
+	                    <h3>Les 10 derniers avoirs clients non soldes de ce mois</h3>
+	                    <div class="panel loading">
+	                        <table>
+	                             <tr>
+	                                <th style="text-align: center;">Num. Avoir</th>
+	                                <th style="text-align: center;">Client</th>
+	                                <th style="text-align: center;">Montant</th>
+	                                <th style="text-align: center;">Avance</th>
+	                                <th style="text-align: center;">Reste</th>
+	                                <th style="text-align: center;">Date creation</th>
+	                             </tr>
+	                          <c:choose>   
+	                           <c:when test="${not empty avoirs}">
+	                            <c:forEach items="${avoirs}" var="avoir">
+	                                 <spring:url value="/avoirclients/${avoir.id}" var="avoir_url" />
+	                                 <tr>
+	                                    <td> <a href="${avoir_url}" class="links">  <c:out value="${avoir.numero}" /> </a> </td>
+	                                    <td> <c:out value="${avoir.nomClient}" /> </td>
+	                                    <td> <c:out value="${avoir.montant}" /> </td>
+	                                    <td> <c:out value="${avoir.avance}" /> </td>
+	                                    <td> <c:out value="${avoir.reste}" /> </td>
+	                                    <td> <fmt:formatDate value="${avoir.dateCreation}" pattern="dd-MM-yyyy HH:mm"/> </td>
+	                                 </tr>
+	                            </c:forEach>
+	                           </c:when>
+	                           <c:otherwise>
+	                                  <tr>
+	                                     <td colspan="6"><p style="text-align: center; color: blue;"> <c:out value="Aucun avoir client trouve..." /> </p></td>
+	                                  </tr>
+	                           </c:otherwise>
+	                          </c:choose>
+	                         </table>  
+	                    </div>
+	                </li>
+                  </ul> 
+                </div>   
+    	    </td>
+    	</security:authorize>    
+       </tr>
+   </table>
+</security:authorize>
+
+
+
+<!-- When connect -->
+<security:authorize ifNotGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
+    <table class="tblog" border="0"  style="margin-top:50px;">
+    	<tr>
+    		<td width="6%" class="tblog"></td>
+    		<td align="left"  class="tblog" >
+    	    <img src="${cloud}"/>
+    		</td>
+    		<td align="center" width="30%" class="tblog">
+	    		<h2> PHARMACIE  </h2>
+	    		<img src="${biglogo}"/>
+    		</td>
+    		<td align="center" width="33%" class="tblog">
+    		    <img src="${imgcomp}"/>
+    		</td>
+    	</tr>
+   </table>
+</security:authorize>
+ </div>
+</util:panel>
+  
+</div>

@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.services;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
@@ -12,7 +13,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.apache.commons.dbcp.DataSourceConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +24,9 @@ public class JasperPrintService
 {
 
 	@Autowired
-    DataSource dataSource;
+    ApplicationContext context;
+	//@Autowired
+	DataSource dataSource = null;
 
     public JasperPrintService()
     {
@@ -35,7 +40,10 @@ public class JasperPrintService
             throw new RuntimeException("jasperFile or response may not be null ! ");
         } else
         {
-            java.sql.Connection connection = DataSourceUtils.doGetConnection(dataSource);
+        	
+            Connection connection = DataSourceUtils.doGetConnection(getDataSource());
+           // DataSourceConnectionFactory dataSourceConnectionFactory = new DataSourceConnectionFactory(dataSource, "jasper", "jasper");
+            //Connection connection = dataSourceConnectionFactory.createConnection();
             parameters.put("PrintBy", SecurityUtil.getUserName());
             parameters.put("user", SecurityUtil.getUserName());
             net.sf.jasperreports.engine.JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile);
@@ -46,13 +54,16 @@ public class JasperPrintService
             ServletOutputStream out1 = response.getOutputStream();
             baos.writeTo(out1);
             out1.flush();
-            DataSourceUtils.doReleaseConnection(connection, dataSource);
+            connection.close();
             return;
         }
     }
 
     public DataSource getDataSource()
     {
+    	if(dataSource==null){
+    		dataSource = (DataSource) context.getBean("jasperdataSource");
+    	}
         return dataSource;
     }
 
