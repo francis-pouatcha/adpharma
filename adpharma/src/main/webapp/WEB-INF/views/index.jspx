@@ -142,8 +142,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 				    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">  
 				      <img src="${ordonnanceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image7" title="Lister les ordonnances" />
 				    </security:authorize> 
-                 </div>
-	    		  
+                 </div>  
     	   </td>
     	   
     	   <!--  <td align="center" width="30%" valign="center" class="tblog">
@@ -154,7 +153,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     	   </td>-->
     	   
     	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">   
-    	   <td class="tblog" style="padding: 0 0 0 150px;">
+    	   <td class="tblog" style="padding: 0 0 0 50px;">
     	      <div id="bloc_accordion">
     	        <ul id="panel1" class="accordion"> 
 	                <li>
@@ -190,39 +189,6 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                       </c:otherwise>
 	                     </c:choose>       
 	                        </table>
-	                    </div>
-	                </li>
-	                <li>
-	                    <h3>Les 10 dernières ventes du jour</h3>
-	                    <div class="panel loading">
-	                        <table>
-	                             <tr>
-	                                <th style="text-align: center;">Num. Vente</th>
-	                                <th style="text-align: center;">Date creation</th>
-	                                <th style="text-align: center;">Vendeur</th>
-	                                <th style="text-align: center;">Client</th>
-	                                <th style="text-align: center;">Montant TTC</th>
-	                             </tr>
-	                          <c:choose>   
-	                           <c:when test="${not empty sellings}">
-	                            <c:forEach items="${sellings}" var="selling">
-	                                <spring:url value="/commandeclients/${selling.id}" var="sell_url" />   
-	                             <tr>
-	                                <td> <a href="${sell_url}" class="links"> <c:out value="${selling.cmdNumber}" /> </a> </td>
-	                                <td> <fmt:formatDate value="${selling.dateCreation}" pattern="dd-MM-yyy HH:mm"/> </td>
-	                                <td> <c:out value="${selling.vendeur.fullName}" /> </td>
-	                                <td> <c:out value="${selling.client.nomComplet}"/> </td>
-	                                <td> <c:out value="${selling.montantTtc}" /> </td>
-	                             </tr>
-	                            </c:forEach> 
-	                           </c:when>
-	                          <c:otherwise>
-	                                  <tr>
-	                                     <td colspan="5"><p style="text-align: center; color: blue;"> <c:out value="Aucune vente trouvee..." /> </p></td>
-	                                  </tr>
-	                          </c:otherwise>
-	                         </c:choose>    
-	                       </table>      
 	                    </div>
 	                </li>
 	                <li>
@@ -407,14 +373,6 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     <table class="tblog" border="0"  style="margin-top:50px;">
     	<tr>
     		<td width="6%" class="tblog"></td>
-    		<!-- <td align="left" width="31%" class="tblog" >
-	    	    <img src="${imgfonct}"/>Gestion des commandes <br/>
-	    		<img src="${imgfonct}"/>Gestion des approvisionements<br/> 
-				<img src="${imgfonct}"/>Gestion des Ventes<br/>
-				<img src="${imgfonct}"/>Gestion de la caisse<br/>
-			    <img src="${imgfonct}"/>Suivi de la clientele<br/>
-				<img src="${imgfonct}"/>Gestion des utilisateurs<br/>
-				<img src="${imgfonct}"/>Gestion des ordonnanciers<br/> -->
     		<td align="left"  class="tblog" >
     	    <img src="${cloud}"/>
     		</td>

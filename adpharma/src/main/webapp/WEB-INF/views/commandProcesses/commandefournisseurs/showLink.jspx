@@ -74,10 +74,10 @@ function annulercmd(){
 		</c:if>
                   <span><a href="${print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer le Bon de Commande" title="imprimer le bon de commande" /></a></span>
                   <span><a href="${printxls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Exporter (EXCEL)" title="exporter au format Excel" /></a></span>
-                  
+                 <!-- 
                   <span><a href="${ send_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
-                  
+                   -->
                   <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER A UBIPHARM" title="Envoyer A Ubipharm" /></a></span>
    

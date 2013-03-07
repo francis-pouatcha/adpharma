@@ -25,7 +25,8 @@ public class DocumentsPath
     public static final String FICHE_INVENTAIRE_COMPTAGE_FILE_PATH = ROOT_DIR+"fiche_inventaire_comptage.jrxml";
     public static final String FICHE_APPROVISIONNEMENT_FILE_PATH = ROOT_DIR+"fiche_approsionnement.jrxml";
     public static final String BON_COMMANDE_FILE_PATH = ROOT_DIR+"bon_commande.jrxml";
-    
+    public static final String ETAT_VALORISATION_FILIALE_PATH = ROOT_DIR+"etat_valorisation_filiale.jrxml";
+
     
     
     

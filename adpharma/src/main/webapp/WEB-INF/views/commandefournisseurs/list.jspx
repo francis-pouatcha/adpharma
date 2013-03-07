@@ -12,11 +12,13 @@
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" property="annuler" z="eH0pxOVGGnH4DisDLDumh3PGjRE="/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" maxLength="-1" property="creePar" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_livre" property="livre" render="false" z="BF+syGDcRNZ/IMKCaMK/ckK5oPc="/>
-            <table:column date="true" dateTimePattern="${commandeFournisseur_submitiondate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" property="submitionDate" z="i6P5JYyTaf0/nT9N1MG4Sw6kJJk="/>
-            <table:column date="true" dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" property="traitmentDate" z="nmNWnaSYeuO03xxIm4q3lttpADs="/>
+            <table:column date="true" label="Envoye Le" dateTimePattern="${commandeFournisseur_submitiondate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" property="submitionDate" z="i6P5JYyTaf0/nT9N1MG4Sw6kJJk="/>
+            <table:column date="true" label="Traite Le" dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" property="traitmentDate" z="nmNWnaSYeuO03xxIm4q3lttpADs="/>
+           <!-- 
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" property="exchangeBeanState" z="XTljQjrTTxjAJoVQ9m/vcmoh91Q="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" property="approvisionnementId" z="lTl0Cb9YfEv/r6bqtWXTxxhKr3A="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" property="commercialKey" z="RNAvnZKqwyNJwlj5q41RhZgVG9c="/>
+         -->
         </table:table>
     </page:list1>
 </div>

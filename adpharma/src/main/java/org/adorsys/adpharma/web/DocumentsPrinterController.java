@@ -25,6 +25,7 @@ import org.adorsys.adpharma.beans.ReclamationForm;
 import org.adorsys.adpharma.beans.process.EtatManagerBean;
 import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
+import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.services.JasperPrintService;
@@ -61,7 +62,7 @@ public class DocumentsPrinterController {
 	public String goToDocsManagerView(Model uiModel) {
 		uiModel.addAttribute("etatManagerBean", new EtatManagerBean());
 		uiModel.addAttribute("rayons",ProcessHelper.populateRayon());
-		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale());
+		uiModel.addAttribute("filiales", Filiale.findAllFiliales());
 		uiModel.addAttribute("typeMouvements", ProcessHelper.populateTypeMouvements());
 		uiModel.addAttribute("users", ProcessHelper.populateUsers());
 		return "etats/docpages";
@@ -264,6 +265,22 @@ public class DocumentsPrinterController {
 			return ;
 		}
 	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatValorisationFiliale.pdf", method = RequestMethod.GET)
+	public void etatValorisationFiliale(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("filiale",etatBean.getFiliale().getFilialeNumber());
+		try {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_VALORISATION_FILIALE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
 	
 	@Produces({"application/pdf"})
 	@Consumes({""})

@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class FileSystemScanner {
-
 	public SimpleScheduleBuilder REPEAT_SECONDLY_FOREVER = SimpleScheduleBuilder.repeatSecondlyForever(10);
 	public Logger LOG = LoggerFactory.getLogger(FileSystemScanner.class);
 	public Scheduler scheduler = null;

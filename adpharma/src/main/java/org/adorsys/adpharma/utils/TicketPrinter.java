@@ -35,13 +35,16 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
+/**
+ * @author adorsys-clovis
+ *
+ */
 public class TicketPrinter {
 	
 public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.pdf";
 //public static final String TICKET_FILE ="/tools/adpharma/documents/ticket.pdf";
 	public static void buildTicket( Paiement pay,Boolean print) throws Exception {
-		Document document = new Document(new Rectangle(0, 0, 220, 1000));
+		Document document = new Document(new Rectangle(0, 0, 235, 1000));
 		
 		FileOutputStream fileOutputStream = new FileOutputStream(new File(TICKET_FILE));
 		PdfWriter writer = PdfWriter.getInstance(document, fileOutputStream);
@@ -137,7 +140,7 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		telCell.setPhrase(new Phrase(new Chunk("Tel: "+site.getPhone() +" Fax : "+ site.getFax(), boddyStyle)));
 		telCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(telCell);
-		/*
+	
 		PdfPCell emailCell = new PdfPCell(cellBorderlessStyle);
 		emailCell.setPhrase(new Phrase(new Chunk("Email : "+site.getEmail(), boddyStyle)));
 		emailCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -147,7 +150,7 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		regCell.setPhrase(new Phrase(new Chunk("Num Contribuable : "+site.getNumeroRegistre(), boddyStyle)));
 		regCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(regCell);
-		*/
+		
 		PdfPCell lineCellh = new PdfPCell(cellBorderlessStyle);
 		lineCellh.setPhrase(new Phrase(new Chunk("-----------------------------------------------", boddyStyle)));
 		lineCellh.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -163,12 +166,12 @@ public static final String TICKET_FILE ="C:\\tools\\adpharma\\documents\\ticket.
 		caiCell1.setPhrase(new Phrase(new Chunk("CAISSIER: "+pay.getCassier().getDisplayName(), boddyStyle)));
 		caiCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(caiCell1);
-		/*
+		
 		PdfPCell salCell2 = new PdfPCell(cellBorderlessStyle);
 		salCell2.setPhrase(new Phrase(new Chunk("VENDEUR: "+pay.getFacture().getVendeur().getDisplayName(), boddyStyle)));
 		salCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 		adressTable.addCell(salCell2);
-	*/
+	
 		PdfPCell clienCell = new PdfPCell(cellBorderlessStyle);
 		clienCell.setPhrase(new Phrase(new Chunk("CLIENT : "+commande.getClient().displayName(), boddyStyle)));
 		clienCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -498,11 +501,9 @@ payTable.addCell(diffCell2);
 		bonTable.addCell(addCell1);
 		bonTable.addCell(addCell2);
 		bonTable.addCell(telCell);
-		/*
 		bonTable.addCell(emailCell);
-		
 		bonTable.addCell(regCell);
-		*/
+	
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
 		emptyCell.setPhrase(new Phrase(new Chunk("   ", boddyStyle)));
 		emptyCell.setHorizontalAlignment(Element.ALIGN_CENTER);

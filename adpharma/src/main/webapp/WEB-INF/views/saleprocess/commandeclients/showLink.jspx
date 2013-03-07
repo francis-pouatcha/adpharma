@@ -132,9 +132,9 @@ function restoreCmd(){
 	
 	<c:set value="true" var="isVente"/>
                    </security:authorize>
-   <!-- 
+   <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
         <span ><a href="${ restore_cmd_url}" style="text-decoration: none;" onclick="return restoreCmd();"><INPUT class="submits" type="button" value="Restore" title="Restorer La Commande" /></a></span>
-    -->
+   </security:authorize>
    </c:if>
    
      <c:if test="${not empty bonClient}">

@@ -49,7 +49,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+/**
+ * @author adorsys-clovis
+ *
+ */
 @RequestMapping("/saleprocess")
 @Controller
 public class SaleProcessController {
@@ -625,7 +628,9 @@ public class SaleProcessController {
 	@ResponseBody
 	public String selectProduct(@PathVariable("pId") Long pId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(pId);
-		return	ligneApprovisionement.clone().toJson();
+		ligneApprovisionement.calculRemise();
+		/// return ligneApprovisionement.clone().toJson();
+		return ligneApprovisionement.toJson();
 	}
 	@Transactional
 	public void saveAndCloseCmd(CommandeClient commandeClient ,Caisse caisse , PharmaUser vendeur){
