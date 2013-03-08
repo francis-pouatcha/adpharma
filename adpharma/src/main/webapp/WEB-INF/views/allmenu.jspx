@@ -75,6 +75,9 @@ if(Check == false){
 		<spring:url
 			value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 50 : param.size}"
 			var="cmd_list_url" />
+			<spring:url
+			value="/commandprocesses/listcommandstoimport"
+			var="cmd_list_toimpor_url" />
 		<spring:url value="/commandefournisseurs?find=BySearch&amp;form"
 			var="cmd_find_four_url" />
 
@@ -157,6 +160,7 @@ if(Check == false){
 											Preparation</a></li>
 									<li><a href="${cmd_find_four_url}"> Rechercher une  Preparation</a></li>
 									<li><a href="${cmd_list_url}">Liste des Preparations</a></li>
+									<li><a href="${cmd_list_toimpor_url}">Preparations a Importer</a></li>
 								</ul></li>
 						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_RAYON ,ROLE_SITE_MANAGER">
