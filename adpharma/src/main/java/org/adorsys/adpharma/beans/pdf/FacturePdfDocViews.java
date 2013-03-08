@@ -2,6 +2,8 @@ package org.adorsys.adpharma.beans.pdf;
 
 import java.awt.Color;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -46,7 +48,8 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 			return ;
 		}
 		String nom = (String) model.get("nom");
-
+		Date dateFacturation = (Date) model.get("dateFacturation");
+		
 		Site site = Site.findSite(Long.valueOf(1));
 		Font headerStyle = new Font(Font.COURIER,8);
 		headerStyle.setStyle("bold");
@@ -166,7 +169,13 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 
 		adressTable1.addCell(addressOnInvoiceCell);// 3:1
 		PdfPCell invoiceDateCell = new PdfPCell(cellBorderlessStyle);
-		invoiceDateCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(facture.getDateCreation(), "dd-MM-yyyy HH:mm"), boddyStyle)));
+		if(dateFacturation==null){
+			invoiceDateCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(facture.getDateCreation(), "dd-MM-yyyy HH:mm"), boddyStyle)));
+		}else{//permettre a un vendeur dentree une date # de la date de creation propremen dit
+			dateFacturation.setHours(facture.getDateCreation().getHours());
+			dateFacturation.setMinutes(facture.getDateCreation().getMinutes());
+			invoiceDateCell.setPhrase(new Phrase(new Chunk(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(dateFacturation), boddyStyle)));
+		}
 		invoiceDateCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable1.addCell(invoiceDateCell);// 3:2

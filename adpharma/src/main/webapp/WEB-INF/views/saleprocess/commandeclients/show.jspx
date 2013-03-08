@@ -123,7 +123,8 @@ return( false );
    }
    
 </script>   
-   
+<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
+ 
     <page:show1 id="ps_org_adorsys_adpharma_domain_CommandeClient" create="false"  update="false" delete="${commandeclient.status eq 'EN_COUR'}" bodyExt="bodyExt.jspx" clientLinks="showLink.jspx"  object="${commandeclient}" path="/commandeclients" z="1A66fYrze0wrG0nIAbWIkwjEZ6s=">
     <div id="cmd">
       <table class="tblog">
@@ -237,6 +238,7 @@ return( false );
 						<tr>
 						    <th style="text-align: center;">AVEC REMISE ?</th>
 							<th style="text-align: center;">NOM COMPLET DU CLIENT</th>
+							<th style="text-align: center;" >DATE DE FACTURATION</th>
 							<th style="text-align: center;" >ACTION</th>
 						</tr>
 						<tr>
@@ -246,6 +248,10 @@ return( false );
 							</td>
 							<td>
 							<INPUT type="text" name="nom" id="nom" class="autres" value="" style=" text-align: center;" />
+							</td>
+							<td>
+							<input type="text" name="dateFacturation" id="dateFacturation" style=" text-align: center;"
+								dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" />
 							</td>
 							<td align="center">
 
@@ -258,7 +264,7 @@ return( false );
 					</table>
 	</form>
 	<BR />
- </center>    
+ </center> 
      </div>
      
     </page:show1>

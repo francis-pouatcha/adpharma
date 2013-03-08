@@ -2,7 +2,7 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${etatcreditses}" z="Rjga7sBu6gEFxfITDhbz8AqKnH8=">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${etatcreditses}" z="user-managed" url="/etatcreditses/searchCredit" search="true" placeholder="Rechercher par client">
         <table:table data="${etatcreditses}" delete="false" id="l_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" property="dateEdition" z="ikmm2karrojRu92cXTrm3/oexms="/>
@@ -19,5 +19,5 @@
             <table:column date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" property="minDateDette" z="lceJHRuHuqYsoGEBomqcRYjCrwE="/>
             <table:column date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" property="maxDateDette" z="ZuIFJ+4MVtfJsO3zdeo7aqrLopg="/>
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

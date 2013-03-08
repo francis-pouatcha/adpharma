@@ -2,7 +2,7 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list id="pl_org_adorsys_adpharma_domain_Inventaire" items="${inventaires}" z="POpv/5CTLfnG/Gnkim/jNtsZ9oM=">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Inventaire" items="${inventaires}" z="user-managed" url="/inventaires/searchInv" search="true" placeholder="Rechercher par agent">
         <table:table data="${inventaires}" delete="false" id="l_org_adorsys_adpharma_domain_Inventaire" path="/inventaires" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" maxLength="-1" property="numeroInventaire" z="user-managed"/>
@@ -19,5 +19,5 @@
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_note" maxLength="-1" property="note" z="user-managed"/>
        
         </table:table>
-    </page:list>
+    </page:list1>
 </div>

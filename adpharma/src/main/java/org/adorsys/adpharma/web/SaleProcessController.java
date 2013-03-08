@@ -2,6 +2,7 @@ package org.adorsys.adpharma.web;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -687,7 +688,9 @@ public class SaleProcessController {
 
 	// imprime les factures 
 	@RequestMapping(value = "/print/{invId}.pdf", method = RequestMethod.GET)
-	public String print(@RequestParam(value = "nom", required = false) String nom, @RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
+	public String print(@RequestParam(value = "nom", required = false) String nom,
+			 @RequestParam(value= "dateFacturation", required = false)  @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFacturation,
+			@RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
 		Facture facture = Facture.findFacture(invId);
 		if(remise!=null){
 			facture.setPrintWithReduction(remise);
@@ -696,6 +699,7 @@ public class SaleProcessController {
 		}
 		uiModel.addAttribute("facture", facture);
 		uiModel.addAttribute("nom", nom);
+		uiModel.addAttribute("dateFacturation", dateFacturation);
 		return "facturePdfDocViews";
 	}
 
