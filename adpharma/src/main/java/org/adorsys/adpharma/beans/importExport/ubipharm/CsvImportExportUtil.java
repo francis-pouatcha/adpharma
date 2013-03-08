@@ -4,15 +4,14 @@
 package org.adorsys.adpharma.beans.importExport.ubipharm;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.TypedQuery;
 
@@ -38,10 +37,10 @@ import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.aspectj.util.FileUtil;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -60,6 +59,9 @@ public class CsvImportExportUtil {
 	private int numberOfClearLignes;
 	private static final String ERROR_CODE_FROM_SENDED_FILE= "E";
 	private static final String ERROR_CODE_FROM_UBIPHARM_SERVER= "ERR";
+
+	Map<LigneCmdFournisseur,BigInteger> productAndQtyDeliveredBalance = new HashMap<LigneCmdFournisseur, BigInteger>();
+	
 	public CsvImportExportUtil() {
 	}
 	
@@ -120,6 +122,9 @@ public class CsvImportExportUtil {
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
 			ligneCmdFournisseur.merge();
 			ligneCmdFournisseur.flush();
+			productAndQtyDeliveredBalance.put(ligneCmdFournisseur, ligneCmdFournisseur.getQuantiteCommande().subtract(ligneCmdFournisseur.getQuantiteFournie()));
+			
+			LOG.warn("Command Merge "+ligneCmdFournisseur.getDesignation());
 		}
 	}
 	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
@@ -440,6 +445,28 @@ public class CsvImportExportUtil {
 		}
 		return receptionFolder;
 	}
-	
+	public String[] getReceivedFiles() {
+		File fileDir = new File(getReceptionFolder());
+		String[] fileNames = FileUtil.listFiles(fileDir);
+		return fileNames;
+	}
+	public List<CommandeFournisseur> listCommandToImport(List<CommandeFournisseur> commandesFournisseurs,String[] fileNames){
+		Assert.notNull(commandesFournisseurs, "Null Commands not required");
+		Assert.notNull(fileNames, "Null files not required");
+		List<CommandeFournisseur> commandeFournisseursToImports = new ArrayList<CommandeFournisseur>();
+		for (CommandeFournisseur commandeFournisseur : commandeFournisseursToImports) {
+			if(!Etat.EN_COUR.equals(commandeFournisseur.getEtatCmd())) {
+				continue;
+			}
+			String cmdNumber = commandeFournisseur.getCmdNumber();
+			for (String fileName : fileNames) {
+				if(fileName.startsWith(cmdNumber)){
+					commandeFournisseursToImports.add(commandeFournisseur);
+					break ;
+				}
+			}
+		}
+		return commandeFournisseursToImports;
+	}
 }
 

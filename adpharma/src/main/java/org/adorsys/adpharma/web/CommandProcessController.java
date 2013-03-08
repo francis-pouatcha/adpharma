@@ -60,7 +60,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/commandprocesses")
-@Controller
+@Controller 
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
@@ -379,9 +379,7 @@ public class CommandProcessController {
 	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
 	public String importFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
-		
-		File fileDir = new File(CsvImportExportUtil.getReceptionFolder());
-		String[] fileNames = FileUtil.listFiles(fileDir);
+		String[] fileNames = new CsvImportExportUtil().getReceivedFiles();
 		for (String fileName : fileNames) {
 			if(!Etat.RECEIVED.equals(commandeFournisseur.getEtatCmd()) &&  fileName.startsWith(commandeFournisseur.getCmdNumber())){
 				CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
@@ -401,7 +399,20 @@ public class CommandProcessController {
 		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
+	@RequestMapping(value="/listcommandstoimport", method=RequestMethod.GET)
+	public String listCommandsToImport(Model uiModel,HttpServletRequest request){
+		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
+		List<CommandeFournisseur> listCommandToImports = csvImportExportUtil.listCommandToImport(
+				CommandeFournisseur.findCommandsByEtatCommand(Etat.EN_COUR).getResultList(), 
+				csvImportExportUtil.getReceivedFiles());
+		if (listCommandToImports.isEmpty()) {
+			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur A importer pour le moment. Raffinez votre recherche ci-haut !" );
+		}else {
+			uiModel.addAttribute("results",listCommandToImports);
 
+		}
+		return "commandefournisseurs/search";
+	}
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/annulerCmd", method = RequestMethod.GET)
 	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel,
@@ -480,4 +491,8 @@ public class CommandProcessController {
 		return Arrays.asList(CommandType.class.getEnumConstants());
 	}
 
+	@ModelAttribute("etats")
+	public Collection<Etat> populateEtats() {
+		return Arrays.asList(Etat.class.getEnumConstants());
+	}
 }
