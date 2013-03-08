@@ -10,7 +10,7 @@
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
             <property name="hibernate.connection.charSet" value="UTF-8"/>
            <!--  -->
-            <property name="hibernate.connection.pool_size" value="10" />
+            <property name="hibernate.connection.pool_size" value="15" />
            <!-- 
             <property name="hibernate.cache.use_second_level_cache" value="true"/>
             <property name="hibernate.cache.use_query_cache" value="true"/>            

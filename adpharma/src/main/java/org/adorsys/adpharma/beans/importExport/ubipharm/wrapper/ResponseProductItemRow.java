@@ -51,15 +51,9 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 	public UbipharmCommandStringSequence readReturningKey(){
 		return new UbipharmCommandStringSequence(59, 62, super.readValue(getStringValue(), 59, 62));
 	}
-	
+		
 	public UbipharmCommandStringSequence readProductDeliveryCodificationType(){
 		return new UbipharmCommandStringSequence(63, 64, super.readValue(getStringValue(), 63, 64));
-	}
-	private String fillValuedWithDefaultContent(String valueToFill,int maxLength){
-		if(StringUtils.isEmpty(valueToFill) || valueToFill.length() < maxLength){
-			valueToFill = StringUtils.leftPad(valueToFill, maxLength);
-		}
-		return valueToFill;
 	}
 	public UbipharmCommandStringSequence readDeliveryProductKey(){
 		return new UbipharmCommandStringSequence(64, 113, super.readValue(getStringValue(), 65, getStringValue().length()));

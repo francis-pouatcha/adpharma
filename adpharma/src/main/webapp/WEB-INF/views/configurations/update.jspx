@@ -11,6 +11,8 @@
         <field:checkbox field="editCloseSupply" label="Editer Les Entrees Clos ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:checkbox field="onlySaleOld" label="Toujour Ventre Les Plus Ancien ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:checkbox field="forceToSameLine" label="Forcer Les ventes SUr le meme CIPM ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:input field="sendFolder" label="Repertoire Envoi" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" z="MeXdUkl5DlTbhYDsOBKZPQRmOA4="/>
+        <field:input field="receptionFolder" label="Repertoire De Reception" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" z="MeXdUkl5DlRbhYDsOBKZJQRmOA4="/>
    
     </form:update>
 </div>

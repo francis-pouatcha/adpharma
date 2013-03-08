@@ -40,12 +40,12 @@ public class EtatCreditsController {
 			addDateTimeFormatPatterns(uiModel);
 			return "etatcreditses/create";
 		}
-		uiModel.asMap().clear();
 		if (etatCredits.getConsommerAvoir()) {
 			etatCredits.consommerAvoir();
 		}
 		etatCredits.computeAmount();
 		etatCredits.persist(); 
+		uiModel.asMap().clear();
 		List<DetteClient> listeDettes =  etatCredits.getListeDettes();
 		for (DetteClient detteClient : listeDettes) {
 			detteClient.setEtatCredit(etatCredits);
@@ -65,7 +65,7 @@ public class EtatCreditsController {
 
 	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
 	public String Search(EtatCreditFinder etat  , Model uiModel) {
-		uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEdition(), etat.getDatePaiement(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
+		uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEditionMin(), etat.getDateEditionMax(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("etatCreditFinder", new EtatCredits());
 

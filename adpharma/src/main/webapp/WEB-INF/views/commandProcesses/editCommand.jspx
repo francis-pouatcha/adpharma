@@ -78,11 +78,6 @@
 
 		};
 		
-		function test(id){
-			
-			if()
-		}
-		
 		function saveLine(){
 			
 			 // Scan touche autorisation, (if autorisation), (if press enter), [Get json and return true], (else return 
@@ -418,9 +413,8 @@
 			</table>
 		</div>
 	</form:customList>
-
-
 	<jsp:include page="ajaxSearchProductForm.jspx" />
+	
 	<div id="editLineDiv">
 		<center>
 			<IMG alt="loading ..." src="${loadimage }" class="loadimage"

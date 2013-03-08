@@ -1,5 +1,9 @@
 package org.adorsys.adpharma.beans.importExport.core;
 
+/**
+ * @author adorsys-GKC
+ *
+ */
 public class FieldConvertionFailedException extends Exception {
 	
 	private Object value ;

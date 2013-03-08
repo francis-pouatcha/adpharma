@@ -37,7 +37,6 @@ public abstract class UbipharmStringOperation implements StringOperation {
 	@Override
 	public StringOperation joinAnotherString(StringOperation stringOperation) {
 		if(stringOperation == null) throw new IllegalArgumentException("Invalid Argument, null value aren't accepted");
-		
 		this.getStringValue().concat(stringOperation.getStringValue());
 		int startIndex2 = stringOperation.getStartIndex();
 		if(isStartIndexCorrect(startIndex2) == false) 

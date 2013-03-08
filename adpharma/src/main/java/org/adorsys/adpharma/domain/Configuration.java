@@ -37,7 +37,9 @@ public class Configuration {
 	@Value("false")
 	private Boolean forceToSameLine;
 	
+	private String receptionFolder ;
 	
+	private String sendFolder ;
 
 
 	public static void init(){
@@ -95,6 +97,26 @@ public class Configuration {
 
 	public void setForceToSameLine(Boolean forceToSameLine) {
 		this.forceToSameLine = forceToSameLine;
+	}
+
+
+	public String getReceptionFolder() {
+		return receptionFolder;
+	}
+
+
+	public void setReceptionFolder(String receptionFolder) {
+		this.receptionFolder = receptionFolder;
+	}
+
+
+	public String getSendFolder() {
+		return sendFolder;
+	}
+
+
+	public void setSendFolder(String sendFolder) {
+		this.sendFolder = sendFolder;
 	}
 
 

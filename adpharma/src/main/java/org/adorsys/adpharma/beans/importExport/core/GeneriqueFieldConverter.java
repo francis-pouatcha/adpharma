@@ -5,7 +5,10 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
-
+/**
+ * @author adorsys-GKC
+ *
+ */
 public   class GeneriqueFieldConverter implements FieldConverter  {
 
 	@Override
