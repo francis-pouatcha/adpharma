@@ -377,11 +377,13 @@ public class CommandProcessController {
 	}
 	
 	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
-	public String ImportFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
+	public String importFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
+		
 		File fileDir = new File(CsvImportExportUtil.getReceptionFolder());
 		String[] fileNames = FileUtil.listFiles(fileDir);
 		for (String fileName : fileNames) {
-			if(!FileSystemScanner.oldFiles.contains(fileName)){
+			if(!Etat.RECEIVED.equals(commandeFournisseur.getEtatCmd()) &&  fileName.startsWith(commandeFournisseur.getCmdNumber())){
 				CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
 				try {
 					LOG.warn("Start Import Of : "+fileName+" ...");
@@ -393,6 +395,8 @@ public class CommandProcessController {
 					e.printStackTrace();
 				}
 				LOG.warn("... "+fileName+", Import Finished");
+			}else {
+				LOG.warn("File \""+fileName+"\" skipped");
 			}
 		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
