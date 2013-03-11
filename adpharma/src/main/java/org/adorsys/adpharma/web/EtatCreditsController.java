@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.beans.process.EtatCreditFinder;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Client;
+import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
 import org.adorsys.adpharma.domain.Paiement;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RooWebScaffold(path = "etatcreditses", formBackingObject = EtatCredits.class)
 @RequestMapping("/etatcreditses")
@@ -159,6 +161,23 @@ public class EtatCreditsController {
 		return "etatcreditses/show";
 	} 
 
+	
+	@RequestMapping(value = "/searchCredit", method = RequestMethod.GET)
+	public String search(@RequestParam("name") String  name,  Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("etatcredits", EtatCredits.findEtatCreditsEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) EtatCredits.countEtatCreditses() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<EtatCredits> list = EtatCredits.findEtatCreditsByNomClientLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("etatcredits", list);
+		}
+		return "etatcredits/list";
+	}
 
 
 	@ModelAttribute("clients")

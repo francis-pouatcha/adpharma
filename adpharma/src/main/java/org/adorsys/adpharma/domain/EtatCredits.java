@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
@@ -326,6 +327,16 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		return q;
 	}
 
+	
+	public static TypedQuery<EtatCredits> findEtatCreditsByNomClientLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.client.nom ASC", EtatCredits.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
+	
 	public Long getClientId() {
 		return clientId;
 	}

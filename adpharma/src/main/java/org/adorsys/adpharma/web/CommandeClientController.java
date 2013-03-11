@@ -26,6 +26,7 @@ import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Genre;
+import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.MouvementStock;
@@ -376,7 +377,22 @@ public class CommandeClientController {
 		return null ;
 	}
 	
-	
+	@RequestMapping(value = "/searchVente", method = RequestMethod.GET)
+	public String search(@RequestParam("name") String  name,  Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) CommandeClient.countCommandeClients() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<CommandeClient> list = CommandeClient.findCommandeClientByNomClientLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("commandeclients", list);
+		}
+		return "commandeclients/list";
+	}
 
 	@Transactional
 	@RequestMapping(value="/{cmdId}/annulerRetourProduit")
