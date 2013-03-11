@@ -18,6 +18,8 @@
 		    		<th style="text-align: center;">CiP</th>
 		    		<th style="text-align: center;" >Designation</th>
 		    		<th style="text-align: center;">qte Com </th>
+					<th style="text-align: center;">Qte Fournie</th>
+					<th style="text-align: center;">Difference</th>
 		    		<th style="text-align: center;">Prix Vente</th>
 		            <th style="text-align: center;">Prix AChat</th>
 		            <th style="text-align: center;">Prix AChat Total</th>
@@ -31,14 +33,30 @@
 		    				<c:out value="${ligneCommande.designation}"></c:out>
 		    			
 		    			</td>
-		    			
 
 		    			<td style="text-align: right;padding-right: 20px;">
 		    			
 		    				<c:out value="${ligneCommande.quantiteCommande}"></c:out>
 		    		
 		    			</td>
-		    			<td style="text-align: right;padding-right: 20px;">
+						<td style="text-align: center;"><c:out
+								value="${ligneCommande.quantiteFournie}"></c:out>
+						</td>
+						<td style="text-align: center;">
+							<c:set var="qty_difference" value="${ligneCommande.quantiteCommande -  ligneCommande.quantiteFournie}" ></c:set>
+							<c:choose>
+								<c:when test="${qty_difference > 0}">
+									<span style="color: red;"> <c:out value="${qty_difference}"  /> </span>
+								</c:when>
+								<c:when test="${0 > qty_difference }">
+									<span style="color: green;"> <c:out value="${qty_difference}"  /> </span>
+								</c:when>
+								<c:otherwise>
+									<span style="color: blue;"> <c:out value="${qty_difference}"  /> </span>
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td style="text-align: right;padding-right: 20px;">
 		     		    				<c:out value="${ligneCommande.prixAVenteMin}"></c:out>
 
 		    			</td>
@@ -46,6 +64,7 @@
 		     		    				<c:out value="${ligneCommande.prixAchatMin}"></c:out>
 
 		    			</td>
+		    			
 		    			<td style="text-align: right;padding-right: 20px;">
 		     		    				<c:out value="${ligneCommande.prixAchatTotal}"></c:out>
 

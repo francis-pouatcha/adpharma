@@ -78,15 +78,14 @@ public class CsvImportExportUtil {
 				saveError(readResponseErrorDetail, readResponseCommandReferences);
 				return ;
 			}
-			
-			List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
-			saveLigneCmdFournisseurs(readResponseProductLignes);
 			List<CommandeFournisseur> commandFournisseurs = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.
 					getCustomerCommandKey().getStringValue()).getResultList();
 			if(commandFournisseurs.isEmpty()){
 				LOG.error("Command Not Found, Hug !");
 			}else {
 				CommandeFournisseur commandeFournisseur = commandFournisseurs.iterator().next();
+				List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
+				saveLigneCmdFournisseurs(readResponseProductLignes,commandeFournisseur);
 				commandeFournisseur.setEtatCmd(Etat.RECEIVED);
 				commandeFournisseur.merge().flush();
 			}
@@ -109,19 +108,15 @@ public class CsvImportExportUtil {
 			commandeFournisseur.merge().flush();
 		}
 	}
-	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows) {
+	private void saveLigneCmdFournisseurs(List<ResponseProductItemRow> productItemRows,CommandeFournisseur commandeFournisseur) {
 		Assert.notNull(productItemRows, "Null argment not required");
 		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
 			String productKey = StringUtils.trim(responseProductItemRow.getOrderingProductKey().getStringValue());
-			List<LigneCmdFournisseur> resultList = LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getResultList();
-			if(resultList.isEmpty()) {
-				LOG.error("No command Item Found With This CIP : "+productKey);
-				continue ;
-			}
-			LigneCmdFournisseur ligneCmdFournisseur = resultList.iterator().next();
+//			LigneCmdFournisseur ligneCmdFournisseur=LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getSingleResult();
+			LigneCmdFournisseur ligneCmdFournisseur = LigneCmdFournisseur.findLigneCmdFournisseurByCipAndComFournisseur(productKey, commandeFournisseur).getSingleResult();
+			
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
-			ligneCmdFournisseur.merge();
-			ligneCmdFournisseur.flush();
+			ligneCmdFournisseur.merge().flush();
 			productAndQtyDeliveredBalance.put(ligneCmdFournisseur, ligneCmdFournisseur.getQuantiteCommande().subtract(ligneCmdFournisseur.getQuantiteFournie()));
 			
 			LOG.warn("Command Merge "+ligneCmdFournisseur.getDesignation());
@@ -454,7 +449,7 @@ public class CsvImportExportUtil {
 		Assert.notNull(commandesFournisseurs, "Null Commands not required");
 		Assert.notNull(fileNames, "Null files not required");
 		List<CommandeFournisseur> commandeFournisseursToImports = new ArrayList<CommandeFournisseur>();
-		for (CommandeFournisseur commandeFournisseur : commandeFournisseursToImports) {
+		for (CommandeFournisseur commandeFournisseur : commandesFournisseurs) {
 			if(!Etat.EN_COUR.equals(commandeFournisseur.getEtatCmd())) {
 				continue;
 			}

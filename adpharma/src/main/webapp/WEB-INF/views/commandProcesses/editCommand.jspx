@@ -393,7 +393,6 @@
 								value="${ligneCommande.prixAVenteMin}"></c:out></td>
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.agentSaisie}"></c:out></td>
-
                          <td class="utilbox">
 						<spring:url value="/resources/images/update.png" var="update_image_url" />
 						<!-- 	<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"

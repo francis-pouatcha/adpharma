@@ -197,6 +197,15 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
        q.setParameter("cip", cip);
        return q;
    }
+   
+   public static TypedQuery<LigneCmdFournisseur> findLigneCmdFournisseurByCipAndComFournisseur(String cip,CommandeFournisseur commandeFournisseur){
+	   if (StringUtils.isEmpty(cip)) throw new IllegalArgumentException("The commande argument is required");
+       EntityManager em = LigneCmdFournisseur.entityManager();
+       TypedQuery<LigneCmdFournisseur> q = em.createQuery("SELECT o FROM LigneCmdFournisseur AS o WHERE o.cip = :cip and o.commande = :commande", LigneCmdFournisseur.class);
+       q.setParameter("cip", cip);
+       q.setParameter("commande", commandeFournisseur);
+       return q;
+   }
 
 
 }
