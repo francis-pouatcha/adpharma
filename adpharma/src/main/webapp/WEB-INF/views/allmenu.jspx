@@ -119,76 +119,101 @@ if(Check == false){
 
 		<ul class="dropdown">
 			<security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
+			
+			<spring:message code="allmenu_stockmanagement" var="stockmanagement" />
+			
 				<li><a style="text-transform: capitalize;" class="headMenu"
-					href="#">GESTION DU STOCK </a>
+					href="#">${stockmanagement } </a>
 					<ul class="sub_menu">
 						<security:authorize
 							ifAnyGranted="ROLE_SAISIE_PRODUIT ,ROLE_SITE_MANAGER">
-							<li><a href="#">Entree En Stock </a>
+							<spring:message code="allmenu_stockmanagement_stockrecord" var="stockmanagement_stockrecord"/>
+							<li><a href="#">${stockmanagement_stockrecord } </a>
 								<ul>
-									<li><a href="${ap_cree_url}">Effectuer Une Entree</a></li>
-									<li><a href="${ap_list_url}">Lister Les Entrees</a></li>
-									<li><a href="${search_list_url}">Rechercher Les
-											Entrees</a></li>
+							<spring:message code="allmenu_stockmanagement_make_an_entry" var="stockmanagement_make_an_entry"/>
+							<spring:message code="allmenu_stockmanagement_list_entries" var="stockmanagement_list_entries"/>
+							<spring:message code="allmenu_stockmanagement_find_entries" var="stockmanagement_find_entries"/>
+									<li><a href="${ap_cree_url}">${stockmanagement_make_an_entry }</a></li>
+									
+									<li><a href="${ap_list_url}">${stockmanagement_list_entries }</a></li>
+									<li><a href="${search_list_url}">${stockmanagement_find_entries }</a></li>
 								</ul></li>
 						</security:authorize>
-						<li><a href="#">Produits approvisionnes</a>
+						<spring:message code="allmenu_stockmanagement_delivered_product" var="delivered_product"/>
+						<spring:message code="allmenu_stockmanagement_decompose_product" var="decompose_product"/>
+						<spring:message code="allmenu_stockmanagement_move_stock" var="move_stock"/>
+						<li><a href="#">${delivered_product }</a>
 							<ul>
 								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
-									<li><a href="${ap_trans_url}">Decomposer un produit (CIPM)</a></li>
+									<li><a href="${ap_trans_url}">${decompose_product }</a></li>
 								</security:authorize>
 								<security:authorize
 									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
-									<li><a href="${ap_sortir_url}">Sortir du Stock (CIPM)</a></li>
+									<li><a href="${ap_sortir_url}">${move_stock }</a></li>
 								</security:authorize>
 								<security:authorize
 									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
-									<li><a href="${ap_inreclam_url}">Entree des Reclamations</a></li>
+						<spring:message code="allmenu_stockmanagement_enter_reclamations" var="enter_reclamations"/>
+									<li><a href="${ap_inreclam_url}">${enter_reclamations }</a></li>
 								</security:authorize>
 								<!--  <li><a href="${ap_correct_url}">Compenser Le Stock CIPM</a></li>-->
-								<li><a href="${search_lgap_url}">rechercher un produit (CIPM)</a></li>
-								<li><a href="${lap_list_url}">lister les produits (CIPM)</a></li>
+						<spring:message code="allmenu_stockmanagement_find_product" var="find_product"/>
+								<li><a href="${search_lgap_url}">${find_product }</a></li>
+						<spring:message code="allmenu_stockmanagement_list_products" var="list_products"/>
+								<li><a href="${lap_list_url}">${list_products }</a></li>
 							</ul></li>
 						<security:authorize ifAnyGranted="ROLE_IMPRESSION_CODE_BARE ,ROLE_SITE_MANAGER">
-						<li><a href="${imp_code_url}">Impression Code Bare</a></li>
+						<spring:message code="allmenu_stockmanagement_print_barcodes" var="print_barcodes"/>
+						<li><a href="${imp_code_url}">${print_barcodes }</a></li>
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_PREPARATION_CMD ,ROLE_SITE_MANAGER">
-							<li><a href="#">Preparation des Commandes</a>
+						<spring:message code="allmenu_stockmanagement_prepare_commands" var="prepare_commands"/>
+							<li><a href="#">${prepare_commands }</a>
 								<ul>
-									<li><a href="${cmd_four_url}"> Effectuer Une
-											Preparation</a></li>
-									<li><a href="${cmd_find_four_url}"> Rechercher une  Preparation</a></li>
-									<li><a href="${cmd_list_url}">Liste des Preparations</a></li>
-									<li><a href="${cmd_list_toimpor_url}">Preparations a Importer</a></li>
+						<spring:message code="allmenu_stockmanagement_make_a_preparation" var="make_a_preparation"/>
+									<li><a href="${cmd_four_url}"> ${make_a_preparation }</a></li>
+						<spring:message code="allmenu_stockmanagement_find_preparation" var="find_preparation"/>
+									<li><a href="${cmd_find_four_url}"> ${find_preparation }</a></li>
+						<spring:message code="allmenu_stockmanagement_list_preparation" var="list_preparation"/>
+									<li><a href="${cmd_list_url}">${list_preparation }</a></li>
+						<spring:message code="allmenu_stockmanagement_preparation_toimport" var="preparation_toimport"/>
+									<li><a href="${cmd_list_toimpor_url}">${preparation_toimport }</a></li>
 								</ul></li>
 						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_RAYON ,ROLE_SITE_MANAGER">
-							<li><a href="#">Emplacements / Rayons</a>
+						<spring:message code="allmenu_stockmanagement_emplacements" var="emplacements"/>
+							<li><a href="#">${emplacements }</a>
 								<ul>
-									<li><a href="${conf_ray_url}"> Ajouter</a></li>
-									<li><a href="${conf_list_ray_url}">Lister</a></li>
+						<spring:message code="allmenu_stockmanagement_emplacement_add" var="emplacement_add"/>
+									<li><a href="${conf_ray_url}"> ${emplacement_add }</a></li>
+						<spring:message code="allmenu_stockmanagement_emplacement_list" var="emplacement_list"/>
+									<li><a href="${conf_list_ray_url}">${emplacement_list }</a></li>
 								</ul></li>
 						</security:authorize>
 
 						<security:authorize
 							ifAnyGranted="ROLE_FOURNISSEUR ,ROLE_SITE_MANAGER">
-							<li><a href="#">Fournisseurs</a>
+						<spring:message code="allmenu_stockmanagement_providers" var="providers"/>
+							<li><a href="#">${providers }</a>
 								<ul>
-									<li><a href="${four_site_url}"> Creer</a></li>
-									<li><a href="${four_list_url}">Lister</a></li>
+						<spring:message code="allmenu_stockmanagement_providers_create" var="providers_create"/>
+									<li><a href="${four_site_url}"> ${providers_create }</a></li>
+						<spring:message code="allmenu_stockmanagement_providers_list" var="providers_list"/>
+									<li><a href="${four_list_url}">${providers_list}</a></li>
 								</ul></li>
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
-							<li><a href="#">Mouvements stock</a>
+						<spring:message code="allmenu_stockmanagement_stockmouvement" var="stockmouvement"/>
+							<li><a href="#">${stockmouvement }</a>
 								<ul>
-									<li><a href="${mvt_search_url}">Rechercher</a></li>
-									<li><a href="${mvt_list_url}">Lister</a></li>
+						<spring:message code="allmenu_stockmanagement_stockmouvement_find" var="stockmouvement_find"/>
+						<spring:message code="allmenu_stockmanagement_stockmouvement_list" var="stockmouvement_list"/>
+									<li><a href="${mvt_search_url}">${stockmouvement_find }</a></li>
+									<li><a href="${mvt_list_url}">${stockmouvement_list }</a></li>
 								</ul></li>
 						</security:authorize>
-
-
 					</ul></li>
 			</security:authorize>
 			<!--  menu vente -->
