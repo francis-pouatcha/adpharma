@@ -3,6 +3,7 @@ package org.adorsys.adpharma.beans;
 import java.io.IOException;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +37,8 @@ import org.springframework.stereotype.Service;
 public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHandler implements LogoutSuccessHandler {
 	static final Logger LOGGER = LoggerFactory.getLogger(AuthentificationFilter.class);
     private RequestCache requestCache = new HttpSessionRequestCache();
-
+    @Resource(name="rolesToHomePageRegistry")
+    RolesToHomePageRegistry rolesToHomePageRegistry ;
     
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -95,7 +97,6 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
 	private String getUserRedirectLink( ){
 		PharmaUser pharmaUser = PharmaUser.findPharmaUsersByUserNameEquals(SecurityUtil.getUserName()).getSingleResult();
 		Set<RoleName> roleNames = pharmaUser.getRoleNames();
-		RolesToHomePageRegistry rolesToHomePageRegistry = new RolesToHomePageRegistry();
 		return rolesToHomePageRegistry.getHomeUrl(roleNames.iterator().next());
 	}
 }
