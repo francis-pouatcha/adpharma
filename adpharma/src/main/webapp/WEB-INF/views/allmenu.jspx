@@ -219,27 +219,34 @@ if(Check == false){
 			<!--  menu vente -->
 			<security:authorize
 				ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
-
-				<li><a href="#">Ventes</a>
+				<spring:message code="allmenu_sales_salemenu" var="sales_salemenu" />
+				<li><a href="#">${sales_salemenu }</a>
 					<ul class="sub_menu">
-							<li><a id="rapidesearch" href="#">Recherche Produit</a></li>
+				<spring:message code="allmenu_sales_findproduct" var="sales_findproduct" />
+							<li><a id="rapidesearch" href="#">${sales_findproduct }</a></li>
 						<security:authorize
 							ifAnyGranted="ROLE_VENTE_COMPTANT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
-							<li><a href="${vente_public_url}">Vente Au Comptant</a></li>
+				<spring:message code="allmenu_sales_cashsale" var="sales_cashsale" /> <!-- cashsale == for vente au comptant -->
+							<li><a href="${vente_public_url}">${sales_cashsale }</a></li>
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_VENTE_CREDIT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
-							<li><a href="${vente_credit_url}">Vente a Credit</a></li>
+				<spring:message code="allmenu_sales_saleoncredit" var="sales_saleoncredit" />
+							<li><a href="${vente_credit_url}">${sales_saleoncredit }</a></li>
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_VENTE_PROFORMAT ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
-							<li><a href="${vente_proformat_url}">Facture Proformat</a></li>
+				<spring:message code="allmenu_sales_proformainvoice" var="sales_proformainvoice" />
+							<li><a href="${vente_proformat_url}">${sales_proformainvoice }</a></li>
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_VENTE_VISU ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
-							<li><a href="${search_url}">Rechercher une vente</a></li>
-							<li><a href="${vente_jour_url}">Ventes du Jour</a></li>
-							<li><a href="${list_url}">Lister Les Ventes</a></li>
+				<spring:message code="allmenu_sales_findsale" var="sales_findsale" />
+							<li><a href="${search_url}">${sales_findsale }</a></li>
+				<spring:message code="allmenu_sales_sale_of_today" var="sales_sale_of_today" />
+							<li><a href="${vente_jour_url}">${sales_sale_of_today }</a></li>
+				<spring:message code="allmenu_sales_list" var="sales_list" />
+							<li><a href="${list_url}">${sales_list }</a></li>
 						</security:authorize>
 
 					</ul></li>
