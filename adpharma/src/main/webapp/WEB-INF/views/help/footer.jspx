@@ -1,10 +1,10 @@
-<div>
+<div style="width: 100%; border-top: 2px inset #ddd;">
       <footer>
-      	<div style="margin-top: 50px">
-	       <center>	
+      	<div style="margin-top: 20px;text-align: center;">
+	       <span>	
 			copyright 2011 <a href="http://adorsys.cm" > ADORSYS S.A</a>  
 	        Phones : +237 33 42 32 44 / 99 93 99 48 
-			</center>		
+			</span>		
 		</div>
       </footer>
 

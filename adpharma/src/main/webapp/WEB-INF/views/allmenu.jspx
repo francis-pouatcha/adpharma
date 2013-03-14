@@ -265,7 +265,7 @@ if(Check == false){
 		        			 
 		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
                           <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
-                          <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
+                           <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
 		        			 
 		        			  <!--  menu facturation-->
     
@@ -613,24 +613,25 @@ if(Check == false){
     	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
 		                                  <li><a href="#">Etats </a>
 		        							<ul>
-		        								<li><a href="${list_rayon_url}">Listing Rayons</a></li>
-		        								<li><a href="${list_clt_url}">Listing Clients</a></li>
-		        								<li><a href="${list_relation_url}">Listing Relations de decomposition</a></li>
-		        								<li><a href="${et_valeur_stock}">Etat Valorisation du stock</a></li>
-		        								<li><a href="${et_jour_dette}">Etat Journalier des Dettes </a></li>
-		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
-		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
-		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
+		        								<li><a href="${list_rayon_url}">Liste des Rayons</a></li>
+		        								<li><a href="${list_clt_url}">Liste des Clients</a></li>
+		        								<li><a href="${list_relation_url}">Relations de decomposition</a></li>
+		        								<li><a href="${et_valeur_stock}">Valorisation du stock</a></li>
+		        								<li><a href="${et_jour_dette}">Journal des Dettes </a></li>
+		        								<li><a href="${cash_journalier_url}">Journal des Caisses </a></li>
+		        								<li><a href="${et_jour_vente}">Journal des Ventes </a></li>
+		        								<li><a id="et_per_vente" href="#">Produits Perissables </a></li>
 		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>
-		        								<li><a href="${list_reclam_url}">Etat Reclamations </a></li>	
+		        								<li><a href="${list_reclam_url}">Reclamations fournisseurs </a></li>	
 		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
 		        							</ul>
 		        						</li>
       </security:authorize>
       
       <!-- Changing theme -->
-      <spring:url value="/?theme=blueTheme" var="blue_theme" />
-      <spring:url value="/?theme=standard" var="green_theme" />
+      <c:set value="${pageContext.request.pathTranslated}" var="contexte" />
+      <spring:url value="${contexte}?theme=blueTheme" var="blue_theme" />
+      <spring:url value="${contexte}?theme=standard" var="green_theme" />
       <security:authorize access="isAuthenticated()">
             <li><a href="#">Themes</a>
 		        <ul>

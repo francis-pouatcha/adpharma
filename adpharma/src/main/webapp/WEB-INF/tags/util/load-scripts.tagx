@@ -39,8 +39,6 @@
      <spring:url value="/resources/js/jqdropdown/jquery.easing.min.js" var="easing" />
      <spring:url value="/resources/js/jqdropdown/accordion.core.css" var="accore" />
      <spring:url value="/resources/js/jqdropdown/core.css" var="core" />
-     <spring:url value="/resources/js/jqdropdown/dropdown.css" var="dropdown" />
-     <spring:url value="/resources/js/jqdropdown/reset.css" var="reset_acc" />
      
     
      <link type="text/css" href="${jquerycss_url}" rel="stylesheet" media="all" />	

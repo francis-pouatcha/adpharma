@@ -13,7 +13,7 @@
   </div>
 </header>
     
-        
+<article class="float-article" id="read_article">        
 <section id="ouvrir">
   <div class="page-header">
     <h1>Ouvrir une caisse <small>Ouvrir une caisse</small></h1>
@@ -64,4 +64,6 @@
     </div>
   </div>  
 </section>
+</article>
+
 </div>

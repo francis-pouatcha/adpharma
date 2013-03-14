@@ -7,6 +7,7 @@
 <spring:url value="/resources/images/documentation/Find_Liabilities.jpg" var="Find_Liabilities_img" />
 <spring:url value="/resources/images/documentation/List_Customer.jpg" var="List_Customer_img" />
 <spring:url value="/resources/images/documentation/List_Liabilities.jpg" var="List_Liabilities_img" />
+
 <header class="jumbotron subhead" id="overview">
   <h1>Suivi de la clientelle</h1>
   <p class="lead">Suivi de la clientelle</p>
@@ -18,6 +19,8 @@
     </ul>
   </div>
 </header>
+
+<article class="float-article" id="read_article">
 <section id="client">
   <div class="page-header">
     <h1>Gestions des clients <small>Gestions des clients</small></h1>
@@ -292,4 +295,6 @@
   </div>
     
 </section>
+</article>
+
 </div>

@@ -232,7 +232,8 @@ font-size: 1em;
 }
 
 tr.list:hover {
-	background-color: rgb(51, 204, 255);
+	/* background-color: rgb(51, 204, 255); */
+	background-color:  #00FF66;
 	color: white;
 	font-weight: bold;
 	cursor: pointer;
@@ -276,7 +277,7 @@ body {
 	margin-right: 2%;
 	margin-bottom: 0px;
 	margin-top: 10px;
-	font-family: Courrier, verdana;
+	font-family: verdana, Courrier;
 }
 
 .tlog .icoImage img {
@@ -766,7 +767,7 @@ caption {
 }
 
 fieldset {
-	background-color:white;
+background-color:white;
 border: none;
 border-radius: 2px;
 margin-bottom: 12px;
@@ -778,7 +779,7 @@ padding: 0 10px;
 legend{
 	/*font-weight: bold; color: blue;*/
 	
-background-color: #4494C9;
+background-color: #58A618;
 border-bottom: 1px solid #d4d4d4;
 border-top: 1px solid #d4d4d4;
 border-radius: 5px;

@@ -48,7 +48,6 @@ public class HomeController {
 	      beginEndOfDay = DateConfig.getBegingEndOfDay(new Date());
 	       if(principal!=null){
 	    	  List<TopSelling> products = statistics.topSellingProducts(begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
-	 		  List<CommandeClient> lastTenSelling = statistics.lastTenSelling(beginEndOfDay.getBegin(), beginEndOfDay.getEnd());
 	 		  List<Caisse> openCashs = statistics.stateOfOpenCash(beginEndOfDay.getBegin(), beginEndOfDay.getEnd());
 	 		  List<ProductsOut> outProducts = statistics.productOutOfStock(BigInteger.ZERO, begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
 	 		  List<ProductsOut> avaries= statistics.productsAvaries();
@@ -56,7 +55,6 @@ public class HomeController {
 	 		  List<Customers> dettesClients = statistics.dettesClients(begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
 	 		  uiModel.addAttribute("pharmacie", site);
 			  uiModel.addAttribute("products", products);
-			  uiModel.addAttribute("sellings", lastTenSelling);
 			  uiModel.addAttribute("cashs", openCashs);
 			  uiModel.addAttribute("ruptures", outProducts);
 			  uiModel.addAttribute("avaries", avaries);

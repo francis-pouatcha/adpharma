@@ -1,60 +1,119 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+ xmlns:spring="http://www.springframework.org/tags">
+
 <header class="jumbotron subhead" id="overview">
+
+
   <h1>Introduction</h1>
-  <p class="lead">AdPharma est un logiciel de gestion de pharmacie...</p>
   <div class="subnav">
-    <ul class="nav nav-pills">
-      <li><a href="#presentation">Presentation de Adpharma et convention generale</a></li>
-      <li><a href="#connection">Connection</a></li>
-    </ul>
+	    <ul class="nav nav-pills">
+	      <li><a href="#presentation">Presentation generale d'ADPHARMA</a></li>
+	      <li><a href="#conventions">Conditions d'utilisation</a></li>
+	    </ul>
+	   <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
+<article class="float-article" id="read_article">
+
 <section id="presentation">
   <div class="page-header">
-    <h1>Presentation <small>Adpharma et convention generale</small></h1>
+    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
+    <h1>Presentation Generale</h1>
+    
+      <span> <b>ADPHARMA</b> est une application informatique de gestion des pharmacies. Cette application est prévue pour un large public, particulierement:</span><BR />
+        <ul style="list-style-type: square;">
+           <li> Les societes pharmaceutiques </li>
+           <li> Les Hopitaux disposant d'un service pharmaceutique </li>
+        </ul>
+      <span>L'application étant de type web, elle peut etre accessible via un réseau local(intranet) ou réseau public(internet).</span>
+      <span> Cette application possède de nombreux avantages à savoir:</span><BR />
+      <ul>
+         <li> Elle assure la securite des informations. </li>
+         <li> Elle est performante en termes d'execution. </li>
+         <li> Elle est facilement extensible, selon les besoins specifiques des clients. </li>
+      </ul>
+      <span>Les differents modules de l'application sont les suivants.</span>
+    
   </div>
   <div class="row">
-  	<div class="span4">
-      <h3>Example body text</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span3 surrond">
+      <h3>Gestion des utilisateurs</h3>
+      <p> Ce module contient les fonctionnalités suivantes: créer un compte utilisateur, modifier un compte, desactiver un compte, reactiver un compte,
+      changer son mot de passe, etc...
+      <a href="${user_url}"> <button class="btn text">lire la suite...</button> </a> </p>
     </div>
-    <div class="span4">
-      <h3>Example body text</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    <div class="span3 surrond">
+      <h3>Gestion du catalogue</h3>
+      <p> Ce module contient les fonctionnalités suivantes: créer un produit, desactiver un produit, modifier un produit, 
+      créer les relations de decomposition, rechercher un produit, etc...
+      <a href="${produit_url}"> <button class="btn text">lire la suite...</button> </a> </p>
     </div>
-    <div class="span4">
-      <h3>Example body text</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    <div class="span3 surrond">
+      <h3>Gestion du stock</h3>
+      <p> 
+         Ce module contient les fonctionnalités suivantes: Entrées en stock de produits, Sorties en stock de produits, Préparations de commandes,
+         mouvements de stock, etc...
+      <a href="${stock_url}"> <button class="btn text">lire la suite...</button> </a> </p>
+    </div>
+    <div class="span3 surrond">
+      <h3>Gestion des ventes</h3>
+      <p>Ce module contient les fonctionnalités suivantes: vente au comptant, vente à crédit, vente proformat, recherche de ventes,
+         ventes du jour, listing des ventes, etc... 
+      <a href="${vente_ul}"> <button class="btn text">lire la suite...</button> </a> </p>
+    </div>
+    <div class="span3 surrond">
+      <h3>Gestion de la caisse</h3>
+      <p>Ce module contient les fonctionnalités suivantes: ouverture/fermeture de caisse, encaissements, décaissements, 
+         etats journalier des caisses, chiffre d'affaire, etc...
+      <a href="${caisse_url}"> <button class="btn text">lire la suite...</button> </a> </p>
+    </div>
+    <div class="span3 surrond">
+      <h3>Gestion des inventaires</h3>
+      <p>Ce module contient les fonctionnalités suivantes: créer un inventaire, fiche detaillée produit par cipm, fiche de suivi de stock,
+         fiche de suivi de quantité, etc...
+      <a href="${inv_url}"> <button class="btn text">lire la suite...</button> </a> </p>
+    </div>
+    <div class="span3 surrond">
+      <h3>Suivi de la clientelle</h3>
+      <p>Ce module contient les fonctionnalités suivantes: créer un compte client, créer une categorie de clients, rechercher un client,
+         gestion des dettes clients, gestion des avoirs clients, etc... 
+      <a href="${client_url}"> <button class="btn text">lire la suite...</button> </a> </p>
+    </div>
+    <div class="span3 surrond">
+      <h3>Supervisions</h3>
+      <p>Ce module contient les fonctionnalités suivantes: statistiques(états des ventes, panier moyen, etc...),
+         configurations(TVA, devises, filiales, taux de marges, etc...) 
+      <a href="${super_url}"> <button class="btn text">lire la suite...</button> </a> </p>
     </div>
   </div>  
 </section>
 
-<!-- connection  -->
 
-<section id="connection">
+
+<!--Conventions generales  -->
+<section id="conventions">
   <div class="page-header">
-    <h1>Connection <small>Comment se connecter?</small></h1>
+    <h1>Conditions d'utilisation</h1>
   </div>
   <div class="row">
   	<div class="span4">
-      <h3>Example body text</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <h3>Utilisation du logiciel, Restrictions</h3>
       <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
     </div>
     <div class="span4">
-      <h3>Example body text</h3>
+      <h3>Règles de confidentialité</h3>
       <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
     </div>
     <div class="span4">
-      <h3>Example body text</h3>
+      <h3>Droits de propriété</h3>
       <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
     </div>
   </div>  
 </section>
+</article>
+
 </div>
+

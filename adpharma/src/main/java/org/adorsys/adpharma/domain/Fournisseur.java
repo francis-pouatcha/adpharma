@@ -148,6 +148,12 @@ public class Fournisseur extends AdPharmaBaseEntity {
     public static List<Fournisseur> findAllFournisseurs() {
         return entityManager().createQuery("SELECT o FROM Fournisseur o ORDER BY o.name ASC ", Fournisseur.class).getResultList();
     }
+    
+    @Transactional(readOnly = true)
+    public static List<Fournisseur> findAllFournisseursExceptFirst() {
+    	 TypedQuery<Fournisseur> query = entityManager().createQuery("SELECT o FROM Fournisseur o WHERE o.id > 1 ORDER BY o.name ASC", Fournisseur.class);
+        return query.getResultList();
+    }
 
     public static TypedQuery<Fournisseur> findFournisseurByProviderKey(String providerKey) {
         TypedQuery<Fournisseur> q = entityManager().createQuery("SELECT o FROM Fournisseur o WHERE o.providerKey =:providerKey ", Fournisseur.class);

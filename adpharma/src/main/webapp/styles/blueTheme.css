@@ -24,6 +24,10 @@ z-index:0;
 	position: relative;
 }
 
+#numero2 {
+z-index:10;
+}
+
 .tbinput{
 	width: 310px;
 	display:block;
@@ -266,7 +270,7 @@ body {
 	margin-right: 2%;
 	margin-bottom: 0px;
 	margin-top: 10px;
-	font-family: Courrier, verdana;
+	font-family:verdana, Courrier;
 }
 
 .tlog .icoImage img {
@@ -666,10 +670,15 @@ ul li {
 /* table elements */
 .tblog {
 	border: none;
+	background: none;
 }
 
 .tbcreate {
 	border: none;
+}
+
+.tbcreate tr{
+	background: none;
 }
 
 table tr:hover{
@@ -734,7 +743,7 @@ caption {
 }
 
 fieldset {
-	background-color:white;
+background-color:white;
 border: none;
 border-radius: 2px;
 margin-bottom: 12px;
