@@ -13,17 +13,30 @@
 	<spring:url value="/clients/getClientByAjax" var="get_client_url" />
 	<spring:url value="/clients/findClientByAjax" var="find_cliet_url" />
 	<spring:url value="/clients?form" var="create_cliet_url" />
+	
+	
+		<spring:message code="saleprocess_client_code" var="client_code"/>
+		<spring:message code="saleprocess_client_dettes" var="client_dettes"/>
+		<spring:message code="saleprocess_client_credible" var="client_credible"/>
 
+                <spring:message code="label_org_adorsys_adpharma_domain_client_nom" var="client_nom"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_prenom" var="client_prenom"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_sexe" var="client_sex"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_telephonemobile" var="client_telephonemobile"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_email" var="client_email"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_employeur" var="client_employeur"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_note" var="client_note"/>
+                <spring:message code="label_org_adorsys_adpharma_domain_client_nomcomplet" var="complete_name"/>
 	<script type="text/javascript">
 	function clearClientTable(){
 		$('#result').html( 
 				'<tr>
-	<th  align="center" valign="top" >CODE</th>
-				<th  align="center" valign="top" >NOM COMPLET</th>
-		<th  align="center" valign="top">TELEPHONE</th>
-		<th  align="center" valign="top" >EMPLOYEUR</th>
-		<th  align="center" valign="top" >DETTES</th>
-		<th  align="center" valign="top" >CREDIBLE</th>
+	<th  align="center" valign="top" >${client_nom}</th>
+				<th  align="center" valign="top" >${complete_name}</th>
+		<th  align="center" valign="top">${client_telephonemobile}</th>
+		<th  align="center" valign="top" >${client_employeur}</th>
+		<th  align="center" valign="top" >${client_dettes}</th>
+		<th  align="center" valign="top" >${client_credible}</th>
 		
 				</tr>');
 		
@@ -140,7 +153,8 @@
 	</script>
 	 <spring:url value="/resources/images/ajax-loader.gif" var="loadimage"/>
 	 
-	<form:create   bodyExt="bodyExt.jspx" id="cmdcredit" label="CREATION VENTE A CREDIT"
+		<spring:message code="commandeclient_util_creditsale" var="util_creditsale"/>
+	<form:create   bodyExt="bodyExt.jspx" id="cmdcredit" label="${util_creditsale }"
 		modelAttribute="commandeCredit" path="/commandeclients/cmdCredit"
 		render="${empty dependencies}" z="user-managed">
 		<field:input field="clientName" style="color:blue;" createBut="creer" 
@@ -172,7 +186,7 @@
 
 		<form id="person" enctype="application/x-www-form-urlencoded">
 			<p>
-				<label for="name">Nom :</label> <input class="searchInput"
+				<label for="name">${client_nom } :</label> <input class="searchInput"
 					type="text" name="name" />
 			</p>
 
@@ -188,12 +202,12 @@
 				class="result search" align="left" id="result" valign="top"
 				width="100%;" frame="box">
 				<tr align="top" valign="top">
-					<th align="center" valign="top">CODE</th>
-					<th align="center" valign="top">NOM COMPLET</th>
-					<th align="center" valign="top">TELEPHONE</th>
-					<th align="center" valign="top">EMPLOYEUR</th>
-					<th align="center" valign="top">DETTES</th>
-					<th align="center" valign="top">CREDIBLE</th>
+					<th align="center" valign="top">${client_nom}</th>
+					<th align="center" valign="top">${complete_name}</th>
+					<th align="center" valign="top">${client_telephonemobile}</th>
+					<th align="center" valign="top">${client_employeur}</th>
+					<th align="center" valign="top">${client_dettes}</th>
+					<th align="center" valign="top">${client_credible}</th>
 
 
 				</tr>
