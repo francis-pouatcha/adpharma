@@ -381,20 +381,28 @@ if(Check == false){
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_INVENTAIRE">
 
 			<li>
-        		<a href="#">Inventaires</a>
+			<spring:message code="inventory_inventories_text" var="inventories_text"/>
+        		<a href="#">${inventories_text }</a>
         			 	<ul class="sub_menu">
-        					<li><a href="${inv_cree_url}">Creer Un Inventaire</a></li>
-        	        					<li><a href="${inv_list_url}">Liste Des Inventaire</a></li>
-        					<li><a href="${fichetDetail_cipm_url}">Fiche Detaillee produit (C.I.P.M)</a></li>
+			<spring:message code="inventory_create_inventory_text" var="create_inventory_text"/>
+        					<li><a href="${inv_cree_url}">${create_inventory_text }</a></li>
+			<spring:message code="inventory_list_inventories" var="list_inventories"/>
+        	        					<li><a href="${inv_list_url}">${list_inventories }</a></li>
+			<spring:message code="inventory_detailed_product_report_cipm" var="detailed_product_report_cipm"/>
+        					<li><a href="${fichetDetail_cipm_url}">${detailed_product_report_cipm }</a></li>
         					<li>
-		        				<a href="#">Edition de Fiches</a>
+			<spring:message code="inventory_repports_edition" var="repports_edition"/>
+		        				<a href="#">${repports_edition }</a>
 		        					<ul>
 		        						<!--  <li><a href="${invRayol}">Fiche Inventaire</a></li>-->
-		        						<li><a href="${fiche_qte_url}">Fiche de suivie de Quantite </a></li>
-		        						<li><a href="${invAlpha_fiche_url}">Fiche de suivie de stock </a></li>	
+			<spring:message code="inventory_product_qty_monitoring_report" var="product_qty_monitoring_report"/>
+		        						<li><a href="${fiche_qte_url}">${product_qty_monitoring_report } </a></li>
+			<spring:message code="inventory_stock_monitoring_report" var="stock_monitoring_report"/>
+		        						<li><a href="${invAlpha_fiche_url}">${stock_monitoring_report } </a></li>	
 		        					</ul>
 		        			 </li>
-		        			 <li><a href="${prd_rps_url}">Produits En Rupture De Stock</a></li>
+			<spring:message code="inventory_product_with_stock_out" var="product_with_stock_out"/>
+		        			 <li><a href="${prd_rps_url}">${product_with_stock_out }</a></li>
         				</ul>
         	</li>
    			 </security:authorize>
