@@ -14,6 +14,9 @@
      </tr>
         
      <tr>
+     
+     <spring:message code="inventory_create_donotselectanyproduct" var="create_donotselectanyproduct"/>
+     <spring:message code="inventory_create_do_inventory_by_cipm" var="create_do_inventory_by_cipm"/>
       <td style="background-color: white;" valign="top"> 
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" render="false" z="user-managed"/>
         <field:input field="NumeroInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" render="false" z="user-managed"/>
@@ -28,8 +31,8 @@
         <field:input field="cipProduct" id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_datedebut_date_format}" field="dateDebut" id="c_org_adorsys_adpharma_domain_Inventaire_dateDebut" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_datefin_date_format}" field="dateFin" id="c_org_adorsys_adpharma_domain_Inventaire_dateFin" render="false" z="user-managed"/>
-        <field:checkbox field="doNotSelectAnyProduct" label="Ne Selectionner aucun Produits ?" id="c_org_adorsys_adpharma_domain_Inventaire_cip"  z="user-managed"/>
-        <field:checkbox field="inventoryBycipm" label="Inventorier Par CIPM ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm"  z="user-managed"/>
+        <field:checkbox field="doNotSelectAnyProduct" label="${create_donotselectanyproduct } ?" id="c_org_adorsys_adpharma_domain_Inventaire_cip"  z="user-managed"/>
+        <field:checkbox field="inventoryBycipm" label="${create_do_inventory_by_cipm } ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm"  z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_daterupture_date_format}" field="dateRupture" id="c_org_adorsys_adpharma_domain_Inventaire_dateRupture" render="false" z="user-managed"/>
      <spring:message code="inventory_inventory_file" var="inventory_file"/>
         <label   for="fichier" > ${inventory_file } : </label>  <input size="8" type="file" name="fichier" />
