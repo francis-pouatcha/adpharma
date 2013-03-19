@@ -271,24 +271,29 @@ if(Check == false){
 			<spring:url value="/avoirclients?find=BySearch&amp;form" var="avoir_search_url" />
 			<spring:url value="/avoirclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="avoir_list_url" />
 			<spring:url value="/caisses/decaissement?form" var="decaissement_url" />
-
+			
+			<spring:message code="cashregister_cashregister_menu" var="cashregister_menu"/>
 			<security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
-				<li><a href="#">Caisses</a>
+				<li><a href="#">${cashregister_menu }</a>
 					<ul class="sub_menu">
-						<li><a href="${cai_cree_url}">Ouvrir</a></li>
-						<li><a href="${delete_caisse_url}" onclick="return  fermer();">Fermer</a></li>
-						<li><a href="${cai_enc_url}">Encaisser</a></li>
+			<spring:message code="cashregister_cashregister_open" var="cashregister_open"/>
+						<li><a href="${cai_cree_url}">${ cashregister_open}</a></li>
+			<spring:message code="cashregister_cashregister_close" var="cashregister_close"/>
+						<li><a href="${delete_caisse_url}" onclick="return  fermer();">${cashregister_close }</a></li>
+			<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
+						<li><a href="${cai_enc_url}">${cashregister_collect }</a></li>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
-							<li><a href="${etat_jour_caisse_url}">Etat Journalier
-									des Caisses</a></li>
-							<li><a href="${etat_caisse_url}">Etat des Caisses</a></li>
+			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
+							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
+			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
+							<li><a href="${etat_caisse_url}">${cashregisters_status }</a></li>
 
 
 							<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
 
 
-							<li><a href="${caisse_search_url }">Rechercher Une
-									Caisse</a></li>
+			<spring:message code="cashregister_find_a_cashregister" var="find_a_cashregister"/>
+							<li><a href="${caisse_search_url }">${find_a_cashregister }</a></li>
 							<!-- 
 
 		        			 <li>
@@ -299,8 +304,10 @@ if(Check == false){
 		        					</ul>
 		        			 </li> -->
 		        			 
-		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
-                          <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
+			<spring:message code="cashregister_find_a_payment" var="find_a_payment"/>
+		        		  <li><a href="${cai_pays_url}">${find_a_payment }</a></li>
+			<spring:message code="cashregister_cash_collected" var="cash_collected"/>
+                          <li><a href="${chiffre_affaire_url}">${cash_collected }</a></li>
                           <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
 		        			 
 		        			  <!--  menu facturation-->
@@ -313,10 +320,13 @@ if(Check == false){
             
                               <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
           <li>  
-            <a href="#">Facturation</a>
+			<spring:message code="cashregister_billing_menu" var="billing_menu"/>
+            <a href="#">${billing_menu }</a>
         			 	<ul class="sub_menu">
-        			 		<li><a href="${find_pay_url}">paiements Facture</a></li>
-        			 	    <li><a href="${conf_fdp_url}"> Rechercher factures</a></li>
+			<spring:message code="cashregister_billing_invoice_payment" var="billing_invoice_paiement"/>
+        			 		<li><a href="${find_pay_url}">${billing_invoice_paiement }</a></li>
+			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
+        			 	    <li><a href="${conf_fdp_url}"> ${billing_invoice_search }</a></li>
         			 		
         					<!-- <li>
 		        				<a href="#">Rechercher factures</a>

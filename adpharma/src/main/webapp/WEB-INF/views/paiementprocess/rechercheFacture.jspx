@@ -26,14 +26,16 @@
 		 <spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"  var="delete_cmd_url" />
 		 <spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"  var="update_client_url" />
 	<div style="margin-bottom: 10px; font-weight: bold;">
-		<span class="firstTab unselectedTab"><a href="${ edit_url}"> ENCAISSER</a></span>
+	<spring:message code="cashregister_cashregister_collect" var="cashregister_collect" />
+	<spring:message code="cashregister_billing_invoice_search" var="invoice_search"/>
+		<span class="firstTab unselectedTab"><a href="${ edit_url}"> ${cashregister_collect }</a></span>
 		<span class="nextTab selectedTab">
 		<c:choose>
 		<c:when test="${not empty paiementProcess.factureSelected}">
-		<a href="javascript:history.back()">RECHERCHE FACTURES</a>
+		<a href="javascript:history.back()">${invoice_search }</a>
 		</c:when>
 		<c:otherwise>
-		<a href="${ find_facture_url}">RECHERCHE FACTURES</a>
+		<a href="${ find_facture_url}">${invoice_search }</a>
 		</c:otherwise>
 		</c:choose>
 			
@@ -75,15 +77,24 @@
 	        <c:if test="${not empty paiementProcess.factureResult}">
 		    <table>
 		    	<tr>
-		    		<th style="text-align: center;">FACTURE No</th>
-		    		<th style="text-align: center;">FACTURE LE</th>
-		    		<th style="text-align: center;">COMMANDE No</th>
-		    		<th style="text-align: center;">TYPE VENTE</th>
-		    		<th style="text-align: center;">MONTANT</th>
-		    		<th style="text-align: center;">AVANCE</th>
-		    		<th style="text-align: center;">RESTE</th>
-		    		<th style="text-align: center;">SOLDER ?</th>
-		    		<th style="text-align: center;">ACTION</th>
+		    	<spring:message code="cashregister_paiement_invoice_number" var="paiement_invoice_number" />
+		    	<spring:message code="cashregister_paiement_billing_date" var="paiement_billing_date" />
+		    	<spring:message code="cashregister_paiement_command_number" var="paiement_command_number" />
+		    	<spring:message code="cashregister_paiement_sale_type" var="paiement_sale_type" />
+		    	<spring:message code="cashregister_paiement_amount" var="paiement_amount" />
+		    	<spring:message code="cashregister_paiement_advance" var="paiement_advance" />
+		    	<spring:message code="cashregister_paiement_balance" var="paiement_balance" />
+		    	<spring:message code="cashregister_paiement_is_paid" var="paiement_is_paid" />
+		    	<spring:message code="saleprocess_saleaction" var="saleprocess_saleaction_text" />
+		    		<th style="text-align: center;">${paiement_invoice_number }</th>
+		    		<th style="text-align: center;">${paiement_billing_date }</th>
+		    		<th style="text-align: center;">${paiement_command_number }</th>
+		    		<th style="text-align: center;">${paiement_sale_type }</th>
+		    		<th style="text-align: center;">${paiement_amount }</th>
+		    		<th style="text-align: center;">${paiement_advance }</th>
+		    		<th style="text-align: center;">${paiement_balance }</th>
+		    		<th style="text-align: center;">${paiement_is_paid }?</th>
+		    		<th style="text-align: center;">${saleprocess_saleaction_text }</th>
 		    		
 		    	</tr>
 		    	<c:forEach items="${paiementProcess.factureResult}" var="facture">
