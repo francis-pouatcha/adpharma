@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.persistence.TypedQuery;
 
@@ -66,7 +67,6 @@ public class CsvImportExportUtil {
 	}
 	
 	public void readCsvFile(String fileName) throws Exception{
-		try {
 			List<String> receptionLines = loadReceptionLines(fileName);
 			DistributorLigne readDistributor = readDistributor(receptionLines);
 			WorkTypeLigne readWorTypeLigne = readWorTypeLigne(receptionLines);
@@ -89,12 +89,6 @@ public class CsvImportExportUtil {
 				commandeFournisseur.setEtatCmd(Etat.RECEIVED);
 				commandeFournisseur.merge().flush();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e.getMessage());
-		}finally {
-			
-		}
 	}
 	
 	private void saveError(ResponseErrorDetailRow readResponseErrorDetail,
@@ -192,33 +186,39 @@ public class CsvImportExportUtil {
 		}
 		return responseErrorDetailRow;
 	}
-	public void exportCommandsToUbipharmCsv(){
+	public void exportCommandsToUbipharmCsv() throws Exception{
 		Writer writer;
-		try {
-			writer = new FileWriter(getSendFolder()+getFileName(loadCommandeFournisseur(),"csv"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to  find the file :"+SENDING_FOLDER_PATH);
-		}
+		CommandeFournisseur commandeFournisseur = loadCommandeFournisseur();
+		writer = new FileWriter(getSendFolder()+getFileName(commandeFournisseur,"csv"));
 		CSVWriter csvWriter = new CSVWriter(writer,CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER);
 		List<String[]> formattedLigneWrapperForCsv = this.getFormattedLigneWrapperForCsv();
 		csvWriter.writeAll(formattedLigneWrapperForCsv);
-		try {
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		writer.close(
+				);
 		LOG.debug("Done");
+		checkIfCommandFileIsTransferred(commandeFournisseur);
 	}
-	public void exportCommandsToUbipharmTxt(){
-		try {
+	public void exportCommandsToUbipharmTxt() throws Exception{
 			CommandeFournisseur commandeFournisseur = loadCommandeFournisseur();
 			String fileName = getFileName(commandeFournisseur, "txt");
 			File fileToSend = new File(getSendFolder()+""+fileName);
 			FileUtils.writeLines(fileToSend, convertAbstractLinesToLines(getLignesToExport()));
-			updateCommandToSended(commandeFournisseur);
-		} catch (IOException e) {
-			e.printStackTrace();
+			checkIfCommandFileIsTransferred(commandeFournisseur);
+	}
+
+	private void checkIfCommandFileIsTransferred(CommandeFournisseur commandeFournisseur)
+			throws InterruptedException, Exception {
+		java.util.logging.Logger.getGlobal().log(Level.INFO, "Execution Blocked for 15000 ms, To wait ubipharm to transfert the file");
+		Thread.sleep(15000);
+		java.util.logging.Logger.getGlobal().log(Level.INFO, "Scanning The ../exports Directory, to check if the file is transferred");
+		String[] listFiles = FileUtil.listFiles(new File(getSendFolder()));
+		if(listFiles.length > 0){
+			java.util.logging.Logger.getGlobal().log(Level.INFO, "File Not Transferred ! " +
+					"Please check If Ubipharm Module is Running on This Computer !");
+			throw new Exception("File Not Sended ! Please check If Ubipharm Module is Running on This Computer ! And Manually look " +
+					"if "+getSendFolder()+", Is Empty. Thanks !!!");
+		}else {
+			updateCommandToSended(commandeFournisseur);					
 		}
 	}
 
