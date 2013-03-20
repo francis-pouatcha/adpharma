@@ -465,19 +465,21 @@ if(Check == false){
             <spring:url value="/produits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_list_url"/>
             <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
                                         <spring:url value="/inventaireProcess?find=BySearch&amp;form" var="prdf_des_url"/>
-                        
+            <spring:message code="catalogues_catalogue_menu" var="catalogue_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
 				<li>
-        		<a href="#">Catalogues</a>
+        		<a href="#">${catalogue_menu }</a>
         			 	<ul class="sub_menu">
         			 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_RECHERCHE_PAR_CIPM">
-        					<li><a href="${search_lgap_url}">Rechercher un Produit (CIPM)</a></li>
+        					<li><a href="${search_lgap_url}">${find_product }</a></li>
         			    </security:authorize>          
         					            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
         					<li>
-		        				<a href="#">produits</a>
+            <spring:message code="catalogues_create_product" var="create_product"/>
+            <spring:message code="catalogues_create_product_cip" var="create_product_cip"/>
+		        				<a href="#">${create_product }</a>
 		        					<ul>
-		        						<li><a href="${prd_cip_url}"> Creer Un Produit Avec C.I.P</a></li>
+		        						<li><a href="${prd_cip_url}"> ${create_product_cip }</a></li>
 		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
 		        						<!-- 
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>

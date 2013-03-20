@@ -211,13 +211,20 @@ public class CsvImportExportUtil {
 		LOG.debug("Done");
 	}
 	public void exportCommandsToUbipharmTxt(){
-		String fileName = getFileName(loadCommandeFournisseur(), "txt");
-		File fileToSend = new File(getSendFolder()+""+fileName);
 		try {
+			CommandeFournisseur commandeFournisseur = loadCommandeFournisseur();
+			String fileName = getFileName(commandeFournisseur, "txt");
+			File fileToSend = new File(getSendFolder()+""+fileName);
 			FileUtils.writeLines(fileToSend, convertAbstractLinesToLines(getLignesToExport()));
+			updateCommandToSended(commandeFournisseur);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void updateCommandToSended(CommandeFournisseur commandeFournisseur) {
+		commandeFournisseur.setEtatCmd(Etat.SENDED_TO_PROVIDER);
+		commandeFournisseur.merge().flush();
 	}
 	public List<String> convertAbstractLinesToLines(List<AbstractUbipharmLigneWrapper> rows){
 		List<String> lines = new ArrayList<String>();

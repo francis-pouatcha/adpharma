@@ -80,9 +80,11 @@ function annulercmd(){
                   <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
                    -->
                    
-      <c:if test="${commandefournisseur.etatCmd != 'RECEIVED'}">
+      <c:if test="${commandefournisseur.etatCmd != 'SENDED_TO_PROVIDER' and commandefournisseur.etatCmd != 'RECEIVED'}">
                   <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER A UBIPHARM" title="Envoyer A Ubipharm" /></a></span>
+      </c:if>
+       <c:if test="${commandefournisseur.etatCmd == 'SENDED_TO_PROVIDER'}">
                   <span><a href="${ import_ubipharm_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="IMPORTER LA COMMANDE" title="Importer " /></a></span>
       </c:if>

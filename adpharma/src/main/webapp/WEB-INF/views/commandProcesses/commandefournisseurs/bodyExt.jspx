@@ -19,7 +19,9 @@
 		    		<th style="text-align: center;" >Designation</th>
 		    		<th style="text-align: center;">qte Com </th>
 					<th style="text-align: center;">Qte Fournie</th>
-					<th style="text-align: center;">Difference</th>
+					 <c:if test="${commandefournisseur.etatCmd == 'RECEIVED'}">
+						<th style="text-align: center;">Difference</th>
+				     </c:if>
 		    		<th style="text-align: center;">Prix Vente</th>
 		            <th style="text-align: center;">Prix AChat</th>
 		            <th style="text-align: center;">Prix AChat Total</th>
@@ -42,6 +44,8 @@
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.quantiteFournie}"></c:out>
 						</td>
+						
+					 <c:if test="${commandefournisseur.etatCmd == 'RECEIVED'}">
 						<td style="text-align: center;">
 							<c:set var="qty_difference" value="${ligneCommande.quantiteCommande -  ligneCommande.quantiteFournie}" ></c:set>
 							<c:choose>
@@ -56,6 +60,8 @@
 								</c:otherwise>
 							</c:choose>
 						</td>
+					 
+				     </c:if>
 						<td style="text-align: right;padding-right: 20px;">
 		     		    				<c:out value="${ligneCommande.prixAVenteMin}"></c:out>
 
