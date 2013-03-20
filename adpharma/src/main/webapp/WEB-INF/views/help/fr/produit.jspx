@@ -1,44 +1,132 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
+ 
+ <!-- Liens des images -->
+ <spring:url value="/resources/images/documentation/catalogue/prd_cip.png" var="prd_cip"/>
+ <spring:url value="/resources/images/documentation/catalogue/prd_noncip.png" var="prd"/>
+ <spring:url value="/resources/images/documentation/catalogue/update_prd.png" var="update_prd"/>
+ <spring:url value="/resources/images/documentation/catalogue/desc_prd.png" var="des_prd"/>
+ <spring:url value="/resources/images/documentation/catalogue/decomposition.png" var="decomposition"/>
+ 
+ <!-- Liens cibles des operations -->
+ <spring:url value="/produits/create/true?form" var="prd_cip_url" />
+ <spring:url value="/produits/create/false?form" var="prd_url" />
+ <spring:url value="/transformationproduits/editTransformation/0" var="decomp_url" />
+ 
+ 
 <header class="jumbotron subhead" id="overview">
-  <h1>Gestion Des Catalogues Produits</h1>
-  <p class="lead">Catalogues Produits</p>
+  <h1>Gestion Du Catalogue de Produits</h1>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#produit">Produits</a></li>
-      <li><a href="#decomposition">Decomposition De Produit</a></li>
+      <li><a href="#catalogue">Catalogue de Produits</a></li>
+      <li><a href="#decomposition">Relations de Decomposition</a></li>
     </ul>
+    <a href="#" onclick="javascript:printBlock('Gestion du Catalogue', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
 <article class="float-article" id="read_article">
-<section id="produit">
+<section id="catalogue">
   <div class="page-header">
-    <h1>Produits <small>Gestion de produits</small></h1>
+    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
+    <h1>Catalogue de Produits</h1>
+  </div>
+  
+<ul style="list-style-type: decimal; list-style-position: outside;">  
+  <div class="row">
+	 	<div class="span6">
+	     <li class="numeros"><h3>Créer un produit avec C.I.P.</h3></li>
+	     <p>
+	         <span>Pour créer un produit avec C.I.P, procedez comme suit:</span> 
+	          <ul>
+			     <li>Connectez-vous avec votre compte</li>
+			     <li>Cliquez sur le menu <b>Catalogues > Produits > Creer un produit avec C.I.P</b></li>
+			     <li>Entrez les informations du produit, puis validez en cliquant sur <b>Enregistrer</b></li>
+			  </ul>
+			  <util:image-box height="250" alttext="Creer un produit avec CIP" width="250" link="${prd_cip}" title="Cliquez pour elargir" targetLink="${prd_cip_url}" />          
+	     </p>
+	    </div>
+	    <div class="span6">
+	     <li class="numeros"><h3>Créer un produit sans C.I.P.</h3></li>
+	     <p>
+	         <span>Pour créer un produit sans C.I.P, procedez comme suit:</span> 
+	          <ul>
+			     <li>Connectez-vous avec votre compte</li>
+			     <li>Cliquez sur le menu <b> Catalogues > Produits > Creer un produit sans C.I.P </b></li>
+			     <li>Entrez les informations du produit, puis validez en cliquant sur <b>Enregistrer</b></li>
+			  </ul> 
+	          <util:image-box height="250" alttext="Creer un produit sans CIP" width="250" link="${prd}" title="Cliquez pour elargir" targetLink="${prd_url }" />     
+	     </p>
+	    </div>
   </div>
   <div class="row">
-  	<div class="span12">
-      <h3>Creer un Produit avec C.I.P</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Creer un produit sans C.I.P</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher un produit du catalogue</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-  </div>  
+	 	<div class="span6">
+	     <li class="numeros"><h3>Mettre à jour un produit</h3></li>
+	     <p>
+	         <span>Pour mettre à jour un produit, procedez comme suit:</span> 
+	          <ul>
+			     <li>Connectez-vous avec votre compte</li>
+			     <li>Cliquez sur le menu <b>Catalogues > Produits > Lister les produits</b></li>
+			     <li>Rechercher le produit à modifier par sa designation dans le champ de recherche</li>
+			     <li>Ensuite, cliquez sur l'icone de modification du produit</li>
+			     <li>Entrez les informations de mises à jour et validez en cliquant sur <b>Enregistrer</b></li>
+			  </ul>
+			  <util:image-box height="250" alttext="Mettre à jour ce produit" width="250" link="${update_prd}" title="Cliquez pour elargir" />          
+	     </p>
+	    </div>
+	    <div class="span6">
+	     <li class="numeros"><h3>Désactiver un produit</h3></li>
+	     <p>
+	         <span>Pour désactiver un produit, procedez comme suit:</span> 
+	          <ul>
+			     <li>Connectez-vous avec votre compte</li>
+			     <li>Cliquez sur le menu <b>Catalogues > Produits > Lister les produits</b></li>
+			     <li>Rechercher le produit à modifier par sa designation dans le champ de recherche</li>
+			     <li>Ensuite, cliquez sur l'icone de modification du produit</li>
+			     <li>Decochez la case à cocher <b>Vente autorise</b>, puis validez en cliquant sur <b>Enregistrer</b></li>
+			  </ul> 
+	          <util:image-box height="250" alttext="Desactiver ce produit" width="250" link="${des_prd}" title="Cliquez pour elargir" />     
+	     </p>
+	    </div>
+  </div>
+</ul>    
 </section>
 
 <section id="decomposition">
   <div class="page-header">
-    <h1>Decomposition De Produit <small>Decomposition De Produit</small></h1>
+    <h1>Relations de Decomposition</h1>
   </div>
-  <div class="row">
-  	<div class="span12">
-      <h3>Example body text</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-   
-  </div>  
+  <ul>
+	  <div class="row">
+	  	<div class="span6">
+	     <li class="numeros"><h3>Definition</h3></li>
+	      <p>
+	         la décomposition de produits est un processus utile pour la vente des produits en détails.<br/> 
+	         Elle permet de décomposer un produit compose en de produits composants.<BR />
+	         Pour créer donc une relation de décomposition, il faut preciser le produit origine que l'on veut décomposer, 
+	         le produit cible obtenu après décomposition, la quantité cible c'est-à-dire la quantité que contient
+	         le produit à décomposer, et le prix de vente du produit cible.
+	         Par exemple, décomposer un carton contenant 100 paquets de paracetamol en paquets de 1 chacun.
+	      </p>
+	    </div>
+	    <div class="span6">
+	     <li class="numeros"><h3>Créer une relation de décomposition</h3></li>
+	      <p>
+	         Pour créer une relation de décomposition, procedez comme suit:
+	         <ul>
+			     <li>Connectez-vous avec votre compte</li>
+			     <li>Cliquez sur le menu <b>Catalogues > Decomposition > Creer une relation</b></li>
+			     <li>Entrez les informations de la decomposition et validez en cliquant sur <b>Enregistrer</b></li>
+			  </ul>
+			  <util:image-box height="250" alttext="Créer une relation de décomposition" width="250" link="${decomposition}" title="Cliquez pour elargir" targetLink="${decomp_url}" /> 
+	      </p>
+	    </div>
+	    
+	  </div>
+   </ul>	    
 </section>
 </article>
 

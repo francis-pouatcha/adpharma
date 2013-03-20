@@ -1,0 +1,47 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	
+	<jsp:output omit-xml-declaration="yes" />
+	
+	<spring:url value="/resources/css/zoombox/zoombox.css" var="zoom_css_url" />
+	<spring:url value="/resources/css/zoombox/zoombox.js" var="zoom_js_url" />
+	
+	<jsp:directive.attribute name="title" type="java.lang.String" required="false" rtexprvalue="true" description="The title of the link" />
+	<jsp:directive.attribute name="link" type="java.lang.String" required="true" rtexprvalue="true" description="The Resource link of the image to zoom" />
+	<jsp:directive.attribute name="alttext" type="java.lang.String" required="true" rtexprvalue="true" description="The alternative text of the image" />
+	<jsp:directive.attribute name="width" type="java.lang.Long" required="true" rtexprvalue="true" description="The width of the display image" />
+	<jsp:directive.attribute name="height" type="java.lang.Long" required="true" rtexprvalue="true"  description="The height of the display image" />
+    <jsp:directive.attribute name="targetLink" type="java.lang.String" required="false" rtexprvalue="true"  description="The Link of the real operation" />
+    <link rel="stylesheet" type="text/css" href="${zoom_css_url}"  media="all" />
+    <script src="${zoom_js_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    
+<div style="margin: 3% 0 0 10%;">
+    <a class="zoombox" title="${title}" href="${link}">
+        <img src="${link}" class="bordered" alt="${alttext}" width="${width}" height="${height}"  />
+    </a> <br/>
+    <c:if test="${not empty targetLink}">
+      <a href="${targetLink}" style="margin:0 0 0 15%;" target="_blank" class="visu">Visualiser l'operation</a>
+    </c:if>  
+</div>	
+
+	<script type="text/javascript">
+	//<![CDATA[
+	        $(function(){
+	        $('a.zoombox').zoombox({
+	        	theme   : 'lightbox',
+	        	duration    : 700,                // Animation duration
+	            animation   : true,
+	        	width   : 300,
+	        	
+	        });
+	        
+	    });
+	//]]>      
+	</script>
+
+
+</jsp:root>	

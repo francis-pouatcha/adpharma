@@ -1,81 +1,263 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
+ 
+ 
+ <!-- Liens des images -->
+ <spring:url value="/resources/images/documentation/stock/appro.png" var="appro" />
+ <spring:url value="/resources/images/documentation/stock/search.png" var="search" />
+ <spring:url value="/resources/images/documentation/stock/sortie.png" var="sortie" />
+ <spring:url value="/resources/images/documentation/stock/decomp.png" var="decomposition" />
+ <spring:url value="/resources/images/documentation/stock/fiche_reclam.png" var="fiche_reclam" />
+ <spring:url value="/resources/images/documentation/stock/reclam.png" var="reclam" />
+ <spring:url value="/resources/images/documentation/stock/codebar.png" var="codebar" />
+ <spring:url value="/resources/images/documentation/stock/commande.png" var="commande" />
+ <spring:url value="/resources/images/documentation/stock/recherche.png" var="recherche" />
+ 
+ <!-- Liens des operations -->
+ <spring:url value="/approvisionements?find=BySearch&amp;form" var="search_appro_url" htmlEscape="true" />
+ <spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm" var="sortie_url" />
+ <spring:url value="/transformationproduits/livreeForm?form" var="decomp_url" />
+ <spring:url value="/approvisionementprocess/reclamations?form" var="fiche_reclam_url" />
+ <spring:url value="/ligneapprovisionements/reclamations?form" var="reclam_url" />
+ 
+ 
 <header class="jumbotron subhead" id="overview">
-  <h1>Gestion Du Stock </h1>
-  <p class="lead">Gestion Du Stock </p>
+  <h1>Gestion Du Stock de Produits</h1>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#entree">Gestion des Entrees</a></li>
-      <li><a href="#cipm">Produits Approvisionnes</a></li>
-      <li><a href="#cmd">Preparation des commandes</a></li>
-      <li><a href="#rayon">Gestion des Emplacements</a></li>
-      <li><a href="#fournisseur">Gestion des Fournisseurs</a></li>
-      <li><a href="#mvt">Gestion des MVTS de Stock</a></li>
+      <li><a href="#entrees" style="font-size: 11px;">Entrées en Stock</a></li>
+      <li><a href="#sorties" style="font-size: 11px;">Sorties et mouvements de Stock</a></li>
+      <li><a href="#decomp" style="font-size: 11px;">Décompositions</a></li>
+      <li><a href="#reclam" style="font-size: 11px;">Reclamations</a></li>
+      <li><a href="#cmd" style="font-size: 11px;">Preparation des Commandes</a></li>
+      <li><a href="#rayon" style="font-size: 11px;">Emplacements de stock</a></li>
+      <li><a href="#fournisseur" style="font-size: 11px;">Fournisseurs</a></li>
     </ul>
+    <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
-    
-<section id="entree">
+
+<article class="float-article" id="read_article">    
+<section id="entrees">
   <div class="page-header">
-    <h1>Gestion des entrees <small>conserne la saisie des produits approvisionnes</small></h1>
+   <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
+    <h1>Entrées en Stock</h1>
   </div>
   <div class="row">
-  	<div class="span12">
+  	<div class="span6">
       <h3>Creer un Approvisionnement</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Rechercher Un Approvisionnement</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Lister les Approvisionnements</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Decomposer un produit Approvisionne</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Sortir du stock un produit Approvisionne</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher un produit Approvisionne</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-       <h3>Impression du code Barre d'un produit Approvisionne</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+      <p>Pour créer un approvisionnement, procedez comme suit:
+        <ul>
+           <li>Aller dans le menu: <b>Gestion du Stock > Entree en Stock > Effectuer une entrée</b></li>
+           <li>Remplissez les informations de l'en-tete de l'approvisionnement Et validez en cliquant sur <b>Enregistrer</b></li>
+           <li>Ensuite, ajoutez les lignes de produits a l'approvisionnement. <br/>
+              <b>N.B:</b> le champ <b>Qte RC</b> represente la quantité de produit à reclamer au fournisseur, et 
+              <b>Qte UG</b> represente la quantité d'unités gratuites de produits offert par le fournisseur.
+           </li>
+           <li>Puis cliquez sur <b>Enregistrer</b> pour valider l'ajout de produit.</li>
+           <li>L'interface de details de l'approvisionnement s'affiche.
+              <ul style="list-style-type: circle;">
+                <li> Cliquer sur <b>Modifier</b> pour modifier les details de l'approvisionnement </li>
+                <li> Cliquer sur <b>Cloturer</b> pour cloturer l'approvisionnement </li>
+                <li> Cliquer sur <b>Fiche d'approvisionnement</b> pour editer la fiche d'approvisionnement </li>
+              </ul>
+           </li>
+        </ul> 
+        <util:image-box height="250" alttext="Creer un Approvisionnement" width="250" link="${appro}" />  
+      </p>
+      
      
+    </div>
+    <div class="span6">
+      <h3>Rechercher un approvisionnement</h3>
+      <p>La recherche d'un approvisionnement peut s'effectuer de 2 façons: 
+        <ul>
+            <li>Par fournisseur. Pour cela:
+                <ul style="list-style-type: circle;">
+                    <li>Allez dans le menu: <b>Gestion du Stock > Entree en Stock > Lister les entrees</b> </li>
+                    <li>Ensuite, entrez le nom du fournisseur dans le champ de recherche et double-cliquez sur le lien pour visualiser l'approvisionnement </li>
+                </ul>
+            </li>
+            <li>
+               Multi-critères. Pour cela:
+               <ul style="list-style-type: circle;">
+                    <li>Allez dans le menu: <b>Gestion du Stock > Entree en Stock > Rechercher les entrees</b> </li>
+                    <li>Entrez le/les critères de recherches et validez en cliquant sur <b>Enregistrer</b>  </li>
+               </ul>
+            </li>
+        </ul>
+        <util:image-box height="250" alttext="Recherche d'un approvisionnement" width="250" link="${search}" targetLink="${search_appro_url}" />  
+      </p>
     </div>
   </div>  
 </section>
   
-<section id="cipm">
+<section id="sorties">
   <div class="page-header">
-    <h1>Gestion des produits approvisionnes<small>...</small></h1>
+    <h1>Sorties en Stock</h1>
   </div>
   <div class="row">
-  	<div class="span12">
-      <h3>Visualiser Les Mouvements de stock</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Visualiser la fiche detaillee d'un produit par CIPM</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher un Mouvement</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span6">
+      <h3>Sortie de produits de stock</h3>
+      <p>
+        La sortie de produits du stock peut s'effectuer de 2 façons:
+        <ul>
+           <li>Par C.I.P. Dans ce cas, il fait sortir tous les produits ayant ce cip dans le stock</li>
+           <li>Par C.I.P.M. Dans ce cas, il fait sortir uniquement le produit ayant le cipm entré.</li>
+        </ul>
+        <util:image-box height="250" alttext="Sortie de produits" width="250" link="${sortie}" targetLink="${sortie_url}"/>
+      </p>
+    </div>
+    <div class="span6">
+      <h3>Mouvements de stock</h3>
+      <p>
+        Les mouvements de stock permettent de retracer toutes les activités qui se sont deroulées dans le stock:
+        <ul style="list-style-type: circle;">
+          <li><b>ENTREES</b> suite à: approvisionnement, retour de produits, transformation de produits </li>
+          <li><b>SORTIES</b> suite à: vente, transformation, inventaire, raison quelconque(avarie, non commande, etc...)</li>
+        </ul>
+        Pour visualiser un mouvement de stock, vous pouvez proceder de deux façons:
+          <ul style="list-style-type: circle;">
+             <li>Soit vous Allez dans le menu: <b>Gestion du Stock > Mouvements de Stock > Lister les mouvements.</b>
+             Ensuite, recherchez le mouvement par désignation dans le champ de recherche. Et double-cliquez sur la ligne du mouvement pour voir les détails du
+              mouvement. 
+             </li>
+             <li>Soit, vous allez dans le menu: <b>Gestion du Stock > Mouvements de Stock > Rechercher.</b> 
+             Ensuite entrez les criteres de recherche et validez en cliquant sur <b>Enregistrer</b></li>
+          </ul>
+      </p>
     </div>
   </div>  
 </section>
+
+<section id="decomp">
+  <div class="page-header">
+    <h1>Décompositions</h1>
+  </div>
+  <div class="row">
+     <div class="span6">
+      <h3>Decomposition de produits</h3>
+      <p>
+         Pour decomposer un produit, il faut proceder comme suit:
+         <ul>
+            <li>Allez dans le menu <b>Gestion du Stock > Produits Approvisionnes > Decomposer un produit</b></li>
+            <li>Recherchez le cipm a decomposer, entrez la quantité à décomposer et cliquez sur le bouton <b>Decomposer</b></li>
+         </ul>
+         <util:image-box height="250" alttext="Decomposition de produits" width="250" link="${decomposition}" targetLink="${decomp_url}" />
+      </p>
+    </div>
+    <div class="span6">
+      <h3>Impression de codes bars</h3>
+      <p>
+         L'impression de codes bars permet d'imprimer les etiquettes de code bares que l'on colle sur les produits.
+         Pour cela, procedez comme suit:
+         <ul>
+            <li>Allez dans le menu <b>Gestion du Stock > Impression de Code Bare</b></li>
+            <li>Entrez le cipm du produit qui represente son code bare, le nombre de code bares a imprimer et cliquez sur <b>Enregistrer</b></li>
+         </ul>
+         <util:image-box height="250" alttext="Impression de code bares" width="250" link="${codebar}" />
+      </p>
+    </div>
+   
+  </div>  
+</section>
+
+<section id="reclam">
+  <div class="page-header">
+    <h1>Reclamations</h1>
+  </div>
+  <div class="row">
+     <div class="span6">
+      <h3>Definition du principe des reclamations</h3>
+      <p> 
+        Les reclamations fournisseur sont des produits que la pharmacie reclame à un fournisseur. 
+        Ces reclamations sont enregistrées lors de l'approvisionnement du bordereau de l'approvisionnement du fournisseur.
+        Deux processus sont gérés à ce niveau: l'edition de fiches de reclamations par fournisseur et les entrées/retours de reclamations.
+      </p>
     
+    </div>
+    <div class="span6">
+      <h3>Edition de la fiche de reclamations fournisseur</h3>
+      <p> 
+        Pour éditer la fiche de reclamations pour un fournisseur, procedez comme suit:
+        <ul>
+           <li>Allez dans le menu <b>Etats > Reclamations fournisseurs</b></li>
+           <li>Saisissez le nom du fournisseur, la periode pour les reclamations et cliquez sur le bouton <b>Imprimer</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Fiche de reclamations fournisseurs" width="250" link="${fiche_reclam}" targetLink="${fiche_reclam_url}" />
+      </p>
+    
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="span6">
+      <h3>Entrée des reclamations fournisseur</h3>
+      <p> 
+        Pour faire les entrées de reclamations, il faut se servir de la fiche de reclamations pour lire les cipm des produits reclamés.
+        Pour cela:
+        <ul>
+           <li>Allez dans le menu <b>Gestion du Stock > Produits Approvisionnes > Entree des reclamations</b></li>
+           <li>Entrez le cipm du produit reclame et appuyez sur la touche <b>TAB</b>(touche de tabulation) pour lancer la recherche du produit.</li>
+           <li>Puis, cliquez sur le bouton <b>Retourner</b> pour retourner le produit.</li>
+        </ul>
+        <util:image-box height="250" alttext="Entrée des reclamations fournisseur" width="250" link="${reclam}" targetLink="${reclam_url}" />
+      </p>
+    
+    </div>
+  </div>   
+</section>    
      
 <section id="cmd">
   <div class="page-header">
-    <h1>Preparation des commandes  <small>modules de preparation automatique des commandes</small></h1>
+    <h1>Préparation des commandes</h1>
   </div>
   <div class="row">
-     <div class="span12">
-      <h3>Editer une fiche de suivi de quantite</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Effectuer Une Commande Fournisseur</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher une commande</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
+     <div class="span6">
+      <h3>Création d'une commande fournisseur</h3>
+      <p>
+          La creation de commandes fournisseur se fait de facon automatique suivant plusieurs modes(MANUELLE, RUPTURE DE STOCK, ALERTE DE STOCK, PLUS VENDU ).
+          Pour créer une commande fournisseur, procedez comme suit:
+          <ul>
+           <li>Allez dans le menu <b>Gestion du Stock > Préparation des commandes > Effectuer une préparation</b></li>
+           <li>Entrez les critères de preparation et cliquez sur <b>enregistrer</b>.</li>
+           <li>La commande sera enregistrée automatiquement avec les lignes de commandes correspondantes.</li>
+           <li>Ensuite, vous pouvez modifier les détails de la commande en cliquant sur <b>Modifier la preparation</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Preparation de commandes" width="250" link="${commande}" />
+      </p>
+     </div>
+     <div class="span6">
+      <h3>Recherche d'une commande fournisseur</h3>
+      <p>
+         La recherche d'une commande fournisseur peut se faire de deux facons:
+         <ul>
+           <li>Par fournisseur. Pour cela:
+              <ul style="list-style-type: circle;">
+                   <li>Allez dans le menu <b>Gestion du Stock > Preparation des commandes > Liste des preparations</b></li>
+                   <li>Entrez le nom du fournisseur de la commande dans le champ de recherche et tapez sur la touche <b>ENTREE</b> pour lancer la recherche</li>
+              </ul>
+           </li>
+           <li>
+              Multi-criteres. Pour cela:
+              <ul style="list-style-type: circle;">
+                 <li>Allez dans le menu <b>Gestion du Stock > Preparation des commandes > Rechercher une preparation</b></li>
+                 <li>Entrez les criteres de recherche de la preparation, puis validez en cliquant sur <b>Rechercher</b></li>
+              </ul>
+           </li>
+         </ul>
+         <util:image-box height="250" alttext="Recherche d'une preparation de commande" width="250" link="${recherche}" />
+      </p>
    
+     </div>
   </div>  
 </section>
 
 <section id="rayon">
   <div class="page-header">
-    <h1>Gestion des Emplacement<small>Configuration des emplacements </small></h1>
+    <h1>Emplacements de Stock</h1>
   </div>
   <div class="row">
      <div class="span12">
@@ -86,13 +268,12 @@
    	  <h3>Rechercher une commande</h3>
    	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
     </div>
-   
   </div>  
 </section>
 
 <section id="fournisseur">
   <div class="page-header">
-    <h1>Gestion des  Fournisseur <small>Configuration des fournisseurs</small></h1>
+    <h1>Fournisseurs</h1>
   </div>
   <div class="row">
      <div class="span12">
@@ -107,21 +288,6 @@
   </div>  
 </section>
 
-<section id="mvt">
-  <div class="page-header">
-    <h1>Gestion des MVTS de stoc <small>...</small></h1>
-  </div>
-  <div class="row">
-     <div class="span12">
-      <h3>Editer une fiche de suivi de quantite</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Effectuer Une Commande Fournisseur</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher une commande</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-   
-  </div>  
-</section>
+</article>
 
 </div>

@@ -44,6 +44,9 @@
 	      h3{
 	      		color: #0088CC;
 	      }
+	       .zoomimg{
+	            z-index: 80;
+	       }
 	      
 	    </style>
 	    <style type="text/css">
@@ -88,7 +91,7 @@
 	  	    	 var zone= document.getElementById(object).innerHTML;
 	  		    
 	  		    // The new pop to open
-	  	    	var fen = window.open("", "", "height=500, width=600,toolbar=0, menubar=0, scrollbars=1, resizable=1,status=0, location=0, left=10, top=10");
+	  	    	var fen = window.open("", "", "height=500, width=700,toolbar=0, menubar=0, scrollbars=1, resizable=0, status=0, location=0, left=10, top=10");
 	  	    	 
 		  	   // style of the popup
 		  	   fen.document.body.style.color = '#000000'; 
@@ -101,6 +104,18 @@
 // 		  	   fen.document.write(zone.innerHTML);
 		  	   fen.document.body.innerHTML += " " + zone + " ";
                fen.document.getElementById('printb').style.display= 'block';
+               for(var i=0; 15>i; i++){
+            	   var test= fen.document.getElementsByTagName('img')[i];
+            	   if(test==null){
+            		   break;
+            	   }else{
+	            	   test.style.display= 'none';
+            	   };
+            	   $('.visu').hide();
+               } 
+              
+               
+
 		  	   
 		  	   /* fen.document.close(); */
 		  	 
@@ -111,6 +126,8 @@
 // 			   fen.window.close(); 
 			   return true; 
 	  	     }
+	  	  
+	  	 
 	  	  
 	  	</script>
 	  	

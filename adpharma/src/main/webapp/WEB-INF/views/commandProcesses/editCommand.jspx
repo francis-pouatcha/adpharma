@@ -427,11 +427,11 @@
 				style="display: none;" />
 		</center>
 
-		<form:create label="modification de la Ligne" otherBut="cancel"
+		<!-- <form:create label="modification de la Ligne" otherBut="cancel"
 			formId="editLineForm" diseableSubmit="true"
 			id="fc_org_adorsys_adpharma_domain_LigneCmdFournisseur"
 			modelAttribute="ligneCmdFournisseur" path="#"
-			z="M03QQWNaBYxQ5t1cWBz/XrQVa6Y=">
+			z="user-managed">
 			<field:hidden field="id"
 				id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" />
 			<field:hidden field="agentSaisie"
@@ -454,6 +454,6 @@
 				id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin"
 				validationMessageCode="field_invalid_number"
 				z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU=" />
-		</form:create>
+		</form:create> -->
 	</div>
 </div>

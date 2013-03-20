@@ -133,7 +133,7 @@ public class ApprovisionementProcessController {
 	}
 
 	@RequestMapping(value = "/{apId}/addLine", method = RequestMethod.POST)
-	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam(required=false) String qteReclam,@RequestParam String qteug,
+	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam(required=false) BigInteger qteReclam,@RequestParam String qteug,
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 		
 		System.out.println("Qte reclammee: "+qteReclam);
@@ -168,7 +168,7 @@ public class ApprovisionementProcessController {
 				System.out.println("Date de peremption: "+ligneApprovisionement.getDatePeremtion());
 			}
 			if(qteReclam!=null){
-				ligneApprovisionement.setQuantiteReclame(new BigInteger(qteReclam));
+				ligneApprovisionement.setQuantiteReclame(qteReclam);
 			}
 			ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 			ligneApprovisionement.setApprovisionement(approvisionement);

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" 
- xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
  xmlns:spring="http://www.springframework.org/tags">
+ 
+ 
+ 
+ <!-- Liens cibles des operations -->
+ <spring:url value="/pharmausers?form" var="add_user_url" />
+ <spring:url value="/passwordresets?form" var="change_pwd_url" />
+ 
  
 <header class="jumbotron subhead" id="overview">
   <h1>Gestion Des Utilisateurs</h1>
@@ -10,11 +18,23 @@
       <li><a href="#gerer">Gerer les comptes Utilisateur</a></li>
       <li><a href="#visualiser">Informations Utilisateur</a></li>
     </ul>
-    <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
+    <a href="#" onclick="javascript:printBlock('Gestion des Utilisateurs', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
 <article class="float-article" id="read_article">
+
+<!-- Images -->
+ <spring:url value="/resources/images/documentation/users/add_user.png" var="add_user" />
+ <spring:url value="/resources/images/documentation/users/suspend_user.png" var="suspend_user" />
+ <spring:url value="/resources/images/documentation/users/resume_user.png" var="resume_user" />
+ <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
+ <spring:url value="/resources/images/documentation/users/update_user.png" var="update_user" />
+ <spring:url value="/resources/images/documentation/users/change_pwd.png" var="change_pwd" />
+ <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
+ <spring:url value="/resources/images/documentation/users/infos_user.png" var="info_user" />
+ <spring:url value="/resources/images/documentation/users/reset_key.png" var="key_user" />
+ 
 <section id="gerer">
   <div class="page-header">
     <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
@@ -34,44 +54,48 @@
 			      	         <li>Entrez les roles de l'utilisateur en cliquant sur l'onglet <b>Roles utilisateurs</b></li>
 			      	         <li>Validez en cliquant sur <b>Enregistrer</b></li>
 			      	    </ul>
+			      	   <util:image-box height="250" targetLink="${add_user_url}" title="Cliquez pour elargir" alttext="Ajouter un utilisateur" width="250" link="${add_user}" /> 
 			      	</p>
 			    </div>
 			    <div class="span6">
-					<li class="numeros"><h3>Desactiver un compte</h3></li>
+					<li class="numeros"><h3>Désactiver un compte</h3></li>
 					<p>
-					    <span>Pour desactiver un compte dans ADPHARMA, procedez comme suit:</span>
+					    <span>Pour désactiver un compte dans ADPHARMA, procedez comme suit:</span>
 					    <ul> 
 					         <li>Connectez-vous en tant qu'administrateur</li>
 					         <li>Cliquez sur le menu <b>Utilisateurs > liste des utilisateurs</b></li>
 					         <li>Recherchez l'utilisateur dans le champ de recherche et double-cliquez sur son lien</li>
 					         <li>Ensuite, cliquez sur le bouton <b>Suspend Account</b></li>
-					    </ul>     
+					    </ul>
+					    <util:image-box height="250" title="Cliquez pour elargir" alttext="Suspendre un Utilisateur" width="250" link="${suspend_user}" />     
 					</p>
 			     </div>
 			</div>
 			<div class="row">
 		    	<div class="span6">
-					<li class="numeros"><h3>Retablir un compte Suspendu</h3></li>
+					<li class="numeros"><h3>Rétablir un compte Suspendu</h3></li>
 					<p>
-					   <span>Pour retablir un compte dans ADPHARMA, procedez comme suit:</span>
+					   <span>Pour rétablir un compte dans ADPHARMA, procedez comme suit:</span>
 					   <ul> 
 					         <li>Connectez-vous en tant qu'administrateur</li>
 					         <li>Cliquez sur le menu <b>Utilisateurs > liste des utilisateurs</b></li>
 					         <li>Recherchez l'utilisateur dans le champ de recherche et double-cliquez sur son lien</li>
 					         <li>Ensuite, cliquez sur le bouton <b>Resume Account</b></li>
-					   </ul> 
+					   </ul>
+					   <util:image-box height="250" title="Cliquez pour elargir" alttext="Retablir un Utilisateur" width="250" link="${resume_user}" />
 					</p>
 			    </div>
 			    <div class="span6">
-			      	 <li class="numeros"><h3>Reinitialiser un mot de passe oublié </h3></li>
+			      	 <li class="numeros"><h3>Réinitialiser un mot de passe oublié </h3></li>
 					<p>
-					    <span>Pour retablir un compte dans ADPHARMA, procedez comme suit:</span>
+					    <span>Pour rétablir un compte dans ADPHARMA, procedez comme suit:</span>
 					    <ul> 
 					         <li>Connectez-vous en tant qu'administrateur</li>
 					         <li>Cliquez sur le menu <b>Utilisateurs > liste des utilisateurs</b></li>
 					         <li>Recherchez l'utilisateur dans le champ de recherche et double-cliquez sur son lien</li>
 					         <li>Ensuite, cliquez sur le bouton <b>Reset Password</b></li>
 					   </ul>
+					   <util:image-box height="250" title="Cliquez pour elargir" alttext="Rétablir le mot de passe oublié" width="250" link="${reset_user}" />
 					</p>
 			    </div>
 		     </div>
@@ -87,6 +111,7 @@
 					         <li>Entrez les nouvelles informations dans les onglets <b>Informations Utilisateurs</b> et <b>Roles Utilisateurs</b></li>
 					         <li>Validez en cliquant sur <b>Enregistrer</b></li>
 					   </ul> 
+					   <util:image-box height="250" title="Cliquez pour elargir" alttext="Modifier l'utilisateur" width="250" link="${update_user}" />
 					</p>
 			     </div>
 			     <div class="span6">
@@ -98,7 +123,8 @@
 					         <li>Cliquez sur le menu <b>Utilisateurs > Changer le mot de passe</b></li>
 					         <li>Entrez l'ancien mot de passe et le nouveau mot de passe</li>
 					         <li>Validez en cliquant sur <b>Enregistrer</b></li>
-					   </ul> 
+					   </ul>
+					   <util:image-box height="250" targetLink="${change_pwd_url}" title="Cliquez pour elargir" alttext="Changer son mot de passe" width="250" link="${change_pwd}" />
 					</p>
 			     </div>
 		     </div>
@@ -117,7 +143,8 @@
 	         <ul> 
 		         <li>Connectez-vous à ADPHARMA avec votre compte</li>
 		         <li>Sur l'en-tête d'ADPHARMA, cliquez sur le lien <b>Infos utilisateurs</b></li>
-	         </ul> 
+	         </ul>
+	         <util:image-box height="250" title="Cliquez pour elargir" alttext="Informations Utilisateur" width="250" link="${info_user}" />
 	      </p>
     </div>
     <div class="span6">
@@ -127,7 +154,9 @@
 	          <ul> 
 			         <li>Connectez-vous à ADPHARMA avec votre compte</li>
 			         <li>Sur l'en-tête d'ADPHARMA, cliquez sur le lien <b>Infos utilisateurs</b></li>
+			         <li>Ensuite cliquez sur le bouton <b>Reset your key</b> du dialogue affiché</li>
 		      </ul>
+		      <util:image-box height="250" title="Cliquez pour elargir" alttext="Modifier la clé de vente" width="250" link="${key_user}" />
 	      </p>
     </div>
    

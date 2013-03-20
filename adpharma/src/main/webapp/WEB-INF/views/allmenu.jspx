@@ -1,4 +1,4 @@
-<div  xmlns:jsp="http://java.sun.com/JSP/Page" 
+<!-- <div  xmlns:jsp="http://java.sun.com/JSP/Page"  -->
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
 	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
@@ -177,7 +177,7 @@ if(Check == false){
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
-							<li><a href="#">Mouvements stock</a>
+							<li><a href="#">Mouvements de stock</a>
 								<ul>
 									<li><a href="${mvt_search_url}">Rechercher</a></li>
 									<li><a href="${mvt_list_url}">Lister</a></li>
