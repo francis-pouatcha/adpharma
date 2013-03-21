@@ -5,12 +5,13 @@
     <form:create id="fc_org_adorsys_adpharma_domain_Rayon" modelAttribute="rayon" path="/rayons" render="${empty dependencies}" z="DA+XqfrvAFWF9ZZt/TcD4qAv/Rk=">
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Rayon_footPrint" render="false" z="user-managed"/>
         <field:input field="codeRayon" id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" render="false" z="user-managed"/>
-        <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_note" label="codeGeo" z="user-managed"/>
+        <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Rayon_displayName" render="false" z="user-managed"/>
+        
+        <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" label="Code géographique" z="user-managed"/>
         <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_note" label="Emplacement" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
         <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" required="true" z="user-managed"/>
         <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Rayon_magasin" itemValue="id" items="${sites}" path="/sites" required="true" z="rdptbcN+MpGx9ZXhWDAmw/JS/Po="/>
-        <field:input field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
-        <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Rayon_displayName" render="false" z="user-managed"/>
+        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Rayon" render="${not empty dependencies}" z="8cN/WhuaTX1RjZNBau0oStEYWac="/>
 </div>

@@ -20,19 +20,40 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Rayon", finders = { "findRayonsByDisplayNameEquals", "findRayonsByNameEquals", "findRayonsByDisplayNameLike", "findRayonsByNameLike" })
 public class Rayon extends AdPharmaBaseEntity {
 
+	/**
+	 * Code permettant d'identifier le rayon dans le systeme
+	 */
     private String codeRayon;
 
+    /**
+     * Nom du rayon
+     */
     @NotNull
     private String name;
 
+    /**
+     * Affichage du nom du rayon
+     */
     private String displayName;
 
+    /**
+     * Code permettant d'identifier un produit a partir d'un code geographique. Un emplacement peut appartenir a plusieurs rayons
+     */
     private String emplacement;
 
+    /**
+     * Code permettant d'identifier physiquement un produit dans la pharmacie
+     */
     private String codeGeo;
 
+    /**
+     * Breve description du rayon    
+     */
     private String note;
 
+    /**
+     * Magasin/site dans lequel se trouve le rayon
+     */
     @NotNull
     @ManyToOne
     private Site magasin;

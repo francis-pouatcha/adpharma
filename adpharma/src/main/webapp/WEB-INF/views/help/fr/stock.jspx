@@ -15,6 +15,9 @@
  <spring:url value="/resources/images/documentation/stock/codebar.png" var="codebar" />
  <spring:url value="/resources/images/documentation/stock/commande.png" var="commande" />
  <spring:url value="/resources/images/documentation/stock/recherche.png" var="recherche" />
+ <spring:url value="/resources/images/documentation/stock/search_mvt.png" var="search_mvt" />
+ <spring:url value="/resources/images/documentation/stock/rayon.png" var="rayon" />
+ 
  
  <!-- Liens des operations -->
  <spring:url value="/approvisionements?find=BySearch&amp;form" var="search_appro_url" htmlEscape="true" />
@@ -22,6 +25,11 @@
  <spring:url value="/transformationproduits/livreeForm?form" var="decomp_url" />
  <spring:url value="/approvisionementprocess/reclamations?form" var="fiche_reclam_url" />
  <spring:url value="/ligneapprovisionements/reclamations?form" var="reclam_url" />
+ <spring:url value="/mouvementstocks?find=BySearch&amp;form" var="mvt_url" />
+ <spring:url value="/approvisionementprocess/printBareCode" var="codebar_url" />
+ <spring:url value="/commandprocesses?form" var="command_url" />
+ <spring:url value="/commandefournisseurs?find=BySearch&amp;form" var="findcomand_url" />
+ <spring:url value="/rayons?form" var="rayon_url" />
  
  
 <header class="jumbotron subhead" id="overview">
@@ -128,6 +136,7 @@
              <li>Soit, vous allez dans le menu: <b>Gestion du Stock > Mouvements de Stock > Rechercher.</b> 
              Ensuite entrez les criteres de recherche et validez en cliquant sur <b>Enregistrer</b></li>
           </ul>
+        <util:image-box height="250" alttext="Recherche d'un mouvement de Stock" width="250" link="${search_mvt}" targetLink="${mvt_url}" />  
       </p>
     </div>
   </div>  
@@ -158,7 +167,7 @@
             <li>Allez dans le menu <b>Gestion du Stock > Impression de Code Bare</b></li>
             <li>Entrez le cipm du produit qui represente son code bare, le nombre de code bares a imprimer et cliquez sur <b>Enregistrer</b></li>
          </ul>
-         <util:image-box height="250" alttext="Impression de code bares" width="250" link="${codebar}" />
+         <util:image-box height="250" alttext="Impression de code bares" width="250" link="${codebar}" targetLink="${codebar_url}" />
       </p>
     </div>
    
@@ -170,16 +179,15 @@
     <h1>Reclamations</h1>
   </div>
   <div class="row">
-     <div class="span6">
+     <div class="span5">
       <h3>Definition du principe des reclamations</h3>
       <p> 
         Les reclamations fournisseur sont des produits que la pharmacie reclame à un fournisseur. 
         Ces reclamations sont enregistrées lors de l'approvisionnement du bordereau de l'approvisionnement du fournisseur.
         Deux processus sont gérés à ce niveau: l'edition de fiches de reclamations par fournisseur et les entrées/retours de reclamations.
       </p>
-    
-    </div>
-    <div class="span6">
+     </div>
+     <div class="span5">
       <h3>Edition de la fiche de reclamations fournisseur</h3>
       <p> 
         Pour éditer la fiche de reclamations pour un fournisseur, procedez comme suit:
@@ -189,11 +197,8 @@
         </ul>
         <util:image-box height="250" alttext="Fiche de reclamations fournisseurs" width="250" link="${fiche_reclam}" targetLink="${fiche_reclam_url}" />
       </p>
-    
-    </div>
-  </div>
-  <div class="row"> 
-    <div class="span6">
+     </div>
+     <div class="span5">
       <h3>Entrée des reclamations fournisseur</h3>
       <p> 
         Pour faire les entrées de reclamations, il faut se servir de la fiche de reclamations pour lire les cipm des produits reclamés.
@@ -205,9 +210,8 @@
         </ul>
         <util:image-box height="250" alttext="Entrée des reclamations fournisseur" width="250" link="${reclam}" targetLink="${reclam_url}" />
       </p>
-    
     </div>
-  </div>   
+  </div>
 </section>    
      
 <section id="cmd">
@@ -226,7 +230,7 @@
            <li>La commande sera enregistrée automatiquement avec les lignes de commandes correspondantes.</li>
            <li>Ensuite, vous pouvez modifier les détails de la commande en cliquant sur <b>Modifier la preparation</b></li>
         </ul>
-        <util:image-box height="250" alttext="Preparation de commandes" width="250" link="${commande}" />
+        <util:image-box height="250" alttext="Preparation de commandes" width="250" link="${commande}" targetLink="${command_url}" />
       </p>
      </div>
      <div class="span6">
@@ -248,7 +252,7 @@
               </ul>
            </li>
          </ul>
-         <util:image-box height="250" alttext="Recherche d'une preparation de commande" width="250" link="${recherche}" />
+         <util:image-box height="250" alttext="Recherche d'une preparation de commande" width="250" link="${recherche}" targetLink="${findcomand_url}"/>
       </p>
    
      </div>
@@ -260,14 +264,31 @@
     <h1>Emplacements de Stock</h1>
   </div>
   <div class="row">
-     <div class="span12">
-      <h3>Editer une fiche de suivi de quantite</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Effectuer Une Commande Fournisseur</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher une commande</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
+     <div class="span6">
+      <h3>Definitions</h3>
+      <p>
+        Un emplacement de stock designé par <b>Rayon</b> permet de localiser physiquement un produit dans le stock.<br/>
+        Il permet aussi de categoriser les produits(organisation des produits en categories) suivant le nom qui lui est attribué.
+        Un rayon est caracterise par:
+        <ul>
+           <li><b>Un Code de rayon</b>, code qui permet d'identifier le rayon dans le systeme</li>
+           <li><b>Un libelle</b>, qui represente le nom du rayon</li>
+           <li><b>Un Code geographique</b>, code qui permet d'identifier le rayon physiquement dans la pharmacie</li>
+           <li><b>Un emplacement</b>, code qui permet d'identifier le rayon à partir de son code geographique. Un emplacement peut appartenir à plusieurs rayons.</li>
+        </ul>
+      </p>
+     </div>
+     <div class="span6">
+      <h3>Créer un rayon</h3>
+      <p>
+        Pour créer un rayon, il faut proceder comme suit:
+        <ul>
+           <li>Allez dans le menu <b>Gestion du Stock > Emplacements/Rayons > Ajouter</b></li>
+           <li>Entrez les information du rayon et validez en cliquant sur <b>Enregistrer</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Creer un Rayon" width="250" link="${rayon}" targetLink="${rayon_url}" />
+      </p>
+     </div>
   </div>  
 </section>
 
@@ -277,14 +298,15 @@
   </div>
   <div class="row">
      <div class="span12">
-      <h3>Editer une fiche de suivi de quantite</h3>
-      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-      <h3>Effectuer Une Commande Fournisseur</h3>
-      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-   	  <h3>Rechercher une commande</h3>
-   	  <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+      <h3>Creer un Fournisseur</h3>
+      <p>
+         Pour creer un fournisseur, procedez comme suit:
+         <ul>
+            <li>Allez dans le menu <b>Gestion du Stock > Fournisseurs > Creer</b></li>
+            <li>Entrez les informations du fournisseur et validez en cliquant sur <b>Enregistrer</b></li>
+         </ul>
+      </p>
     </div>
-   
   </div>  
 </section>
 
