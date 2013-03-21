@@ -27,7 +27,7 @@
                     <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" disabled="true" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" render="false" z="user-managed"/>
                     <field:datetime dateTimePattern="${produit_datedernieresortie_date_format}" disabled="true" field="dateDerniereSortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" render="false" z="user-managed"/>
                     <field:input field="quantiteEnStock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
-                    <field:input field="seuilComande" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" label="stock alert" validationMessageCode="field_invalid_integer" z="user-managed"/>
+                    <field:input field="seuilComande" id="c_org_adorsys_adpharma_domain_Produit_seuilComande"  validationMessageCode="field_invalid_integer" z="user-managed"/>
                     <field:input field="plafondStock" id="c_org_adorsys_adpharma_domain_Produit_plafondStock" validationMessageCode="field_invalid_integer" z="DPR1QqMyvQB+RqYN+gwAtskwqYU="/>
                     <LEGEND> Infos appro / Vente</LEGEND>
                     <field:input field="tauxRemiseMax" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>

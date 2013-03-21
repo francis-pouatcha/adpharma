@@ -425,6 +425,12 @@ public class CommandProcessController {
 		List<CommandeFournisseur> listCommandToImports = csvImportExportUtil.listCommandToImport(
 				CommandeFournisseur.findCommandsByEtatCommand(Etat.EN_COUR).getResultList(), 
 				csvImportExportUtil.getReceivedFiles());
+		List<CommandeFournisseur> otherListCommandToImports = csvImportExportUtil.listCommandToImport(
+				CommandeFournisseur.findCommandsByEtatCommand(Etat.SENDED_TO_PROVIDER).getResultList(), 
+				csvImportExportUtil.getReceivedFiles());
+		for (CommandeFournisseur commandeFournisseur : otherListCommandToImports) {
+			listCommandToImports.add(commandeFournisseur);
+		}
 		if (listCommandToImports.isEmpty()) {
 			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur A importer pour le moment. Raffinez votre recherche ci-haut !" );
 		}else {

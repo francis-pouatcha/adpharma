@@ -113,7 +113,7 @@ public class CsvImportExportUtil {
 			ligneCmdFournisseur.merge().flush();
 			productAndQtyDeliveredBalance.put(ligneCmdFournisseur, ligneCmdFournisseur.getQuantiteCommande().subtract(ligneCmdFournisseur.getQuantiteFournie()));
 			
-			LOG.warn("Command Merge "+ligneCmdFournisseur.getDesignation());
+			LOG.warn("Merging Command Item : CIP = "+ligneCmdFournisseur.getCip());
 		}
 	}
 	public boolean responseHasError(ResponseErrorDetailRow errorDetailRow){
@@ -457,9 +457,7 @@ public class CsvImportExportUtil {
 		Assert.notNull(fileNames, "Null files not required");
 		List<CommandeFournisseur> commandeFournisseursToImports = new ArrayList<CommandeFournisseur>();
 		for (CommandeFournisseur commandeFournisseur : commandesFournisseurs) {
-			if(!Etat.EN_COUR.equals(commandeFournisseur.getEtatCmd())) {
-				continue;
-			}
+			
 			String cmdNumber = commandeFournisseur.getCmdNumber();
 			for (String fileName : fileNames) {
 				if(fileName.startsWith(cmdNumber)){

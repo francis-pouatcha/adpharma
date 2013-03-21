@@ -477,17 +477,21 @@ if(Check == false){
         					<li>
             <spring:message code="catalogues_create_product" var="create_product"/>
             <spring:message code="catalogues_create_product_cip" var="create_product_cip"/>
+            <spring:message code="catalogues_create_product_without_cip" var="create_product_without_cip"/>
+            <spring:message code="catalogues_list_product_with_cip" var="list_product_with_cip"/>
+            <spring:message code="catalogues_famillies_set" var="famillies_set"/>
+            <spring:message code="catalogues_find_product_by_cip" var="find_product_by_cip"/>
 		        				<a href="#">${create_product }</a>
 		        					<ul>
 		        						<li><a href="${prd_cip_url}"> ${create_product_cip }</a></li>
-		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
+		        						<li><a href="${prd_scip_url}"> ${create_product_without_cip } </a></li>
 		        						<!-- 
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
 		        						 -->
-		        						<li><a href="${prd_list_url}"> Lister les produits(CIP)</a></li>
+		        						<li><a href="${prd_list_url}"> ${list_product_with_cip }</a></li>
 		        						
-		        					    <li><a href="${aff_fsf_url}"> Affectation Familles </a></li>
-		        						<li><a href="${prdf_des_url}"> Rechercher un Produit(CIP)</a></li>	
+		        					    <li><a href="${aff_fsf_url}"> ${famillies_set } </a></li>
+		        						<li><a href="${prdf_des_url}"> ${find_product_by_cip }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <spring:url value="/familleproduits?form" var="fp_url"/>
@@ -495,26 +499,37 @@ if(Check == false){
             
           <spring:url value="/sousfamilleproduits?form" var="sfp_url"/>
             <spring:url value="/sousfamilleproduits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="sfp_list_url"/>
+            
+            <spring:message code="catalogues_product_famillies" var="product_famillies"/>
+            <spring:message code="catalogues_product_famillies_create" var="product_famillies_create"/>
+            <spring:message code="catalogues_product_famillies_list" var="product_famillies_list"/>
 		        			 <li style="display: none;">
-		        				<a href="#">Famille Produit</a>
+		        				<a href="#">${product_famillies }</a>
 		        					<ul>
-		        						<li><a href="${fp_url}">Creer</a></li>
-		        						<li><a href="${fp_list_url}">Lister</a></li>
+		        						<li><a href="${fp_url}">${product_famillies_create }</a></li>
+		        						<li><a href="${fp_list_url}">${product_famillies_list }</a></li>
 		        					</ul>
 		        			 </li>
+            <spring:message code="catalogues_product_sub_famillies" var="product_sub_famillies"/>
+            <spring:message code="catalogues_product_sub_famillies_create" var="product_sub_famillies_create"/>
+            <spring:message code="catalogues_product_sub_famillies_create_list" var="product_sub_famillies_list"/>
 		        			<li style="display: none;">
-		        				<a href="#"> Sous Famille Produit</a>
+		        				<a href="#"> ${product_sub_famillies }</a>
 		        					<ul>
-		        						<li><a href="${sfp_url}">Creer</a></li>
-		        						<li><a href="${sfp_list_url}">Lister</a></li>
+		        						<li><a href="${sfp_url}">${product_sub_famillies_create }Creer</a></li>
+		        						<li><a href="${sfp_list_url}">${product_sub_famillies_list }</a></li>
 		        					</ul>
 		        			 </li>
 		        			 <li>
-		        				<a href="#"> Decompositions</a>
+            <spring:message code="catalogues_product_cracking" var="product_cracking"/>
+            <spring:message code="catalogues_relation_create" var="relation_create"/>
+            <spring:message code="catalogues_relations_list" var="relations_list"/>
+            <spring:message code="catalogues_relations_find" var="relations_find"/>
+		        				<a href="#"> ${product_cracking }</a>
 		        					<ul>
-		        						<li><a href="${transf_url}">Creer Une relation</a></li>
-		        						<li><a href="${trans_list_url}">Liste Des Relations</a></li>
-		        						<li><a href="${transff_url}">Rechercher Une Relation</a></li>
+		        						<li><a href="${transf_url}">${relation_create }</a></li>
+		        						<li><a href="${trans_list_url}">${relations_list }</a></li>
+		        						<li><a href="${transff_url}">${relations_find }</a></li>
 		        					</ul>
 		        			 </li>
 		        			       </security:authorize>
