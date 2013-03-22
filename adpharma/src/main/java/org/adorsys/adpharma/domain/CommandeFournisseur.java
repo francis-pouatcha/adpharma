@@ -82,7 +82,7 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	private Boolean livre;
 
 	@OrderBy(clause = "dateSaisie DESC")
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande",fetch=FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "commande",fetch=FetchType.EAGER)
 	private Set<LigneCmdFournisseur> ligneCommande = new HashSet<LigneCmdFournisseur>();
 
 	@Enumerated
@@ -346,7 +346,12 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		
 		return q;
 	}
-
+	public static TypedQuery<CommandeFournisseur> findCommandsByEtatCommand(Etat etat){
+		if (etat == null) throw new IllegalArgumentException("The etat argument is required");
+		TypedQuery<CommandeFournisseur> createQuery = entityManager().createQuery("SELECT o FROM CommandeFournisseur AS o WHERE o.etatCmd = :etat", CommandeFournisseur.class);
+		createQuery.setParameter("etat", etat);
+		return createQuery;
+	}
 	public String getLastestUbipharmError() {
 		return lastestUbipharmError;
 	}

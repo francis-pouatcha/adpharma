@@ -78,11 +78,6 @@
 
 		};
 		
-		function test(id){
-			
-			if()
-		}
-		
 		function saveLine(){
 			
 			 // Scan touche autorisation, (if autorisation), (if press enter), [Get json and return true], (else return 
@@ -398,7 +393,6 @@
 								value="${ligneCommande.prixAVenteMin}"></c:out></td>
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.agentSaisie}"></c:out></td>
-
                          <td class="utilbox">
 						<spring:url value="/resources/images/update.png" var="update_image_url" />
 						<!-- 	<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
@@ -418,9 +412,8 @@
 			</table>
 		</div>
 	</form:customList>
-
-
 	<jsp:include page="ajaxSearchProductForm.jspx" />
+	
 	<div id="editLineDiv">
 		<center>
 			<IMG alt="loading ..." src="${loadimage }" class="loadimage"

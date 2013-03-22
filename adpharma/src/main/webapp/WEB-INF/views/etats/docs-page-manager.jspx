@@ -101,7 +101,14 @@
                 <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
           </td>
      </tr>
-    
+    <tr >
+          <td>
+               <i class="labeletat" > Etat Valorisation du stock par Filiale  </i>
+          </td>
+          <td>
+                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url10"  />
+          </td>
+     </tr>
      
     </table>
     </DIV>

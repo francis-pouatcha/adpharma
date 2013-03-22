@@ -16,7 +16,8 @@
      <spring:url value="/etats/print/etatPeriodiqueTransformation.pdf?"  var="url6" />
      <spring:url value="/etats/print/etatPeriodiqueTauxMarque.pdf?"  var="url7" />    
       <spring:url value="/etats/print/etatVAlorisationRayon.pdf?"  var="url8" />
-      <spring:url value="/etats/print/etatFicheStockRayon.pdf?"  var="url9" />   
+      <spring:url value="/etats/print/etatFicheStockRayon.pdf?"  var="url9" />  
+      <spring:url value="/etats/print/etatValorisationFiliale.pdf?"  var="url10" />   
          <spring:url value="/etats/etatPeriodique?form"  var="date_form_url" />
     
  <script type="text/javascript">
@@ -30,14 +31,10 @@
 	var url7 = '${url7}' ;
 	var url8 = '${url8}' ;
 	var url9 = '${url9}' ;
+	var url10 = '${url10}' ;
 	var gotoUrl =url1 ;
 
     $(function (){
-    	
-    	
-    	
-    		
-    		 
     		 function openDialog(path,textHeader,printBaseUrl){
         		 $("#dialog").dialog({
         	            modal: true,
@@ -111,6 +108,7 @@
  	     if(id=="url7")gotoUrl =url7 ;
  	    if(id=="url8")gotoUrl =url8 ;
  	   if(id=="url9")gotoUrl =url9 ;
+ 	  if(id=="url10")gotoUrl =url10 ;
  		  }
     
     

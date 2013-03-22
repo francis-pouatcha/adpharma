@@ -21,10 +21,9 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir
         <table:table create="false" data="${inventaire.produits}"  show="false" update="false" delete="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_cip" property="cip" z="lwxQZw1IKddvNjeg0GSHUNNrti0="/>
             <table:column id="c_org_adorsys_adpharma_domain_Produit_designation" maxLength="-1" property="designation" z="user-managed"/>
-                      <table:column id="c_org_adorsys_adpharma_domain_Produit_familleProduit" maxLength="-1" property="familleProduit" z="user-managed"/>
-                      <table:column id="c_org_adorsys_adpharma_domain_Produit_sousfamilleProduit" maxLength="-1" property="sousfamilleProduit" z="user-managed"/>
-                                <table:column id="c_org_adorsys_adpharma_domain_Produit_rayon" maxLength="25" property="rayon" z="user-managed"/>
-          
+            <table:column id="c_org_adorsys_adpharma_domain_Produit_familleProduit" maxLength="-1" property="familleProduit" z="user-managed"/>
+             <table:column id="c_org_adorsys_adpharma_domain_Produit_sousfamilleProduit" maxLength="-1" property="sousfamilleProduit" z="user-managed"/>
+             <table:column id="c_org_adorsys_adpharma_domain_Produit_rayon" maxLength="25" property="rayon" z="user-managed"/>
             <table:column label="Stock" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" property="quantiteEnStock" z="user-managed"/>
           <c:if test="${inventaire.pAchat}">
            <table:column label="pAchat" id="s_org_adorsys_adpharma_domain_Produit_prixAchatSTock" property="prixAchatSTock" z="ttj2H7NDmMWmIJuHe7fmZhDOzXo="/>
@@ -47,8 +46,7 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock" label="qte En stock" property="quantieEnStock" z="U1bqJlzV7lqmOkmpqTQDEESiFGQ="/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" label="qte REEL" property="quantiteVendu"  z="user-managed"/>
            <c:if test="${inventaire.pAchat}">
-                       <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" label="P Achat" property="prixAchatUnitaire"  z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
-           
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" label="P Achat" property="prixAchatUnitaire"  z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
            </c:if>
            <c:if test="${inventaire.pVente}">
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" label="P Vente" property="prixVenteUnitaire" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>

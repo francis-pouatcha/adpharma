@@ -1,7 +1,10 @@
 package org.adorsys.adpharma.beans.importExport.core;
 
 import java.util.HashMap;
-
+/**
+ * @author adorsys-GKC
+ *
+ */
 public class FieldAndTypeMap extends HashMap<String, Class>{
 	private String field ;
 	private Class clazz ;

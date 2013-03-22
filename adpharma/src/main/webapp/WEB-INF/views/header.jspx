@@ -113,7 +113,7 @@
 	  				<c:otherwise>
 	  				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
 					      <spring:url value="/login" var="login"/>
-					      <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" > ${msg_login}</a> 
+					     <!--  <a href="${login}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;" > ${msg_login}</a> --> 
 	  				</c:otherwise>
 	  			</c:choose>	
 			</div>

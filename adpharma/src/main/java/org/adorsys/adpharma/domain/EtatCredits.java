@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
@@ -273,7 +274,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		this.maxDateDette = maxDateDette;
 	}
 
-	public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEdition, Date datePaiement, Boolean solder, Boolean anuller,Boolean encaisser) {
+	public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEditionMin, Date dateEditionMax, Boolean solder, Boolean anuller,Boolean encaisser) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE o.id IS NOT NULL ");
 		if (StringUtils.isNotBlank(clientName)) {
 			clientName = clientName+"% " ;
@@ -282,11 +283,11 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		if (StringUtils.isNotBlank(etatNumber)) {
 			searchQuery.append(" AND o.etatNumber = :etatNumber ");
 		}
-		if (dateEdition!=null) {
-			searchQuery.append("AND o.dateEdition >= :dateEdition ");
+		if (dateEditionMin!=null) {
+			searchQuery.append("AND o.dateEdition >= :dateEditionMin ");
 		}
-		if (datePaiement!=null) {
-			searchQuery.append("AND o.datePaiement >= :datePaiement ");
+		if (dateEditionMax!=null) {
+			searchQuery.append("AND o.dateEdition <= :dateEditionMax ");
 		}
 		if (solder!=null) {
 			searchQuery.append("AND o.solder IS :solder ");
@@ -307,11 +308,11 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		if (StringUtils.isNotBlank(etatNumber)) {
 			q.setParameter("etatNumber", etatNumber);
 		}
-		if (dateEdition!=null) {
-			q.setParameter("dateEdition", dateEdition);
+		if (dateEditionMin!=null) {
+			q.setParameter("dateEditionMin", dateEditionMin);
 		}
-		if (datePaiement!=null) {
-			q.setParameter("datePaiement", datePaiement);
+		if (dateEditionMax!=null) {
+			q.setParameter("dateEditionMax", dateEditionMax);
 		}
 		if (solder!=null) {
 			q.setParameter("solder", solder);
@@ -326,6 +327,16 @@ public class EtatCredits extends AdPharmaBaseEntity {
 		return q;
 	}
 
+	
+	public static TypedQuery<EtatCredits> findEtatCreditsByNomClientLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.client.nom ASC", EtatCredits.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
+	
 	public Long getClientId() {
 		return clientId;
 	}

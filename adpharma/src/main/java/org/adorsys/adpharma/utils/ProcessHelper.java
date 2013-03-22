@@ -27,6 +27,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
+/**
+ * @author adorsys-GKC
+ *
+ */
 public class ProcessHelper {
 
 	public   static String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

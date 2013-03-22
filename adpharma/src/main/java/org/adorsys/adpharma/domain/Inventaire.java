@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -465,5 +466,14 @@ public class Inventaire extends AdPharmaBaseEntity {
 		}
 
 	}
+	
+	 public static TypedQuery<Inventaire> findInventaireByNomAgentLike(String nom) {
+	        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+	        nom =nom + "%";
+	        EntityManager em = Inventaire.entityManager();
+	        TypedQuery<Inventaire> q = em.createQuery("SELECT o FROM Inventaire AS o WHERE LOWER(o.agent.lastName) LIKE LOWER(:nom) OR LOWER(o.agent.firstName) LIKE LOWER(:nom)   ORDER BY o.agent.lastName ASC", Inventaire.class);
+	        q.setParameter("nom", nom);
+	        return q;
+	    }
 
 }

@@ -51,11 +51,10 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 	public UbipharmCommandStringSequence readReturningKey(){
 		return new UbipharmCommandStringSequence(59, 62, super.readValue(getStringValue(), 59, 62));
 	}
-	
+		
 	public UbipharmCommandStringSequence readProductDeliveryCodificationType(){
 		return new UbipharmCommandStringSequence(63, 64, super.readValue(getStringValue(), 63, 64));
 	}
-	
 	public UbipharmCommandStringSequence readDeliveryProductKey(){
 		return new UbipharmCommandStringSequence(64, 113, super.readValue(getStringValue(), 65, getStringValue().length()));
 	}

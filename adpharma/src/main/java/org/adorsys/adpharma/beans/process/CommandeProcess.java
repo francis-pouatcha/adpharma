@@ -104,7 +104,7 @@ public class CommandeProcess {
 			return null ;
 		}
 		if(selection.equals(ModeSelection.RUPTURE_STOCK)){
-			searchQuery = new StringBuilder("SELECT p , SUM(p.seuilComande) as qte ,(select MAX(l.prixAchatUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip ) as pa , (select MAX(l.prixVenteUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip )as pv  FROM Produit AS p WHERE p.quantiteEnStock <= :qte  ");
+			searchQuery = new StringBuilder("SELECT p , p.seuilComande as qte ,(select MAX(l.prixAchatUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip ) as pa , (select MAX(l.prixVenteUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip )as pv  FROM Produit AS p WHERE p.quantiteEnStock <= :qte  ");
 		}
 		if(selection.equals(ModeSelection.ALERTE_STOCK)){
 			searchQuery = new StringBuilder("SELECT p , SUM(p.seuilComande) as qte ,(select MAX(l.prixAchatUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip ) as pa , (select MAX(l.prixVenteUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip )as pv  FROM Produit AS p WHERE p.quantiteEnStock <= p.seuilComande  ");

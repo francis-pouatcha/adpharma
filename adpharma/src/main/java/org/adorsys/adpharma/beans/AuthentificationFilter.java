@@ -1,9 +1,9 @@
 package org.adorsys.adpharma.beans;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,21 +11,35 @@ import javax.servlet.http.HttpSession;
 
 import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.Configuration;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
-
+/**
+ * This class use some code from SavedRequestAwareAuthenticationSuccessHandler.
+ * Works like @see SavedRequestAwareAuthenticationSuccessHandler
+ * 
+ * @author franklin
+ * @author w2b
+ *
+ */
 @Service("authentificationFilter")
-public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSuccessHandler implements LogoutSuccessHandler {
-
+public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHandler implements LogoutSuccessHandler {
+	static final Logger LOGGER = LoggerFactory.getLogger(AuthentificationFilter.class);
+    private RequestCache requestCache = new HttpSessionRequestCache();
+    @Resource(name="rolesToHomePageRegistry")
+    RolesToHomePageRegistry rolesToHomePageRegistry ;
+    
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException{
@@ -42,8 +56,32 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 		}else {
 			session.setAttribute("sessionBean", sessionBean) ;
 		}
-		super.onAuthenticationSuccess(request, response, authentication);
-		return;
+		//TODO  :  find user's target url, 2- set it to the RequestCae
+	    SavedRequest savedRequest = requestCache.getRequest(request, response);
+
+        if (savedRequest == null) {
+//            super.onAuthenticationSuccess(request, response, authentication);
+        	String redirectLink = getUserRedirectLink();
+        	if(StringUtils.isBlank(redirectLink)) redirectLink = "";
+			String userRedirectLink  = new StringBuilder().append(request.getContextPath()).append(redirectLink).toString();
+        	LOGGER.warn("Redirecting User : "+userRedirectLink);
+        	
+			response.sendRedirect(userRedirectLink);
+            return;
+        }
+
+        if (isAlwaysUseDefaultTargetUrl() || org.springframework.util.StringUtils.hasText(request.getParameter(getTargetUrlParameter()))) {
+            requestCache.removeRequest(request, response);
+            super.onAuthenticationSuccess(request, response, authentication);
+            return;
+        }
+
+        clearAuthenticationAttributes(request);
+
+        // Use the DefaultSavedRequest URL
+        String targetUrl = savedRequest.getRedirectUrl();
+        logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
 	}
 
 	@Override
@@ -53,4 +91,12 @@ public class AuthentificationFilter  extends SavedRequestAwareAuthenticationSucc
 		return ;
 	}
 
+    public void setRequestCache(RequestCache requestCache) {
+        this.requestCache = requestCache;
+    }
+	private String getUserRedirectLink( ){
+		PharmaUser pharmaUser = PharmaUser.findPharmaUsersByUserNameEquals(SecurityUtil.getUserName()).getSingleResult();
+		Set<RoleName> roleNames = pharmaUser.getRoleNames();
+		return rolesToHomePageRegistry.getHomeUrl(roleNames.iterator().next());
+	}
 }

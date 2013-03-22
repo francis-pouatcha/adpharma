@@ -56,6 +56,13 @@
 		<property name="minEvictableIdleTimeMillis" value="1800000" />
 		<property name="validationQuery" value="SELECT 1" />
 	</bean>
+	<bean class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" name="jasperdataSource" id="jasperdataSource">
+		<property name="driverClassName" value="${database.driverClassName}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.jasperusername}" />
+		<property name="password" value="${database.jasperpassword}" />
+	</bean>
 <!-- Concurrent Session Control Beans 
 
         <bean class="org.springframework.security.core.session.SessionRegistryImpl"
@@ -73,9 +80,6 @@
 		<property name="persistenceUnitName" value="persistenceUnit" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	
-<bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" id="viewResolver">
-        <property name="basename" value="views"/>
-    </bean>
+<bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" id="viewResolver">  <property name="basename" value="views"/>
+</bean>
 </beans>

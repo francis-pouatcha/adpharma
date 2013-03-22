@@ -14,26 +14,24 @@ import org.slf4j.LoggerFactory;
 public class CommandJob implements Job {
 	private static Logger LOG = LoggerFactory.getLogger(CommandJob.class);
 	public  static int numberOfTime;
-	private static List<String> oldFiles = new ArrayList<String>();
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		File fileDir = new File(CsvImportExportUtil.RECEPTION_FOLDER_PATH);
+		File fileDir = new File(CsvImportExportUtil.getReceptionFolder());
 		String[] fileNames = FileUtil.listFiles(fileDir);
 		for (String fileName : fileNames) {
-			if(isNewFile(fileName) ){
+			if(!FileSystemScanner.oldFiles.contains(fileName)){
 				CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
 				try {
 					LOG.warn("Start Import Of : "+fileName+" ...");
-					csvImportExportUtil.readCsvFile(CsvImportExportUtil.RECEPTION_FOLDER_PATH+""+fileName);
+					csvImportExportUtil.readCsvFile(CsvImportExportUtil.getReceptionFolder()+""+fileName);
+					FileSystemScanner.oldFiles.add(fileName);
 				} catch (Exception e) {
+					LOG.error("",e);
+					FileSystemScanner.oldFiles.add(fileName);
 					e.printStackTrace();
 				}
-				oldFiles.add(fileName);
 				LOG.warn("... "+fileName+", Import Finished");
 			}
 		}
-	}
-	private boolean isNewFile(String fileName) {
-		return oldFiles.contains(fileName) == false;
 	}
 }

@@ -495,7 +495,15 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		q.setParameter("typeCommande", typeCommande);
 		return q.getResultList();
 	}
-
+	
+	public static TypedQuery<CommandeClient> findCommandeClientByNomClientLike(String nom) {
+        if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
+        nom =nom + "%";
+        EntityManager em = CommandeClient.entityManager();
+        TypedQuery<CommandeClient> q = em.createQuery("SELECT o FROM CommandeClient AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.client.nom ASC", CommandeClient.class);
+        q.setParameter("nom", nom);
+        return q;
+    }
 
 	public static List<CommandeClient> findCommandeClientEntries(int firstResult, int maxResults) {
 		return entityManager().createQuery("SELECT o FROM CommandeClient o ORDER BY o.id DESC ", CommandeClient.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

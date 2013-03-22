@@ -19,7 +19,8 @@
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
       <spring:url value="/commandprocesses/${itemId}/annulerCmd"  var="delete_cmd_url" />
-      <spring:url value="/commandprocesses/ubipharm/${itemId}/send"  var="send_ubipharm_url" />
+	      <spring:url value="/commandprocesses/ubipharm/${itemId}/send"  var="send_ubipharm_url" />
+	      <spring:url value="/commandprocesses/ubipharm/${itemId}/import"  var="import_ubipharm_url" />
      
  <c:set value="EN_COUR"  var="etat"/>
  
@@ -52,7 +53,7 @@ function annulercmd(){
     </c:when>
     <c:otherwise>
    <c:choose>
-   <c:when test="${commandefournisseur.etatCmd == etat and not commandefournisseur.annuler}">
+   <c:when test="${commandefournisseur.etatCmd == etat || commandefournisseur.etatCmd eq 'RECEIVED' and not commandefournisseur.annuler}">
                  <span><a href="${ edit_url}" style="text-decoration: none;">
                  <INPUT class="submits" type="button" value="MODIFIER LA PREPARATION" title="modifier le detail de la commande" /></a></span>
                 <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
@@ -61,7 +62,7 @@ function annulercmd(){
         
     </c:when> 
    </c:choose>
-      <c:if test="${commandefournisseur.etatCmd eq 'EN_COUR' and not commandefournisseur.annuler}">
+      <c:if test="${commandefournisseur.etatCmd eq 'EN_COUR' || commandefournisseur.etatCmd eq 'RECEIVED' and not commandefournisseur.annuler}">
         <span><a href="${delete_cmd_url}" style="text-decoration: none;">
         <INPUT onclick="return annulercmd();" class="submits" type="button" value="Annuler La PREPARATION" title="Annuler La commande" /></a></span>
 		</c:if>
@@ -74,12 +75,20 @@ function annulercmd(){
 		</c:if>
                   <span><a href="${print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer le Bon de Commande" title="imprimer le bon de commande" /></a></span>
                   <span><a href="${printxls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Exporter (EXCEL)" title="exporter au format Excel" /></a></span>
-                  
+                 <!-- 
                   <span><a href="${ send_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
-                  
+                   -->
+                   
+      <c:if test="${commandefournisseur.etatCmd != 'CLOS' and commandefournisseur.etatCmd != 'SENDED_TO_PROVIDER' and commandefournisseur.etatCmd != 'RECEIVED'}">
                   <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER A UBIPHARM" title="Envoyer A Ubipharm" /></a></span>
+      </c:if>
+       <c:if test="${commandefournisseur.etatCmd == 'SENDED_TO_PROVIDER'}">
+                  <span><a href="${ import_ubipharm_url}" style="text-decoration: none;" >
+                  <INPUT class="submits" type="button" value="IMPORTER LA COMMANDE" title="Importer " /></a></span>
+      </c:if>
+      
    
    <c:if test="${not empty appMessages}">
 		<hr style="margin-top: 2px;margin-bottom: -13px;"/>

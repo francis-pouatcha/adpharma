@@ -24,9 +24,8 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-import net.sf.jasperreports.engine.JasperExportManager;
-
 import org.adorsys.adpharma.beans.importExport.ubipharm.CsvImportExportUtil;
+import org.adorsys.adpharma.beans.importExport.ubipharm.FileSystemScanner;
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.AbstractUbipharmLigneWrapper;
 import org.adorsys.adpharma.beans.process.CommandeProcess;
 import org.adorsys.adpharma.beans.process.OrderPreParationBean;
@@ -44,7 +43,9 @@ import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.ProcessHelper;
-import org.hibernate.annotations.OnDeleteAction;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,12 +59,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/commandprocesses")
-@Controller
+@Controller 
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
 	
+
+	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
+	
 	private boolean sendedToUbipharm ;
+
+
+	private boolean sendToUbipharmFailed;
+
+
+	private String ubipharmCommandSendingErrorMessage;
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(
@@ -351,13 +361,24 @@ public class CommandProcessController {
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 		uiModel.addAttribute("itemId", cmdId);
 		commandeFournisseur.merge();
+		checkAndInsertUbipharmActionsLogsInUIModel(uiModel);
+		return "commandprocesses/show";
+	}
+	private void checkAndInsertUbipharmActionsLogsInUIModel(Model uiModel){
+
 		if(sendedToUbipharm){
 			uiModel.addAttribute("apMessage", "Command Sended To Ubipharm.");
 			sendedToUbipharm = false;//reset value to false.
 		}
-		return "commandprocesses/show";
+		if(this.sendToUbipharmFailed) {
+			if(StringUtils.isBlank(ubipharmCommandSendingErrorMessage)){
+				this.ubipharmCommandSendingErrorMessage = "Command Not sended An Unexpected " +
+						"Error has been detected ! We are Working on that.";
+			}
+			uiModel.addAttribute("apMessage", this.ubipharmCommandSendingErrorMessage);
+			this.sendToUbipharmFailed = false;
+		}
 	}
-	
 	@RequestMapping(value="/ubipharm/{itemId}/send", method = RequestMethod.GET)
 	public String sendToUbipharm(@PathVariable("itemId")Long cmdId, Model uiModel){
 		
@@ -365,12 +386,59 @@ public class CommandProcessController {
 		importExportUtil.setCmdId(cmdId);
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		importExportUtil.exportCommandsToUbipharmTxt();
-		importExportUtil.checkIfNewlyReceivedCommand();
-		sendedToUbipharm= true ;
+		try {
+			importExportUtil.exportCommandsToUbipharmTxt();
+//			importExportUtil.checkIfNewlyReceivedCommand();
+			sendedToUbipharm= true ;
+		} catch (Exception e) {
+			this.sendToUbipharmFailed = true; 
+			this.ubipharmCommandSendingErrorMessage =  e.getMessage();
+		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
+	
+	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
+	public String importFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
+		String[] fileNames = new CsvImportExportUtil().getReceivedFiles();
+		for (String fileName : fileNames) {
+			if(!Etat.RECEIVED.equals(commandeFournisseur.getEtatCmd()) &&  fileName.startsWith(commandeFournisseur.getCmdNumber())){
+				CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
+				try {
+					LOG.warn("Start Import Of : "+fileName+" ...");
+					csvImportExportUtil.readCsvFile(CsvImportExportUtil.getReceptionFolder()+""+fileName);
+					FileSystemScanner.oldFiles.add(fileName);
+				} catch (Exception e) {
+					LOG.error("",e);
+					e.printStackTrace();
+				}
+				LOG.warn("... "+fileName+", Import Finished");
+			}else {
+				LOG.warn("File \""+fileName+"\" skipped");
+			}
+		}
+		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
+	}
+	@RequestMapping(value="/listcommandstoimport", method=RequestMethod.GET)
+	public String listCommandsToImport(Model uiModel,HttpServletRequest request){
+		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
+		List<CommandeFournisseur> listCommandToImports = csvImportExportUtil.listCommandToImport(
+				CommandeFournisseur.findCommandsByEtatCommand(Etat.EN_COUR).getResultList(), 
+				csvImportExportUtil.getReceivedFiles());
+		List<CommandeFournisseur> otherListCommandToImports = csvImportExportUtil.listCommandToImport(
+				CommandeFournisseur.findCommandsByEtatCommand(Etat.SENDED_TO_PROVIDER).getResultList(), 
+				csvImportExportUtil.getReceivedFiles());
+		for (CommandeFournisseur commandeFournisseur : otherListCommandToImports) {
+			listCommandToImports.add(commandeFournisseur);
+		}
+		if (listCommandToImports.isEmpty()) {
+			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur A importer pour le moment. Raffinez votre recherche ci-haut !" );
+		}else {
+			uiModel.addAttribute("results",listCommandToImports);
 
+		}
+		return "commandefournisseurs/search";
+	}
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/annulerCmd", method = RequestMethod.GET)
 	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel,
@@ -449,4 +517,8 @@ public class CommandProcessController {
 		return Arrays.asList(CommandType.class.getEnumConstants());
 	}
 
+	@ModelAttribute("etats")
+	public Collection<Etat> populateEtats() {
+		return Arrays.asList(Etat.class.getEnumConstants());
+	}
 }

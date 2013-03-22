@@ -2,6 +2,7 @@ package org.adorsys.adpharma.web;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,7 +50,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+/**
+ * @author adorsys-clovis
+ *
+ */
 @RequestMapping("/saleprocess")
 @Controller
 public class SaleProcessController {
@@ -625,7 +629,9 @@ public class SaleProcessController {
 	@ResponseBody
 	public String selectProduct(@PathVariable("pId") Long pId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(pId);
-		return	ligneApprovisionement.clone().toJson();
+		ligneApprovisionement.calculRemise();
+		/// return ligneApprovisionement.clone().toJson();
+		return ligneApprovisionement.toJson();
 	}
 	@Transactional
 	public void saveAndCloseCmd(CommandeClient commandeClient ,Caisse caisse , PharmaUser vendeur){
@@ -687,7 +693,9 @@ public class SaleProcessController {
 
 	// imprime les factures 
 	@RequestMapping(value = "/print/{invId}.pdf", method = RequestMethod.GET)
-	public String print(@RequestParam(value = "nom", required = false) String nom, @RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
+	public String print(@RequestParam(value = "nom", required = false) String nom,
+			 @RequestParam(value= "dateFacturation", required = false)  @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFacturation,
+			@RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
 		Facture facture = Facture.findFacture(invId);
 		if(remise!=null){
 			facture.setPrintWithReduction(remise);
@@ -696,6 +704,7 @@ public class SaleProcessController {
 		}
 		uiModel.addAttribute("facture", facture);
 		uiModel.addAttribute("nom", nom);
+		uiModel.addAttribute("dateFacturation", dateFacturation);
 		return "facturePdfDocViews";
 	}
 

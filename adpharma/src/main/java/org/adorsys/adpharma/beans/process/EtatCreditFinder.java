@@ -14,12 +14,12 @@ public class EtatCreditFinder {
 	private String EtatNumber ;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
-	private Date dateEdition ;
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date dateEditionMin ;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
-	private Date datePaiement;
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date dateEditionMax;
 	
 	private Boolean solder ;
 	
@@ -46,20 +46,22 @@ public class EtatCreditFinder {
 		EtatNumber = etatNumber;
 	}
 
-	public Date getDateEdition() {
-		return dateEdition;
+	
+
+	public Date getDateEditionMin() {
+		return dateEditionMin;
 	}
 
-	public void setDateEdition(Date dateEdition) {
-		this.dateEdition = dateEdition;
+	public void setDateEditionMin(Date dateEditionMin) {
+		this.dateEditionMin = dateEditionMin;
 	}
 
-	public Date getDatePaiement() {
-		return datePaiement;
+	public Date getDateEditionMax() {
+		return dateEditionMax;
 	}
 
-	public void setDatePaiement(Date datePaiement) {
-		this.datePaiement = datePaiement;
+	public void setDateEditionMax(Date dateEditionMax) {
+		this.dateEditionMax = dateEditionMax;
 	}
 
 	public Boolean getSolder() {

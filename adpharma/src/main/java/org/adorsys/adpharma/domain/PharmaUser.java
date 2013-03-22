@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.Temporal;
@@ -73,7 +74,7 @@ public class PharmaUser extends AdPharmaBaseEntity {
     	this.displayRole  =displayRole;
     }
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     private Set<RoleName> roleNames = new HashSet<RoleName>();
 
     private String phoneNumber;

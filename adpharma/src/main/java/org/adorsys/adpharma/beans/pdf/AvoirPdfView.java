@@ -30,7 +30,10 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
+/**
+ * @author adorsys-GKC
+ *
+ */
 @Component("avoirPdfView")
 public class AvoirPdfView extends   AbstractPdfView {
 	

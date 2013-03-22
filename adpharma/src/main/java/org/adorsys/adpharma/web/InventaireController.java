@@ -14,6 +14,7 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 import org.adorsys.adpharma.beans.importExport.LigneInventaireImportExportService;
+import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Inventaire;
@@ -148,7 +149,22 @@ public class InventaireController {
 		return "inventaireProcess/show";
 	}
 
-	
+	@RequestMapping(value = "/searchInv", method = RequestMethod.GET)
+	public String search(@RequestParam("name") String  name,  Model uiModel) {
+		
+		if("".equals(name)){
+			Integer page = 1;
+			Integer size = 50;
+			int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("inventaires", Inventaire.findInventaireEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) Inventaire.countInventaires() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		}else{
+				List<Inventaire> list = Inventaire.findInventaireByNomAgentLike(name).setMaxResults(50).getResultList();
+				uiModel.addAttribute("inventaires", list);
+		}
+		return "inventaires/list";
+	}
 
 	@RequestMapping(value = "/inventaireEnCour",method = RequestMethod.GET)
 	public String inventaireEnCour(Model uiModel,HttpServletRequest httpServletRequest ) {
