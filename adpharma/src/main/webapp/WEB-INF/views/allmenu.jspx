@@ -203,20 +203,16 @@ if(Check == false){
 									<li><a href="${four_list_url}">${providers_list}</a></li>
 								</ul></li>
 						</security:authorize>
-						<security:authorize
-							ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
-<<<<<<< HEAD
-							<li><a href="#">Mouvements de stock</a>
-=======
-						<spring:message code="allmenu_stockmanagement_stockmouvement" var="stockmouvement"/>
+						<security:authorize ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
+						   <spring:message code="allmenu_stockmanagement_stockmouvement" var="stockmouvement"/>
 							<li><a href="#">${stockmouvement }</a>
->>>>>>> 614aa29cb8b5fbea47b44b0294e1497930131d3b
 								<ul>
-						<spring:message code="allmenu_stockmanagement_stockmouvement_find" var="stockmouvement_find"/>
-						<spring:message code="allmenu_stockmanagement_stockmouvement_list" var="stockmouvement_list"/>
+									<spring:message code="allmenu_stockmanagement_stockmouvement_find" var="stockmouvement_find"/>
+									<spring:message code="allmenu_stockmanagement_stockmouvement_list" var="stockmouvement_list"/>
 									<li><a href="${mvt_search_url}">${stockmouvement_find }</a></li>
 									<li><a href="${mvt_list_url}">${stockmouvement_list }</a></li>
-								</ul></li>
+								</ul>
+							</li>
 						</security:authorize>
 					</ul></li>
 			</security:authorize>
@@ -308,17 +304,11 @@ if(Check == false){
 		        					</ul>
 		        			 </li> -->
 		        			 
-<<<<<<< HEAD
-		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
-                          <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
-                           <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
-=======
 			<spring:message code="cashregister_find_a_payment" var="find_a_payment"/>
 		        		  <li><a href="${cai_pays_url}">${find_a_payment }</a></li>
 			<spring:message code="cashregister_cash_collected" var="cash_collected"/>
                           <li><a href="${chiffre_affaire_url}">${cash_collected }</a></li>
                           <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
->>>>>>> 614aa29cb8b5fbea47b44b0294e1497930131d3b
 		        			 
 		        			  <!--  menu facturation-->
     
@@ -364,19 +354,16 @@ if(Check == false){
             <spring:url value="/clients?find=BySearch&amp;form" var="clt_findN_url"/>
             <spring:url value="/clients?find=ByClientNumberEquals&amp;form" var="clt_findcn_url"/>
             <spring:url value="/categorieclients?form" var="clt_cat_url"/>
-                <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="clt_catl_url"/>
-                <spring:url value="/etatcreditses?form" var="etat_credit_url"/>
-                                <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etatList_url"/>
-                                 <spring:url value="/etatcreditses?find=BySearch&amp;form" var="find_etat_url"/>
-                
-                
-                <spring:url value="/detteclients?find=BySearch&amp;form" var="clt_dets_url"/>
-                <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
-    
-                       <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+            <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="clt_catl_url"/>
+            <spring:url value="/etatcreditses?form" var="etat_credit_url"/>
+            <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etatList_url"/>
+            <spring:url value="/etatcreditses?find=BySearch&amp;form" var="find_etat_url"/>
+            <spring:url value="/detteclients?find=BySearch&amp;form" var="clt_dets_url"/>
+            <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 
        
-    </security:authorize>
+            </security:authorize>
     
       <!--  menu Fournisseur-->  
          <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
@@ -714,22 +701,17 @@ if(Check == false){
       </security:authorize>
       
       <!-- Changing theme -->
-<<<<<<< HEAD
       <c:set value="${pageContext.request.pathTranslated}" var="contexte" />
-      <spring:url value="${contexte}?theme=blueTheme" var="blue_theme" />
-      <spring:url value="${contexte}?theme=standard" var="green_theme" />
-=======
-      <spring:url value="/?theme=blueTheme" var="blue_theme_link" />
-      <spring:url value="/?theme=standard" var="green_theme_link" />
+      <spring:url value="${contexte}?theme=blueTheme" var="blue_theme_link" />
+      <spring:url value="${contexte}?theme=standard" var="green_theme_link" />
 
->>>>>>> 614aa29cb8b5fbea47b44b0294e1497930131d3b
       <security:authorize access="isAuthenticated()">
       	<spring:message code="allmenu_theme" var="theme" />
             <li><a href="#">${theme }</a>
 		        <ul>
       	<spring:message code="allmenu_green_theme" var="green_theme" />
       	<spring:message code="allmenu_blue_theme" var="blue_theme" />
-		          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a></li>
+		          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a>  <c:out value="${contexte}" /> </li>
 		          <li><a href="${blue_theme_link}" title="${blue_theme }">${blue_theme }</a></li>
 		        </ul>
 		    </li>      

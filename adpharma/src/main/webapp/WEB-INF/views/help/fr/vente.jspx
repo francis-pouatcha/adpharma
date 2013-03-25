@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
 <header class="jumbotron subhead" id="overview">
   <h1>Gestion Des Ventes </h1>
   <div class="subnav">
@@ -21,9 +24,16 @@
   <div class="row">
   	<div class="span5">
         <h3>Vente au Comptant</h3>
-      	<p>Nullam quis risus eget urna mollis ornare vel eu leo.
-      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
-      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+      	<p>
+      	    Pour ce type de vente, les encaissement se font au comptant(cash) à la caisse. Le client par défaut de la commande est <b>CLIENTS DIVERS</b>.<BR />
+      	    Mais il est possible de modifier ce client ou d'en créer un nouveau lors de la vente en cliquant sur le bouton <b>Infos Clients</b><BR />
+      	    Les remises sur le Net a payer(Remise NAP) sont permises lors de la vente en fonction de la remise accordée au vendeur et offrent deux possiblités: en montant ou en pourcentage.
+      	    Pour effectuer une vente au comptant, il faut proceder comme suit: 
+      	    <ul>
+      	        <li>Allez dans le menu <b>Ventes > Ventes au Comptant</b></li>
+      	        <li>Ajouter les produits a la commande et validez en cliquant sur <b>Cloturer la vente</b></li>
+      	    </ul>
+      	    <util:image-box height="250" alttext="Vente au Comptant" width="250" link="${ }" />
       	</p>
     </div>
     <div class="span5">

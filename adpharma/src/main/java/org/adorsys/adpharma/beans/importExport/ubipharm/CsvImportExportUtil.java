@@ -208,12 +208,12 @@ public class CsvImportExportUtil {
 
 	private void checkIfCommandFileIsTransferred(CommandeFournisseur commandeFournisseur)
 			throws InterruptedException, Exception {
-		java.util.logging.Logger.getGlobal().log(Level.INFO, "Execution Blocked for 15000 ms, To wait ubipharm to transfert the file");
+		java.util.logging.Logger.getLogger("").log(Level.INFO, "Execution Blocked for 15000 ms, To wait ubipharm to transfert the file");
 		Thread.sleep(15000);
-		java.util.logging.Logger.getGlobal().log(Level.INFO, "Scanning The ../exports Directory, to check if the file is transferred");
+		java.util.logging.Logger.getLogger("").log(Level.INFO, "Scanning The ../exports Directory, to check if the file is transferred");
 		String[] listFiles = FileUtil.listFiles(new File(getSendFolder()));
 		if(listFiles.length > 0){
-			java.util.logging.Logger.getGlobal().log(Level.INFO, "File Not Transferred ! " +
+			java.util.logging.Logger.getLogger("").log(Level.INFO, "File Not Transferred ! " +
 					"Please check If Ubipharm Module is Running on This Computer !");
 			throw new Exception("File Not Sended ! Please check If Ubipharm Module is Running on This Computer ! And Manually look " +
 					"if "+getSendFolder()+", Is Empty. Thanks !!!");
