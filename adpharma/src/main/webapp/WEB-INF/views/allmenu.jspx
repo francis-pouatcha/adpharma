@@ -558,60 +558,83 @@ if(Check == false){
             <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
             <spring:url value="/statistics/new?form" var="courbes" />        		
      
-           
+           <!-- Menu Supervision -->
+           <spring:message code="supervision_supervision_menu" var="supervision_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
             <li>
-        		<a href="#">Supervisions</a>
+        		<a href="#">${supervision_menu }</a>
         			 	<ul class="sub_menu">
 		        			
 		        			 <li>
-		        				<a href="#">Statistique</a>
+           <spring:message code="supervision_statistics_menu" var="statistics_menu"/>
+		        				<a href="#">${statistics_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_statis_url }">Courbe Chiffre D'affaire</a></li>
-		        					    <li><a href="${courbe_vente_url }">Panier Moyen</a></li>	
-		        					    <li><a href="${etat_vente_url }">Etat des ventes</a></li>	
-		        					    <li><a href="${courbes}">Courbes statistiques</a></li>		
+           <spring:message code="supervision_statistics_cash_collected" var="statistics_cash_collected"/>
+           <spring:message code="supervision_statistics_medium_order_set" var="statistics_medium_order_set"/>
+           <spring:message code="supervision_statistics_sales_report" var="statistics_sales_report"/>	
+           <spring:message code="supervision_statistics_statistics_graph" var="statistics_statistics_graph"/>	
+		        						<li><a href="${create_statis_url }">${statistics_cash_collected }</a></li>
+		        					    <li><a href="${courbe_vente_url }">${statistics_medium_order_set }</a></li>
+		        					    <li><a href="${etat_vente_url }">${statistics_sales_report }</a></li>
+		        					    <li><a href="${courbes}">${statistics_statistics_graph }</a></li>		
 		        					</ul>
 		        			 </li>
 		        			 <li>
-		        				<a href="#">Ordonnancier</a>
+           <spring:message code="supervision_ordonnancer_menu" var="ordonnancer_menu"/>
+		        				<a href="#">${ordonnancer_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_list_ord_url}">Lister</a></li>	
+           <spring:message code="supervision_ordonnancer_list" var="ordonnancer_list"/>
+		        						<li><a href="${conf_list_ord_url}">${ordonnancer_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			
 		        			
+           <spring:message code="supervision_conditionment_menu" var="conditionment_menu"/>
 
-		        			 <li>	<a href="#">Conditionnement</a>
+		        			 <li>	<a href="#">${conditionment_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_con_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_con_url}">Lister</a></li>	
+           <spring:message code="supervision_conditionment_add" var="conditionment_add"/>
+           <spring:message code="supervision_conditionment_list" var="conditionment_list"/>
+		        						<li><a href="${conf_con_url}"> ${conditionment_add }</a></li>
+		        						<li><a href="${conf_list_con_url}">${conditionment_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">Taux Margs</a>
+           <spring:message code="supervision_marginrate_menu" var="marginrate_menu"/>
+		        			  <li><a href="#">${marginrate_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_mrg_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_mrg_url}">Lister</a></li>	
+           <spring:message code="supervision_marginrate_add" var="marginrate_add"/>
+           <spring:message code="supervision_marginrate_list" var="marginrate_list"/>
+		        						<li><a href="${conf_mrg_url}"> ${marginrate_add }</a></li>
+		        						<li><a href="${conf_list_mrg_url}">${marginrate_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">T.V.A</a>
+           <spring:message code="supervision_tva_menu" var="tva_menu"/>
+		        			  <li><a href="#">${tva_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_tva_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_tva_url}">Lister</a></li>	
+           <spring:message code="supervision_tva_add" var="tva_add"/>
+           <spring:message code="supervision_tva_list" var="tva_list"/>
+		        						<li><a href="${conf_tva_url}"> ${tva_add }</a></li>
+		        						<li><a href="${conf_list_tva_url}">${tva_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <li>
-		        			 	<a href="#">Devises</a>
+           <spring:message code="supervision_devices_menu" var="devices_menu"/>
+		        			 	<a href="#">${devices_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_dev_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_dev_url}">Lister</a></li>	
+           <spring:message code="supervision_devices_add" var="devices_add"/>
+		        						<li><a href="${conf_dev_url}"> ${devices_add }</a></li>
+           <spring:message code="supervision_devices_list" var="devices_list"/>
+		        						<li><a href="${conf_list_dev_url}">${devices_list }</a></li>	
 		        					</ul>
 		        			 </li>
+           <spring:message code="supervision_filial_menu" var="filial_menu"/>
 		        			   <li>
-		        			 	<a href="#">Filiales</a>
+		        			 	<a href="#">${filial_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_filiale_url}"> Ajouter</a></li>
-		        						<li><a href="${filiale_list_url}">Lister</a></li>	
+           <spring:message code="supervision_filial_add" var="filial_add"/>
+           <spring:message code="supervision_filial_list" var="filial_list"/>
+		        						<li><a href="${create_filiale_url}"> ${filial_add }</a></li>
+		        						<li><a href="${filiale_list_url}">${filial_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			 <li><a href="${conf_list_site_url}">Sites</a></li>
