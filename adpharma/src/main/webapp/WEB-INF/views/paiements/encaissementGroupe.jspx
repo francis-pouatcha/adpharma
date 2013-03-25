@@ -22,10 +22,12 @@
 			<spring:url value="/resources/images/annuler.png"  var="annuler" />
 			<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
 	<div style="margin-bottom: 10px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}"> ENCAISSER PAIEMENT</a></span>
+	<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
+		<span class="firstTab selectedTab"><a href="${ edit_url}"> ${cashregister_collect }</a></span>
 		<span class="nextTab unselectedTab">
 		
-		<a href="${ find_client_url}">RECHERCHE CLIENTS</a>
+	<spring:message code="client_followup_find_client" var="find_client_text"/>
+		<a href="${ find_client_url}">${find_client_text }</a>
 		</span>
 	
 		</div>
@@ -99,17 +101,22 @@ function verif_formulaire()
 
 
      	<!-- afficher ce formulaire pour la mis a jour des ligne -->
-  
  <util:panel title="encaisser paiement groupe client  : ${paiementProcess.client }" id="paygrp">
 		<form action="${findclient_url}" method="post">
 		     <table style="margin-bottom: 10px;">
 		    	<tr>
-		    		<th style="text-align: center;">No CLIENT :</th>
-		    		<th style="text-align: center;">NOM COMPLET</th>
-		    		 <th style="text-align: center;">CREDIT AUTORISE ?</th>
-		    		<th style="text-align: center;">PLAFOND CREDIT</th>
-		    	   <th style="text-align: center;">TOTAL DETTE</th>
-		    				    		<th  style="text-align: center;">CATEGORIE</th>
+		    	<spring:message code="payment_customer_number" var="customer_number" />
+		    		<th style="text-align: center;">${customer_number } :</th>
+		    	<spring:message code="payment_customer_name" var="customer_name" />
+		    		<th style="text-align: center;">${customer_name }</th>
+		    	<spring:message code="payment_autorised_credits" var="autorised_credits" />
+		    		 <th style="text-align: center;">${autorised_credits } ?</th>
+		    	<spring:message code="payment_credit_max" var="credit_max" />
+		    		<th style="text-align: center;">${credit_max }</th>
+		    	<spring:message code="payment_total_debt" var="total_debt" />
+		    	   <th style="text-align: center;">${total_debt }</th>
+		    	   <spring:message code="label_org_adorsys_adpharma_domain_client_categorie" var="domain_client_categorie" />
+		    				    		<th  style="text-align: center;">${domain_client_categorie }</th>
 		    	</tr>
 		    		<tr>
 		    			<td style="text-align: center; width: 20px;">
@@ -161,6 +168,7 @@ function verif_formulaire()
             <tr>
                 <td class="tbcreate">                    
                              
+        <spring:message code="cashregister_paiement_amount" var="paiement_amount_text"/>
                              
     <field:select field="typePaiement" id="c_org_adorsys_adpharma_domain_Paiement_typePaiement" items="${typepaiements}" path="typepaiements" z="Dzs9YGtnaM4pJOnIYbIfZkx1xgU="/>
      <c:choose>
@@ -169,7 +177,7 @@ function verif_formulaire()
      <c:if test="${paiementProcess.factureSelected.typeCommande != payType }">
       
         <div>
-      <label for="_montant">Montant : </label>
+      <label for="_montant">${paiement_amount_text }: </label>
        <springform:input path="montant" id="montant" onKeyPress="return scanTouche(event)" maxlength="8" cssStyle="color:blue ; width: 212px;" />   
        </div>   
 <BR /> 
@@ -178,11 +186,10 @@ function verif_formulaire()
       <c:if test="${paiementProcess.factureSelected.typeCommande == payType  and paiementProcess.factureSelected.encaisser}">
                  <field:select field="quiPaye" id="c_org_adorsys_adpharma_domain_Paiement_quiPaye" items="${quipayes}" path="quipayes" z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q="/>
         <div>
-      <label for="_montant">Montant : </label>
+      <label for="_montant">${paiement_amount_text } : </label>
        <springform:input path="montant" id="montant" onKeyPress="return scanTouche(event)" maxlength="8" cssStyle="color:blue ; width: 212px;" />   
                   <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
        </div>   
- <BR /> 
  
      </c:if>
     
@@ -191,17 +198,19 @@ function verif_formulaire()
            <field:select field="quiPaye" id="c_org_adorsys_adpharma_domain_Paiement_quiPaye" items="${quipayes}" path="quipayes" z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q="/>
            <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="datePaiement" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
       <div>
-           <label for="_montant">Montant : </label>
+           <label for="_montant">${paiement_amount_text } : </label>
              <springform:input path="montant" cssStyle="color:blue ; width: 212px;" maxlength="8" onKeyPress="return scanTouche(event)"  id="montant"/> 
+ <BR /> 
              <b style="color: red; margin-left: 20px;"> <c:out value="${msgMontant}" ></c:out>  </b> 
                
        </div>   
  <BR />
       </c:otherwise>
      </c:choose>
-
+<spring:message code="" var="" />
  <div>
-      <label for="_sommeRecue">Somme Recue : </label>
+ <spring:message code="cashregister_paiement_received_cash" var="paiement_received_cash_text" />
+      <label for="_sommeRecue">${paiement_received_cash_text } : </label>
        <springform:input path="sommeRecue" onKeyPress="return scanTouche(event)" onkeyup="calculeReste()" onfocus="true"  id="sommeRecue" cssStyle=" width: 212px;" />   
 		     		  <b style="color: red; margin-left: 20px;"> <c:out value="${msgSommeRecue}" ></c:out>  </b> 
 
@@ -209,7 +218,8 @@ function verif_formulaire()
  <BR /> 
  
  <div>
-      <label for="_difference">Difference : </label>
+ <spring:message code="cashregister_paiement_balance" var="paiement_balance_text"/>
+      <label for="_difference">${paiement_balance_text } : </label>
        <springform:input path="difference" id="difference" cssStyle="color:red ; width: 212px;"  readonly="true"/>        
          
 </div>   
@@ -217,22 +227,28 @@ function verif_formulaire()
    </td>
  <c:if test="${paiementProcess.factureSelected.commande.typeCommande eq 'VENTE_A_CREDIT' }">
     <td valign="top" style="border: none;width: 300px; ">  
-    <P> 
-        <span><b>Client :</b>  ${paiementProcess.factureSelected.commande.client } </span> <BR /><BR />
-        <span> <b>Part client :</b> ${paiementProcess.detteclient}  fcfa</span>
+    <P>
+    <spring:message code="label_org_adorsys_adpharma_domain_etatdette_client" var="domain_etatdette_client_text"/> 
+        <span><b>${domain_etatdette_client_text } :</b>  ${paiementProcess.factureSelected.commande.client } </span> <BR /><BR />
+        <spring:message code="cashregister_paiement_customer_own" var="customer_own_text"/>
+        <spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation_text"/>
+        <span> <b>${customer_own_text } :</b> ${paiementProcess.detteclient}  ${currency_abbreviation_text }</span>
     
      </P>
      
      <P> 
-        <span><B>Payeur : </B> ${paiementProcess.factureSelected.commande.clientPaiyeur }  </span> <BR /> <BR />
-        <span><B>Part Payeur :</B> ${paiementProcess.dettePayeur}  fcfa</span>
+     <spring:message code="cashregister_paiement_buyer" var="paiement_buyer_text"/>
+     <spring:message code="cashregister_paiement_buyer_part" var="paiement_buyer_part_text"/>
+        <span><B>${paiement_buyer_text } : </B> ${paiementProcess.factureSelected.commande.clientPaiyeur }  </span> <BR /> <BR />
+        <span><B>${paiement_buyer_part_text }:</B> ${paiementProcess.dettePayeur}  fcfa</span>
     
      </P>
     </td>
   </c:if>
                 <td class="tbcreate">  
   <div>
-      <label for="_informations">  Informations : </label>
+  <spring:message  code="payment_information_text" var="information_text"/>
+      <label for="_informations">  ${information_text } : </label>
        <springform:textarea path="informations" id="informations" cssStyle="width: 300px; height: 200px; " />        
          
 </div> 
@@ -251,8 +267,8 @@ function verif_formulaire()
 		     
 		  
 		 <c:if test="${paiementProcess.showDetailForm }">
-	
-		  <page:show1 id="ps_org_adorsys_adpharma_domain_Paiement" clientLinks="showLink.jspx"  update="false" create="false" delete="false" list="false" label="Detail Paiement" object="${paiement}" path="/paiements" z="fyAeiwB2j9oF7Fya80SQjha1x/c=">
+	<spring:message code="payment_payment_details" var="payment_details_text"/>
+		  <page:show1 id="ps_org_adorsys_adpharma_domain_Paiement" clientLinks="showLink.jspx"  update="false" create="false" delete="false" list="false" label="${payment_details_text }" object="${paiement}" path="/paiements" z="fyAeiwB2j9oF7Fya80SQjha1x/c=">
          <table class="tblog">
             <tr>
                 <td class="tbcreate">
@@ -265,9 +281,10 @@ function verif_formulaire()
         
          </td>
                 <td class="tbcreate"> 
+                <spring:message code="payment_paid_amount" var="paid_amount_text"/>
         <field:display field="facture" id="s_org_adorsys_adpharma_domain_Paiement_facture" object="${paiement}" z="nFbbpMPfCzCLNeREJ0l2kt0w1UU="/>
         <field:display field="typePaiement" id="s_org_adorsys_adpharma_domain_Paiement_typePaiement" object="${paiement}" z="kZZuKGC+FADJuMZ8qnnMxAL0GDw="/>
-        <field:display field="montant" label="montant Paye" id="s_org_adorsys_adpharma_domain_Paiement_montant" object="${paiement}" z="3LPvtKnsGL75kwU63UYoyqKbsQw="/>
+        <field:display field="montant" label="${paid_amount_text }" id="s_org_adorsys_adpharma_domain_Paiement_montant" object="${paiement}" z="3LPvtKnsGL75kwU63UYoyqKbsQw="/>
         <field:display field="sommeRecue" id="s_org_adorsys_adpharma_domain_Paiement_sommeRecue" object="${paiement}" z="uis2mdlTSUK2jyPM0ehqSQ2cVwo="/>
         <field:display field="difference" id="s_org_adorsys_adpharma_domain_Paiement_difference" object="${paiement}" z="MsCBTALIlSIJ+b/wy/Xx9OFMOQ0="/>
         </td>
@@ -282,7 +299,8 @@ function verif_formulaire()
 		  
 	
 <c:if test="${not empty dettesSoldees }"> 
-<h3 style="color: green;"> Liste Des Dettes Soldees .</h3> 
+<spring:message code="payment_list_paid_debt" var="list_paid_debt_text"/>
+<h3 style="color: green;"> ${list_paid_debt_text } .</h3> 
    <table:table data="${dettesSoldees}" create="false" delete="false" show="false" id="l_org_adorsys_adpharma_domain_DetteClient" path="/detteclients" update="false" z="user-managed">
             <table:column id="s_org_adorsys_adpharma_domain_DetteClient_clientNo" property="clientNo" z="GBRRK/qRFTC2P3oMyBcRGL1XRKM="/>
             <table:column id="s_org_adorsys_adpharma_domain_DetteClient_factureNo" property="factureNo" z="Mh8t4CIOJgofup34Oi+mqFXQm0E="/>
