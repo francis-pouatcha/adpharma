@@ -289,8 +289,11 @@
 					onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CiP</th>
-							<th style="text-align: center;">Designation</th>
+			<spring:message code="saleprocess_default_cip" var="default_cip_text"/>
+							<th style="text-align: center;">${default_cip_text }</th>
+			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
+							<th style="text-align: center;">${product_designation_text }</th>
+			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
 							<th style="text-align: center;">Stock</th>
 							<th style="text-align: center;">Stock alert</th>
 							<th style="text-align: center;">qte cmd</th>
