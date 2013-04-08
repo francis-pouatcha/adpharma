@@ -701,20 +701,57 @@ if(Check == false){
       </security:authorize>
       
       <!-- Changing theme -->
-      <c:set value="${pageContext.request.pathTranslated}" var="contexte" />
-      <spring:url value="${contexte}?theme=blueTheme" var="blue_theme_link" />
-      <spring:url value="${contexte}?theme=standard" var="green_theme_link" />
-
       <security:authorize access="isAuthenticated()">
-      	<spring:message code="allmenu_theme" var="theme" />
-            <li><a href="#">${theme }</a>
-		        <ul>
-      	<spring:message code="allmenu_green_theme" var="green_theme" />
-      	<spring:message code="allmenu_blue_theme" var="blue_theme" />
-		          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a>  <c:out value="${contexte}" /> </li>
-		          <li><a href="${blue_theme_link}" title="${blue_theme }">${blue_theme }</a></li>
-		        </ul>
-		    </li>      
+            
+              <c:set value="${pageContext.request.pathTranslated}" var="contexte" />
+		      <!-- Construct urls -->
+		      <!-- URL du theme bleu -->
+		      <spring:url value="${contexte}" var="blue_theme_link">
+		           <c:if test="${not empty param}">
+		                  <c:if test="${not empty param.page}">
+		                     <spring:param name="page" value="${param.page}" />
+		                  </c:if>
+		                  <c:if test="${not empty param.size}">
+		                     <spring:param name="size" value="${param.size}" />
+		                  </c:if>
+		                  <c:if test="${null ne param.form}">
+                               <spring:param name="form" />
+                          </c:if>
+		                  <spring:param name="theme" value="blueTheme" />
+		          </c:if>
+		          <c:if test="${empty param}">
+		            <spring:param name="theme" value="blueTheme" />
+		          </c:if>
+		      </spring:url>
+		      
+		      <!-- URL du theme vert -->
+		      <spring:url value="${contexte}" var="green_theme_link">
+		           <c:if test="${not empty param}">
+		                  <c:if test="${not empty param.page}">
+		                     <spring:param name="page" value="${param.page}" />
+		                  </c:if>
+		                  <c:if test="${not empty param.size}">
+		                     <spring:param name="size" value="${param.size}" />
+		                  </c:if>
+		                  <c:if test="${null ne param.form}">
+                               <spring:param name="form" />
+                          </c:if>
+		                  <spring:param name="theme" value="standard" />  
+		           </c:if>
+		           <c:if test="${empty param}">
+		            <spring:param name="theme" value="standard" />
+		          </c:if>   
+		      </spring:url>
+            
+	      	  <spring:message code="allmenu_theme" var="theme" />
+	            <li><a href="#">${theme }</a>
+			        <ul>
+	      	<spring:message code="allmenu_green_theme" var="green_theme" />
+	      	<spring:message code="allmenu_blue_theme" var="blue_theme" />
+			          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a> </li>
+			          <li><a href="${blue_theme_link}" title="${blue_theme }">${blue_theme }</a></li>
+			        </ul>
+			    </li>      
       </security:authorize>
       
       

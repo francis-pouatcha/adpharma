@@ -7,6 +7,7 @@
 	xmlns:spring="http://www.springframework.org/tags" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
+	
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	<spring:url value="/saleprocess/0/findProduct" var="find_product_url" />
 	<spring:url value="/saleprocess/0/selectProduct" var="select_product_url" />

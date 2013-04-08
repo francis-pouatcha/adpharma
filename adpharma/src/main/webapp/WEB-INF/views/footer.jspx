@@ -16,9 +16,9 @@ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" id="footer" version="2.0">
   
     <div id="footer1" >
 		<center>	
-		<a href="http://adorsys.cm" style="color: #eee"> ADORSYS S.A</a>  
-        Phones : +237 33 42 32 44 / 99 93 99 48 
-		<span style="float: right; font-weight: bold; color: white;">Languages | <util:language locale="fr" label="francaise"/> <util:language locale="en" label="anglaise"/></span>
+			<a href="http://adorsys.cm" style="color: #eee"> ADORSYS S.A</a>  
+	        Phones : +237 33 42 32 44 / 99 93 99 48 
+			
 		</center>
     </div>
 

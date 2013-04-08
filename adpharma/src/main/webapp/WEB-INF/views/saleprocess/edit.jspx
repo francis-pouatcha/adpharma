@@ -28,17 +28,15 @@
 		<spring:message code="saleprocess_update"  var="update_line"/>
 		<spring:message code="saleprocess_cancel"  var="cancel_line"/>
 		<spring:message code="allmenu_users_add"  var="add_action"/>
-		
 		<spring:message code="saleprocess_close_sale"  var="close_sale"/>
 		<spring:message code="saleprocess_save_command"  var="save_command"/>
-		
-                <spring:message code="label_org_adorsys_adpharma_domain_client_nom" var="client_nom"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_prenom" var="client_prenom"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_sexe" var="client_sex"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_telephonemobile" var="client_telephonemobile"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_email" var="client_email"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_employeur" var="client_employeur"/>
-                <spring:message code="label_org_adorsys_adpharma_domain_client_note" var="client_note"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_nom" var="client_nom"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_prenom" var="client_prenom"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_sexe" var="client_sex"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_telephonemobile" var="client_telephonemobile"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_email" var="client_email"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_employeur" var="client_employeur"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_note" var="client_note"/>
 		<spring:message code="saleprocess_cancel_sale"  var="cancel_sale"/>
 		<spring:message code="saleprocess_prescription_book"  var="prescription_book"/>
 		<spring:message code="saleprocess_prescription_book_description"  var="prescription_book_description"/>
@@ -47,41 +45,39 @@
 		<spring:message code="saleprocess_product_date_of_record"  var="product_date_of_record"/>
 		<spring:message code="saleprocess_product_provider"  var="product_provider"/>
 		<spring:message code="saleprocess_product_dosage"  var="product_dosage"/>
-								<spring:message code="saleprocess_apply" var="apply_text"/>
-								<spring:message code="saleprocess_discount_nettopay" var="discount_nettopay_text"/>
-						<spring:message code="saleprocess_total_command" var="total_command" />
-						<spring:message code="saleprocess_total_discount" var="total_discount" />
-						<spring:message code="saleprocess_net_to_pay" var="net_to_pay" />
-								<spring:message code="saleprocess_again_and_again" var="again_and_again" />
-							<spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation" />
-						<spring:message code="saleproccess_update_command" var="update_command" />
-								<spring:message code="saleprocess_unselect_product" var="unselect_product"  />
+		<spring:message code="saleprocess_apply" var="apply_text"/>
+		<spring:message code="saleprocess_discount_nettopay" var="discount_nettopay_text"/>
+		<spring:message code="saleprocess_total_command" var="total_command" />
+		<spring:message code="saleprocess_total_discount" var="total_discount" />
+		<spring:message code="saleprocess_net_to_pay" var="net_to_pay" />
+		<spring:message code="saleprocess_again_and_again" var="again_and_again" />
+		<spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation" />
+		<spring:message code="saleproccess_update_command" var="update_command" />
+		<spring:message code="saleprocess_unselect_product" var="unselect_product"  />
 		<spring:message code="saleprocess_client_code" var="client_code"/>
 		<spring:message code="saleprocess_client_dettes" var="client_dettes"/>
 		<spring:message code="saleprocess_client_credible" var="client_credible"/>
 		<spring:message code="saleprocess_product_out"  var="product_product_out"/>
 		
 		
- <script type="text/javascript">
-
-function annCmd(){
-	Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
-	if(Check == false){
-		return false;
-		
-	}else{
-		return true;
-	}
-	}
-	
-
-
+<script type="text/javascript">
+		function annCmd(){
+			Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
+			if(Check == false){
+				return false;
+				
+			}else{
+				return true;
+			}
+			}
 </script>
-	<div style="margin-bottom: 2px; padding-bottom: 2px;">
+	<!--  <div style="margin-bottom: 20px; padding-bottom: 2px; border: 1px solid black;">
 		<span id="cmdName" style="font-weight: bold"> <c:out
 				value="${saleProcess.displayName}" />
 		</span>
-	</div>
+	</div>-->
+	<util:display-box display="${saleProcess.displayName}" />
+	
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit"
 		var="edit_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct"   var="find_product_url" />
@@ -796,7 +792,7 @@ $('#updateClient').dialog("close");
 					<th style="text-align: center;">${inhouse_cip }</th>
 					<th style="text-align: center;">${default_cip }</th>
 					<th style="width: 400px; text-align: center;">${product_designation }</th>
-					<th style="text-align: center;">${product_unit_pric }</th>
+					<th style="text-align: center; text-transform: uppercase;">${product_unit_price}</th>
 					<th style="text-align: center;">${product_qty }</th>
 					<th style="text-align: center;">${product_total_price }</th>
 					<th style="text-align: center;">${product_discount }</th>

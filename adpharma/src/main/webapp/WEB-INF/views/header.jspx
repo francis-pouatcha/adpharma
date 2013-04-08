@@ -12,18 +12,24 @@
  <spring:url var="logoutimage" value="/resources/images/logout.png" />
  <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />
  <spring:url var="home" value="/?lang=fr" /> 
- <spring:message code="button_home" var="home_label" />
  <spring:url var="user" value="/resources/images/usericon.png" />
  <spring:url var="search" value="/resources/images/search.png" />
  <spring:url var="dropdown" value="/resources/images/zonebar-downarrow.png" />
  <spring:url var="logoutimage" value="/resources/images/logout.png" />
  <spring:url var="home" value="/" />
  <spring:url var="img" value="/resources/images/logo.png" />
- <spring:message code="button_home" var="home_label" />
  <spring:url value="/resources/j_spring_security_logout" var="logout"/>
+ <spring:url value="/resources/images/icon-16-logout.png" var="icon_logout" />
+ 
+ 
+ <spring:message code="button_home" var="home_label" />
+ <spring:message code="button_home" var="home_label" />
  <spring:message code="security_logout"  var="msg_logout"/>
  <spring:message code="security_login"  var="msg_login"/>
  <spring:message code="security_user_infos"  var="msg_user"/>
+ <spring:message code="welcome_user1" var="welcome1" /> 
+ <spring:message code="welcome_user2" var="welcome2" />
+ <spring:message code="lang_user" var="lang_user" />
 
   
 <script type="text/javascript">
@@ -85,10 +91,9 @@
 		});
 </script>
 
- 
        
-<table  style="border:none;">
-  <tr>
+<table  style="border:none; background: none;">
+  <tr style="background: none;">
     <td class="tbleft" >
  		<a style="text-decoration: none" href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
 			<img src="${img}"  alt="DZone"  />
@@ -98,17 +103,22 @@
 			<div id="right-side">
 				<c:choose>
 	  				<c:when test="${pageContext['request'].userPrincipal != null}">
-	  			  <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
-			  		<a href="#"  > Bienvenue 	${pageContext['request'].userPrincipal.name}</a> Sur  ${sessionBean.connectedSiteName}
-			    	<a id="userInfos" title="cliquer pour voir vos Infos" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
+		  			    <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
+				  		<a href="#" class="welcome_user"> <span>${welcome1} </span> ${pageContext['request'].userPrincipal.name}</a> <span style="margin-left: 5px; margin-right: 5px; color: #6FEFC9;">${welcome2}</span> 
+				  		<span style="color: #6FEFC9;">${sessionBean.connectedSiteName}</span>
+				    	<a id="userInfos" title="Vos Informations" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
+				    	<a href="#">
+			             ${lang_user}: <util:language locale="fr" label="Français"/> <util:language locale="en" label="English"/>
+			            </a>
 	  				</c:when>
 	  			</c:choose>
 				<c:choose>
 	  				<c:when test="${pageContext['request'].userPrincipal != null}">
-					     <a href="${logout}" style="margin-rigth: 1px;margin-left:  1px;padding-right: 1px;"  onclick="return confHeader();" >
+					     <a href="${logout}" style="margin-rigth: 1px;margin-left: 1px;padding-right: 1px;"  onclick="return confHeader();" >
+					       <img src="${icon_logout}" alt="Logout" title="${msg_logout}"/>
 					       ${msg_logout}
 					     </a> 
-					          <spring:url var="setLicence_url" value="#" />
+					     <spring:url var="setLicence_url" value="#" />
 	  				</c:when>
 	  				<c:otherwise>
 	  				     <spring:url var="setLicence_url" value="/licenceentitys/setLicence" />

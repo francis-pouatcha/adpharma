@@ -212,15 +212,22 @@ font-size: 1em;
 	font-weight: bold;
 }
 .tbleft {
-	background: none repeat scroll 0 0 #58A618 !important; /* Digg green */
+	background: none repeat scroll 0 0 #015A08 !important; /* Digg green */
 	border: none;
 	width: 25%;
-	
+	-webkit-border-radius: 10px 0 0 0;
+    -moz-border-radius: 10px 0 0 0;
+    -o-border-radius: 10px 0 0 0;
+	border-radius: 10px 0 0 0;
 }
 .tbrigth {
-	background: none repeat scroll 0 0 #58A618 !important; /* Digg green */
+	background: none repeat scroll 0 0 #015A08 !important; /* Digg green */
 	border: none;
 	width: 75%;
+	-webkit-border-radius: 0 10px 0 0;
+    -moz-border-radius: 0 10px 0 0;
+    -o-border-radius: 0 10px 0 0;
+	border-radius: 0 10px 0 0;
 }
 
 
@@ -307,13 +314,6 @@ table.result a:visited {
 	color: #7db223;
 }
 
-}
-p.appMessage {
-	font-weight: bold;
-	text-transform: uppercase;
-	font-size: 25px;
-	font-style: italic;
-}
 
 .submits { 
    /*	border: 1px solid #BBBBBB;
@@ -346,8 +346,6 @@ p.appMessage {
 }
 
 
-
-
 .submits:hover {
 	background: 00FF66 transparent;
 	-moz-box-shadow: 2px 2px 8px #000;
@@ -357,9 +355,14 @@ p.appMessage {
 
 #header {
 	margin-bottom: 0px;
-	background-color: #00FF66;
+	/* background-color: #00FF66; */
+	background-color: #58A618;
 	padding: 5px;
-	
+	border-radius: 10px 10px 0 0;
+}
+
+.welcome_user{
+	margin-right: 4px;
 }
 
 #_topmenu {
@@ -463,8 +466,8 @@ p.appMessage {
 
 #footer {
 	margin-bottom: 0px;
-	/* background-color: #33CCFF; */
-	background-color: #00FF66;
+	/* background-color: #00FF66; */
+	background-color: #58A618;
 	padding: 5px;
 }
 
@@ -1053,6 +1056,7 @@ p {
 	margin-bottom: 1.2em;
 }
 
+
 a img {
 	border: none;
 }
@@ -1110,6 +1114,7 @@ a:hover {
 	vertical-align: center;
 	font-weight: bold;
 	text-transform: uppercase;
+	font-size: 12px;
 }
 
 #right-side img {
@@ -1121,6 +1126,8 @@ a:hover {
 	border-left: 1px solid white;
 	height: 10px;
 	padding-left: 10px;
+	font-size: 10px;
+	text-shadow: 2px 2px 2px #333;
 }
 
 #right-side a.first {
@@ -1262,7 +1269,7 @@ form#main-search label {
 }
 
 #footer1 {
-	background: #58A618;
+	background: #015A08;
 	padding: 5px;
 	color: white;
 	font-size: 12px;
@@ -1271,8 +1278,5 @@ form#main-search label {
 #footer1 a {
 	color: white;
 }
-
-
-
 
 

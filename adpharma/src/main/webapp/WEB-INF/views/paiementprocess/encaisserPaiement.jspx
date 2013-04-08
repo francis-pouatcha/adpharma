@@ -475,12 +475,9 @@
 				</table>
 			</form>
 			<c:if test="${not empty apMessage}">
-				<hr />
 				<center>
 					<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
 				</center>
-				<hr />
-
 			</c:if>
 			<c:if test="${paiementProcess.showPostForm }">
 				<!--  formulaire de paiement -->

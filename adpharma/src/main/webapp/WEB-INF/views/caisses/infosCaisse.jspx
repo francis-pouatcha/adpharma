@@ -7,26 +7,17 @@
  
   <util:panel id="title" title="Message D'Information">
     <div style="overflow-y: scroll; height: 600px;">
-  
- <center style="text-transform: uppercase;">
- 
- <c:if test="${not empty apMessage}">
-		<hr/>
-			<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-		<hr/>
-		
-</c:if>
+       <center style="text-transform: uppercase;">
+			 <c:if test="${not empty apMessage}">
+				<p class="appMessage">${apMessage}</p>
+			</c:if>
 	
-  <c:if test="${not empty appMessages}">
-		<hr/>
-		<c:forEach var="appMessage" items="${appMessages}">
-			<p class="appMessage" style="color: green; margin-bottom: 1px;">${appMessage}</p>
-		</c:forEach>
-				<hr/>
-		
-	</c:if>
-</center>
-  </div>
-
+		    <c:if test="${not empty appMessages}">
+				<c:forEach var="appMessage" items="${appMessages}">
+					<p class="appMessage">${appMessage}</p>
+				</c:forEach>
+			</c:if>
+       </center>
+    </div>
   </util:panel>
 </div>

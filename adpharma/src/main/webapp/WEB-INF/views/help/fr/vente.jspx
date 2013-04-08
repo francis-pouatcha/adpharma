@@ -3,6 +3,19 @@
  xmlns:tiles="http://tiles.apache.org/tags-tiles"
  xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
  xmlns:spring="http://www.springframework.org/tags">
+ 
+ 
+ <spring:url value="/resources/images/documentation/ventes/vente_cash.png" var="sales_cash" />
+ <spring:url value="/resources/images/documentation/ventes/vente_credit.png" var="sales_credit" />
+ <spring:url value="/resources/images/documentation/ventes/proformat.png" var="sales_proformat" />
+ <spring:url value="/resources/images/documentation/ventes/print_bill.png" var="print_bill" />
+ <spring:url value="/resources/images/documentation/ventes/print_bill1.png" var="print_bill1" />
+ <spring:url value="/resources/images/documentation/ventes/print_ticket.png" var="print_ticket" />
+ <spring:url value="/resources/images/documentation/ventes/print_ticket2.png" var="print_ticket2" />
+ <spring:url value="/resources/images/documentation/ventes/cancel_sale.png" var="cancel_sale" />
+ <spring:url value="/resources/images/documentation/ventes/restore_sale.png" var="restore_sale" />
+ 
+ 
 <header class="jumbotron subhead" id="overview">
   <h1>Gestion Des Ventes </h1>
   <div class="subnav">
@@ -33,21 +46,46 @@
       	        <li>Allez dans le menu <b>Ventes > Ventes au Comptant</b></li>
       	        <li>Ajouter les produits a la commande et validez en cliquant sur <b>Cloturer la vente</b></li>
       	    </ul>
-      	    <util:image-box height="250" alttext="Vente au Comptant" width="250" link="${ }" />
+      	    <util:image-box height="250" alttext="Vente au Comptant" width="250" link="${sales_cash}" />
       	</p>
     </div>
     <div class="span5">
       	<h3>Vente à Credit</h3>
-      	<p>Nullam quis risus eget urna mollis ornare vel eu leo.
-      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
-      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+      	<p>
+      	   Pour une vente à credit, il faut preciser tout d'abord renseigner les informations suivantes: 
+      	   <ul>
+      	     <li>Le client. C'est celui qui effectue la commande a credit</li>
+      	     <li>Le payeur. C'est celui qui paye une partie de la commande</li>
+      	     <li>Le taux de couverture. C'est le taux du montant que devra couvrir le client payeur</li>
+      	     <li>Le numéro de bon. C'est le numero fournit par le client payeur au client afin de garder une trace de l'action effectuée</li>
+      	   </ul>
+      	   Pour effectuer une vente à crédit, procedez comme suit:
+      	   <ul>
+      	      <li>Allez dans le menu <b>Ventes > Vente à Credit</b></li>
+      	      <li>Remplissez les informations du client et validez en cliquant sur <b>Enregistrer</b></li>
+      	      <li>Ensuite, ajoutez les produits à la commande, puis cliquez sur <b>Cloturer la vente</b></li>
+      	   </ul>
+      	   <util:image-box height="250" alttext="Vente a credit" width="250" link="${sales_credit}" />
       	</p>
     </div>
     <div class="span5">
       	<h3>Vente Proformat</h3>
-      	<p>Nullam quis risus eget urna mollis ornare vel eu leo.
-      	 Cum sociis natoque penatibus et magnis dis parturient montes, 
-      	 nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+      	<p>
+      	  Une Vente proformat est un devis de commande que l'on propose à un client. 
+      	  Ces ventes pourront être par la suite converties en ventes publiques ou en vente à crédit.
+      	  Pour créer une vente proformat, il faut proceder comme suit:
+      	  <ul>
+      	      <li>Allez dans le menu Ventes > Facture Proformat</li>
+      	      <li>Entrez les produits a la commande et ensuite validez en cliquant sur <b>Cloturer la vente</b></li>	
+      	  </ul>
+      	  Une fois que le client a confirmé votre facture proformat, au moment ou il viens payer, validez la proformat en procédant comme suit:
+      	  <ul>
+      	      <li>Allez dans le menu Ventes > Lister les Ventes</li>
+      	      <li>Rechercher la vente proformat en entrant le nom du client dans le champ de recherche</li>
+      	      <li>Ensuite, double-cliquez sur le lien de la commande proformat trouvée</li>
+      	      <li>Dans la page de détails de la commande proformat, cliquez sur le bouton <b>Convertir Vente Public</b> pour effectuer la conversion automatique de cette proformat</li>
+      	  </ul>
+      	  <util:image-box height="250" alttext="Vente Proformat" width="250" link="${sales_proformat}" /> 
       	</p>
     </div>
   </div>  
@@ -58,16 +96,67 @@
     <h1>Impressions</h1>
   </div>
   <div class="row">
-  	<div class="span5">
-      <h3>Imprimer une Facture</h3>
+  	<div class="span7">
+      <h3>Imprimer une Facture de caisse</h3>
       <p>
-        Nullam id dolor id nibh ultricies vehicula ut id elit.
+       pour imprimer une facture de caisse, vous pouvez proceder de deux façons selon votre besoin
+       <ul style="list-style-type: decimal;">
+           <li> 
+                <h5>Impression rapide de la facture</h5>
+                 Pour cela, procedez comme suit:
+                <ul> 
+                  <li> Recherchez la vente en allant dans le menu <b>Ventes > Lister les Ventes</b> ou dans le menu <b>Ventes > Rechercher une Vente</b></li>
+                  <li>Une fois la vente trouvée, faites un clic sur le lien de la vente pour ouvrir le dialogue des détails de la vente.</li>
+                  <li>Ensuite, cliquez sur le lien <b>Facture de caisse</b> pour imprimer la facture de caisse</li>
+                </ul>
+                <util:image-box height="250" alttext="Impression de la facture de caisse" width="250" link="${print_bill}"/>
+           </li>
+           <li>
+              <h5>Impression avec modification de l'en-tete de la facture</h5>
+              Pour cela, procedez comme suit:
+              <ul>
+                <li> Recherchez la vente en allant dans le menu <b>Ventes > Lister les Ventes</b> ou dans le menu <b>Ventes > Rechercher une Vente</b></li>
+                <li>Une fois la vente trouvée, faites un double-clic sur le lien de la vente pour afficher les details de la vente</li>
+                <li>Cliquez sur le bouton <b>Imprimer la facture</b></li>
+                <li>Entrez les elements de l'en-tête: <b>Facture avec remise, Nom complet du client, Date de facturation</b> et cliquez sur <b>Imprimer.</b></li>
+              </ul>
+              <util:image-box height="250" alttext="Impression de la facture de caisse" width="250" link="${print_bill1}"/>
+           </li>
+        </ul>
       </p>
     </div>
-    <div class="span5">
+    <div class="span7">
       <h3>Imprimer un Ticket de caisse</h3>
       <p>
-        Nullam id dolor id nibh ultricies vehicula ut id elit.
+        On peut imprimer les tickets de caisse de deux facons:
+        <ul style="list-style-type: decimal;">
+           <li>
+               <h5>Impression avec remise</h5>
+               Pour imprimer un ticket de caisse avec remise, procedez comme suit:
+               <ul>
+                  <li>Rechercher la vente de 2 facons:
+                     <ul style="list-style-type: circle;">
+                        <li>Soit vous allez dans le menu <b>Ventes > Lister les ventes </b>, entrez le nom du client dans le champ de recherche et validez en tapant <b>ENTRER</b></li>
+                        <li>Soit vous allez dans le menu <b>Ventes > Rechercher une Vente</b>, entrez les critères de recherche et validez en cliquant sur <b>Enregistrer</b> </li>
+                     </ul>
+                  </li>
+                  <li>Cliquez sur le lien de la vente ensuite cliquez sur le lien ticket de caisse sur le dialogue qui s'affiche</li>
+                  <util:image-box height="250" alttext="Imprimer Ticket de caisse" width="250" link="${print_ticket}" />
+               </ul>
+               
+           </li>
+           <li>
+               <h5>Impression sans remise</h5>
+               Pour imprimer un ticket de caisse sans remise, procedez comme suit:
+               <ul>
+                 <li> Allez dans le menu <b>Caisses > Rechercher un Paiement</b> </li>
+                 <li> Entrez les critères de recherche de paiement(N.B.: un paiement est lie a une facture) et cliquez sur enregistrer</li>
+                 <li> Une fois le paiement trouvé, double-cliquez sur le lien du paiement</li>
+                 <li> Dans les détails du paiement, cliquez sur le bouton <b>Ticket sans remise</b></li>
+               </ul>
+               <util:image-box height="250" alttext="Imprimer Ticket de caisse sans remise" width="250" link="${print_ticket2}" />
+           </li>
+        </ul> 
       </p>
     </div>
   </div>  
@@ -78,19 +167,50 @@
     <h1>Autres Opérations</h1>
   </div>
   <div class="row">
-  	<div class="span5">
-      <h3>Annuler une facture</h3>
+    <div class="span5">
+      <h3>Rechercher une vente</h3>
       <p>
-         Nullam id dolor id nibh ultricies vehicula ut id elit.
+         La recherche d'une vente peut s'éffectuer de deux façons:
+         <ul>
+            <li>Soit vous allez dans le menu <b>Ventes > Lister les ventes</b>, ensuite vous entrez le nom client dans le champ de recherche et validez la recherche en tapant <b>ENTRER</b> </li>
+            <li> Soit vous allez dans le menu <b>Ventes > Rechercher une vente </b>. Vous entrez les critères de recherche  et validez en cliquant sur <b>Enregistrer</b></li>
+         </ul>
+      </p>
+    </div>
+  	<div class="span5">
+      <h3>Annuler une vente</h3>
+      <p>
+         L'annulation d'une vente ne supprime pas la vente, elle la désactive de telle façon qu'elle ne puisse pas etre encaissée à la caisse.
+         Pour annuler une vente, procedez comme suit:
+         <ul>
+            <li>Rechercher la vente, ensuite double-cliquez sur le lien de la vente</li>
+            <li>Cliquez sur le bouton <b>Annuler</b> et un message de confirmation de l'annulation sera affiché</li>
+         </ul>
+         <util:image-box height="250" alttext="Annuler une vente" width="250" link="${cancel_sale}" />
       </p>
     </div>
     <div class="span5">
-      <h3>Effectuer un retour de produits</h3>
+      <h3>Restaurer une vente</h3>
       <p>
-         Nullam id dolor id nibh ultricies vehicula ut id elit.
+         Tout comme on annule une vente, il est possible de la restaurer pour permettre qu'on puisse l'encaisser. Pour cela, procedez comme suit:
+         <ul>
+            <li>Rechercher la vente, ensuite double-cliquez sur le lien de la vente</li>
+            <li>Cliquez sur le bouton <b>Restaurer</b> et un message de confirmation de la restauration sera affiché</li>
+         </ul>
+         <util:image-box height="250" alttext="Restaurer une vente" width="250" link="${restore_sale}" />
       </p>
     </div>
-  </div>  
+  </div> 
+  <div class="row">
+      <div class="span4">
+      <h3>Effectuer un retour de produits</h3>
+      <p>
+         Effectuer un retour de produits est un mode de gestion laissé au choix de chaque pharmacie. 
+         Le retour de produits ici consiste à annuler une facture déjà encaissée. 
+         C'est une opération très delicate qu'il faut entreprendre avec précaution sinon elle va créer une incoherence dans le stock.
+      </p>
+    </div>
+  </div> 
 </section>
 </article>
 

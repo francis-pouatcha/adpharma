@@ -13,11 +13,14 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<div style="margin-bottom: 2px; padding-bottom: 2px;">
+	<!--  <div style="margin-bottom: 2px; padding-bottom: 2px;">
 		<span style="font-weight: bold"> <c:out
 				value="${commandeProcess.displayName}" />
 		</span>
-	</div>
+	</div> -->
+	
+	<util:display-box display="${commandeProcess.displayName}" />
+	
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
 	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form" var="edit_url" />

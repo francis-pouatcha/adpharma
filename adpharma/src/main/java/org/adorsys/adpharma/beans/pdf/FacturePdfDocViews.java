@@ -44,7 +44,8 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 
 		Facture facture = (Facture) model.get("facture");
 		if(facture == null){
-			document.add(new Phrase("\n\n\n aucune facture trouvee !"));
+			document.add(new Phrase("\n\n\n LA VENTE N'A PAS ETE CLOTUREE !\n"));
+			document.add(new Phrase("AUCUNE FACTURE TROUVEE..."));
 			return ;
 		}
 		String nom = (String) model.get("nom");
