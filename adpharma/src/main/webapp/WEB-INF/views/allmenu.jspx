@@ -324,7 +324,7 @@ if(Check == false){
             <a href="#">${billing_menu }</a>
         			 	<ul class="sub_menu">
 			<spring:message code="cashregister_billing_invoice_payment" var="billing_invoice_paiement"/>
-        			 		<li><a href="${find_pay_url}">${billing_invoice_paiement }</a></li>
+        			 		<!-- - <li><a href="${find_pay_url}">${billing_invoice_paiement }</a></li>-->
 			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
         			 	    <li><a href="${conf_fdp_url}"> ${billing_invoice_search }</a></li>
         			 		
@@ -717,6 +717,9 @@ if(Check == false){
 		                  <c:if test="${null ne param.form}">
                                <spring:param name="form" />
                           </c:if>
+                          <c:if test="${null ne param.find}">
+                               <spring:param name="find" value="${param.find}" />
+                          </c:if>
 		                  <spring:param name="theme" value="blueTheme" />
 		          </c:if>
 		          <c:if test="${empty param}">
@@ -735,6 +738,9 @@ if(Check == false){
 		                  </c:if>
 		                  <c:if test="${null ne param.form}">
                                <spring:param name="form" />
+                          </c:if>
+                          <c:if test="${null ne param.find}">
+                               <spring:param name="find" value="${param.find}" />
                           </c:if>
 		                  <spring:param name="theme" value="standard" />  
 		           </c:if>
@@ -803,8 +809,8 @@ if(Check == false){
         		<spring:message code="allmenu_license" var="license" />
     			<a href="#">${license }</a>
         			 	<ul class="sub_menu">
-        		<spring:message code="allmenu_license_update" var="license_update" />
-        			 		<li><a href="${licence_update_link }">${license_update }</a></li>
+        		         <spring:message code="allmenu_license_update" var="license_update" />
+        			     <li><a href="${licence_update_link }">${license_update }</a></li>
         			 		
         			 	</ul>
         		</li>

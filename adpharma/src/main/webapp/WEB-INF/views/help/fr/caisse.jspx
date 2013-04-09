@@ -9,15 +9,19 @@
  <spring:url value="/resources/images/documentation/caisses/Fermer.png" var="close_cash" />
  <spring:url value="/resources/images/documentation/caisses/etat_jrcaisse.png" var="jr_cash" />
  <spring:url value="/resources/images/documentation/caisses/etat_perCaisse.png" var="per_cash" />
+ <spring:url value="/resources/images/documentation/caisses/search_payment.png" var="search_payment" />
+ <spring:url value="/resources/images/documentation/caisses/search_cash.png" var="search_cash" />
+ <spring:url value="/resources/images/documentation/caisses/CA.png" var="CA" />
  
 <header class="jumbotron subhead" id="overview">
   <h1>Gestion Des Caisses</h1>
   <div class="subnav">
     <ul class="nav nav-pills">
       <li><a href="#open-close">Ouverture/Fermeture de caisse</a></li>
-      <li><a href="#encaissement">Encaissement</a></li>
-      <li><a href="#effectuer">Etats des caisses</a></li>
-      <li><a href="#visualiser">Paiements</a></li>
+      <li><a href="#encaissement">Encaissements</a></li>
+      <li><a href="#etats">Etats des caisses</a></li>
+      <li><a href="#payments">Paiements</a></li>
+      <li><a href="#others">Autres Operations</a></li>
     </ul>
   <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>  
   </div>
@@ -73,7 +77,7 @@
     </div>
   </div>  
 </section>
-<section id="visualiser">
+<section id="etats">
   <div class="page-header">
     <h1>Etat des caisses</h1>
     <p>L'état des caisses permet de visualiser sur une periode les détails des mouvements éffectués dans ces caisses.
@@ -106,16 +110,61 @@
     </div>
   </div>  
 </section>
-<section id="rechercher">
+<section id="payments">
   <div class="page-header">
     <h1>Paiements</h1>
+    <p>Un paiement est un montant associé au solde d'une facture, et une facture ne peut contenir qu'un seul paiement. 
+     Elle sert de trace dans les mouvements de la caisse.
+    </p>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	   <h3>Rechercher un paiement</h3>
+       <p>
+          Elle permet de rechercher le paiement d'une facture pour une éventuelle impression de ticket de caisse. 
+          Pour rechercher un paiement, procedez comme suit:
+          <ul>
+              <li>Allez dans le menu <b>Caisses > Rechercher un paiement</b></li>
+              <li>Entrez les criteres de recherche de paiement et validez en cliquant sur <b>Enregistrer</b></li>
+          </ul>
+          <util:image-box height="250" alttext="Rechercher un paiement" width="250" link="${search_payment}" />
+       </p>
     </div>
+    <div class="span5">
+       <h3>Rechercher une caisse</h3>
+       <p>
+          Elle permet de rechercher une caisse selon plusieurs critères. Pour cela, procedez comme suit:
+          <ul>
+            <li>Allez dans le menu <b>Caisses > Rechercher une caisse</b></li>
+            <li>Ensuite, Entrez les criteres de recherche de la caisse et validez en cliquant sur <b>Enregistrer</b></li>
+          </ul>
+         <util:image-box height="250" alttext="Rechercher une caisse" width="250" link="${search_cash}" />
+       </p>
+    </div>
+    <div class="span5">
+       <h3>Chiffre d'affaires</h3>
+       <p>
+         Le chiffre d'affaire permet de visualiser sur un etat les marges benificiaires de chaque filiale du site.
+         Pour produire cet etat, procedez comme suit: 
+         <ul>
+             <li>Allez dans le menu <b>Caisses > Chiffre d'Affaires</b></li>
+             <li>Entrez les parametres d'edition(Filiale, Date debut, Date Fin) et validez en cliquant sur <b>Enregistrer</b></li>
+         </ul>
+         <util:image-box height="250" alttext="Edition du chiffre d'affaires" width="250" link="${CA}" />
+       </p>
+    </div>   
   </div>  
 </section>
+<section id="others">
+  <div class="page-header">
+    <h1>Autres operations</h1>
+  </div> 
+    <div class="row">
+  	    <div class="span7">
+  	       <h3>Recherche de factures</h3>
+  	    </div>
+    </div>	    
+</section>    
 </article>
 
 </div>
