@@ -215,8 +215,7 @@ public class CsvImportExportUtil {
 		if(listFiles.length > 0){
 			java.util.logging.Logger.getLogger("").log(Level.INFO, "File Not Transferred ! " +
 					"Please check If Ubipharm Module is Running on This Computer !");
-			throw new Exception("File Not Sended ! Please check If Ubipharm Module is Running on This Computer ! And Manually look " +
-					"if "+getSendFolder()+", Is Empty. Thanks !!!");
+			throw new Exception("Command File Not Transfered! Please check If Ubipharm Module is Running on This Computer !");
 		}else {
 			updateCommandToSended(commandeFournisseur);					
 		}

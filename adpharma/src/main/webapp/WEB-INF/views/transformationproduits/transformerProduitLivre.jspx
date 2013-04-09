@@ -18,7 +18,7 @@
 		<spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
 	   <spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	
-		
+		<spring:message code="" var=""/>
 	
    		<!-- product selection  	    -->
 	

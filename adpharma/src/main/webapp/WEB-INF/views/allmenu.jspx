@@ -555,63 +555,87 @@ if(Check == false){
             <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
             <spring:url value="/statistics/new?form" var="courbes" />        		
      
-           
+           <!-- Menu Supervision -->
+           <spring:message code="supervision_supervision_menu" var="supervision_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
             <li>
-        		<a href="#">Supervisions</a>
+        		<a href="#">${supervision_menu }</a>
         			 	<ul class="sub_menu">
 		        			
 		        			 <li>
-		        				<a href="#">Statistique</a>
+           <spring:message code="supervision_statistics_menu" var="statistics_menu"/>
+		        				<a href="#">${statistics_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_statis_url }">Courbe Chiffre D'affaire</a></li>
-		        					    <li><a href="${courbe_vente_url }">Panier Moyen</a></li>	
-		        					    <li><a href="${etat_vente_url }">Etat des ventes</a></li>	
-		        					    <li><a href="${courbes}">Courbes statistiques</a></li>		
+           <spring:message code="supervision_statistics_cash_collected" var="statistics_cash_collected"/>
+           <spring:message code="supervision_statistics_medium_order_set" var="statistics_medium_order_set"/>
+           <spring:message code="supervision_statistics_sales_report" var="statistics_sales_report"/>	
+           <spring:message code="supervision_statistics_statistics_graph" var="statistics_statistics_graph"/>	
+		        						<li><a href="${create_statis_url }">${statistics_cash_collected }</a></li>
+		        					    <li><a href="${courbe_vente_url }">${statistics_medium_order_set }</a></li>
+		        					    <li><a href="${etat_vente_url }">${statistics_sales_report }</a></li>
+		        					    <li><a href="${courbes}">${statistics_statistics_graph }</a></li>		
 		        					</ul>
 		        			 </li>
 		        			 <li>
-		        				<a href="#">Ordonnancier</a>
+           <spring:message code="supervision_ordonnancer_menu" var="ordonnancer_menu"/>
+		        				<a href="#">${ordonnancer_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_list_ord_url}">Lister</a></li>	
+           <spring:message code="supervision_ordonnancer_list" var="ordonnancer_list"/>
+		        						<li><a href="${conf_list_ord_url}">${ordonnancer_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			
 		        			
+           <spring:message code="supervision_conditionment_menu" var="conditionment_menu"/>
 
-		        			 <li>	<a href="#">Conditionnement</a>
+		        			 <li>	<a href="#">${conditionment_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_con_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_con_url}">Lister</a></li>	
+           <spring:message code="supervision_conditionment_add" var="conditionment_add"/>
+           <spring:message code="supervision_conditionment_list" var="conditionment_list"/>
+		        						<li><a href="${conf_con_url}"> ${conditionment_add }</a></li>
+		        						<li><a href="${conf_list_con_url}">${conditionment_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">Taux Margs</a>
+           <spring:message code="supervision_marginrate_menu" var="marginrate_menu"/>
+		        			  <li><a href="#">${marginrate_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_mrg_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_mrg_url}">Lister</a></li>	
+           <spring:message code="supervision_marginrate_add" var="marginrate_add"/>
+           <spring:message code="supervision_marginrate_list" var="marginrate_list"/>
+		        						<li><a href="${conf_mrg_url}"> ${marginrate_add }</a></li>
+		        						<li><a href="${conf_list_mrg_url}">${marginrate_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">T.V.A</a>
+           <spring:message code="supervision_tva_menu" var="tva_menu"/>
+		        			  <li><a href="#">${tva_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_tva_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_tva_url}">Lister</a></li>	
+           <spring:message code="supervision_tva_add" var="tva_add"/>
+           <spring:message code="supervision_tva_list" var="tva_list"/>
+		        						<li><a href="${conf_tva_url}"> ${tva_add }</a></li>
+		        						<li><a href="${conf_list_tva_url}">${tva_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <li>
-		        			 	<a href="#">Devises</a>
+           <spring:message code="supervision_devices_menu" var="devices_menu"/>
+		        			 	<a href="#">${devices_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_dev_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_dev_url}">Lister</a></li>	
+           <spring:message code="supervision_devices_add" var="devices_add"/>
+		        						<li><a href="${conf_dev_url}"> ${devices_add }</a></li>
+           <spring:message code="supervision_devices_list" var="devices_list"/>
+		        						<li><a href="${conf_list_dev_url}">${devices_list }</a></li>	
 		        					</ul>
 		        			 </li>
+           <spring:message code="supervision_filial_menu" var="filial_menu"/>
 		        			   <li>
-		        			 	<a href="#">Filiales</a>
+		        			 	<a href="#">${filial_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_filiale_url}"> Ajouter</a></li>
-		        						<li><a href="${filiale_list_url}">Lister</a></li>	
+           <spring:message code="supervision_filial_add" var="filial_add"/>
+           <spring:message code="supervision_filial_list" var="filial_list"/>
+		        						<li><a href="${create_filiale_url}"> ${filial_add }</a></li>
+		        						<li><a href="${filiale_list_url}">${filial_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			 <li><a href="${conf_list_site_url}">Sites</a></li>
+           <spring:message code="supervision_site_menu" var="site_menu"/>
+		        			 <li><a href="${conf_list_site_url}">${site_menu }</a></li>
 		        		</ul>
 		     </li>
       
@@ -620,47 +644,63 @@ if(Check == false){
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
     
      <li>
-		        				<a href="#"> Suivie Clients</a>
+     <spring:message code="client_followup_menu"  var="client_fellowup_menu"/>
+     <spring:message code="client_followup_create_client"  var="create_client"/>
+     <spring:message code="client_followup_list_client"  var="list_client"/>
+     <spring:message code="client_followup_find_client"  var="find_client"/>
+		        				<a href="#"> ${client_fellowup_menu }</a>
 		        					<ul>
-		        						<li><a href="${clt_cree_url}"> Creer un Client</a></li>
-		        						<li><a href="${clt_list_url}">Lister des Client</a></li>
-		        						<li><a href="${clt_findN_url}">rechercher un Clients</a>	</li>
+		        						<li><a href="${clt_cree_url}">${create_client } </a></li>
+		        						<li><a href="${clt_list_url}">${list_client }</a></li>
+		        						<li><a href="${clt_findN_url}">${find_client }</a>	</li>
 		        						
 		        						
 		        <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_GESTION_DETTE">
 		                                 <li>
-		        							<a href="#">Dettes Clients</a>
+     <spring:message code="client_followup_clients_debt_menu"  var="clients_debt_menu"/>
+		        							<a href="#">${clients_debt_menu }</a>
 		        							<ul>
-		        						<li><a href="${list_dette_url}">Lister les dettes</a></li>
-		        						<li><a href="${clt_dets_url}">recherche Dettes</a></li>
+     <spring:message code="client_followup_clients_list_debt"  var="list_debt"/>
+		        						<li><a href="${list_dette_url}">${list_debt }</a></li>
+     <spring:message code="client_followup_clients_find_debt"  var="find_debt"/>
+		        						<li><a href="${clt_dets_url}">${find_debt }</a></li>
 		        							</ul>
 		        						</li>
 		        						 <li>
-		        							<a href="#">Etats de Credits</a>
+     <spring:message code="client_followup_credit_reports_menu"  var="credit_reports_menu"/>
+		        							<a href="#">${credit_reports_menu }</a>
 		        							<ul>
-		        						<li><a href="${etat_credit_url}">Edition Etat Credit</a></li>
-		        						<li><a href="${find_etat_url}">Recherche Etat Credit</a></li>
-		        						<li><a href="${find_etatList_url}">Lister Les Etat Credit</a></li>
+     <spring:message code="client_followup_edit_credit_report"  var="edit_credit_report"/>
+		        						<li><a href="${etat_credit_url}">${edit_credit_report }</a></li>
+     <spring:message code="client_followup_find_credit_report"  var="find_credit_report"/>
+		        						<li><a href="${find_etat_url}">${find_credit_report }</a></li>
+     <spring:message code="client_followup_list_credit_report"  var="list_credit_report"/>
+		        						<li><a href="${find_etatList_url}">${list_credit_report }</a></li>
 		        							</ul>
 		        						</li>
-		        						
-		        						
+     <spring:message code="client_followup_client_category_menu"  var="client_category_menu"/>
 	 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 		        						
-		                                  <li><a href="#">categories Clients</a>
+		                                  <li><a href="#">${client_category_menu }</a>
 		        							<ul>
-		        								<li><a href="${clt_cat_url}"> Creer</a></li>
-		        								<li><a href="${clt_catl_url}">Lister</a></li>	
+     <spring:message code="client_followup_client_category_create"  var="client_category_create"/>
+     <spring:message code="client_followup_client_category_list"  var="client_category_list"/>
+		        								<li><a href="${clt_cat_url}"> ${client_category_create }</a></li>
+		        								<li><a href="${clt_catl_url}">${client_category_list }</a></li>	
 		        							</ul>
 		        						</li>
 		        						
 		        						
 		        						 <li>
-		        				<a href="#">Avoir Client</a>
+     <spring:message code="client_followup_client_possesions_menu"  var="client_possesions_menu"/>
+		        				<a href="#">${client_possesions_menu }</a>
 		        					<ul>
-		        						<li><a href="${avoir_url}">Creer un Avoir</a></li>
-		        				       <li><a href="${avoir_search_url}">Rechercher un Avoir  </a></li>	
-		        						<li><a href="${avoir_list_url}">Lister Les Avoirs  </a></li>	
+     <spring:message code="client_followup_client_possesions_create"  var="client_possesions_create"/>
+		        						<li><a href="${avoir_url}">${client_possesions_create }</a></li>
+     <spring:message code="client_followup_client_possesions_find"  var="client_possesions_find"/>
+		        				       <li><a href="${avoir_search_url}">${client_possesions_find } </a></li>
+     <spring:message code="client_followup_client_possesions_list"  var="client_possesions_list"/>	
+		        						<li><a href="${avoir_list_url}">${client_possesions_list } </a></li>	
 		        					</ul>
 		        			 </li>
 		        			 </security:authorize>
@@ -683,19 +723,32 @@ if(Check == false){
     	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
     	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
     	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
-		                                  <li><a href="#">Etats </a>
+    	<spring:message code="reports_reports_menu" var="reports_menu"/>
+		                                  <li><a href="#">${reports_menu } </a>
 		        							<ul>
-		        								<li><a href="${list_rayon_url}">Liste des Rayons</a></li>
-		        								<li><a href="${list_clt_url}">Liste des Clients</a></li>
-		        								<li><a href="${list_relation_url}">Relations de decomposition</a></li>
-		        								<li><a href="${et_valeur_stock}">Valorisation du stock</a></li>
-		        								<li><a href="${et_jour_dette}">Journal des Dettes </a></li>
-		        								<li><a href="${cash_journalier_url}">Journal des Caisses </a></li>
-		        								<li><a href="${et_jour_vente}">Journal des Ventes </a></li>
-		        								<li><a id="et_per_vente" href="#">Produits Perissables </a></li>
-		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>
-		        								<li><a href="${list_reclam_url}">Reclamations fournisseurs </a></li>	
-		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
+		        								
+    	<spring:message code="reports_listing_shelves" var="listing_shelves"/>
+    	<spring:message code="reports_client_listing" var="client_listing"/>
+		        								<li><a href="${list_rayon_url}">${listing_shelves }</a></li>
+		        								<li><a href="${list_clt_url}">${client_listing }</a></li>
+    	<spring:message code="reports_decomposition_relation_list" var="decomposition_relation_list"/>
+		        								<li><a href="${list_relation_url}">${decomposition_relation_list }</a></li>
+    	<spring:message code="reports_stock_valorisation_report" var="stock_valorisation_report"/>
+		        								<li><a href="${et_valeur_stock}">${stock_valorisation_report }</a></li>
+    	<spring:message code="reports_daily_debts_report" var="daily_debts_report"/>
+		        								<li><a href="${et_jour_dette}">${daily_debts_report }</a></li>
+    	<spring:message code="reports_daily_cashregister_debts_report" var="daily_cashregister_debts_report"/>
+		        								<li><a href="${cash_journalier_url}">${daily_cashregister_debts_report }</a></li>
+    	<spring:message code="reports_daily_sales_report" var="daily_sales_report"/>
+		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
+    	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
+		        								<li><a id="et_per_vente" href="#">${expireable_product_report } </a></li>
+    	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
+		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
+    	<spring:message code="reports_reclamations_reports" var="reclamations_reports"/>
+		        								<li><a href="${list_reclam_url}">${reclamations_reports } </a></li>
+    	<spring:message code="reports_other_reports" var="other_reports"/>	
+		        								<li><a href="${autre_etats}">${other_reports }</a></li>	
 		        							</ul>
 		        						</li>
       </security:authorize>
@@ -825,7 +878,9 @@ if(Check == false){
       
     	<li>
     	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
-    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="Manuel ADPHARMA" target="_blank">AIDE</a>
+    	 <spring:message code="help_help_menu"  var="help_menu"/>
+    	 <spring:message code="help_help_menu_title"  var="help_menu_title"/>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="${help_menu_title }" target="_blank">${help_menu }</a>
        </li>
   	
  </ul> 
