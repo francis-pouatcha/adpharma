@@ -224,7 +224,7 @@ font-size: 1em;
 tr.list:hover {
 	background-color: rgb(51, 204, 255);
 	color: white;
-	font-weight: bold;
+	/* font-weight: bold; */
 	cursor: pointer;
 }
 
