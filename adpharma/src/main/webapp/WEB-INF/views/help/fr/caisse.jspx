@@ -1,67 +1,170 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
+ 
+ <spring:url value="/resources/images/documentation/caisses/ouvrir.png" var="open_cash" />
+ <spring:url value="/resources/images/documentation/caisses/encaissement.png" var="encaissement" />
+ <spring:url value="/resources/images/documentation/caisses/Fermer.png" var="close_cash" />
+ <spring:url value="/resources/images/documentation/caisses/etat_jrcaisse.png" var="jr_cash" />
+ <spring:url value="/resources/images/documentation/caisses/etat_perCaisse.png" var="per_cash" />
+ <spring:url value="/resources/images/documentation/caisses/search_payment.png" var="search_payment" />
+ <spring:url value="/resources/images/documentation/caisses/search_cash.png" var="search_cash" />
+ <spring:url value="/resources/images/documentation/caisses/CA.png" var="CA" />
+ 
 <header class="jumbotron subhead" id="overview">
   <h1>Gestion Des Caisses</h1>
-  <p class="lead">Gestion Des Caisses</p>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#ouvrir">Ouvrir une caisse</a></li>
-      <li><a href="#fermer">Fermer une caisse</a></li>
-      <li><a href="#effectuer">Effectuer une encaissement</a></li>
-      <li><a href="#visualiser">Visualiser l'etat des vente</a></li>
-      <li><a href="#rechercher">Rechercher une caisse</a></li>
+      <li><a href="#open-close">Ouverture/Fermeture de caisse</a></li>
+      <li><a href="#encaissement">Encaissements</a></li>
+      <li><a href="#etats">Etats des caisses</a></li>
+      <li><a href="#payments">Paiements</a></li>
+      <li><a href="#others">Autres Operations</a></li>
     </ul>
+  <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>  
   </div>
 </header>
     
-        
-<section id="ouvrir">
+<article class="float-article" id="read_article">        
+<section id="open-close">
   <div class="page-header">
-    <h1>Ouvrir une caisse <small>Ouvrir une caisse</small></h1>
+    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a>
+    <h1>Ouverture/Fermeture de caisse</h1>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span6">
+  	 <h3>Ouverture de caisse</h3>
+     <p>L'ouverture de caisse est necessaire pour toute operation que l'o veut effectuer dans la caisse.<br/>
+        Pour ouvrir une caisse, procedez comme suit:
+        <ul>
+           <li>Connectez-vous avec votre compte et allez dans le menu <b>Caisses > Ouvrir</b> </li>
+           <li> Entrez le fond de caisse et validez en cliquant sur <b>Enregistrer</b> </li>
+        </ul>
+        <util:image-box height="250" alttext="Ouvrir une caisse" width="250" link="${open_cash}" />
+     </p>
+    </div>
+    <div class="span6">
+  	 <h3>Fermeture de caisse</h3>
+     <p>
+         La fermeture de caisse permet d'annuler toute operation dans la caisse comme les encaissements et les decaissements. 
+         Pour fermer une caisse, procedez comme suit:
+         <ul>
+            <li>Connectez-vous avec votre compte et allez dans le menu <b>Caisses > Fermer</b></li>
+            <li>Un message confirmant que votre caisse a bien été fermée sera affichée.</li>
+         </ul>
+         <util:image-box height="250" alttext="Fermer une caisse" width="250" link="${close_cash}" /> 
+     </p>
     </div>
   </div>  
 </section>
-<section id="fermer">
+<section id="encaissement">
   <div class="page-header">
-    <h1>Fermer une caisse <small>Fermer une caisse</small></h1>
+    <h1>Encaissements</h1>
   </div>
   <div class="row">
   	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+     <p>
+        Pour effectuer un encaissement, procedez comme suit:
+        <ul>
+            <li>Allez dans le menu <b>Caisses > Encaisser</b></li>
+            <li>Cliquez sur le bouton <b>Ticket Suivant</b> pour faire appel à la facture suivante de la file d'attente des factures</li>
+            <li>Entrez le montant reçu et cliquez sur le bouton <b>Encaisser</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Encaissement" width="250" link="${encaissement}" />
+     </p>
     </div>
   </div>  
 </section>
-<section id="effectuer">
+<section id="etats">
   <div class="page-header">
-    <h1>Effectuer une caisse <small>Effectuer une caisse</small></h1>
+    <h1>Etat des caisses</h1>
+    <p>L'état des caisses permet de visualiser sur une periode les détails des mouvements éffectués dans ces caisses.
+       Cependant l'on peut produire un état journalier ou un etat périodique, tous au format pdf.
+    </p>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span6">
+  	  <h3>Etat Journalier des caisses</h3>
+      <p>
+        L'etat journalier des caisses permet de faire un bilan des caisses aucours d'une journée. 
+        Pour faire l'état periodique des caisses, procedez comme suit:
+        <ul>
+           <li>Soit vous allez dans le menu <b>Caisses > Etat journalier des caisses</b></li>
+           <li>Soit vous allez dans le menu <b>Etats >Journal des caisses</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Etat journalier des caisses" width="250" link="${jr_cash}" />
+      </p>
+    </div>
+    <div class="span6">
+      <h3>Etat Periodique des caisses</h3>
+      <p>L'état périodique des caisses permet de faire le bilan des caisses aucours d'une période donnée.
+         Pour faire l'état periodique des caisses, procedez comme suit:
+         <ul>
+             <li>Allez dans le menu <b>Caisses > Etat des caisses</b></li>
+             <li>Vous entrez la periode minimum et maximum et validez en cliquant sur <b>Enregistrer</b> pour produire le document pdf</li>
+         </ul>
+         <util:image-box height="250" alttext="Etat periodique des caisses" width="250" link="${per_cash}" />
+      </p>
     </div>
   </div>  
 </section>
-<section id="visualiser">
+<section id="payments">
   <div class="page-header">
-    <h1>Visualiser une caisse <small>Visualiser une caisse</small></h1>
+    <h1>Paiements</h1>
+    <p>Un paiement est un montant associé au solde d'une facture, et une facture ne peut contenir qu'un seul paiement. 
+     Elle sert de trace dans les mouvements de la caisse.
+    </p>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	   <h3>Rechercher un paiement</h3>
+       <p>
+          Elle permet de rechercher le paiement d'une facture pour une éventuelle impression de ticket de caisse. 
+          Pour rechercher un paiement, procedez comme suit:
+          <ul>
+              <li>Allez dans le menu <b>Caisses > Rechercher un paiement</b></li>
+              <li>Entrez les criteres de recherche de paiement et validez en cliquant sur <b>Enregistrer</b></li>
+          </ul>
+          <util:image-box height="250" alttext="Rechercher un paiement" width="250" link="${search_payment}" />
+       </p>
     </div>
+    <div class="span5">
+       <h3>Rechercher une caisse</h3>
+       <p>
+          Elle permet de rechercher une caisse selon plusieurs critères. Pour cela, procedez comme suit:
+          <ul>
+            <li>Allez dans le menu <b>Caisses > Rechercher une caisse</b></li>
+            <li>Ensuite, Entrez les criteres de recherche de la caisse et validez en cliquant sur <b>Enregistrer</b></li>
+          </ul>
+         <util:image-box height="250" alttext="Rechercher une caisse" width="250" link="${search_cash}" />
+       </p>
+    </div>
+    <div class="span5">
+       <h3>Chiffre d'affaires</h3>
+       <p>
+         Le chiffre d'affaire permet de visualiser sur un etat les marges benificiaires de chaque filiale du site.
+         Pour produire cet etat, procedez comme suit: 
+         <ul>
+             <li>Allez dans le menu <b>Caisses > Chiffre d'Affaires</b></li>
+             <li>Entrez les parametres d'edition(Filiale, Date debut, Date Fin) et validez en cliquant sur <b>Enregistrer</b></li>
+         </ul>
+         <util:image-box height="250" alttext="Edition du chiffre d'affaires" width="250" link="${CA}" />
+       </p>
+    </div>   
   </div>  
 </section>
-<section id="rechercher">
+<section id="others">
   <div class="page-header">
-    <h1>Rechercher une caisse <small>Rechercher une caisse</small></h1>
-  </div>
-  <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-  </div>  
-</section>
+    <h1>Autres operations</h1>
+  </div> 
+    <div class="row">
+  	    <div class="span7">
+  	       <h3>Recherche de factures</h3>
+  	    </div>
+    </div>	    
+</section>    
+</article>
+
 </div>

@@ -6,10 +6,10 @@
         <div id="tabset">
             <ul>
                 <li>
-                    <a href="#tab1">Information Utilisateur </a>
+                    <a href="#tab1">Informations Utilisateur </a>
                 </li>
                 <li>
-                    <a href="#tab2">Roles Utilisateur </a>
+                    <a href="#tab2">Rôles Utilisateur </a>
                 </li>
             </ul>
             <div id="tab1">

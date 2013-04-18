@@ -1,0 +1,35 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	
+	<jsp:output omit-xml-declaration="yes" />
+	
+	<jsp:directive.attribute name="display" type="java.lang.String" required="false" description="The text to display in the display box"/>
+	
+	<style type="text/css">
+	         .display_box{
+	            margin-bottom: 15px;
+	            margin-top: 5px; 
+	            padding: 1% 0.5% 1% 0.5%;
+	            background: -moz-linear-gradient(90deg, #EEE, #CCC) repeat scroll 0 0 transparent;
+	            background: -webkit-gradient(linear, left top, left bottom, from(#CCC), to(#EEE) );
+	            border: 1px ridge #CCC;
+	         }
+	</style>
+	
+	<c:set value="${display}" var="DISPLAY" />
+	
+	<c:if test="${empty DISPLAY}">
+	     <c:set value="ADPHARMA" var="DISPLAY" />
+	</c:if>
+	
+	<div class="display_box">
+		<span id="cmdName" style="font-weight: bold"> 
+		   <c:out value="${DISPLAY}" />
+		</span>
+	</div>
+</jsp:root>	
+	

@@ -48,24 +48,37 @@
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<div style="margin-bottom: 10px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">
-				ENCAISSER</a></span> <span class="nextTab unselectedTab"> <a
-			href="${ find_facture_url}">RECHERCHE FACTURES</a>
-		</span> <SPAN><a style="padding-left: 25px; text-decoration: none;"
+	
+	<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
+	<spring:message code="cashregister_paiement_voucher_amount" var="paiement_voucher_amount"/>
+	<spring:message code="cashregister_paiement_voucher_number" var="paiement_voucher_number"/>
+	<spring:message code="cashregister_my_own_tickets"  var="my_own_tickets"/>	
+	
+			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
+		<span class="firstTab selectedTab"><a href="${ edit_url}">${cashregister_collect }</a></span> <span class="nextTab unselectedTab"> <a
+			href="${ find_facture_url}">${billing_invoice_search }</a>
+		</span> 
+	<spring:message code="cashregister_collect_find_ticket" var="collect_find_ticket"/>
+	<spring:message code="cashregister_collect_find_ticket_title" var="collect_find_ticket_title"/>
+		<SPAN><a style="padding-left: 25px; text-decoration: none;"
 			href="${ next_facture_url}"> <INPUT class="submits" type="button"
-				value="Ticket Suivant" title="Encaisser La Facture Suivante" /></a></SPAN>
+				value="${collect_find_ticket }" title="${collect_find_ticket_title }" /></a></SPAN>
 		<c:if test="${ not empty paiementProcess.factureSelected }">
 			<spring:url
 				value="/paiementprocess/annulFacture/${paiementProcess.factureSelected.commande.id}"
 				var="annuler_facture_url" />
 
+	<spring:message code="cashregister_cancel_invoice" var="cancel_invoice"/>
+	<spring:message code="cashregister_cancel_invoice_title" var="cancel_invoice_title"/>
 			<SPAN><a style="padding-left: 20px; text-decoration: none;"
 				href="${ annuler_facture_url}"> <INPUT class="submits"
-					type="button" value="Annuler La Facture " title="Annuler La Vente " /></a></SPAN>
+					type="button" value="${cancel_invoice } " title="${cancel_invoice_title }" /></a></SPAN>
 		</c:if>
-		<SPAN><a style="padding-left: 20px; text-decoration: none;"
+		<SPAN>
+			
+		<a style="padding-left: 20px; text-decoration: none;"
 			href="${ mypaiements_url}"> <INPUT class="submits"
-				style="color: black;" type="button" value="Mes Tickets "
+				style="color: black;" type="button" value="${my_own_tickets} "
 				title="Lister Mes Tickets " /></a></SPAN> <SPAN><a
 			style="padding-left: 20px; text-decoration: none;" href="#"> <INPUT
 				style="color: red; font-weight: bold; font-style: italic; border: none; text-decoration: blink; width: 300px;"
@@ -105,8 +118,6 @@
 			 */
 		}
 
-
-		
 		function generateWord() {
 			$.get('${unpayCmd}', function(data) {
 				if (data == '0') {
@@ -403,23 +414,34 @@
 
 
 	<!-- afficher ce formulaire pour la mis a jour des ligne -->
+	<spring:message code="cashregister_paiement_utilpanel_upline" var="paiement_utilpanel_upline"/>
 	<util:panel
-		title="encaisser paiement facture No : ${paiementProcess.factureSelected.factureNumber }"
+		title="${paiement_utilpanel_upline } : ${paiementProcess.factureSelected.factureNumber }"
 		id="upline">
 		<div style="overflow-y: scroll; height: 500px;">
 
 			<form action="${findInvoice_url}" method="post">
 				<table style="margin-bottom: 10px;">
 					<tr>
-						<th style="text-align: center;">FACTURE No</th>
-						<th style="text-align: center;">FACTURE LE</th>
-						<th style="text-align: center;">COMMANDE No</th>
-						<th style="text-align: center;">TYPE VENTE</th>
-						<th style="text-align: center;">NET A PAYER</th>
-						<th style="text-align: center;">REMISE</th>
-						<th style="text-align: center;">AVANCE</th>
-						<th style="text-align: center;">RESTE</th>
-						<th style="text-align: center;">VENDEUR</th>
+					<spring:message code="label_org_adorsys_adpharma_domain_facture_facturenumber" var="facture_facturenumber"/>
+						<th style="text-align: center;">${facture_facturenumber }</th>
+					<spring:message code="cashregister_cancel_invoice" var="cancel_invoice"/>
+					<spring:message code="cashregister_paiement_billing_date" var="paiement_billing_date"/>
+					<spring:message code="cashregister_paiement_command_number" var="paiement_command_number"/>
+					<spring:message code="cashregister_paiement_sale_type" var="paiement_sale_type"/>
+					<spring:message code="cashregister_paiement_net_to_pay" var="paiement_net_to_pay"/>
+					<spring:message code="cashregister_paiement_discount" var="paiement_discount"/>
+					<spring:message code="cashregister_paiement_advance" var="paiement_advance"/>
+					<spring:message code="cashregister_paiement_rest_to_pay" var="paiement_rest_to_pay"/>
+					<spring:message code="cashregister_paiement_seller" var="paiement_seller"/>
+						<th style="text-align: center;">${paiement_billing_date }</th>
+						<th style="text-align: center;">${paiement_command_number }</th>
+						<th style="text-align: center;">${paiement_sale_type }</th>
+						<th style="text-align: center;">${paiement_net_to_pay }</th>
+						<th style="text-align: center;">${paiement_discount }</th>
+						<th style="text-align: center;">${paiement_advance }</th>
+						<th style="text-align: center;">${paiement_rest_to_pay }</th>
+						<th style="text-align: center;">${paiement_seller }</th>
 
 					</tr>
 					<tr>
@@ -453,12 +475,9 @@
 				</table>
 			</form>
 			<c:if test="${not empty apMessage}">
-				<hr />
 				<center>
 					<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
 				</center>
-				<hr />
-
 			</c:if>
 			<c:if test="${paiementProcess.showPostForm }">
 				<!--  formulaire de paiement -->
@@ -475,9 +494,11 @@
 									z="GdIcRJUiL4l1DDiAnYXMJRhhW0Q=" />
 
 								<div>
+								
+					<spring:message code="cashregister_paiement_option" var="paiement_option"/>
 									<label
 										style="font-weight: bold; font-size: 18px; text-transform: uppercase;"
-										for="_typePaiement">Mode Paiement : </label>
+										for="_typePaiement">${paiement_option } : </label>
 									<springform:select id="typePaiement"
 										cssStyle=" width: 212px; height: 25px;" path="typePaiement"
 										items="${typepaiements}" />
@@ -486,7 +507,7 @@
 									<div>
 										<label
 											style="font-weight: bold; font-size: 15px; text-transform: uppercase;"
-											for="_numeroBon">Numero du Bon : </label>
+											for="_numeroBon">${paiement_voucher_number } : </label>
 										<springform:input path="numeroBon" id="numeroBon"
 											readonly="true"
 											cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 30px; height: 31px;" />
@@ -498,7 +519,7 @@
 									<div>
 										<label
 											style="font-weight: bold; font-size: 15px; text-transform: uppercase;"
-											for="_montantBon">Montant du Bon : </label>
+											for="_montantBon">${paiement_voucher_amount } : </label>
 										<springform:input path="montantBon" id="montantBon"
 											readonly="true"
 											cssStyle="color:green ; width: 212px;font-weight: bold; font-size: 30px; height: 31px;" />
@@ -509,9 +530,10 @@
 									<BR />
 								</div>
 								<div>
+					<spring:message code="cashregister_paiement_amount" var="paiement_amount"/>
 									<label
 										style="font-weight: bold; font-size: 18px; text-transform: uppercase;"
-										for="_montant">Montant : </label>
+										for="_montant">${paiement_amount } : </label>
 									<springform:input path="montant" id="montant" readonly="true"
 										onKeyPress="return scanTouche(event)" maxlength="8"
 										cssStyle="color:blue ; width: 212px;font-weight: bold; font-size: 40px; height: 50px;" />
@@ -521,9 +543,10 @@
 								</div> <BR />
 
 								<div>
+					<spring:message code="cashregister_paiement_received_cash" var="paiement_received_cash"/>
 									<label
 										style="font-weight: bold; font-size: 18px; text-transform: uppercase;"
-										for="_sommeRecue">Somme Recue : </label>
+										for="_sommeRecue">${paiement_received_cash } : </label>
 									<springform:input path="sommeRecue"
 										onKeyPress="return scanTouche(event)" onkeyup="calculeReste()"
 										onfocus="true" id="sommeRecue"
@@ -534,9 +557,10 @@
 								</div> <BR />
 
 								<div>
+					<spring:message code="cashregister_paiement_balance" var="paiement_balance"/>
 									<label
 										style="font-weight: bold; font-size: 18px; text-transform: uppercase;"
-										for="_difference">Difference : </label>
+										for="_difference">${paiement_balance } : </label>
 									<springform:input path="difference" id="difference"
 										cssStyle="color:red ; width: 212px;font-weight: bold; font-size: 40px;height: 50px;"
 										readonly="true" />
@@ -584,23 +608,29 @@
 									</P>
 									<c:if
 										test="${paiementProcess.factureSelected.commande.typeCommande eq 'VENTE_A_CREDIT' }">
+					<spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation" />
 										<P>
-											<span><b>TAUX DU BON :</b> <b
+										
+					<spring:message code="cashregister_paiement_voucher_rate" var="paiement_voucher_rate"/>
+											<span><b>${paiement_voucher_rate } :</b> <b
 												style="color: green; font-size: 40px;">
 													${paiementProcess.factureSelected.commande.tauxCouverture }
 													% </b></span> <BR /> <BR /> <span><b>CLIENT :</b>
 												${paiementProcess.factureSelected.commande.client } </span> <BR />
-											<BR /> <span> <b>PART CLIENT :</b> <fmt:formatNumber
-													value="${paiementProcess.detteclient}" /> Fcfa
+					<spring:message code="cashregister_paiement_customer_own" var="paiement_customer_own"/>
+											<BR /> <span> <b>${paiement_customer_own } :</b> <fmt:formatNumber
+													value="${paiementProcess.detteclient}" /> ${currency_abbreviation }
 											</span>
 
 										</P>
 
 										<P>
-											<span><B>PAYEUR : </B>
+					<spring:message code="cashregister_paiement_buyer" var="paiement_buyer"/>
+					<spring:message code="cashregister_paiement_buyer" var="paiement_buyer"/>
+											<span><B>${paiement_buyer } : </B>
 												${paiementProcess.factureSelected.commande.clientPaiyeur } </span>
-											<BR /> <BR /> <span><B>PART PAYEUR :</B> <fmt:formatNumber
-													value="${paiementProcess.dettePayeur}" /></span> Fcfa
+											<BR /> <BR /> <span><B>${paiement_buyer } :</B> <fmt:formatNumber
+													value="${paiementProcess.dettePayeur}" /></span> ${currency_abbreviation }
 
 										</P>
 
@@ -675,13 +705,14 @@
 	<div id="findbon" style="display: none;">
 		<form id="findbonForm">
 			<P>
-				<LABEL for="numero"> Numero Du Bon :</LABEL> <INPUT
+					<spring:message code="cashregister_paiement_balance" var="paiement_balance"/>
+				<LABEL for="numero"> ${paiement_voucher_number } :</LABEL> <INPUT
 					onKeyPress="return scanTouche(event)" id="numero" type="text"
 					name="numero" />
 			</P>
 
 			<P>
-				<LABEL for="montant"> Montant du Bon :</LABEL> <INPUT
+				<LABEL for="montant"> ${paiement_voucher_amount } :</LABEL> <INPUT
 					onKeyPress="return scanTouche(event)" id="valeurBon" type="text"
 					name="montant" />
 			</P>
@@ -689,15 +720,16 @@
 
 		</form>
 	</div>
+	<spring:message code="cashregister_paiement_close" var="paiement_close"/>
+	<spring:message code="cashregister_paiement_welcome" var="paiement_welcome"/>
+	<spring:message code="cashregister_paiement_welcome_help" var="paiement_welcome_help"/>
 	<div id="container">
 		<div id="inner" style="overflow: scroll; height: 300px;">
 			<a class="aide" href="#"
-				style="color: red; font-weight: bold; text-align: right;">CLOSE</a><br />
+				style="color: red; font-weight: bold; text-align: right;">${paiement_close }</a><br />
 			<center style="text-transform: uppercase;">
-				<H1>Bienvenue dans l'aide D'adPharma</H1>
-			</center>
-			L'aide Pour cette Page est en cour de redaction <br /> Merci pour
-			Votre Comprehension <br />
+				<H1>${paiement_welcome }</H1>
+			</center>${paiement_welcome_help } <br />
 
 
 		</div>

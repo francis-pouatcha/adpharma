@@ -112,9 +112,11 @@ public class ApprovisionementProcessController {
 	@RequestMapping(value = "/{apId}/edit", method = RequestMethod.GET)
 	public String editApprovisionnement(@PathVariable("apId") Long apId, Model uiModel,HttpSession session) {
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+		String fournisseur = approvisionement.getFounisseur().getFournisseurNumber();
 		ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
 		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		uiModel.addAttribute("numero", fournisseur);
 		initProcurementViewDependencies(uiModel);
 		return "approvisionementprocess/edit";
 	}
@@ -131,8 +133,10 @@ public class ApprovisionementProcessController {
 	}
 
 	@RequestMapping(value = "/{apId}/addLine", method = RequestMethod.POST)
-	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam String qteReclam,@RequestParam String qteug,
+	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam(required=false) BigInteger qteReclam,@RequestParam String qteug,
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
+		
+		System.out.println("Qte reclammee: "+qteReclam);
 		
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		Produit produit = Produit.findProduit(pId);
@@ -163,8 +167,8 @@ public class ApprovisionementProcessController {
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2));
 				System.out.println("Date de peremption: "+ligneApprovisionement.getDatePeremtion());
 			}
-			if(qteReclam!=""){
-				ligneApprovisionement.setQuantiteReclame(new BigInteger(qteReclam));
+			if(qteReclam!=null){
+				ligneApprovisionement.setQuantiteReclame(qteReclam);
 			}
 			ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 			ligneApprovisionement.setApprovisionement(approvisionement);
@@ -549,8 +553,8 @@ public class ApprovisionementProcessController {
 		// Formulaire d'impression des listes de reclamations
 		@RequestMapping(value="/reclamations", params="form", method=RequestMethod.GET)
 		public String ReclamationsForm(Model uiModel, HttpServletRequest httpServletRequest){
-			
-			List<Fournisseur> fournisseurs = Fournisseur.findAllFournisseurs();
+			String fournisseurNumber = Fournisseur.findFournisseur(new Long(1)).getFournisseurNumber();
+			List<Fournisseur> fournisseurs = Fournisseur.findAllFournisseursExceptFirst();
 			String array = Fournisseur.toJsonArray(fournisseurs);
 			uiModel.addAttribute("listefournisseurs", array);
 			return "reclamations/create";

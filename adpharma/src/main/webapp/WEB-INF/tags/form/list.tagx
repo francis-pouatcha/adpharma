@@ -32,7 +32,6 @@
          </c:when>
          <c:otherwise>
              <center >
-		        <hr/>
 		        <c:choose>
                    <c:when test="${not empty message}">
        			     <p class="appMessage" style="color: green; margin-bottom: 1px;">${message}</p>
@@ -41,7 +40,6 @@
    			         <p class="appMessage" style="color: green; margin-bottom: 1px;"><spring:message arguments="${label}" code="entity_not_found" /></p>
 		          </c:otherwise>
                 </c:choose>
-		        <hr/>
              </center>
 		</c:otherwise>
      </c:choose>

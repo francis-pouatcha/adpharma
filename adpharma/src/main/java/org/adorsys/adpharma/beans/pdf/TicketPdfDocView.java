@@ -42,8 +42,9 @@ public class TicketPdfDocView  extends   AbstractPdfView {
 				HttpServletResponse response) throws Exception {
 			Paiement pay= (Paiement) model.get("paiement");
 			if(pay == null) {
-				document.add(new Phrase("\n\n\n aucun ticket trouve !"));
-				return ;
+				document.add(new Phrase("\n\n\n FACTURE NON ENCAISSEE !\n"));
+				document.add(new Phrase("AUCUN TICKET TROUVE..."));
+ 				return;
 			}
 			Site site = Site.findSite(Long.valueOf(1));
           //  writer.addJavaScript("this.print(true);",false); 

@@ -6,10 +6,7 @@
   <util:panel id="title" title="${title}">
   <div style="overflow-y: scroll; height: 300px;">
 <center style="text-transform: uppercase;">		
-       <hr/>
-			<p class="appMessage" style="color: green; margin-bottom: 1px;">Mot de pass mis a jour avec success !</p>
-		<hr/>
-	
+			<p class="appMessage" style="color: green; margin-bottom: 1px;">Mot de passe mis a jour avec success !</p>
 </center>
 </div>
   </util:panel>

@@ -1,7 +1,6 @@
 package org.adorsys.adpharma.web;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.ProcessHelper;
-import org.aspectj.util.FileUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +68,12 @@ public class CommandProcessController {
 	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
 	
 	private boolean sendedToUbipharm ;
+
+
+	private boolean sendToUbipharmFailed;
+
+
+	private String ubipharmCommandSendingErrorMessage;
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(
@@ -356,13 +361,24 @@ public class CommandProcessController {
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 		uiModel.addAttribute("itemId", cmdId);
 		commandeFournisseur.merge();
+		checkAndInsertUbipharmActionsLogsInUIModel(uiModel);
+		return "commandprocesses/show";
+	}
+	private void checkAndInsertUbipharmActionsLogsInUIModel(Model uiModel){
+
 		if(sendedToUbipharm){
 			uiModel.addAttribute("apMessage", "Command Sended To Ubipharm.");
 			sendedToUbipharm = false;//reset value to false.
 		}
-		return "commandprocesses/show";
+		if(this.sendToUbipharmFailed) {
+			if(StringUtils.isBlank(ubipharmCommandSendingErrorMessage)){
+				this.ubipharmCommandSendingErrorMessage = "Command Not sended An Unexpected " +
+						"Error has been detected ! We are Working on that.";
+			}
+			uiModel.addAttribute("apMessage", this.ubipharmCommandSendingErrorMessage);
+			this.sendToUbipharmFailed = false;
+		}
 	}
-	
 	@RequestMapping(value="/ubipharm/{itemId}/send", method = RequestMethod.GET)
 	public String sendToUbipharm(@PathVariable("itemId")Long cmdId, Model uiModel){
 		
@@ -370,9 +386,14 @@ public class CommandProcessController {
 		importExportUtil.setCmdId(cmdId);
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		importExportUtil.exportCommandsToUbipharmTxt();
-//		importExportUtil.checkIfNewlyReceivedCommand();
-		sendedToUbipharm= true ;
+		try {
+			importExportUtil.exportCommandsToUbipharmTxt();
+//			importExportUtil.checkIfNewlyReceivedCommand();
+			sendedToUbipharm= true ;
+		} catch (Exception e) {
+			this.sendToUbipharmFailed = true; 
+			this.ubipharmCommandSendingErrorMessage =  e.getMessage();
+		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
 	
@@ -389,7 +410,6 @@ public class CommandProcessController {
 					FileSystemScanner.oldFiles.add(fileName);
 				} catch (Exception e) {
 					LOG.error("",e);
-					FileSystemScanner.oldFiles.add(fileName);
 					e.printStackTrace();
 				}
 				LOG.warn("... "+fileName+", Import Finished");
@@ -405,6 +425,12 @@ public class CommandProcessController {
 		List<CommandeFournisseur> listCommandToImports = csvImportExportUtil.listCommandToImport(
 				CommandeFournisseur.findCommandsByEtatCommand(Etat.EN_COUR).getResultList(), 
 				csvImportExportUtil.getReceivedFiles());
+		List<CommandeFournisseur> otherListCommandToImports = csvImportExportUtil.listCommandToImport(
+				CommandeFournisseur.findCommandsByEtatCommand(Etat.SENDED_TO_PROVIDER).getResultList(), 
+				csvImportExportUtil.getReceivedFiles());
+		for (CommandeFournisseur commandeFournisseur : otherListCommandToImports) {
+			listCommandToImports.add(commandeFournisseur);
+		}
 		if (listCommandToImports.isEmpty()) {
 			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur A importer pour le moment. Raffinez votre recherche ci-haut !" );
 		}else {

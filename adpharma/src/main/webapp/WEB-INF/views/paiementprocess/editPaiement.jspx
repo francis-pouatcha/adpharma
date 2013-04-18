@@ -28,23 +28,42 @@
 			<spring:url  value="/saleprocess/${saleProcess.cmdId}/enregistrer"  var="enr_cmd_url" />
 		 <spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"  var="delete_cmd_url" />
 		 <spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"  var="update_client_url" />
+		 
+		 <spring:message code="cashregister_billing_invoice_search" var="invoice_search" />
+		 <spring:message code="label_org_adorsys_adpharma_domain_paiement" var="domain_paiement_text" />
+		 <spring:message code="cashregister_billing_invoice_search" var="invoice_search"/>
+		 
 	<div style="margin-bottom: 6px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">PAIEMENT</a></span>
+		<span class="firstTab selectedTab"><a href="${ edit_url}">${domain_paiement_text }</a></span>
 		<span class="nextTab unselectedTab">
 		<c:choose>
 		<c:when test="${not empty saleprocess.produit}">
-		<a href="javascript:history.back()">RECHERCHE FACTUREs</a>
+		<a href="javascript:history.back()">${invoice_search }</a>
 		</c:when>
 		<c:otherwise>
-		<a href="${ find_product_url}">RECHERCHE FACTUREss</a>
+		
+		<a href="${ find_product_url}">${invoice_search }</a>
 		</c:otherwise>
 		</c:choose>
 		</span>
-	<span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
-		<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Annuler" title="Enregistre L'approvisionnement" /></a></span>
-<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Imprimer Facture" title="Imprimer Facture de Caisse" /></a></span>
-<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Facture Proforma" title="Imprimer Facture proforma" /></a></span>
-<span ><a href="${ update_client_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+		<spring:message code="button_save" var="button_save_text" />
+		<spring:message code="button_cancel" var="button_cancel_text" />
+		<spring:message code="cashregister_editpayment_save_payment" var="editpayment_save_payment" />
+		<spring:message code="cashregister_editpayment_cancel_payment" var="editpayment_cancel_payment" />
+		
+		<spring:message code="cashregister_editpayment_print_invoice" var="print_invoice" />
+		<spring:message code="cashregister_editpayment_print_invoice_title" var="print_invoice_title" />
+		
+		<spring:message code="cashregister_editpayment_proforma_invoice" var="proforma_invoice" />
+		<spring:message code="cashregister_editpayment_print_proforma_invoice_title" var="print_proforma_invoice_title" />
+		
+		<spring:message code="cashregister_editpayment_customer_information" var="customer_information" />
+		<spring:message code="cashregister_editpayment_print_customer_information_title" var="print_customer_information_title" />
+	<span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="${button_save_text }" title="${editpayment_save_payment }" /></a></span>
+		<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="${button_save_text }" title="${editpayment_cancel_payment }" /></a></span>
+<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="${print_invoice }" title="${print_invoice_title }" /></a></span>
+<span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="${proforma_invoice }" title="${print_proforma_invoice_title }" /></a></span>
+<span ><a href="${ update_client_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="${customer_information }" title="${print_customer_information_title }" /></a></span>
 	
 		</div>
 		
@@ -65,14 +84,18 @@
 </c:otherwise>
 </c:choose>
      	<!-- afficher ce formulaire pour la mis a jour des ligne -->
-  
- <util:panel title="Mettre a jour Les Informations" id="upline">
+<spring:message code="label_org_adorsys_adpharma_domain_caisse_caissier" var="domain_caisse_caissier" /> 
+<spring:message code="cashregister_editpayment_cashregister_secret" var="cashregister_secret" /> 
+<spring:message code="cashregister_editpayment_utilpanel_title" var="utilpanel_title" /> 
+<spring:message code="label_org_adorsys_adpharma_domain_caisse_dateouverture" var="caisse_dateouverture" />
+<spring:message code="label_org_adorsys_adpharma_domain_caisse_fondcaisse" var="caisse_fondcaisse" />
+ <util:panel title="${utilpanel_title }" id="upline">
 		    <table>
 		    	<tr>
-		    		<th  style="text-align: center;" >CAISSIER</th>
-		    		<th style="text-align: center;" >CODE CAISSE</th>
-		    		<th  style="text-align: center;" >DATE OUVERTURE</th>
-		            <th  style="text-align: center;" >FOND DE CAISSE</th>
+		    		<th  style="text-align: center;" >${domain_caisse_caissier }</th>
+		    		<th style="text-align: center;" >${cashregister_secret }</th>
+		    		<th  style="text-align: center;" >${caisse_dateouverture }</th>
+		            <th  style="text-align: center;" >${caisse_fondcaisse }</th>
 		    	</tr>
 		    		<tr>
 		    			<td>

@@ -46,10 +46,9 @@ public class FactureController {
 		}else {
 			uiModel.addAttribute("apMessage", "Aucune Facture Trouvee");
 			return "caisses/infos";
-
 		}
-
 	}
+	
 	@RequestMapping(value="findDetails/ByAjax/{invId}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findDetails(@PathVariable("invId") Long invId, Model uiModel) {
@@ -60,6 +59,7 @@ public class FactureController {
 				}
 		       return null ;
 	}
+	
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		 Facture facture = new Facture() ;

@@ -13,11 +13,14 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<div style="margin-bottom: 2px; padding-bottom: 2px;">
+	<!--  <div style="margin-bottom: 2px; padding-bottom: 2px;">
 		<span style="font-weight: bold"> <c:out
 				value="${commandeProcess.displayName}" />
 		</span>
-	</div>
+	</div> -->
+	
+	<util:display-box display="${commandeProcess.displayName}" />
+	
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
 	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form" var="edit_url" />
@@ -289,8 +292,11 @@
 					onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CiP</th>
-							<th style="text-align: center;">Designation</th>
+			<spring:message code="saleprocess_default_cip" var="default_cip_text"/>
+							<th style="text-align: center;">${default_cip_text }</th>
+			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
+							<th style="text-align: center;">${product_designation_text }</th>
+			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
 							<th style="text-align: center;">Stock</th>
 							<th style="text-align: center;">Stock alert</th>
 							<th style="text-align: center;">qte cmd</th>
@@ -420,11 +426,11 @@
 				style="display: none;" />
 		</center>
 
-		<form:create label="modification de la Ligne" otherBut="cancel"
+		<!-- <form:create label="modification de la Ligne" otherBut="cancel"
 			formId="editLineForm" diseableSubmit="true"
 			id="fc_org_adorsys_adpharma_domain_LigneCmdFournisseur"
 			modelAttribute="ligneCmdFournisseur" path="#"
-			z="M03QQWNaBYxQ5t1cWBz/XrQVa6Y=">
+			z="user-managed">
 			<field:hidden field="id"
 				id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_designation" />
 			<field:hidden field="agentSaisie"
@@ -447,6 +453,6 @@
 				id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin"
 				validationMessageCode="field_invalid_number"
 				z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU=" />
-		</form:create>
+		</form:create> -->
 	</div>
 </div>

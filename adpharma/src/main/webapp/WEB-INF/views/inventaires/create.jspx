@@ -6,12 +6,17 @@
     <form:create id="fc_org_adorsys_adpharma_domain_Inventaire"   multipart="true" modelAttribute="inventaire" path="/inventaires" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
     <table >
      <tr>
-       <th>Information  Inventaire</th>
-        <th>Information consernant les   Produits a inventorier</th>
+     <spring:message code="inventory_inventory_info" var="inventory_info"/>
+       <th>${inventory_info }</th>
+     <spring:message code="inventory_product_to_be_inventored_information" var="product_to_be_inventored_information"/>
+        <th>${product_to_be_inventored_information }</th>
      
      </tr>
         
      <tr>
+     
+     <spring:message code="inventory_create_donotselectanyproduct" var="create_donotselectanyproduct"/>
+     <spring:message code="inventory_create_do_inventory_by_cipm" var="create_do_inventory_by_cipm"/>
       <td style="background-color: white;" valign="top"> 
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" render="false" z="user-managed"/>
         <field:input field="NumeroInventaire" id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" render="false" z="user-managed"/>
@@ -26,19 +31,33 @@
         <field:input field="cipProduct" id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_datedebut_date_format}" field="dateDebut" id="c_org_adorsys_adpharma_domain_Inventaire_dateDebut" render="false" z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_datefin_date_format}" field="dateFin" id="c_org_adorsys_adpharma_domain_Inventaire_dateFin" render="false" z="user-managed"/>
-        <field:checkbox field="doNotSelectAnyProduct" label="Ne Selectionner aucun Produits ?" id="c_org_adorsys_adpharma_domain_Inventaire_cip"  z="user-managed"/>
-        <field:checkbox field="inventoryBycipm" label="Inventorier Par CIPM ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm"  z="user-managed"/>
+        <field:checkbox field="doNotSelectAnyProduct" label="${create_donotselectanyproduct } ?" id="c_org_adorsys_adpharma_domain_Inventaire_cip"  z="user-managed"/>
+        <field:checkbox field="inventoryBycipm" label="${create_do_inventory_by_cipm } ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm"  z="user-managed"/>
         <field:datetime dateTimePattern="${inventaire_daterupture_date_format}" field="dateRupture" id="c_org_adorsys_adpharma_domain_Inventaire_dateRupture" render="false" z="user-managed"/>
-        <label   for="fichier" > Fichier : </label>  <input size="8" type="file" name="fichier" />
+     <spring:message code="inventory_inventory_file" var="inventory_file"/>
+        <label   for="fichier" > ${inventory_file } : </label>  <input size="8" type="file" name="fichier" />
       </td>
        <td style="background-color: white;">
         <field:select field="rayon"  label="Emplacement" itemValue="id" path="#" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" items="${rayons}"  z="user-managed"/>
         <field:input field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" render="false"  z="user-managed"/>
-        <field:input field="designation" titleMessage="fournir la designation du produuit a inventorier"  id="c_org_adorsys_adpharma_domain_Inventaire_designation" z="user-managed"/>
-        <field:input field="beginBy" titleMessage="nom du produit se Commencant par" label="commencant Par ?" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy" z="user-managed"/>
-        <field:input field="endBy" titleMessage="nom du produit se terminant par " label="Se Terminant Par ? " id="c_org_adorsys_adpharma_domain_Inventaire_endBy"  z="user-managed"/>
-        <field:input field="cipmProduct" titleMessage="Fournir le cipm du produit a inventorier" buttonLabel="..." buttonId="cipmbt" label="Produit (CIPM)" id="c_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements"  z="user-managed"/>
-        <field:input field="cipProduct" titleMessage="fournir le cip du produit a inventorier" buttonLabel="..." buttonId="cipbt" label="Produits (CIP)" id="c_org_adorsys_adpharma_domain_Inventaire_produits"  z="user-managed"/>
+     
+     <spring:message code="inventory_create_designation_title" var="create_designation_title"/>
+        <field:input field="designation" titleMessage="${create_designation_title }"  id="c_org_adorsys_adpharma_domain_Inventaire_designation" z="user-managed"/>
+     <spring:message code="inventory_create_beginby_title" var="create_beginby_title"/>
+     <spring:message code="inventory_create_beginby_label" var="create_beginby_label"/>
+        <field:input field="beginBy" titleMessage="${create_beginby_title }" label="${create_beginby_label } ?" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy" z="user-managed"/>
+        
+     <spring:message code="inventory_create_endingwith_title" var="create_endingwith_title"/>
+     <spring:message code="inventory_create_endingwith_label" var="create_endingwith_label"/>
+        <field:input field="endBy" titleMessage="${create_endingwith_title } " label="${create_endingwith_label } ? " id="c_org_adorsys_adpharma_domain_Inventaire_endBy"  z="user-managed"/>
+     
+     <spring:message code="inventory_create_productcipm_title" var="create_productcipm_title"/>
+     <spring:message code="inventory_create_productcipm_label" var="create_productcipm_label"/>
+        <field:input field="cipmProduct" titleMessage="${create_productcipm_title }" buttonLabel="..." buttonId="cipmbt" label="${create_productcipm_label }" id="c_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements"  z="user-managed"/>
+        
+     <spring:message code="inventory_create_productcip_title" var="create_productcip_title"/>
+     <spring:message code="inventory_create_productcip_label" var="create_productcip_label"/>
+        <field:input field="cipProduct" titleMessage="${create_productcip_title }" buttonLabel="..." buttonId="cipbt" label="${create_productcip_label }" id="c_org_adorsys_adpharma_domain_Inventaire_produits"  z="user-managed"/>
       <field:input field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" render="false" z="user-managed"/>
         <field:input field="sousFamillePiroduit" id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" render="false" z="user-managed"/>
       

@@ -100,7 +100,11 @@ public class UbipharmTests {
 		importExportUtil.setCmdId(new Long(14));
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		importExportUtil.exportCommandsToUbipharmCsv();
+		try {
+			importExportUtil.exportCommandsToUbipharmCsv();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	@Test
 	public void testDateFormat(){
@@ -147,7 +151,12 @@ public class UbipharmTests {
 		importExportUtil.setCmdId(new Long(14));
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
-		importExportUtil.exportCommandsToUbipharmTxt();
+		try {
+			importExportUtil.exportCommandsToUbipharmTxt();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void copyFile(String source, String destination) throws IOException{
 		FileUtils.copyFileToDirectory(new File(source), new File(destination));

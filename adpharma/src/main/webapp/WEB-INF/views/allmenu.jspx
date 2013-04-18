@@ -203,16 +203,16 @@ if(Check == false){
 									<li><a href="${four_list_url}">${providers_list}</a></li>
 								</ul></li>
 						</security:authorize>
-						<security:authorize
-							ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
-						<spring:message code="allmenu_stockmanagement_stockmouvement" var="stockmouvement"/>
+						<security:authorize ifAnyGranted="ROLE_MOUVEMENTS ,ROLE_SITE_MANAGER">
+						   <spring:message code="allmenu_stockmanagement_stockmouvement" var="stockmouvement"/>
 							<li><a href="#">${stockmouvement }</a>
 								<ul>
-						<spring:message code="allmenu_stockmanagement_stockmouvement_find" var="stockmouvement_find"/>
-						<spring:message code="allmenu_stockmanagement_stockmouvement_list" var="stockmouvement_list"/>
+									<spring:message code="allmenu_stockmanagement_stockmouvement_find" var="stockmouvement_find"/>
+									<spring:message code="allmenu_stockmanagement_stockmouvement_list" var="stockmouvement_list"/>
 									<li><a href="${mvt_search_url}">${stockmouvement_find }</a></li>
 									<li><a href="${mvt_list_url}">${stockmouvement_list }</a></li>
-								</ul></li>
+								</ul>
+							</li>
 						</security:authorize>
 					</ul></li>
 			</security:authorize>
@@ -271,24 +271,29 @@ if(Check == false){
 			<spring:url value="/avoirclients?find=BySearch&amp;form" var="avoir_search_url" />
 			<spring:url value="/avoirclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="avoir_list_url" />
 			<spring:url value="/caisses/decaissement?form" var="decaissement_url" />
-
+			
+			<spring:message code="cashregister_cashregister_menu" var="cashregister_menu"/>
 			<security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
-				<li><a href="#">Caisses</a>
+				<li><a href="#">${cashregister_menu }</a>
 					<ul class="sub_menu">
-						<li><a href="${cai_cree_url}">Ouvrir</a></li>
-						<li><a href="${delete_caisse_url}" onclick="return  fermer();">Fermer</a></li>
-						<li><a href="${cai_enc_url}">Encaisser</a></li>
+			<spring:message code="cashregister_cashregister_open" var="cashregister_open"/>
+						<li><a href="${cai_cree_url}">${ cashregister_open}</a></li>
+			<spring:message code="cashregister_cashregister_close" var="cashregister_close"/>
+						<li><a href="${delete_caisse_url}" onclick="return  fermer();">${cashregister_close }</a></li>
+			<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
+						<li><a href="${cai_enc_url}">${cashregister_collect }</a></li>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
-							<li><a href="${etat_jour_caisse_url}">Etat Journalier
-									des Caisses</a></li>
-							<li><a href="${etat_caisse_url}">Etat des Caisses</a></li>
+			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
+							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
+			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
+							<li><a href="${etat_caisse_url}">${cashregisters_status }</a></li>
 
 
 							<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
 
 
-							<li><a href="${caisse_search_url }">Rechercher Une
-									Caisse</a></li>
+			<spring:message code="cashregister_find_a_cashregister" var="find_a_cashregister"/>
+							<li><a href="${caisse_search_url }">${find_a_cashregister }</a></li>
 							<!-- 
 
 		        			 <li>
@@ -299,8 +304,10 @@ if(Check == false){
 		        					</ul>
 		        			 </li> -->
 		        			 
-		        		  <li><a href="${cai_pays_url}">Recherche Paiements</a></li>
-                          <li><a href="${chiffre_affaire_url}">Chiffre D'affaire</a></li>
+			<spring:message code="cashregister_find_a_payment" var="find_a_payment"/>
+		        		  <li><a href="${cai_pays_url}">${find_a_payment }</a></li>
+			<spring:message code="cashregister_cash_collected" var="cash_collected"/>
+                          <li><a href="${chiffre_affaire_url}">${cash_collected }</a></li>
                           <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
 		        			 
 		        			  <!--  menu facturation-->
@@ -313,10 +320,13 @@ if(Check == false){
             
                               <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
           <li>  
-            <a href="#">Facturation</a>
+			<spring:message code="cashregister_billing_menu" var="billing_menu"/>
+            <a href="#">${billing_menu }</a>
         			 	<ul class="sub_menu">
-        			 		<li><a href="${find_pay_url}">paiements Facture</a></li>
-        			 	    <li><a href="${conf_fdp_url}"> Rechercher factures</a></li>
+			<spring:message code="cashregister_billing_invoice_payment" var="billing_invoice_paiement"/>
+        			 		<!-- - <li><a href="${find_pay_url}">${billing_invoice_paiement }</a></li>-->
+			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
+        			 	    <li><a href="${conf_fdp_url}"> ${billing_invoice_search }</a></li>
         			 		
         					<!-- <li>
 		        				<a href="#">Rechercher factures</a>
@@ -344,19 +354,16 @@ if(Check == false){
             <spring:url value="/clients?find=BySearch&amp;form" var="clt_findN_url"/>
             <spring:url value="/clients?find=ByClientNumberEquals&amp;form" var="clt_findcn_url"/>
             <spring:url value="/categorieclients?form" var="clt_cat_url"/>
-                <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="clt_catl_url"/>
-                <spring:url value="/etatcreditses?form" var="etat_credit_url"/>
-                                <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etatList_url"/>
-                                 <spring:url value="/etatcreditses?find=BySearch&amp;form" var="find_etat_url"/>
-                
-                
-                <spring:url value="/detteclients?find=BySearch&amp;form" var="clt_dets_url"/>
-                <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
-    
-                       <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+            <spring:url value="/categorieclients?page=1&amp;size=${empty param.size ? 50 : param.size}" var="clt_catl_url"/>
+            <spring:url value="/etatcreditses?form" var="etat_credit_url"/>
+            <spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="find_etatList_url"/>
+            <spring:url value="/etatcreditses?find=BySearch&amp;form" var="find_etat_url"/>
+            <spring:url value="/detteclients?find=BySearch&amp;form" var="clt_dets_url"/>
+            <spring:url value="/detteclients?find=ByDateCreationBetween&amp;form" var="clt_detd_url"/>
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 
        
-    </security:authorize>
+            </security:authorize>
     
       <!--  menu Fournisseur-->  
          <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
@@ -381,20 +388,28 @@ if(Check == false){
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_INVENTAIRE">
 
 			<li>
-        		<a href="#">Inventaires</a>
+			<spring:message code="inventory_inventories_text" var="inventories_text"/>
+        		<a href="#">${inventories_text }</a>
         			 	<ul class="sub_menu">
-        					<li><a href="${inv_cree_url}">Creer Un Inventaire</a></li>
-        	        					<li><a href="${inv_list_url}">Liste Des Inventaire</a></li>
-        					<li><a href="${fichetDetail_cipm_url}">Fiche Detaillee produit (C.I.P.M)</a></li>
+			<spring:message code="inventory_create_inventory_text" var="create_inventory_text"/>
+        					<li><a href="${inv_cree_url}">${create_inventory_text }</a></li>
+			<spring:message code="inventory_list_inventories" var="list_inventories"/>
+        	        					<li><a href="${inv_list_url}">${list_inventories }</a></li>
+			<spring:message code="inventory_detailed_product_report_cipm" var="detailed_product_report_cipm"/>
+        					<li><a href="${fichetDetail_cipm_url}">${detailed_product_report_cipm }</a></li>
         					<li>
-		        				<a href="#">Edition de Fiches</a>
+			<spring:message code="inventory_repports_edition" var="repports_edition"/>
+		        				<a href="#">${repports_edition }</a>
 		        					<ul>
 		        						<!--  <li><a href="${invRayol}">Fiche Inventaire</a></li>-->
-		        						<li><a href="${fiche_qte_url}">Fiche de suivie de Quantite </a></li>
-		        						<li><a href="${invAlpha_fiche_url}">Fiche de suivie de stock </a></li>	
+			<spring:message code="inventory_product_qty_monitoring_report" var="product_qty_monitoring_report"/>
+		        						<li><a href="${fiche_qte_url}">${product_qty_monitoring_report } </a></li>
+			<spring:message code="inventory_stock_monitoring_report" var="stock_monitoring_report"/>
+		        						<li><a href="${invAlpha_fiche_url}">${stock_monitoring_report } </a></li>	
 		        					</ul>
 		        			 </li>
-		        			 <li><a href="${prd_rps_url}">Produits En Rupture De Stock</a></li>
+			<spring:message code="inventory_product_with_stock_out" var="product_with_stock_out"/>
+		        			 <li><a href="${prd_rps_url}">${product_with_stock_out }</a></li>
         				</ul>
         	</li>
    			 </security:authorize>
@@ -447,27 +462,33 @@ if(Check == false){
             <spring:url value="/produits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_list_url"/>
             <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
                                         <spring:url value="/inventaireProcess?find=BySearch&amp;form" var="prdf_des_url"/>
-                        
+            <spring:message code="catalogues_catalogue_menu" var="catalogue_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
 				<li>
-        		<a href="#">Catalogues</a>
+        		<a href="#">${catalogue_menu }</a>
         			 	<ul class="sub_menu">
         			 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_RECHERCHE_PAR_CIPM">
-        					<li><a href="${search_lgap_url}">Rechercher un Produit (CIPM)</a></li>
+        					<li><a href="${search_lgap_url}">${find_product }</a></li>
         			    </security:authorize>          
         					            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">
         					<li>
-		        				<a href="#">produits</a>
+            <spring:message code="catalogues_create_product" var="create_product"/>
+            <spring:message code="catalogues_create_product_cip" var="create_product_cip"/>
+            <spring:message code="catalogues_create_product_without_cip" var="create_product_without_cip"/>
+            <spring:message code="catalogues_list_product_with_cip" var="list_product_with_cip"/>
+            <spring:message code="catalogues_famillies_set" var="famillies_set"/>
+            <spring:message code="catalogues_find_product_by_cip" var="find_product_by_cip"/>
+		        				<a href="#">${create_product }</a>
 		        					<ul>
-		        						<li><a href="${prd_cip_url}"> Creer Un Produit Avec C.I.P</a></li>
-		        						<li><a href="${prd_scip_url}"> Creer Un Produit Sans C.I.P </a></li>
+		        						<li><a href="${prd_cip_url}"> ${create_product_cip }</a></li>
+		        						<li><a href="${prd_scip_url}"> ${create_product_without_cip } </a></li>
 		        						<!-- 
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
 		        						 -->
-		        						<li><a href="${prd_list_url}"> Lister les produits(CIP)</a></li>
+		        						<li><a href="${prd_list_url}"> ${list_product_with_cip }</a></li>
 		        						
-		        					    <li><a href="${aff_fsf_url}"> Affectation Familles </a></li>
-		        						<li><a href="${prdf_des_url}"> Rechercher un Produit(CIP)</a></li>	
+		        					    <li><a href="${aff_fsf_url}"> ${famillies_set } </a></li>
+		        						<li><a href="${prdf_des_url}"> ${find_product_by_cip }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <spring:url value="/familleproduits?form" var="fp_url"/>
@@ -475,26 +496,37 @@ if(Check == false){
             
           <spring:url value="/sousfamilleproduits?form" var="sfp_url"/>
             <spring:url value="/sousfamilleproduits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="sfp_list_url"/>
+            
+            <spring:message code="catalogues_product_famillies" var="product_famillies"/>
+            <spring:message code="catalogues_product_famillies_create" var="product_famillies_create"/>
+            <spring:message code="catalogues_product_famillies_list" var="product_famillies_list"/>
 		        			 <li style="display: none;">
-		        				<a href="#">Famille Produit</a>
+		        				<a href="#">${product_famillies }</a>
 		        					<ul>
-		        						<li><a href="${fp_url}">Creer</a></li>
-		        						<li><a href="${fp_list_url}">Lister</a></li>
+		        						<li><a href="${fp_url}">${product_famillies_create }</a></li>
+		        						<li><a href="${fp_list_url}">${product_famillies_list }</a></li>
 		        					</ul>
 		        			 </li>
+            <spring:message code="catalogues_product_sub_famillies" var="product_sub_famillies"/>
+            <spring:message code="catalogues_product_sub_famillies_create" var="product_sub_famillies_create"/>
+            <spring:message code="catalogues_product_sub_famillies_create_list" var="product_sub_famillies_list"/>
 		        			<li style="display: none;">
-		        				<a href="#"> Sous Famille Produit</a>
+		        				<a href="#"> ${product_sub_famillies }</a>
 		        					<ul>
-		        						<li><a href="${sfp_url}">Creer</a></li>
-		        						<li><a href="${sfp_list_url}">Lister</a></li>
+		        						<li><a href="${sfp_url}">${product_sub_famillies_create }Creer</a></li>
+		        						<li><a href="${sfp_list_url}">${product_sub_famillies_list }</a></li>
 		        					</ul>
 		        			 </li>
 		        			 <li>
-		        				<a href="#"> Decompositions</a>
+            <spring:message code="catalogues_product_cracking" var="product_cracking"/>
+            <spring:message code="catalogues_relation_create" var="relation_create"/>
+            <spring:message code="catalogues_relations_list" var="relations_list"/>
+            <spring:message code="catalogues_relations_find" var="relations_find"/>
+		        				<a href="#"> ${product_cracking }</a>
 		        					<ul>
-		        						<li><a href="${transf_url}">Creer Une relation</a></li>
-		        						<li><a href="${trans_list_url}">Liste Des Relations</a></li>
-		        						<li><a href="${transff_url}">Rechercher Une Relation</a></li>
+		        						<li><a href="${transf_url}">${relation_create }</a></li>
+		        						<li><a href="${trans_list_url}">${relations_list }</a></li>
+		        						<li><a href="${transff_url}">${relations_find }</a></li>
 		        					</ul>
 		        			 </li>
 		        			       </security:authorize>
@@ -523,63 +555,87 @@ if(Check == false){
             <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
             <spring:url value="/statistics/new?form" var="courbes" />        		
      
-           
+           <!-- Menu Supervision -->
+           <spring:message code="supervision_supervision_menu" var="supervision_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
             <li>
-        		<a href="#">Supervisions</a>
+        		<a href="#">${supervision_menu }</a>
         			 	<ul class="sub_menu">
 		        			
 		        			 <li>
-		        				<a href="#">Statistique</a>
+           <spring:message code="supervision_statistics_menu" var="statistics_menu"/>
+		        				<a href="#">${statistics_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_statis_url }">Courbe Chiffre D'affaire</a></li>
-		        					    <li><a href="${courbe_vente_url }">Panier Moyen</a></li>	
-		        					    <li><a href="${etat_vente_url }">Etat des ventes</a></li>	
-		        					    <li><a href="${courbes}">Courbes statistiques</a></li>		
+           <spring:message code="supervision_statistics_cash_collected" var="statistics_cash_collected"/>
+           <spring:message code="supervision_statistics_medium_order_set" var="statistics_medium_order_set"/>
+           <spring:message code="supervision_statistics_sales_report" var="statistics_sales_report"/>	
+           <spring:message code="supervision_statistics_statistics_graph" var="statistics_statistics_graph"/>	
+		        						<li><a href="${create_statis_url }">${statistics_cash_collected }</a></li>
+		        					    <li><a href="${courbe_vente_url }">${statistics_medium_order_set }</a></li>
+		        					    <li><a href="${etat_vente_url }">${statistics_sales_report }</a></li>
+		        					    <li><a href="${courbes}">${statistics_statistics_graph }</a></li>		
 		        					</ul>
 		        			 </li>
 		        			 <li>
-		        				<a href="#">Ordonnancier</a>
+           <spring:message code="supervision_ordonnancer_menu" var="ordonnancer_menu"/>
+		        				<a href="#">${ordonnancer_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_list_ord_url}">Lister</a></li>	
+           <spring:message code="supervision_ordonnancer_list" var="ordonnancer_list"/>
+		        						<li><a href="${conf_list_ord_url}">${ordonnancer_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			
 		        			
+           <spring:message code="supervision_conditionment_menu" var="conditionment_menu"/>
 
-		        			 <li>	<a href="#">Conditionnement</a>
+		        			 <li>	<a href="#">${conditionment_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_con_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_con_url}">Lister</a></li>	
+           <spring:message code="supervision_conditionment_add" var="conditionment_add"/>
+           <spring:message code="supervision_conditionment_list" var="conditionment_list"/>
+		        						<li><a href="${conf_con_url}"> ${conditionment_add }</a></li>
+		        						<li><a href="${conf_list_con_url}">${conditionment_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">Taux Margs</a>
+           <spring:message code="supervision_marginrate_menu" var="marginrate_menu"/>
+		        			  <li><a href="#">${marginrate_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_mrg_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_mrg_url}">Lister</a></li>	
+           <spring:message code="supervision_marginrate_add" var="marginrate_add"/>
+           <spring:message code="supervision_marginrate_list" var="marginrate_list"/>
+		        						<li><a href="${conf_mrg_url}"> ${marginrate_add }</a></li>
+		        						<li><a href="${conf_list_mrg_url}">${marginrate_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			  <li><a href="#">T.V.A</a>
+           <spring:message code="supervision_tva_menu" var="tva_menu"/>
+		        			  <li><a href="#">${tva_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_tva_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_tva_url}">Lister</a></li>	
+           <spring:message code="supervision_tva_add" var="tva_add"/>
+           <spring:message code="supervision_tva_list" var="tva_list"/>
+		        						<li><a href="${conf_tva_url}"> ${tva_add }</a></li>
+		        						<li><a href="${conf_list_tva_url}">${tva_list }</a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <li>
-		        			 	<a href="#">Devises</a>
+           <spring:message code="supervision_devices_menu" var="devices_menu"/>
+		        			 	<a href="#">${devices_menu }</a>
 		        					<ul>
-		        						<li><a href="${conf_dev_url}"> Ajouter</a></li>
-		        						<li><a href="${conf_list_dev_url}">Lister</a></li>	
+           <spring:message code="supervision_devices_add" var="devices_add"/>
+		        						<li><a href="${conf_dev_url}"> ${devices_add }</a></li>
+           <spring:message code="supervision_devices_list" var="devices_list"/>
+		        						<li><a href="${conf_list_dev_url}">${devices_list }</a></li>	
 		        					</ul>
 		        			 </li>
+           <spring:message code="supervision_filial_menu" var="filial_menu"/>
 		        			   <li>
-		        			 	<a href="#">Filiales</a>
+		        			 	<a href="#">${filial_menu }</a>
 		        					<ul>
-		        						<li><a href="${create_filiale_url}"> Ajouter</a></li>
-		        						<li><a href="${filiale_list_url}">Lister</a></li>	
+           <spring:message code="supervision_filial_add" var="filial_add"/>
+           <spring:message code="supervision_filial_list" var="filial_list"/>
+		        						<li><a href="${create_filiale_url}"> ${filial_add }</a></li>
+		        						<li><a href="${filiale_list_url}">${filial_list }</a></li>	
 		        					</ul>
 		        			 </li>
-		        			 <li><a href="${conf_list_site_url}">Sites</a></li>
+           <spring:message code="supervision_site_menu" var="site_menu"/>
+		        			 <li><a href="${conf_list_site_url}">${site_menu }</a></li>
 		        		</ul>
 		     </li>
       
@@ -588,47 +644,63 @@ if(Check == false){
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
     
      <li>
-		        				<a href="#"> Suivie Clients</a>
+     <spring:message code="client_followup_menu"  var="client_fellowup_menu"/>
+     <spring:message code="client_followup_create_client"  var="create_client"/>
+     <spring:message code="client_followup_list_client"  var="list_client"/>
+     <spring:message code="client_followup_find_client"  var="find_client"/>
+		        				<a href="#"> ${client_fellowup_menu }</a>
 		        					<ul>
-		        						<li><a href="${clt_cree_url}"> Creer un Client</a></li>
-		        						<li><a href="${clt_list_url}">Lister des Client</a></li>
-		        						<li><a href="${clt_findN_url}">rechercher un Clients</a>	</li>
+		        						<li><a href="${clt_cree_url}">${create_client } </a></li>
+		        						<li><a href="${clt_list_url}">${list_client }</a></li>
+		        						<li><a href="${clt_findN_url}">${find_client }</a>	</li>
 		        						
 		        						
 		        <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_GESTION_DETTE">
 		                                 <li>
-		        							<a href="#">Dettes Clients</a>
+     <spring:message code="client_followup_clients_debt_menu"  var="clients_debt_menu"/>
+		        							<a href="#">${clients_debt_menu }</a>
 		        							<ul>
-		        						<li><a href="${list_dette_url}">Lister les dettes</a></li>
-		        						<li><a href="${clt_dets_url}">recherche Dettes</a></li>
+     <spring:message code="client_followup_clients_list_debt"  var="list_debt"/>
+		        						<li><a href="${list_dette_url}">${list_debt }</a></li>
+     <spring:message code="client_followup_clients_find_debt"  var="find_debt"/>
+		        						<li><a href="${clt_dets_url}">${find_debt }</a></li>
 		        							</ul>
 		        						</li>
 		        						 <li>
-		        							<a href="#">Etats de Credits</a>
+     <spring:message code="client_followup_credit_reports_menu"  var="credit_reports_menu"/>
+		        							<a href="#">${credit_reports_menu }</a>
 		        							<ul>
-		        						<li><a href="${etat_credit_url}">Edition Etat Credit</a></li>
-		        						<li><a href="${find_etat_url}">Recherche Etat Credit</a></li>
-		        						<li><a href="${find_etatList_url}">Lister Les Etat Credit</a></li>
+     <spring:message code="client_followup_edit_credit_report"  var="edit_credit_report"/>
+		        						<li><a href="${etat_credit_url}">${edit_credit_report }</a></li>
+     <spring:message code="client_followup_find_credit_report"  var="find_credit_report"/>
+		        						<li><a href="${find_etat_url}">${find_credit_report }</a></li>
+     <spring:message code="client_followup_list_credit_report"  var="list_credit_report"/>
+		        						<li><a href="${find_etatList_url}">${list_credit_report }</a></li>
 		        							</ul>
 		        						</li>
-		        						
-		        						
+     <spring:message code="client_followup_client_category_menu"  var="client_category_menu"/>
 	 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 		        						
-		                                  <li><a href="#">categories Clients</a>
+		                                  <li><a href="#">${client_category_menu }</a>
 		        							<ul>
-		        								<li><a href="${clt_cat_url}"> Creer</a></li>
-		        								<li><a href="${clt_catl_url}">Lister</a></li>	
+     <spring:message code="client_followup_client_category_create"  var="client_category_create"/>
+     <spring:message code="client_followup_client_category_list"  var="client_category_list"/>
+		        								<li><a href="${clt_cat_url}"> ${client_category_create }</a></li>
+		        								<li><a href="${clt_catl_url}">${client_category_list }</a></li>	
 		        							</ul>
 		        						</li>
 		        						
 		        						
 		        						 <li>
-		        				<a href="#">Avoir Client</a>
+     <spring:message code="client_followup_client_possesions_menu"  var="client_possesions_menu"/>
+		        				<a href="#">${client_possesions_menu }</a>
 		        					<ul>
-		        						<li><a href="${avoir_url}">Creer un Avoir</a></li>
-		        				       <li><a href="${avoir_search_url}">Rechercher un Avoir  </a></li>	
-		        						<li><a href="${avoir_list_url}">Lister Les Avoirs  </a></li>	
+     <spring:message code="client_followup_client_possesions_create"  var="client_possesions_create"/>
+		        						<li><a href="${avoir_url}">${client_possesions_create }</a></li>
+     <spring:message code="client_followup_client_possesions_find"  var="client_possesions_find"/>
+		        				       <li><a href="${avoir_search_url}">${client_possesions_find } </a></li>
+     <spring:message code="client_followup_client_possesions_list"  var="client_possesions_list"/>	
+		        						<li><a href="${avoir_list_url}">${client_possesions_list } </a></li>	
 		        					</ul>
 		        			 </li>
 		        			 </security:authorize>
@@ -651,37 +723,94 @@ if(Check == false){
     	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
     	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
     	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
-		                                  <li><a href="#">Etats </a>
+    	<spring:message code="reports_reports_menu" var="reports_menu"/>
+		                                  <li><a href="#">${reports_menu } </a>
 		        							<ul>
-		        								<li><a href="${list_rayon_url}">Listing Rayons</a></li>
-		        								<li><a href="${list_clt_url}">Listing Clients</a></li>
-		        								<li><a href="${list_relation_url}">Listing Relations de decomposition</a></li>
-		        								<li><a href="${et_valeur_stock}">Etat Valorisation du stock</a></li>
-		        								<li><a href="${et_jour_dette}">Etat Journalier des Dettes </a></li>
-		        								<li><a href="${cash_journalier_url}">Etat Journalier des Caisses </a></li>
-		        								<li><a href="${et_jour_vente}">Etat Journalier des Ventes </a></li>
-		        								<li><a id="et_per_vente" href="#">Etat Produit Perisables </a></li>
-		        								<li><a href="${list_rup_url}">Produits En Rupture </a></li>
-		        								<li><a href="${list_reclam_url}">Etat Reclamations </a></li>	
-		        								<li><a href="${autre_etats}">Autres Etats</a></li>	
+		        								
+    	<spring:message code="reports_listing_shelves" var="listing_shelves"/>
+    	<spring:message code="reports_client_listing" var="client_listing"/>
+		        								<li><a href="${list_rayon_url}">${listing_shelves }</a></li>
+		        								<li><a href="${list_clt_url}">${client_listing }</a></li>
+    	<spring:message code="reports_decomposition_relation_list" var="decomposition_relation_list"/>
+		        								<li><a href="${list_relation_url}">${decomposition_relation_list }</a></li>
+    	<spring:message code="reports_stock_valorisation_report" var="stock_valorisation_report"/>
+		        								<li><a href="${et_valeur_stock}">${stock_valorisation_report }</a></li>
+    	<spring:message code="reports_daily_debts_report" var="daily_debts_report"/>
+		        								<li><a href="${et_jour_dette}">${daily_debts_report }</a></li>
+    	<spring:message code="reports_daily_cashregister_debts_report" var="daily_cashregister_debts_report"/>
+		        								<li><a href="${cash_journalier_url}">${daily_cashregister_debts_report }</a></li>
+    	<spring:message code="reports_daily_sales_report" var="daily_sales_report"/>
+		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
+    	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
+		        								<li><a id="et_per_vente" href="#">${expireable_product_report } </a></li>
+    	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
+		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
+    	<spring:message code="reports_reclamations_reports" var="reclamations_reports"/>
+		        								<li><a href="${list_reclam_url}">${reclamations_reports } </a></li>
+    	<spring:message code="reports_other_reports" var="other_reports"/>	
+		        								<li><a href="${autre_etats}">${other_reports }</a></li>	
 		        							</ul>
 		        						</li>
       </security:authorize>
       
       <!-- Changing theme -->
-      <spring:url value="/?theme=blueTheme" var="blue_theme_link" />
-      <spring:url value="/?theme=standard" var="green_theme_link" />
-
       <security:authorize access="isAuthenticated()">
-      	<spring:message code="allmenu_theme" var="theme" />
-            <li><a href="#">${theme }</a>
-		        <ul>
-      	<spring:message code="allmenu_green_theme" var="green_theme" />
-      	<spring:message code="allmenu_blue_theme" var="blue_theme" />
-		          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a></li>
-		          <li><a href="${blue_theme_link}" title="${blue_theme }">${blue_theme }</a></li>
-		        </ul>
-		    </li>      
+            
+              <c:set value="${pageContext.request.pathTranslated}" var="contexte" />
+		      <!-- Construct urls -->
+		      <!-- URL du theme bleu -->
+		      <spring:url value="${contexte}" var="blue_theme_link">
+		           <c:if test="${not empty param}">
+		                  <c:if test="${not empty param.page}">
+		                     <spring:param name="page" value="${param.page}" />
+		                  </c:if>
+		                  <c:if test="${not empty param.size}">
+		                     <spring:param name="size" value="${param.size}" />
+		                  </c:if>
+		                  <c:if test="${null ne param.form}">
+                               <spring:param name="form" />
+                          </c:if>
+                          <c:if test="${null ne param.find}">
+                               <spring:param name="find" value="${param.find}" />
+                          </c:if>
+		                  <spring:param name="theme" value="blueTheme" />
+		          </c:if>
+		          <c:if test="${empty param}">
+		            <spring:param name="theme" value="blueTheme" />
+		          </c:if>
+		      </spring:url>
+		      
+		      <!-- URL du theme vert -->
+		      <spring:url value="${contexte}" var="green_theme_link">
+		           <c:if test="${not empty param}">
+		                  <c:if test="${not empty param.page}">
+		                     <spring:param name="page" value="${param.page}" />
+		                  </c:if>
+		                  <c:if test="${not empty param.size}">
+		                     <spring:param name="size" value="${param.size}" />
+		                  </c:if>
+		                  <c:if test="${null ne param.form}">
+                               <spring:param name="form" />
+                          </c:if>
+                          <c:if test="${null ne param.find}">
+                               <spring:param name="find" value="${param.find}" />
+                          </c:if>
+		                  <spring:param name="theme" value="standard" />  
+		           </c:if>
+		           <c:if test="${empty param}">
+		            <spring:param name="theme" value="standard" />
+		          </c:if>   
+		      </spring:url>
+            
+	      	  <spring:message code="allmenu_theme" var="theme" />
+	            <li><a href="#">${theme }</a>
+			        <ul>
+	      	<spring:message code="allmenu_green_theme" var="green_theme" />
+	      	<spring:message code="allmenu_blue_theme" var="blue_theme" />
+			          <li><a href="${green_theme_link}" title="${green_theme }">${green_theme }</a> </li>
+			          <li><a href="${blue_theme_link}" title="${blue_theme }">${blue_theme }</a></li>
+			        </ul>
+			    </li>      
       </security:authorize>
       
       
@@ -733,8 +862,8 @@ if(Check == false){
         		<spring:message code="allmenu_license" var="license" />
     			<a href="#">${license }</a>
         			 	<ul class="sub_menu">
-        		<spring:message code="allmenu_license_update" var="license_update" />
-        			 		<li><a href="${licence_update_link }">${license_update }</a></li>
+        		         <spring:message code="allmenu_license_update" var="license_update" />
+        			     <li><a href="${licence_update_link }">${license_update }</a></li>
         			 		
         			 	</ul>
         		</li>
@@ -749,7 +878,9 @@ if(Check == false){
       
     	<li>
     	 <spring:url value="/help/manuel?page=introduction" var="sommaire_url"/>
-    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="Manuel ADPHARMA" target="_blank">AIDE</a>
+    	 <spring:message code="help_help_menu"  var="help_menu"/>
+    	 <spring:message code="help_help_menu_title"  var="help_menu_title"/>
+    		<a  href="${sommaire_url}" style="color: blue; font-weight: bold; cursor: help;" title="${help_menu_title }" target="_blank">${help_menu }</a>
        </li>
   	
  </ul> 

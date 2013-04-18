@@ -24,6 +24,10 @@ z-index:0;
 	position: relative;
 }
 
+#numero2 {
+z-index:10;
+}
+
 .tbinput{
 	width: 310px;
 	display:block;
@@ -204,13 +208,19 @@ font-size: 1em;
 	background-color: #1b5790;/* Digg Blue */
 	border: none;
 	width: 25%;
-	
+	-webkit-border-radius: 10px 0 0 0;
+    -moz-border-radius: 10px 0 0 0;
+    -o-border-radius: 10px 0 0 0;
+	border-radius: 10px 0 0 0;
 }
 .tbrigth {
 	background-color: #1b5790;/* Digg Blue */
 	border: none;
 	width: 75%;
-	
+	-webkit-border-radius: 0 10px 0 0;
+    -moz-border-radius: 0 10px 0 0;
+    -o-border-radius: 0 10px 0 0;
+	border-radius: 0 10px 0 0;
 }
 
 
@@ -266,7 +276,7 @@ body {
 	margin-right: 2%;
 	margin-bottom: 0px;
 	margin-top: 10px;
-	font-family: Courrier, verdana;
+	font-family:verdana, Courrier;
 }
 
 .tlog .icoImage img {
@@ -296,13 +306,6 @@ table.result a:visited {
 	color: #7db223;
 }
 
-}
-p.appMessage {
-	font-weight: bold;
-	text-transform: uppercase;
-	font-size: 25px;
-	font-style: italic;
-}
 
 .submits { /*	border: 1px solid #BBBBBB;
 	color: #33AAFF ;
@@ -343,7 +346,11 @@ p.appMessage {
 	margin-bottom: 0px;
 	background-color: #33CCFF;
 	padding: 5px;
-	
+	border-radius: 10px 10px 0 0;
+}
+
+.welcome_user{
+	margin-right: 4px;
 }
 
 #_topmenu {
@@ -666,10 +673,15 @@ ul li {
 /* table elements */
 .tblog {
 	border: none;
+	background: none;
 }
 
 .tbcreate {
 	border: none;
+}
+
+.tbcreate tr{
+	background: none;
 }
 
 table tr:hover{
@@ -734,7 +746,7 @@ caption {
 }
 
 fieldset {
-	background-color:white;
+background-color:white;
 border: none;
 border-radius: 2px;
 margin-bottom: 12px;
@@ -1020,6 +1032,7 @@ p {
 	margin-bottom: 1.2em;
 }
 
+
 a img {
 	border: none;
 }
@@ -1077,6 +1090,7 @@ a:hover {
 	vertical-align: center;
 	font-weight: bold;
 	text-transform: uppercase;
+	font-size: 12px;
 }
 
 #right-side img {
@@ -1088,6 +1102,8 @@ a:hover {
 	border-left: 1px solid white;
 	height: 10px;
 	padding-left: 10px;
+	font-size: 10px;
+	text-shadow: 2px 2px 2px #333;
 }
 
 #right-side a.first {

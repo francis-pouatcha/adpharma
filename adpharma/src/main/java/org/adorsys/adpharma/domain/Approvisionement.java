@@ -331,7 +331,14 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
 
     public static TypedQuery<Approvisionement> findApproByFournisseurLike(String nom) {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
-        nom =nom + "%";
+        /*nom =nom + "%";*/
+        nom = nom.replace('*', '%');
+        if (nom.charAt(0) != '%') {
+            nom = "%" + nom;
+        }
+        if (nom.charAt(nom.length() - 1) != '%') {
+            nom = nom + "%";
+        }
         EntityManager em = Approvisionement.entityManager();
         TypedQuery<Approvisionement> q = em.createQuery("SELECT o FROM Approvisionement AS o WHERE LOWER(o.founisseur.name) LIKE LOWER(:nom) ORDER BY o.id DESC", Approvisionement.class);
         q.setParameter("nom", nom);

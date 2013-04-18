@@ -1,12 +1,16 @@
-<html xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" >  
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+ xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+ xmlns:spring="http://www.springframework.org/tags" 
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" >  
 	
 	<jsp:output doctype-root-element="HTML" doctype-system="html" />
 	
-	<jsp:directive.page contentType="text/html;charset=UTF-8" />  
+	<jsp:directive.page contentType="text/html;charset=utf-8" />  
 	<jsp:directive.page pageEncoding="UTF-8" /> 
 			
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=8" />	
 		<title>Manuel Adpharma</title>
     	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
@@ -15,9 +19,15 @@
 		<spring:url value="/resources/bootstrap/css/bootstrap.css" var="bootstrap_url" />
 		<spring:url value="/resources/bootstrap/css/docs.css" var="docs_url" />
 		<spring:url value="/resources/bootstrap/css/bootstrap-responsive.css" var="bootstraprespo_url" />
+		<spring:url value="/resources/bootstrap/css/custom.css" var="bootstraprespo_url" />
 		<spring:url value="/resources/bootstrap/js/jquery-1.8.1.js" var="jquery_url" />
 		<spring:url value="/resources/bootstrap/js/application.js" var="app_url" />
 		<spring:url value="/resources/bootstrap/js/bootstrap-scrollspy.js" var="bootstrap_scroll_url" />
+		
+		<spring:url value="/resources/bootstrap/css/print.css" var="print_url" />
+		
+		<spring:url value="/resources/images/print.png" var="print" scope="session"/>
+		
 	    <!-- Le styles -->
 	     <link type="text/css" href="${bootstrap_url}" rel="stylesheet" />
 	    
@@ -34,11 +44,23 @@
 	      h3{
 	      		color: #0088CC;
 	      }
+	       .zoomimg{
+	            z-index: 80;
+	       }
+	      
+	    </style>
+	    <style type="text/css">
+	         @media print{
+	          #presentation button{visibility: hidden;}
+	      }
+	    
 	    </style>
 	    
 	    <link rel="SHORTCUT ICON" href="${favicon}" />
-	    <link type="text/css" href="${bootstraprespo_url}" rel="stylesheet" />
-	    <link type="text/css" href="${docs_url}" rel="stylesheet" />
+	    <link type="text/css" href="${bootstraprespo_url}" rel="stylesheet" media="all" />
+	    <link type="text/css" href="${docs_url}" rel="stylesheet" media="all" />
+	   <!--  <link type="text/css" href="${print_url}" rel="stylesheet" media="print" />  -->
+	    
 	    <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 	    <script type="text/javascript" src="${bootstrap_scroll_url}"><!-- required for FF3 and Opera --></script>
 	    <script type="text/javascript" src="${app_url}"><!-- required for FF3 and Opera --></script>
@@ -61,6 +83,54 @@
 	  			$('.subnav').scrollspy();
 	  		})
 	  	</script>
+	  	
+	  	<script type="text/javascript">
+	  	  // This function print the article of the page 
+	  	     function printBlock(title, object){
+	  		    // area to print. 
+	  	    	 var zone= document.getElementById(object).innerHTML;
+	  		    
+	  		    // The new pop to open
+	  	    	var fen = window.open("", "", "height=500, width=700,toolbar=0, menubar=0, scrollbars=1, resizable=0, status=0, location=0, left=10, top=10");
+	  	    	 
+		  	   // style of the popup
+		  	   fen.document.body.style.color = '#000000'; 
+		  	   fen.document.body.style.backgroundColor = '#FFFFFF';
+		  	   fen.document.body.style.fontSize = '12px';
+		  	   fen.document.body.style.padding = "20px";
+		  	   
+		  	   // Data to print
+		  	   fen.document.title = title; 
+// 		  	   fen.document.write(zone.innerHTML);
+		  	   fen.document.body.innerHTML += " " + zone + " ";
+               fen.document.getElementById('printb').style.display= 'block';
+               for(var i=0; 15>i; i++){
+            	   var test= fen.document.getElementsByTagName('img')[i];
+            	   if(test==null){
+            		   break;
+            	   }else{
+	            	   test.style.display= 'none';
+            	   };
+            	   $('.visu').hide();
+               } 
+              
+               
+
+		  	   
+		  	   /* fen.document.close(); */
+		  	 
+			   // Impression of popup 
+// 			   fen.window.print(); 
+		  	 
+			  //close the popup
+// 			   fen.window.close(); 
+			   return true; 
+	  	     }
+	  	  
+	  	 
+	  	  
+	  	</script>
+	  	
   		<div><tiles:insertAttribute name="header"/></div>
   		<div><tiles:insertAttribute name="body"/></div>
    		<div><tiles:insertAttribute name="footer"/></div>

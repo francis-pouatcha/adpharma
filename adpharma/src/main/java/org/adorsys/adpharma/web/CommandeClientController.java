@@ -331,10 +331,27 @@ public class CommandeClientController {
 	}
 
 	@Transactional
-	@RequestMapping(value="/convertirEnVente/{cmdId}", method = RequestMethod.GET)
-	public String convertirEnVente(@PathVariable("cmdId") Long cmdId, Model uiModel) {
+	@RequestMapping(value="/convertirEnVentePublic/{cmdId}", method = RequestMethod.GET)
+	public String convertirEnVentePublic(@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		commandeClient.setTypeCommande(TypeCommande.VENTE_AU_PUBLIC);
+		Facture facture = Facture.findFacture(commandeClient.getFactureId());
+		facture.setTypeFacture(TypeFacture.CAISSE);
+		commandeClient.merge();
+		facture.setTypeCommande(commandeClient.getTypeCommande());
+		facture.merge();
+		uiModel.addAttribute("apMessage", "Commande convertie avec success !");
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("commandeclient", commandeClient);
+		uiModel.addAttribute("itemId", cmdId);
+		return "saleprocess/showCmd";
+	}
+	
+	@Transactional
+	@RequestMapping(value="/convertirEnVenteCredit/{cmdId}", method = RequestMethod.GET)
+	public String convertirEnVenteCredit(@PathVariable("cmdId") Long cmdId, Model uiModel) {
+		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
+		commandeClient.setTypeCommande(TypeCommande.VENTE_A_CREDIT);
 		Facture facture = Facture.findFacture(commandeClient.getFactureId());
 		facture.setTypeFacture(TypeFacture.CAISSE);
 		commandeClient.merge();
@@ -370,11 +387,13 @@ public class CommandeClientController {
 	@ResponseBody
 	public String findDetails(@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-		if (commandeClient!=null) {
-			List<LigneCmdClient> resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
-			return  LigneCmdClient.toDeepJsonArray(resultList);
+		List<LigneCmdClient> resultList= new ArrayList<LigneCmdClient>();
+		if (commandeClient==null) return null;
+	    resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
+		if(resultList.isEmpty()){
+		return null;
 		}
-		return null ;
+		return  LigneCmdClient.toDeepJsonArray(resultList);
 	}
 	
 	@RequestMapping(value = "/searchVente", method = RequestMethod.GET)

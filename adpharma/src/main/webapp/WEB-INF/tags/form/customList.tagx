@@ -18,10 +18,7 @@
         <c:otherwise>
         	   
 <center >
-		<hr/>
-		
-			<p class="appMessage" style="color: green; margin-bottom: 1px;"><spring:message arguments="${label}" code="entity_not_found" /></p>
-		<hr/>
+			<p class="appMessage">  <spring:message arguments="${label}" code="entity_not_found" /> </p>
 </center>
 		          <jsp:doBody />
         </c:otherwise>

@@ -28,12 +28,16 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     </style>
     
     <SCRIPT type="text/javascript">
-           $(document).ready(function(){
-        	   document.getElementById("cipm").focus();
-           });
-           
+	    $(function(){
+	 	   document.getElementById("cipm").focus();
+	    });
+       
+    </SCRIPT>
+    
+    <SCRIPT type="text/javascript">
            function findLine() {
        		var cipm = document.getElementById("cipm").value;
+       		console.log(cipm);
        		var url = "${find_cipm_url}" + cipm ;
        			$.getJSON(url, function(data) {
        					if (data.id!=null) {

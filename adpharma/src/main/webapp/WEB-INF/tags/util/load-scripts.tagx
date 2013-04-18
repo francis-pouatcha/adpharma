@@ -24,6 +24,7 @@
    <spring:url value="/resources/css/ui-lightness/jquery-ui-1.8.18.custom.css" var="jquerycss_url" />
     <spring:url value="/resources/css/hmenu/jquerycssmenu.css" var="hmenucss_url" />
      <spring:url value="/resources/js/menu.js" var="menu_url" />
+     <spring:url value="/resources/css/messages.css" var="message_css" />
      
      <spring:url value="/resources/js/JqueryTokenInput/jquery.tokeninput.js" var="jquery_token" />
      <spring:url value="/resources/js/JqueryTokenInput/token-input.css" var="token_css" />
@@ -39,8 +40,6 @@
      <spring:url value="/resources/js/jqdropdown/jquery.easing.min.js" var="easing" />
      <spring:url value="/resources/js/jqdropdown/accordion.core.css" var="accore" />
      <spring:url value="/resources/js/jqdropdown/core.css" var="core" />
-     <spring:url value="/resources/js/jqdropdown/dropdown.css" var="dropdown" />
-     <spring:url value="/resources/js/jqdropdown/reset.css" var="reset_acc" />
      
     
      <link type="text/css" href="${jquerycss_url}" rel="stylesheet" media="all" />	
@@ -50,6 +49,7 @@
      
      <link type="text/css" href="${accore}" rel="stylesheet" media="all" />
      <link type="text/css" href="${dropdown}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${message_css}" rel="stylesheet" media="all" />
 
 <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
