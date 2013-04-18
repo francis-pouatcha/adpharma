@@ -7,16 +7,17 @@
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
-        <field:input disableFormBinding="true" field="cip" label="Cip Produit" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="c432RE8O3u4prQfUX9JzAcJ2KOE="/>
-       <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-           </td>
-            <td style="border: none;">
-       <field:input disableFormBinding="true" field="netPayer" label="Montant Min" id="f_org_adorsys_adpharma_domain_Facture_netPayer" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-       <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="Date Min" field="dateCreation"  id="f_org_adorsys_adpharma_domain_Facture_dateCreation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-       <field:checkbox field="solder" id="f_org_adorsys_adpharma_domain_Facture_solder"  label="Solder ? "/>
-   </td>
-   </tr>
-   </table>
+                    <field:input disableFormBinding="false" field="factureNumber" id="f_org_adorsys_adpharma_domain_Facture_factureNumber" required="false" z="user-managed"/>
+			        <field:input disableFormBinding="false" field="cip" label="Cip Produit" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="user-managed"/>
+			        <field:input disableFormBinding="false" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="user-managed"/>
+                </td>
+                <td style="border: none;">
+			        <field:input disableFormBinding="true" field="netPayer" label="Montant Min" id="f_org_adorsys_adpharma_domain_Facture_netPayer" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+			        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="Date Min" field="dateCreation"  id="f_org_adorsys_adpharma_domain_Facture_dateCreation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+			        <field:checkbox field="solder" id="f_org_adorsys_adpharma_domain_Facture_solder"  label="Solder ? "/>
+                </td>
+            </tr>
+         </table>
     </form:custumcreate>
     
     <c:if test="${ not empty results}">

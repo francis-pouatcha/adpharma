@@ -291,10 +291,10 @@ public class Facture extends AdPharmaBaseEntity {
         return q;
     }
 
-    public static List<Facture> search(Boolean solder, String cip, String designation, BigInteger netPayer, Date dateCreation) {
-        StringBuilder searchQuery = new StringBuilder("SELECT o FROM Facture AS o WHERE o.netPayer >= :netPayer AND o.dateCreation >= :dateCreation AND o.solder IS :solder AND o.id IN (SELECT l.facture.id FROM LigneFacture AS l WHERE l.id IS NOT NULL  ");
-        dateCreation = dateCreation != null ? dateCreation : PharmaDateUtil.parseToDate("16-05-2012", PharmaDateUtil.DATE_PATTERN_LONG);
-        netPayer = netPayer != null ? netPayer : BigInteger.ZERO;
+    public static List<Facture> search(Boolean solder, String cip, String designation, BigInteger netPayer, Date dateCreation, String numFacture) {
+    	dateCreation = dateCreation != null ? dateCreation : PharmaDateUtil.parseToDate("16-05-2012", PharmaDateUtil.DATE_PATTERN_LONG);
+    	netPayer = netPayer != null ? netPayer : BigInteger.ZERO;
+        StringBuilder searchQuery = new StringBuilder("SELECT o FROM Facture AS o WHERE o.netPayer >= :netPayer AND o.dateCreation >= :dateCreation AND o.solder IS :solder AND o.id IN (SELECT l.facture.id FROM LigneFacture AS l WHERE l.id IS NOT NULL)  ");
         solder = solder != null ? solder : Boolean.TRUE;
         if (StringUtils.isNotBlank(cip)) {
             searchQuery.append(" AND l.cip = :cip ");
@@ -303,6 +303,10 @@ public class Facture extends AdPharmaBaseEntity {
             designation = designation + "%";
             searchQuery.append(" AND  LOWER(l.designation) LIKE LOWER(:designation) ");
         }
+        if (StringUtils.isNotBlank(numFacture)) {
+        	numFacture = numFacture + "%";
+            searchQuery.append(" AND  o.factureNumber = :numero ");
+        }
         TypedQuery<Facture> q = entityManager().createQuery(searchQuery.append(" ORDER BY l.designation ASC ) ").toString(), Facture.class);
         if (StringUtils.isNotBlank(designation)) {
             q.setParameter("designation", designation);
@@ -310,9 +314,18 @@ public class Facture extends AdPharmaBaseEntity {
         if (StringUtils.isNotBlank(cip)) {
             q.setParameter("cip", cip);
         }
-        q.setParameter("dateCreation", dateCreation);
-        q.setParameter("netPayer", netPayer);
-        q.setParameter("solder", solder);
+        if (StringUtils.isNotBlank(numFacture)) {
+            q.setParameter("numero", numFacture);
+        }
+        if (dateCreation!= null) {
+        	q.setParameter("dateCreation", dateCreation);
+        }
+        if (netPayer!= null) {
+        	q.setParameter("netPayer", netPayer);
+        }
+        if (netPayer!= null) {
+        	q.setParameter("solder", solder);
+        }
         return q.getResultList();
     }
 

@@ -23,14 +23,14 @@
       <li><a href="#payments">Paiements</a></li>
       <li><a href="#others">Autres Operations</a></li>
     </ul>
-  <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>  
+  <a href="#" onclick="javascript:printBlock('Gestion des caisses', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>  
   </div>
 </header>
     
 <article class="float-article" id="read_article">        
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a>
 <section id="open-close">
   <div class="page-header">
-    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a>
     <h1>Ouverture/Fermeture de caisse</h1>
   </div>
   <div class="row">
@@ -155,16 +155,6 @@
     </div>   
   </div>  
 </section>
-<section id="others">
-  <div class="page-header">
-    <h1>Autres operations</h1>
-  </div> 
-    <div class="row">
-  	    <div class="span7">
-  	       <h3>Recherche de factures</h3>
-  	    </div>
-    </div>	    
-</section>    
 </article>
 
 </div>

@@ -288,15 +288,14 @@
 
 			<!-- afficher ce formulaire ppour l ajout de produit -->
 			<util:panel title="saisir le CIP du Produit" id="cip">
-				<form action="${cmd_add_url}" method="POST" name="formulaire"
-					onSubmit="return verif_formulaire()">
+				<form action="${cmd_add_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-			<spring:message code="saleprocess_default_cip" var="default_cip_text"/>
+							<spring:message code="saleprocess_default_cip" var="default_cip_text"/>
 							<th style="text-align: center;">${default_cip_text }</th>
-			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
+							<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
 							<th style="text-align: center;">${product_designation_text }</th>
-			<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
+							<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
 							<th style="text-align: center;">Stock</th>
 							<th style="text-align: center;">Stock alert</th>
 							<th style="text-align: center;">qte cmd</th>
@@ -357,8 +356,7 @@
 			</util:panel>
 			<BR />
 	<center>
-		<IMG alt="loading ..." src="${loadimage }" class="loadimage"
-			style="display: none;" />
+		<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" />
 	</center>
 	<!-- Show the list of product commanded here -->
 	<form:customList

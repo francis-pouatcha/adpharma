@@ -6,7 +6,7 @@
         <table class="tblog">
             <tr>
                 <td class="tbcreate">
-                    <field:input style="width: 40%;" field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" required="true" z="user-managed"/>
+                    <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" required="true" style="width: 40%;" z="user-managed"/>
                     <field:display field="codeRayon" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" object="${rayon}" z="user-managed"/>
                     <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_note" label="code Geo" z="user-managed"/>
                     <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_note" label="Emplacement" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
@@ -17,5 +17,7 @@
                 </td>
             </tr>
         </table>
+        <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_emplacement" z="fxHxdAwJlhYUFcKua3iT3tVWFy0="/>
+        <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" z="0MuVuKOro/JmJ+MQXMinj5VimaY="/>
     </form:update>
 </div>

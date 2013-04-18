@@ -1,44 +1,113 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
+ 
+ <spring:url value="/resources/images/documentation/inventaires/modify.png" var="modify" />
+ <spring:url value="/resources/images/documentation/inventaires/print.png" var="print_fiche" />
+ <spring:url value="/resources/images/documentation/inventaires/create.png" var="create_inventory" />
+ <spring:url value="/resources/images/documentation/inventaires/fiche_qte.png" var="fiche_qte" />
+ <spring:url value="/resources/images/documentation/inventaires/fiche_stock.png" var="fiche_stock" />
+ <spring:url value="/resources/images/documentation/inventaires/fiche_details.png" var="fiche_details" />
+ 
 <header class="jumbotron subhead" id="overview">
-  <h1>Gestion Des Caisses</h1>
-  <p class="lead">Gestion Des Caisses</p>
+  <h1>Gestion Des Inventaires</h1>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#editer">Editer une fiche de suivie du stock</a></li>
-      <li><a href="#effectuer">Effectuer un inventaire</a></li>
-      <li><a href="#rechercher">Rechercher un Inventaire</a></li>
+      <li><a href="#inventory">Inventaires</a></li>
+      <li><a href="#edition">Edition des fiches</a></li>
     </ul>
+    <a href="#" onclick="javascript:printBlock('Gestion des inventaires', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
-        
-<section id="editer">
+
+<article class="float-article" id="read_article">        
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a>
+<section id="inventory">
   <div class="page-header">
-    <h1>Editer une fiche de suivie du stock <small>Editer une fiche de suivie du stock</small></h1>
+    <h1>Inventaires</h1>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	 <h3>Creer un inventaire</h3>
+     <p>Pour creer un inventaire, procedez comme suit:
+        <ul>
+          <li>Allez dans le menu <b>Inventaires > Creer un inventaire</b></li>
+          <li>Remplissez les informations de l'en-tete de l'inventaire(necessaires pour faciliter la recherche des produits) puis enregistrez</li>
+          <li>Ensuite, ajoutez les produits à l'inventaire et enregistrez en cliquant sur le bouton<b>Enregistrer l'inventaire</b></li>
+        </ul>
+        <util:image-box height="250" alttext="Creer un inventaire" width="250" link="${create_inventory}" /> 
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Modifier un inventaire</h3>
+     <p>Pour modifier un inventaire qui n'a pas encore ete cloture, procedez  comme suit: 
+        <ul>
+           <li>Allez dans le menu <b>Inventaires > Liste des inventaires</b></li>
+           <li>Recherchez l'inventaire en entrant le nom de l'agent de l'inventaire dans le champ de recherche</li>
+           <li>Une fois l'inventaire trouve, double-cliquez sur le lien de l'inventaire, ensuite, cliquez sur le bouton <b>Modifier details</b> pour modifier les details de l'inventaire</li>
+        </ul>
+        <util:image-box height="250" alttext="Modifier l'inventaire" width="250" link="${modify}" />
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Fiche inventaire</h3>
+     <p>Pour imprimer la fiche d'un inventaire, procedez  comme suit: 
+        <ul>
+            <li>Allez dans le menu <b>Inventaires > Liste des Inventaires</b></li>
+            <li>Recherchez l'inventaire en entrant le nom de l'agent de l'inventaire dans le champ de recherche</li>
+            <li>Une fois l'inventaire trouve, double-cliquez sur le lien de l'inventaire, ensuite, cliquez sur le bouton <b>Fiche inventaire</b> pour imprimer</li>
+        </ul>
+        <util:image-box height="250" alttext="Imprimer la fiche d'inventaire" width="250" link="${print_fiche}" />
+     </p>
     </div>
   </div>  
 </section>
-<section id="effectuer">
+<section id="edition">
   <div class="page-header">
-    <h1> Effectuer un inventaire <small> Effectuer un inventaire</small></h1>
+    <h1> Edition des fiches </h1>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	 <h3>Fiche de suivie de stock</h3>
+     <p>
+        La fiche de suivie de stock presente un etat des quantités fichiers des produits en stock. 
+        On produit cette fiche generalement lorsque l'on veut faire l'inventaire physique du stock.<BR />
+        Pour editer cette fiche, procedez comme suit:
+        <ul>
+           <li>Allez dans le menu <b>Inventaires > Edition des fiches > Fiche de suivie de stock</b></li>
+           <li>Entrez les parametres d'edition puis enregistrez</li>
+        </ul>
+        <util:image-box height="250" alttext="Fiche de suivi de stock" width="250" link="${fiche_stock}" />
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Fiche de suivie de quantités</h3>
+     <p>
+        La fiche de suivi de quantités permet pour chaque produit d'afficher les valeurs des quantités(quantité en stock, quantité vendue, quantité commandée).<BR />
+        Pour imprimer cette fiche, procedez comme suit:
+        <ul>
+           <li>Allez dans le menu <b>Inventaires > Edition des fiches > Fiche de suivie de quantités</b></li>
+           <li>Entrez les paramètres d'impression puis enregistrez</li>
+        </ul>
+        <util:image-box height="250" alttext="Etat de la fiche de suivie de quantite" width="250" link="${fiche_qte}" /> 
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Fiche detaillée produit(C.I.P.M)</h3>
+     <p>
+         La fiche detaillée produit permet d'avoir diverses informations sur le produit tels(les details du produit même, les détails de ses entrées en stock et de ses mouvements de stock).<BR />
+         Pour editer cette fiche, procedez comme suit: 
+         <ul>
+             <li>Allez dans le menu <b>Inventaires > Fiche detaillée Produit(C.I.P.M)</b></li>
+             <li>Entrez le CIPM d'un produit et enregistrez </li>
+         </ul>
+         <util:image-box height="250" alttext="Fiche detaillee produit" width="250" link="${fiche_details}" />
+     </p>
     </div>
   </div>  
 </section>
-<section id="rechercher">
-  <div class="page-header">
-    <h1>Rechercher un Inventaire <small>Rechercher un Inventaire</small></h1>
-  </div>
-  <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-  </div>  
-</section>
+</article>
+
 </div>

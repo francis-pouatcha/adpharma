@@ -499,20 +499,18 @@ table.navigation {
 
 label {
 	width: 220px;
+/*     width:auto; */
 	float: left;
 	margin-left: 5px;
 	margin-top: 0px;
 	font-weight: bold;
-	font-style: italic;
 }
 
 .labeletat {
-	width: 100%
+	width: 100%;
 	float: left;
 	margin-left: 5px;
 	margin-top: 0px;
-	
-	
 }
 
 input {

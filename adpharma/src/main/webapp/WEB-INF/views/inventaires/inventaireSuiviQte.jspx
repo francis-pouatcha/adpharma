@@ -7,30 +7,29 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir
     <jsp:output omit-xml-declaration="yes"/>
            
     <spring:message code="label_org_adorsys_adpharma_domain_inventaire_designation" var="inventaire_designation"/>
-    
     <spring:message code="label_org_adorsys_adpharma_domain_inventaire_beginby" var="inventaire_beginby"/>
     <spring:message code="label_org_adorsys_adpharma_domain_inventaire_endby" var="inventaire_endby"/>
-    <spring:message code="label_org_adorsys_adpharma_domain_inventaire_beginby" var="inventaire_designation"/>
+    <spring:message code="label_org_adorsys_adpharma_domain_inventaire_datedebut" var="inventaire_datedebut"/>
     <spring:message code="label_org_adorsys_adpharma_domain_inventaire_datefin" var="inventaire_datefin"/>
     
-       <form:custumcreate id="fc_org_adorsys_adpharma_domain_Inventaire" modelAttribute="inventaire" path="/inventaireProcess/ficheSuivieQte.pdf" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
-         <table class="tblog">
+  <form:custumcreate id="fc_org_adorsys_adpharma_domain_Inventaire" label="Fiche de suivie de quantite" modelAttribute="inventaire" path="/inventaireProcess/ficheSuivieQte.pdf" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
+     <table class="tblog">
         <tr>
           <td class="tbcreate">
-           <field:input field="designation" label="${inventaire_designation }" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
+           <field:input field="designation" label="${inventaire_designation}" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
            <field:input field="beginBy" label="${inventaire_beginby }" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy"  z="user-managed"/>
-          <field:input field="endBy" label="${inventaire_endby }" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
+           <field:input field="endBy" label="${inventaire_endby }" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
            <field:input field="cipProduct" label="C.I.P" id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" z="user-managed"/>
-           </td>
-         <td class="tbcreate">
+          </td>
+          <td class="tbcreate">
            <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" path="" itemValue="id" items="${rayons}"  z="user-managed"/>
-         <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" path="" itemValue="id" items="${filiales}"  z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateDebut" label="${inventaire_designation} " id="c_org_adorsys_adpharma_domain_Inventaire_dateDebut" required="true" z="user-managed"/>
-         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateFin" label="${inventaire_datefin } " id="c_org_adorsys_adpharma_domain_Inventaire_dateFin"  z="user-managed"/>
-        </td>
+           <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" path="" itemValue="id" items="${filiales}"  z="user-managed"/>
+           <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateDebut" label="${inventaire_datedebut} " id="c_org_adorsys_adpharma_domain_Inventaire_dateDebut" required="true" z="user-managed"/>
+           <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateFin" label="${inventaire_datefin } " id="c_org_adorsys_adpharma_domain_Inventaire_dateFin"  z="user-managed"/>
+          </td>
         </tr>
-        </table>
-         </form:custumcreate>
+     </table>
+   </form:custumcreate>
        
        
       

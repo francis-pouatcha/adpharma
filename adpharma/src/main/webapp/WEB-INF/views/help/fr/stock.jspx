@@ -33,7 +33,7 @@
  
  
 <header class="jumbotron subhead" id="overview">
-  <h1>Gestion Du Stock de Produits</h1>
+  <h1>Gestion Du Stock</h1>
   <div class="subnav">
     <ul class="nav nav-pills">
       <li><a href="#entrees" style="font-size: 11px;">Entrées en Stock</a></li>
@@ -44,14 +44,14 @@
       <li><a href="#rayon" style="font-size: 11px;">Emplacements de stock</a></li>
       <li><a href="#fournisseur" style="font-size: 11px;">Fournisseurs</a></li>
     </ul>
-    <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
+    <a href="#" onclick="javascript:printBlock('Gestion du Stock', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
 <article class="float-article" id="read_article">    
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
 <section id="entrees">
   <div class="page-header">
-   <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
     <h1>Entrées en Stock</h1>
   </div>
   <div class="row">

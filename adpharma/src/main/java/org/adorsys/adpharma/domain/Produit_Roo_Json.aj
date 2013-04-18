@@ -13,10 +13,6 @@ import org.adorsys.adpharma.domain.Produit;
 
 privileged aspect Produit_Roo_Json {
     
-    public String Produit.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
     public static Produit Produit.fromJsonToProduit(String json) {
         return new JSONDeserializer<Produit>().use(null, Produit.class).deserialize(json);
     }

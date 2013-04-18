@@ -103,7 +103,12 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 
 	@PostLoad
 	public void postLoad() {
-		designation = produit.getDesignation();
+		try {
+			designation = produit.getDesignation();
+		} catch (Exception e) {
+			System.out.println("Pile d'erreurs:\n");
+		    e.printStackTrace();
+		}
 	}
 
 	public void protectSomeField() {

@@ -82,6 +82,7 @@
 	margin: 0;
 	border: 0;
 	padding: 0;
+	z-index: 100;
 }
 .dijitPositionOnly {
 	
@@ -884,7 +885,7 @@ body .dijitAlignClient { position: absolute; }
 	overflow: hidden;
 }
 .dijitCalendarContainer {
-	width: auto;	
+	width: auto;
 }
 .dijitCalendarContainer th, .dijitCalendarContainer td {
 	padding: 0;
