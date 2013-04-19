@@ -75,7 +75,7 @@
 <SCRIPT type="text/javascript">
 $(function(){
 	$.datepicker.setDefaults( $.datepicker.regional[ "" ]);
-	$( "#wid_presc_date" ).datepicker( $.datepicker.regional[ "${language}" ] );
+	$( "#date_prescription" ).datepicker( $.datepicker.regional[ "${language}" ] );
 	createPrescriptionDialog();
 });
 </SCRIPT>
@@ -86,7 +86,7 @@ $(function(){
 				value="${saleProcess.displayName}" />
 		</span>
 	</div>-->
-	<util:display-box display="${saleProcess.displayName}" />
+	<util:display-box display="${saleProcess.displayName}" id="text-box"/>
 	
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit"
 		var="edit_url" />
@@ -184,10 +184,10 @@ $(function(){
 	          <form method="post" enctype="application/x-www-form-urlencoded">
 	              <fieldset class="ordo_css">
 	                 <legend>Ordonnance</legend>
-	                   <p> <label style="font-size: 13px;">Prescripteur: </label><input type="text" name="prescriptor" /> </p>
-	                   <p> <label style="font-size: 13px;">Hopital: </label><input type="text" name="hopital" /> </p>
-	                   <p> <label style="font-size: 13px;">Nom patient: </label><input type="text" name="patient" /> </p>
-	                   <p> <label style="font-size: 13px;">Date prescription: </label><input type="text" name="prescrip_date" id="wid_presc_date" /> </p>
+	                   <p> <label style="font-size: 13px;">Prescripteur: </label><input type="text" name="Prescripteur" id="prescripteur" /> </p>
+	                   <p> <label style="font-size: 13px;">Hopital: </label><input type="text" name="hospital" id="hopital" /> </p>
+	                   <p> <label style="font-size: 13px;">Nom patient: </label><input type="text" name="nomDuPatient" id="nom_patient" /> </p>
+	                   <p> <label style="font-size: 13px;">Date prescription: </label><input type="text" name="datePrescrip" id="date_prescription" /> </p>
 	              </fieldset>
 	          </form>
 	</div>

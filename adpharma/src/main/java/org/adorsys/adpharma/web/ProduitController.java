@@ -70,7 +70,7 @@ public class ProduitController {
 	    if(!produits.isEmpty()){
 	    	produit=produits.iterator().next();
 	    }
-		return produit.toJson();
+		return produit.toJson1();
 	}
 	
 	

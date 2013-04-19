@@ -137,6 +137,11 @@ $(function(){
 // Dialogue de creation de l'ordonnance
 function createPrescriptionDialog(){
 	$('#ordonanceform').dialog({
+		open: function(){
+			$.getJSON( "${find_cip_url }"+cip, function(data){
+				
+			});
+		},
 		autoOpen: false,
 		width: 500,
 		resizable:true,

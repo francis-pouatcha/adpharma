@@ -2,6 +2,7 @@ package org.adorsys.adpharma.domain;
 
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import javax.persistence.OneToOne;
 
+@RooJson
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Ordonnancier", finders = { "findOrdonnanciersByCommande", "findOrdonnanciersByOrdNumberEquals" })

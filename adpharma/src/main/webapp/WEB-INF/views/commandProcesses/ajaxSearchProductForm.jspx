@@ -227,8 +227,6 @@ function requete(){
 									this.onclick = function(event) {
 										$('#findproduit').dialog("close");
 										requetes(current.id);
-									
-										
 									};
 									});
 							
@@ -304,12 +302,11 @@ function requete(){
 	});
 	
 	</script>
-	<div id="findproduit" style="display: none;" title="recherche un cip ">
+	<div id="findproduit" style="display: none;" title="Rechercher un produit ">
 
 		<form id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
-				<label for="designation">Designation :</label> <input
-					class="searchInput" type="text" name="designation" />
+				<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation" />
 			</p>
 
 

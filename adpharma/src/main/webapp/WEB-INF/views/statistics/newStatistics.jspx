@@ -46,9 +46,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
         	   
        		   $('form#produitfindform').submit(function(){
        			    clearProductTable();
-       				$.getJSON( '${find_product_url}',
-       						$('#produitfindform').serialize(),
-       			                function(data){
+       				$.getJSON( '${find_product_url}', $('#produitfindform').serialize(), function(data){
        								$(data).each(function(){
        									$('#resultproduit').append(
        										'<tr id="'+this.cip+'">
@@ -69,8 +67,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
        										requete(current.id);
        									};
        									});
-       							
-
        							});
        				return false ;
        		});
@@ -90,8 +86,9 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
            function requete(cip){
         	   $.getJSON( "${find_cip_url}"+cip, function(data){
         		   if(data!=null){
-        		   $("#cip").val("");
         		   $("#cip").val(data.cip);
+        		   }else{
+        			   $("#cip").val("");
         		   }
         	   });
            };
@@ -187,7 +184,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
                      
                      
                      
-                     <td style="border: none;">
+                     <td style="border: none; margin-top: -200px;">
                           <util:panel title="Resultat graphique de la courbe" id="result_graph">
                      
                           </util:panel>
