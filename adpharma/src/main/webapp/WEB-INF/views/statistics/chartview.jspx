@@ -5,19 +5,18 @@ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
 xmlns:c="http://java.sun.com/jsp/jstl/core"
 xmlns:spring="http://www.springframework.org/tags" 
 xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
     
     
     <style type="text/css">
        #courbes{ 
-            width: auto; 
+            width: 100%;
             height:500px;
             border: 1px solid #CCC; 
             background: -moz-linear-gradient(90deg, #FFF, #EEE) repeat scroll 0 0 transparent; 
 		    background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#FFF) );
-		    display: block;
 		    }
 		#curvey_table{width: 300px; }  
 		#curvey_table label{width: auto;} 
@@ -98,9 +97,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     
     
     <div id="courbes">
-         <table style="border: none;">
-                 <tr>
-                     <td style="width: 25%; border: none;">
+                     <div style="width: 26%; float: left;">
                           <util:panel title="Parametres de la courbe" id="param_edition">
                            <form action="" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
                              <table id="curvey_table">
@@ -175,26 +172,31 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
                                          </td>
                                      </tr>
                                      <tr>
-                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="text-align: center;"/> </td>
+                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px;"/> </td>
                                      </tr>
                              </table>
                            </form>
                           </util:panel>
-                     </td>
+                     </div>
                      
                      
                      
-                     <td style="border: none; margin-top: -200px;">
-                          <util:panel title="Resultat graphique de la courbe" id="result_graph">
-                     
-                          </util:panel>
-                          <util:panel title="Resultat de donnees de la courbe" id="result_data">
-                     
-                          </util:panel>
-                     </td>
-                 </tr>
-         
-         </table>
+                     <div style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
+                          
+                            <div title="Resultat graphique des statistiques" selected="true" dojoType="dijit.layout.AccordionPane">
+                                  <p style="overflow: auto;">
+                                      Resultats courbe graphique
+                                  </p>
+                            </div>
+                            
+                            <div title="Resultat textuel des statistiques" dojoType="dijit.layout.AccordionPane">
+                                  <p style="overflow: auto;"> 
+                                     Resultats donnees textuelles
+                                 </p>
+                            </div>
+                          
+                     </div>
+  </div>                   
          
         <!-- Formulaire a factoriser  --> 
          <div style="display: none;" id="search_product">
@@ -218,8 +220,5 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 		     </form>
          
          </div>
-         
     
-    </div>
-   
 </div>    

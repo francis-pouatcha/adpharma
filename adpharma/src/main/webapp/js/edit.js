@@ -138,7 +138,7 @@ $(function(){
 function createPrescriptionDialog(){
 	$('#ordonanceform').dialog({
 		open: function(){
-			$.getJSON( "${find_cip_url }"+cip, function(data){
+			$.getJSON( "${find_ordonance_url}", function(data){
 				
 			});
 		},

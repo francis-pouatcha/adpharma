@@ -65,7 +65,6 @@
 			Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
 			if(Check == false){
 				return false;
-				
 			}else{
 				return true;
 			}
@@ -92,6 +91,7 @@ $(function(){
 		var="edit_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct"   var="find_product_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/selectProduct"   var="select_product_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/findOrdonance" var="find_ordonance_url" />
 <!-- 
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
  -->

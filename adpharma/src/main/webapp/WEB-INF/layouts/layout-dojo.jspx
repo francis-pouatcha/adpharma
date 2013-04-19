@@ -39,7 +39,6 @@ xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.spring
 					<tiles:insertAttribute name="allmenu" ignore="false" />
 			   		<div id="wrapper">
 					    <div id="main">		
-					    	
 				    		<tiles:insertAttribute name="body"/> 
 					    	<tiles:insertAttribute name="footer" ignore="true"/>
 					    </div>

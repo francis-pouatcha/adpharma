@@ -303,15 +303,15 @@ public class ProduitController {
 	    }
 
 	  
-	  @ModelAttribute("produits")
+	  /*@ModelAttribute("produits")
 	    public Collection<Produit> populateProduits() {
 	        return Produit.findAllProduits();
-	    }
+	    }*/
 	  
-	/*@ModelAttribute("produits")
+	@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {
 		return new ArrayList<Produit>();
-	}	 */
+	}
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
 		public String searchDette(@RequestParam("name") String  name,  Model uiModel) {
 			

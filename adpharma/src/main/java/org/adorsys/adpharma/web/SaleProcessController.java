@@ -253,11 +253,27 @@ public class SaleProcessController {
 	@RequestMapping(value="/{cmdId}/saveOrdonance", method=RequestMethod.GET)
 	@ResponseBody
 	public String createOrUpdateOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam(value="datePrescrip", required=false) String datePrescription, Ordonnancier ordonnance, Model uiModel){
-		   if(datePrescription!=null){
-			   ordonnance.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
-		   }
-		
-		return "";
+		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
+		List<Ordonnancier> ordonnanciers = Ordonnancier.findOrdonnanciersByCommande(commande).getResultList();
+		Ordonnancier ordonnancier=null;
+		if(!ordonnanciers.isEmpty()){
+			ordonnancier= ordonnanciers.iterator().next();
+			ordonnancier.setPrescripteur(ordonnance.getPrescripteur());
+			ordonnancier.setHospital(ordonnance.getHospital());
+			ordonnancier.setNomDuPatient(ordonnance.getNomDuPatient());
+			if(datePrescription!=null){
+				   ordonnancier.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
+		    }
+			ordonnancier.merge();
+			return ordonnancier.toJson();
+		}else{
+			if(datePrescription!=null){
+				ordonnance.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
+			}
+			ordonnance.setCommande(commande);
+			ordonnance.persist();
+			return ordonnance.toJson();
+		}
 	}
 
 
