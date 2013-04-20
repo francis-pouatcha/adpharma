@@ -285,13 +285,10 @@ public class LigneApprovisionementController {
 	
 	@RequestMapping(value="/reclamation/retour", method=RequestMethod.POST)
 	public String returnOfReclamations(@ModelAttribute("reclamation")ReclamationBean reclamation, Model uiModel){
-		System.out.println("Quantite retournee: "+reclamation.getReturnQuantity());
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEqualsAndReclamations(reclamation.getCipm()).getResultList().iterator().next();
 		reclamationService.setQteRetour(reclamation.getReturnQuantity());
-		System.out.println("Qte Retour: "+reclamationService.getQteRetour());
 		reclamationService.updateStock(ligneApprovisionement);
 		uiModel.addAttribute("ligneRetourne", ligneApprovisionement);
-		System.out.println("Ligne approvisionement: "+ligneApprovisionement);
 		return "ligneapprovisionements/reclamations";
 	}
 	

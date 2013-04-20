@@ -58,9 +58,22 @@ public class ProduitController {
 			prd.calculPrixTotalStock();
 			reponse= ""+prd.getCip()+","+prd.getDesignation()+","+prd.getTauxDeMarge().getMargeValue()+","+prd.getId()+","+prd.getQuantiteEnStock()+","+prd.getSeuilComande()+","+prd.getPrixTotalStock();
 		}
-
 		return reponse;
 	}
+	
+	// Recherche ajax d'un produit par son CIP
+	@RequestMapping(value="/searchProductByCipAjax/{cip}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findProductByCipAjax(@PathVariable("cip") String cip, HttpServletRequest request, Model uiModel) {
+	    Produit produit= new Produit();
+	    List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(1).getResultList();
+	    if(!produits.isEmpty()){
+	    	produit=produits.iterator().next();
+	    }
+		return produit.toJson1();
+	}
+	
+	
 
 	@RequestMapping(value="/attributionFamile", params = "form", method = RequestMethod.GET)
 	public String attributionFamile(Model uiModel) {
@@ -148,10 +161,10 @@ public class ProduitController {
 	   	return updateForm(merge.getId(), uiModel) ;
 	}
 
-	//a redefinir
+	//Recherche ajax de produits par designation
 	@RequestMapping(value="/findProductByCipAjax", method = RequestMethod.GET)
 	@ResponseBody
-	public String findProductByCipAjax(Model uiModel ,  HttpServletRequest httpServletRequest) {
+	public String findProductByCipAjax(HttpServletRequest httpServletRequest) {
 		String des = httpServletRequest.getParameter("designation");
 		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(100).getResultList();
 		return Produit.toJsonArray(resultList);
@@ -162,7 +175,6 @@ public class ProduitController {
 	public String findProductByIdAjax(@PathVariable("id") Long id,Model uiModel ,  HttpServletRequest httpServletRequest) {
 		Produit produit = Produit.findProduit(id);
 		produit.calculPrixTotalStock();
-
 		return produit.toJson();
 	}
 
@@ -291,15 +303,15 @@ public class ProduitController {
 	    }
 
 	  
-	  @ModelAttribute("produits")
+	  /*@ModelAttribute("produits")
 	    public Collection<Produit> populateProduits() {
 	        return Produit.findAllProduits();
-	    }
+	    }*/
 	  
-	/*@ModelAttribute("produits")
+	@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {
 		return new ArrayList<Produit>();
-	}	 */
+	}
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
 		public String searchDette(@RequestParam("name") String  name,  Model uiModel) {
 			

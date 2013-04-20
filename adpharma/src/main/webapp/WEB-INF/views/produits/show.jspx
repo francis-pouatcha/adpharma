@@ -35,6 +35,7 @@
         <field:display field="posologie" id="s_org_adorsys_adpharma_domain_Produit_posologie" object="${produit}" z="gPKvPCUmN4Xseq4YXRdVxfzkpGM="/>
         <field:display field="principeActif" id="s_org_adorsys_adpharma_domain_Produit_principeActif" object="${produit}" z="+UORiI07q3v/ZUCbCW3GTOnVy9I="/>
         <field:display field="observation" id="s_org_adorsys_adpharma_domain_Produit_observation" object="${produit}" z="2OnzMv6w45/J0vIPypqSXyLqZY0="/>
+        <field:display field="cipType" id="s_org_adorsys_adpharma_domain_Produit_cipType" object="${produit}" z="vqU9SuuJ78v0kLs08h+yfyrhuVQ="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Produit_footPrint" object="${produit}" z="sTmGDG3gdH1etdXs7ozgmjuXQDE="/>

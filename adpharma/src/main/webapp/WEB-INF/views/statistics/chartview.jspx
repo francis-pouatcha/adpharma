@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    <style type="text/css">
+       #courbes{ 
+            width: 100%;
+            height:500px;
+            border: 1px solid #CCC; 
+            background: -moz-linear-gradient(90deg, #FFF, #EEE) repeat scroll 0 0 transparent; 
+		    background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#FFF) );
+		    }
+		#curvey_table{width: 300px; }  
+		#curvey_table label{width: auto;} 
+		#curvey_table input{font-style: normal;}
+		#curvey_table td{padding-bottom: 25px; border: none; background: #fff;} 
+		#result_graph{vertical-align: top;}
+		#result_data{vertical-align: top;}
+    </style>
+    <spring:url value="/produits/findProductByCipAjax" var="find_product_url" />
+    <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />
+    
+    
+    <script type="text/javascript">
+           $(function(){
+        	   
+        	   function clearProductTable(){
+       			$('#resultproduit').html(
+       					'<tr>
+       					    <th>CIP</th>
+       			    		<th>DESIGNATION</th>
+       			    		<th>QTE CIP</th>
+       			    		<th>RAYON</th>
+       			    		<th>FILIALE</th>
+       					</tr>');
+       		      };
+        	   
+       		   $('form#produitfindform').submit(function(){
+       			    clearProductTable();
+       				$.getJSON( '${find_product_url}', $('#produitfindform').serialize(), function(data){
+       								$(data).each(function(){
+       									$('#resultproduit').append(
+       										'<tr id="'+this.cip+'">
+       										  <td>'+this.cip+'</td>
+       										  <td>'+this.designation+'</td>
+       										  <td>'+this.quantiteEnStock+'</td>
+       										  <td>'+this.rayon.codeRayon+'</td>
+       										  <td>'+this.filiale.libelle+'</td>
+       										  </tr>'
+       										
+       								);
+       									
+       								});
+       								$('table#resultproduit tr').each(function(){
+       									var current = this;
+       									this.onclick = function(event) {
+       										$('#search_product').dialog("close");
+       										requete(current.id);
+       									};
+       									});
+       							});
+       				return false ;
+       		});
+       		
+       		$('img.loadimage').ajaxStart(function(){
+       			$(this).show();
+       		});
+       		
+       		$('img.loadimage').ajaxStop(function(){
+       			$(this).hide();
+       		});
+        	      
+        	   
+        	     dialog_widget('search_product', 'Rechercher un produit', 800, 'slide', 'fade', 'top');
+           });
+           
+           function requete(cip){
+        	   $.getJSON( "${find_cip_url}"+cip, function(data){
+        		   if(data!=null){
+        		   $("#cip").val(data.cip);
+        		   }else{
+        			   $("#cip").val("");
+        		   }
+        	   });
+           };
+    
+    </script>
+    
+    
+    
+    <div id="courbes">
+                     <div style="width: 26%; float: left;">
+                          <util:panel title="Parametres de la courbe" id="param_edition">
+                           <form action="" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
+                             <table id="curvey_table">
+                                     <tr>
+                                         <td colspan="2">
+                                             <label for="cip">Rechercher un produit</label><BR />
+                                             <input type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/> 
+                                             <input type="button" value="OK" class="submits" id="search" style="float: left;" />
+                                         </td>
+                                     </tr>
+                                     
+                                     <tr>
+                                          <td colspan="2"> 
+                                              <label for="type">Type Etat:</label><BR />
+                                              <SELECT dojoType="dijit.form.ComboBox" name="type" id="type" style="float: left;">
+							                       <c:forEach items="${typescourbes}" var="type">
+							                             <option value="${type}">${type}</option>
+							                      </c:forEach>
+	                                          </SELECT> 
+                                          </td>
+                                     </tr>
+                                     <tr>
+                                          <td>
+                                               <label for="same" title="Annees egales"> Annees eg. </label> 
+                                               <input type="radio" name="choix_annee" id="same" checked="checked"/> 
+                                          </td>
+                                          <td> 
+                                               <label for="diff" title="Annees differentes"> Annees diff. </label>
+                                               <input type="radio" name="choix_annee" id="diff" value="Annees diff." /> 
+                                          </td>
+                                     </tr>
+                                     <tr>
+                                         <td> <input type="text" style="width: 130px;" dojoType="dijit.form.DateTextBox" placeholder="Annee minimum" constraints="{datePattern:'yyyy'}" name="annee_min" id="year_min" /> </td>
+                                         
+                                         <td> <input type="text" style="width: 130px;" dojoType="dijit.form.DateTextBox" placeholder="Annee maximum" constraints="{datePattern:'yyyy'}" name="annee_max" id="year_max" />  </td>
+                                     </tr>
+                                      <tr>
+                                         <td> 
+                                             <label for="month_min" title="Mois minimum">Mois min.</label><BR />
+                                             <SELECT name="mois_min" id="month_min" dojoType="dijit.form.ComboBox" style="width: 120px; float: left;">
+                                                <option selected="selected">JANVIER</option>
+                                                <option>FEVRIER</option>
+                                                <option>MARS</option>
+                                                <option>AVRIL</option>
+                                                <option>MAI</option>
+                                                <option>JUIN</option>
+                                                <option>JUILLET</option>
+                                                <option>AOUT</option>
+                                                <option>SEPTEMBRE</option>
+                                                <option>OCTOBRE</option>
+                                                <option>NOVEMBRE</option>
+                                                <option>DECEMBRE</option>
+                                             </SELECT>
+                                          </td>
+                                         
+                                         <td> 
+                                              <label for="month_max" title="Mois maximum">Mois max.</label><BR />
+                                              <SELECT name="mois_max" id="month_max" dojoType="dijit.form.ComboBox" style="width: 120px; float: left;">
+                                                <option selected="selected">JANVIER</option>
+                                                <option>FEVRIER</option>
+                                                <option>MARS</option>
+                                                <option>AVRIL</option>
+                                                <option>MAI</option>
+                                                <option>JUIN</option>
+                                                <option>JUILLET</option>
+                                                <option>AOUT</option>
+                                                <option>SEPTEMBRE</option>
+                                                <option>OCTOBRE</option>
+                                                <option>NOVEMBRE</option>
+                                                <option>DECEMBRE</option>
+                                              </SELECT>  
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px;"/> </td>
+                                     </tr>
+                             </table>
+                           </form>
+                          </util:panel>
+                     </div>
+                     
+                     
+                     
+                     <div style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
+                          
+                            <div title="Resultat graphique des statistiques" selected="true" dojoType="dijit.layout.AccordionPane">
+                                  <p style="overflow: auto;">
+                                      Resultats courbe graphique
+                                  </p>
+                            </div>
+                            
+                            <div title="Resultat textuel des statistiques" dojoType="dijit.layout.AccordionPane">
+                                  <p style="overflow: auto;"> 
+                                     Resultats donnees textuelles
+                                 </p>
+                            </div>
+                          
+                     </div>
+  </div>                   
+         
+        <!-- Formulaire a factoriser  --> 
+         <div style="display: none;" id="search_product">
+             <form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+					<p>
+					 <label for="des"> ${product_designation} :</label> <input class="searchInput" type="text" name="designation" id="des"/>
+					</p>
+					
+					<center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+			 		<div style="height:400px; overflow: auto; "  >
+					<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+					    	<tr>
+					    		<th style="text-align: center;">${default_cip }</th>
+					    		<th style="text-align: center; width: 250px;">${product_designation }</th>
+					    		<th style="text-align: center;">QTE CIP</th>
+					    		<th style="text-align: center;" >RAYON</th>
+					    		<th style="text-align: center;">FILIALE</th>
+					    	</tr>
+					  </table>
+				    </div>
+		     </form>
+         
+         </div>
+    
+</div>    

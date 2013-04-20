@@ -7,8 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
+import java.util.Arrays;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
+import org.adorsys.adpharma.domain.CipType;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.ModeConditionement;
@@ -43,6 +45,11 @@ privileged aspect ProduitController_Roo_Controller {
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/produits";
+    }
+    
+    @ModelAttribute("ciptypes")
+    public Collection<CipType> ProduitController.populateCipTypes() {
+        return Arrays.asList(CipType.class.getEnumConstants());
     }
     
     @ModelAttribute("familleproduits")

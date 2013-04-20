@@ -153,16 +153,15 @@ public class CommandProcessController {
 			@RequestParam Long pId, @RequestParam BigInteger qte,
 			@RequestParam BigDecimal pa, @RequestParam BigDecimal pv,
 			Model uiModel, HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		Produit produit = Produit.findProduit(pId);
+		System.out.println("Designation du produit: "+produit.getDesignation());
 		pa = pa == null ? BigDecimal.ZERO : pa;
 		pv = pv == null ? BigDecimal.ZERO : pv;
 		qte = qte == null ? BigInteger.ONE : qte;
 		BigDecimal pt = pa.multiply(new BigDecimal(qte));
 		if (commandeFournisseur.contientProduit(produit)) {
-			uiModel.addAttribute("apMessage",
-					"Ce produit est deja dans la liste ");
+			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 		} else {
 			LigneCmdFournisseur line = new LigneCmdFournisseur();
 			line.setCommande(commandeFournisseur);
@@ -173,14 +172,11 @@ public class CommandProcessController {
 			line.setPrixAchatTotal(pt);
 			line.persist();
 			commandeFournisseur.increaseMontant(pt);
-			System.out.println(pt);
 			commandeFournisseur.merge();
 		}
 		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
-				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
-						commandeFournisseur).getResultList(),
-				CommandeFournisseur.findCommandeFournisseur(cmdId)
-						.getFournisseur().getName());
+				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(),
+				CommandeFournisseur.findCommandeFournisseur(cmdId).getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess", commandeProcess);
 		uiModel.addAttribute("ligneCmdFournisseur", new LigneCmdFournisseur());
 		return "commandprocesses/editCommand";

@@ -34,6 +34,12 @@
 	<!-- 
 	<bean class="org.adorsys.adpharma.security.CheckIsValideLicenceInterceptor"  />
      -->
+
+	     <mvc:interceptor>
+	         <mvc:mapping path="/*"/>
+	         <bean class="org.adorsys.adpharma.security.GeneralInterceptor" id="generalInterceptor" />
+	     </mvc:interceptor>
+
 	</mvc:interceptors>
 
 	<!-- selects a static view for rendering without the need for an explicit 

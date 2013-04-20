@@ -4,10 +4,11 @@
 	xmlns:form="http://www.springframework.org/tags/form"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:spring="http://www.springframework.org/tags" version="2.0">
-	
 	<jsp:output omit-xml-declaration="yes" />
 	
+	<jsp:directive.attribute name="id" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier for this tag (do not change!)"/>
 	<jsp:directive.attribute name="display" type="java.lang.String" required="false" description="The text to display in the display box"/>
+	
 	
 	<style type="text/css">
 	         .display_box{
@@ -26,7 +27,7 @@
 	     <c:set value="ADPHARMA" var="DISPLAY" />
 	</c:if>
 	
-	<div class="display_box">
+	<div class="display_box" id="${id}">
 		<span id="cmdName" style="font-weight: bold"> 
 		   <c:out value="${DISPLAY}" />
 		</span>

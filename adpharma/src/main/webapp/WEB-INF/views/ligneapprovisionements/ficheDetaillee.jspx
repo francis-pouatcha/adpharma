@@ -5,10 +5,12 @@
   xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
     <form:find finderName="ByCipMaison" label=" C.I.P.M " id="ff_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="mfxSu9PxyKZFpc8Q1LJyLYCLqGA=">
-        <field:input disableFormBinding="true" field="cipMaison" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" min="7" required="true" z="JanFPilJj1M2l+/Li05hgkcshoA="/>
+        <field:input disableFormBinding="true" field="cipMaison" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" min="7" required="true" z="user-managed"/>
     </form:find>
         <BR />
+        
     <util:panel id="ficheDetail" title="Fiche Detail Produit de C.I.P.M : ${cipm}" openPane="true">
  <div style="overflow: auto; height: 500px;"> 
       <c:if test="${ not empty results }">

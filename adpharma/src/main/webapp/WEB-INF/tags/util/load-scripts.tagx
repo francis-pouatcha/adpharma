@@ -41,6 +41,16 @@
      <spring:url value="/resources/js/jqdropdown/accordion.core.css" var="accore" />
      <spring:url value="/resources/js/jqdropdown/core.css" var="core" />
      
+     <!-- Jquery DatePicker -->
+     <spring:url value="/resources/js/calendar/jquery.ui.core.js" var="jq_uicore" />
+     <spring:url value="/resources/js/calendar/jquery.ui.widget.js" var="jq_uiwidget" />
+     <spring:url value="/resources/js/calendar/jquery.ui.datepicker.js" var="jq_datepicker_en" />
+     <spring:url value="/resources/js/calendar/jquery.ui.datepicker-fr.js" var="jq_datepicker_fr" />
+     
+     <!-- Css DatePicker -->
+     <spring:url value="/resources/js/calendar/jquery.ui.all.css" var="uiallcss" />
+     <spring:url value="/resources/js/calendar/demos.css" var="datepicker_demo" />
+     <spring:url value="/resources/js/calendar/jquery.ui.datepicker.css" var="datepicker_css" />
     
      <link type="text/css" href="${jquerycss_url}" rel="stylesheet" media="all" />	
      <link type="text/css" href="${token_css}" rel="stylesheet" media="all" />
@@ -50,6 +60,11 @@
      <link type="text/css" href="${accore}" rel="stylesheet" media="all" />
      <link type="text/css" href="${dropdown}" rel="stylesheet" media="all" />
      <link type="text/css" href="${message_css}" rel="stylesheet" media="all" />
+     
+     <!-- Links DatePicker -->
+     <link type="text/css" href="${uiallcss}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${datepicker_demo}" rel="stylesheet" media="all" />
+     <link type="text/css" href="${datepicker_css}" rel="stylesheet" media="all" />
 
 <script type="text/javascript" src="${jquery_url}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${ajax_url}"><!-- required for FF3 and Opera --></script>
@@ -65,6 +80,12 @@
 <script type="text/javascript" src="${carousselani}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${accordion2}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${easing}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
+
+<!-- Scripts DatePicker -->
+<script type="text/javascript" src="${jq_uicore}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jq_uiwidget}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jq_datepicker_en}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jq_datepicker_fr}" charset="utf-8" ><!-- required for FF3 and Opera --></script>
  
     
       
@@ -107,8 +128,9 @@
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.Textarea");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.SimpleTextarea");</script>
     
-    
-    <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>
+  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.AccordionContainer");</script>
+  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.AccordionPane");</script>
+  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>
   <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.TabContainer");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.fx");</script>
     

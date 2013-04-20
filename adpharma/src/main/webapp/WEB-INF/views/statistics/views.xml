@@ -11,6 +11,6 @@
         <put-attribute name="body" value="/WEB-INF/views/statistics/courbeventecip.jspx"/>
     </definition>
     <definition extends="vendeur" name="statistics/courbes">
-        <put-attribute name="body" value="/WEB-INF/views/statistics/newStatistics.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/views/statistics/chartview.jspx"/>
     </definition>
 </tiles-definitions>

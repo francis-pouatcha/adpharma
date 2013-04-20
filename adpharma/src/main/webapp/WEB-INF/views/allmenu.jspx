@@ -30,7 +30,7 @@ if(Check == false){
 
 	<jsp:include page="allmenuscripts.jspx" />
 	<spring:url
-		value="/detteclients?page=1&amp;size=${empty param.size ? 100 : param.size}"
+		value="/detteclients?page=1&amp;size=${empty param.size ? 30 : param.size}"
 		var="list_dette_url" />
 
 	<spring:url value="/produits/attributionFamile?form" var="aff_fsf_url" />
@@ -555,7 +555,7 @@ if(Check == false){
             <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
             <spring:url value="/statistics/new?form" var="courbes" />        		
      
-           <!-- Menu Supervision -->
+           <!-- Menu Supervisions -->
            <spring:message code="supervision_supervision_menu" var="supervision_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
             <li>
@@ -640,6 +640,7 @@ if(Check == false){
 		     </li>
       
  
+ <!-- Menu suivi clientelle -->
     </security:authorize>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
     

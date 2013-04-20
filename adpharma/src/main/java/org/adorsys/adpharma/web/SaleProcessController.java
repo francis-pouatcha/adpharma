@@ -234,6 +234,47 @@ public class SaleProcessController {
 		ordonnancier.flush();
 		return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
 	}
+	
+	// Recherche ajax de l'ordonnance de la commande
+	@RequestMapping(value="/{cmdId}/findOrdonance", method=RequestMethod.GET)
+	@ResponseBody
+	public String findOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam("datePrescrip")String datePrescription, Ordonnancier ordonnancier){
+		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
+		List<Ordonnancier> ordonnances = Ordonnancier.findOrdonnanciersByCommande(commande).getResultList();
+		Ordonnancier ordonnance= null;
+		if(!ordonnances.isEmpty()){
+			ordonnance= ordonnances.iterator().next();
+			return ordonnance.toJson();
+		}
+		return null;
+	}
+	
+	// Creation ou mise a jour de l'ordonnance de la commande
+	@RequestMapping(value="/{cmdId}/saveOrdonance", method=RequestMethod.GET)
+	@ResponseBody
+	public String createOrUpdateOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam(value="datePrescrip", required=false) String datePrescription, Ordonnancier ordonnance, Model uiModel){
+		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
+		List<Ordonnancier> ordonnanciers = Ordonnancier.findOrdonnanciersByCommande(commande).getResultList();
+		Ordonnancier ordonnancier=null;
+		if(!ordonnanciers.isEmpty()){
+			ordonnancier= ordonnanciers.iterator().next();
+			ordonnancier.setPrescripteur(ordonnance.getPrescripteur());
+			ordonnancier.setHospital(ordonnance.getHospital());
+			ordonnancier.setNomDuPatient(ordonnance.getNomDuPatient());
+			if(datePrescription!=null){
+				   ordonnancier.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
+		    }
+			ordonnancier.merge();
+			return ordonnancier.toJson();
+		}else{
+			if(datePrescription!=null){
+				ordonnance.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
+			}
+			ordonnance.setCommande(commande);
+			ordonnance.persist();
+			return ordonnance.toJson();
+		}
+	}
 
 
 	//met a jour un client lor d'une vente au comptant  

@@ -37,6 +37,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
 
+import flexjson.JSONSerializer;
+
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Produit", finders = { "findProduitsByDesignationLike", "findProduitsByProduitNumberLike", "findProduitsByQuantiteEnStock", "findProduitsByFamilleProduit", "findProduitsByRayon", "findProduitsByCipEquals", "findProduitsByDesignationEquals" })
@@ -187,6 +189,10 @@ public class Produit extends AdPharmaBaseEntity {
 	private boolean commander;
 
 	private BigInteger plafondStock;
+	
+	 public String getDesignation() {
+	        return this.designation;
+	    }
 
 	public void calculQteVendue(Date dateMin, Date dateMax) {
 		dateMin = dateMin != null ? dateMin : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
@@ -376,7 +382,16 @@ public class Produit extends AdPharmaBaseEntity {
 		sb.append(getCip());
 		return sb.toString();
 	}
-
+	
+	// Override json product
+	public String toJson(){
+		return new JSONSerializer().exclude("*.class").serialize(this);
+	}
+	
+	public String toJson1(){
+		return new JSONSerializer().include("cip", "designation", "quantiteEnStock").exclude("*.class", "*").serialize(this);
+	}
+	
 	public void calculPrixTotalStock() {
 		prixTotalStock = BigDecimal.ZERO;
 		List<LigneApprovisionement> ligne = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ZERO, cip).getResultList();
@@ -433,6 +448,16 @@ public class Produit extends AdPharmaBaseEntity {
 		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
+	
+	
+	// Recherche d'un produit par son cip egale en triant les colonnes
+	public static TypedQuery<Produit> findProduitsByCipEqualsNew(String cip) {
+        if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
+        EntityManager em = Produit.entityManager();
+        TypedQuery<Produit> q = em.createQuery("SELECT o.cip, o.designation, o.quantiteEnStock, o.prixAchatU, o.prixVenteU FROM Produit AS o WHERE o.cip = :cip", Produit.class);
+        q.setParameter("cip", cip);
+        return q;
+    }
 
 	public static List<Produit> findProduitAlerteStockEntries(int firstResult, int maxResults) {
 		return entityManager().createQuery("SELECT o FROM Produit AS o WHERE o.quantiteEnStock <= o.seuilComande ORDER BY o.designation ASC ", Produit.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

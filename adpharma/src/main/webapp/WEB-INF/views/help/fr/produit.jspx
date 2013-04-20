@@ -29,9 +29,9 @@
 </header>
 
 <article class="float-article" id="read_article">
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
 <section id="catalogue">
   <div class="page-header">
-    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
     <h1>Catalogue de Produits</h1>
   </div>
   

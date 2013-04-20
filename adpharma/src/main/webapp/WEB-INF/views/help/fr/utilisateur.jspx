@@ -9,6 +9,16 @@
  <!-- Liens cibles des operations -->
  <spring:url value="/pharmausers?form" var="add_user_url" />
  <spring:url value="/passwordresets?form" var="change_pwd_url" />
+<!-- Images -->
+ <spring:url value="/resources/images/documentation/users/add_user.png" var="add_user" />
+ <spring:url value="/resources/images/documentation/users/suspend_user.png" var="suspend_user" />
+ <spring:url value="/resources/images/documentation/users/resume_user.png" var="resume_user" />
+ <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
+ <spring:url value="/resources/images/documentation/users/update_user.png" var="update_user" />
+ <spring:url value="/resources/images/documentation/users/change_pwd.png" var="change_pwd" />
+ <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
+ <spring:url value="/resources/images/documentation/users/infos_user.png" var="info_user" />
+ <spring:url value="/resources/images/documentation/users/reset_key.png" var="key_user" />
  
  
 <header class="jumbotron subhead" id="overview">
@@ -23,21 +33,9 @@
 </header>
 
 <article class="float-article" id="read_article">
-
-<!-- Images -->
- <spring:url value="/resources/images/documentation/users/add_user.png" var="add_user" />
- <spring:url value="/resources/images/documentation/users/suspend_user.png" var="suspend_user" />
- <spring:url value="/resources/images/documentation/users/resume_user.png" var="resume_user" />
- <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
- <spring:url value="/resources/images/documentation/users/update_user.png" var="update_user" />
- <spring:url value="/resources/images/documentation/users/change_pwd.png" var="change_pwd" />
- <spring:url value="/resources/images/documentation/users/reset_pwd.png" var="reset_user" />
- <spring:url value="/resources/images/documentation/users/infos_user.png" var="info_user" />
- <spring:url value="/resources/images/documentation/users/reset_key.png" var="key_user" />
- 
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
 <section id="gerer">
   <div class="page-header">
-    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
     <h1>Gestion des comptes Utilisateur</h1>
   </div>
   
@@ -162,7 +160,6 @@
    
   </div>  
 </section>
-
 </article>
 
 </div>

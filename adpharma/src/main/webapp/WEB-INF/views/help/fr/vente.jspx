@@ -24,14 +24,14 @@
       <li><a href="#impressions">Impressions</a></li>
       <li><a href="#operations">Autres opérations</a></li>
     </ul>
-    <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
+    <a href="#" onclick="javascript:printBlock('Gestion des ventes', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
 <article class="float-article" id="read_article">
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
 <section id="vente">
   <div class="page-header">
-    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
     <h1>Types de Vente</h1>
   </div>
   <div class="row">

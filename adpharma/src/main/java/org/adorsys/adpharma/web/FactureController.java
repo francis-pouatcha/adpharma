@@ -70,7 +70,8 @@ public class FactureController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String Search(Facture facture , Model uiModel) {
-		uiModel.addAttribute("results", Facture.search(facture.getSolder(),facture.getCip(), facture.getDesignation(), facture.getNetPayer(), facture.getDateCreation()));
+		System.out.println("Numero de Facture: "+facture.getFactureNumber());
+		uiModel.addAttribute("results", Facture.search(facture.getSolder(),facture.getCip(), facture.getDesignation(), facture.getNetPayer(), facture.getDateCreation(), facture.getFactureNumber()));
 		uiModel.addAttribute("facture", facture);
 		return "factures/search";
 	}

@@ -12,7 +12,6 @@
 	      <li><a href="#presentation">Presentation generale d'ADPHARMA</a></li>
 	      <li><a href="#conventions">Conditions d'utilisation</a></li>
 	    </ul>
-	   <a href="#" onclick="javascript:printBlock('introduction', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>
   </div>
 </header>
 
@@ -20,7 +19,6 @@
 
 <section id="presentation">
   <div class="page-header">
-    <a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a> 
     <h1>Presentation Generale</h1>
     
       <span> <b>ADPHARMA</b> est une application informatique de gestion des pharmacies. Cette application est prévue pour un large public, particulierement:</span><BR />

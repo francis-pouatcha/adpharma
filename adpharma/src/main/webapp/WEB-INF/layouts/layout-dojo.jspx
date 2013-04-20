@@ -1,6 +1,6 @@
 <html xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" 
 xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.springframework.org/tags"
- xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" >  
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util">  
 	
 	<jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
 	
@@ -16,11 +16,29 @@ xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.spring
 	</head>
 	
   	<body class="tundra spring">
+  	               
+  	               <!-- Messages products internationalization -->
+  	                <spring:message code="saleprocess_inhouse_cip"  var="inhouse_cip" scope="session"/>
+					<spring:message code="saleprocess_default_cip"  var="default_cip" scope="session" />
+					<spring:message code="saleprocess_product_designation"  var="product_designation" scope="session" />
+					<spring:message code="saleprocess_product_unit_price"  var="product_unit_price" scope="session" />
+					<spring:message code="saleprocess_product_qty"  var="product_qty" scope="session" />
+					<spring:message code="saleprocess_product_discount"  var="product_discount" scope="session" />
+					<spring:message code="saleprocess_product_total_price"  var="product_total_price" scope="session" />
+					<spring:message code="saleprocess_product_qty_cipm"  var="product_qty_cipm" scope="session"/>
+					<spring:message code="saleprocess_product_qty_cip"  var="product_qty_cip" scope="session"/>
+					<spring:message code="saleprocess_product_date_of_record"  var="product_date_of_record" scope="session"/>
+					<spring:message code="saleprocess_product_provider"  var="product_provider" scope="session"/>
+					<spring:message code="saleprocess_product_dosage"  var="product_dosage" scope="session"/>
+					
+					<!-- General Url's -->
+					<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" scope="session" />
+  	
+  	
 					<tiles:insertAttribute  name="header" ignore="true" />
 					<tiles:insertAttribute name="allmenu" ignore="false" />
 			   		<div id="wrapper">
 					    <div id="main">		
-					    	
 				    		<tiles:insertAttribute name="body"/> 
 					    	<tiles:insertAttribute name="footer" ignore="true"/>
 					    </div>

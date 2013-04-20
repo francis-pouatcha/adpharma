@@ -197,8 +197,6 @@ function requete(){
 			    		 <th>FILIALE</th>
 
 					</tr>');
-		//	$('#designation').val(" ");
-			
 		};
 		
 
@@ -227,11 +225,8 @@ function requete(){
 								$('table#resultproduit tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {
-										console.log(current.id)
 										$('#findproduit').dialog("close");
 										requetes(current.id);
-									
-										
 									};
 									});
 							
@@ -304,22 +299,14 @@ function requete(){
 
 			  	}
 
-			 
-		
-			 
-	
-
-	})
+	});
 	
 	</script>
-	<div id="findproduit" style="display: none;" title="recherche un cip ">
-
-
+	<div id="findproduit" style="display: none;" title="Rechercher un produit ">
 
 		<form id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
-				<label for="designation">Designation :</label> <input
-					class="searchInput" type="text" name="designation" />
+				<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation" />
 			</p>
 
 

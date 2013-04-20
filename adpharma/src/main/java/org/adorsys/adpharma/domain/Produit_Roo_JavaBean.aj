@@ -26,10 +26,6 @@ privileged aspect Produit_Roo_JavaBean {
         this.produitNumber = produitNumber;
     }
     
-    public String Produit.getDesignation() {
-        return this.designation;
-    }
-    
     public void Produit.setDesignation(String designation) {
         this.designation = designation;
     }

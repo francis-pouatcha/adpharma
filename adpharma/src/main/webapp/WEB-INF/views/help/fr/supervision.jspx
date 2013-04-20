@@ -1,92 +1,260 @@
-<div>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:tiles="http://tiles.apache.org/tags-tiles"
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:spring="http://www.springframework.org/tags">
+ 
+ <spring:url value="/resources/images/documentation/supervisions/courbeCA.png" var="courbe_ca" />
+ <spring:url value="/resources/images/documentation/supervisions/panier_moyen.png" var="panier" />
+ <spring:url value="/resources/images/documentation/supervisions/rapport_ventes.png" var="sales_report" />
+ <spring:url value="/resources/images/documentation/supervisions/create_ord.png" var="create_ord" />
+ <spring:url value="/resources/images/documentation/supervisions/print_ord.png" var="print_ord" />
+ <spring:url value="/resources/images/documentation/supervisions/show_ord.png" var="show_ord" />
+ 
+ 
 <header class="jumbotron subhead" id="overview">
   <h1>Supervision</h1>
-  <p class="lead">Supervision</p>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#stat">Visualiser des courbes statistiques</a></li>
-      <li><a href="#devise">Gerer les devises</a></li>
-      <li><a href="#marge">Gerer les taux de marges</a></li>
-      <li><a href="#mode">Gerer les modes de conditionnements</a></li>
-      <li><a href="#ordo">Gerer les ordonanciers</a></li>
-      <li><a href="#filiale">Gerer les filiales</a></li>
-      <li><a href="#site">Gerer les sites</a></li>
+      <li><a href="#stats">Statistiques</a></li>
+      <li><a href="#ordo">Ordonnanciers</a></li>
+      <li><a href="#config">Configurations</a></li>
     </ul>
+  <a href="#" onclick="javascript:printBlock('Supervisions', 'read_article')"> <IMG alt="print" src="${print}" title="Imprimer" style="float: right; margin: -35px 30px 0 0;"/> </a>  
   </div>
 </header>
 
 <article class="float-article" id="read_article">
-<section id="stat">
+<a href="javascript:window.print(); window.close();" style="display: none;" id="printb"> Imprimer </a>
+<section id="stats">
   <div class="page-header">
-    <h1>Visualiser des courbes statistiques <small>Visualiser des courbes statistiques</small></h1>
+    <h1>Courbes statistiques</h1>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	 <h3>Courbe du chiffre d'affaire</h3>
+     <p> La courbe du chiffre d'affaire permet de voir le montant des achats et des ventes au cours d'une periode.
+        Pour visualiser cette courbe statistique, procedez comme suit:
+        <ul>
+          <li> Allez dans le menu <b>Supervisions > Statistique > Courbe chiffre d'affaire</b></li>
+          <li>Entrez les periodes minimum et maximum et la frequence de statistique et enregistrez</li>
+        </ul>
+        <util:image-box height="250" alttext="Courbe chiffre d'affaires" width="250" link="${courbe_ca}" />
+     </p>
     </div>
-  </div>  
-</section>
-<section id="devise">
-  <div class="page-header">
-    <h1>Gerer les devises <small>Gerer les devises</small></h1>
-  </div>
-  <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    <div class="span5">
+  	 <h3>Panier moyen</h3>
+     <p> 
+        La courbe de panier moyen est une courbe representative du montant d'achats moyen par nombre de clients aucours d'une certaine periode.<BR />
+        Pour visualiser cette courbe statistique, procedez comme suit:
+        <ul>
+           <li> Allez dans le menu <b>Supervisions > Statistique > Panier moyen</b></li>
+           <li>Entrez les periodes minimum et maximum et la frequence de statistique et enregistrez</li>
+        </ul>
+        <util:image-box height="250" alttext="Panier moyen" width="250" link="${panier}" />
+      </p>
     </div>
-  </div>  
-</section>
-<section id="marge">
-  <div class="page-header">
-    <h1>Gerer les taux de marges <small>Gerer les taux de marges</small></h1>
-  </div>
-  <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
-    </div>
-  </div>  
-</section>
-<section id="mode">
-  <div class="page-header">
-    <h1>Gerer les modes de conditionnements <small>Gerer les modes de conditionnements</small></h1>
-  </div>
-  <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    <div class="span5">
+  	 <h3>Rapport des ventes</h3>
+     <p>
+        Cet état permet de visualiser le total des ventes par produits vendus aucours d'une certaine periode. <BR />
+        Pour visualiser cette courbe statistique, procedez comme suit:
+        <ul>
+           <li> Allez dans le menu <b>Supervisions > Statistique > Rapport des ventes</b></li>
+           <li>Entrez les periodes minimum et maximum et enregistrez</li>
+        </ul>
+        <util:image-box height="250" alttext="Rapport des ventes" width="250" link="${sales_report}" />
+     </p>
     </div>
   </div>  
 </section>
 <section id="ordo">
   <div class="page-header">
-    <h1>Gerer les ordonanciers <small>Gerer les ordonanciers</small></h1>
+    <h1>Ordonnanciers</h1>
+     Les ordonnanciers permettent de garder une trace des ordonnanciers fournis par les clients pour l'achat de leurs produits.<BR />
+     Ces derniers servent d'éventuelles preuves d'achats de medicaments au sein d'une pharmacie.
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    <div class="span5">
+     <h3>Créer une ordonnance</h3>
+     <p>
+       La création d'une ordonnance se fait lors de la vente.<BR />
+       Pour créer une ordonnance, procedez comme suit:
+       <ul>  
+         <li>allez dans l'interface de vente et cliquez sur le bouton <b>Ordonnancier</b></li>
+         <li>Remplissez le formulaire de l'ordonnance et enregistrez.</li>
+       </ul>  
+       <util:image-box height="250" alttext="Creer une ordonnance" width="250" link="${create_ord}" />
+     </p>
+    </div>
+  	<div class="span5">
+  	 <h3>Visualiser une ordonnance</h3>
+     <p>
+        Pour visualiser une ordonnance, procedez comme suit: 
+        <ul>
+           <li>Allez dans le menu <b>Supervisions > Ordonnancier > Lister</b></li>
+           <li> Recherchez l'ordonnancier dans la liste ensuite, double-cliquez pour voir les détails</li>
+        </ul>
+        <util:image-box height="250" alttext="Visualiser une ordonnance" width="250" link="${show_ord}" />
+     </p>
+    </div>
+    <div class="span5">
+     <h3>Imprimer une ordonnance</h3>
+     <p>
+      Pour imprimer une ordonnance, procedez comme suit: 
+        <ul>
+           <li>Allez dans le menu <b>Supervisions > Ordonnancier > Lister</b></li>
+           <li> Recherchez l'ordonnancier dans la liste ensuite, double-cliquez sur le lien de l'ordonnance</li>
+           <li>Dans la page de détails de l'ordonnance, cliquez sur le bouton <b>Imprimer l'ordonnance</b></li>
+        </ul>
+       <util:image-box height="250" alttext="Imprimer une ordonnance" width="250" link="${print_ord}" />
+     </p>
     </div>
   </div>  
 </section>
-<section id="filiale">
+<section id="config">
   <div class="page-header">
-    <h1>Gerer les filiales <small>Gerer les filiales</small></h1>
+    <h1>Configurations</h1>
+    <p>Les élements de configuration permettent d'initialiser le système avec des valeurs qui devront êtres utiles partout ou l'application en aurait besoin<BR />
+      Ces élements ne pourront donc en aucun cas etre supprimés mais modifiables par rapport à un choix de gestion.
+    </p>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	 <h3>Conditionnements</h3>
+     <p>
+       Les conditionnements correspondent aux modes de conservation des produits
+       <ul style="list-style-type: decimal;">
+          <li>
+	       <h5>Creer un conditionnement</h5>
+	       Pour creer un conditionnement, procedez comme suit:
+	       <ul>
+	           <li>Allez dans le menu <b>Supervisions > Conditionnements > Ajouter</b></li>
+	           <li>Remplissez le formulaire de conditionnement et cliquez sur <b>Enregistrer</b></li>
+	       </ul>
+	      </li> 
+	      <li>
+	        <h5>Visualiser un conditionnement</h5>
+	        Pour visualiser un conditionnement, procedez comme suit:
+	        <ul>
+	           <li>Allez dans le menu <b>Supervisions > Conditionnements > Lister</b></li>
+	           <li>Recherchez le conditionnement et double-cliquez sur le lien pour voir les details</li>
+	       </ul>
+	      </li>
+       </ul>
+     </p>
     </div>
-  </div>  
-</section>
-<section id="site">
-  <div class="page-header">
-    <h1>Gerer les sites <small>Gerer les sites</small></h1>
+    <div class="span5">
+  	 <h3>Taux de marges</h3>
+     <p>
+        Le taux de marge correspond au pourcentage de marge beneficiaire que l'on accorde sur les produits en vente
+       <ul style="list-style-type: decimal;">
+          <li>
+	       <h5>Creer le Taux de marge</h5>
+	       Pour creer le taux de marge, procedez comme suit:
+	       <ul>
+	           <li>Allez dans le menu <b>Supervisions > Taux de marge > Ajouter</b></li>
+	           <li>Remplissez le formulaire du taux de marge et cliquez sur <b>Enregistrer</b></li>
+	       </ul>
+	      </li> 
+	      <li>
+	        <h5>Visualiser le taux de marge</h5>
+	        Pour visualiser le taux de marge, procedez comme suit:
+	        <ul>
+	           <li>Allez dans le menu <b>Supervisions > Taux de marge > Lister</b></li>
+	           <li>Recherchez le Taux de marge et double-cliquez sur le lien pour voir les details</li>
+	       </ul>
+	      </li>
+       </ul>
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>TVA</h3>
+     <p>
+         La TVA(Taxe sur la valeur ajoutee) correspond au pourcentage standard coefficient du total d'une vente. On ne peut creer qu'une seule valeur de TVA.
+       <ul style="list-style-type: decimal;">
+          <li>
+	       <h5>Créer la TVA</h5>
+	       Pour creer la TVA, procedez comme suit:
+	       <ul>
+	           <li>Allez dans le menu <b>Supervisions > TVA > Ajouter</b></li>
+	           <li>Remplissez le formulaire de la TVA et cliquez sur <b>Enregistrer</b></li>
+	       </ul>
+	      </li> 
+	      <li>
+	        <h5>Visualiser la TVA</h5>
+	        Pour visualiser la TVA, procedez comme suit:
+	        <ul>
+	           <li>Allez dans le menu <b>Supervisions > T.V.A > Lister</b></li>
+	           <li>Recherchez la TVA et double-cliquez sur le lien pour voir les details</li>
+	       </ul>
+	      </li>
+       </ul>
+     </p>
+    </div>
   </div>
   <div class="row">
-  	<div class="span12">
-     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+  	<div class="span5">
+  	 <h3>Devises</h3>
+     <p>
+       Les devises permettent de faire des conversions automatiques de monnaies etrangères en monnaies locales
+       <ul style="list-style-type: decimal;">
+          <li>
+	       <h5>Creer une devise</h5>
+	       Pour creer une devise, procedez comme suit:
+	       <ul>
+	           <li>Allez dans le menu <b>Supervisions > Devises > Ajouter</b></li>
+	           <li>Remplissez le formulaire de la devise et cliquez sur <b>Enregistrer</b></li>
+	       </ul>
+	      </li> 
+	      <li>
+	        <h5>Visualiser une devise</h5>
+	        Pour visualiser une devise, procedez comme suit:
+	        <ul>
+	           <li>Allez dans le menu <b>Supervisions > Devises > Lister</b></li>
+	           <li>Recherchez la devise et double-cliquez sur le lien pour voir les details</li>
+	       </ul>
+	      </li>
+       </ul>
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Filiales</h3>
+     <p>
+       Les filiales correspondent aux differentes branches d'un site
+       <ul style="list-style-type: decimal;">
+          <li>
+	       <h5>Creer une filiale</h5>
+	       Pour creer une filiale, procedez comme suit:
+	       <ul>
+	           <li>Allez dans le menu <b>Supervisions > Filiales > Ajouter</b></li>
+	           <li>Remplissez le formulaire de la filiale et cliquez sur <b>Enregistrer</b></li>
+	       </ul>
+	      </li> 
+	      <li>
+	        <h5>Visualiser une filiale</h5>
+	        Pour visualiser une filiale, procedez comme suit:
+	        <ul>
+	           <li>Allez dans le menu <b>Supervisions > Filiales > Lister</b></li>
+	           <li>Recherchez la filiale et double-cliquez sur le lien pour voir les details</li>
+	       </ul>
+	      </li>
+       </ul>
+     </p>
+    </div>
+    <div class="span5">
+  	 <h3>Sites</h3>
+     <p>
+       Le site correspond à l'entité de la pharmacie. Il est crée par défaut lors de la premiere initialisation de l'application, et ensuite devra être modifié.
+       Pour modifier un site, procedez comme suit:
+       <ul>
+          <li>Allez dans le menu <b>Supervisions > Sites</b> et double-cliquez sur le lien du site pour voir les details</li>
+          <li>Cliquez sur l'icône de mise à jour du site, ensuite modifiez les informations du site et cliquez sur <b>Enregistrer</b></li>
+       </ul>
+     </p>
     </div>
   </div>  
 </section>
 </article>
-
 
 </div>
