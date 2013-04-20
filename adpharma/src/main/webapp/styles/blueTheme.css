@@ -523,12 +523,13 @@ input {
 	text-align: center;
 	font-weight: bold;
 	color: blue;
+	font-size: 20px;
 }
 
 .autres:focus {
 	background-color: green;
 	color: white;
-	font-size: 22px;
+	
 }
 
 .tva:focus {
@@ -1254,3 +1255,24 @@ form#main-search label {
 #footer1 a {
 	color: white;
 }
+
+.add-on {
+    background-color: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    color: #999999;
+    display: inline-block;
+    font-weight: normal;
+    min-width: 16px;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: auto;
+    height:17px;
+     margin-left: -1px;
+    margin-right: 0;
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+#formulaire td:FIRST-CHILD {
+	width: 12%;
+}
+

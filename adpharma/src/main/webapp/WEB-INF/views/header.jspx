@@ -107,9 +107,9 @@
 				  		<a href="#" class="welcome_user"> <span>${welcome1} </span> ${pageContext['request'].userPrincipal.name}</a> <span style="margin-left: 5px; margin-right: 5px; color: #6FEFC9;">${welcome2}</span> 
 				  		<span style="color: #6FEFC9;">${sessionBean.connectedSiteName}</span>
 				    	<a id="userInfos" title="Vos Informations" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
-				    	<a href="#">
+				    	<!-- <a href="#">
 			             ${lang_user}: <util:language locale="fr" label="Français"/> <util:language locale="en" label="English"/>
-			            </a>
+			            </a> -->
 	  				</c:when>
 	  			</c:choose>
 				<c:choose>

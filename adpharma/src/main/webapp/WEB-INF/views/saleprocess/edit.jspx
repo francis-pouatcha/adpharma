@@ -527,11 +527,30 @@ $('#updateClient').dialog("close");
 								title="${enter_qty }" maxlength="4" /></td>
 
 
-
-							<td><INPUT type="text" name="rem"
-								onkeyup="calculePtWhithRem()" maxlength="5" class="autres"
-								value="${saleProcess.lineToUpdate.remise}"
-								onKeyPress="return scanTouche(event)" /></td>
+							<td width="11%">
+								<INPUT type="hidden" name="remax" id="remax" value="${saleProcess.lineToUpdate.produit.remiseMax}" />
+								 <INPUT type="text"
+									 id="remP" value=""
+									maxlength="2" class="autres unique"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 40px"
+								 />
+								 <span class="add-on">%</span>
+								 <INPUT type="text"
+									name="rem" id="rem" value="${saleProcess.lineToUpdate.remise}"
+									maxlength="5" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 72px;margin-left: 2px;"
+								 />
+							</td>
+							
+							<!-- <td>
+								<INPUT type="text" name="rem"
+									onkeyup="calculePtWhithRem()" maxlength="5" class="autres"
+									value="${saleProcess.lineToUpdate.remise}"
+									onKeyPress="return scanTouche(event)" 
+								/>
+							</td> -->
 							<td><INPUT type="text" name="pt" id="pt" class="autres"
 								value="${saleProcess.lineToUpdate.prixTotal}"
 								disabled="disabled" style="color: red;" /></td>
@@ -626,11 +645,21 @@ $('#updateClient').dialog("close");
 								onkeyup="calculePt()" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
-							<td><INPUT type="hidden" name="remax" id="remax"
-								value="${saleProcess.produit.remiseMax}" /> <INPUT type="text"
-								name="rem" id="rem" onkeyup="calculePtWhithRem()" value="${rem}"
-								maxlength="5" class="autres"
-								onKeyPress="return scanTouche(event) ;  " title="la remise" />
+							<td width="11%">
+								<INPUT type="hidden" name="remax" id="remax" value="${saleProcess.produit.remiseMax}" />
+								 <INPUT type="text"
+									 id="remP" value="${rem}"
+									maxlength="2" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 40px"
+								 />
+								 <span class="add-on">%</span>
+								 <INPUT type="text"
+									name="rem" id="rem" value="${rem}"
+									maxlength="5" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 72px;margin-left: 2px;"
+								 />
 							</td>
 							<td><INPUT type="text" name="pt" id="pt" class="autres"
 								value="${pt}" style="color: red; text-align: center;"

@@ -17,7 +17,7 @@
   <link rel="SHORTCUT ICON" href="${favicon}" />
   <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
   <c:set var="userLocale">
-    <c:out value="${fn:replace(pageContext.response.locale, '_', '-')}" default="fr" />
+    <c:out value="fr"/>
   </c:set>
   <spring:url value="/resources/js/jquery-1.7.1.min.js" var="jquery_url" />
    <spring:url value="/resources/js/jquery-ui-1.8.18.custom.min.js" var="jqueryui_url" />

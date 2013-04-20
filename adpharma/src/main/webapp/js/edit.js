@@ -39,27 +39,36 @@ function calculePtWhithRem() {
 
 	if (pId == "") {
 		alert("veullez rechercher un  produit !");
+		$('#rem').val("");
+		$('#remP').val("");			
+		return false;
 	} else if (qte == "") {
 		document.getElementById("pt").value = 0;
 
 		alert("veullez saisir la quantite a commandee !");
+		$('#rem').val("");
+		$('#remP').val("");
+		return false;
 
 	} else if (rem > remax) {
 		if (remax == 0) {
 			alert("Vous n'etes pas autorise a accorder des remises");
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
-		
+			$('#remP').val(0);
+			return false;
 		}else{
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
 			alert("la remise est surepieure a la remise max:" + remax + " fcfa");
-
+			$('#remP').val(0);
+			return false;
 		}
 
 	} else {
 
 		document.getElementById("pt").value = (pu - rem) * qte;
+		return true;
 	}
 
 }
@@ -133,7 +142,26 @@ $(function(){
 	return	verif_formulaire();
 	});
 	
+	$('#rem').keyup(function() {
+			var bool = calculePtWhithRem();
+			console.log(bool);
+			if(bool)
+				$('#remP').val(($('#rem').val()*100)/$('#pu').val());
+		});
 	
+	$('#remP').keyup(function() {
+			if($('#pId').val()==""){
+				alert("veullez rechercher un  produit !");
+				$('#remP').val("");
+			}else{
+				$('#rem').val(($('#remP').val()*$('#pu').val())/100);
+				calculePtWhithRem();
+			}
+			
+		});
+		
+		
+			$('.unique').val($('#rem').val()*100/$('#pu').val());
 	});
 
 
