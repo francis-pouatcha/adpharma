@@ -13,10 +13,6 @@ import org.adorsys.adpharma.domain.Ordonnancier;
 
 privileged aspect Ordonnancier_Roo_Json {
     
-    public String Ordonnancier.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
     public static Ordonnancier Ordonnancier.fromJsonToOrdonnancier(String json) {
         return new JSONDeserializer<Ordonnancier>().use(null, Ordonnancier.class).deserialize(json);
     }

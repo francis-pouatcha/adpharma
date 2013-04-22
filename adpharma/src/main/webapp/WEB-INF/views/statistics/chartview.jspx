@@ -22,8 +22,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
 		#curvey_table label{width: auto;} 
 		#curvey_table input{font-style: normal;}
 		#curvey_table td{padding-bottom: 25px; border: none; background: #fff;} 
-		#result_graph{vertical-align: top;}
-		#result_data{vertical-align: top;}
     </style>
     <spring:url value="/produits/findProductByCipAjax" var="find_product_url" />
     <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />

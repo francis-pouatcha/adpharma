@@ -7,8 +7,8 @@
 	<jsp:output omit-xml-declaration="yes" />
 	
 	<jsp:directive.attribute name="id" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier for this tag (do not change!)"/>
-	<jsp:directive.attribute name="display" type="java.lang.String" required="false" description="The text to display in the display box"/>
-	
+	<jsp:directive.attribute name="display" type="java.lang.String" required="false" rtexprvalue="true" description="The text to display in the display box"/>
+	<jsp:directive.attribute name="display1" type="java.lang.String" required="false" rtexprvalue="true" description="The other text to display in the display box"/>
 	
 	<style type="text/css">
 	         .display_box{
@@ -22,14 +22,18 @@
 	</style>
 	
 	<c:set value="${display}" var="DISPLAY" />
+	<c:set value="${display1}" var="DISPLAY1" />
 	
 	<c:if test="${empty DISPLAY}">
 	     <c:set value="ADPHARMA" var="DISPLAY" />
 	</c:if>
 	
 	<div class="display_box" id="${id}">
-		<span id="cmdName" style="font-weight: bold"> 
+		<span id="cmdName" style="font-weight: bold; margin-right: 20px;"> 
 		   <c:out value="${DISPLAY}" />
+		</span>
+		<span id="other" style="font-weight: bold;">
+		    <c:out value="${DISPLAY1}" />
 		</span>
 	</div>
 </jsp:root>	

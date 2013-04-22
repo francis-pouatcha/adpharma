@@ -135,4 +135,12 @@ privileged aspect SaleProcess_Roo_JavaBean {
         this.ordonnancier = ordonnancier;
     }
     
+    public String SaleProcess.getDisplayOrdonance() {
+        return this.displayOrdonance;
+    }
+    
+    public void SaleProcess.setDisplayOrdonance(String displayOrdonance) {
+        this.displayOrdonance = displayOrdonance;
+    }
+    
 }

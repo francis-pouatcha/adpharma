@@ -1,4 +1,4 @@
-package org.adorsys.adpharma.domain;
+	package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

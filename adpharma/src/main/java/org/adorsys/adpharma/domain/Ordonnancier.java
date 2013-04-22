@@ -15,6 +15,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
+
+import flexjson.JSONSerializer;
+import flexjson.transformer.DateTransformer;
+
 import javax.persistence.OneToOne;
 
 @RooJson
@@ -72,7 +76,9 @@ public class Ordonnancier extends AdPharmaBaseEntity {
         return sb.toString();
     }
     
-   
+    public String toJson() {
+        return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).exclude("*.class").serialize(this);
+    }
     
     public static List<Ordonnancier> findOrdonnancierEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Ordonnancier o ORDER BY o.id DESC ", Ordonnancier.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

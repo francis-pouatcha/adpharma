@@ -135,11 +135,18 @@ $(function(){
 
 
 // Dialogue de creation de l'ordonnance
-function createPrescriptionDialog(){
+/*function createPrescriptionDialog(){
 	$('#ordonanceform').dialog({
 		open: function(){
-			$.getJSON( "${find_ordonance_url}", function(data){
-				
+			$.getJSON( '${find_ordonance_url}', function(data){
+				if(data==null){
+					alert("Pas d'ordonance en cours");
+				}else{
+					$('#prescripteur').val(data.Prescripteur);
+					$('#hopital').val(data.hospital);
+					$('#nom_patient').val(data.nomDuPatient);
+					$('#prescripteur').val(data.date_prescription);
+				}
 			});
 		},
 		autoOpen: false,
@@ -164,7 +171,7 @@ function createPrescriptionDialog(){
 		$('#ordonanceform').dialog('open');
 		return false;
 	});
-}
+}*/
 
 
 // widget de dialogue a utiliser

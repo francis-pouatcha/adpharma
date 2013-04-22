@@ -180,14 +180,11 @@ $('#conv_credit').click(function(){
    </c:if>     
                    
    <c:if test="${not empty apMessage}">
-		    <hr style="margin-top: 2px;margin-bottom: -13px;"/>
 			<center>
 					<p class="appMessage">${apMessage}</p>
 			</center>
    </c:if>    
    
- 
- 
        <div id="creditcmd" style="display: none;">
               <p>Test</p>   
        </div>

@@ -71,86 +71,95 @@
 			}
 </script>
 
-<SCRIPT type="text/javascript">
-$(function(){
-	$.datepicker.setDefaults( $.datepicker.regional[ "" ]);
-	$( "#date_prescription" ).datepicker( $.datepicker.regional[ "${language}" ] );
-	createPrescriptionDialog();
-});
-</SCRIPT>
 
-
-	<!--  <div style="margin-bottom: 20px; padding-bottom: 2px; border: 1px solid black;">
-		<span id="cmdName" style="font-weight: bold"> <c:out
-				value="${saleProcess.displayName}" />
-		</span>
-	</div>-->
-	<util:display-box display="${saleProcess.displayName}" id="text-box"/>
+	<util:display-box display="${saleProcess.displayName}" id="text-box" display1="${saleProcess.displayOrdonance}" />
 	
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit"
-		var="edit_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/edit" var="edit_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/findProduct"   var="find_product_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/selectProduct"   var="select_product_url" />
 	<spring:url value="/saleprocess/${saleProcess.cmdId}/findOrdonance" var="find_ordonance_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/saveOrdonance" var="save_ordonance_url" />
+	
+<SCRIPT type="text/javascript">
+		$(function(){
+			$.datepicker.setDefaults( $.datepicker.regional[ "" ]);
+			$( "#date_prescription" ).datepicker( $.datepicker.regional[ "${language}" ] );
+			$('#ordonanceform').dialog({
+				open: function(){
+					$.getJSON( '${find_ordonance_url}', function(data){
+						if(data!=null){
+							$('#prescripteur').val(data.prescripteur);
+							$('#hopital').val(data.hospital);
+							$('#nom_patient').val(data.nomDuPatient);
+							$('#date_prescription').val(data.datePrescription);
+						}
+					});
+				},
+				autoOpen: false,
+				width: 500,
+				resizable:true,
+				draggable :true,
+				title:"Creer une ordonnance",
+		        hide:'fade',
+		        show:'fade',
+		        position:'top',
+				buttons: {
+					"Annuler": function() { 
+						$(this).dialog("close"); 
+					},
+					"Enregistrer": function() { 
+						$.get( '${save_ordonance_url}', $('#ordonnance_form').serialize(), function(data){
+							$('#other').html(data);
+						});
+						$(this).dialog("close");
+					}
+				}
+			});
+			
+			$('#btOrdo').click(function(){
+				$('#ordonanceform').dialog('open');
+				return false;
+			});
+		});
+</SCRIPT>
 <!-- 
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
  -->
  <spring:url value="/produits/${saleProcess.cmdId}/findByCipmAjax/" var="find_cipm_url" />
 	<c:choose>
 		<c:when test="${forcer}">
-			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLineForcer"
-				var="addLine_url" />
-			<spring:url
-				value="/saleprocess/${saleProcess.cmdId}/anulerVenteForcer/${saleProcess.produit.id}"
-				var="annulerVenteForcer_url" />
-
+			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLineForcer" var="addLine_url" />
+			<spring:url value="/saleprocess/${saleProcess.cmdId}/anulerVenteForcer/${saleProcess.produit.id}" var="annulerVenteForcer_url" />
 		</c:when>
 		<c:otherwise>
-			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"
-				var="addLine_url" />
-
+			<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine" var="addLine_url" />
 		</c:otherwise>
 	</c:choose>
 
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"
-		var="find_upd_url" />
-
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/"
-		var="show_prd_url" />
-
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine" var="find_upd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/showProduct/" var="show_prd_url" />
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrer"
-		var="enr_cmd_url" />
-		<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrementValider"
-		var="valider_cmd_url" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/addGlobalRemise"
-		var="add_rem_url" />
-	<spring:url
-		value="/saleprocess/${saleProcess.cmdId}/addGlobalRemisePourcentage"
-		var="add_rempour_url" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/annuler"
-		var="delete_cmd_url" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/ordonnancier?form"
-		var="ord_cmd_url" />
-
-	<spring:url
-		value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form"
-		var="update_client_url" />
-	<spring:url
-		value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form"
-		var="update_credit_client_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrer" var="enr_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/enregistrementValider" var="valider_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/addGlobalRemise" var="add_rem_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/addGlobalRemisePourcentage" var="add_rempour_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/annuler" var="delete_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/ordonnancier?form" var="ord_cmd_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateClient/${saleProcess.clientId}?form" var="update_client_url" />
+	<spring:url value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form" var="update_credit_client_url" />
 
 	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
 		            
 		            
-		            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
-		<span><a href="${ enr_cmd_url}"
-			style="text-decoration: none;"><INPUT class="submits"
-				type="button" value="${close_sale }"
-				title="${save_command }" /></a></span>
-				</security:authorize>
+		    <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
+		       <span>
+		           <a href="${ enr_cmd_url}" style="text-decoration: none;">
+		              <INPUT class="submits" type="button" value="${close_sale }" title="${save_command }" />
+		           </a>
+		      </span>
+		   </security:authorize>
 				<!-- 
 				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
 						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
@@ -181,13 +190,13 @@ $(function(){
 	</div> 
 	
 	<div id="ordonanceform" style="display: none; height: 400px;">
-	          <form method="post" enctype="application/x-www-form-urlencoded">
+	          <form method="post" enctype="application/x-www-form-urlencoded" id="ordonnance_form">
 	              <fieldset class="ordo_css">
-	                 <legend>Ordonnance</legend>
+	                 <legend>Infos Ordonnance</legend>
 	                   <p> <label style="font-size: 13px;">Prescripteur: </label><input type="text" name="Prescripteur" id="prescripteur" /> </p>
 	                   <p> <label style="font-size: 13px;">Hopital: </label><input type="text" name="hospital" id="hopital" /> </p>
 	                   <p> <label style="font-size: 13px;">Nom patient: </label><input type="text" name="nomDuPatient" id="nom_patient" /> </p>
-	                   <p> <label style="font-size: 13px;">Date prescription: </label><input type="text" name="datePrescrip" id="date_prescription" /> </p>
+	                   <p> <label style="font-size: 13px;">Date prescription: </label><input type="text" name="datePrescrip" id="date_prescription"  pattern="dd-MM-yyy"/> </p>
 	              </fieldset>
 	          </form>
 	</div>
@@ -673,13 +682,11 @@ $('#updateClient').dialog("close");
 					</table>
 				</form>
 
+           <!-- Messages d'erreurs -->
 				<c:if test="${not empty apMessage}">
-					<hr />
 					<center>
 						<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
 					</center>
-					<hr />
-
 				</c:if>
 
 			</util:panel>

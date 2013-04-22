@@ -61,6 +61,8 @@ public class SaleProcess {
 	private String displayName ;
 
 	private Ordonnancier ordonnancier;
+	
+	private String displayOrdonance;
 
 
 	private void ordonne(Long cmdId, Model uiModel){
@@ -98,6 +100,7 @@ public class SaleProcess {
 
 		calculPrix(commande);
 		ordonne(cmdId, uiModel);
+		displayOrdonance= displayOrdonnance();
 	}
 
 	public void calculPrix(CommandeClient commande){
@@ -135,7 +138,7 @@ public class SaleProcess {
 		this.setTotalRemise(commande.getRemise());
 		this.setNetApayer(commande.getMontantTtc());
 		ordonne(cmdId, uiModel);
-
+        displayOrdonance= displayOrdonnance();
 	}
 
 	public SaleProcess(Long cmdId, List<LigneCmdClient> ligneCommande, Model uiModel) {
@@ -146,6 +149,7 @@ public class SaleProcess {
 	}
 	public SaleProcess(Model uiModel) {
 		ordonne(this.cmdId, uiModel);
+		displayOrdonance= displayOrdonnance();
 	}
 
 
@@ -153,7 +157,7 @@ public class SaleProcess {
 		this.cmdId = cmdId;
 		typeCommande = CommandeClient.findCommandeClient(cmdId).getTypeCommande().name();
 		ordonne(cmdId, uiModel);
-
+		displayOrdonance= displayOrdonnance();
 	}
 
 	//genere les ligne de commande pour un cipm donne 
@@ -198,8 +202,24 @@ public class SaleProcess {
 
 	}
 
+	// Affichage des donnees de la commande
 	private String displayName(){
-		return new StringBuilder().append(" "+cmdNumber).append("  , du: ").append(PharmaDateUtil.format(dateCommande, "dd-MM-yyyy HH:mm")).append("  , ").append(clientName).append("   ,     "+typeCommande).toString();
+		StringBuilder displayText= new StringBuilder();
+		displayText.append(" "+cmdNumber).append("  , du: ").append(PharmaDateUtil.format(dateCommande, "dd-MM-yyyy HH:mm")).append("  , ").append(clientName).append("   ,     "+typeCommande);
+		return displayText.toString();
+	}
+	
+	// Affichage des donnees de l'ordonnance
+	public String displayOrdonnance(){
+		StringBuilder displayText= new StringBuilder();
+		displayText.append("  ");
+		displayText.append("ORDONNANCE- ");
+		if(ordonnancier!=null){
+			displayText.append("Numero: "+ordonnancier.getOrdNumber()+", Patient: "+ordonnancier.getNomDuPatient());
+		}else{
+			displayText.append("Aucune ordonnance associee a cette commande");
+		}
+		return displayText.toString();
 	}
 
 }

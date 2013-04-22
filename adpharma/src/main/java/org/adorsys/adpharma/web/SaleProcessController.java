@@ -238,7 +238,7 @@ public class SaleProcessController {
 	// Recherche ajax de l'ordonnance de la commande
 	@RequestMapping(value="/{cmdId}/findOrdonance", method=RequestMethod.GET)
 	@ResponseBody
-	public String findOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam("datePrescrip")String datePrescription, Ordonnancier ordonnancier){
+	public String findOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam(value="datePrescrip", required=false)String datePrescription, Ordonnancier ordonnancier){
 		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
 		List<Ordonnancier> ordonnances = Ordonnancier.findOrdonnanciersByCommande(commande).getResultList();
 		Ordonnancier ordonnance= null;
@@ -252,10 +252,13 @@ public class SaleProcessController {
 	// Creation ou mise a jour de l'ordonnance de la commande
 	@RequestMapping(value="/{cmdId}/saveOrdonance", method=RequestMethod.GET)
 	@ResponseBody
-	public String createOrUpdateOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, @RequestParam(value="datePrescrip", required=false) String datePrescription, Ordonnancier ordonnance, Model uiModel){
+	public String createOrUpdateOrdonnanceAjax(@PathVariable("cmdId")Long cmdId, 
+			@RequestParam(value="datePrescrip", required=false) String datePrescription, Ordonnancier ordonnance, Model uiModel){
 		CommandeClient commande = CommandeClient.findCommandeClient(cmdId);
 		List<Ordonnancier> ordonnanciers = Ordonnancier.findOrdonnanciersByCommande(commande).getResultList();
 		Ordonnancier ordonnancier=null;
+		// Texte de l'ordonnance a afficher 
+		StringBuilder display= new StringBuilder();
 		if(!ordonnanciers.isEmpty()){
 			ordonnancier= ordonnanciers.iterator().next();
 			ordonnancier.setPrescripteur(ordonnance.getPrescripteur());
@@ -265,14 +268,24 @@ public class SaleProcessController {
 				   ordonnancier.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
 		    }
 			ordonnancier.merge();
-			return ordonnancier.toJson();
+			SaleProcess saleProcess= new SaleProcess(cmdId, uiModel);
+			/*display.append("ORDONNANCE- Numero: "+ordonnancier.getOrdNumber());
+			if(ordonnancier.getNomDuPatient()!=null){
+			 display.append("  Nom du patient: "+ordonnancier.getNomDuPatient());
+			}*/
+			return saleProcess.getDisplayOrdonance();
 		}else{
 			if(datePrescription!=null){
 				ordonnance.setDatePrescription(PharmaDateUtil.parseToDate(datePrescription, PharmaDateUtil.DATE_PATTERN_LONG));
 			}
 			ordonnance.setCommande(commande);
 			ordonnance.persist();
-			return ordonnance.toJson();
+			SaleProcess saleProcess = new SaleProcess(cmdId, uiModel);
+			/*display.append("ORDONNANCE- Numero: "+ordonnance.getOrdNumber());
+			if(ordonnance.getNomDuPatient()!=null){
+			 display.append("  Nom du patient: "+ordonnance.getNomDuPatient());
+			}*/
+			return saleProcess.getDisplayOrdonance();
 		}
 	}
 

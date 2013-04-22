@@ -640,7 +640,7 @@ if(Check == false){
 		     </li>
       
  
- <!-- Menu suivi clientelle -->
+ <!-- Menu suivie clientelle -->
     </security:authorize>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
     
