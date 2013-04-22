@@ -1,4 +1,5 @@
 /* main elements */
+
 .style_login{
 	background: -moz-linear-gradient(90deg, #eee, #eee) repeat scroll 0 0 transparent;
 	background:-webkit-gradient(linear, left top, left bottom, from(#eee), to(#eee));
@@ -242,7 +243,7 @@ tr.list:hover {
 	/* background-color: rgb(51, 204, 255); */
 	background-color:  #00FF66;
 	color: white;
-	font-weight: bold;
+	/* font-weight: bold; */
 	cursor: pointer;
 }
 
@@ -1277,4 +1278,22 @@ form#main-search label {
 	color: white;
 }
 
-
+.add-on {
+    background-color: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    color: #999999;
+    display: inline-block;
+    font-weight: normal;
+    min-width: 16px;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: auto;
+    height:17px;
+     margin-left: -1px;
+    margin-right: 0;
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+#formulaire td:FIRST-CHILD {
+	width: 12%;
+}

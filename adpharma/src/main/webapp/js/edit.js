@@ -33,33 +33,44 @@ function calculePtWhithRem() {
 	var rem = document.getElementById("rem").value;
 	var qte = document.getElementById("qte").value;
 	var remax = document.getElementById("remax").value;
+	
 	remax = Math.floor(remax);
 	var pu = document.getElementById("pu").value;
 	var pId = document.getElementById("pId").value;
-
+	
+	
 	if (pId == "") {
 		alert("veullez rechercher un  produit !");
+		$('#rem').val("");
+		$('#remP').val("");			
+		return false;
 	} else if (qte == "") {
 		document.getElementById("pt").value = 0;
 
 		alert("veullez saisir la quantite a commandee !");
+		$('#rem').val("");
+		$('#remP').val("");
+		return false;
 
 	} else if (rem > remax) {
 		if (remax == 0) {
 			alert("Vous n'etes pas autorise a accorder des remises");
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
-		
+			$('#remP').val(0);
+			return false;
 		}else{
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
 			alert("la remise est surepieure a la remise max:" + remax + " fcfa");
-
+			$('#remP').val(0);
+			return false;
 		}
 
 	} else {
 
 		document.getElementById("pt").value = (pu - rem) * qte;
+		return true;
 	}
 
 }
@@ -131,6 +142,28 @@ $(function(){
 	$('#formulaire').bind('submit',function(event) {
 	return	verif_formulaire();
 	});
+	
+	$('#rem').keyup(function() {
+		var bool = calculePtWhithRem();
+		console.log(bool);
+		if(bool)
+			$('#remP').val(Math.round(($('#rem').val()*100)/$('#pu').val()));
+	});
+
+$('#remP').keyup(function() {
+		if($('#pId').val()==""){
+			alert("veullez rechercher un  produit !");
+			$('#remP').val("");
+		}else{
+			$('#rem').val(Math.floor(($('#remP').val()*$('#pu').val())/100));
+			calculePtWhithRem();
+		}
+		
+	});
+	
+	
+	$('.unique').val($('#rem').val()*100/$('#pu').val());
+	
 	});
 
 
@@ -167,6 +200,7 @@ $(function(){
 		}
 	});
 	
+
 	$('#btOrdo').click(function(){
 		$('#ordonanceform').dialog('open');
 		return false;

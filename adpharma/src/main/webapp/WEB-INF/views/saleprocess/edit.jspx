@@ -231,6 +231,7 @@
 		    		<th>${product_qty_cipm}</th>
 		    		<th>${product_qty_cip}</th>
 		    		<th>${product_date_of_record}</th>
+		    		<th>RAYON</th>
 		    		<th>${product_provider}</th>
 		    	
 				</tr>');
@@ -305,6 +306,7 @@
 										  <td>'+this.quantieEnStock+'</td>
 										  <td>'+this.qteCip+'</td>
 										  <td>'+this.saisiele+'</td>
+										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
 
 										  </tr>'
@@ -526,7 +528,7 @@ $('#updateClient').dialog("close");
 							<th colspan="2" style="text-align: center;">${saleaction }</th>
 						</tr>
 						<tr>
-							<td><INPUT type="hidden" name="lineId" id="lineId"
+							<td><INPUT type="hidden" name="lineId" id="pId"
 								value="${saleProcess.lineToUpdate.id}" /> <INPUT type="text"
 								name="cipm" maxlength="-1" id="1" class="autres"
 								value="${saleProcess.lineToUpdate.cipM}" title="Taux De Marge"
@@ -554,11 +556,30 @@ $('#updateClient').dialog("close");
 								title="${enter_qty }" maxlength="4" /></td>
 
 
-
-							<td><INPUT type="text" name="rem"
-								onkeyup="calculePtWhithRem()" maxlength="5" class="autres"
-								value="${saleProcess.lineToUpdate.remise}"
-								onKeyPress="return scanTouche(event)" /></td>
+							<td width="11%">
+								<INPUT type="hidden" name="remax" id="remax" value="${saleProcess.lineToUpdate.produit.remiseMax}" />
+								 <INPUT type="text"
+									 id="remP" value=""
+									maxlength="2" class="autres unique"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 40px"
+								 />
+								 <span class="add-on">%</span>
+								 <INPUT type="text"
+									name="rem" id="rem" value="${saleProcess.lineToUpdate.remise}"
+									maxlength="5" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 72px;margin-left: 2px;"
+								 />
+							</td>
+							
+							<!-- <td>
+								<INPUT type="text" name="rem"
+									onkeyup="calculePtWhithRem()" maxlength="5" class="autres"
+									value="${saleProcess.lineToUpdate.remise}"
+									onKeyPress="return scanTouche(event)" 
+								/>
+							</td> -->
 							<td><INPUT type="text" name="pt" id="pt" class="autres"
 								value="${saleProcess.lineToUpdate.prixTotal}"
 								disabled="disabled" style="color: red;" /></td>
@@ -653,11 +674,21 @@ $('#updateClient').dialog("close");
 								onkeyup="calculePt()" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
-							<td><INPUT type="hidden" name="remax" id="remax"
-								value="${saleProcess.produit.remiseMax}" /> <INPUT type="text"
-								name="rem" id="rem" onkeyup="calculePtWhithRem()" value="${rem}"
-								maxlength="5" class="autres"
-								onKeyPress="return scanTouche(event) ;  " title="la remise" />
+							<td style="width:135px;min-width: 135px;">
+								<INPUT type="hidden" name="remax" id="remax" value="${saleProcess.produit.remiseMax}" />
+								 <INPUT type="text"
+									 id="remP" value="${rem}"
+									maxlength="2" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 40px"
+								 />
+								 <span class="add-on">%</span>
+								 <INPUT type="text"
+									name="rem" id="rem" value="${rem}"
+									maxlength="5" class="autres"
+									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									style="display: inline-block;margin-bottom: 0px;width: 72px;margin-left: 2px;"
+								 />
 							</td>
 							<td><INPUT type="text" name="pt" id="pt" class="autres"
 								value="${pt}" style="color: red; text-align: center;"

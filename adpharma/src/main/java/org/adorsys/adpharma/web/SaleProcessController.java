@@ -194,7 +194,7 @@ public class SaleProcessController {
 	}
 
 	//permet d associer un ordonnancier a un client  
-	//cette fonction ne travaille plus : Moyo
+	//cette fonction ne travaille plus :
 	@RequestMapping(value = "/{cmdId}/ordonnancier",params = "form", method = RequestMethod.GET)
 	public String createOrUpdateOrdonnanceForm(@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		List<Ordonnancier> ordonnanciers = Ordonnancier.findOrdonnanciersByCommande(CommandeClient.findCommandeClient(cmdId)).getResultList();
