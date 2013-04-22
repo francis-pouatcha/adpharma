@@ -222,6 +222,7 @@ $(function(){
 		    		<th>${product_qty_cipm}</th>
 		    		<th>${product_qty_cip}</th>
 		    		<th>${product_date_of_record}</th>
+		    		<th>RAYON</th>
 		    		<th>${product_provider}</th>
 		    	
 				</tr>');
@@ -296,6 +297,7 @@ $(function(){
 										  <td>'+this.quantieEnStock+'</td>
 										  <td>'+this.qteCip+'</td>
 										  <td>'+this.saisiele+'</td>
+										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
 
 										  </tr>'
@@ -663,7 +665,7 @@ $('#updateClient').dialog("close");
 								onkeyup="calculePt()" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
-							<td width="11%">
+							<td style="width:135px;min-width: 135px;">
 								<INPUT type="hidden" name="remax" id="remax" value="${saleProcess.produit.remiseMax}" />
 								 <INPUT type="text"
 									 id="remP" value="${rem}"

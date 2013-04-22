@@ -170,6 +170,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private Boolean remiseAutorise;
 
 	private transient String fournisseur;
+	
+	private transient String nonRayon;
 
 	private transient String saisiele;
 
@@ -231,19 +233,20 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		line.setQteCip(produit.getQuantiteEnStock());
 		line.setViewMsg(viewMsg);
 		line.setRemiseMax(remiseMax);
+		line.setNonRayon(getProduit().getRayon().getName());
 		return line;
 	}
 
 	public String toJson() {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip").exclude("*","*.class").serialize(this);
+		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon").exclude("*","*.class").serialize(this);
 	}
 	
 	public String toJson2() {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","prixAchatUnitaire","designation","quantiteAprovisione","quantiteReclame","quantieEnStock","fournisseur","qteCip").exclude("*","*.class").serialize(this);
+		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","prixAchatUnitaire","designation","quantiteAprovisione","quantiteReclame","quantieEnStock","fournisseur","qteCip","nonRayon").exclude("*","*.class").serialize(this);
 	}
 	
 	public static String toJsonArray(Collection<LigneApprovisionement> collection) {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip").exclude("*","*.class").serialize(collection);
+		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon").exclude("*","*.class").serialize(collection);
 	}
 
 	public String getFournisseur() {
@@ -252,6 +255,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public void setFournisseur(String fournisseur) {
 		this.fournisseur = fournisseur;
+	}
+
+	public String getNonRayon() {
+		return nonRayon;
+	}
+
+	public void setNonRayon(String nonRayon) {
+		this.nonRayon = nonRayon;
 	}
 
 	public String getSaisiele() {

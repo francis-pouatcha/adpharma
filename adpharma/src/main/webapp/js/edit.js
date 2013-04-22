@@ -147,7 +147,7 @@ $(function(){
 		var bool = calculePtWhithRem();
 		console.log(bool);
 		if(bool)
-			$('#remP').val(($('#rem').val()*100)/$('#pu').val());
+			$('#remP').val(Math.round(($('#rem').val()*100)/$('#pu').val()));
 	});
 
 $('#remP').keyup(function() {
@@ -155,7 +155,7 @@ $('#remP').keyup(function() {
 			alert("veullez rechercher un  produit !");
 			$('#remP').val("");
 		}else{
-			$('#rem').val(($('#remP').val()*$('#pu').val())/100);
+			$('#rem').val(Math.floor(($('#remP').val()*$('#pu').val())/100));
 			calculePtWhithRem();
 		}
 		
