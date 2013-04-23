@@ -56,15 +56,14 @@ public class ConfigurationSoldes implements Serializable {
     private Boolean actif= Boolean.TRUE;
     
     @NotNull(message="Le cip du produit ne doit pas etre null")    
-    private transient String cip;
+    private transient String cipProduit;
     
-    public String getCip() {
-		return cip;
-	}
-    
-    public void setCip(String cip) {
-		this.cip = cip;
-	}
+   public String getCipProduit() {
+	return cipProduit;
+}
+   public void setCipProduit(String cipProduit) {
+	this.cipProduit = cipProduit;
+}
     
     
     @PrePersist
