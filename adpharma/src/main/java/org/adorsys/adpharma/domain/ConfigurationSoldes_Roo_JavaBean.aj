@@ -42,12 +42,12 @@ privileged aspect ConfigurationSoldes_Roo_JavaBean {
         this.etatSole = etatSole;
     }
     
-    public Boolean ConfigurationSoldes.getActif() {
-        return this.actif;
+    public Boolean ConfigurationSoldes.getActiveConfig() {
+        return this.activeConfig;
     }
     
-    public void ConfigurationSoldes.setActif(Boolean actif) {
-        this.actif = actif;
+    public void ConfigurationSoldes.setActiveConfig(Boolean activeConfig) {
+        this.activeConfig = activeConfig;
     }
     
 }

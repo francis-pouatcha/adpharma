@@ -337,7 +337,7 @@ public class ProduitController {
 		  return "produits/soldes";
 	  }
 	  
-	  @RequestMapping(value="/soldes/create", method=RequestMethod.GET)
+	  @RequestMapping(value="/soldes/create", method=RequestMethod.POST)
 	  public String createSolde(@Valid ConfigurationSoldes solde, HttpServletRequest request, BindingResult bindingResult, Model uiModel){
 		  Produit produit = Produit.findProduitsByCipEquals(solde.getCipProduit()).getSingleResult();
 		   if(bindingResult.hasErrors()){
