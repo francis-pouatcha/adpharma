@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -189,6 +190,9 @@ public class Produit extends AdPharmaBaseEntity {
 	private boolean commander;
 
 	private BigInteger plafondStock;
+	
+	@Embedded
+	private ConfigurationSoldes configSolde;
 	
 	 public String getDesignation() {
 	        return this.designation;

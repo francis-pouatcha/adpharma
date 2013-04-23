@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    <style type="text/css">
+       #courbes{ 
+            width: 100%;
+            height:500px;
+            border: 1px solid #CCC; 
+            background: -moz-linear-gradient(90deg, #FFF, #EEE) repeat scroll 0 0 transparent; 
+		    background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#FFF) );
+		    }
+		#curvey_table{width: 300px; }  
+		#curvey_table label{width: auto;} 
+		#curvey_table input{font-style: normal;}
+		#curvey_table td{padding-bottom: 25px; border: none; background: #fff;} 
+    </style>
+    <spring:url value="/produits/findProductByCipAjax" var="find_product_url" />
+    <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />
+    
+    
+    <script type="text/javascript">
+           $(function(){
+        	   
+        	   function clearProductTable(){
+       			$('#resultproduit').html(
+       					'<tr>
+       					    <th>CIP</th>
+       			    		<th>DESIGNATION</th>
+       			    		<th>QTE CIP</th>
+       			    		<th>RAYON</th>
+       			    		<th>FILIALE</th>
+       					</tr>');
+       		      };
+        	   
+       		   $('form#produitfindform').submit(function(){
+       			    clearProductTable();
+       				$.getJSON( '${find_product_url}', $('#produitfindform').serialize(), function(data){
+       								$(data).each(function(){
+       									$('#resultproduit').append(
+       										'<tr id="'+this.cip+'">
+       										  <td>'+this.cip+'</td>
+       										  <td>'+this.designation+'</td>
+       										  <td>'+this.quantiteEnStock+'</td>
+       										  <td>'+this.rayon.codeRayon+'</td>
+       										  <td>'+this.filiale.libelle+'</td>
+       										  </tr>'
+       										
+       								);
+       									
+       								});
+       								$('table#resultproduit tr').each(function(){
+       									var current = this;
+       									this.onclick = function(event) {
+       										$('#search_product').dialog("close");
+       										requete(current.id);
+       									};
+       									});
+       							});
+       				return false ;
+       		});
+       		
+       		$('img.loadimage').ajaxStart(function(){
+       			$(this).show();
+       		});
+       		
+       		$('img.loadimage').ajaxStop(function(){
+       			$(this).hide();
+       		});
+        	      
+        	   
+        	     dialog_widget('search_product', 'Rechercher un produit', 800, 'slide', 'fade', 'top');
+           });
+           
+           function requete(cip){
+        	   $.getJSON( "${find_cip_url}"+cip, function(data){
+        		   if(data!=null){
+        		   $("#cip").val(data.cip);
+        		   $("#designation").val(data.designation);
+        		   }else{
+        			   $("#cip").val("");
+        		   }
+        	   });
+           };
+    
+    </script>
+    
+    <script type="text/javascript">
+       function validForm(){
+    	   var cip= document.getElementById("cip").value;
+    	   var debut= document.getElementById("date_debut").value;
+    	   var fin= document.getElementById("date_fin").value;
+    	   var x= debut.split("-");
+    	   var y= fin.split("-");
+    	   var dateJour= new Date();
+    	   dateJour.setHours(0);
+    	   dateJour.setMinutes(0);
+    	   dateJour.setSeconds(0);
+    	   var dateDebut= new Date(x[2], parseInt(x[1].charAt(1))-1, x[0]);
+    	   var dateFin= new Date(y[2], parseInt(y[1].charAt(1))-1, y[0]);
+    	   console.log("Mois: "+x[1].charAt(1));
+    	   console.log("date fin: "+dateFin);
+    	   console.log("date debut: "+dateDebut);
+    	   if(cip==""){
+    		   alert("Veuillez rechercher le produit");
+    		   return false;
+    	   }
+    	   if(dateDebut> dateFin){
+    		   alert("La date de fin du solde doit etre superieure ou egale a la date de debut");
+    		   return false;
+    	   }
+    	   if(dateJour> dateFin){
+    		   alert("La date de fin doit etre superieure ou egale a la date du jour");
+    		   return false;
+    	   }
+    	   if(taux==""){
+    		   alert("Veuillez entrer le taux de solde du produit");
+    		   return false;
+    	   }
+    	   
+       }
+    
+    </script>
+    
+    
+    
+    <div id="courbes">
+                     <div style="width: 26%; float: left;">
+                          <util:panel title="Creer Configuration de solde" id="param_edition">
+                           <form:form action="" commandName="solde" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
+                             <table id="curvey_table">
+                                     <tr>
+                                         <td colspan="2">
+                                             <label for="cip">Rechercher un produit</label><BR />
+                                             <form:input path="cip" type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/> 
+                                             <input type="button" value="OK" class="submits" id="search" style="float: left;" />
+                                             
+                                         </td>
+                                     </tr>
+                                     
+                                     <tr>
+                                          <td colspan="2"> 
+                                              <label for="type">Designation</label><BR />
+                                              <input type="text" dojoType="dijit.form.TextBox" disabled="disabled" id="designation" />
+                                              
+                                          </td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2">
+                                             <label for="date_debut">Date Debut Solde</label><BR />
+                                             <form:input path="debutSolde" type="text" dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" id="date_debut"/> 
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2">
+                                             <label for="date_fin">Date Fin Solde</label><BR />
+                                             <form:input path="finSolde" type="text" dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" id="date_fin"/> 
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                          <td> 
+                                              <label for="type">Taux du solde(%)</label><BR />
+                                              <form:input path="tauxSolde" type="text"  dojoType="dijit.form.TextBox" id="taux" />
+                                          </td>
+                                          <td>
+                                               <label for="type">Activer?</label><BR />
+                                               <form:input path="actif" type="checkbox" checked="checked"/>
+                                          </td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px;"/> </td>
+                                     </tr>
+                             </table>
+                           </form:form>
+                          </util:panel>
+                     </div>
+                     
+                     
+                     
+                     <div style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
+                          
+                            <div title="Liste des produits en solde" selected="true" dojoType="dijit.layout.ContentPane">
+                                  <p style="overflow: auto;">
+                                     Liste des produits en solde
+                                  </p>
+                            </div>
+                            
+                            <div title="Autres" dojoType="dijit.layout.ContentPane">
+                                  <p style="overflow: auto;"> 
+                                     Autres
+                                 </p>
+                            </div>
+                          
+                     </div>
+  </div>                   
+         
+        <!-- Formulaire a factoriser  --> 
+         <div style="display: none;" id="search_product">
+             <form  id="produitfindform" enctype="application/x-www-form-urlencoded">
+					<p>
+					 <label for="des"> ${product_designation} :</label> <input class="searchInput" type="text" name="designation" id="des"/>
+					</p>
+					
+					<center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+			 		<div style="height:400px; overflow: auto; "  >
+					<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+					    	<tr>
+					    		<th style="text-align: center;">${default_cip }</th>
+					    		<th style="text-align: center; width: 250px;">${product_designation }</th>
+					    		<th style="text-align: center;">QTE CIP</th>
+					    		<th style="text-align: center;" >RAYON</th>
+					    		<th style="text-align: center;">FILIALE</th>
+					    	</tr>
+					  </table>
+				    </div>
+		     </form>
+         
+         </div>
+    
+</div>    

@@ -59,6 +59,7 @@
         <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
         <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
         <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="/aJ/nPLLC7Pbr4lVWetnWx6SEh0="/>
+        <field:input field="configSolde" id="c_org_adorsys_adpharma_domain_Produit_configSolde" z="NLCnenXtGlqUMxpZs4ZAzLQM/8Q="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Produit" render="${not empty dependencies}" z="n4/IjG6lu5Bj/dySKMFveULZa44="/>
 </div>

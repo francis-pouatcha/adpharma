@@ -8,6 +8,7 @@ import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.ModeConditionement;
@@ -220,6 +221,14 @@ privileged aspect Produit_Roo_JavaBean {
     
     public void Produit.setPlafondStock(BigInteger plafondStock) {
         this.plafondStock = plafondStock;
+    }
+    
+    public ConfigurationSoldes Produit.getConfigSolde() {
+        return this.configSolde;
+    }
+    
+    public void Produit.setConfigSolde(ConfigurationSoldes configSolde) {
+        this.configSolde = configSolde;
     }
     
     public Filiale Produit.getFiliale() {

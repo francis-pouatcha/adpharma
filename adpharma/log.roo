@@ -345,3 +345,24 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-19 16:42:27
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-19 20:28:58
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-22 15:15:45
+entity --class ~.domain.ConfigurationSoldes
+field date --fieldName debutSolde --type java.util.Date
+field date --fieldName finSolde --type java.util.Date
+field number --fieldName tauxSolde --type java.lang.Long
+field number --fieldName montantSolde --type java.math.BigDecimal
+enum type --class ~.domain.EtatSolde
+enum constant --name EN_COURS
+enum constant --name ANNULE
+focus --class ~.domain.ConfigurationSoldes
+field enum --fieldName etatSole --type ~.domain.EtatSolde
+field boolean --fieldName actif 
+// [failed] field reference --fieldName produit --type ~.domain.Produit --cardinality ONE_TO_ONE --notNull 
+// [failed] field reference --fieldName produit --type ~.domain.Produit --cardinality ONE_TO_ONE --notNull true
+// [failed] field reference --fieldName produit --type ~.domain.Produit --cardinality ONE_TO_ONE
+// [failed] field reference --fieldName produit --type ~.domain.Produit
+// [failed] field reference --fieldName produit --type ~.domain.Produit
+// [failed] field reference --fieldName produit --type ~.domain.Produit --cardinality ONE_TO_ONE 
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-22 16:34:27
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-23 10:32:38

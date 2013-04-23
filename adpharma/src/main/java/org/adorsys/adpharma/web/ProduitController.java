@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
+import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
@@ -328,5 +329,24 @@ public class ProduitController {
 			}
 			return "produits/list";
 		}
+	  
+	  @RequestMapping(value="/soldes", params="form", method=RequestMethod.GET)
+	  public String soldesForm(Model uiModel){
+		   ConfigurationSoldes soldes = new ConfigurationSoldes();
+		   uiModel.addAttribute("solde", soldes);
+		  return "produits/soldes";
+	  }
+	  
+	  @RequestMapping(value="/soldes/create", method=RequestMethod.GET)
+	  public String createSolde(@Valid ConfigurationSoldes solde, HttpServletRequest request, BindingResult bindingResult, Model uiModel){
+		  Produit produit = Produit.findProduitsByCipEquals(solde.getCip()).getSingleResult();
+		   if(bindingResult.hasErrors()){
+			   uiModel.addAttribute("solde", solde);
+			   return "produits/soldes";
+		   }
+		   produit.setConfigSolde(solde);
+		   produit.merge();
+		  return "produits/soldes";
+	  }
 
 }

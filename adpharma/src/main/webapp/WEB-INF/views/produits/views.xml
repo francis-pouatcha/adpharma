@@ -46,7 +46,9 @@
        <definition extends="default" name="dataloader/loadproduit">
         <put-attribute name="body" value="/WEB-INF/views/produits/loadproduits.jspx"/>
     </definition>
-   
+   <definition extends="vendeur" name="produits/soldes">
+        <put-attribute name="body" value="/WEB-INF/views/produits/configsolde.jspx"/>
+    </definition>
    
   
 </tiles-definitions>
