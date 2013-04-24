@@ -24,6 +24,7 @@ import com.lowagie.text.Font;
 import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -225,7 +226,7 @@ if (lineCommande.iterator().hasNext()) {
 	protected void buildPdfMetadata(Map<String, Object> model,
 			
 	    Document document, HttpServletRequest request) {
-		document.setPageSize(PageSize.A6);
+		document.setPageSize(new Rectangle(0, 0, 235, 1000));
 		document.setMargins(5, 5, 10, 10);
 		Font boddyStyle = new Font(Font.COURIER,8);
 		Font headerStyle = new Font(Font.COURIER,15);
