@@ -6,12 +6,12 @@
         <div id="tabset">
             <ul>
                 <li>
-                    <spring:message  var="user_info" code="pharma_user_info" />
+                <spring:message  var="user_info" code="pharma_user_info" />
                     <a href="#tab1">${user_info } </a>
                 </li>
                 <li>
-                    <spring:message  var="user_rule" code="pharma_user_rule" />
-                    <a href="#tab2"> ${user_rule} </a>
+                <spring:message  var="user_rule" code="pharma_user_rule" />
+                    <a href="#tab2"> ${user_rule}  </a>
                 </li>
             </ul>
             <div id="tab1">
