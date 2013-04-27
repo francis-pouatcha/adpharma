@@ -30,7 +30,6 @@
     </c:choose>
     
     <c:if test="${not empty appMessages}">
-		<hr style="font-size: 16px;font-weight: bold;margin-bottom: -15px;"/>
 		<c:forEach var="appMessage" items="${appMessages}">
 			<p class="appMessage" style="color: green;text-align: center;font-size: 16px;font-weight: bold;margin-bottom: -20px;">${appMessage}</p>
 		</c:forEach>

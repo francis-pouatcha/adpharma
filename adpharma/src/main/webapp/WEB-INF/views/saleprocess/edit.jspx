@@ -325,8 +325,28 @@
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
 											$('#qte').val(1);
-											$('#pt').val(data.prixVenteUnitaire);
-											$('#remax').val(data.remiseMax);
+// 											$('#pt').val(data.prixVenteUnitaire);
+// 											$('#remax').val(data.remiseMax);
+											
+											// verification de l'existence d'1 promotion active pour ce produit
+												if(data.produit.configSolde.activeConfig== true){
+													document.getElementById("remP").value= data.produit.configSolde.tauxSolde;
+													// J'annule la remise max car le produit est en promotion
+													$('#remax').val(0);
+													document.getElementById("rem").value= Math.floor(($('#remP').val()*$('#pu').val())/100);
+													document.getElementById("pt").value = ($('#pu').val() - $('#rem').val()) * $('#qte').val();
+													document.getElementById("remP").disabled=true;
+													document.getElementById("rem").readOnly=true;
+												}
+											// Si le produit n'est pas en promotion
+											else{
+												$('#remax').val(data.remiseMax);
+												$('#pt').val(data.prixVenteUnitaire);
+												$('#remP').val("");
+												$('#rem').val("");
+												document.getElementById("remP").disabled=false;
+												document.getElementById("rem").readOnly=false;
+											}
 											$('#findproduit').dialog("close"); 
 													});
 									
@@ -561,7 +581,7 @@ $('#updateClient').dialog("close");
 								 <INPUT type="text"
 									 id="remP" value=""
 									maxlength="2" class="autres unique"
-									onKeyPress="return scanTouche(event) ;  " title="la remise"
+									onKeyPress="return scanTouche(event);  " title="la remise"
 									style="display: inline-block;margin-bottom: 0px;width: 40px"
 								 />
 								 <span class="add-on">%</span>
@@ -596,12 +616,9 @@ $('#updateClient').dialog("close");
 
 
 				<c:if test="${not empty apMessage}">
-					<hr />
 					<center>
 						<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
 					</center>
-					<hr />
-
 				</c:if>
 
 			</util:panel>

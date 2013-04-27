@@ -366,3 +366,26 @@ field boolean --fieldName actif
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-22 16:34:27
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-23 10:32:38
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-23 15:53:28
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-24 06:20:59
+web mvc scaffold --class ~.domain.ConfigurationSoldes --backingType ~.domain.ConfigurationSoldes
+web mvc scaffold --class ~.web.ConfigurationSoldesController --backingType ~.domain.ConfigurationSoldes
+focus --class ~.domain.Produit
+finder list 
+finder list 
+// [failed] finder add --finderName findProduitsByConfigSolde
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-24 14:21:36
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-24 14:21:50
+focus --class ~.domain.Ordonnancier
+finder list 
+focus --class ~.domain.Produit
+finder list 
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-25 08:11:51
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-25 08:12:04
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-25 08:15:59
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:20:14
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:53:52

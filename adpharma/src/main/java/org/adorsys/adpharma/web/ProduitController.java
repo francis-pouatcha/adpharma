@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.PostUpdate;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.DetteClient;
+import org.adorsys.adpharma.domain.EtatSolde;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
@@ -31,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -330,6 +333,9 @@ public class ProduitController {
 			return "produits/list";
 		}
 	  
+	  
+	  
+	  // Formulaire de creation de solde
 	  @RequestMapping(value="/soldes", params="form", method=RequestMethod.GET)
 	  public String soldesForm(Model uiModel){
 		   ConfigurationSoldes soldes = new ConfigurationSoldes();
@@ -337,16 +343,95 @@ public class ProduitController {
 		  return "produits/soldes";
 	  }
 	  
+	  // Creer ou mettre a jour un solde
 	  @RequestMapping(value="/soldes/create", method=RequestMethod.POST)
-	  public String createSolde(@Valid ConfigurationSoldes solde, HttpServletRequest request, BindingResult bindingResult, Model uiModel){
+	  @Transactional
+	  public String createOrUpdateSolde(@ModelAttribute("solde") @Valid ConfigurationSoldes solde, BindingResult bindingResult, 
+			  @RequestParam(value="pId", required=false)Long pId, Model uiModel, HttpServletRequest httpServletRequest){
+		  ConfigurationSoldes.validateAll(bindingResult, solde);
+		  if(bindingResult.hasErrors()){
+			  uiModel.addAttribute("errors", "Erreurs!");
+			  uiModel.addAttribute("solde", solde);
+			  return "produits/soldes";
+		  }
 		  Produit produit = Produit.findProduitsByCipEquals(solde.getCipProduit()).getSingleResult();
-		   if(bindingResult.hasErrors()){
-			   uiModel.addAttribute("solde", solde);
-			   return "produits/soldes";
-		   }
-		   produit.setConfigSolde(solde);
-		   produit.merge();
+		  ConfigurationSoldes config = produit.getConfigSolde();
+		  if(config==null){
+			  produit.setConfigSolde(solde);// creation
+		  }else{
+				  if(pId!=null){
+					  uiModel.addAttribute("forbid", "Solde en cours pour ce produit");
+					  return "produits/soldes";
+			      }
+			  produit.setConfigSolde(solde);// Mise a jour
+ 		  }
+		  uiModel.asMap().clear();
+		  produit.merge();
+		  produit.flush();
+//		  uiModel.addAttribute("produitsoldes", Produit.findProduitsWithConfigSolde().getResultList());
+//		  return "produits/soldes";
+		  return "redirect:/produits/show/"+encodeUrlPathSegment(produit.getId().toString(), httpServletRequest);
+	  }
+	  
+	  @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	  public String showConfig(@PathVariable("id") Long id, Model uiModel){
+		  List<Produit> produits= Produit.findProduitsWithConfigSolde().getResultList();
+		  uiModel.addAttribute("produitsoldes", produits);
 		  return "produits/soldes";
 	  }
+	  
+	  // Desactiver un solde
+	  @RequestMapping(value="/cancelsolde/{id}", method=RequestMethod.GET)
+	  public String cancelSolde(@PathVariable("id")Long id, Model uiModel, HttpServletRequest request){
+		  Produit produit = Produit.findProduit(id);
+		  if(produit.getConfigSolde().getActiveConfig().equals(Boolean.TRUE)){
+			  Produit.cancelSolde(produit);
+		  }
+		  return "produits/soldes";
+	  }
+	  
+	  // Activer un solde
+	  @RequestMapping(value="/activesolde/{id}", method=RequestMethod.GET)
+	  public String activeSolde(@PathVariable("id")Long id, Model uiModel, HttpServletRequest request){
+		  Produit produit = Produit.findProduit(id);
+		  if(produit.getConfigSolde().getActiveConfig().equals(Boolean.FALSE)){
+			  Produit.activateSolde(produit);
+		  }
+		  return "produits/soldes";
+	  }
+	  
+	  // Supprimer un solde
+	  @RequestMapping(value="/deletesolde/{id}", method=RequestMethod.GET)
+	  @Transactional
+	  public String deleteSolde(@PathVariable("id")Long id, Model uiModel, HttpServletRequest request){
+		  Produit produit = Produit.findProduit(id);
+		  if(!produit.getConfigSolde().equals(null)){
+			  Produit.deleteSolde(produit);
+		  }
+		  uiModel.addAttribute("produitsoldes", Produit.findProduitsWithConfigSolde().getResultList());
+		  return "produits/soldes";
+	  }
+	  
+	  // Mettre a jour un solde
+	  @RequestMapping(value="/updatesolde/{id}", method=RequestMethod.GET) 
+	  public String updateSolde(@PathVariable("id")Long id, Model uiModel, HttpServletRequest request){
+		         Produit produit = Produit.findProduit(id);
+		         ConfigurationSoldes solde = produit.getConfigSolde();
+		         solde.setCipProduit(produit.getCip());
+		         uiModel.addAttribute("solde", solde);
+		         uiModel.addAttribute("produitsoldes", Produit.findProduitsWithConfigSolde().getResultList());
+		  return "produits/soldes";
+	  }
+	  
+	  @ModelAttribute("solde")
+	  public ConfigurationSoldes soldes(){
+		  return new ConfigurationSoldes();
+	  }
+	  
+	  // Chargement des produits ayant une configuration de solde
+	    @ModelAttribute("produitsoldes")
+		public Collection<Produit> populateProduitsSolde() {
+			return Produit.findProduitsWithConfigSolde().getResultList();
+		}
 
 }

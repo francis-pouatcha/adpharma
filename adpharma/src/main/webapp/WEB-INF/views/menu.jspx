@@ -272,6 +272,10 @@
                 <menu:item id="i_configuration_new" messageCode="global_menu_new" url="/configurations?form" z="PpKhRYSLF3fMvOlr5J8dEALoaF8="/>
                 <menu:item id="i_configuration_list" messageCode="global_menu_list" url="/configurations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="eTnA6q7aRKdliIXm9IDu8P8bUhU="/>
             </menu:category>
+            <menu:category id="c_configurationsoldes" z="w+Qu8lJSbDBcjtpXpBSEYahA1W4=">
+                <menu:item id="i_configurationsoldes_new" messageCode="global_menu_new" url="/configurationsoldeses?form" z="XhjL0k08j8fY3HiiIj70lCWWOXg="/>
+                <menu:item id="i_configurationsoldes_list" messageCode="global_menu_list" url="/configurationsoldeses?page=1&amp;size=${empty param.size ? 10 : param.size}" z="L5Ab6M2I3b4cCM9B9f+1r+asjgY="/>
+            </menu:category>
         </menu:menu>
     </security:authorize>
 </div>

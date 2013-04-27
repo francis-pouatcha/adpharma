@@ -443,6 +443,56 @@ public class Produit extends AdPharmaBaseEntity {
 	public String displayName() {
 		return new StringBuilder().append(getDesignation()).append(" , ").append(getCip()).toString();
 	}
+	
+	
+	/* ----------------------------Utilitaires de configuration de soldes -------------------------------------*/
+	
+	// Desactiver un solde
+	public static void cancelSolde(Produit produit){
+		produit.getConfigSolde().setActiveConfig(Boolean.FALSE);
+		produit.merge();
+		produit.flush();
+	}
+	
+	// Activer un solde
+	public static void activateSolde(Produit produit){
+		produit.getConfigSolde().setActiveConfig(Boolean.TRUE);
+		produit.merge();
+		produit.flush();
+	}
+	
+	// Supprimer un solde
+	public static void deleteSolde(Produit produit){
+		produit.setConfigSolde(null);
+		produit.merge();
+		produit.flush();
+	}
+	
+	// Methode qui verfie si le produit est en solde ou pas
+	public static boolean hasSolde(Produit produit){
+		  ConfigurationSoldes solde = produit.getConfigSolde();
+		  if(solde!=null){
+			  if(solde.getActiveConfig()==Boolean.TRUE){
+				  return true;
+			  }else{
+				  return false;
+			  }
+		  }
+		return false;
+	}
+	
+	// Recherche de produits ayant une configuration de solde
+		public static TypedQuery<Produit> findProduitsWithConfigSolde() {
+			EntityManager em = Produit.entityManager();
+			TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE o.configSolde IS NOT NULL ORDER BY o.designation ASC", Produit.class);
+			return q;
+		}
+	
+	
+	
+	
+	
+	
 
 	public static TypedQuery<Produit> findProduitsByQuantiteEnStock(BigInteger quantiteEnStock) {
 		if (quantiteEnStock == null) throw new IllegalArgumentException("The quantiteEnStock argument is required");
@@ -504,6 +554,8 @@ public class Produit extends AdPharmaBaseEntity {
 		q.setParameter("actif", Boolean.TRUE);
 		return q;
 	}
+	
+	
 	public static TypedQuery<Produit> findProduitsByCip(String cip) {
 		if (cip == null) throw new IllegalArgumentException("The cip argument is required");
 		EntityManager em = Produit.entityManager();

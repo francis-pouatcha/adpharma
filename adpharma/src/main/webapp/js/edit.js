@@ -3,17 +3,28 @@ function calculePt() {
 	var pu = document.getElementById("pu").value;
 	var qte = document.getElementById("qte").value;
 	var rem = document.getElementById("rem").value;
+	var remP= document.getElementById("remP").value;
 	if (rem == "") {
 		rem = 0 ;
 	}
 	if (qte != "") {
-
-		
+		// Calcul de la promotion
+		if(remP!=""){
+			calculPromo();
+		}
 		document.getElementById("pt").value = (pu - rem) * qte;
 	}else{
 		document.getElementById("rem").value = "";
 		document.getElementById("pt").value =  0 ;
-	}
+	};
+}
+
+function calculPromo(){
+	 $('#rem').val(Math.floor(($('#remP').val()*$('#pu').val())/100));
+	 rem= $('#rem').val();
+	 pu = document.getElementById("pu").value;
+	 qte = document.getElementById("qte").value;
+	document.getElementById("pt").value = (pu - rem) * qte;
 }
 
 
@@ -27,6 +38,16 @@ function annCmd(){
 		return true;
 	}
 	}
+
+// Fonction generique d'annulation
+function deleteBox(texte){
+	var check= confirm(texte);
+	if(check==false){
+		return false;
+	}else{
+		return true;
+	};
+}
 
 
 function calculePtWhithRem() {
@@ -62,13 +83,12 @@ function calculePtWhithRem() {
 		}else{
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
-			alert("la remise est surepieure a la remise max:" + remax + " fcfa");
+			alert("la remise est superieure a la remise max:" + remax + " fcfa");
 			$('#remP').val(0);
 			return false;
 		}
 
 	} else {
-
 		document.getElementById("pt").value = (pu - rem) * qte;
 		return true;
 	}
@@ -160,7 +180,7 @@ $('#remP').keyup(function() {
 		}
 		
 	});
-	
+
 	
 	$('.unique').val($('#rem').val()*100/$('#pu').val());
 	
@@ -213,8 +233,8 @@ function dialog_widget(id, title, width, hide_effect, show_effect, position){
 	var dialog= $('#'+id).dialog({
 		autoOpen: false,
 		width: width,
-		resizable:true,
-		draggable :false,
+		resizable:false,
+		draggable :true,
 		title: title,
         hide:  hide_effect,
         show:  show_effect,

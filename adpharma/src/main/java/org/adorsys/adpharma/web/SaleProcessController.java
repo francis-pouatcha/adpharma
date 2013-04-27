@@ -32,6 +32,7 @@ import org.adorsys.adpharma.domain.LigneFacture;
 import org.adorsys.adpharma.domain.Ordonnancier;
 import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.security.SecurityUtil;
@@ -476,10 +477,15 @@ public class SaleProcessController {
 				}
 			}
 		}
-			if (remiseAutorise < remise.intValue()) {
-				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
-				remise = BigDecimal.ZERO ;
+			
+			// Si le produit n'est pas en solde, il verifie la remise, dans le cas contraire, il laisse passer la remise de la promotion.
+			if(!Produit.hasSolde(ligneApp.getProduit())){
+				if (remiseAutorise < remise.intValue()) {
+					uiModel.addAttribute("apMessage","la remise sur ce produit ne peut etre superieure a : "+remiseAutorise);
+					remise = BigDecimal.ZERO ;
+				}
 			}
+			
 			SaleProcess.addline(pId, qte, remise, commandeClient);
 
 		}

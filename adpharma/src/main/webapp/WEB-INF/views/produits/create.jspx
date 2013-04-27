@@ -50,16 +50,15 @@
                 </td>
             </tr>
         </table>
-        <field:input field="prixAchatU" id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" validationMessageCode="field_invalid_number" z="9iUgy1RUSEhKXBnvCQxa2kuQ8I8="/>
-        <field:input field="prixVenteU" id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" validationMessageCode="field_invalid_number" z="XYtWr+HgzPcpfkT3Fa16fQkyl2o="/>
-        <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" z="aBXRUfXCBzTP7rH3/WWL2Hbu+3U="/>
-        <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Produit_actif" z="YirIMUT1Cmf86Y5J7Sut8EFLwow="/>
-        <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits" z="OurxblZBwoww2DmBOEF5L/0IPBo="/>
-        <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits" z="H7v25lQAmbUNLHOGGXLVe1G1E48="/>
-        <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
-        <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
-        <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="/aJ/nPLLC7Pbr4lVWetnWx6SEh0="/>
-        <field:input field="configSolde" id="c_org_adorsys_adpharma_domain_Produit_configSolde" z="NLCnenXtGlqUMxpZs4ZAzLQM/8Q="/>
+        <field:input field="prixAchatU" id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" validationMessageCode="field_invalid_number" render="false" z="user-managed"/>
+        <field:input field="prixVenteU" id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" validationMessageCode="field_invalid_number" z="user-managed" render="false"/>
+        <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" render="false" z="user-managed"/>
+        <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Produit_actif" z="user-managed" render="false"/>
+        <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Produit_familleProduit" itemValue="id" items="${familleproduits}" path="/familleproduits" z="user-managed" render="false"/>
+        <field:select field="SousfamilleProduit" id="c_org_adorsys_adpharma_domain_Produit_SousfamilleProduit" itemValue="id" items="${sousfamilleproduits}" path="/sousfamilleproduits" z="user-managed" render="false"/>
+        <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="user-managed" render="false"/>
+        <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="user-managed" render="false"/>
+        <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" z="user-managed" render="false"/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Produit" render="${not empty dependencies}" z="n4/IjG6lu5Bj/dySKMFveULZa44="/>
 </div>
