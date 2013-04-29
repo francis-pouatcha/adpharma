@@ -28,6 +28,7 @@ public class PharmaDateUtil {
 	public static final String DATETIME_PATTERN_LONG_LIT_SEC = "EEE, dd MMM yyyy HH:mm:ss";
 	public static final String DATETIME_PATTERN_SHORT_SEC = "dd-MM HH:mm:ss";
 	public static final String DATETIME_PATTERN_SHORT_LIT_SEC = "HH:mm:ss EEE, dd MMM";
+	public static final String DATE_PATTERN_YEAR = "yyyy";
 
 	public static final String format(Date date, String pattern){
 		if (date == null) {
@@ -60,7 +61,7 @@ public class PharmaDateUtil {
 			return new SimpleDateFormat(pattern).parse(date);
 		} catch (ParseException e) {
 			
-			return new DateUtils().addYears(new Date(), 5);
+			return new DateUtils().addYears(new Date(), 1);
 		}
 	}
 	
@@ -76,6 +77,37 @@ public class PharmaDateUtil {
 		 String stringDate = format(date, PharmaDateUtil.DATE_PATTERN_LONG);
 		 stringDate = stringDate + " 23:59" ;
 		return parse(stringDate, DATETIME_PATTERN_LONG);
+	}
+	
+	public static String parseToFrenchMonth(int intValue){
+		switch(intValue)
+		{
+		case 1:
+		  return "Jan" ;
+		case 2:
+			return "Fev" ;
+		case 3:
+			return "Mars" ;
+		case 4:
+			return "Avril" ;
+		case 5:
+			return "Mai" ;
+		case 6:
+			return "Juin" ;
+		case 7:
+			return "Juillet" ;
+		case 8:
+			return "Aout" ;
+		case 9:
+			return "Sep" ;
+		case 10:
+			return "Oct" ;
+		case 11:
+			return "Nov" ;
+		
+		default:
+		return "Dec" ;
+		}
 	}
 
 }

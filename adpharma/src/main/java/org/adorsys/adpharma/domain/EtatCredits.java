@@ -277,7 +277,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	public static TypedQuery<EtatCredits> search(String clientName,String etatNumber,  Date dateEditionMin, Date dateEditionMax, Boolean solder, Boolean anuller,Boolean encaisser) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM EtatCredits AS o WHERE o.id IS NOT NULL ");
 		if (StringUtils.isNotBlank(clientName)) {
-			clientName = clientName+"% " ;
+			clientName = clientName+"%" ;
 			searchQuery.append(" AND  LOWER(o.client.nom) LIKE LOWER(:nom)  ");
 		}
 		if (StringUtils.isNotBlank(etatNumber)) {

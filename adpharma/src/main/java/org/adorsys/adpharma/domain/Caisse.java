@@ -92,6 +92,16 @@ public class Caisse extends AdPharmaBaseEntity {
 	public Caisse() {
 	}
 
+
+	public BigDecimal getDisbusementValue(){
+		return  totalCash.subtract(totalBonCmd.add(totalRetrait.add(totalBonClient)));
+	}
+
+	public boolean canDoDisbursement(BigDecimal disbursementAmount){
+		if(disbursementAmount==null) return false ;
+		return getDisbusementValue().compareTo(disbursementAmount) >= 1 ;
+	}
+
 	@PostPersist
 	public void postPersit() {
 		caisseNumber = NumberGenerator.getNumber("CA-", getId(), 4);
@@ -150,6 +160,12 @@ public class Caisse extends AdPharmaBaseEntity {
 			totalEncaissement = totalEncaissement.add(amount);
 		}
 
+	}
+
+	public BigDecimal calculateSolde(){
+		BigDecimal solde = fondCaisse.add(totalEncaissement);
+		solde = solde.subtract(totalRetrait);
+		return solde ;
 	}
 
 	public void updateBonCmdPartiel(BigDecimal amount) {
@@ -259,7 +275,7 @@ public class Caisse extends AdPharmaBaseEntity {
 		q.setParameter("typeMouvement", TypeMouvement.VENTE);
 		return q.getResultList();
 	}
-	
+
 	public static List<Object[]> findChiffreAffaireByFilialeAndTypeMvt(String filiale ,  Date debut ,Date fin,TypeMouvement typeMouvement) {
 		if (debut == null || fin == null || filiale == null||typeMouvement==null) throw new IllegalArgumentException("The debut or fin or filiale  arguments are required");
 		EntityManager em = Caisse.entityManager();
@@ -319,7 +335,7 @@ public class Caisse extends AdPharmaBaseEntity {
 		if (StringUtils.isNotBlank(caisseNumber)) {
 			q.setParameter("caisseNumber", caisseNumber);
 		}
-		
+
 		return q;
 	}
 }

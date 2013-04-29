@@ -116,6 +116,10 @@ public class Produit extends AdPharmaBaseEntity {
 	public void setPrixVenteStock(BigDecimal prixVenteStock) {
 		this.prixVenteStock = prixVenteStock;
 	}
+	public void initPrice(){
+		this.prixVenteStock = prixVenteU!=null ?prixVenteU :BigDecimal.ZERO;
+		this.prixAchatSTock = prixAchatU !=null ?prixAchatU :BigDecimal.ZERO;
+	}
 
 	public BigInteger getQtevendu() {
 		return qtevendu;
@@ -375,7 +379,7 @@ public class Produit extends AdPharmaBaseEntity {
 		String cip = null;
 		cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
 		while (!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty()) {
-			cip = "9" + RandomStringUtils.randomNumeric(5) + "9";
+			cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
 		}
 		return cip;
 	}

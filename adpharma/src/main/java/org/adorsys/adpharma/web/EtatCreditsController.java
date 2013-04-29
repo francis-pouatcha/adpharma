@@ -63,11 +63,12 @@ public class EtatCreditsController {
 		return "etatcreditses/search";
 	}
 
-	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/BySearch", method = RequestMethod.POST)
 	public String Search(EtatCreditFinder etat  , Model uiModel) {
+		System.out.println(etat.getClientName());
 		uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEditionMin(), etat.getDateEditionMax(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
 		addDateTimeFormatPatterns(uiModel);
-		uiModel.addAttribute("etatCreditFinder", new EtatCredits());
+		uiModel.addAttribute("etatCreditFinder", new EtatCreditFinder());
 
 		return "etatcreditses/search";
 	}

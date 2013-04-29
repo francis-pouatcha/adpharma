@@ -107,12 +107,14 @@
 						<td><INPUT type="text" name="qte" id="qte" class="autres"
 							onKeyPress="return scanTouche(event)" width="50px;"
 							title="saisir la Quantite" /></td>
-						<td><SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
+						<td>
+						<SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
 								<OPTION value="NON_COMMANDE" selected="selected">NON COMMANDE</OPTION>
 								<OPTION value="AVARIE">AVARIE</OPTION>
 								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
-
-						</SELECT></td>
+                                <OPTION value="NON_JUSTIFIE">NON JUSTIFIE</OPTION>
+						</SELECT>
+						</td>
 
 
 						<td align="center"><INPUT type="submit" value="Enregistrer"

@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list1 id="pl_org_adorsys_adpharma_domain_TransformationProduit" items="${transformationproduits}" z="user-managed" url="/transformationproduits/searchTrans" search="true" placeholder="Rechercher par produit cible">
-        <table:table data="${transformationproduits}" delete="false" id="l_org_adorsys_adpharma_domain_TransformationProduit" path="/transformationproduits" z="user-managed">
+        <table:table data="${transformationproduits}"  id="l_org_adorsys_adpharma_domain_TransformationProduit" path="/transformationproduits" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitOrigine" maxLength="-1" property="produitOrigine" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_produitCible" maxLength="-1" property="produitCible" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" property="qteCible" z="user-managed"/>

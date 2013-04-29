@@ -11,7 +11,6 @@
         <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" required="true" z="user-managed"/>
         <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Rayon_magasin" itemValue="id" items="${sites}" path="/sites" required="true" z="rdptbcN+MpGx9ZXhWDAmw/JS/Po="/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
-        <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_emplacement" z="fxHxdAwJlhYUFcKua3iT3tVWFy0="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Rayon" render="${not empty dependencies}" z="8cN/WhuaTX1RjZNBau0oStEYWac="/>
 </div>

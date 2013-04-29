@@ -56,7 +56,7 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 		float[] adColumnsWith = {.5f, .5f,.5f  ,.5f  ,.5f ,.5f ,.5f,.5f};
 		float[] imgColumnsWith = {.5f ,  .2f};
 		
-		PdfPTable adressTable = new PdfPTable(8);
+		PdfPTable adressTable = new PdfPTable(5);
 		adressTable.setWidthPercentage(100);
 		adressTable.setHeaderRows(0);
 		Font boddyStyle = new Font(Font.BOLD,10);

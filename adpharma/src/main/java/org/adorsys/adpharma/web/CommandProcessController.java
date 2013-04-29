@@ -68,11 +68,7 @@ public class CommandProcessController {
 	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
 	
 	private boolean sendedToUbipharm ;
-
-
 	private boolean sendToUbipharmFailed;
-
-
 	private String ubipharmCommandSendingErrorMessage;
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
@@ -238,6 +234,7 @@ public class CommandProcessController {
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		if (line != null) {
 			commandeFournisseur.decreaseMontant(line.getPrixAchatTotal());
+			commandeFournisseur.getLigneCommande().remove(line);
 			line.remove();
 			commandeFournisseur.merge();
 			return "ok";
@@ -278,19 +275,15 @@ public class CommandProcessController {
 	public String updateLine(@PathVariable("cmdId") Long cmdId,
 			LigneCmdFournisseur orderItem, Model uiModel,
 			HttpServletRequest httpServletRequest) {
-		LigneCmdFournisseur line = LigneCmdFournisseur
-				.findLigneCmdFournisseur(orderItem.getId());
-		if (line == null)
-			return null;
-		BigDecimal pv = orderItem.getPrixAVenteMin() == null ? BigDecimal.ZERO
-				: orderItem.getPrixAVenteMin();
+		LigneCmdFournisseur line = LigneCmdFournisseur.findLigneCmdFournisseur(orderItem.getId());
+		if (line == null) return null;
+		BigDecimal pv = orderItem.getPrixAVenteMin() == null ? BigDecimal.ZERO : orderItem.getPrixAVenteMin();
 		line.setQuantiteCommande(orderItem.getQuantiteCommande());
 		line.setPrixAchatMin(orderItem.getPrixAchatMin());
 		line.setPrixAVenteMin(pv);
 		line.calculPrixTotal();
 		line.merge();
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		commandeFournisseur.increaseMontant(line.getPrixAchatTotal());
 		commandeFournisseur.merge();
 		return line.toJson();

@@ -1,7 +1,6 @@
 package org.adorsys.adpharma.beans.importExport;
 
 import java.math.BigDecimal;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,11 +11,10 @@ import jxl.Cell;
 import jxl.Sheet;
 
 import org.adorsys.adpharma.domain.Approvisionement;
-import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
-import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.stereotype.Service;
 @Service
@@ -35,8 +33,15 @@ public class LigneApproImportExportService extends ImportExportService<LigneAppr
 		LigneApprovisionement item = new LigneApprovisionement();
 		List<Produit> products = Produit.findProduitsByCip(cells[0].getContents()).getResultList();
 		BigInteger qte = new BigInteger(cells[1].getContents());
-		BigDecimal pa = new BigDecimal(cells[2].getContents());
-		BigDecimal pv = new BigDecimal(cells[3].getContents());
+		BigDecimal pa = BigDecimal.ZERO;
+		BigDecimal pv = BigDecimal.ZERO;
+		try {
+			 pa = new BigDecimal(StringUtils.remove(cells[2].getContents(), "�").trim());
+			 pv = new BigDecimal(StringUtils.remove(cells[3].getContents(), "�").trim());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		if(!(products.isEmpty() || qte ==null)){
 			Produit prd = products.iterator().next();
 			item.setProduit(prd);

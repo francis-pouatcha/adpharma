@@ -3,7 +3,6 @@ package org.adorsys.adpharma.domain;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +27,7 @@ import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -38,8 +36,7 @@ import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.adorsys.adpharma.services.SupplyService;
-import org.codehaus.jackson.annotate.JsonIgnore;
+
 import flexjson.JSONSerializer;
 
 /**
@@ -737,6 +734,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.dateSaisie BETWEEN :minDateSaisie AND :maxDateSaisie ");
 		minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
 		maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2090 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		etat = etat == null ? Etat.CLOS : etat ;
 		if (StringUtils.isNotBlank(cipMaison)) {
 			return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE  o.cipMaison = :cipMaison ", LigneApprovisionement.class).setParameter("cipMaison", cipMaison);
 		}

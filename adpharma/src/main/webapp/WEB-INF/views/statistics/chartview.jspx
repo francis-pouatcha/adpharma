@@ -9,7 +9,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
     
-    
+     <spring:url value="/statistics/displayChart" var="chart_url" />
     <style type="text/css">
        #courbes{ 
             width: 100%;
@@ -26,10 +26,110 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
     <spring:url value="/produits/findProductByCipAjax" var="find_product_url" />
     <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />
     
+    <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
     
     <script type="text/javascript">
+    function  drawCrossChart(divId,firstSerie,secondSerie,ticks,chartTitle){
+		   var s1 = firstSerie;
+	        var s2 = secondSerie;
+	        var ticks = ticks ;
+	        var titles = chartTitle
+	         
+	        plot2 = $.jqplot(divId, [s1, s2], {
+	       	 animate: true,
+	            seriesDefaults: {
+	                renderer:$.jqplot.BarRenderer,
+	               
+	                pointLabels: { show: true }
+	            },
+	            
+	            title: titles,
+	            axes: {
+	                xaxis: {
+	                    renderer: $.jqplot.CategoryAxisRenderer,
+	                    ticks: ticks
+	                },
+	                tickOptions:{ 
+	                    fontSize:'10pt', 
+	                    fontFamily:'Tahoma', 
+	                    angle:-40
+	                }
+	            
+	            },
+	            cursor: {
+	                style: 'crosshair',     // A CSS spec for the cursor type to change the
+	                                        // cursor to when over plot.
+	                show: true,
+	                showTooltip: true,      // show a tooltip showing cursor position.
+	                followMouse: true,     // wether tooltip should follow the mouse or be stationary.
+	                tooltipLocation: 'ne',  // location of the tooltip either relative to the mouse
+	                                        // (followMouse=true) or relative to the plot.  One of
+	                                        // the compass directions, n, ne, e, se, etc.
+	                tooltipOffset: 6,       // pixel offset of the tooltip from the mouse or the axes.
+	                showTooltipGridPosition: false,     // show the grid pixel coordinates of the mouse
+	                                                    // in the tooltip.
+	                showTooltipUnitPosition: true,      // show the coordinates in data units of the mouse
+	                                                    // in the tooltip.
+	                tooltipFormatString: '%.4P',    // sprintf style format string for tooltip values.
+	                useAxesFormatters: true,        // wether to use the same formatter and formatStrings
+	                                                // as used by the axes, or to use the formatString
+	                                                // specified on the cursor with sprintf.
+	                tooltipAxesGroups: [],  // show only specified axes groups in tooltip.  Would specify like:
+	                                        // [['xaxis', 'yaxis'], ['xaxis', 'y2axis']].  By default, all axes
+	                                        // combinations with for the series in the plot are shown.
+	               
+
+	            }
+	           
+	        });
+	   };
+	   function drawChart(divId,serie,ticks,chartTitle){
+		   $.jqplot.config.enablePlugins = true;
+	        var s1 = serie;
+	        var ticks = ticks;
+	        var titles = chartTitle 
+	        plot1 = $.jqplot('chart1', [s1], {
+	            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+	            animate: true,
+	            seriesDefaults:{
+	                renderer:$.jqplot.BarRenderer,
+	                pointLabels: { show: true }
+	            },
+	            title: titles,
+	            axes: {
+	                xaxis: {
+	                    renderer: $.jqplot.CategoryAxisRenderer,
+	                    ticks: ticks
+	                },
+	                tickOptions:{ 
+	                    fontSize:'10pt', 
+	                    fontFamily:'Tahoma', 
+	                    angle:-40
+	                }
+	            },
+	            highlighter: { show: false }
+	        });
+	     
+	       
+	   }
+	// Validation du formulaire de l'etat
+	   function validForm(){
+		     var chartType = $('#type').val() ;
+		     if('NOMBRE_CLIENTS' == chartType){
+		    	 $('#cip').val('') ;
+		     }
+			var moisMin= document.getElementById('month_min').value;
+			var moisMax= document.getElementById('month_max').value;
+			if(moisMin>moisMax){
+				alert("Le mois1  doit etre inferieur au mois2");
+				return false;
+			}
+			return true;
+		}
+   
            $(function(){
-        	   
+        	  
+               
         	   function clearProductTable(){
        			$('#resultproduit').html(
        					'<tr>
@@ -76,10 +176,37 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
        			$(this).hide();
        		});
         	      
-        	   
-        	     dialog_widget('search_product', 'Rechercher un produit', 800, 'slide', 'fade', 'top');
+        	     dialog_widget('search_product', 'Rechercher un produit', 1000, 'fade', 'slide', 'top');
+        	     
+        	     $('#chart-btn').click(function(){
+        	    	if( validForm()){
+        	    		$.getJSON( '${chart_url}',$('#chartForm').serialize(),
+                  	    		
+               			        function(data){
+                  	    	     $('#chart1').html("");
+                  	    	   
+                  	    	   if(data.firstYear==data.secondYear){
+                  	    		 $('#legend').hide();
+                  	    		 drawChart('chart1',data.firstSerieValues,data.xAxisValues ,data.chartTitle);
+                  	    	   }else{
+                  	    		 drawCrossChart('chart1',data.firstSerieValues,data.secondSerieValues,data.xAxisValues ,data.chartTitle);
+                  	    		$('#legend').show();
+                  	    		 $('#firstYear').text(data.firstYear);
+                  	    		 $('#secondYear').text(data.secondYear);
+                  	    		
+                  	    	   }
+                  	    				
+                                                        
+               					});
+        	    		
+        	    	};
+        	    	 
+              	     
+              		 	});	
            });
            
+       			
+       			
            function requete(cip){
         	   $.getJSON( "${find_cip_url}"+cip, function(data){
         		   if(data!=null){
@@ -89,34 +216,37 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
         		   }
         	   });
            };
+           
+         
     
     </script>
     
     
-    
+    <center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
     <div id="courbes">
                      <div style="width: 26%; float: left;">
                           <util:panel title="Parametres de la courbe" id="param_edition">
-                           <form action="" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
+                           <form action="${chart_url}" method="post" id="chartForm" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
                              <table id="curvey_table">
-                                     <tr>
+                                     <tr> 
                                          <td colspan="2">
-                                             <label for="cip">Rechercher un produit</label><BR />
-                                             <input type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/> 
-                                             <input type="button" value="OK" class="submits" id="search" style="float: left;" />
+                                             <label for="cip">Saisir un CIP</label><BR />
+                                             <input type="text" name="productCip" style="width: 200px; float: left;"  dojoType="dijit.form.TextBox" id="cip"/> 
+                                             <input type="button" value="search" class="submits" id="search" style="width: 75px; height:25px;" />
                                          </td>
                                      </tr>
                                      
                                      <tr>
                                           <td colspan="2"> 
-                                              <label for="type">Type Etat:</label><BR />
-                                              <SELECT dojoType="dijit.form.ComboBox" name="type" id="type" style="float: left;">
+                                              <label for="type">Type de Graphe :</label><BR />
+                                              <SELECT dojoType="dijit.form.ComboBox" name="typeOfChart" id="type" style="width: 275px;;">
 							                       <c:forEach items="${typescourbes}" var="type">
 							                             <option value="${type}">${type}</option>
 							                      </c:forEach>
 	                                          </SELECT> 
                                           </td>
                                      </tr>
+                                     <!-- 
                                      <tr>
                                           <td>
                                                <label for="same" title="Annees egales"> Annees eg. </label> 
@@ -127,71 +257,96 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
                                                <input type="radio" name="choix_annee" id="diff" value="Annees diff." /> 
                                           </td>
                                      </tr>
+                                      -->
                                      <tr>
-                                         <td> <input type="text" style="width: 130px;" dojoType="dijit.form.DateTextBox" placeholder="Annee minimum" constraints="{datePattern:'yyyy'}" name="annee_min" id="year_min" /> </td>
+                                         <td> 
+                                         <label for="type">Annee1 :</label><BR />
+                                              <SELECT dojoType="dijit.form.ComboBox" style="width: 130px;" name="firstYear" id="year_min" >
+							                       <c:forEach begin="2012" end="2020" step="1" var="year">
+							                             <option value="${year}">${year}</option>
+							                      </c:forEach>
+	                                          </SELECT> 
                                          
-                                         <td> <input type="text" style="width: 130px;" dojoType="dijit.form.DateTextBox" placeholder="Annee maximum" constraints="{datePattern:'yyyy'}" name="annee_max" id="year_max" />  </td>
+                                         </td>
+                                         
+                                         <td>
+                                          <label for="type">Annee2 :</label><BR />
+                                              <SELECT dojoType="dijit.form.ComboBox" style="width: 130px;" name="secondYear" id="year_max" >
+							                       <c:forEach begin="2012" end="${currentDate + 1}" step="1" var="year">
+							                             <option value="${year}">${year}</option>
+							                      </c:forEach>
+	                                          </SELECT> 
+                                           </td>
                                      </tr>
                                       <tr>
                                          <td> 
-                                             <label for="month_min" title="Mois minimum">Mois min.</label><BR />
-                                             <SELECT name="mois_min" id="month_min" dojoType="dijit.form.ComboBox" style="width: 120px; float: left;">
-                                                <option selected="selected">JANVIER</option>
-                                                <option>FEVRIER</option>
-                                                <option>MARS</option>
-                                                <option>AVRIL</option>
-                                                <option>MAI</option>
-                                                <option>JUIN</option>
-                                                <option>JUILLET</option>
-                                                <option>AOUT</option>
-                                                <option>SEPTEMBRE</option>
-                                                <option>OCTOBRE</option>
-                                                <option>NOVEMBRE</option>
-                                                <option>DECEMBRE</option>
+                                             <label for="month_min" title="Mois minimum">Mois 1.</label><BR />
+                                             <SELECT name="minMonth" id="month_min"  style="width: 130px;">
+                                                <option value="1" selected="selected">JANVIER</option>
+                                                <option value="2" >FEVRIER</option>
+                                                <option value="3" >MARS</option>
+                                                <option value="4" >AVRIL</option>
+                                                <option value="5" >MAI</option>
+                                                <option value="6" >JUIN</option>
+                                                <option value="7" >JUILLET</option>
+                                                <option value="8" >AOUT</option>
+                                                <option value="9" >SEPTEMBRE</option>
+                                                <option value="10" >OCTOBRE</option>
+                                                <option value="11" >NOVEMBRE</option>
+                                                <option value="12" >DECEMBRE</option>
                                              </SELECT>
                                           </td>
                                          
                                          <td> 
-                                              <label for="month_max" title="Mois maximum">Mois max.</label><BR />
-                                              <SELECT name="mois_max" id="month_max" dojoType="dijit.form.ComboBox" style="width: 120px; float: left;">
-                                                <option selected="selected">JANVIER</option>
-                                                <option>FEVRIER</option>
-                                                <option>MARS</option>
-                                                <option>AVRIL</option>
-                                                <option>MAI</option>
-                                                <option>JUIN</option>
-                                                <option>JUILLET</option>
-                                                <option>AOUT</option>
-                                                <option>SEPTEMBRE</option>
-                                                <option>OCTOBRE</option>
-                                                <option>NOVEMBRE</option>
-                                                <option>DECEMBRE</option>
+                                              <label for="month_max" title="Mois maximum">Mois 2.</label><BR />
+                                              <SELECT name="maxMonth" id="month_max"  style="width: 130px;">
+                                                <option value="1" selected="selected">JANVIER</option>
+                                               <option value="2" >FEVRIER</option>
+                                                <option value="3"  >MARS</option>
+                                                <option value="4">AVRIL</option>
+                                                <option value="5" >MAI</option>
+                                                <option value="6" >JUIN</option>
+                                                <option value="7" >JUILLET</option>
+                                                <option value="8" >AOUT</option>
+                                                <option value="9"   >SEPTEMBRE</option>
+                                                <option value="10" >OCTOBRE</option>
+                                                <option value="11" >NOVEMBRE</option>
+                                                <option value="12" >DECEMBRE</option>
+                                         
                                               </SELECT>  
                                          </td>
                                      </tr>
                                      <tr>
-                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px;"/> </td>
+                                         <td colspan="2"> <input type="button" id="chart-btn" class="submits" value="Visualiser" style="font-size:15px; width: 275px; height: 30px;"/> </td>
                                      </tr>
                              </table>
                            </form>
+                           
                           </util:panel>
+                          <BR />
+                           <HR />
+                          <div style="width: 50% ; display: none;"  id="legend">
+                         
+                             LEGENDE
+                          <TABLE>
+                          
+                             <TR>
+                                <TD style="background-color: rgb(51,204,255); width: 50%;"></TD>
+                                <TD id="firstYear" style=" width: 80%;">2013</TD>
+                             </TR>
+                             <TR>
+                                <TD style="background-color:orange ; width: 50%;"></TD>
+                                <TD id="secondYear" style=" width: 80%;">2017</TD>
+                             </TR>
+                          </TABLE>
+                          </div>
                      </div>
                      
                      
                      
-                     <div style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
-                          
-                            <div title="Resultat graphique des statistiques" selected="true" dojoType="dijit.layout.AccordionPane">
-                                  <p style="overflow: auto;">
-                                      Resultats courbe graphique
-                                  </p>
-                            </div>
-                            
-                            <div title="Resultat textuel des statistiques" dojoType="dijit.layout.AccordionPane">
-                                  <p style="overflow: auto;"> 
-                                     Resultats donnees textuelles
-                                 </p>
-                            </div>
+                     <div id="chart1" style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" >
+                           
+                           
                           
                      </div>
   </div>                   

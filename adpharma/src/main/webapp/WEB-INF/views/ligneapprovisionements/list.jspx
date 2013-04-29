@@ -8,7 +8,7 @@
     <page:list1 id="pl_org_adorsys_adpharma_domain_LigneApprovisionement" items="${ligneapprovisionements}" label="Produits en Stock" z="user-managed" url="/ligneapprovisionements/searchLigneApp" search="true" placeholder="Rechercher par designation">
         <table:table create="false" data="${ligneapprovisionements}" delete="false" id="l_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" show="${permission }" update="${permission }" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" property="lotNumber" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_lotNumber" render="false" property="lotNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" property="indexLine" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cip" property="cip" render="${permission }" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit" property="produit" render="false" z="user-managed"/>
@@ -23,8 +23,8 @@
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" property="prixVenteUnitaire" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_qteCip" property="qteCip" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_fournisseur" property="fournisseur" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" property="skipPriceConvertion" z="f4bYocMiuI/hEHaE3xaj2yXuk/s="/>
-            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" property="viewMsg" z="wIyJj8YDIgmA9SVk5e11t8oajaM="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" render="false" property="skipPriceConvertion" z="f4bYocMiuI/hEHaE3xaj2yXuk/s="/>
+            <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" property="viewMsg" render="false" z="wIyJj8YDIgmA9SVk5e11t8oajaM="/>
         </table:table>
     </page:list1>
 </div>

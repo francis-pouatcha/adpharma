@@ -44,7 +44,7 @@ public class SecurityUtil {
 		if(userDetails==null) return null;
 		String username = userDetails.getUsername();
 		TypedQuery<PharmaUser> query = PharmaUser.findPharmaUsersByUserNameEquals(username) ;
-		return query.getResultList().iterator().next();
+		return query.getSingleResult();
 	}
 
 	public static PharmaUser getPharmaUser(String key){

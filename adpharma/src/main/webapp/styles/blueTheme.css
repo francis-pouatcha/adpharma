@@ -227,22 +227,21 @@ font-size: 1em;
 .search tr:hover {
 	background-color: rgb(51, 204, 255);
 	color: white;
-	font-weight: bold;
 	cursor: pointer;
 }
 
 tr.list:hover {
 	background-color: rgb(51, 204, 255);
 	color: white;
+
 	/* font-weight: bold; */
 	cursor: pointer;
 }
 
 .search td:hover {
 	background-color: rgb(51, 204, 255);
-	font-weight: bold;
 	cursor: pointer;
-	text-transform: uppercase;
+	color: white;
 }
 
 #container {
@@ -528,13 +527,12 @@ input {
 .autres:focus {
 	background-color: green;
 	color: white;
-	
 }
 
 .tva:focus {
 	background-color: green;
 	color: white;
-	font-size: 15px;
+	font-size: 18px;
 }
 
 .prix {
@@ -543,7 +541,7 @@ input {
 	text-transform: uppercase;
 	text-align: center;
 	font-weight: bold;
-	font-size: 23px;
+	font-size: 18px;
 	border-color: white;
 }
 

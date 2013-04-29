@@ -217,7 +217,7 @@ public class SaleProcess {
 		if(ordonnancier!=null){
 			displayText.append("Numero: "+ordonnancier.getOrdNumber()+", Patient: "+ordonnancier.getNomDuPatient());
 		}else{
-			displayText.append("Aucune ordonnance associee a cette commande");
+			displayText.append("");
 		}
 		return displayText.toString();
 	}

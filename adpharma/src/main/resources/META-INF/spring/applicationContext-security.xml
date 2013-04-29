@@ -28,7 +28,7 @@
 
 		<!-- Simply authenticated -->
 		<intercept-url pattern="/passwordresets/**"
-			access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_SUPER_ADMIN')" />
+			access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_SUPER_ADMIN','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/commandprocesses/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" />
 		<intercept-url pattern="/approvisionementprocess/**"
@@ -43,17 +43,17 @@
 		<intercept-url pattern="/commandeclients/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')" />
 		<intercept-url pattern="/caisses/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/factures/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/paiementprocess/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_CASH_CONTROLLER')" />
 
-		<intercept-url pattern="/devises/**" access="hasAnyRole('ROLE_SITE_MANAGER')" />
+		<intercept-url pattern="/devises/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/filiales/**" access="hasAnyRole('ROLE_SITE_MANAGER')" />
 		<intercept-url pattern="/sites/**" access="hasAnyRole('ROLE_SITE_MANAGER')" />
-		<intercept-url pattern="/tvas/**" access="hasAnyRole('ROLE_SITE_MANAGER')" />
-		<intercept-url pattern="/tauxmarges/**" access="hasAnyRole('ROLE_SITE_MANAGER')" />
+		<intercept-url pattern="/tvas/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASH_CONTROLLER')" />
+		<intercept-url pattern="/tauxmarges/**" access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/modeconditionements/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" />
 		<intercept-url pattern="/rayons/**"
@@ -64,15 +64,15 @@
 
 
 		<intercept-url pattern="/operationcaisses/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/paiements/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/clients/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_SUIVI_CLIENT')" />
 		<intercept-url pattern="/categorieclients/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_SUIVI_CLIENT')" />
 		<intercept-url pattern="/detteclients/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_CASHIER','ROLE_SUIVI_CLIENT')" />
 		<intercept-url pattern="/fournisseurs/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" />
 		<intercept-url pattern="/produits/**"
@@ -82,7 +82,7 @@
 		<intercept-url pattern="/inventaireProcess/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE')" />
 		<intercept-url pattern="/statistics/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_INVENTAIRE','ROLE_CASH_CONTROLLER')" />
 		<intercept-url pattern="/commandefournisseurs/**"
 			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER')" />
 		<intercept-url pattern="/commandefournisseurs/sendToPlatform/**"
@@ -101,12 +101,12 @@
 		<intercept-url pattern="/configurations/**" access="hasAnyRole('ROLE_SUPER_ADMIN')" />
 
 		<intercept-url pattern="/etatcreditses/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_SUIVI_CLIENT')" />
 		<intercept-url pattern="/avoirclients/**"
-			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR')" />
+			access="hasAnyRole('ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_SUIVI_CLIENT')" />
 
 		<intercept-url pattern="/adpharma/**"
-			access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION')" />
+			access="hasAnyRole('ROLE_ADMIN','ROLE_SITE_MANAGER','ROLE_STOCKER','ROLE_CASHIER','ROLE_VENDEUR','ROLE_OPEN_SALE_SESSION','ROLE_CASH_CONTROLLER','ROLE_SUIVI_CLIENT')" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/**" access="permitAll" />
 	</http>

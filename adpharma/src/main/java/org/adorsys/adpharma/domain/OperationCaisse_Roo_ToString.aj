@@ -12,12 +12,15 @@ privileged aspect OperationCaisse_Roo_ToString {
         sb.append("Caisse: ").append(getCaisse()).append(", ");
         sb.append("DateOperation: ").append(getDateOperation()).append(", ");
         sb.append("FootPrint: ").append(getFootPrint()).append(", ");
+        sb.append("GiveTo: ").append(getGiveTo()).append(", ");
+        sb.append("Havenumber: ").append(getHavenumber()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");
         sb.append("ModePaiement: ").append(getModePaiement()).append(", ");
         sb.append("Montant: ").append(getMontant()).append(", ");
         sb.append("Note: ").append(getNote()).append(", ");
         sb.append("OpNumber: ").append(getOpNumber()).append(", ");
         sb.append("Operateur: ").append(getOperateur()).append(", ");
+        sb.append("OrderBy: ").append(getOrderBy()).append(", ");
         sb.append("RaisonOperation: ").append(getRaisonOperation()).append(", ");
         sb.append("TypeOperation: ").append(getTypeOperation()).append(", ");
         sb.append("Version: ").append(getVersion());

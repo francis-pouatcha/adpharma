@@ -2,7 +2,6 @@ package org.adorsys.adpharma.web;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,9 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.UIManager;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.process.PaiementProcess;
@@ -41,6 +38,7 @@ import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -57,7 +55,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @RequestMapping("/saleprocess")
 @Controller
+@ManagedResource(objectName="org.adorsys.adpharma.web:name=SaleProcessControllerr") 
 public class SaleProcessController {
+	@ResponseBody
+	@RequestMapping(value="/{saleId}/findByCipmAjax/{cipm}", method = RequestMethod.GET)
+	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel) {
+		String	cipMaison = cipm;
+		Configuration config = Configuration.findConfiguration(new Long(1));
+		LigneApprovisionement item = new LigneApprovisionement() ;
+		if(config.getOnlySaleOld()){
+			CommandeClient sale = CommandeClient.findCommandeClient(saleId);
+			List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(2).getResultList();
+			if (!lines.isEmpty()) {
+				LigneApprovisionement next = lines.iterator().next();
+				List<LigneApprovisionement> oldcimplist = SaleService.getoldProductLisForSale(next.getProduit(), sale);
+				if(next.isOldItem(oldcimplist)){
+					return lines.iterator().next().clone().toJson();
+				}else {
+					item.setViewMsg("veullez saisir le cipm le plus ancien !") ;
+					return item.toJson() ;
+				}
+			}else {
+				item.setViewMsg("Aucun produit trouve !") ;
+				return item.toJson() ;
+			}	
+		}
+		return new ProduitController().findByCipmAjax(cipMaison, uiModel) ;
+
+	}
+
+
 	@RequestMapping(value = "/newPublicCmd", method = RequestMethod.GET)
 	public String newCommand(Model uiModel,HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = initCmdClient();
@@ -467,23 +494,30 @@ public class SaleProcessController {
 			}
 
 		} else{
-			
+
 			if(SecurityUtil.getPharmaUser().hasAnyRole(RoleName.ROLE_CHANGER_PRIX_VENTE)){
-		      if(pu!=null){
-				if(pu.compareTo(ligneApp.getPrixAchatUnitaire())==1 || pu.compareTo(ligneApp.getPrixAchatUnitaire())==0){
-					ligneApp.setPrixVenteUnitaire(pu);
-				}else{
-					uiModel.addAttribute("apMessage", "Impossible de modifier le prix de vente! le prix de vente ("+pu+"cfa) est inferieur au prix d'achact ("+ligneApp.getPrixAchatUnitaire()+"cfa)");
+				if(pu!=null){
+					if(pu.compareTo(ligneApp.getPrixAchatUnitaire())==1 || pu.compareTo(ligneApp.getPrixAchatUnitaire())==0){
+						ligneApp.setPrixVenteUnitaire(pu);
+					}else{
+						uiModel.addAttribute("apMessage", "Impossible de modifier le prix de vente! le prix de vente ("+pu+"cfa) est inferieur au prix d'achact ("+ligneApp.getPrixAchatUnitaire()+"cfa)");
+					}
 				}
 			}
-		}
+//<<<<<<< HEAD
+			if (remiseAutorise < remise.intValue()) {
+				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+				remise = BigDecimal.ZERO ;
+// =======
+		//}
 			
-			// Si le produit n'est pas en solde, il verifie la remise, dans le cas contraire, il laisse passer la remise de la promotion.
+			/*// Si le produit n'est pas en solde, il verifie la remise, dans le cas contraire, il laisse passer la remise de la promotion.
 			if(!Produit.hasSolde(ligneApp.getProduit())){
 				if (remiseAutorise < remise.intValue()) {
 					uiModel.addAttribute("apMessage","la remise sur ce produit ne peut etre superieure a : "+remiseAutorise);
 					remise = BigDecimal.ZERO ;
-				}
+				}*/
+// >>>>>>> 6b306bf01d7ce37acceca951f0907bc1cd6d1e4b
 			}
 			
 			SaleProcess.addline(pId, qte, remise, commandeClient);
@@ -754,18 +788,29 @@ public class SaleProcessController {
 	// imprime les factures 
 	@RequestMapping(value = "/print/{invId}.pdf", method = RequestMethod.GET)
 	public String print(@RequestParam(value = "nom", required = false) String nom,
-			 @RequestParam(value= "dateFacturation", required = false)  @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFacturation,
+			@RequestParam(value= "dateFacturation", required = false)  @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateFacturation,
 			@RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
 		Facture facture = Facture.findFacture(invId);
-		if(remise!=null){
-			facture.setPrintWithReduction(remise);
-		}else {
-			facture.setPrintWithReduction(Boolean.FALSE);
-		}
-		uiModel.addAttribute("facture", facture);
 		uiModel.addAttribute("nom", nom);
 		uiModel.addAttribute("dateFacturation", dateFacturation);
+		if(remise!=null) facture.setPrintWithReduction(remise);
+		uiModel.addAttribute("facture", facture);
 		return "facturePdfDocViews";
+	}
+	// imprime les ticket
+	@RequestMapping(value = "/printTickets/{invId}.pdf", method = RequestMethod.GET)
+	public String printTicket(@RequestParam(value = "nom", required = false) String nom,
+			@RequestParam(value= "dateTicket", required = false)  @DateTimeFormat(pattern = "dd-MM-yyyy") Date dateTicket,
+			@RequestParam(value = "remise", required = false) Boolean remise , @PathVariable("invId")Long invId, Model uiModel){
+		Facture facture = Facture.findFacture(invId);
+		uiModel.addAttribute("nom", nom);
+		uiModel.addAttribute("dateTicket", dateTicket);
+		System.out.println(nom+" : "+dateTicket);
+		Paiement paiement = facture.getCommande().getPaiements();
+		//if(remise!=null) paiement.setReduction(remise);
+		uiModel.addAttribute("paiement", paiement);
+		return "ticketPdfDocView";
+
 	}
 
 

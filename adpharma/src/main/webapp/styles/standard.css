@@ -233,13 +233,12 @@ font-size: 1em;
 
 
 .search tr:hover {
-	background-color: rgb(51, 204, 255);
-	color: white;
-	font-weight: bold;
+	color:  rgb(51, 204, 255);
 	cursor: pointer;
 }
 
 tr.list:hover {
+
 	/* background-color: rgb(51, 204, 255); */
 	background-color:  #00FF66;
 	color: white;
@@ -248,10 +247,8 @@ tr.list:hover {
 }
 
 .search td:hover {
-	background-color: rgb(51, 204, 255);
-	font-weight: bold;
+	color:  rgb(51, 204, 255);
 	cursor: pointer;
-	text-transform: uppercase;
 }
 
 #container {
@@ -536,6 +533,8 @@ input {
 	text-align: center;
 	font-weight: bold;
 	color: blue;
+	font-size: 18px;
+	
 }
 
 .tbcell {
@@ -544,19 +543,19 @@ input {
 	font-weight: bold;
 	border-color:green;
 	color: black ;
-	font-size: 16px;
+	font-size: 18px;
 }
 
 .autres:focus {
 	background-color: green;
 	color: white;
-	font-size: 22px;
+	font-size: 18px;
 }
 
 .tva:focus {
 	background-color: green;
 	color: white;
-	font-size: 15px;
+	font-size: 18px;
 }
 
 .prix {
@@ -707,6 +706,7 @@ ul li {
 }
 
 table tr:hover{
+	color:  rgb(51, 204, 255);
 	cursor: pointer;
 }
 

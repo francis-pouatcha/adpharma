@@ -17,7 +17,7 @@ public class CipMgenerator {
 	@SuppressWarnings("deprecation")
 	public static final String getCipM(String suffix){
 		String dateString = PharmaDateUtil.format(new Date(), PharmaDateUtil.DATE_PATTERN_TRIM);
-		 return  new StringBuffer().append(dateString).append(CipMgenerator.formatNumber(suffix, 6)).toString();
+		 return  new StringBuffer().append(dateString).append(CipMgenerator.formatNumber(suffix, 4)).toString();
 	 }
 	
 	public static String formatNumber(String stringToFormat , int patern){
