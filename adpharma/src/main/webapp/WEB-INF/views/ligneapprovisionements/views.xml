@@ -60,4 +60,8 @@
         <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/returnClaims.jspx"/>
     </definition>
     
+    <definition extends="approvisionnement" name="ligneapprovisionements/changedateprices">
+        <put-attribute name="body" value="/WEB-INF/views/ligneapprovisionements/changedateprices.jspx"/>
+    </definition>
+    
 </tiles-definitions>
