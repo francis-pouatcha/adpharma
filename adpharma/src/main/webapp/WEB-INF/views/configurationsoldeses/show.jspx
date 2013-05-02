@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_ConfigurationSoldes" object="${configurationsoldes}" path="/configurationsoldeses" z="user-managed">
+        <field:display field="cipProduit" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_cipProduit" object="${configurationsoldes}" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${configurationSoldes_debutsolde_date_format}" field="debutSolde" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_debutSolde" object="${configurationsoldes}" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${configurationSoldes_finsolde_date_format}" field="finSolde" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_finSolde" object="${configurationsoldes}" z="user-managed"/>
+        <field:display field="tauxSolde" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_tauxSolde" object="${configurationsoldes}" z="user-managed"/>
+        <field:display field="etatSole" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_etatSole" object="${configurationsoldes}" z="user-managed"/>
+        <field:display field="activeConfig" id="s_org_adorsys_adpharma_domain_ConfigurationSoldes_activeConfig" object="${configurationsoldes}" z="user-managed"/>
+    </page:show>
+</div>

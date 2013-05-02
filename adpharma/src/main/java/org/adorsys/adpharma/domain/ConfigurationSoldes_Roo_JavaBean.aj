@@ -4,7 +4,7 @@
 package org.adorsys.adpharma.domain;
 
 import java.lang.Boolean;
-import java.lang.Long;
+import java.math.BigDecimal;
 import java.util.Date;
 import org.adorsys.adpharma.domain.EtatSolde;
 
@@ -26,11 +26,11 @@ privileged aspect ConfigurationSoldes_Roo_JavaBean {
         this.finSolde = finSolde;
     }
     
-    public Long ConfigurationSoldes.getTauxSolde() {
+    public BigDecimal ConfigurationSoldes.getTauxSolde() {
         return this.tauxSolde;
     }
     
-    public void ConfigurationSoldes.setTauxSolde(Long tauxSolde) {
+    public void ConfigurationSoldes.setTauxSolde(BigDecimal tauxSolde) {
         this.tauxSolde = tauxSolde;
     }
     

@@ -3,7 +3,7 @@ package org.adorsys.adpharma.domain;
 
 public enum RoleName {
 
-	ROLE_ADMIN("ADMINISTRATEUR", " Gere des Utilisateurs"),
+	 ROLE_ADMIN("ADMINISTRATEUR", " Gere des Utilisateurs"),
      ROLE_STOCKER("MAGASINIER", "Gere des aprovisionnements , du catalogue de produits , les mouvements de stocks"),
      ROLE_CASHIER("CAISSIER", "Gere les Encaissements "),
      ROLE_SITE_MANAGER("MANAGER", "Responsable du site a tous les profiles exclu l administration"),
@@ -32,7 +32,9 @@ public enum RoleName {
 	 ROLE_VENTE_DESIGNATION("VENTE PAR DESIGNATION ", "permet d'effectuer les ventes par designation "),
 	 ROLE_RECHERCHE_PAR_CIPM("RECHERCHE PRD PAR CIPM ", "permet d'effectuer la recherche de produit par cipm "),
 	 ROLE_CHANGER_PRIX_VENTE("CHANGER LE PRIX D'UN PRODUIT A LA VENTE", "permet de changer le prix d'un produit a la vente"),  
-	 ROLE_FUSIONNER_CIP("FUSIONNER DES CIP", "permet de fusionner le stock de produit different ");   
+	 ROLE_FUSIONNER_CIP("FUSIONNER DES CIP", "permet de fusionner le stock de produit different "),
+	 ROLE_CASH_CONTROLLER("CASH CONTROLLER", "la gestion des caisses ") ,
+	 ROLE_SUIVI_CLIENT("SUIVIE CLIENT", "permet la gestion et suivi des clients ")  ;
 	 
    
 

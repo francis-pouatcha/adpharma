@@ -15,6 +15,7 @@ import org.adorsys.adpharma.domain.Customers;
 import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.services.homestatisticsclasses.TopSelling;
+import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.springframework.stereotype.Service;
 
 @Service("statisticsServiceImpl")
@@ -115,9 +116,21 @@ public class StatisticsServiceImpl implements StatisticsService{
 			Customers custom= new Customers();
 			custom.setId((Long)obj[0]);
 			custom.setNomClient((String)obj[1]);
+//<<<<<<< HEAD
+			try {
+				custom.setMontant((BigDecimal)obj[2]);
+			} catch (Exception e) {
+				custom.setMontant((BigDecimal)obj[2]);
+			}
 			custom.setMontant((BigDecimal)obj[2]);
 			custom.setAvance((BigDecimal)obj[3]);
 			custom.setReste((BigDecimal)obj[4]);
+/*=======
+//			custom.setMontant((BigDecimal)obj[2]);
+			custom.setMontant(new BigDecimal((obj[2]).toString()));
+			custom.setAvance(new BigDecimal((obj[3]).toString()));
+			custom.setReste(new BigDecimal((obj[4]).toString()));
+>>>>>>> 6b306bf01d7ce37acceca951f0907bc1cd6d1e4b*/
 			custom.setDateCreation((Date)obj[5]);
 			dettes.add(custom);
 		}

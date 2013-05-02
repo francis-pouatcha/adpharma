@@ -49,6 +49,7 @@ public class ApprovisionementProcessFindProductController {
 			List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(1).getResultList();
             if (!produits.isEmpty()) {
 				 prd = produits.iterator().next() ;
+				 prd.initPrice();
 			}
 		}
 

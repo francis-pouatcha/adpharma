@@ -8,7 +8,6 @@
 	style=" margin: 10px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-      
        <!-- liste of link to use on this page  -->
        <spring:url value="/saleprocess/${itemId}/edit"  var="edit_url" />
        <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
@@ -172,13 +171,14 @@ $('#conv_credit').click(function(){
           <c:if test="${not bonClient.imprimer}">
               <spring:url value="/avoirclients/print/${bonClient.id}.pdf" var="avoir_url"/>
               <span><a href="${ avoir_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer Le bon" title="visualiser l'avoir" /></a></span>
-   	      </c:if>
-   </c:if> 
-   
-   <c:if test="${not empty factureNumber}">
-          <span style="margin-left: 50px; font-weight: bold;font-size: 30px; color: green;">${factureNumber}  </span>  			
-   </c:if>     
-                   
+   			</c:if>
+     
+       </c:if> 
+      <c:if test="${not empty factureNumber}">
+        <span style="margin-left: 50px; font-weight: bold;font-size: 30px; color: green;">${factureNumber}  </span>  			
+     
+       </c:if>     
+
    <c:if test="${not empty apMessage}">
 			<center>
 					<p class="appMessage">${apMessage}</p>

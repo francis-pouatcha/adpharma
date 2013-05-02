@@ -98,7 +98,12 @@
                      <spring:url value="/resources/js/plugins/jqplot.categoryAxisRenderer.min.js" var="jqpl7" />
                         <spring:url value="/resources/js/plugins/jqplot.barRenderer.min.js" var="jqpl8" />
                            <spring:url value="/resources/js/jquery.jqplot.min.css" var="jqpl9" />
-   
+                            <spring:url value="/resources/js/plugins/jqplot.pieRenderer.min.js" var="jqpl10" />
+                            <spring:url value="/resources/js/plugins/jqplot.pointLabels.js" var="jqpl11" />
+                             <spring:url value="/resources/js/plugins/jqplot.highlighter.js" var="jqpl12" />
+                              <spring:url value="/resources/js/plugins/ jqplot.cursor.min.js" var="jqpl13" />
+                            
+  
 <script type="text/javascript" src="${jqpl1 }"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqpl2 }"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqpl3 }"><!-- required for FF3 and Opera --></script>
@@ -107,6 +112,10 @@
 <script type="text/javascript" src="${jqpl6 }"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqpl7}"><!-- required for FF3 and Opera --></script>
 <script type="text/javascript" src="${jqpl8}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl10}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl11}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl12}"><!-- required for FF3 and Opera --></script>
+<script type="text/javascript" src="${jqpl13}"><!-- required for FF3 and Opera --></script>
   <link type="text/css" href="${jqpl9}" rel="stylesheet" />	
    
   
@@ -123,6 +132,7 @@
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.parser");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.DateTextBox");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.TextBox");</script>
+  <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.CheckBox");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.ComboBox");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.CurrencyTextBox");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dijit.form.Textarea");</script>

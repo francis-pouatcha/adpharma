@@ -25,7 +25,6 @@ public class JasperPrintService
 
 	@Autowired
     ApplicationContext context;
-	//@Autowired
 	DataSource dataSource = null;
 
     public JasperPrintService()
@@ -42,8 +41,6 @@ public class JasperPrintService
         {
         	
             Connection connection = DataSourceUtils.doGetConnection(getDataSource());
-           // DataSourceConnectionFactory dataSourceConnectionFactory = new DataSourceConnectionFactory(dataSource, "jasper", "jasper");
-            //Connection connection = dataSourceConnectionFactory.createConnection();
             parameters.put("PrintBy", SecurityUtil.getUserName());
             parameters.put("user", SecurityUtil.getUserName());
             net.sf.jasperreports.engine.JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile);

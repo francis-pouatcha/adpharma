@@ -26,7 +26,7 @@
 		             <th style="text-align: center;">QTE RET</th>
 		            <th style="text-align: center;">PRIX TOTAL</th>
 		           <th style="text-align: center;">REMISE</th>
-		        <!--     <th style="text-align: center;">ANNULER</th>-->
+		        <!--<th style="text-align: center;">ANNULER</th>-->
 		    	</tr>
 		
 		   <c:forEach items="${commandeclient.lineCommande }" var="ligne">

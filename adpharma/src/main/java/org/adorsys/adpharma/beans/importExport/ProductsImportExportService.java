@@ -25,6 +25,7 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 	@Override
 	public List<String> useFieldName() {
 		String[] fieldNames = {"cip","designation","pa","pv","rayon"} ;
+		//String[] fieldNames = {"cip","designation"} ;
 	    return	Arrays.asList(fieldNames);
 		
 	}
@@ -59,14 +60,15 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 			prd.setDesignation(cells[1].getContents());
 			prd.setFabricant("-//-");
 			prd.setFiliale(Filiale.findFiliale(new Long(1)));
-			List<Rayon> resultList = Rayon.findRayonsByEmplacement(cells[4].getContents()).getResultList();
+			/*List<Rayon> resultList = Rayon.findRayonsByEmplacement(cells[4].getContents()).getResultList();
 			if(!resultList.isEmpty()){
 				prd.setRayon(resultList.iterator().next());
 			}else {
 				prd.setRayon(Rayon.findRayon(new Long(1)));
-			}
-			prd.setPrixAchatU(ProcessHelper.stringToBigDecimal(cells[2].getContents()));
-			prd.setPrixVenteU(ProcessHelper.stringToBigDecimal(cells[3].getContents()));
+			}*/
+			prd.setRayon(Rayon.findRayon(new Long(1)));
+			prd.setPrixAchatU(ProcessHelper.stringToBigDecimal(StringUtils.remove(cells[2].getContents(), "�").trim()));
+			prd.setPrixVenteU(ProcessHelper.stringToBigDecimal(StringUtils.remove(cells[3].getContents(), "�").trim()));
 			prd.setPlafondStock(new BigInteger("50"));
 			prd.setTauxDeMarge(TauxMarge.findTauxMarge(new Long(1)));
 			prd.setTauxRemiseMax(BigDecimal.valueOf(2));

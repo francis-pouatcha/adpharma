@@ -213,6 +213,9 @@ reste = montant;
     public static List<AvoirClient> findAllAvoirClients() {
         return entityManager().createQuery("SELECT o FROM AvoirClient  o ORDER BY o.id DESC", AvoirClient.class).getResultList();
     }
+    public static List<AvoirClient> findAvoirClientEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM AvoirClient o ORDER BY o.id DESC", AvoirClient.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
 
     public static TypedQuery<AvoirClient> search(Date dateEdition,String numero, String clientName, String clientNumber, TypeBon typeBon, Boolean annuler, Boolean solder) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM AvoirClient AS o WHERE o.annuler IS :annuler ");

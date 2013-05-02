@@ -3,12 +3,12 @@
  xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/> 
-        <form:custumcreate modelAttribute="etatCreditFinder"  id="fc_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
-          <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName"  z="user-managed"/>
-        <field:input  field="etatNumber" id="c_org_adorsys_adpharma_domain_EtatCredits_etatNumber"  z="user-managed"/>
+        <form:create modelAttribute="etatCreditFinder"  id="fc_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
+         <field:input field="clientName" id="c_org_adorsys_adpharma_domain_EtatCredits_clientName"  z="user-managed"/>
+         <field:input  field="etatNumber" id="c_org_adorsys_adpharma_domain_EtatCredits_etatNumber"  z="user-managed"/>
          <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  field="dateEditionMin" label="Date Edition Min" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition"  z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateEditionMax"  label="Date Edition Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
-    </form:custumcreate>
+         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="dateEditionMax"  label="Date Edition Max" id="c_org_adorsys_adpharma_domain_EtatCredits_datePaiement"  z="user-managed"/>
+    </form:create>
     <page:list id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${results}" z="DNg67SL6NthDAvpPO58mJVf09is=">
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_DetteClient" path="/etatcreditses" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" property="footPrint" render="false" z="user-managed"/>

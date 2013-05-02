@@ -50,7 +50,6 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
 		SessionBean sessionBean = new SessionBean(findSite);
 		sessionBean.setConfiguration(Configuration.findConfiguration(new Long(1)));
 		if(!sessionBean.isAbleToConnect(SecurityUtil.getPharmaUser())){
-			//session.invalidate();
 			session.setAttribute("sessionBean", sessionBean) ;
 
 		}else {
@@ -94,9 +93,12 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
     public void setRequestCache(RequestCache requestCache) {
         this.requestCache = requestCache;
     }
-	private String getUserRedirectLink( ){
+	private String getUserRedirectLink(){
+		/*
 		PharmaUser pharmaUser = PharmaUser.findPharmaUsersByUserNameEquals(SecurityUtil.getUserName()).getSingleResult();
 		Set<RoleName> roleNames = pharmaUser.getRoleNames();
 		return rolesToHomePageRegistry.getHomeUrl(roleNames.iterator().next());
+		*/
+		return "";
 	}
 }

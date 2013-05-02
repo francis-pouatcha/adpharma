@@ -38,6 +38,7 @@ public class RolesToHomePageRegistry {
 		roleToHomeUrlRegistry.put(RoleName.ROLE_MOUVEMENTS, "");
 		roleToHomeUrlRegistry.put(RoleName.ROLE_RAYON, "");
 		roleToHomeUrlRegistry.put(RoleName.ROLE_STOCKER, "");
+		roleToHomeUrlRegistry.put(RoleName.ROLE_SUPER_ADMIN, "");
 	}
 	
 	public String getHomeUrl(RoleName roleName){

@@ -3,16 +3,16 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_org_adorsys_adpharma_domain_Configuration" modelAttribute="configuration" path="/configurations" versionField="Version" z="qwX4DzSiDLZuUjgPQ3wq0quRI4U=">
-        <field:checkbox field="saleForce" label="Forcer les Ventes ?" id="c_org_adorsys_adpharma_domain_Configuration_saleForce" z="7yx75pXjUGFxdYszUrPhJ5vfP6Q="/>
-        <field:checkbox field="closeCashUnpaySale" label="Fermer Les Caisses Avec Factures Impayees ?" id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" z="LgZxq62q6wXP8Zc2WOMZtwfQx64="/>
+        <field:checkbox field="saleForce" id="c_org_adorsys_adpharma_domain_Configuration_saleForce" label="Forcer les Ventes ?" z="user-managed"/>
+        <field:checkbox field="closeCashUnpaySale" id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" label="Fermer Les Caisses Avec Factures Impayees ?" z="user-managed"/>
         <field:checkbox field="closeCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" z="X/fLML/P1TS2xrQyhPalHoqQwLU="/>
-        <field:checkbox field="restoreCancelSale" label="Restorer Les Ventes Anullees ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:checkbox field="saleCash" label="Autoriser La vente directe ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:checkbox field="editCloseSupply" label="Editer Les Entrees Clos ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:checkbox field="onlySaleOld" label="Toujour Ventre Les Plus Ancien ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:checkbox field="forceToSameLine" label="Forcer Les ventes SUr le meme CIPM ?" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:input field="sendFolder" label="Repertoire Envoi" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" z="MeXdUkl5DlTbhYDsOBKZPQRmOA4="/>
-        <field:input field="receptionFolder" label="Repertoire De Reception" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" z="MeXdUkl5DlRbhYDsOBKZJQRmOA4="/>
-   
+        <field:checkbox field="restoreCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Restorer Les Ventes Anullees ?" z="user-managed"/>
+        <field:checkbox field="saleCash" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Autoriser La vente directe ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="editCloseSupply" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Editer Les Entrees Clos ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Toujour Ventre Les Plus Ancien ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Forcer Les ventes SUr le meme CIPM ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:input field="sendFolder" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" label="Repertoire Envoi" z="user-managed"/>
+        <field:input field="receptionFolder" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" label="Repertoire De Reception" z="user-managed"/>
+        <field:checkbox field="enableLicence" id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" z="uLkgoAWqOZfC0bIWe2C6J1OAdx8="/>
     </form:update>
 </div>

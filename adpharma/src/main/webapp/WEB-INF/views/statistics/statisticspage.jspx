@@ -24,13 +24,14 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                },
 	                title: {
 	                    text: 'COURBE DES VENTES ET ACHATS',   // title for the plot,
-	                    show: true,
 	                },
 	                series:[
+                     
                      {label:'Courbe des Achats'},
                      {label:'Courbe des Ventes'},
 	                    
 	                    {
+                    	 pointLabels: { show: true},
 	                        rendererOptions: {
 	                            // speed up the animation a little bit.
 	                            // This is a number of milliseconds.
@@ -42,12 +43,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    }
 	                ],
 	               
-	                legend: {
-	                    show: true,
-	                    location: 'se',     // compass direction, nw, n, ne, e, se, s, sw, w.
-	                    xoffset: 10,        // pixel offset of the legend box from the x (or x2) axis.
-	                    yoffset: 10       // pixel offset of the legend box from the y (or y2) axis.
-	                },
 
 	                axesDefaults: {
 	                    pad: 0

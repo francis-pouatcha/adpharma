@@ -136,7 +136,6 @@ public class ApprovisionementProcessController {
 	public String addLine(@PathVariable("apId") Long apId,@RequestParam Long pId,@RequestParam String qte, @RequestParam(required=false) BigInteger qteReclam,@RequestParam String qteug,
 			@RequestParam String pa,@RequestParam String pv,@RequestParam(required = false) String tvaj,@RequestParam String prm,Model uiModel,HttpSession session) {
 		
-		System.out.println("Qte reclammee: "+qteReclam);
 		
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 		Produit produit = Produit.findProduit(pId);
@@ -158,7 +157,7 @@ public class ApprovisionementProcessController {
 			LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 			if(prm==""){
 			       if(!produit.isPerissable()){
-			    	   ligneApprovisionement.setDatePeremtion(new DateUtils().addYears(new Date(), 5));
+			    	   ligneApprovisionement.setDatePeremtion(new DateUtils().addYears(new Date(), 1));
 			       }else{
 			    	   uiModel.addAttribute("apMessage", "Veuillez entrer la date de peremption du produit");
 			    	   return initViewContent(approvisionement, tvaj, uiModel);
@@ -213,24 +212,25 @@ public class ApprovisionementProcessController {
 				uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
 			}else if (approvisionement.CommandeContientProduit(produit)) {
 				uiModel.addAttribute("apMessage", "Ce produit ne fait Pas partie de la commande recuperer !");
-			}else if((new BigInteger(qteug)).compareTo(new BigInteger(qte))==1) {
+
+			}else if((ProcessHelper.stringToBigInteger(qteug).compareTo(ProcessHelper.stringToBigInteger(qte))==1)) {
 				uiModel.addAttribute("apMessage", "les unites gratuites sont superieur a la quantite approvisione !");		
 			}else{
 				LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 				ligneApprovisionement.setApprovisionement(approvisionement);
 				if (StringUtils.isNotBlank(qte)) {
-					ligneApprovisionement.setQuantiteAprovisione(new BigInteger(qte.trim()));
+					ligneApprovisionement.setQuantiteAprovisione(ProcessHelper.stringToBigInteger(qte));
 				}
 				if (StringUtils.isNotBlank(qteug)) {
-					ligneApprovisionement.setQuantiteUniteGratuite(new BigInteger(qteug.trim()));
+					ligneApprovisionement.setQuantiteUniteGratuite(ProcessHelper.stringToBigInteger(qteug));
 				}
 				if (StringUtils.isNotBlank(pa)) {
-					ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
+					ligneApprovisionement.setPrixAchatUnitaire( ProcessHelper.stringToBigDecimal(pa));
 				}
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2) );
 				if (StringUtils.isNotBlank(pv)) {
-					ligneApprovisionement.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
+					ligneApprovisionement.setPrixVenteUnitaire( ProcessHelper.stringToBigDecimal(pv));
 				}
 				produit.addproduct(ligneApprovisionement.getQuantiteAprovisione());
 				ligneApprovisionement.setProduit(produit);
@@ -242,7 +242,7 @@ public class ApprovisionementProcessController {
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
 			approvisonementProcess.setEtat(Etat.CLOS);
 			if (StringUtils.isNotBlank(tvaj)) {
-				approvisonementProcess.setTaux(new BigDecimal(tvaj.trim()));
+				approvisonementProcess.setTaux( ProcessHelper.stringToBigDecimal(tvaj));
 			}
 			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
 			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
@@ -254,14 +254,14 @@ public class ApprovisionementProcessController {
 		@RequestMapping(value = "/{apId}/updateLine", method = RequestMethod.POST)
 		public String updatedLine(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte, @RequestParam BigInteger qteug,
 				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj,@RequestParam String prm, 
-				@RequestParam BigInteger qterecl, Model uiModel,HttpSession session) {
+				@RequestParam(required=false) BigInteger qterecl, Model uiModel,HttpSession session) {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			LigneApprovisionement line = LigneApprovisionement.findLigneApprovisionement(lineId);
 			
 			if (!approvisionement.getEtat().equals(Etat.CLOS)) {
 				line.setQuantiteAprovisione(qte);
 				line.setQuantiteUniteGratuite(qteug);
-				line.setQuantiteReclame(qterecl);
+				line.setQuantiteReclame(qterecl!=null?qterecl:BigInteger.ZERO);
 				line.setPrixAchatUnitaire(pa);
 				if (!"".equals(pv)) {
 					line.setPrixVenteUnitaire(new BigDecimal(pv.trim()));

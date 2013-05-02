@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
 xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
 xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+xmlns:form="http://www.springframework.org/tags/form"
 xmlns:spring="http://www.springframework.org/tags"
-xmlns:form="http://www.springframework.org/tags/form"  
 xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;" version="2.0">
+ style="width: 100%; height: auto;" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
     
@@ -18,10 +20,89 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
             background: -moz-linear-gradient(90deg, #FFF, #EEE) repeat scroll 0 0 transparent; 
 		    background: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#FFF) );
 		    }
-		#curvey_table{width: 300px; }  
+		#curvey_table{width: 300px;}  
 		#curvey_table label{width: auto;} 
 		#curvey_table input{font-style: normal;}
-		#curvey_table td{padding-bottom: 25px; border: none; background: #fff;} 
+		#curvey_table td{padding-bottom: 15px; border: none; background: #fff;} 
+		.error{
+		  color: #ff0000;
+		  font-size: 12px; 
+		  font-weight: bold;
+		}
+		#soldes tr:HOVER{
+		  cursor: default;
+		  background: #CCC;
+		}
+		
+		.message{
+                -webkit-background-size: 40px 40px;
+                -moz-background-size: 40px 40px;
+                background-size: 40px 40px;
+                background-image: -webkit-gradient(linear, left top, right bottom,
+                                                        color-stop(.25, rgba(255, 255, 255, .05)), color-stop(.25, transparent),
+                                                        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .05)),
+                                                        color-stop(.75, rgba(255, 255, 255, .05)), color-stop(.75, transparent),
+                                                        to(transparent));
+                background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+                                                        transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+                                                        transparent 75%, transparent);
+                 -moz-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 -webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+                 width: auto;
+                 border: 1px solid;
+                 color: #FFFFFF;
+                 padding: 10px;
+                /*  position: fixed; */
+                 _position: absolute;
+                 text-shadow: 0 1px 0 rgba(0,0,0,.5);
+                 -webkit-animation: animate-bg 5s linear infinite;
+                 -moz-animation: animate-bg 5s linear infinite;
+                 } 
+                 
+                 .errors{
+	                 background-color: #de4343;
+	                 border-color: #c43d3d;
+                  }
+                  
+                  .success{ 
+	                 background-color: #61b832;
+	                 border-color: #55a12c;
+                    }
+                 
+                 .message h3 { margin: 0 0 5px 0; color: #FFFFFF; font-weight: bold; }
+                 .message p{ margin: 0; color: #FFFFFF; font-size: 12px;}
+         
+                 @-webkit-keyframes animate-bg{
+				    from {
+				        background-position: 0 0;
+				          }
+				    to {
+				       background-position: -80px 0;
+				    }
+                  }
+
+				@-moz-keyframes animate-bg{
+					    from {
+					        background-position: 0 0;
+					    }
+					    to {
+					       background-position: -80px 0;
+					    }
+					}
+		
     </style>
     <spring:url value="/produits/findProductByCipAjax" var="find_product_url" />
     <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />
@@ -29,7 +110,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
     
     <script type="text/javascript">
            $(function(){
-        	   
         	   function clearProductTable(){
        			$('#resultproduit').html(
        					'<tr>
@@ -40,7 +120,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
        			    		<th>FILIALE</th>
        					</tr>');
        		      };
-        	   
        		   $('form#produitfindform').submit(function(){
        			    clearProductTable();
        				$.getJSON( '${find_product_url}', $('#produitfindform').serialize(), function(data){
@@ -83,6 +162,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
            function requete(cip){
         	   $.getJSON( "${find_cip_url}"+cip, function(data){
         		   if(data!=null){
+        		   $("#pId").val(data.id);
         		   $("#cip").val(data.cip);
         		   $("#designation").val(data.designation);
         		   }else{
@@ -98,23 +178,38 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
     	   var cip= document.getElementById("cip").value;
     	   var debut= document.getElementById("date_debut").value;
     	   var fin= document.getElementById("date_fin").value;
+    	   var taux= document.getElementById("taux").value;
     	   var x= debut.split("-");
     	   var y= fin.split("-");
     	   var dateJour= new Date();
     	   dateJour.setHours(0);
     	   dateJour.setMinutes(0);
     	   dateJour.setSeconds(0);
-    	   var dateDebut= new Date(x[2], parseInt(x[1].charAt(1))-1, x[0]);
-    	   var dateFin= new Date(y[2], parseInt(y[1].charAt(1))-1, y[0]);
-    	   console.log("Mois: "+x[1].charAt(1));
-    	   console.log("date fin: "+dateFin);
-    	   console.log("date debut: "+dateDebut);
+    	   var dateDebut;
+    	   var dateFin;
     	   if(cip==""){
-    		   alert("Veuillez rechercher le produit");
+    		   alert("Veuillez rechercher le cip du produit");
+    		   return false;
+    	   } 
+    	   if(debut!=""){
+    		   dateDebut= new Date(x[2], parseInt(x[1].charAt(1))-1, x[0]);
+    	   }else{
+    		   alert("Entrez la date de debut");
     		   return false;
     	   }
+    	   if(fin!=""){
+    		   dateFin = new Date(y[2], parseInt(y[1].charAt(1))-1, y[0]);
+    	   }else{
+    		   alert("Entrez la date de fin");
+    		   return false;
+    	   }
+    	   
     	   if(dateDebut> dateFin){
     		   alert("La date de fin du solde doit etre superieure ou egale a la date de debut");
+    		   return false;
+    	   }
+    	   if(dateJour> dateDebut){
+    		   alert("La date de debut doit etre superieure ou egale a la date du jour");
     		   return false;
     	   }
     	   if(dateJour> dateFin){
@@ -125,24 +220,33 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
     		   alert("Veuillez entrer le taux de solde du produit");
     		   return false;
     	   }
-    	   
        }
-    
     </script>
     
     
     
+    <spring:url value="/produits/soldes/create" var="create_solde_url" />
+    
     <div id="courbes">
-                     <div style="width: 26%; float: left;">
+                     <div style="width: 28%; float: left; height:480px; padding-right:8px; overflow: auto;">
                           <util:panel title="Creer Configuration de solde" id="param_edition">
-                           <form:form action="" commandName="solde" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validForm();">
+                           <form:form action="${create_solde_url}" commandName="solde" method="POST" acceptCharset="UTF-8" onsubmit="return validForm();">
+                             <c:if test="${not empty errors}">
+                              <p><form:errors cssClass="error" /></p>
+                             </c:if>
+                             <c:if test="${not empty forbid}">
+                                <div class="errors message">
+                                  <p>Erreur: ${forbid}</p>
+                                </div>  
+                             </c:if>
                              <table id="curvey_table">
                                      <tr>
                                          <td colspan="2">
+                                             <input type="hidden" value="" name="pId" id="pId" />
                                              <label for="cip">Rechercher un produit</label><BR />
-                                             <form:input path="cipProduit" type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/> 
-                                             <input type="button" value="OK" class="submits" id="search" style="float: left;" />
-                                             
+                                             <form:input path="cipProduit" type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/>
+                                             <input type="button" value="OK" class="submits" id="search" style="float: left;" /><BR />
+                                             <form:errors path="cipProduit" cssClass="error"  />
                                          </td>
                                      </tr>
                                      
@@ -150,33 +254,37 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
                                           <td colspan="2"> 
                                               <label for="type">Designation</label><BR />
                                               <input type="text" dojoType="dijit.form.TextBox" disabled="disabled" id="designation" style="width: 300px;" />
-                                              
                                           </td>
                                      </tr>
                                      <tr>
                                          <td colspan="2">
+                                             <!-- dojoType="dijit.form.DateTextBox" constraints="{datePattern:'yyyy-MM-dd'}" -->
                                              <label for="date_debut">Date Debut Solde</label><BR />
-                                             <form:input path="debutSolde" type="text" dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" id="date_debut"/> 
+                                             <form:input path="debutSolde" type="text" id="date_debut"/><BR /> 
+                                             <form:errors path="debutSolde" cssClass="error" />
                                          </td>
                                      </tr>
                                      <tr>
                                          <td colspan="2">
                                              <label for="date_fin">Date Fin Solde</label><BR />
-                                             <form:input path="finSolde" type="text" dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" id="date_fin"/> 
+                                             <form:input path="finSolde" type="text" id="date_fin"/><BR /> 
+                                             <form:errors path="finSolde" cssClass="error" />
                                          </td>
                                      </tr>
                                      <tr>
                                           <td> 
-                                              <label for="type">Taux du solde(%)</label><BR />
-                                              <form:input path="tauxSolde" type="text"  dojoType="dijit.form.TextBox" id="taux" />
+                                              <label for="taux">Taux du solde(%)</label><BR />
+                                              <form:input path="tauxSolde" type="text"  dojoType="dijit.form.TextBox" id="taux" /><BR />
+                                              <form:errors path="tauxSolde" cssClass="error" />
                                           </td>
                                           <td>
                                                <label for="type">Activer?</label><BR />
-                                               <form:input path="activeConfig" type="checkbox" checked="checked"/>
+                                               <form:checkbox path="activeConfig"  dojoType="dijit.form.CheckBox" /><BR />
+                                               <p></p>
                                           </td>
                                      </tr>
                                      <tr>
-                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px;"/> </td>
+                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px; float: left;"/> </td>
                                      </tr>
                              </table>
                            </form:form>
@@ -185,22 +293,84 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
                      
                      
                      
-                     <div style="float: right; width: 73%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
+                     <div style="float: right; width: 70%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
                           
                             <div title="Liste des produits en solde" selected="true" dojoType="dijit.layout.ContentPane">
                                   <p style="overflow: auto;">
-                                     Liste des produits en solde
+                                      <spring:url value="/resources/images/create.png" var="create_url" />
+                                     <spring:url value="/produits/soldes?form" var="create_config_url" />
+                                     <spring:url value="/" var="home" />
+                                     <a href="${create_config_url}" title="Creer une configuration de solde" style="margin-right: 10px;"><IMG alt="create" src="${create_url}" /></a>
+                                     <a href="${home}" style="text-decoration: none;"><INPUT type="button" class="submits" value="Quitter" title="Quitter la configuration de soldes" /></a>
+                                     
+                                     <table id="soldes">
+                                          <tr>
+                                             <th style="text-align: center;">CIP</th>
+                                             <th style="text-align: center;">DESIGNATION</th>
+                                             <th style="text-align: center;">DEBUT SOLDE</th>
+                                             <th style="text-align: center;">FIN SOLDE</th>
+                                             <th style="text-align: center;">TAUX SOLDE</th>
+                                             <th style="text-align: center;">ETAT SOLDE</th>
+                                             <th style="text-align: center;">ACTIONS</th>
+                                          </tr>
+                                      <c:choose>
+                                         <c:when test="${not empty produitsoldes}">   
+                                          <c:forEach items="${produitsoldes}" var="produit">
+	                                          <tr>
+		                                           <td> <c:out value="${produit.cip}" /> </td>
+		                                           <td> <c:out value="${produit.designation}" /> </td>
+		                                           <td> <fmt:formatDate value="${produit.configSolde.debutSolde}" pattern="dd-MM-yyyy" /> </td>
+		                                           <td> <fmt:formatDate value="${produit.configSolde.finSolde}" pattern="dd-MM-yyyy" /> </td>
+		                                           <td> <c:out value="${produit.configSolde.tauxSolde}" /> </td>
+		                                           <td style="text-align: center;">
+		                                               <spring:url value="/resources/images/tick.png" var="ko" />
+		                                               <spring:url value="/resources/images/deny.png" var="ok" />
+		                                               <spring:url value="/produits/cancelsolde/${produit.id}" var="cancel_solde_url" />
+		                                               <spring:url value="/produits/activesolde/${produit.id}" var="active_solde_url" />
+		                                              <c:if test="${produit.configSolde.activeConfig eq true }"> 
+		                                               <a href="${cancel_solde_url}" title="Desactiver le solde"> <IMG alt="cancel" src="${ko}" /> </a>
+		                                              </c:if>
+		                                              <c:if test="${produit.configSolde.activeConfig eq false }"> 
+		                                               <a href="${active_solde_url}" title="Activer le solde"> <IMG alt="cancel" src="${ok}" /> </a>
+		                                              </c:if> 
+		                                           </td>
+		                                           <td colspan="2">
+		                                               <spring:url value="/resources/images/delete.png" var="delete" />
+		                                               <spring:url value="/resources/images/update.png" var="update" />
+		                                               <spring:url value="/produits/deletesolde/${produit.id}" var="delete_solde_url" />
+		                                               <spring:url value="/produits/updatesolde/${produit.id}" var="update_solde_url" />
+		                                               <a href="${update_solde_url}" title="Modifier le solde" style="margin-right: 15px;"> <IMG alt="update" src="${update}" /> </a>
+		                                               <a href="${delete_solde_url}" title="Supprimer le solde"> <IMG alt="delete" src="${delete}" onclick="return deleteBox('Voulez-vous vraiment supprimer ce solde? ')"/> </a>
+		                                           </td>
+		                                      </tr>     
+                                          </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                               <tr>
+                                                    <td colspan="7"> <p class="appMessage" style="text-align: center;"> <c:out value="Aucun produit en solde..." /> </p> </td>
+                                               </tr>
+                                        </c:otherwise>  
+                                      </c:choose>  
+                                     </table>
                                   </p>
                             </div>
                             
-                            <div title="Autres" dojoType="dijit.layout.ContentPane">
+                            <div title=" " dojoType="dijit.layout.ContentPane">
                                   <p style="overflow: auto;"> 
-                                     Autres
-                                 </p>
+                                     Autres informations
+                                  </p>
                             </div>
                           
                      </div>
-  </div>                   
+  </div>   
+  <c:set value="dd-MM-yyyy" var="dateTimePattern" />
+  <script type="text/javascript">
+		    <c:set var="sec_dateTimePattern">
+		       <spring:escapeBody javaScriptEscape="true">${dateTimePattern}</spring:escapeBody>
+		    </c:set>
+		    Spring.addDecoration(new Spring.ElementDecoration({elementId : 'date_debut', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Date de debut du solde', constraints: {datePattern : '${sec_dateTimePattern}'}, datePattern : '${sec_dateTimePattern}'}}));
+		    Spring.addDecoration(new Spring.ElementDecoration({elementId : 'date_fin', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Date de fin du solde', constraints: {datePattern : '${sec_dateTimePattern}'}, datePattern : '${sec_dateTimePattern}'}}));
+    </script>                
          
         <!-- Formulaire a factoriser  --> 
          <div style="display: none;" id="search_product">
@@ -208,7 +378,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" style="width: 100%; height: auto;"
 					<p>
 					 <label for="des"> ${product_designation} :</label> <input class="searchInput" type="text" name="designation" id="des"/>
 					</p>
-					
 					<center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
 			 		<div style="height:400px; overflow: auto; "  >
 					<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">

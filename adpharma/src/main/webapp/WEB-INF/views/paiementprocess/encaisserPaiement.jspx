@@ -55,9 +55,12 @@
 	<spring:message code="cashregister_my_own_tickets"  var="my_own_tickets"/>	
 	
 			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
-		<span class="firstTab selectedTab"><a href="${ edit_url}">${cashregister_collect }</a></span> <span class="nextTab unselectedTab"> <a
+		<span class="firstTab selectedTab"><a href="${ edit_url}">${cashregister_collect }</a></span>
+		<!-- 
+		 <span class="nextTab unselectedTab"> <a
 			href="${ find_facture_url}">${billing_invoice_search }</a>
 		</span> 
+		-->
 	<spring:message code="cashregister_collect_find_ticket" var="collect_find_ticket"/>
 	<spring:message code="cashregister_collect_find_ticket_title" var="collect_find_ticket_title"/>
 		<SPAN><a style="padding-left: 25px; text-decoration: none;"

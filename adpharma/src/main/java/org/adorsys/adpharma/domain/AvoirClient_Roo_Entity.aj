@@ -4,7 +4,6 @@
 package org.adorsys.adpharma.domain;
 
 import java.lang.Long;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -23,10 +22,6 @@ privileged aspect AvoirClient_Roo_Entity {
     public static AvoirClient AvoirClient.findAvoirClient(Long id) {
         if (id == null) return null;
         return entityManager().find(AvoirClient.class, id);
-    }
-    
-    public static List<AvoirClient> AvoirClient.findAvoirClientEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM AvoirClient o", AvoirClient.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
 }

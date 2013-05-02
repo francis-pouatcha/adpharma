@@ -11,9 +11,17 @@ privileged aspect Configuration_Roo_ToString {
         StringBuilder sb = new StringBuilder();
         sb.append("CloseCancelSale: ").append(getCloseCancelSale()).append(", ");
         sb.append("CloseCashUnpaySale: ").append(getCloseCashUnpaySale()).append(", ");
+        sb.append("EditCloseSupply: ").append(getEditCloseSupply()).append(", ");
+        sb.append("EnableLicence: ").append(getEnableLicence()).append(", ");
+        sb.append("ForceToSameLine: ").append(getForceToSameLine()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("OnlySaleOld: ").append(getOnlySaleOld()).append(", ");
+        sb.append("ReceptionFolder: ").append(getReceptionFolder()).append(", ");
         sb.append("RestoreCancelSale: ").append(getRestoreCancelSale()).append(", ");
-        sb.append("SaleForce: ").append(getSaleForce());
-        sb.append("SaleCash: ").append(getSaleCash());
+        sb.append("SaleCash: ").append(getSaleCash()).append(", ");
+        sb.append("SaleForce: ").append(getSaleForce()).append(", ");
+        sb.append("SendFolder: ").append(getSendFolder()).append(", ");
+        sb.append("Version: ").append(getVersion());
         return sb.toString();
     }
     

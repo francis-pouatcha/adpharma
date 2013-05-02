@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_ConfigurationSoldes" items="${configurationsoldeses}" z="user-managed">
+        <table:table data="${configurationsoldeses}" id="l_org_adorsys_adpharma_domain_ConfigurationSoldes" path="/configurationsoldeses" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_cipProduit" property="cipProduit" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${configurationSoldes_debutsolde_date_format}" id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_debutSolde" property="debutSolde" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${configurationSoldes_finsolde_date_format}" id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_finSolde" property="finSolde" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_tauxSolde" property="tauxSolde" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_etatSole" property="etatSole" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_ConfigurationSoldes_activeConfig" property="activeConfig" z="user-managed"/>
+        </table:table>
+    </page:list>
+</div>

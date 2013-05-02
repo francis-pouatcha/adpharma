@@ -131,7 +131,7 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		adressTable1.setWidthPercentage(100);
 
 		PdfPCell customerNameCell = new PdfPCell(cellBorderlessStyle);
-		customerNameCell.setPhrase(new Phrase(new Chunk("Client :", headerStyle)));
+		customerNameCell.setPhrase(new Phrase(new Chunk("Nom du Client :", headerStyle)));
 		customerNameCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable1.addCell(customerNameCell);// 2:1
@@ -165,7 +165,7 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 			adressTable1.addCell(emptyCell);// 2:3
 		}
 		PdfPCell addressOnInvoiceCell = new PdfPCell(cellBorderlessStyle);
-		addressOnInvoiceCell.setPhrase(new Phrase(new Chunk("Date Facturation :", headerStyle)));
+		addressOnInvoiceCell.setPhrase(new Phrase(new Chunk("Date de Facturation :", headerStyle)));
 		addressOnInvoiceCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable1.addCell(addressOnInvoiceCell);// 3:1
@@ -182,7 +182,7 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		adressTable1.addCell(invoiceDateCell);// 3:2
 		adressTable1.addCell(emptyCell);// 3:3
 		PdfPCell sallerCell = new PdfPCell(cellBorderlessStyle);
-		sallerCell.setPhrase(new Phrase(new Chunk("Vendeur :", headerStyle)));
+		sallerCell.setPhrase(new Phrase(new Chunk("Nom du Vendeur :", headerStyle)));
 		sallerCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable1.addCell(sallerCell);// 2:1
@@ -448,11 +448,12 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		document.setFooter(footer);
 		HeaderFooter header = null ;
 		if (facture.getTypeFacture().equals(TypeFacture.PROFORMAT)) {
-			header	= new HeaderFooter(new Phrase(new Chunk("FACTURE PROFORMAT "+facture.getCommande().getCmdNumber() , headerStyle)), false);
+			header	= new HeaderFooter(new Phrase(new Chunk("FACTURE"+facture.getCommande().getCmdNumber() , headerStyle)), false);
 		}else {
 			header	= new HeaderFooter(new Phrase(new Chunk("FACTURE "+facture.getCommande().getCmdNumber() , headerStyle)), false);
 
 		}
+		
 		header.setAlignment(Element.ALIGN_CENTER);
 		document.setHeader(header);
 

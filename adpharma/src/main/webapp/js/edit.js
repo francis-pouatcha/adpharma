@@ -3,17 +3,28 @@ function calculePt() {
 	var pu = document.getElementById("pu").value;
 	var qte = document.getElementById("qte").value;
 	var rem = document.getElementById("rem").value;
+	var remP= document.getElementById("remP").value;
 	if (rem == "") {
 		rem = 0 ;
 	}
 	if (qte != "") {
-
-		
+		// Calcul de la promotion
+		if(remP!=""){
+			calculPromo();
+		}
 		document.getElementById("pt").value = (pu - rem) * qte;
 	}else{
 		document.getElementById("rem").value = "";
 		document.getElementById("pt").value =  0 ;
-	}
+	};
+}
+
+function calculPromo(){
+	 $('#rem').val(Math.floor(($('#remP').val()*$('#pu').val())/100));
+	 rem= $('#rem').val();
+	 pu = document.getElementById("pu").value;
+	 qte = document.getElementById("qte").value;
+	document.getElementById("pt").value = (pu - rem) * qte;
 }
 
 
@@ -27,6 +38,16 @@ function annCmd(){
 		return true;
 	}
 	}
+
+// Fonction generique d'annulation
+function deleteBox(texte){
+	var check= confirm(texte);
+	if(check==false){
+		return false;
+	}else{
+		return true;
+	};
+}
 
 
 function calculePtWhithRem() {
@@ -62,13 +83,12 @@ function calculePtWhithRem() {
 		}else{
 			document.getElementById("rem").value = 0;
 			document.getElementById("pt").value = pu * qte;
-			alert("la remise est surepieure a la remise max:" + remax + " fcfa");
+			alert("la remise est superieure a la remise max:" + remax + " fcfa");
 			$('#remP').val(0);
 			return false;
 		}
 
 	} else {
-
 		document.getElementById("pt").value = (pu - rem) * qte;
 		return true;
 	}
@@ -160,7 +180,7 @@ $('#remP').keyup(function() {
 		}
 		
 	});
-	
+
 	
 	$('.unique').val($('#rem').val()*100/$('#pu').val());
 	
@@ -213,8 +233,8 @@ function dialog_widget(id, title, width, hide_effect, show_effect, position){
 	var dialog= $('#'+id).dialog({
 		autoOpen: false,
 		width: width,
-		resizable:true,
-		draggable :false,
+		resizable:false,
+		draggable :true,
 		title: title,
         hide:  hide_effect,
         show:  show_effect,
@@ -232,52 +252,10 @@ function dialog_widget(id, title, width, hide_effect, show_effect, position){
 	});
 }
 
-// Validation du formulaire de l'etat
-function validForm(){
-	var checkSame= document.getElementById("same").checked;
-	var checkdiff= document.getElementById("diff").checked;
-	var dateMin= document.getElementById("year_min");
-	var dateMax= document.getElementById("year_max");
-	var moisMin= document.getElementById('month_min').value;
-	var moisMax= document.getElementById('month_max').value;
-	var date1= new Date(2013, monthToNumber(moisMin.toLowerCase()), 1);
-	var date2= new Date(2013, monthToNumber(moisMax.toLowerCase()), 1);
-	console.log(date1);
-	console.log(date2);
-	if(checkSame){
-		if(dateMin.value!= dateMax.value){
-			alert("Les annees doivent etre egales");
-			return false;
-		}
-	}
-	if(checkdiff){
-		if(dateMin.value== dateMax.value){
-			alert("Les annees doivent etre differentes");
-			return false;
-		}
-	}
-	if(date1>date2){
-		alert("Le mois minimum doit etre inferieur au mois maximum");
-		return false;
-	}
-	return true;
-}
 
-function monthToNumber(month){
-	if(month=="janvier") return 0;
-	else if(month=="fevrier") return 1;
-	else if(month=="mars") return 2;
-	else if(month=="avril") return 3;
-	else if(month=="mai") return 4;
-	else if(month=="juin") return 5;
-	else if(month=="juillet") return 6;
-	else if(month=="aout") return 7;
-	else if(month=="septembre") return 8;
-	else if(month=="octobre") return 9;
-	else if(month=="novembre") return 10;
-	else if(month=="decembre") return 11;
-	else return null;
-}
+
+
+
 
 
 

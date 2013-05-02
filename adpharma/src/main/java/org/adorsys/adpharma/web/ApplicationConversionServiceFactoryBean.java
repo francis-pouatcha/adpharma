@@ -1,5 +1,8 @@
 package org.adorsys.adpharma.web;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.CategorieClient;
@@ -23,6 +26,9 @@ import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.hibernate.ejb.EntityManagerFactoryImpl;
+import org.hibernate.ejb.internal.EntityManagerFactoryRegistry;
+import org.hibernate.engine.spi.PersistenceContext;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
@@ -33,7 +39,6 @@ import org.springframework.roo.addon.web.mvc.controller.RooConversionService;
  */
 @RooConversionService
 public class ApplicationConversionServiceFactoryBean extends FormattingConversionServiceFactoryBean {
-
 	@Override
 	protected void installFormatters(FormatterRegistry registry) {
 		super.installFormatters(registry);

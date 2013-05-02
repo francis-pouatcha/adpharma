@@ -273,7 +273,7 @@ if(Check == false){
 			<spring:url value="/caisses/decaissement?form" var="decaissement_url" />
 			
 			<spring:message code="cashregister_cashregister_menu" var="cashregister_menu"/>
-			<security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER">
+			<security:authorize ifAnyGranted="ROLE_CASHIER,ROLE_SITE_MANAGER,ROLE_CASH_CONTROLLER">
 				<li><a href="#">${cashregister_menu }</a>
 					<ul class="sub_menu">
 			<spring:message code="cashregister_cashregister_open" var="cashregister_open"/>
@@ -282,7 +282,7 @@ if(Check == false){
 						<li><a href="${delete_caisse_url}" onclick="return  fermer();">${cashregister_close }</a></li>
 			<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
 						<li><a href="${cai_enc_url}">${cashregister_collect }</a></li>
-						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_CONTROLLER">
 			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
 							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
 			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
@@ -308,8 +308,7 @@ if(Check == false){
 		        		  <li><a href="${cai_pays_url}">${find_a_payment }</a></li>
 			<spring:message code="cashregister_cash_collected" var="cash_collected"/>
                           <li><a href="${chiffre_affaire_url}">${cash_collected }</a></li>
-                          <!--  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>-->
-		        			 
+                  <li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
 		        			  <!--  menu facturation-->
     
             <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
@@ -642,7 +641,7 @@ if(Check == false){
  
  <!-- Menu suivie clientelle -->
     </security:authorize>
-            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
+            <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION,ROLE_SUIVI_CLIENT">
     
      <li>
      <spring:message code="client_followup_menu"  var="client_fellowup_menu"/>
@@ -656,7 +655,7 @@ if(Check == false){
 		        						<li><a href="${clt_findN_url}">${find_client }</a>	</li>
 		        						
 		        						
-		        <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_GESTION_DETTE">
+		        <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_GESTION_DETTE,ROLE_SUIVI_CLIENT">
 		                                 <li>
      <spring:message code="client_followup_clients_debt_menu"  var="clients_debt_menu"/>
 		        							<a href="#">${clients_debt_menu }</a>
@@ -680,7 +679,7 @@ if(Check == false){
 		        							</ul>
 		        						</li>
      <spring:message code="client_followup_client_category_menu"  var="client_category_menu"/>
-	 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+	 <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_SUIVI_CLIENT">
 		        						
 		                                  <li><a href="#">${client_category_menu }</a>
 		        							<ul>

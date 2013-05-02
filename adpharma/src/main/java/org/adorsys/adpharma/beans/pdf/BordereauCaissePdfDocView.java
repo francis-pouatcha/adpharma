@@ -460,7 +460,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		tableDetail.addCell(cheque);
 		
 		PdfPCell credit = new PdfPCell(cellStyle);
-		credit.setPhrase(new Phrase(new Chunk("CREDIT", headerStyle)));
+		credit.setPhrase(new Phrase(new Chunk("RETRAIT", headerStyle)));
 		credit.setBackgroundColor(Color.gray);
 		credit.setPaddingBottom(5);
 
@@ -530,7 +530,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		tableDetail.addCell(chequev);
 		
 		PdfPCell creditv = new PdfPCell(cellStyle);
-		creditv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCredit().intValue(), headerStyles)));
+		creditv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalRetrait().intValue(), headerStyles)));
 		creditv.setPaddingBottom(5);
 
 		tableDetail.addCell(creditv);
@@ -553,7 +553,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbsolde = new PdfPCell(cellStyle);
-		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.getTotalEncaissement().add(fond).intValue(), headerStyles)));
+		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.calculateSolde().intValue(), headerStyles)));
 		tbsolde.setPaddingBottom(5);
 
 		tableDetail.addCell(tbsolde);
