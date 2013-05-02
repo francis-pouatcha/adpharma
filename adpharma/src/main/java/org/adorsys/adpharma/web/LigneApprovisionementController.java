@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.beans.ChangeDatePrice;
 import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Client;
@@ -310,6 +311,30 @@ public class LigneApprovisionementController {
 		}
 		return "ligneapprovisionements/list";
 	}
+	
+	
+	
+	@RequestMapping(value="/changeDatePrice")
+    public String changeDatePrice(ChangeDatePrice changeDatePrice, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+        if (bindingResult.hasErrors()) {
+            uiModel.addAttribute("changeDatePrice", changeDatePrice);
+            return "ligneapprovisionements/changedateprices";
+        }
+        
+        return "ligneapprovisionements/changedateprices";
+    }
+    
+    @RequestMapping(value="changeDatePriceForm")
+    public String createFormChangeDatePrice(Model uiModel) {
+        uiModel.addAttribute("changeDatePrice", new ChangeDatePrice());
+        return "ligneapprovisionements/changedateprices";
+    }
+	
+	
+	
+	
+	
+	
 	
 	
 	@ModelAttribute("approvisionements")

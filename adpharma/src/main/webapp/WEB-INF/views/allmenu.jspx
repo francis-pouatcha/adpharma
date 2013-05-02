@@ -116,6 +116,7 @@ if(Check == false){
 		<spring:url
 			value="/mouvementstocks?page=1&amp;size=${empty param.size ? 50 : param.size}"
 			var="mvt_list_url" />
+		<spring:url value="ligneapprovisionements/changeDatePriceForm" var="modif_prix_date_url" ></spring:url>
 
 		<ul class="dropdown">
 			<security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
@@ -142,10 +143,14 @@ if(Check == false){
 						<spring:message code="allmenu_stockmanagement_delivered_product" var="delivered_product"/>
 						<spring:message code="allmenu_stockmanagement_decompose_product" var="decompose_product"/>
 						<spring:message code="allmenu_stockmanagement_move_stock" var="move_stock"/>
+						<spring:message code="allmenu_stockmanagement_modif_prix_date" var="modif_prix_date"/>
 						<li><a href="#">${delivered_product }</a>
 							<ul>
 								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
 									<li><a href="${ap_trans_url}">${decompose_product }</a></li>
+								</security:authorize>
+								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
+									<li><a href="${modif_prix_date_url}">${modif_prix_date}</a></li>
 								</security:authorize>
 								<security:authorize
 									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">

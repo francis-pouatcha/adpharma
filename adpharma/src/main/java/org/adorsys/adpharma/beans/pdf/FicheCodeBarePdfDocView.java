@@ -52,10 +52,10 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 		float[] adColumnsWith = {.5f, .5f,.5f  ,.5f  ,.5f ,.5f ,.5f,.5f};
 		float[] imgColumnsWith = {.5f ,  .2f};
 		
-		PdfPTable adressTable = new PdfPTable(5);
+		PdfPTable adressTable = new PdfPTable(8);
 		adressTable.setWidthPercentage(100);
 		adressTable.setHeaderRows(0);
-		Font boddyStyle = new Font(Font.BOLD,12);
+		Font boddyStyle = new Font(Font.BOLD,10);
 		
 		boddyStyle.setStyle("bold");
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);

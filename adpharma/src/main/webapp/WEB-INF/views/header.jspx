@@ -5,7 +5,6 @@
 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
-  
  <spring:url var="banner" value="/resources/images/fakoship_logo.png" />
  <spring:url var="ship" value="/resources/images/biglogo.png" />
  <spring:url var="loginimage" value="/resources/images/login.png" />
@@ -20,8 +19,6 @@
  <spring:url var="img" value="/resources/images/logo.png" />
  <spring:url value="/resources/j_spring_security_logout" var="logout"/>
  <spring:url value="/resources/images/icon-16-logout.png" var="icon_logout" />
- 
- 
  <spring:message code="button_home" var="home_label" />
  <spring:message code="button_home" var="home_label" />
  <spring:message code="security_logout"  var="msg_logout"/>
@@ -30,8 +27,6 @@
  <spring:message code="welcome_user1" var="welcome1" /> 
  <spring:message code="welcome_user2" var="welcome2" />
  <spring:message code="lang_user" var="lang_user" />
-
-  
 <script type="text/javascript">
 		function confHeader(){
 		Check = confirm("Voulez vous vraiment Ferner votre session? ");
@@ -104,7 +99,7 @@
 				<c:choose>
 	  				<c:when test="${pageContext['request'].userPrincipal != null}">
 		  			    <img src="${user}" alt="user icon" style="margin-rigth: 1px;margin-left:1px;" />
-				  		<a href="#" class="welcome_user"> <span>${welcome1} </span> ${pageContext['request'].userPrincipal.name}</a> <span style="margin-left: 5px; margin-right: 5px; color: #6FEFC9;">${welcome2}</span> 
+				  		<a href="#" class="welcome_user"> <span>${welcome1} </span> ${pageContext['request'].userPrincipal.name}</a> <span style="margin-left: 5px; margin-right: 5px; color: #6FEFC9;">|</span> 
 				  		<span style="color: #6FEFC9;">${sessionBean.connectedSiteName}</span>
 				    	<a id="userInfos" title="Vos Informations" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
 				    	<!-- <a href="#">
