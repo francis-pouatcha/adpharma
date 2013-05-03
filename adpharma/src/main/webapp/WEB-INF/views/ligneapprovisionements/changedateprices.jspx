@@ -19,37 +19,39 @@
 .dj_webkit .dijitTextBoxDisabled input {
 	color: #545454;
 }
+
 </style>
 
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	<spring:url value="/ligneapprovisionements/findProductAjax"	var="find_product_url" />
 	<spring:url  var="find_prdId_url" value="/ligneapprovisionements/findProductByidAjax" />
-
+	<spring:url  var="findProductByCipm_url" value="/ligneapprovisionements/findProductByCipmAjax" />
 
 	<form:create id="fc_org_adorsys_adpharma_beans_ChangeDatePrice"
 		modelAttribute="changeDatePrice" path="/ligneapprovisionements/changeDatePrice"
 		label="Modifier le Prix et ou la Date d'un Produit" z="">
-		<div>${error}</div>
+		<div style="color: red;font-size: 20px;font-style: italic; margin-bottom: 5px;">${message}</div>
 		<div style="float: left;">
 			<INPUT type="hidden" name="id" id="ligneId" />
-			<field:input field="cipm"
+			<field:input field="cipm" required="true" validationMessage="le cipm est obligatoire"
+				validationRegex="[0-9]*" min="7"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_cipm" z="" />
 			<INPUT type="submit" value="Rechercher" style="float: right;"
 				class="submit" id="find" /><br />
 			<field:input field="designation"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_designation"
-				disabled="true" z="" />
-			<field:input field="prixActuel"
+				readonly="true" z="" />
+			<field:input field="prixActuel" validationRegex="[0-9]*"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_prixActuel"
-				disabled="true" z="" />
+				 z="" readonly="true" />
 			<field:input field="nouveauPrix"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouveauPrix" z="" />
 		</div>
 		<div style="float: left; margin-left: 60px; margin-right: 20px;">
 			<field:input field="datePeremptionActuel"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_datePeremptionActuel"
-				disabled="true" z="" />
-			<field:input field="nouvelDatePeremption"
+				readonly="true" z="" />
+			<field:datetime dateTimePattern="dd-MM-yyyy" field="nouvelDatePeremption"
 				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouvelDatePeremption"
 				z="" />
 			<field:checkbox field="appliqueLeNouveauPrixATousLesCipmDeMemeCip"
@@ -91,6 +93,26 @@
 	</div>
 	<script type="text/javascript">
      $(function(){
+    	 
+     $('#_cipm_id').keyup(function() {
+    	 var cipm =	$('#_cipm_id').val();
+    	 console.log("ok");
+    	  	$.getJSON( "${findProductByCipm_url }/"+cipm,
+    	  			function(data){
+    	  		if (data.id== null) {
+    	  			$('#_designation_id').val("");
+	    		 	$('#_prixActuel_id').val("");
+	    		 	$('#_datePeremptionActuel_id').val("");
+	    		 	$('#ligneId').val("");
+    	  				}else{
+    	  					$('#_designation_id').val(data.designation);
+			    		 	$('#_prixActuel_id').val(data.prixVenteUnitaire);
+			    		 	$('#_datePeremptionActuel_id').val(data.datePeremtion);
+			    		 	$('#ligneId').val(data.id);	
+    	  				}
+    	  			
+    	  			});
+    }); 
    
     $('#find').click(function(){
     	
@@ -143,6 +165,7 @@
 								this.onclick = function(event) {
 									$.getJSON( '${find_prdId_url}/'+this.id,
 								           function(data){
+												$('#_cipm_id').val(data.cipMaison);
 								    		    $('#_designation_id').val(data.designation);
 								    		 	$('#_prixActuel_id').val(data.prixVenteUnitaire);
 								    		 	$('#_datePeremptionActuel_id').val(data.datePeremtion);
