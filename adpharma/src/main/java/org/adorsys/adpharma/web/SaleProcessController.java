@@ -504,20 +504,11 @@ public class SaleProcessController {
 					}
 				}
 			}
-//<<<<<<< HEAD
+
 			if (remiseAutorise < remise.intValue()) {
 				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
 				remise = BigDecimal.ZERO ;
-// =======
-		//}
-			
-			/*// Si le produit n'est pas en solde, il verifie la remise, dans le cas contraire, il laisse passer la remise de la promotion.
-			if(!Produit.hasSolde(ligneApp.getProduit())){
-				if (remiseAutorise < remise.intValue()) {
-					uiModel.addAttribute("apMessage","la remise sur ce produit ne peut etre superieure a : "+remiseAutorise);
-					remise = BigDecimal.ZERO ;
-				}*/
-// >>>>>>> 6b306bf01d7ce37acceca951f0907bc1cd6d1e4b
+
 			}
 			
 			SaleProcess.addline(pId, qte, remise, commandeClient);

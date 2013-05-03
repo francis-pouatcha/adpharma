@@ -11,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class ChangeDatePrice {
 	
+	private Long id;
+	
 	private String cipm;
 	
 	private String designation;
@@ -95,6 +97,14 @@ public class ChangeDatePrice {
 	public void setAppliqueLaNouvelDateATousLesCipmDeMemeCip(
 			boolean appliqueLaNouvelDateATousLesCipmDeMemeCip) {
 		this.appliqueLaNouvelDateATousLesCipmDeMemeCip = appliqueLaNouvelDateATousLesCipmDeMemeCip;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

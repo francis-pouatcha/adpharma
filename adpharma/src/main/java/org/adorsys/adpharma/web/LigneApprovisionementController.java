@@ -315,12 +315,31 @@ public class LigneApprovisionementController {
 	
 	
 	@RequestMapping(value="/changeDatePrice")
-    public String changeDatePrice(ChangeDatePrice changeDatePrice, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
+    public String changeDatePrice(ChangeDatePrice changeDatePrice, Model uiModel, HttpServletRequest httpServletRequest) {
+        if (changeDatePrice.getNouveauPrix()==null && changeDatePrice.getNouveauPrix().equals("") ||
+        		changeDatePrice.getNouvelDatePeremption()==null && changeDatePrice.getNouvelDatePeremption().equals("") ) {
+        	
             uiModel.addAttribute("changeDatePrice", changeDatePrice);
+            uiModel.addAttribute("error", "la date et/ou le prix sont null, veuillez les remplir!");
             return "ligneapprovisionements/changedateprices";
         }
         
+        
+        if(changeDatePrice.getNouveauPrix()!=null && changeDatePrice.getNouveauPrix().compareTo(changeDatePrice.getPrixActuel())==1){
+        	LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(changeDatePrice.getId());
+        	approvisionement.setPrixVenteUnitaire(changeDatePrice.getNouveauPrix());
+        	approvisionement.merge();
+        	approvisionement.flush();
+        	uiModel.addAttribute("error", "Prix modifier avec succes");
+        }
+        if(changeDatePrice.getNouvelDatePeremption()!=null && changeDatePrice.getNouvelDatePeremption().compareTo(changeDatePrice.getDatePeremptionActuel())==1){
+        	LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(changeDatePrice.getId());
+        	approvisionement.setDatePeremtion(changeDatePrice.getNouvelDatePeremption());
+        	approvisionement.merge();
+        	approvisionement.flush();
+        	uiModel.addAttribute("error", "Date de peremtion modifier avec succes");
+        }
+        uiModel.addAttribute("changeDatePrice", new ChangeDatePrice());
         return "ligneapprovisionements/changedateprices";
     }
     
@@ -331,9 +350,20 @@ public class LigneApprovisionementController {
     }
 	
 	
+    @RequestMapping(value="/findProductAjax")
+    @ResponseBody
+	public String findByDesAjax( @RequestParam("designation") String designation, Model uiModel) {
+		
+		List<LigneApprovisionement> list = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndDesignationLike(BigInteger.ONE, designation , Etat.CLOS).getResultList();
+		return LigneApprovisionement.toJsonArray(list);
+	}
 	
-	
-	
+    @RequestMapping(value="/findProductByidAjax/{id}")
+    @ResponseBody
+	public String findByIdAjax( @PathVariable("id") Long id, Model uiModel) {
+		LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(id);
+		return approvisionement.toJson();
+	}
 	
 	
 	

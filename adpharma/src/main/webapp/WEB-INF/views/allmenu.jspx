@@ -149,7 +149,7 @@ if(Check == false){
 								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
 									<li><a href="${ap_trans_url}">${decompose_product }</a></li>
 								</security:authorize>
-								<security:authorize ifAnyGranted="ROLE_DECOMPOSE_ENTREE ,ROLE_SITE_MANAGER">
+								<security:authorize ifAnyGranted="ROLE_MODIFIER_PRIX_DATE, ROLE_SITE_MANAGER">
 									<li><a href="${modif_prix_date_url}">${modif_prix_date}</a></li>
 								</security:authorize>
 								<security:authorize
