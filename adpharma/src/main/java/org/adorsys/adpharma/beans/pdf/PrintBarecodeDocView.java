@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.adorsys.adpharma.beans.process.PrintBareCodeBean;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.Site;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -55,8 +56,10 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 		// addresse de la pharmacie
 		float[] adColumnsWith = {.5f, .5f,.5f  ,.5f  ,.5f ,.5f ,.5f,.5f};
 		float[] imgColumnsWith = {.5f ,  .2f};
-		
-		PdfPTable adressTable = new PdfPTable(8);
+		Site site = Site.findSite(new Long(1));
+		int nbline = 8 ;
+		if(site!=null) nbline = site.getBareCodePerLine()!=null ?site.getBareCodePerLine().intValue():8;
+		PdfPTable adressTable = new PdfPTable(nbline);
 		adressTable.setWidthPercentage(100);
 		adressTable.setHeaderRows(0);
 		Font boddyStyle = new Font(Font.BOLD,10);

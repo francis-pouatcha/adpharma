@@ -15,6 +15,7 @@
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
                     <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                     <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Order Sent Path" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
+                    <field:input field="bareCodePerLine" label="nb codeBare/Ligne" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" z="XSlT/K1ynhmGm1x065HiZwvbhPM="/>
                 </td>
                 <td class="tbcreate">
                     <field:input field="siteManager" id="c_org_adorsys_adpharma_domain_Site_siteManager" required="true" z="RS3JPJNTpbicmh1hQISTW4PNauU="/>
@@ -29,7 +30,6 @@
                 </td>
             </tr>
         </table>
-        <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" z="XSlT/K1ynhmGm1x065HiZwvbhPM="/>
-        <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
+       
     </form:update>
 </div>
