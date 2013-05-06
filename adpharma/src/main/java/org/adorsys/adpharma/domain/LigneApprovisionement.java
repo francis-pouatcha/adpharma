@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import flexjson.JSONSerializer;
+import flexjson.transformer.DateTransformer;
 
 /**
  * @author adorsys-clovis
@@ -235,7 +236,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public String toJson() {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon", "produit.configSolde.tauxSolde", "produit.configSolde.activeConfig").exclude("*","*.class").serialize(this);
+		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon", "produit.configSolde.tauxSolde","datePeremtion", "produit.configSolde.activeConfig").exclude("*","*.class").serialize(this);
 	}
 	
 	public String toJson2() {
@@ -243,7 +244,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 	
 	public static String toJsonArray(Collection<LigneApprovisionement> collection) {
-		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon").exclude("*","*.class").serialize(collection);
+		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon","datePeremtion").exclude("*","*.class").serialize(collection);
 	}
 
 	public String getFournisseur() {

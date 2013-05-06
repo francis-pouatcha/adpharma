@@ -576,7 +576,6 @@ $('#updateClient').dialog("close");
 								value="${saleProcess.lineToUpdate.prixUnitaire}"
 								onKeyPress="return scanTouche(event)" title="${enter_cip }"
 								style="color: blue; padding-left: 0px;"  />
-
 							</td>
 							
 							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly" onmouseover="this.select();" onfocus="this.select();"  class="autres"
