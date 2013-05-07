@@ -491,8 +491,9 @@ if(Check == false){
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
 		        						 -->
 		        						<li><a href="${prd_list_url}"> ${list_product_with_cip }</a></li>
-		        						<li><a href="${updateCip_url}"> ${modif_cip_product }</a></li>
-		        						
+		        						<security:authorize ifAnyGranted="ROLE_MODIFIER_CIP">
+		        							<li><a href="${updateCip_url}"> ${modif_cip_product }</a></li>
+		        						</security:authorize>
 		        					    <li><a href="${aff_fsf_url}"> ${famillies_set } </a></li>
 		        						<li><a href="${prdf_des_url}"> ${find_product_by_cip }</a></li>
 		        						<li><a href="${soldes_form_url}">Configuration soldes</a></li>	
