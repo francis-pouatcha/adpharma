@@ -2,6 +2,7 @@
 <div xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:spring="http://www.springframework.org/tags" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
@@ -23,47 +24,21 @@
 </style>
 
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
-	<spring:url value="/ligneapprovisionements/findProductAjax"	var="find_product_url" />
-	<spring:url  var="find_prdId_url" value="/ligneapprovisionements/findProductByidAjax" />
+	<spring:url value="/produits/findProductAjax"	var="find_product_url" />
+	<spring:url  var="find_prdId_url" value="/produits/findProductByidAjax" />
 	<spring:url  var="findProductByCipm_url" value="/ligneapprovisionements/findProductByCipmAjax" />
+	<util:panel title="Modifier le CIP d'un Produit" id="">
+		<form>
+			<div style="color: red;font-size: 20px;font-style: italic; margin-bottom: 5px;" id="message">${message}</div>
+			
+				<INPUT type="hidden" name="id" id="id" />
+				<input name="cip" id="cip" style="margin-left: 10px;" />
+				<INPUT type="submit" value="Rechercher" id="find" style="margin-left: 10px;" /><br />
+				<input type="submit" value="Changer CIP" class="submits" style="width: 202px;margin-top: 7px;" />
+		</form>	
+	</util:panel>	
 
-	<form:create id="fc_org_adorsys_adpharma_beans_ChangeDatePrice"
-		modelAttribute="changeDatePrice" path="/ligneapprovisionements/changeDatePrice"
-		label="Modifier le Prix et ou la Date d'un Produit" z="">
-		<div style="color: red;font-size: 20px;font-style: italic; margin-bottom: 5px;">${message}</div>
-		<div style="float: left;">
-			<INPUT type="hidden" name="id" id="ligneId" />
-			<field:input field="cipm" required="true" validationMessage="le cipm est obligatoire"
-				validationRegex="[0-9]*" min="7" 
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_cipm" z="" />
-			<INPUT type="submit" value="Rechercher" style="float: right;"
-				class="submit" id="find" /><br />
-			<field:input field="designation"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_designation"
-				readonly="true" z="" />
-			<field:input field="prixActuel" validationRegex="[0-9]*"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_prixActuel"
-				 z="" readonly="true" />
-			<field:input field="nouveauPrix"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouveauPrix" z="" />
-		</div>
-		<div style="float: left; margin-left: 60px; margin-right: 20px;">
-			<field:input field="datePeremptionActuel"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_datePeremptionActuel"
-				readonly="true" z="" />
-			<field:datetime dateTimePattern="dd-MM-yyyy" field="nouvelDatePeremption"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouvelDatePeremption"
-				z="" />
-			<field:checkbox field="appliqueLeNouveauPrixATousLesCipmDeMemeCip"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_appliqueLeNouveauPrixATousLesCipmDeMemeCip"
-				z="" />
-			<br /> <br />
-			<field:checkbox field="appliqueLaNouvelDateATousLesCipmDeMemeCip"
-				id="c_org_adorsys_adpharma_beans_ChangeDatePrice_appliqueLaNouvelDateATousLesCipmDeMemeCip"
-				z="" />
-		</div>
 
-	</form:create>
 	<div id="findproduit" style="display: none;" title="recherche un cip ">
 		<input type="hidden" id="select" />
 		<form id="produitfindform" enctype="application/x-www-form-urlencoded">
@@ -82,10 +57,8 @@
 				width="100%;" frame="box">
 				<tr>
 					<th style="text-align: center;">CIP</th>
-					<th style="text-align: center;">CIPM</th>
 					<th style="text-align: center; width: 250px;">DESIGNATION</th>
-					<th style="text-align: center;">PRIX</th>
-					<th style="text-align: center;">DATE PEREMPTION</th>
+					
 				</tr>
 			</table>
 		</div>
@@ -129,11 +102,8 @@
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
-				    <th style="text-align: center;">CIP</th>
-					<th style="text-align: center;">CIPM</th>
-					<th style="text-align: center; width: 250px;">DESIGNATION</th>
-					<th style="text-align: center;">PRIX</th>
-					<th style="text-align: center;">DATE PEREMPTION</th>
+				    <th style="text-align: center; width: 250px;">CIP</th>
+					<th style="text-align: center;">DESIGNATION</th>
 				</tr>');
 	//	$('#designation').val(" ");
 		
@@ -150,10 +120,7 @@
 								$('#resultproduit').append(
 									'<tr id="'+this.id+'">
 									  <td>'+this.cip+'</td>
-									  <td>'+this.cipMaison+'</td>
 									  <td>'+this.designation+'</td>
-									   <td>'+this.prixVenteUnitaire+'</td>
-									  <td>'+this.datePeremtion+'</td>
 									  </tr>'
 									
 							);
@@ -164,11 +131,9 @@
 								this.onclick = function(event) {
 									$.getJSON( '${find_prdId_url}/'+this.id,
 								           function(data){
-												$('#_cipm_id').val(data.cipMaison);
-								    		    $('#_designation_id').val(data.designation);
-								    		 	$('#_prixActuel_id').val(data.prixVenteUnitaire);
-								    		 	$('#_datePeremptionActuel_id').val(data.datePeremtion);
-								    		 	$('#ligneId').val(data.id);
+												$('#cip').val(data.cip);
+								    		 	$('#id').val(data.id);
+								    		 	$('#message').html("cip: "+data.cip+", designation: "+data.designation);
 												$('#findproduit').dialog("close"); 
 											});
 								

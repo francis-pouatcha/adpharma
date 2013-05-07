@@ -16,6 +16,7 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.DetteClient;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.EtatSolde;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
@@ -401,5 +402,41 @@ public class ProduitController {
 		public Collection<Produit> populateProduitsSolde() {
 			return Produit.findProduitsWithConfigSolde().getResultList();
 		}
+	    
+	    @RequestMapping(value="/findProductAjax")
+	    @ResponseBody
+		public String findByDesAjax( @RequestParam("designation") String designation, Model uiModel) {
+			
+			List<Produit> list = Produit.findProduitsByDesignationLike(designation).getResultList();
+			return Produit.toJsonArray(list);
+		}
+	    
+	    @RequestMapping(value="/findProductByidAjax/{id}")
+	    @ResponseBody
+		public String findByIdAjax( @PathVariable("id") Long id, Model uiModel) {
+			Produit produit = Produit.findProduit(id);
+			return produit.toJson();
+		}
+	    
+	    @RequestMapping(value = "updateCip")
+	    public String updateCip(@RequestParam(value="id", required=false) Long id,
+	    		@RequestParam(value="cip", required=false) String cip, Model uiModel) {
+	    	
+	    	if(id!=null && cip!=null && !cip.equals("")){
+	    		List<Produit> list = Produit.findProduitsByCipEquals(cip).getResultList();
+	    		if(list!=null && !list.isEmpty()){
+	    			uiModel.addAttribute("message", "Le cip que vous avez entrez, existe deja! ");
+	    		}else{
+	    			Produit produit = Produit.findProduit(id);
+	    			produit.setCip(cip);
+	    			produit.merge();
+	    			uiModel.addAttribute("message", "Le cip du produit a ete modifie! ");
+	    		}
+	    	}else{
+	    		uiModel.addAttribute("message", "Selectionner un produit et entrer un nouveau cip! ");
+	    	}
+	    	
+	        return "produits/changecip";
+	    }
 
 }

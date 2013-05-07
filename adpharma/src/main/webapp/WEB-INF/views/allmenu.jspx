@@ -464,6 +464,7 @@ if(Check == false){
                         <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
                         <spring:url value="/inventaireProcess?find=BySearch&amp;form" var="prdf_des_url"/>
                         <spring:url value="/produits/soldes?form" var="soldes_form_url" />
+                        <spring:url value="/produits/updateCip" var="updateCip_url" />
                         
             <spring:message code="catalogues_catalogue_menu" var="catalogue_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
@@ -481,6 +482,7 @@ if(Check == false){
             <spring:message code="catalogues_list_product_with_cip" var="list_product_with_cip"/>
             <spring:message code="catalogues_famillies_set" var="famillies_set"/>
             <spring:message code="catalogues_find_product_by_cip" var="find_product_by_cip"/>
+            <spring:message code="catalogues_product_cip" var="modif_cip_product"/>
 		        				<a href="#">${create_product }</a>
 		        					<ul>
 		        						<li><a href="${prd_cip_url}"> ${create_product_cip }</a></li>
@@ -489,7 +491,9 @@ if(Check == false){
 		        						<li><a href="${up_prd_url}">Modifier Un Produit</a></li>
 		        						 -->
 		        						<li><a href="${prd_list_url}"> ${list_product_with_cip }</a></li>
-		        						
+		        						<security:authorize ifAnyGranted="ROLE_MODIFIER_CIP">
+		        							<li><a href="${updateCip_url}"> ${modif_cip_product }</a></li>
+		        						</security:authorize>
 		        					    <li><a href="${aff_fsf_url}"> ${famillies_set } </a></li>
 		        						<li><a href="${prdf_des_url}"> ${find_product_by_cip }</a></li>
 		        						<li><a href="${soldes_form_url}">Configuration soldes</a></li>	

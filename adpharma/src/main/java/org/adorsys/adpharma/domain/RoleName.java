@@ -35,7 +35,8 @@ public enum RoleName {
 	 ROLE_FUSIONNER_CIP("FUSIONNER DES CIP", "permet de fusionner le stock de produit different "),
 	 ROLE_CASH_CONTROLLER("CASH CONTROLLER", "la gestion des caisses ") ,
 	 ROLE_SUIVI_CLIENT("SUIVIE CLIENT", "permet la gestion et suivi des clients ")  ,
-	 ROLE_MODIFIER_PRIX_DATE("MODIFIER PRIX DATE", "permet de modifier le prix et la date de premption d'un produit ")  ;
+	 ROLE_MODIFIER_PRIX_DATE("MODIFIER PRIX DATE", "permet de modifier le prix et la date de premption d'un produit ")  ,
+	 ROLE_MODIFIER_CIP("MODIFIER CIP", "permet de modifier le cip d'un produit ")  ;
 	 
    
 
