@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.domain;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.annotations.OrderBy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -229,6 +231,8 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		approvisionement.deleteAllLine();
 		if (!ligneCommande.isEmpty()) {
 			for (LigneCmdFournisseur line : ligneCommande) {
+				BigInteger qtef = line.getQuantiteFournie();
+				if(qtef.intValue()<=0) continue ;
 				LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 				ligneApprovisionement.setApprovisionement(approvisionement);
 				ligneApprovisionement.setCip(line.getCip());
@@ -236,11 +240,12 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 				ligneApprovisionement.setIndexLine(getNewIndex());
 				ligneApprovisionement.setPrixAchatUnitaire(line.getPrixAchatMin());
 				ligneApprovisionement.setPrixVenteUnitaire(line.getPrixAVenteMin());
-				ligneApprovisionement.setQuantiteAprovisione(line.getQuantiteCommande());
+				ligneApprovisionement.setQuantiteAprovisione(qtef);
 				ligneApprovisionement.setProduit(line.getProduit());
 				ligneApprovisionement.setPrixAchatTotal(line.getPrixAchatTotal());
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
 				ligneApprovisionement.CalculeQteEnStock();
+				ligneApprovisionement.setDatePeremtion(DateUtils.addDays(new Date(), 1));
 				ligneApprovisionement.persist();
 				approvisionement.getLigneApprivisionement().add(ligneApprovisionement);
 			}

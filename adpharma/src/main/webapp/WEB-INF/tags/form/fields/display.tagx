@@ -68,25 +68,19 @@
 
 	<c:if test="${empty render or render}">
 		<c:if test="${not empty object and empty label}">
-			<spring:message
-				code="label_${fn:toLowerCase(fn:substringAfter(id,'_'))}"
-				var="label" htmlEscape="false" />
+			<spring:message code="label_${fn:toLowerCase(fn:substringAfter(id,'_'))}" var="label" htmlEscape="false" />
 		</c:if>
-
 		<c:if test="${empty dateTimePattern}">
 			<c:set value="dd-MM-yyyy hh:mm" var="dateTimePattern" />
 		</c:if>
-
 		<c:set var="sec_object" value="${fn:escapeXml(object)}" />
 		<c:set var="sec_field" value="${fn:escapeXml(field)}" />
-
 		<div id="_${fn:escapeXml(id)}_id">
-			<label for="_${fn:escapeXml(field)}_id"> <c:out
-					value="${label}" /> :
+			<label for="_${fn:escapeXml(field)}_id"> 
+			<c:out value="${label}" /> :
 			</label>
-			<div class="box" style="color: ${color}"
-				id="_${fn:escapeXml(id)}_${fn:escapeXml(field)}_id">
-				<c:choose>
+			<div class="box" style="color: ${color}"	id="_${fn:escapeXml(id)}_${fn:escapeXml(field)}_id">
+			 <c:choose>
 					<c:when test="${date}">
 						<spring:escapeBody>
 							<fmt:formatDate value="${object[field]}"
@@ -108,9 +102,9 @@
 					<spring:eval expression="object[field]" />
 					</c:otherwise>
 					</c:choose>
-					
+					<br />
 						
-
+                              
 						<!--  put the hidden input down the label -->
 						<c:if test="${hiddenfield}">
 							<c:choose>
@@ -151,6 +145,7 @@
 
 			</div>
 		</div>
-		<br />
+		
 	</c:if>
+	<br />
 </jsp:root>

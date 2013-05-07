@@ -52,7 +52,7 @@ public class LigneCmdFournisseur extends AdPharmaBaseEntity {
 
 	private BigInteger quantiteCommande = BigInteger.ONE;
 	
-	private BigInteger quantiteFournie = BigInteger.ONE;
+	private BigInteger quantiteFournie = BigInteger.ZERO;
 
 	@NotNull
 	private String agentSaisie;

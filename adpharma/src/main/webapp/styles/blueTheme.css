@@ -204,6 +204,14 @@ font-size: 1em;
 	font-size: 1.3em;
 	font-weight: bold;
 }
+.tbcell {
+	width: 120px;
+	text-align: center;
+	font-weight: bold;
+	border-color:green;
+	color: black ;
+	font-size: 18px;
+}
 .tbleft {
 	background-color: #1b5790;/* Digg Blue */
 	border: none;

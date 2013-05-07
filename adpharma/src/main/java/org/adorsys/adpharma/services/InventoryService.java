@@ -158,7 +158,7 @@ public class InventoryService {
 				if(quantity.intValue() <= 0) break ;
 				if(resultList.indexOf(line) == resultList.size() - 1)
 				{
-					quantity = line.pushAllInForInventory(quantity);
+				 	quantity = line.pushAllInForInventory(quantity);
 				} else
 				{
 					quantity = line.pushProductsInForInventory(quantity);

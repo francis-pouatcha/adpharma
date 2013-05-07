@@ -63,13 +63,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
-	
+
 
 	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
-	
+
 	private boolean sendedToUbipharm ;
 	private boolean sendToUbipharmFailed;
-	private String ubipharmCommandSendingErrorMessage;
+	private String  ubipharmCommandSendingErrorMessage;
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String createCommande(
@@ -85,8 +85,8 @@ public class CommandProcessController {
 		session.setAttribute("productResult", Produit.findAllProduits());
 		commandeFournisseur.persist();
 		return "redirect:/commandprocesses/"
-				+ ProcessHelper.encodeUrlPathSegment(commandeFournisseur
-						.getId().toString(), httpServletRequest)
+		+ ProcessHelper.encodeUrlPathSegment(commandeFournisseur
+				.getId().toString(), httpServletRequest)
 				+ "/editCommand";
 	}
 
@@ -199,13 +199,12 @@ public class CommandProcessController {
 					preparedBean.getRayon(), preparedBean.getFiliale(),
 					preparedBean.getModeSelection());
 		}
-		preparedBean.getOrderItemm(order, listItems,
-				preparedBean.getModeSelection());
+		preparedBean.getOrderItemm(order, listItems, preparedBean.getModeSelection());
 		if (order != null) {
 			uiModel.asMap().clear();
 			return "redirect:/commandefournisseurs/"
-					+ ProcessHelper.encodeUrlPathSegment(order.getId()
-							.toString(), httpServletRequest);
+			+ ProcessHelper.encodeUrlPathSegment(order.getId()
+					.toString(), httpServletRequest);
 
 		} else {
 			uiModel.addAttribute("orderPreParationBean",
@@ -263,7 +262,7 @@ public class CommandProcessController {
 		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
 				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
 						commandeFournisseur).getResultList(),
-				CommandeFournisseur.findCommandeFournisseur(cmdId)
+						CommandeFournisseur.findCommandeFournisseur(cmdId)
 						.getFournisseur().getName());
 		commandeProcess.setProduit(produit);
 		uiModel.addAttribute("commandeProcess", commandeProcess);
@@ -309,7 +308,7 @@ public class CommandProcessController {
 		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
 				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
 						commandeFournisseur).getResultList(),
-				commandeFournisseur.getFournisseur().getName());
+						commandeFournisseur.getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess", commandeProcess);
 		uiModel.addAttribute("ligneCmdFournisseur", new LigneCmdFournisseur());
 
@@ -370,14 +369,14 @@ public class CommandProcessController {
 	}
 	@RequestMapping(value="/ubipharm/{itemId}/send", method = RequestMethod.GET)
 	public String sendToUbipharm(@PathVariable("itemId")Long cmdId, Model uiModel){
-		
+
 		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
 		importExportUtil.setCmdId(cmdId);
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();
 		importExportUtil.setLignesToExport(lignesToExport);
 		try {
 			importExportUtil.exportCommandsToUbipharmTxt();
-//			importExportUtil.checkIfNewlyReceivedCommand();
+			//importExportUtil.checkIfNewlyReceivedCommand();
 			sendedToUbipharm= true ;
 		} catch (Exception e) {
 			this.sendToUbipharmFailed = true; 
@@ -385,7 +384,7 @@ public class CommandProcessController {
 		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
-	
+
 	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
 	public String importFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
+import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.io.FileUtils;
@@ -52,8 +54,8 @@ import au.com.bytecode.opencsv.CSVWriter;
  */
 public class CsvImportExportUtil {
 	private static Logger LOG = LoggerFactory.getLogger(CsvImportExportUtil.class);
-	public static  String RECEPTION_FOLDER_PATH = "/tools/ubipharm/receptions/";
-	private static 	String SENDING_FOLDER_PATH = "/tools/ubipharm/exports/";
+	public static  String RECEPTION_FOLDER_PATH = "/home/clovisgakam/PhMLClient/interfaces/reponses/" ; //"/tools/ubipharm/receptions/";
+	private static 	String SENDING_FOLDER_PATH =  "/home/clovisgakam/PhMLClient/interfaces/messages/" ; // "/tools/ubipharm/exports/";
 	private List<AbstractUbipharmLigneWrapper> lignesToExport= new ArrayList<AbstractUbipharmLigneWrapper>();
 	private Long cmdId = null;
 	private int numberOfEncodedLignes;
@@ -78,10 +80,10 @@ public class CsvImportExportUtil {
 				saveError(readResponseErrorDetail, readResponseCommandReferences);
 				return ;
 			}
-			List<CommandeFournisseur> commandFournisseurs = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(readResponseCommandReferences.
-					getCustomerCommandKey().getStringValue()).getResultList();
+			String cmdNumber = readResponseCommandReferences.getCustomerCommandKey().getStringValue();
+			List<CommandeFournisseur> commandFournisseurs = CommandeFournisseur.findCommandeFournisseursByCmdNumberEquals(cmdNumber).getResultList();
 			if(commandFournisseurs.isEmpty()){
-				LOG.error("Command Not Found, Hug !");
+				LOG.error("Command Not Found, Hug ! : "+cmdNumber);
 			}else {
 				CommandeFournisseur commandeFournisseur = commandFournisseurs.iterator().next();
 				List<ResponseProductItemRow> readResponseProductLignes = readResponseProductLignes(receptionLines);
@@ -106,13 +108,14 @@ public class CsvImportExportUtil {
 		Assert.notNull(productItemRows, "Null argment not required");
 		for (ResponseProductItemRow responseProductItemRow : productItemRows) {
 			String productKey = StringUtils.trim(responseProductItemRow.getOrderingProductKey().getStringValue());
+			System.out.println(productKey);
 //			LigneCmdFournisseur ligneCmdFournisseur=LigneCmdFournisseur.findLigneCmdFournisseursByCip(productKey).getSingleResult();
-			LigneCmdFournisseur ligneCmdFournisseur = LigneCmdFournisseur.findLigneCmdFournisseurByCipAndComFournisseur(productKey, commandeFournisseur).getSingleResult();
-			
+			List<LigneCmdFournisseur> cmdList = LigneCmdFournisseur.findLigneCmdFournisseurByCipAndComFournisseur(productKey, commandeFournisseur).getResultList();
+			if(cmdList.isEmpty()) continue ;
+			LigneCmdFournisseur ligneCmdFournisseur = cmdList.iterator().next();
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
 			ligneCmdFournisseur.merge().flush();
 			productAndQtyDeliveredBalance.put(ligneCmdFournisseur, ligneCmdFournisseur.getQuantiteCommande().subtract(ligneCmdFournisseur.getQuantiteFournie()));
-			
 			LOG.warn("Merging Command Item : CIP = "+ligneCmdFournisseur.getCip());
 		}
 	}
@@ -186,6 +189,7 @@ public class CsvImportExportUtil {
 		}
 		return responseErrorDetailRow;
 	}
+	
 	public void exportCommandsToUbipharmCsv() throws Exception{
 		Writer writer;
 		CommandeFournisseur commandeFournisseur = loadCommandeFournisseur();
@@ -203,26 +207,33 @@ public class CsvImportExportUtil {
 			String fileName = getFileName(commandeFournisseur, "txt");
 			File fileToSend = new File(getSendFolder()+""+fileName);
 			FileUtils.writeLines(fileToSend, convertAbstractLinesToLines(getLignesToExport()));
-			checkIfCommandFileIsTransferred(commandeFournisseur);
+		    checkIfCommandFileIsTransferred(commandeFournisseur);
 	}
 
 	private void checkIfCommandFileIsTransferred(CommandeFournisseur commandeFournisseur)
 			throws InterruptedException, Exception {
 		java.util.logging.Logger.getLogger("").log(Level.INFO, "Execution Blocked for 15000 ms, To wait ubipharm to transfert the file");
 		Thread.sleep(15000);
-		java.util.logging.Logger.getLogger("").log(Level.INFO, "Scanning The ../exports Directory, to check if the file is transferred");
+		java.util.logging.Logger.getLogger("").log(Level.INFO, "Scanning The "+ getSendFolder()+" Directory, to check if the file is transferred");
 		String[] listFiles = FileUtil.listFiles(new File(getSendFolder()));
 		if(listFiles.length > 0){
-			java.util.logging.Logger.getLogger("").log(Level.INFO, "File Not Transferred ! " +
-					"Please check If Ubipharm Module is Running on This Computer !");
-			throw new Exception("Command File Not Transfered! Please check If Ubipharm Module is Running on This Computer !");
-		}else {
-			updateCommandToSended(commandeFournisseur);					
+			for (int i = 0; i < listFiles.length; i++) {
+				if(StringUtils.startsWithIgnoreCase(listFiles[i], commandeFournisseur.getCmdNumber())){
+					updateCommandToSended(commandeFournisseur);	
+					java.util.logging.Logger.getLogger("").log(Level.INFO, "File Not Transferred ! " +
+							"Please check If Ubipharm Module is Running on This Computer !");
+					throw new Exception("Command File Not Transfered! Please check If Ubipharm Module is Running on This Computer !");
+				
+				}
+			}
+          
 		}
+		updateCommandToSended(commandeFournisseur);					
 	}
 
 	private void updateCommandToSended(CommandeFournisseur commandeFournisseur) {
 		commandeFournisseur.setEtatCmd(Etat.SENDED_TO_PROVIDER);
+		commandeFournisseur.setSubmitionDate(new Date());
 		commandeFournisseur.merge().flush();
 	}
 	public List<String> convertAbstractLinesToLines(List<AbstractUbipharmLigneWrapper> rows){
@@ -233,7 +244,7 @@ public class CsvImportExportUtil {
 		return lines;
 	}
 	private String getFileName(CommandeFournisseur loadCommandeFournisseur,String extension) {
-		return "Command-"+loadCommandeFournisseur.getId()+"."+extension;
+		return loadCommandeFournisseur.getCmdNumber()+"."+extension;
 	}
 
 	public void checkIfNewlyReceivedCommand(){
@@ -431,17 +442,19 @@ public class CsvImportExportUtil {
 		this.cmdId = cmdId;
 	}
 	public static String getSendFolder(){
-		Configuration configuration = Configuration.findAllConfigurations().iterator().next();
-		String sendFolder = configuration.getSendFolder();
-		if(sendFolder == null || sendFolder.isEmpty()){
+		//Configuration configuration = Configuration.findAllConfigurations().iterator().next();
+		Site site = Site.findSite(new  Long(1));
+		String sendFolder = site.getOrderSentPath();
+		if(StringUtils.isBlank(sendFolder)){
 			sendFolder = SENDING_FOLDER_PATH;
 		}
 		return sendFolder;
 	}
 	public static String getReceptionFolder(){
 		Configuration configuration = Configuration.findAllConfigurations().iterator().next();
-		String receptionFolder = configuration.getReceptionFolder();
-		if(receptionFolder == null || receptionFolder.isEmpty()){
+		Site site = Site.findSite(new  Long(1));
+		String receptionFolder = site.getOrderReceivePath();
+		if(StringUtils.isBlank(receptionFolder)){
 			receptionFolder = RECEPTION_FOLDER_PATH;
 		}
 		return receptionFolder;
@@ -456,7 +469,6 @@ public class CsvImportExportUtil {
 		Assert.notNull(fileNames, "Null files not required");
 		List<CommandeFournisseur> commandeFournisseursToImports = new ArrayList<CommandeFournisseur>();
 		for (CommandeFournisseur commandeFournisseur : commandesFournisseurs) {
-			
 			String cmdNumber = commandeFournisseur.getCmdNumber();
 			for (String fileName : fileNames) {
 				if(fileName.startsWith(cmdNumber)){
