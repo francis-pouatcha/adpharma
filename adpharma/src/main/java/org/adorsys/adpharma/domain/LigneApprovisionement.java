@@ -152,6 +152,22 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private transient BigDecimal prixAchatSTock;
 
 	private transient BigDecimal prixVenteStock;
+	
+	public BigDecimal getPrixAchatSTock() {
+		return prixAchatSTock;
+	}
+	
+	public BigDecimal getPrixVenteStock() {
+		return prixVenteStock;
+	}
+	
+	public void setPrixAchatSTock(BigDecimal prixAchatSTock) {
+		this.prixAchatSTock = prixAchatSTock;
+	}
+	
+	public void setPrixVenteStock(BigDecimal prixVenteStock) {
+		this.prixVenteStock = prixVenteStock;
+	}
 
 	public BigInteger getQteCip() {
 		return qteCip;

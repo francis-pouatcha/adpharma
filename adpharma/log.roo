@@ -389,3 +389,57 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-25 08:15:59
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:20:14
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:53:52
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-06 15:24:53
+hint
+entity --class ~.domain.SalesConfiguration --extends ~.domain.AdPharmaBaseEntity
+field number --fieldName minValue --type java.math.BigInteger
+field number --fieldName maxValue --type java.math.BigInteger
+field number --fieldName tauxReduction --type java.math.BigDecimal
+enum type --class ~.domain.TypeVente
+enum constant --name DETAILS
+// [failed] enum constant --name SEMI_GROS
+enum constant --name GROS
+enum constant --name SEMI_GROS
+focus --class ~.domain.SalesConfiguration
+field enum --fieldName typeVente --type ~.domain.TypeVente
+// [failed] web mvc scaffold --class ~.domain.SalesConfiguration
+web mvc scaffold --class ~.domain.SalesConfiguration
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-06 16:02:13
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-06 16:02:26
+controller scaffold --class ~.web.SalesConfigurationController --entity ~.domain.SalesConfiguration
+finder list
+finder add --finderName findSalesConfigurationsByTypeVente
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-06 16:51:38
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-06 16:51:52
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-06 17:03:25
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 13:56:16
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 13:57:55
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 14:04:47
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 14:04:59
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 15:26:51
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 15:27:06
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 15:59:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 15:59:49
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 16:02:27
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 17:33:17
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 17:33:28
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 18:16:00
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 18:16:11
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 23:53:01
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 23:53:07
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-08 23:56:15
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-08 23:56:56
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-09 00:19:07
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-10 10:39:27
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-10 19:02:19

@@ -12,6 +12,7 @@ import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
+import org.adorsys.adpharma.domain.SalesConfiguration;
 import org.springframework.stereotype.Service;
 
 
@@ -20,12 +21,15 @@ public class SaleService {
 
 	public   LigneCmdClient  generateLigneCmd(LigneApprovisionement ligneApp , BigInteger qte ,BigDecimal remise ,CommandeClient commandeClient) {
 		LigneCmdClient ligneCmdClient = null;
+		BigDecimal prixVente= getPrixVenteLigne(qte, ligneApp);
+		System.out.println("Nouveau prix de vente de la ligne de commande: "+prixVente);
 		if (qte.intValue()>0) {
 			ligneCmdClient = new LigneCmdClient();							
 			ligneCmdClient.setCip(ligneApp.getCip());
 			ligneCmdClient.setCipM(ligneApp.getCipMaison());
 			ligneCmdClient.setCommande(commandeClient);
-			ligneCmdClient.setPrixUnitaire(ligneApp.getPrixVenteUnitaire());
+//			ligneCmdClient.setPrixUnitaire(ligneApp.getPrixVenteUnitaire());
+			ligneCmdClient.setPrixUnitaire(prixVente);
 			ligneCmdClient.setQuantiteCommande(qte);
 			ligneCmdClient.setDesignation(ligneApp.getDesignation());
 			ligneCmdClient.setProduit(ligneApp);
@@ -37,6 +41,25 @@ public class SaleService {
 		}
 
 		return ligneCmdClient ;
+	}
+	
+	
+	// Fonction qui retourne le prix de vente unitaire pour la configuration de vente active(vente en details, vente en semi-gros, vente en gros)
+	public BigDecimal getPrixVenteLigne(BigInteger qte, LigneApprovisionement line){
+		List<SalesConfiguration> configurations = SalesConfiguration.findAllSalesConfigurations();
+		BigDecimal prixVente=null;
+		for(SalesConfiguration config: configurations){
+			if(config.getActiveConfig()==Boolean.TRUE){
+				BigInteger minValue = config.getMinValue();
+				BigInteger maxValue = config.getMaxValue();
+				if(qte.intValue()>= minValue.intValue() && qte.intValue()<= maxValue.intValue()){
+					prixVente= line.getPrixVenteUnitaire().multiply((new BigDecimal(1).subtract(config.getTauxReduction().divide(new BigDecimal(100))))); 
+				}
+			}else{
+				prixVente= line.getPrixVenteUnitaire();
+			}
+		}
+		return prixVente;
 	}
 
 	public  void addline(Long lineId , BigInteger quantite ,BigDecimal remise ,CommandeClient commandeClient){

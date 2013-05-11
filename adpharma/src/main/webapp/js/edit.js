@@ -19,6 +19,8 @@ function calculePt() {
 	};
 }
 
+
+
 function calculPromo(){
 	 $('#rem').val(Math.floor(($('#remP').val()*$('#pu').val())/100));
 	 rem= $('#rem').val();
