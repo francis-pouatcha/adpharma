@@ -28,6 +28,7 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
@@ -145,7 +146,12 @@ public class DocumentsPrinterController {
 		parameters.put("DateF",etatBean.getDateFin());
 		
 		try {
-			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
+			if(TypeMouvement.SORTIE_PRODUIT.equals(etatBean.getTypeMouvement())){
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_DES_SORTIE_RAISON_FILE_PATH);
+			}else{
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,6 +169,7 @@ public class DocumentsPrinterController {
 		parameters.put("DateF",begingEndOfDay.getEnd());
 		
 		try {
+			
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_VENTE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

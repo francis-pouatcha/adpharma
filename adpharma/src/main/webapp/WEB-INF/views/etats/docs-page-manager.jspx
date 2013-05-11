@@ -21,9 +21,10 @@
         <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
         <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-         
+          <!-- 
         <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+         -->
+       <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
     </td>
     <td style="vertical-align: top;"  width="45%">
     <DIV style="overflow:auto;height: 400px; ">

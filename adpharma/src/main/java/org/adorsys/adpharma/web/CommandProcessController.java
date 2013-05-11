@@ -106,6 +106,41 @@ public class CommandProcessController {
 			return;
 		}
 	}
+	
+	@Produces({ "application/pdf" })
+	@Consumes({ "" })
+	@RequestMapping(value = "/{cmdId}/printBonLivraison.pdf", method = RequestMethod.GET)
+	public void printBonLivraison(@PathVariable("cmdId") Long cmdId,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("commandeid", cmdId);
+		try {
+			jasperPrintService.printDocument(parameters, response,
+					DocumentsPath.BON_LIVRAISON_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+	}
+	
+	
+	@Produces({ "application/pdf" })
+	@Consumes({ "" })
+	@RequestMapping(value = "/{cmdId}/printBonRupture.pdf", method = RequestMethod.GET)
+	public void printBonRupture(@PathVariable("cmdId") Long cmdId,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("commandeid", cmdId);
+		try {
+			jasperPrintService.printDocument(parameters, response,
+					DocumentsPath.BON_RUPTURE_OU_INCONNU_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+	}
 
 	@Produces({ "" })
 	@Consumes({ "" })
@@ -355,7 +390,7 @@ public class CommandProcessController {
 	private void checkAndInsertUbipharmActionsLogsInUIModel(Model uiModel){
 
 		if(sendedToUbipharm){
-			uiModel.addAttribute("apMessage", "Command Sended To Ubipharm.");
+			uiModel.addAttribute("apMessage", "Commande Envoyer Sur le Serveur PHML avec Succes ! .");
 			sendedToUbipharm = false;//reset value to false.
 		}
 		if(this.sendToUbipharmFailed) {
@@ -369,7 +404,6 @@ public class CommandProcessController {
 	}
 	@RequestMapping(value="/ubipharm/{itemId}/send", method = RequestMethod.GET)
 	public String sendToUbipharm(@PathVariable("itemId")Long cmdId, Model uiModel){
-
 		CsvImportExportUtil importExportUtil = new CsvImportExportUtil();
 		importExportUtil.setCmdId(cmdId);
 		List<AbstractUbipharmLigneWrapper> lignesToExport = importExportUtil.constructLigneToExport();

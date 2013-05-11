@@ -239,6 +239,8 @@ public class LigneApprovisionementController {
 		mouvementStock.setDestination(DestinationMvt.FOURNISSEUR);
 		mouvementStock.setOrigine(DestinationMvt.MAGASIN);
 		mouvementStock.setQteDeplace(qte);
+		mouvementStock.setpAchatTotal(qte.multiply(line.getPrixAchatUnitaire().toBigInteger()));
+		mouvementStock.setpVenteTotal(qte.multiply(line.getPrixVenteUnitaire().toBigInteger()));
 		mouvementStock.setQteInitiale(line.getQuantieEnStock());
 		line.setQuantiteSortie(line.getQuantiteSortie().add(qte));
 		line.CalculeQteEnStock();

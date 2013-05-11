@@ -289,8 +289,6 @@
 											$('#cmdName').html(data);
 											$('#findClient').dialog("close"); 
 													});
-									
-										
 									};
 									});
 							
@@ -335,11 +333,14 @@
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
 											$('#qte').val(1);
-// 											$('#pt').val(data.prixVenteUnitaire);
-// 											$('#remax').val(data.remiseMax);
+										//retireitrer les quatre ligne ci dessous 
 											
+											$('#remax').val(data.remiseMax);
+											$('#pt').val(data.prixVenteUnitaire);
+											$('#remP').val("");
+											$('#remq').val("");											
 											// verification de l'existence d'1 promotion active pour ce produit
-											if(data.produit.configSolde.activeConfig == true){
+											/*if(data.produit.configSolde.activeConfig == true){
 													document.getElementById("remP").value= data.produit.configSolde.tauxSolde;
 													// J'annule la remise max car le produit est en promotion
 													$('#remax').val(0);
@@ -354,7 +355,7 @@
 												$('#rem').val("");
 												document.getElementById("remP").disabled=false;
 												document.getElementById("rem").readOnly=false;
-											 }
+											 }*/
 											
 													});
 										$('#findproduit').dialog("close"); 

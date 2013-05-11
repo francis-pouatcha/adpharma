@@ -13,6 +13,8 @@
         <spring:url value="/approvisionements/${commandefournisseur.approvisionnementId}"  var="appro_url" />
       <spring:url value="/commandefournisseurs/sendToPlatform/${itemId}"  var="send_url" />
       <spring:url value="/commandprocesses/${itemId}/printBonCommande.pdf"  var="print_url" />
+      <spring:url value="/commandprocesses/${itemId}/printBonLivraison.pdf"  var="print_liv_url" />
+      <spring:url value="/commandprocesses/${itemId}/printBonRupture.pdf"  var="print_rup_url" />
       <spring:url value="/commandprocesses/${itemId}/exporto.xls"  var="printxls_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
       <spring:url value="/resources/images/print.png"  var="print" />
@@ -55,8 +57,8 @@ function annulercmd(){
    <c:when test="${commandefournisseur.etatCmd eq 'CLOS' || commandefournisseur.etatCmd eq 'RECEIVED' and not commandefournisseur.annuler}">
                 <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
                 <INPUT class="submits" type="button" value="CONVERTIR EN ENTREE" title="cloturer la commande" /></a></span>
-     <span><a href="#" style="text-decoration: none;"><INPUT class="submits" type="button" value="Bordereau de livraison" title="editer le Bordereau de livraison" /></a></span>
-     <span><a href="#" style="text-decoration: none;"><INPUT class="submits" type="button" value="Produits inconnus/en rupture " title="editer la liste des produits inconnues du fournisseur ou en rupture" /></a></span>
+     <span><a href="${print_liv_url }" style="text-decoration: none;"><INPUT class="submits" type="button" value="Bordereau de livraison" title="editer le Bordereau de livraison" /></a></span>
+     <span><a href="${print_rup_url }" style="text-decoration: none;"><INPUT class="submits" type="button" value="Produits inconnus/en rupture " title="editer la liste des produits inconnues du fournisseur ou en rupture" /></a></span>
     </c:when>
    </c:choose>
       <c:if test="${commandefournisseur.etatCmd eq 'EN_COUR'}">
@@ -81,7 +83,7 @@ function annulercmd(){
                    
       <c:if test="${commandefournisseur.etatCmd != 'CLOS' and commandefournisseur.etatCmd != 'SENDED_TO_PROVIDER' and commandefournisseur.etatCmd != 'RECEIVED'}">
                   <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
-                  <INPUT class="submits" type="button" value="ENVOYER A UBIPHARM" title="Envoyer A Ubipharm" /></a></span>
+                  <INPUT class="submits" type="button" value="Envoyer au serveur PHML" title="Envoyer a serveur PHML" /></a></span>
       </c:if>
        <c:if test="${commandefournisseur.etatCmd == 'SENDED_TO_PROVIDER'}">
                   <span><a href="${ import_ubipharm_url}" style="text-decoration: none;" >

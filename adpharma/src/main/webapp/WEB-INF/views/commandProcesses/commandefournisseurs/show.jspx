@@ -6,8 +6,8 @@
        
        <table >
             <tr>
-                <td >
-                <field:display field="creePar" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" object="${commandefournisseur}" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
+                <td style="width: 50%;" >
+        <field:display field="creePar" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" object="${commandefournisseur}" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
         <field:display date="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}" field="dateCreation" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" object="${commandefournisseur}" z="l1dWLTCmilRZmojzHAL0n6Tf+9k="/>
         <field:display date="true" dateTimePattern="${commandeFournisseur_datelimitelivraison_date_format}" field="dateLimiteLivraison" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" object="${commandefournisseur}" z="kwUzroD2p8KlbuQNKvEVrxf43aI="/>
         <field:display field="fournisseur" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" object="${commandefournisseur}" z="RL3gTCf3poCMmy0AAXBvJDnHUvg="/>
