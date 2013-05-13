@@ -201,7 +201,7 @@
 			<c:if test="${not empty  salesConfig}">
 			          <span>
 			               <a href="#" style="text-decoration: none;"> 
-			                  <INPUT type="button" class="submits" value="Configuration Vente" id="config_vente" title="Visualiser les configurations de vente"  />
+			                  <INPUT type="button" class="submits" value="Configurations Vente" id="config_vente" title="Visualiser les configurations de vente"  />
 			               </a>   
 			          </span>
 			</c:if>
@@ -209,20 +209,19 @@
 			<div id="configuration_vente" style="display: none; height: 400px;" title="Liste des configurations de Vente">
 			        <table>
 			             <tr>
-			                 <th>Prix 1</th>
-			                 <th>Prix 2</th>
-			                 <th>Prix 3</th>
+			                 <th style="text-align: center;">Configuration 1</th>
+			                 <th style="text-align: center;">Configuration 2</th>
+			                 <th style="text-align: center;">Configuration 3</th>
 			             </tr>
 			             <tr>
+			               <c:forEach items="${configurations}" var="configuration">
 			                 <td>
-			                 
+			                   <span style="font-weight: bold;">Type de vente: </span> <c:out value="${configuration.typeVente}" /> <BR /><BR />
+			                   <span style="font-weight: bold;">Intervalle des Qtes: </span> [<c:out value="${configuration.minValue}" /> , <c:out value="${configuration.maxValue}" />] <BR /> <BR />
+			                   <span style="font-weight: bold;">Taux de reduction: </span> <c:out value="${configuration.tauxReduction}" />% <BR /><BR />
+			                   <span style="font-weight: bold;">Actif: </span> <c:out value="${configuration.activeConfig}" /> 
 			                 </td>
-			                 <td>
-			                 
-			                 </td>
-			                 <td>
-			                 
-			                 </td>
+			               </c:forEach>  
 			             </tr>
 			        </table>
 			
@@ -488,7 +487,7 @@
 			draggable :true,
             hide:'fade',
             show:'slide',
-            position:'right',
+            position:'top',
 			buttons: {
 				"Cancel": function() { 
 					$(this).dialog("close"); 
