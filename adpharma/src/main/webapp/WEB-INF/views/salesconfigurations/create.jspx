@@ -11,7 +11,7 @@ xmlns:spring="http://www.springframework.org/tags" version="2.0">
         
         <c:if test="${not empty configuration}">
            <spring:url value="/salesconfigurations/${configuration}?form" var="update_url" />
-           <p><a href="${update_url}">Modifier la configuration</a></p>
+           <p><a href="${update_url}" style="font-weight: bold;">Modifier la configuration</a></p>
         </c:if>
         
         <field:select field="typeVente" label="Type de vente" id="c_org_adorsys_adpharma_domain_SalesConfiguration_typeVente" items="${typeventes}" path="typeventes" z="q/35+EusvrjIFyOQ0YpwXTpzVBg="/>

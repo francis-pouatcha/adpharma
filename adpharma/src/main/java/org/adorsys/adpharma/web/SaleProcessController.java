@@ -170,6 +170,7 @@ public class SaleProcessController {
 		String configurations = SalesConfiguration.toJsonArray(salesConfigurations);
 		uiModel.addAttribute("saleProcess",saleProcess);
 		uiModel.addAttribute("salesConfig",configurations);
+		uiModel.addAttribute("configurations", salesConfigurations);
 		uiModel.addAttribute("apMessage", httpServletRequest.getAttribute("apMessage"));
 
 		return "saleprocess/edit";

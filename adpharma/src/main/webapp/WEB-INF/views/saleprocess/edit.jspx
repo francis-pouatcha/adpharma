@@ -150,7 +150,7 @@
 	<spring:url value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form" var="update_credit_client_url" />
 
 	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
+		    <span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
 		            
 		            
 		    <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
@@ -160,33 +160,67 @@
 		           </a>
 		      </span>
 		   </security:authorize>
-				<!-- 
-				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
-						 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-				</security:authorize>
- -->
-		<spring:message code="saleprocess_find_product"  var="find_product"/>
-    <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="${find_product }" type="button"/></a></span> 
+				 
+			<!--<security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
+					 <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+			</security:authorize>-->
+ 
+		    <spring:message code="saleprocess_find_product"  var="find_product"/>
+            <span >
+             <a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="${find_product }" type="button"/></a>
+            </span> 
 
-				 <span>
-					 <a href="${ delete_cmd_url}" style="text-decoration: none;">
-					  <INPUT class="submits" type="button" value="${cancel_sale }" title="${cancel_sale }" onclick="return annCmd();" />
-				     </a>
-				 </span> 
-				 <span>
-				     <!-- <a href="${ord_cmd_url}" style="text-decoration: none;">  </a> -->
-				      <INPUT class="submits" type="button" value="${prescription_book}" title="${prescription_book_description }" id="btOrdo" />
-				 </span>
+			<span>
+				 <a href="${ delete_cmd_url}" style="text-decoration: none;">
+				  <INPUT class="submits" type="button" value="${cancel_sale }" title="${cancel_sale }" onclick="return annCmd();" />
+			     </a>
+			</span> 
+			<span>
+			     <!-- <a href="${ord_cmd_url}" style="text-decoration: none;">  </a> -->
+			      <INPUT class="submits" type="button" value="${prescription_book}" title="${prescription_book_description }" id="btOrdo" />
+			</span>
 				
-		<spring:message code="saleprocess_customer_information"  var="customer_information"/>
-		<spring:message code="saleprocess_customer_information_description"  var="customer_information_description"/>
-		<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
-			<span><a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
-					type="button" value="${customer_information }" title="${customer_information_description }" /></a></span>
-		</c:if>
-<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
-<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
-</c:if> -->
+			<spring:message code="saleprocess_customer_information"  var="customer_information"/>
+			<spring:message code="saleprocess_customer_information_description"  var="customer_information_description"/>
+			<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
+				<span>
+				        <a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
+						type="button" value="${customer_information }" title="${customer_information_description}" /></a>
+				</span>
+			</c:if>
+			<c:if test="${not empty  salesConfig}">
+			          <span>
+			               <a href="#" style="text-decoration: none;"> 
+			                  <INPUT type="button" class="submits" value="Configuration Vente" id="config_vente" title="Visualiser les configurations de vente"  />
+			               </a>   
+			          </span>
+			</c:if>
+			
+			<div id="configuration_vente" style="display: none; height: 400px;" title="Liste des configurations de Vente">
+			        <table>
+			             <tr>
+			                 <th>Prix 1</th>
+			                 <th>Prix 2</th>
+			                 <th>Prix 3</th>
+			             </tr>
+			             <tr>
+			                 <td>
+			                 
+			                 </td>
+			                 <td>
+			                 
+			                 </td>
+			                 <td>
+			                 
+			                 </td>
+			             </tr>
+			        </table>
+			
+			</div>
+		
+		<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
+		<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+		</c:if> -->
 	</div> 
 	
 	<div id="ordonanceform" style="display: none; height: 400px;">
@@ -435,6 +469,24 @@
 			
 		});
 		
+		$('#configuration_vente').dialog({
+			open:function(){
+			},
+			autoOpen: false,
+			width:700,
+			resizable:true,
+			draggable :true,
+            hide:'fade',
+            show:'slide',
+            position:'right',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
 		// Dialog	find produit		
 		$('#findproduit').dialog({
 			open:function(){
@@ -518,6 +570,10 @@ $('#updateClient').dialog("close");
 			return false;
 		});
 		
+		$('#config_vente').click(function(){
+			$('#configuration_vente').dialog('open');
+			return false;
+		});
 		
 		
 		
