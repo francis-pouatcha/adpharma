@@ -7,6 +7,13 @@
         <field:checkbox field="closeCashUnpaySale" id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" z="LgZxq62q6wXP8Zc2WOMZtwfQx64="/>
         <field:checkbox field="closeCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" z="X/fLML/P1TS2xrQyhPalHoqQwLU="/>
         <field:checkbox field="restoreCancelSale" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="saleCash" id="c_org_adorsys_adpharma_domain_Configuration_saleCash" z="yI0e4mPmHH8WWQQJJNgILfZP0TE="/>
+        <field:checkbox field="editCloseSupply" id="c_org_adorsys_adpharma_domain_Configuration_editCloseSupply" z="WndZU7mqbEbziL2TLKKpVNNzlH0="/>
+        <field:checkbox field="enableLicence" id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" z="uLkgoAWqOZfC0bIWe2C6J1OAdx8="/>
+        <field:checkbox field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_onlySaleOld" z="nWnoUuN5a3yKQ0OSe7k64bHt/Ng="/>
+        <field:checkbox field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_forceToSameLine" z="fhFd7EQrDUKNXzbae16hHaeEJEk="/>
+        <field:input field="receptionFolder" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" z="jhGmR5SniBJJfQynMEL/I9upqNA="/>
+        <field:input field="sendFolder" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" z="MHEZGrd5PWGl4rgVtpgDJ86Ju6E="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Configuration" render="${not empty dependencies}" z="n5WKmI2zluUl8/h2o1jkpDeb8lg="/>
 </div>

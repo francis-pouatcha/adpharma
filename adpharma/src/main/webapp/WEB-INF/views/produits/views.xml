@@ -49,6 +49,8 @@
    <definition extends="vendeur" name="produits/soldes">
         <put-attribute name="body" value="/WEB-INF/views/produits/configsolde.jspx"/>
     </definition>
-   
+   <definition extends="public" name="produits/changecip">
+        <put-attribute name="body" value="/WEB-INF/views/produits/changecip.jspx"/>
+    </definition>
   
 </tiles-definitions>

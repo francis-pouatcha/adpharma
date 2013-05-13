@@ -15,7 +15,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_reste" property="reste" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_solder" property="solder" render="false" z="+7JGrL912c89jciq7N8lHGEIpYU="/>
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_annuler" property="annuler" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_etatCredit" maxLength="-1" property="etatCredit" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_DetteClient_etatCredit" render="false" maxLength="-1" property="etatCredit" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_clientId" property="clientId" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_factureId" property="factureId" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_DetteClient_numBon" property="numBon" render="false" z="user-managed"/>

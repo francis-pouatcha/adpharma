@@ -389,6 +389,7 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-04-25 08:15:59
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:20:14
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-04-26 11:53:52
+<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-06 15:24:53
 hint
 entity --class ~.domain.SalesConfiguration --extends ~.domain.AdPharmaBaseEntity
@@ -443,3 +444,7 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-10 10:39:27
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-10 19:02:19
+=======
+
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-05-03 09:54:19
+>>>>>>> 82409d0c495d7a5a8f1fc17d24baec7a7107c86d

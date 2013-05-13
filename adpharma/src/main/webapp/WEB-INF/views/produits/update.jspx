@@ -78,16 +78,6 @@
                     </td>
                 </tr>
             </table>
-            <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Produit_footPrint" z="user-managed" render="false"/>
-            <field:input field="prixAchatU" id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" validationMessageCode="field_invalid_number" z="user-managed" render="false"/>
-            <field:input field="prixVenteU" id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" validationMessageCode="field_invalid_number" z="user-managed" render="false"/>
-            <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" z="user-managed" render="false"/>
-            <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" z="user-managed" render="false"/>
-            <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Produit_actif" z="user-managed" render="false"/>
-            <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="user-managed" render="false"/>
-            <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="user-managed" render="false"/>
-            <field:select field="modeConditionement" id="c_org_adorsys_adpharma_domain_Produit_modeConditionement" itemValue="id" items="${modeconditionements}" path="/modeconditionements" z="user-managed" render="false"/>
-            <field:input field="configSolde" id="c_org_adorsys_adpharma_domain_Produit_configSolde" z="user-managed" render="false"/>
         </form:update>
     </div>
     <jsp:include page="ajaxSearchProductForm.jspx"/>

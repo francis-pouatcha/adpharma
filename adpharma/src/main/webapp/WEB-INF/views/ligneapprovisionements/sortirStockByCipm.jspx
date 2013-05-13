@@ -26,7 +26,7 @@
 		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
 		var="delete_cmd_url" />
 			<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
-		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+		<spring:url value="/saleprocess/0/findProduct/"   var="find_product_url" />
 	
 		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
 	
@@ -82,7 +82,7 @@
 								$('table#resultproduit tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {
-										$.getJSON( '${select_product_url}/'+this.id,
+										$.getJSON( '${select_product_url}'+this.id,
 									                function(data){
 											document.getElementById("cipm").value = data.cipMaison;
 			    							document.getElementById("cip").value = data.cip;
@@ -268,12 +268,14 @@ $('#subForm').submit(function(){
 						<td><INPUT type="text" name="qte" id="qte" class="autres"
 							onKeyPress="return scanTouche(event)" width="50px;"
 							title="saisir la Quantite" /></td>
-						<td><SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
+						<td>
+						<SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
 								<OPTION value="NON_COMMANDE" selected="selected">NON COMMANDE</OPTION>
 								<OPTION value="AVARIE">AVARIE</OPTION>
 								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
-
-						</SELECT></td>
+								<OPTION value="NON_JUSTIFIE">NON JUSTIFIE</OPTION>
+						</SELECT>
+						</td>
 
 
 						<td align="center"><INPUT type="submit" value="Enregistrer"

@@ -5,10 +5,22 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:url value="/commandeclients/${commandeclient.id}/retourProduit" var="find_cipm_url"/>
+     <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
+           <spring:url value="/saleprocess/printTickets/${commandeclient.factureId}.pdf"  var="print_tick_url" />
  	<script type="text/javascript">
  
-   $(
-function(){
+
+ 	function printTickets(){
+ 		var printTicketUrl ="${print_tick_url}?"+$("#ticket").serialize()+"&amp;dateTicket="+$("#dateTicket").val();
+ 		window.location = printTicketUrl ;
+ 	};
+ 	
+ 	function printInvoice(){
+ 		var printInvoiceUrl= "${print_inv_url}?"+$("#factures").serialize()+"&amp;dateFacturation="+$("#dateFacturation").val();
+ 		window.location = printInvoiceUrl ;
+ 	};
+ 	
+   $(function(){
  
 // Hook up the print link.
 $( "a#butRetout" )
@@ -122,6 +134,13 @@ return( false );
 	   return false;
    }
    
+   
+   $( "#cipm" ).click(function(){
+   	findline();
+   return( false );
+   });
+  
+   
 </script>   
 <script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
  
@@ -229,12 +248,12 @@ return( false );
      
      </div>
            <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
+           <spring:url value="/saleprocess/printTickets/${commandeclient.factureId}.pdf"  var="print_tick_url" />
      
-     <div id="facture" style="display: none; margin-bottom: 10px; height: 50px; ">
+     <div id="facture" style="display: none; margin-bottom: 10px; height: 100px; ">
     <center>
-     <form action="${print_inv_url}" style="width: 50%; "  method="GET" id="facture"
-					name="factures" >
-					<table>
+    
+					<table style="width: 60%; " >
 						<tr>
 						    <th style="text-align: center;">AVEC REMISE ?</th>
 							<th style="text-align: center;">NOM COMPLET DU CLIENT</th>
@@ -242,6 +261,8 @@ return( false );
 							<th style="text-align: center;" >ACTION</th>
 						</tr>
 						<tr>
+							 <form action="${print_inv_url}"   method="GET" id="factures" name="factures" >
+						
 							
 							<td>
 							<INPUT type="checkbox" name="remise" id="remise" class="autres" checked="checked"  style=" text-align: center;" />
@@ -255,15 +276,36 @@ return( false );
 							</td>
 							<td align="center">
 
-										<INPUT type="submit"   value="Imprimer" class="submits" />
+										<INPUT type="button" onclick="printInvoice();"   value="facture" class="submits" />
 
 								</td>
-								
-
+						   </form>
 						</tr>
+	
+	
+						<tr>
+							<form action="${print_tick_url}"   method="GET" id="ticket" name="ticket" >
+							<td>
+							<INPUT type="checkbox" id="remiset" name="remise"  class="autres" checked="checked"  style=" text-align: center;" />
+							</td>
+							<td>
+							<INPUT type="text" id="nomt" name="nom" class="autres" value="" style=" text-align: center;" />
+							</td>
+							<td>
+							<input type="text" id="dateTicket" name="dateTicket"  style=" text-align: center;"
+								dojoType="dijit.form.DateTextBox" constraints="{datePattern:'dd-MM-yyyy'}" />
+							</td>
+							<td align="center">
+
+										<INPUT type="button" onclick="printTickets();"   value="ticket" class="submits" />
+
+								</td>
+						  </form>
+						</tr>
+	
 					</table>
-	</form>
-	<BR />
+	
+	
  </center> 
      </div>
      

@@ -2,6 +2,7 @@ package org.adorsys.adpharma.web;
 
 import java.math.BigInteger;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,17 +57,24 @@ public class HomeController {
 	 		  List<ProductsOut> outProducts = statistics.productOutOfStock(BigInteger.ZERO, begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
 	 		  List<ProductsOut> avaries= statistics.productsAvaries();
 	 		  List<Customers> avoirs= statistics.avoirsClients(begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
-	 		  List<Customers> dettesClients = statistics.dettesClients(begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
+	 		  //List<Customers> dettesClients = statistics.dettesClients(begingEndOfMonth.getBegin(), begingEndOfMonth.getEnd());
 	 		  uiModel.addAttribute("pharmacie", site);
 			  uiModel.addAttribute("products", products);
 			  uiModel.addAttribute("cashs", openCashs);
 			  uiModel.addAttribute("ruptures", outProducts);
 			  uiModel.addAttribute("avaries", avaries);
 			  uiModel.addAttribute("avoirs", avoirs);
-			  uiModel.addAttribute("dettes", dettesClients);
+			//  uiModel.addAttribute("dettes", dettesClients);
 			  
 			  return "index";
 	       }
+	       ArrayList<RoleName> arrayList = new ArrayList<RoleName>();
+	       arrayList.add(RoleName.ROLE_VENDEUR);
+	       arrayList.add(RoleName.ROLE_OPEN_SALE_SESSION);
+	       if(principal!=null && pharmaUser.hasAnyRole(arrayList)){
+		    	
+	    	  return  "redirect:/saleprocess/newPublicCmd";
+		       }
 	      
 		 if(pharmaUser==null) {
 		 

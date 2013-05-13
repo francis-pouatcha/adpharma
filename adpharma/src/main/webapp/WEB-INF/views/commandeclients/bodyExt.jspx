@@ -115,20 +115,7 @@
 			$('#creer').hide();
 			return false;
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	});
-	
-		
-	
 	</script>
 	
 	 <form:create  id="fc_org_adorsys_adpharma_domain_Client" otherBut="cancel" modelAttribute="client" path="/clients/createForCreditSale" render="${empty dependencies}" z="ys02dHc9phUWtWwquIgxG46avgY=">

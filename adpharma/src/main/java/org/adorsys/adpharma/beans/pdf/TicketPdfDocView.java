@@ -1,6 +1,8 @@
 package org.adorsys.adpharma.beans.pdf;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ import org.adorsys.adpharma.domain.TypeBon;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypePaiement;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -32,7 +35,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Component("ticketPdfDocView")
-
 public class TicketPdfDocView  extends   AbstractPdfView {
 	//le contenu est a revoir 
 
@@ -40,7 +42,9 @@ public class TicketPdfDocView  extends   AbstractPdfView {
 		protected void buildPdfDocument(Map<String, Object> model,
 				Document document, PdfWriter writer, HttpServletRequest request,
 				HttpServletResponse response) throws Exception {
-			Paiement pay= (Paiement) model.get("paiement");
+			   Paiement pay= (Paiement) model.get("paiement");
+			   String nom = (String) model.get("nom");
+			   Date dateTicket = (Date) model.get("dateTicket");
 			if(pay == null) {
 				document.add(new Phrase("\n\n\n FACTURE NON ENCAISSEE !\n"));
 				document.add(new Phrase("AUCUN TICKET TROUVE..."));
@@ -151,7 +155,14 @@ public class TicketPdfDocView  extends   AbstractPdfView {
 			
 			//ticket information
 			PdfPCell tnCell = new PdfPCell(cellBorderlessStyle);
-			tnCell.setPhrase(new Phrase(new Chunk("TICKET: "+ pay.getPaiementNumber()+" du "+PharmaDateUtil.format(pay.getDateSaisie(),"dd-MM-yyyy hh:mm"), boddyStyle)));
+			if(dateTicket==null){
+				tnCell.setPhrase(new Phrase(new Chunk("TICKET: "+ pay.getPaiementNumber()+" du "+PharmaDateUtil.format(pay.getDateSaisie(),"dd-MM-yyyy HH:mm"), boddyStyle)));
+
+			}else{//permettre a un vendeur dentree une date # de la date de creation propremen dit
+				dateTicket.setHours(facture.getDateCreation().getHours());
+				dateTicket.setMinutes(facture.getDateCreation().getMinutes());
+				tnCell.setPhrase(new Phrase(new Chunk("TICKET: "+ pay.getPaiementNumber()+" du "+PharmaDateUtil.format(dateTicket,"dd-MM-yyyy HH:mm"), boddyStyle)));
+			}
 			tnCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(tnCell);// 
 			PdfPCell caiCell1 = new PdfPCell(cellBorderlessStyle);
@@ -165,7 +176,13 @@ public class TicketPdfDocView  extends   AbstractPdfView {
 			adressTable.addCell(salCell2);
 		    
 			PdfPCell clienCell = new PdfPCell(cellBorderlessStyle);
-			clienCell.setPhrase(new Phrase(new Chunk("CLIENT : "+commande.getClient().displayName(), boddyStyle)));
+			if (StringUtils.isBlank(nom)) {
+				clienCell.setPhrase(new Phrase(new Chunk("CLIENT : "+commande.getClient().displayName(), boddyStyle)));
+
+			}else {
+				clienCell.setPhrase(new Phrase(new Chunk("CLIENT : "+nom, boddyStyle)));
+
+			}
 			clienCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(clienCell);
 			if (commande.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT) && !commande.getVentePartiel()) {

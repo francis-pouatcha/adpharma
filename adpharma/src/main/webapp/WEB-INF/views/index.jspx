@@ -111,7 +111,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
             
 <!-- When not connected -->    
  <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_STOCKER, ROLE_CASHIER, ROLE_SITE_MANAGER, ROLE_VENDEUR,ROLE_SUPER_ADMIN">  
-    <table class="tblog" >
+    <table class="tblog"  style="height: 400px;" >
        <tr>
     	   <td align="center" width="30%" class="tblog">
 	    		  <div id="carousel">
@@ -197,10 +197,10 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                        <table>
 	                             <tr>
 	                                <th style="text-align: center;">Num. Caisse</th>
-	                                <th style="text-align: center;">Date ouverture</th>
 	                                <th style="text-align: center;">Caissier</th>
 	                                <th style="text-align: center;">Fond caisse</th>
 	                                <th style="text-align: center;">Total encaissement</th>
+	                                 <th style="text-align: center;">Total Retrait</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty cashs}">
@@ -208,10 +208,10 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                               <spring:url value="/caisses/${cash.id}" var="cash_url" />
 	                               <tr>
 	                                   <td> <a href="${cash_url}" class="links"> <c:out value="${cash.caisseNumber}" /> </a> </td>
-	                                   <td> <fmt:formatDate value="${cash.dateOuverture}" pattern="dd-MM-yyy HH:mm"/> </td>
 	                                   <td> <c:out value="${cash.caissier.fullName}" /> </td>
 	                                   <td> <c:out value="${cash.fondCaisse}" /> </td>
 	                                   <td> <c:out value="${cash.totalEncaissement}" /> </td>
+	                                   <td><c:out value="${cash.totalRetrait}" />  </td>
 	                               </tr>
 	                            </c:forEach>
 	                           </c:when>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.adorsys.adpharma.beans.ChangeDatePrice;
 import org.adorsys.adpharma.beans.process.ReclamationBean;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Client;
@@ -309,6 +310,111 @@ public class LigneApprovisionementController {
 						setMaxResults(50).getResultList());
 		}
 		return "ligneapprovisionements/list";
+	}
+	
+	
+	
+	@RequestMapping(value="/changeDatePrice")
+    public String changeDatePrice(ChangeDatePrice changeDatePrice, Model uiModel, HttpServletRequest httpServletRequest) {
+        if (changeDatePrice.getNouveauPrix()==null && changeDatePrice.getNouvelDatePeremption()==null) {
+        	
+            uiModel.addAttribute("changeDatePrice", changeDatePrice);
+            uiModel.addAttribute("message", "la date et le prix sont null, veuillez remplir o moins un!");
+            return "ligneapprovisionements/changedateprices";
+        }
+        
+        
+        if(changeDatePrice.getNouveauPrix()!=null && changeDatePrice.getId()!=null){
+        	if(changeDatePrice.isAppliqueLeNouveauPrixATousLesCipmDeMemeCip()){
+        		
+        		List<LigneApprovisionement> list = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(changeDatePrice.getCipm()).getResultList();
+        		try {
+        			List<LigneApprovisionement> list2 = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, list.get(0).getCip()).getResultList();
+        		
+					for(LigneApprovisionement approvisionement:list2){
+						approvisionement.setPrixVenteUnitaire(changeDatePrice.getNouveauPrix());
+						approvisionement.merge();
+						approvisionement.flush();
+					}
+					uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+				} catch (Exception e) {
+					uiModel.addAttribute("message", "vous n'avez pas entrer un bon cipm");
+				}
+        		
+        	}else{
+        		
+        		LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(changeDatePrice.getId());
+            	approvisionement.setPrixVenteUnitaire(changeDatePrice.getNouveauPrix());
+            	approvisionement.merge();
+            	approvisionement.flush();
+            	uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+        	}
+        	
+        }
+        if(changeDatePrice.getNouvelDatePeremption()!=null && changeDatePrice.getId()!=null){
+        	if(changeDatePrice.isAppliqueLaNouvelDateATousLesCipmDeMemeCip()){
+        		
+        		List<LigneApprovisionement> list = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(changeDatePrice.getCipm()).getResultList();
+        		try {
+        			List<LigneApprovisionement> list2 = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, list.get(0).getCip()).getResultList();
+        		
+					for(LigneApprovisionement approvisionement:list2){
+						approvisionement.setDatePeremtion(changeDatePrice.getNouvelDatePeremption());
+						approvisionement.merge();
+						approvisionement.flush();
+					}
+					uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+				} catch (Exception e) {
+					uiModel.addAttribute("message", "vous n'avez pas entrer un bon cipm");
+				}
+        		
+        	}else{
+        		
+        		LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(changeDatePrice.getId());
+        		approvisionement.setDatePeremtion(changeDatePrice.getNouvelDatePeremption());
+            	approvisionement.merge();
+            	approvisionement.flush();
+            	uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+        	}
+        	
+        	
+        }
+        uiModel.addAttribute("changeDatePrice", new ChangeDatePrice());
+        return "ligneapprovisionements/changedateprices";
+    }
+    
+    @RequestMapping(value="changeDatePriceForm")
+    public String createFormChangeDatePrice(Model uiModel) {
+        uiModel.addAttribute("changeDatePrice", new ChangeDatePrice());
+        return "ligneapprovisionements/changedateprices";
+    }
+	
+	
+    @RequestMapping(value="/findProductAjax")
+    @ResponseBody
+	public String findByDesAjax( @RequestParam("designation") String designation, Model uiModel) {
+		
+		List<LigneApprovisionement> list = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndDesignationLike(BigInteger.ONE, designation , Etat.CLOS).getResultList();
+		return LigneApprovisionement.toJsonArray(list);
+	}
+	
+    @RequestMapping(value="/findProductByidAjax/{id}")
+    @ResponseBody
+	public String findByIdAjax( @PathVariable("id") Long id, Model uiModel) {
+		LigneApprovisionement approvisionement = LigneApprovisionement.findLigneApprovisionement(id);
+		return approvisionement.toJson();
+	}
+	
+    @RequestMapping(value="/findProductByCipmAjax/{cipm}")
+    @ResponseBody
+	public String findByCipmAjax( @PathVariable("cipm") String cipm, Model uiModel) {
+		List<LigneApprovisionement> list = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipm).getResultList();
+		try {
+				return list.get(0).toJson();
+		} catch (Exception e) {
+			return null;
+		}
+	
 	}
 	
 	

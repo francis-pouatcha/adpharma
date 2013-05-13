@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.Decaissement;
+import org.adorsys.adpharma.beans.process.CashDisbursementBean;
 import org.adorsys.adpharma.beans.process.ChiffreAffaireBean;
+import org.adorsys.adpharma.beans.process.PaiementProcess;
 import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
@@ -19,11 +21,13 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Genre;
+import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeDecaissement;
+import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.security.SecurityUtil;
-import org.adorsys.adpharma.services.DisbursementService;
+import org.adorsys.adpharma.services.DefaultDisbursementService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -32,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,54 +50,64 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CaisseController {
 
 	@Autowired
-	private DisbursementService decaissementService;
+	private DefaultDisbursementService disbursementService;
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		uiModel.addAttribute("caisse", new Caisse());
 		return "caisses/search";
-		
+
 	}
-	
+
 	// Formualire de decaissement
 	@RequestMapping(value="/decaissement", params="form", method=RequestMethod.GET)
 	public String decaissementForm(Model uiModel){
-		uiModel.addAttribute("decaissement", new Decaissement());	
-		return "caisses/decaissement";
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if(openCaisse == null){
+			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte ! ");
+			return "caisses/infos";
+		}
+		initDisbursementView(uiModel, openCaisse,null);
+		return "caisses/decaissement"; 
 	}
 	
-	
-	// Action de decaissement
-	@RequestMapping(value="/decaisser", method=RequestMethod.GET)
-	public String decaissement(@Valid Decaissement decaissement, BindingResult bindingResult, Model uiModel){
-		Caisse caisse=null;
-		BigDecimal currentAmount=BigDecimal.ZERO;
-		try {
-			caisse = Decaissement.validateDisbursement(bindingResult, decaissement);
-			currentAmount=caisse.getTotalCash();
-		} catch (Exception e) {
-			 System.out.println(e.getMessage());
-		}
-		
-		if(bindingResult.hasErrors()){
-			uiModel.addAttribute("errors", "erreurs!");
-			return "caisses/decaissement";
-		}
-		
-		decaissementService.makeDisbursement(caisse, decaissement.getMontantDecaissement(), decaissement.getNote());
-		if(decaissement.getTypeDecaissement().equals(TypeDecaissement.CONSOMMATION_AVOIR.toString())){
-			AvoirClient avoirClient = AvoirClient.findAvoirClientsByNumeroEquals(decaissement.getNumAvoir()).getSingleResult();
-			avoirClient.setMontant(avoirClient.getMontant().subtract(decaissement.getMontantDecaissement()));
-			avoirClient.setMontantUtilise(avoirClient.getMontantUtilise().add(decaissement.getMontantDecaissement()));
-			avoirClient.merge();
-		}
-		uiModel.addAttribute("sucess", "Votre caisse avait un montant de: "+currentAmount+" ,vous avez decaisse la somme de: "+decaissement.getMontantDecaissement()+" ,le solde de votre caisse est de: "+caisse.getTotalCash());
-		
-		return "caisses/decaissement";
-		
-	}
-	
+	@RequestMapping(value = "/printDisbursementTicket/{id}.pdf", method = RequestMethod.GET)
+    public String printAvoir(@PathVariable("id") Long id, Model uiModel) {
+		OperationCaisse operationCaisse = OperationCaisse.findOperationCaisse(id);
+        uiModel.addAttribute("operationCaisse", operationCaisse);
+        return "disbusementPdfView";
+    }
 
+
+	// Action de decaissement
+	@RequestMapping(value="/decaisser", method=RequestMethod.POST)
+	public String decaissement(CashDisbursementBean disbursement, Decaissement decaissement ,BindingResult bindingResult, Model uiModel){
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if(openCaisse == null){
+			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte ! ");
+			return "caisses/infos";
+		}
+		if (!disbursement.isValid(uiModel, openCaisse)) {
+			initDisbursementView(uiModel, openCaisse,disbursement);
+			return "caisses/decaissement"; 
+		}
+		disbursementService.processDisbursement(openCaisse, disbursement);
+		initDisbursementView(uiModel, openCaisse,disbursement);
+		return "caisses/decaissement";
+
+	}
+
+
+
+
+
+
+	public void initDisbursementView(Model uiModel ,Caisse caisse ,CashDisbursementBean disb){
+		List<OperationCaisse> operationCaisses = OperationCaisse.findOperationCaissesByCaisseAndtypeOperations(TypeOpCaisse.DECAISSEMENT, caisse).getResultList();
+		uiModel.addAttribute("cashDisbursementBean", disb==null ? new CashDisbursementBean():disb);
+		uiModel.addAttribute("operationCaisses", operationCaisses);
+
+	}
 	@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
 	public String Search(Caisse caisse , Model uiModel) {
 		uiModel.addAttribute("results", Caisse.search(caisse.getCaisseNumber(), caisse.getCaissier(), caisse.getDateOuverture(), caisse.getDateFemeture(), caisse.getCaisseOuverte()).getResultList());
@@ -232,8 +247,8 @@ public class CaisseController {
 			return "bordereauCaissePdfDocView";
 		}
 	}
-	
-	
+
+
 	@RequestMapping(params = "find=etatJournalier", method = RequestMethod.GET)
 	public String etatJournalier(Model uiModel) {
 		DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date());
@@ -282,11 +297,11 @@ public class CaisseController {
 	public Collection<Caisse> populateCaisses() {
 		return new ArrayList<Caisse>();
 	}
-	
+
 	@ModelAttribute("typesDecaissements")
 	public Collection<TypeDecaissement> populateTypeDecaissement(){
 		return Arrays.asList(TypeDecaissement.class.getEnumConstants());
 	}
-	
-	
+
+
 }

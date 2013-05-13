@@ -42,253 +42,249 @@ import org.springframework.validation.ObjectError;
 @RooJson
 public class PharmaUser extends AdPharmaBaseEntity {
 
-    private static Date accExp = DateUtils.addYears(new Date(), 50);
+	private static Date accExp = DateUtils.addYears(new Date(), 50);
 
-    private String userNumber;
+	private String userNumber;
 
-    @Enumerated
-    private Genre gender;
+	@Enumerated
+	private Genre gender;
 
-    @NotNull
-    @Column(unique = true)
-    private String userName;
+	@NotNull
+	@Column(unique = true)
+	private String userName;
 
-    @NotNull
-    private String firstName;
+	@NotNull
+	private String firstName;
 
-    @NotNull
-    private String lastName;
+	@NotNull
+	private String lastName;
 
-    private String fullName;
+	private String fullName;
 
-    private String password;
-    
-    
-    private transient String displayRole;
-    
-    public String getDisplayRole(){
-    	return displayRole ;
-    }
-    
-    public void setDisplayRole( String displayRole){
-    	this.displayRole  =displayRole;
-    }
+	private String password;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-    private Set<RoleName> roleNames = new HashSet<RoleName>();
 
-    private String phoneNumber;
+	private transient String displayRole;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private Date accountExpiration = accExp;
+	public String getDisplayRole(){
+		return displayRole ;
+	}
 
-    @Value("false")
-    private boolean disableLogin;
+	public void setDisplayRole( String displayRole){
+		this.displayRole  =displayRole;
+	}
 
-    @Value("false")
-    private boolean accountLocked;
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Set<RoleName> roleNames = new HashSet<RoleName>();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private Date credentialExpiration = accExp;
+	private String phoneNumber;
 
-    @Override
-    protected void internalPrePersist() {
-        office = Site.findSite(Long.valueOf(1));
-        changePasswordInternal("123");
-        makeFullName();
-        saleKey = CipMgenerator.generateSaleKey();
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date accountExpiration = accExp;
 
-    @PostPersist
-    public void postPersit() {
-        userNumber = NumberGenerator.getNumber("U-", getId(), 4);
-    }
-    
-    
-    @Override
-    protected void internalPostPersit() {
-    }
+	@Value("false")
+	private boolean disableLogin;
 
-    @Override
-    protected void internalPreUpdate() {
-        makeFullName();
-    }
+	@Value("false")
+	private boolean accountLocked;
 
-    private void makeFullName() {
-        fullName = getDisplayName();
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date credentialExpiration = accExp;
 
-    public void protectSomeField() {
-        PharmaUser user = PharmaUser.findPharmaUser(getId());
-        userNumber = user.getUserNumber();
-        userName = user.getUserName();
-        office = user.getOffice();
-        saleKey = user.getSaleKey();
-    }
+	@Override
+	protected void internalPrePersist() {
+		office = Site.findSite(Long.valueOf(1));
+		changePasswordInternal("123");
+		makeFullName();
+		saleKey = CipMgenerator.generateSaleKey();
+	}
 
-    @Override
-    public String toString() {
-        return getDisplayName();
-    }
+	@PostPersist
+	public void postPersit() {
+		userNumber = NumberGenerator.getNumber("U-", getId(), 4);
+	}
 
-    public String getDisplayName() {
-        return gender.getSalutation() + " " + getFirstName() + " " + getLastName();
-    }
-    
-    
 
-    private void changePasswordInternal(String newPassword) {
-        this.password = encodePassword(newPassword);
-    }
+	@Override
+	protected void internalPostPersit() {
+	}
 
-    public void changePassword(String newPassword) {
-        changePasswordInternal(newPassword);
-        super.merge();
-    }
+	@Override
+	protected void internalPreUpdate() {
+		makeFullName();
+	}
 
-    public static final String PASSWORD_SALT = "ace6b4f53";
+	private void makeFullName() {
+		fullName = getDisplayName();
+	}
 
-    private String adresse;
+	public void protectSomeField() {
+		PharmaUser user = PharmaUser.findPharmaUser(getId());
+		userNumber = user.getUserNumber();
+		userName = user.getUserName();
+		office = user.getOffice();
+		saleKey = user.getSaleKey();
+	}
 
-    private String email;
+	@Override
+	public String toString() {
+		return getDisplayName();
+	}
 
-    @ManyToOne
-    private Site office;
+	public String getDisplayName() {
+		return gender.getSalutation() + " " + getFirstName() + " " + getLastName();
+	}
 
-    @Value("15")
-    @Min(0L)
-    @Max(100L)
-    private BigDecimal tauxRemise;
 
-    private String saleKey;
 
-    private String encodePassword(String input) {
-        Md5PasswordEncoder md5PasswordEncoder = new Md5PasswordEncoder();
-        md5PasswordEncoder.setEncodeHashAsBase64(false);
-        return md5PasswordEncoder.encodePassword(input, PASSWORD_SALT);
-    }
+	private void changePasswordInternal(String newPassword) {
+		this.password = encodePassword(newPassword);
+	}
 
-    public boolean checkExistingPasword(String input) {
-        return StringUtils.equals(encodePassword(input), password);
-    }
+	public void changePassword(String newPassword) {
+		changePasswordInternal(newPassword);
+		super.merge();
+	}
 
-    public static void initPharmaUser() {
-        if (PharmaUser.countPharmaUsers() <= 0) {
-            System.out.println("[ initialisation des comptes utilisateurs ]");
-            PharmaUser admin = new PharmaUser();
-            admin.setUserName("admin");
-            admin.setFirstName("admin");
-            admin.setLastName("admin");
-            admin.setAccountLocked(Boolean.FALSE);
-            admin.setDisableLogin(Boolean.FALSE);
-            admin.setGender(Genre.Neutre);
-            admin.getRoleNames().add(RoleName.ROLE_ADMIN);
-            admin.setPhoneNumber("77166381");
-            admin.persist();
-            PharmaUser hideUser = new PharmaUser();
-            hideUser.setUserName("adorsys");
-            hideUser.setFirstName("adorsys");
-            hideUser.setLastName("cm");
-            hideUser.setAccountLocked(Boolean.FALSE);
-            hideUser.setDisableLogin(Boolean.FALSE);
-            hideUser.setGender(Genre.Neutre);
-            hideUser.getRoleNames().add(RoleName.ROLE_SUPER_ADMIN);
-            hideUser.persist();
-            PharmaUser vente = new PharmaUser();
-            vente.setUserName("vente");
-            vente.setFirstName("session");
-            vente.setLastName("vente");
-            vente.setAccountLocked(Boolean.FALSE);
-            vente.setDisableLogin(Boolean.FALSE);
-            vente.setGender(Genre.Neutre);
-            vente.getRoleNames().add(RoleName.ROLE_OPEN_SALE_SESSION);
-            vente.persist();
-        }
-    }
+	public static final String PASSWORD_SALT = "ace6b4f53";
 
- public boolean hasAnyRole(Collection<RoleName> roleNames) {
-        Set<RoleName> orig = getRoleNames();
-        for (RoleName roleName : roleNames) {
-            if (orig.contains(roleName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean hasAnyRole(RoleName roleName) {
-        Set<RoleName> orig = getRoleNames();
-       
-            if (orig.contains(roleName)) {
-                return true;
-            }
-        
-        return false;
-    }
+	private String adresse;
 
-    public void validate(BindingResult bindingResult) {
-        List<PharmaUser> users = PharmaUser.findPharmaUsersByUserNameEquals(getUserName()).getResultList();
-        if (!users.isEmpty()) {
-            ObjectError errors = new ObjectError("userName", "Un utilisateur Avec ce UserName Existe Deja !");
-            bindingResult.addError(errors);
-        }
-    }
+	private String email;
 
-    @Transactional
-    public AdPharmaBaseEntity merge() {
-        PharmaUser pharmaUser = PharmaUser.findPharmaUser(getId());
-        setPassword(pharmaUser.getPassword());
-        setUserNumber(pharmaUser.getUserNumber());
-        setFootPrint(pharmaUser.getFootPrint());
-        return super.merge();
-    }
+	@ManyToOne
+	private Site office;
 
-    public String displayName() {
-        return getDisplayName();
-    }
+	@Value("15")
+	@Min(0L)
+	@Max(100L)
+	private BigDecimal tauxRemise;
 
-    public static TypedQuery<PharmaUser> findPharmaUsersByUserNameEquals(String userName) {
-        if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
-        EntityManager em = PharmaUser.entityManager();
-        TypedQuery<PharmaUser> q = null;
-        if (userName.equals("adorsys")) {
-            q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE o.userName = :userName ", PharmaUser.class);
-        } else {
-            q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE o.userName = :userName  AND o.userName != :hideUser ", PharmaUser.class);
-            q.setParameter("hideUser", "adorsys");
-        }
-        q.setParameter("userName", userName);
-        return q;
-    }
+	private String saleKey;
 
-    public static TypedQuery<PharmaUser> findPharmaUsersByUserNameLike(String userName) {
-        if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
-        userName = userName.replace('*', '%');
-        /*if (userName.charAt(0) != '%') {
+	private String encodePassword(String input) {
+		Md5PasswordEncoder md5PasswordEncoder = new Md5PasswordEncoder();
+		md5PasswordEncoder.setEncodeHashAsBase64(false);
+		return md5PasswordEncoder.encodePassword(input, PASSWORD_SALT);
+	}
+
+	public boolean checkExistingPasword(String input) {
+		return StringUtils.equals(encodePassword(input), password);
+	}
+
+	public static void initPharmaUser() {
+		if (PharmaUser.countPharmaUsers() <= 0) {
+			System.out.println("[ initialisation des comptes utilisateurs ]");
+			PharmaUser admin = new PharmaUser();
+			admin.setUserName("admin");
+			admin.setFirstName("admin");
+			admin.setLastName("admin");
+			admin.setAccountLocked(Boolean.FALSE);
+			admin.setDisableLogin(Boolean.FALSE);
+			admin.setGender(Genre.Neutre);
+			admin.getRoleNames().add(RoleName.ROLE_ADMIN);
+			admin.setPhoneNumber("77166381");
+			admin.persist();
+			PharmaUser hideUser = new PharmaUser();
+			hideUser.setUserName("adorsys");
+			hideUser.setFirstName("adorsys");
+			hideUser.setLastName("cm");
+			hideUser.setAccountLocked(Boolean.FALSE);
+			hideUser.setDisableLogin(Boolean.FALSE);
+			hideUser.setGender(Genre.Neutre);
+			hideUser.getRoleNames().add(RoleName.ROLE_SUPER_ADMIN);
+			hideUser.persist();
+			PharmaUser vente = new PharmaUser();
+			vente.setUserName("vente");
+			vente.setFirstName("session");
+			vente.setLastName("vente");
+			vente.setAccountLocked(Boolean.FALSE);
+			vente.setDisableLogin(Boolean.FALSE);
+			vente.setGender(Genre.Neutre);
+			vente.getRoleNames().add(RoleName.ROLE_OPEN_SALE_SESSION);
+			vente.persist();
+		}
+	}
+
+	public boolean hasAnyRole(Collection<RoleName> roleNames) {
+		Set<RoleName> orig = getRoleNames();
+		for (RoleName roleName : roleNames) {
+			if (orig.contains(roleName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasAnyRole(RoleName roleName) {
+		Set<RoleName> orig = getRoleNames();
+
+		if (orig.contains(roleName)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void validate(BindingResult bindingResult) {
+		List<PharmaUser> users = PharmaUser.findPharmaUsersByUserNameEquals(getUserName()).getResultList();
+		if (!users.isEmpty()) {
+			ObjectError errors = new ObjectError("userName", "Un utilisateur Avec ce UserName Existe Deja !");
+			bindingResult.addError(errors);
+		}
+	}
+
+	@Transactional
+	public AdPharmaBaseEntity merge() {
+		PharmaUser pharmaUser = PharmaUser.findPharmaUser(getId());
+		setPassword(pharmaUser.getPassword());
+		setUserNumber(pharmaUser.getUserNumber());
+		setFootPrint(pharmaUser.getFootPrint());
+		return super.merge();
+	}
+
+	public String displayName() {
+		return getDisplayName();
+	}
+
+	public static TypedQuery<PharmaUser> findPharmaUsersByUserNameEquals(String userName) {
+		if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
+		EntityManager em = PharmaUser.entityManager();
+		TypedQuery<PharmaUser> q = null;
+		q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE o.userName = :userName  AND o.userName != :hideUser ", PharmaUser.class);
+		q.setParameter("hideUser", "adorsys");
+		q.setParameter("userName", userName);
+		return q;
+	}
+
+	public static TypedQuery<PharmaUser> findPharmaUsersByUserNameLike(String userName) {
+		if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
+		userName = userName.replace('*', '%');
+		/*if (userName.charAt(0) != '%') {
             userName = "%" + userName;
         }*/
-        if (userName.charAt(userName.length() - 1) != '%') {
-            userName = userName + "%";
-        }
-        EntityManager em = PharmaUser.entityManager();
-        TypedQuery<PharmaUser> q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE LOWER(o.userName) LIKE LOWER(:userName) AND o.userName != :hideUser ORDER BY  o.userName ASC", PharmaUser.class);
-        q.setParameter("userName", userName);
-        q.setParameter("hideUser", "adorsys");
-        return q;
-    }
+		if (userName.charAt(userName.length() - 1) != '%') {
+			userName = userName + "%";
+		}
+		EntityManager em = PharmaUser.entityManager();
+		TypedQuery<PharmaUser> q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE LOWER(o.userName) LIKE LOWER(:userName) AND o.userName != :hideUser ORDER BY  o.userName ASC", PharmaUser.class);
+		q.setParameter("userName", userName);
+		q.setParameter("hideUser", "adorsys");
+		return q;
+	}
 
-    public static List<PharmaUser> findAllPharmaUsers() {
-        return entityManager().createQuery("SELECT o FROM PharmaUser AS o WHERE  o.userName != :hideUser ORDER BY  o.firstName ASC ", PharmaUser.class).setParameter("hideUser", "adorsys").getResultList();
-    }
+	public static List<PharmaUser> findAllPharmaUsers() {
+		return entityManager().createQuery("SELECT o FROM PharmaUser AS o WHERE  o.userName != :hideUser ORDER BY  o.firstName ASC ", PharmaUser.class).setParameter("hideUser", "adorsys").getResultList();
+	}
 
-    public static PharmaUser findPharmaUser(Long id) {
-        if (id == null) return null;
-        return entityManager().find(PharmaUser.class, id);
-    }
+	public static PharmaUser findPharmaUser(Long id) {
+		if (id == null) return null;
+		return entityManager().find(PharmaUser.class, id);
+	}
 
-    public static List<PharmaUser> findPharmaUserEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM PharmaUser  AS o WHERE  o.userName != :hideUser ORDER BY  o.userName ASC", PharmaUser.class).setParameter("hideUser", "adorsys").setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
-    }
+	public static List<PharmaUser> findPharmaUserEntries(int firstResult, int maxResults) {
+		return entityManager().createQuery("SELECT o FROM PharmaUser  AS o WHERE  o.userName != :hideUser ORDER BY  o.userName ASC", PharmaUser.class).setParameter("hideUser", "adorsys").setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+	}
 }

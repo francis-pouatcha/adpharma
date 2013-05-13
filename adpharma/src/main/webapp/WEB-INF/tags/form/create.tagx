@@ -60,14 +60,20 @@
 			<spring:message
 				code="label_${fn:toLowerCase(fn:substringAfter(id,'_'))}"
 				var="label" htmlEscape="false" />
+				
+				<spring:message arguments="${label}" code="entity_create"
+			var="title_msg" htmlEscape="false" />
 		</c:if>
+		<c:if test="${not empty label}">
+			<c:set value="${label}" var="title_msg" /> 
+		</c:if>
+		
 
 		<c:set var="enctype" value="application/x-www-form-urlencoded" />
 		<c:if test="${multipart}">
 			<c:set var="enctype" value="multipart/form-data" />
 		</c:if>
-		<spring:message arguments="${label}" code="entity_create"
-			var="title_msg" htmlEscape="false" />
+		
 		<util:panel id="${id}" title="${title_msg}" openPane="${openPane}">
 			<spring:url value="${path}" var="form_url" />
 

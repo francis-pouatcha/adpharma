@@ -10,8 +10,6 @@
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" maxLength="-1" property="name" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_magasin" maxLength="-1" property="magasin" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Rayon_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Rayon_emplacement" property="emplacement" z="4aRdmz2lTiO5TmpbAEs+5vJ1/go="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" property="codeGeo" z="z0nCLqMi67/cAfCbm4+TOGCgWNg="/>
         </table:table>
     </page:list1>
 </div>

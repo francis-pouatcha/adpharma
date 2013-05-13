@@ -16,6 +16,7 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.DetteClient;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.EtatSolde;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
@@ -190,7 +191,7 @@ public class ProduitController {
 	public String findByCipmAjax(@PathVariable("cipm") String cipm,Model uiModel) {
 		String	cipMaison = cipm;
 		//cipMaison = StringUtils.removeStart(cipMaison, "0");
-		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(10).getResultList();
+		List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(2).getResultList();
 		if (!lines.isEmpty()) {
 			return lines.iterator().next().clone().toJson();
 		}else {
@@ -200,34 +201,7 @@ public class ProduitController {
 	}
 
 
-	@RequestMapping(value="/{saleId}/findByCipmAjax/{cipm}", method = RequestMethod.GET)
-	@ResponseBody
-	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel) {
-		String	cipMaison = cipm;
-		Configuration config = Configuration.findConfiguration(new Long(1));
-		LigneApprovisionement item = new LigneApprovisionement() ;
-		if(config.getOnlySaleOld()){
-			CommandeClient sale = CommandeClient.findCommandeClient(saleId);
-			List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipMaison).setMaxResults(10).getResultList();
-			if (!lines.isEmpty()) {
-				LigneApprovisionement next = lines.iterator().next();
-				List<LigneApprovisionement> oldcimplist = SaleService.getoldProductLisForSale(next.getProduit(), sale);
-				if(next.isOldItem(oldcimplist)){
-					return lines.iterator().next().clone().toJson();
-				}else {
-					item.setViewMsg("veullez saisir le cipm le plus ancien !") ;
-					return item.toJson() ;
-				}
-			}else {
-				item.setViewMsg("Aucun produit trouve !") ;
-				return item.toJson() ;
-			}	
-		}
-		return findByCipmAjax(cipMaison, uiModel) ;
-
-	}
-
-
+	
 	@RequestMapping(value="/create/{cip}",method = RequestMethod.POST)
 	public String create(@PathVariable("cip") boolean cip, @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		produit.validate(bindingResult);
@@ -306,16 +280,11 @@ public class ProduitController {
 	        return "produits/list";
 	    }
 
-	  
-	  /*@ModelAttribute("produits")
-	    public Collection<Produit> populateProduits() {
-	        return Produit.findAllProduits();
-	    }*/
-	  
 	@ModelAttribute("produits")
 	public Collection<Produit> populateProduits() {
 		return new ArrayList<Produit>();
-	}
+	}	 
+
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
 		public String searchDette(@RequestParam("name") String  name,  Model uiModel) {
 			
@@ -433,5 +402,41 @@ public class ProduitController {
 		public Collection<Produit> populateProduitsSolde() {
 			return Produit.findProduitsWithConfigSolde().getResultList();
 		}
+	    
+	    @RequestMapping(value="/findProductAjax")
+	    @ResponseBody
+		public String findByDesAjax( @RequestParam("designation") String designation, Model uiModel) {
+			
+			List<Produit> list = Produit.findProduitsByDesignationLike(designation).getResultList();
+			return Produit.toJsonArray(list);
+		}
+	    
+	    @RequestMapping(value="/findProductByidAjax/{id}")
+	    @ResponseBody
+		public String findByIdAjax( @PathVariable("id") Long id, Model uiModel) {
+			Produit produit = Produit.findProduit(id);
+			return produit.toJson();
+		}
+	    
+	    @RequestMapping(value = "updateCip")
+	    public String updateCip(@RequestParam(value="id", required=false) Long id,
+	    		@RequestParam(value="cip", required=false) String cip, Model uiModel) {
+	    	
+	    	if(id!=null && cip!=null && !cip.equals("")){
+	    		List<Produit> list = Produit.findProduitsByCipEquals(cip).getResultList();
+	    		if(list!=null && !list.isEmpty()){
+	    			uiModel.addAttribute("message", "Le cip que vous avez entrez, existe deja! ");
+	    		}else{
+	    			Produit produit = Produit.findProduit(id);
+	    			produit.setCip(cip);
+	    			produit.merge();
+	    			uiModel.addAttribute("message", "Le cip du produit a ete modifie! ");
+	    		}
+	    	}else{
+	    		uiModel.addAttribute("message", "Selectionner un produit et entrer un nouveau cip! ");
+	    	}
+	    	
+	        return "produits/changecip";
+	    }
 
 }

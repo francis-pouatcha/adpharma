@@ -4,10 +4,12 @@
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_org_adorsys_adpharma_domain_Configuration" items="${configurations}" z="plMydWa76lMkp6qq36kgyiWinKg=">
         <table:table data="${configurations}" id="l_org_adorsys_adpharma_domain_Configuration" path="/configurations" z="OXW1YdUvLibmPYHyNLtMQhDBKBM=">
-            <table:column id="c_org_adorsys_adpharma_domain_Configuration_saleForce" property="saleForce" z="HxMY/YuJcGGQecs3u6rAxInfwJw="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Configuration_closeCashUnpaySale" property="closeCashUnpaySale" z="KVdYFUxu1sxOyHLOEaTc4UJ0xQk="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Configuration_closeCancelSale" property="closeCancelSale" z="sLb/lZvoHDjxRos2D7ancMy5wJU="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" property="restoreCancelSale" z="1Sv7/rjQGZXJgRlPoAxbZv7GARM="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_saleCash" property="saleCash" z="lvKYJ8BATb3LW31jA4SdblJ/iNs="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_editCloseSupply" property="editCloseSupply" z="KC9W7opJX494DhL2AApZBQcFlGY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" property="enableLicence" z="4cWVBkZD1/sDV4LtdwB35mNHFHA="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_onlySaleOld" property="onlySaleOld" z="GmiXN5qncUN9PNSwD0Q6icLVp1c="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_forceToSameLine" property="forceToSameLine" z="7f6Q6y+VjqbJwQ5dj96KwIpWDaw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" property="receptionFolder" z="DqkSZvjareQO4TTD6SvTr3dJ5hw="/>
         </table:table>
     </page:list>
 </div>

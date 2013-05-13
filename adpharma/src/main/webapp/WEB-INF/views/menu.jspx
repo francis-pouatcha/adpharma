@@ -281,6 +281,10 @@
                 <menu:item id="i_salesconfiguration_list" messageCode="global_menu_list" url="/salesconfigurations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="+jl/HxazURbPKXEKaT04bQl+t4E="/>
                 <menu:item id="fi_salesconfiguration_typevente" messageCode="global_menu_find" url="/salesconfigurations?find=ByTypeVente&amp;form" z="mvju8w/w3khqk7snLp99FVsRRsc="/>
             </menu:category>
+            <menu:category id="c_changedateprice" z="ck3U12QI8UWqpzRpksYENe84+GQ=">
+                <menu:item id="i_changedateprice_new" messageCode="global_menu_new" url="/changedateprices?form" z="MM5jW5cMcnXvxnbiKJ8NAnc1vX4="/>
+                <menu:item id="i_changedateprice_list" messageCode="global_menu_list" url="/changedateprices?page=1&amp;size=${empty param.size ? 10 : param.size}" z="R7Ea4oNf6uiElTtvnYCICkofQXc="/>
+            </menu:category>
         </menu:menu>
     </security:authorize>
 </div>

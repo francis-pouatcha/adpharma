@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ApprovisionementController {
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = {RequestMethod.GET})
 	public String show(@PathVariable("id") Long id, Model uiModel) {
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("approvisionement", Approvisionement.findApprovisionement(id));

@@ -60,14 +60,14 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 		boddyStyle.setStyle("bold");
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
 		emptyCell.setPhrase(new Phrase("\n"));
-		emptyCell.setMinimumHeight(6f);
+		emptyCell.setMinimumHeight(8f);
 		PdfPCell empty = new PdfPCell(cellBorderlessStyle);
 		//PrintEmptyCell(12, 2, adressTable, emptyCell);
 		List<LigneApprovisionement>  ligne = ( List<LigneApprovisionement> ) model.get("ligneApprivisionement");
 		if (!ligne.isEmpty()) {
 			int size = ligne.size();
 		for (LigneApprovisionement ligneApprovisionement : ligne) {
- int i = 1 ;
+             int i = 1 ;
 			int quantieEnStock = ligneApprovisionement.getQuantiteAprovisione().intValue();
 		 	
 		printBareCode(ligneApprovisionement, quantieEnStock, adressTable, cb);
@@ -90,7 +90,7 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 					}
 					
 				}else {
-					for (int j = 1; j <= 8; j++) {
+					for (int j = 1; j <= 5; j++) {
 						table.addCell(emptyCell);
 					}
 				}
@@ -111,7 +111,7 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 		for (int i = 0; i < quantieEnStock ; i++) {
 			Barcode128 code128 = new Barcode128();
 			code128.setCodeType(code128.CODE128);
-			code128.setBarHeight(24);
+			code128.setBarHeight(18);
 			code128.setCode(ligneApprovisionement.getCipMaison());
 			Image imageEAN = code128.createImageWithBarcode(cb, null, null);
 			PdfPCell imgCell = new PdfPCell(cellBorderlessStyle);

@@ -18,6 +18,7 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -55,6 +56,11 @@ public class SearchSalesBean {
 	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date dateCreation ;
 
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private Date dateCreationF ;
+
 	private PharmaUser pharmaUser;
 
 	private List<CommandeClient> searchReasult = new ArrayList<CommandeClient>();
@@ -63,6 +69,7 @@ public class SearchSalesBean {
 		 if (this.entityManager == null) this.entityManager = AdPharmaBaseEntity.entityManager();
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM CommandeClient AS o WHERE o.dateCreation >= :minDateCreation ");
 		dateCreation = dateCreation != null ? dateCreation : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		dateCreationF = dateCreationF != null ? dateCreationF : PharmaDateUtil.getEndDayDate() ;
 		if (StringUtils.isNotBlank(commandeNumber))return entityManager.createQuery("SELECT o FROM CommandeClient AS o WHERE  o.cmdNumber = :cmdNumber ", CommandeClient.class).setParameter("cmdNumber", "CMD-" + commandeNumber).getResultList();
 		if (StringUtils.isNotBlank(cipm) && StringUtils.isNotBlank(designation)){
 			searchQuery.append(" AND o.id IN (SELECT l.commande.id FROM LigneCmdClient AS l where l.cipM = :cipm AND LOWER(l.designation) LIKE LOWER(:designation)  ) "); 
@@ -75,6 +82,7 @@ public class SearchSalesBean {
 		if (!etat.equals(Etat.ALL))  searchQuery.append(" AND o.status = :status "); 
 		if (pharmaUser != null) searchQuery.append(" AND o.vendeur = :pharmaUser "); 
 		if (anuller != null) searchQuery.append(" AND o.annuler = :annuler "); 
+		if (anuller != null) searchQuery.append(" AND  o.dateCreation <= :maxDateCreation "); 
 		if (!typeCommande.equals(TypeCommande.ALL))  searchQuery.append(" AND o.typeCommande = :typeCommande "); 
 
 		TypedQuery<CommandeClient> q = entityManager.createQuery(searchQuery.append(" ORDER BY o.id DESC").toString(), CommandeClient.class);
@@ -90,6 +98,7 @@ public class SearchSalesBean {
 		if (!etat.equals(Etat.ALL))  q.setParameter("status",etat); 
 		if (pharmaUser != null)  q.setParameter("pharmaUser",pharmaUser);
 		if (anuller != null)  q.setParameter("annuler",anuller);
+		if (dateCreationF != null) q.setParameter("maxDateCreation", dateCreationF ,TemporalType.TIMESTAMP);
 		if (!typeCommande.equals(TypeCommande.ALL))   q.setParameter("typeCommande",typeCommande); 
 		q.setParameter("minDateCreation", dateCreation ,TemporalType.TIMESTAMP);
 		System.out.println(q.toString());
@@ -180,6 +189,16 @@ public class SearchSalesBean {
 
 	public void setSearchReasult(List<CommandeClient> searchReasult) {
 		this.searchReasult = searchReasult;
+	}
+
+
+	public Date getDateCreationF() {
+		return dateCreationF;
+	}
+
+
+	public void setDateCreationF(Date dateCreationF) {
+		this.dateCreationF = dateCreationF;
 	}
 	
 	

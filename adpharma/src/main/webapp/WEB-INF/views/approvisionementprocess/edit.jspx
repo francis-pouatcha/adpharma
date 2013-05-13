@@ -88,8 +88,10 @@
 							<th style="text-align: center;">CiP</th>
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">CipM</th>
-							<th style="text-align: center;">Quantite</th>
+							<th style="text-align: center;">QTE</th>
+							<!-- 
 							<th style="text-align: center;">Qte RC</th>
+							 -->
 							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 							<th style="text-align: center;">Prix Achat</th>
@@ -121,12 +123,12 @@
 								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}"
 								onkeypress="return scanTouche(event)" width="30px;"
 								title="saisir la Quantite" maxlength="4" id="qte" /></td>
-								
+								<!-- 
 								<td><input type="text" name="qterecl" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteReclame}"
 								onkeypress="return scanTouche(event)" width="30px;" onmouseover="this.select();"
 								title="saisir la Quantite reclamee" maxlength="4" id="qterecl" /></td>
-								
+								 -->
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
 								onkeypress="return scanTouche(event)" width="30px;" onmouseover="this.select();"
@@ -179,10 +181,12 @@
 							<th style="text-align: center;">CiP</th>
 							<th style="text-align: center;">Designation</th>
 							<th style="text-align: center;">Marge(%)</th>
-							<th style="text-align: center;">Quantite</th>
+							<th style="text-align: center;">QTE</th>
+							<!-- 
 							<c:if test="${numero != 'F-0001'}">
 							 <th style="text-align: center;">Qte RC</th>
 							</c:if>
+							 -->
 							<th style="text-align: center;">Qte UG</th>
 							<th style="text-align: center;">Prix Vente</th>
 							<th style="text-align: center;">Prix Achat</th>
@@ -223,12 +227,12 @@
 								title="saisir la Quantite" id="qte" /></td> -->
 								
 						<c:set value="F-0001" var="numFournisseur" />		
-					     
+					     <!-- 
 					     <c:if test="${numero != 'F-0001'}">			
 							<td><input type="text" name="qteReclam" class="autres qteClass"
 								title="saisir la Quantite Reclamee" id="qteRec"  onmouseover="this.select();"/></td>
 					    </c:if>				
-
+                        -->
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
 								onkeypress="return scanTouche(event)" width="30px;"
@@ -309,8 +313,10 @@
 				<th style="text-align: center;">CipM</th>
 				<th style="text-align: center;">Marge</th>
 				<th style="text-align: center;">PAUnit</th>
-				<th style="text-align: center;">Quantite</th>
+				<th style="text-align: center;">QTE</th>
+				<!-- 
 				<th style="text-align: center;">Qte RC</th>
+				 -->
 				<th style="text-align: center;">Qte UG</th>
 				<th style="text-align: center;">PA Total</th>
 				<th style="text-align: center;">PV Unit</th>
@@ -335,9 +341,9 @@
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.prixAchatUnitaire}" /></td>
 					
 					<td style="text-align: right; padding-right: 20px;"><c:out value="${ligne.quantiteAprovisione}"></c:out></td>
-					
+					<!-- 
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.quantiteReclame}" /></td>
-					
+					 -->
 					<td style="text-align: right; padding-right: 20px;"><c:out value="${ligne.quantiteUniteGratuite}"></c:out></td>
 					
 					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.prixAchatTotal}" /></td>

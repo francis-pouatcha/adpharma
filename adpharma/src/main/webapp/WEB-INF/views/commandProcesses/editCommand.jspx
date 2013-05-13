@@ -18,37 +18,54 @@
 				value="${commandeProcess.displayName}" />
 		</span>
 	</div> -->
-	
+
 	<util:display-box display="${commandeProcess.displayName}" />
-	
+
 	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
-	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form" var="edit_url" />
-	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/findProduct?form"	var="find_product_url" />
-	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/enregistrerCmd"	var="enr_cmd_url" />
-	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/addLine"	var="cmd_add_url" />
-	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/showProduct/"  var="show_prd_url" />
-	<spring:url value="/approvisionementprocess/1/findProduct/"	var="find_cip_url" />
-	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd" var="delete_cmd_url" />
-	<spring:url	value="/commandprocesses/${commandeProcess.cmdId}/printBonCommande.pdf" var="bon_cmd_url" />
-	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/exporto.xls"	var="xls_cmd_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/editCommand?form"
+		var="edit_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/findProduct?form"
+		var="find_product_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/enregistrerCmd"
+		var="enr_cmd_url" />
+	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/addLine"
+		var="cmd_add_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/showProduct/"
+		var="show_prd_url" />
+	<spring:url value="/approvisionementprocess/1/findProduct/"
+		var="find_cip_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/annulerCmd"
+		var="delete_cmd_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/printBonCommande.pdf"
+		var="bon_cmd_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/exporto.xls"
+		var="xls_cmd_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL PREPARATION</a></span>
-		<span><a href="${ enr_cmd_url}" style="text-decoration: none;">
-		<INPUT	class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a>
-		</span> 
-		<span><a href="${ delete_cmd_url}" style="text-decoration: none;">
-		<INPUT class="submits" type="button" value="Annuler la Preparation" title="Annuler la preparation" /></a>
-		</span>
-		<span><a href="#" id="findprd" style="text-decoration: none;">
-		<INPUT class="submits" type="button" value="Rechercher un produit" title="Rechercher un produit" /></a>
-		</span>
-		<span><a href="${bon_cmd_url}" style="text-decoration: none;">
-		<INPUT class="submits" type="button" value="imprimer le bon de commande " title="imprimer le bon " /></a>
-		</span>
-		<span><a href="${xls_cmd_url}" style="text-decoration: none;">
-		<INPUT class="submits" type="button" value="exporter (EXCEL) " title="exporter au format xls " /></a>
-		</span>
+		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL
+				PREPARATION</a></span> <span><a href="${ enr_cmd_url}"
+			style="text-decoration: none;"> <INPUT class="submits"
+				type="button" value="Enregistrer"
+				title="Enregistre L'approvisionnement" /></a> </span> <span><a
+			href="${ delete_cmd_url}" style="text-decoration: none;"> <INPUT
+				class="submits" type="button" value="Annuler la Preparation"
+				title="Annuler la preparation" /></a> </span> <span><a href="#"
+			id="findprd" style="text-decoration: none;"> <INPUT
+				class="submits" type="button" value="Rechercher un produit"
+				title="Rechercher un produit" /></a> </span> <span><a
+			href="${bon_cmd_url}" style="text-decoration: none;"> <INPUT
+				class="submits" type="button" value="imprimer le bon de commande "
+				title="imprimer le bon " /></a> </span> <span><a href="${xls_cmd_url}"
+			style="text-decoration: none;"> <INPUT class="submits"
+				type="button" value="exporter (EXCEL) "
+				title="exporter au format xls " /></a> </span>
 
 	</div>
 
@@ -60,7 +77,9 @@
 		var="update_url" />
 	<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
 
-	<spring:url value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/" var="delete_line_url" />
+	<spring:url
+		value="/commandprocesses/${commandeProcess.cmdId}/deleteLine/"
+		var="delete_line_url" />
 
 	<script type="text/javascript">
 		function deleteRow(row) {
@@ -80,123 +99,120 @@
 			}
 
 		};
-		
-		function saveLine(){
-			
-			 // Scan touche autorisation, (if autorisation), (if press enter), [Get json and return true], (else return 
-			 
-			
-			
-			$.getJSON( '${update_url}',
-					$('#editLineForm').serialize(),
-		                function(data){
-				if(data!=null){
-					var rowId = "tr#"+$('#_id_id').val()+" td";
-					var int = parseInt('0');
-					$(rowId).each(function(){
-						if(int==3)	$(this).html(data.quantiteCommande);
-						if(int==4)	$(this).html(data.prixAchatMin);
-						if(int==5)	$(this).html(data.prixAVenteMin);
-						int++ ;
+
+		function saveLine() {
+
+			// Scan touche autorisation, (if autorisation), (if press enter), [Get json and return true], (else return 
+
+			$.getJSON('${update_url}', $('#editLineForm').serialize(),
+					function(data) {
+						if (data != null) {
+							var rowId = "tr#" + $('#_id_id').val() + " td";
+							var int = parseInt('0');
+							$(rowId).each(function() {
+								if (int == 3)
+									$(this).html(data.quantiteCommande);
+								if (int == 4)
+									$(this).html(data.prixAchatMin);
+								if (int == 5)
+									$(this).html(data.prixAVenteMin);
+								int++;
+							});
+
+							//$('#editLineDiv').dialog('close');
+						} else {
+							alert('la ligne est introuvable !');
+						}
+
 					});
-					  
-					  $('#editLineDiv').dialog('close');
-				}else{
-					alert('la ligne est introuvable !');
-				}
-				         
-						});
 		};
-		function setFormInfos(rowId ,qte,pa,pv){
-			  $('#_cip_id').val('cip');
-			  $('#_id_id').val(rowId);
-			  $('#_designation_id').val('des');
-			  $('#_quantiteCommande_id').val(qte);
-			  $('#_prixAchatMin_id').val(pa);
-			  $('#_prixAVenteMin_id').val(pv);
-			  $('#_agentSaisie_id').val('agent');
+		function setFormInfos(rowId, qte, pa, pv) {
+			$('#_cip_id').val('cip');
+			$('#_id_id').val(rowId);
+			$('#_designation_id').val('des');
+			$('#_quantiteCommande_id').val(qte);
+			$('#_prixAchatMin_id').val(pa);
+			$('#_prixAVenteMin_id').val(pv);
+			$('#_agentSaisie_id').val('agent');
 		};
-		function saveChange(rowId){
-			var tbs = "tr#"+rowId+" td";
+		function saveChange(rowId) {
+			var tbs = "tr#" + rowId + " td";
 			var int = parseInt('0');
-			var qte='';
-			var pa='';
-			var pv='';
-			$(tbs).each(function(){
-				if(int==3){
-				if($(this).children().is('input')){
-		        	var put =  $(this).children();
-		        	qte = $(put).val() ;
-		        	$(this).html( qte) ;
-		          }
-				
+			var qte = '';
+			var pa = '';
+			var pv = '';
+			$(tbs).each(function() {
+				if (int == 3) {
+					if ($(this).children().is('input')) {
+						var put = $(this).children();
+						qte = $(put).val();
+						$(this).html(qte);
+					}
+
 				}
-				if(int==4)	{
-					if($(this).children().is('input')){
-				        	var put =  $(this).children();
-				        	pa = $(put).val() ;
-					        $(this).html( pa) ;
-				          }
+				if (int == 4) {
+					if ($(this).children().is('input')) {
+						var put = $(this).children();
+						pa = $(put).val();
+						$(this).html(pa);
+					}
 				}
-				if(int==5)	{
-					if($(this).children().is('input')){
-				        	var put =  $(this).children();
-				            pv = $(put).val() ;
-					        $(this).html( pv) ;
-				      }
+				if (int == 5) {
+					if ($(this).children().is('input')) {
+						var put = $(this).children();
+						pv = $(put).val();
+						$(this).html(pv);
+					}
 				}
-				
-				 
-				if(int==7)	{
-					var put =  $(this).children();
-		            $(put).hide() ;
+
+				if (int == 7) {
+					var put = $(this).children();
+					$(put).hide();
 				}
-				int++ ;
+				int++;
 			});
 
-			setFormInfos(rowId ,qte,pa,pv)
-			 saveLine();
-			 
+			setFormInfos(rowId, qte, pa, pv)
+			saveLine();
+
 		};
-		function getLineById(lineId){
-				$.getJSON( '${update_line_url}'+lineId,
-			                function(data){
-					if(data!=null){
-						  $('#_cip_id').val(data.cip);
-						  $('#_id_id').val(data.id);
-						  $('#_designation_id').val(data.designation);
-						  $('#_quantiteCommande_id').val(data.quantiteCommande);
-						  $('#_prixAchatMin_id').val(data.prixAchatMin);
-						  $('#_prixAVenteMin_id').val(data.prixAVenteMin);
-						  $('#_agentSaisie_id').val(data.agentSaisie);
-						  $('#editLineDiv').dialog('open');
-					}else{
-						alert('la ligne est introuvable !');
-					}
-					         
-							});
-				return false ;
-		} ;
-		
-		$('img.loadimage').ajaxStart(function(){
+		function getLineById(lineId) {
+			$.getJSON('${update_line_url}' + lineId, function(data) {
+				if (data != null) {
+					$('#_cip_id').val(data.cip);
+					$('#_id_id').val(data.id);
+					$('#_designation_id').val(data.designation);
+					$('#_quantiteCommande_id').val(data.quantiteCommande);
+					$('#_prixAchatMin_id').val(data.prixAchatMin);
+					$('#_prixAVenteMin_id').val(data.prixAVenteMin);
+					$('#_agentSaisie_id').val(data.agentSaisie);
+					$('#editLineDiv').dialog('open');
+				} else {
+					alert('la ligne est introuvable !');
+				}
+
+			});
+			return false;
+		};
+
+		$('img.loadimage').ajaxStart(function() {
 			$(this).show();
 		});
-		
-		$('img.loadimage').ajaxStop(function(){
+
+		$('img.loadimage').ajaxStop(function() {
 			$(this).hide();
 		});
 
-
-		function enterKeyPressedListnerProcessor(evenement,rowId) {
-			if(evenement.keyCode == 13){
+		function enterKeyPressedListnerProcessor(evenement, rowId) {
+			if (evenement.keyCode == 13) {
 				saveChange(rowId);
 			}
 		}
-		
+
 		//Dialog	find client		
-		
+
 		$(function() {
-			$('#cip').focus() ;
+			$('#cip').focus();
 			$('#editLineDiv').dialog({
 				open : function() {
 				},
@@ -208,155 +224,160 @@
 				hide : 'fade',
 				show : 'slide'
 			});
-			
-			$('input#proceed').click(function(){
+
+			$('input#proceed').click(function() {
 				saveLine();
 				return false;
 			});
-			
-			
-			$('input#false').click(function(){
+
+			$('input#false').click(function() {
 				$('#editLineDiv').dialog('close');
 				return false;
 			});
-			$('tr.list').click(function(){
-				var rwoId =$(this).attr('id');
-				if( isSavable(rwoId)){
-					
-				}else{
-					toggleToinput(rwoId) ;
+			$('tr.list').click(function() {
+				var rwoId = $(this).attr('id');
+				alert(rwoId) ;
+				if (isSavable(rwoId)) {
+				} else {
+					toggleToinput(rwoId);
 				}
-				  
+
 				return false;
 			});
-			
-			function toggleToinput(rowId){
-				var tbs = "tr#"+rowId+" td";
-				var savebtn = "#"+rowId+"save";
-				
+
+			function toggleToinput(rowId) {
+				var tbs = "tr#" + rowId + " td";
+				var savebtn = "#" + rowId + "save";
+
 				var int = parseInt('0');
-				$(tbs).each(function(){
-					if(int==3){
-					if(!$(this).children().is('input')){
-						var text=	$(this).text();
-					    var input = '<input type="text" class="tbcell"  onmouseover="this.select();" onfocus="this.select();"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
-					   $(this).html(input);
-			          }
-					}
-					if(int==4)	{
-						if(!$(this).children().is('input')){
-							var text=	$(this).text();
-						    var input = '<input type="text" class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
-						   $(this).html(input);
-				          }
-					}
-					if(int==5)	{
-						if(!$(this).children().is('input')){
-							var text=	$(this).text();
-						    var input = '<input type="text"  class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'+text+'"  />' ;
-						    $(this).html(input);
-						    $(savebtn).show();
-				          }else{
-				        	  $(savebtn).hide();
-					          }
-					}
-					
-					int++ ;
-				});
-				
-			};
-			function isSavable(rowId){
-				var tbs = "tr#"+rowId+" td";
-				var result = false ;
-				var int = parseInt('0');
-				$(tbs).each(function(){
-					if(int==3){
-					if($(this).children().is('input')){
-						result = true ;
-			          }
-					
-					}
-					int++ ;
-				});
-				return result ;
+				$(tbs).each(
+							function() {
+									if (int == 3) {
+										if (!$(this).children().is('input')) {
+											var text = $(this).text();
+											var input = '<input type="text" class="tbcell"  onmouseover="this.select();" onfocus="this.select();"   onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'
+													+ text + '"  />';
+											$(this).html(input);
+										}
+									}
+									if (int == 4) {
+										if (!$(this).children().is('input')) {
+											var text = $(this).text();
+											var input = '<input type="text" class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'
+													+ text + '"  />';
+											$(this).html(input);
+										}
+									}
+									if (int == 5) {
+										if (!$(this).children().is('input')) {
+											var text = $(this).text();
+											var input = '<input type="text"  class="tbcell" onmouseover="this.select();" onfocus="this.select();"  onKeyPress="return scanTouche(event)"  style=" text-align:  right;" value="'
+													+ text + '"  />';
+											$(this).html(input);
+											$(savebtn).show();
+										} else {
+											$(savebtn).hide();
+										}
+									}
+
+									int++;
+								});
+
 			}
-			
-			
-			
+			;
+			function isSavable(rowId) {
+				var tbs = "tr#" + rowId + " td";
+				var result = false;
+				var int = parseInt('0');
+				$(tbs).each(function() {
+					if (int == 3) {
+						if ($(this).children().is('input')) {
+							result = true;
+						}
+
+					}
+					int++;
+				});
+				return result;
+			}
+
 		});
 	</script>
 
-			<!-- afficher ce formulaire ppour l ajout de produit -->
-			<util:panel title="saisir le CIP du Produit" id="cip">
-				<form action="${cmd_add_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
-					<table>
-						<tr>
-							<spring:message code="saleprocess_default_cip" var="default_cip_text"/>
-							<th style="text-align: center;">${default_cip_text }</th>
-							<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
-							<th style="text-align: center;">${product_designation_text }</th>
-							<spring:message code="saleprocess_product_designation" var="product_designation_text"/>
-							<th style="text-align: center;">Stock</th>
-							<th style="text-align: center;">Stock alert</th>
-							<th style="text-align: center;">qte cmd</th>
-							<th style="text-align: center;">Prix achat</th>
-							<th style="text-align: center;">Prix Vente</th>
-							<th style="text-align: center;">ACTION</th>
-						</tr>
-						<tr>
-							<td><INPUT type="hidden" name="pId" id="pId"
-								value="${commandeProcess. produit.id}" /> <INPUT type="text"
-								name="cip" onchange="requete();" autofocus="autofocus" onmouseover="this.select();" onfocus="this.select();"
-								class="autres" value="${commandeProcess.produit.cip}"
-								onKeyPress="return scanTouche(event)"
-								style="color: blue; text-align: center;" maxlength="7" id="cip" />
-							</td>
-							<td><INPUT type="text" name="des" class="des"
-								title="Designation"
-								value="${commandeProcess.produit.designation}"
-								style="color: blue; text-align: center;" disabled="disabled"
-								id="des" /></td>
-							<td><INPUT type="text" name="qtes" class="autres"
-								value="${commandeProcess.produit.quantiteEnStock}"
-								disabled="disabled" style="color: blue;" id="qtes" /></td>
-							<td><INPUT type="text" name="sc" style="color: blue;"
-								class="autres" value="${commandeProcess.produit.seuilComande }"
-								disabled="disabled" id="sc" /></td>
+	<!-- afficher ce formulaire ppour l ajout de produit -->
+	<util:panel title="saisir le CIP du Produit" id="cip">
+		<form action="${cmd_add_url}" method="POST" name="formulaire"
+			onSubmit="return verif_formulaire()">
+			<table>
+				<tr>
+					<spring:message code="saleprocess_default_cip"
+						var="default_cip_text" />
+					<th style="text-align: center;">${default_cip_text }</th>
+					<spring:message code="saleprocess_product_designation"
+						var="product_designation_text" />
+					<th style="text-align: center;">${product_designation_text }</th>
+					<spring:message code="saleprocess_product_designation"
+						var="product_designation_text" />
+					<th style="text-align: center;">Stock</th>
+					<th style="text-align: center;">Stock alert</th>
+					<th style="text-align: center;">qte cmd</th>
+					<th style="text-align: center;">Prix achat</th>
+					<th style="text-align: center;">Prix Vente</th>
+					<th style="text-align: center;">ACTION</th>
+				</tr>
+				<tr>
+					<td><INPUT type="hidden" name="pId" id="pId"
+						value="${commandeProcess. produit.id}" /> <INPUT type="text"
+						name="cip" onchange="requete();" autofocus="autofocus"
+						onmouseover="this.select();" onfocus="this.select();"
+						class="autres" value="${commandeProcess.produit.cip}"
+						onKeyPress="return scanTouche(event)"
+						style="color: blue; text-align: center;" maxlength="7" id="cip" />
+					</td>
+					<td><INPUT type="text" name="des" class="des"
+						title="Designation" value="${commandeProcess.produit.designation}"
+						style="color: blue; text-align: center;" disabled="disabled"
+						id="des" /></td>
+					<td><INPUT type="text" name="qtes" class="autres"
+						value="${commandeProcess.produit.quantiteEnStock}"
+						disabled="disabled" style="color: blue;" id="qtes" /></td>
+					<td><INPUT type="text" name="sc" style="color: blue;"
+						class="autres" value="${commandeProcess.produit.seuilComande }"
+						disabled="disabled" id="sc" /></td>
 
-							<td><INPUT type="text" name="qte" class="autres" onmouseover="this.select();" onfocus="this.select();"
-								style="color: black; text-align: center;"
-								onKeyPress="return scanTouche(event)" maxlength="7"
-								title="quantite a Commander" id="qte" /></td>
-							<td><INPUT type="text" name="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
-								onKeyPress="return scanTouche(event)"
-								style="color: black; text-align: center;"
-								title="saisir le Prix D'Achat Unitaire" id="pa" />
-							</td>
-							<td>
-							<INPUT type="text" name="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
-								onKeyPress="return scanTouche(event)"
-								style="color: black; text-align: center;"
-								title="saisir le Prix De Vente Unitaire" id="pv" />
-							
-							</td>
-							<td><INPUT type="submit" class="submits" value="Ajouter" />
-							</td>
+					<td><INPUT type="text" name="qte" class="autres"
+						onmouseover="this.select();" onfocus="this.select();"
+						style="color: black; text-align: center;"
+						onKeyPress="return scanTouche(event)" maxlength="7"
+						title="quantite a Commander" id="qte" /></td>
+					<td><INPUT type="text" name="pa" class="autres"
+						onmouseover="this.select();" onfocus="this.select();"
+						onKeyPress="return scanTouche(event)"
+						style="color: black; text-align: center;"
+						title="saisir le Prix D'Achat Unitaire" id="pa" /></td>
+					<td><INPUT type="text" name="pv" class="autres"
+						onmouseover="this.select();" onfocus="this.select();"
+						onKeyPress="return scanTouche(event)"
+						style="color: black; text-align: center;"
+						title="saisir le Prix De Vente Unitaire" id="pv" /></td>
+					<td><INPUT type="submit" class="submits" value="Ajouter" /></td>
 
-						</tr>
-					</table>
-				</form>
-				<center style="text-transform: uppercase;">
-					<c:if test="${not empty apMessage }">
-						<hr />
-						<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-						<hr />
-					</c:if>
+				</tr>
+			</table>
+		</form>
+		<center style="text-transform: uppercase;">
+			<c:if test="${not empty apMessage }">
+				<hr />
+				<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
+				<hr />
+			</c:if>
 
-				</center>
-			</util:panel>
-			<BR />
+		</center>
+	</util:panel>
+	<BR />
 	<center>
-		<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" />
+		<IMG alt="loading ..." src="${loadimage }" class="loadimage"
+			style="display: none;" />
 	</center>
 	<!-- Show the list of product commanded here -->
 	<form:customList
@@ -379,7 +400,8 @@
 
 				<c:forEach items="${commandeProcess.productSelected}"
 					var="ligneCommande">
-					<tr class="list" id="${ ligneCommande.id}" onkeypress="enterKeyPressedListnerProcessor(event,this.id);">
+					<tr class="list" id="${ ligneCommande.id}"
+						onkeypress="enterKeyPressedListnerProcessor(event,this.id);">
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.produit.cip}"></c:out></td>
 						<td style="width: 300px; text-align: left; padding-left: 20px;">
@@ -397,19 +419,16 @@
 								value="${ligneCommande.prixAVenteMin}"></c:out></td>
 						<td style="text-align: center;"><c:out
 								value="${ligneCommande.agentSaisie}"></c:out></td>
-                         <td class="utilbox">
-						<spring:url value="/resources/images/update.png" var="update_image_url" />
-						<!-- 	<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
+						<td class="utilbox"><spring:url
+								value="/resources/images/update.png" var="update_image_url" />
+							<!-- 	<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
 							src="${ update_image_url}" title=" Supprimer la selection"
-							onclick="saveChange(this.alt);" /> -->
-						</td>
-						<td class="utilbox">
-						<spring:url
+							onclick="saveChange(this.alt);" /> --></td>
+						<td class="utilbox"><spring:url
 								value="/resources/images/delete.png" var="delete_image_url" />
 							<img alt="${ligneCommande.id}" class="image"
 							src="${ delete_image_url}" title=" Supprimer la selection"
-							onclick="hideRow(this.alt);" />
-						</td>
+							onclick="hideRow(this.alt);" /></td>
 					</tr>
 				</c:forEach>
 
@@ -417,14 +436,14 @@
 		</div>
 	</form:customList>
 	<jsp:include page="ajaxSearchProductForm.jspx" />
-	
+
 	<div id="editLineDiv">
 		<center>
 			<IMG alt="loading ..." src="${loadimage }" class="loadimage"
 				style="display: none;" />
 		</center>
 
-		<!-- <form:create label="modification de la Ligne" otherBut="cancel"
+		<form:create label="modification de la Ligne" otherBut="cancel"
 			formId="editLineForm" diseableSubmit="true"
 			id="fc_org_adorsys_adpharma_domain_LigneCmdFournisseur"
 			modelAttribute="ligneCmdFournisseur" path="#"
@@ -451,6 +470,6 @@
 				id="c_org_adorsys_adpharma_domain_LigneCmdFournisseur_prixAchatMin"
 				validationMessageCode="field_invalid_number"
 				z="IwKF8WQ+IAw3LwQPqnNOAqNHOgU=" />
-		</form:create> -->
+		</form:create> 
 	</div>
 </div>
