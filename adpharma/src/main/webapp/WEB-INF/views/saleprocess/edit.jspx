@@ -414,12 +414,8 @@
 // 											$('#remax').val(data.remiseMax);
 											
 											// verification de l'existence d'1 promotion active pour ce produit
-<<<<<<< HEAD
 											if(data.produit.configSolde!= null){
-												if(data.produit.configSolde.activeConfig== true){
-=======
-											if(data.produit.configSolde.activeConfig == true){
->>>>>>> 82409d0c495d7a5a8f1fc17d24baec7a7107c86d
+											  if(data.produit.configSolde.activeConfig == true){
 													document.getElementById("remP").value= data.produit.configSolde.tauxSolde;
 													// J'annule la remise max car le produit est en promotion
 													$('#remax').val(0);
@@ -427,14 +423,10 @@
 													document.getElementById("pt").value = ($('#pu').val() - $('#rem').val()) * $('#qte').val();
 													document.getElementById("remP").disabled=true;
 													document.getElementById("rem").readOnly=true;
-<<<<<<< HEAD
 												}
 											}	
 											// Si le produit n'est pas en promotion
 											else{
-=======
-												}else{
->>>>>>> 82409d0c495d7a5a8f1fc17d24baec7a7107c86d
 												$('#remax').val(data.remiseMax);
 // 												$('#pt').val(data.prixVenteUnitaire);
 												$('#remP').val("");
@@ -687,13 +679,8 @@ $('#updateClient').dialog("close");
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-<<<<<<< HEAD
 							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
-								onkeyup="calculePt(); configuration();"
-=======
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly" onmouseover="this.select();" onfocus="this.select();"  class="autres"
-								onkeyup="calculePt()" 
->>>>>>> 82409d0c495d7a5a8f1fc17d24baec7a7107c86d
+								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
 								title="${enter_qty }" maxlength="4" /></td>
@@ -808,13 +795,8 @@ $('#updateClient').dialog("close");
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-<<<<<<< HEAD
 							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
-=======
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly" onmouseover="this.select();" onfocus="this.select();" 
-								onkeyup="calculePt()" value="${qte}" class="autres"
->>>>>>> 82409d0c495d7a5a8f1fc17d24baec7a7107c86d
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
 							<td style="width:135px;min-width: 135px;">
