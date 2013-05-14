@@ -322,6 +322,7 @@
 		for(var i=0; obj.length>i ; i++){
 			var taux= obj[i].tauxReduction;
 			var type= obj[i].typeVente;
+		if((obj[i].activeConfig==true)){
 			if(type=="DETAILS"){
 				prix = stock * (1- taux/100);
 				details= eval(prix);
@@ -334,6 +335,7 @@
 				prix = stock * (1- taux/100);
 				gros= eval(prix);
 			};
+		};
 		};
 		
 	}
@@ -847,7 +849,7 @@ $('#updateClient').dialog("close");
 								</security:authorize>
 								<c:if test="${changePrice}">
 									<INPUT type="text" name="pu" id="pu" class="autres"  onmouseover="this.select();" onfocus="this.select();" 
-										value="${saleProcess.produit.prixVenteUnitaire}" disabled="disabled"
+										value="${saleProcess.produit.prixVenteUnitaire}" readonly="readonly"
 										style="color: blue; text-align: center;" onkeyup="calculePt()" 
 										onKeyPress="return scanTouche(event)" />
 								</c:if>

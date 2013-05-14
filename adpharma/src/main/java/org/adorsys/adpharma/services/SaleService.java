@@ -22,7 +22,6 @@ public class SaleService {
 	public   LigneCmdClient  generateLigneCmd(LigneApprovisionement ligneApp , BigInteger qte ,BigDecimal remise ,CommandeClient commandeClient) {
 		LigneCmdClient ligneCmdClient = null;
 		BigDecimal prixVente= getPrixVenteLigne(qte, ligneApp);
-		System.out.println("Nouveau prix de vente de la ligne de commande: "+prixVente);
 		if (qte.intValue()>0) {
 			ligneCmdClient = new LigneCmdClient();							
 			ligneCmdClient.setCip(ligneApp.getCip());
