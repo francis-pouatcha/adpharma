@@ -120,8 +120,7 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 			PdfPCell imgCell = new PdfPCell(cellBorderlessStyle);
 			PdfPCell textcell = new PdfPCell(cellBorderlessStyle);
 			imgCell.setBorder(0);
-			imgCell.setPaddingLeft(7);
-			imgCell.setPaddingRight(7);
+			imgCell.setPadding(3);
 			textcell.setBorder(0);
 			imgCell.setImage(imageEAN);
 			imgCell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -138,7 +137,9 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 			imgTable.setWidthPercentage(100);
 			imgTable.addCell(imgCell);
 			imgTable.addCell(textcell);
-			table.addCell(imgTable);
+			PdfPCell codeBareCell = new PdfPCell(imgTable);
+			codeBareCell.setFixedHeight(33f);
+			table.addCell(codeBareCell);
 
 		}
 
