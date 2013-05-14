@@ -46,7 +46,7 @@ public class SaleService {
 	// Fonction qui retourne le prix de vente unitaire pour la configuration de vente active(vente en details, vente en semi-gros, vente en gros)
 	public BigDecimal getPrixVenteLigne(BigInteger qte, LigneApprovisionement line){
 		List<SalesConfiguration> configurations = SalesConfiguration.findAllSalesConfigurations();
-		BigDecimal prixVente=null;
+		BigDecimal prixVente=line.getPrixVenteUnitaire();
 		for(SalesConfiguration config: configurations){
 			if(config.getActiveConfig()==Boolean.TRUE){
 				BigInteger minValue = config.getMinValue();
