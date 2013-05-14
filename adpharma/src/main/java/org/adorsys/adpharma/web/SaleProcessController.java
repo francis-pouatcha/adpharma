@@ -658,14 +658,14 @@ public class SaleProcessController {
 	//update line
 
 	@RequestMapping(value = "/{cmdId}/updateLine", method = RequestMethod.POST)
-	public String updatedLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long lineId,@RequestParam BigInteger qte,
-			@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
-		return updateCmdLine(cmdId, lineId, qte, rem, uiModel, httpServletRequest) ;
+	public String updatedLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long lineId,@RequestParam BigInteger qte, 
+			@RequestParam(required=false)BigDecimal pu,	@RequestParam String rem,Model uiModel,HttpServletRequest httpServletRequest) {
+		return updateCmdLine(cmdId, lineId, qte, pu, rem, uiModel, httpServletRequest) ;
 	}
 	/*
 	 * use for update line of commande
 	 */
-	public String updateCmdLine(Long cmdId,Long lineId,BigInteger qte,String rem,Model uiModel,HttpServletRequest httpServletRequest){
+	public String updateCmdLine(Long cmdId,Long lineId,BigInteger qte, BigDecimal pu, String rem,Model uiModel,HttpServletRequest httpServletRequest){
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
 		LigneCmdClient line =  LigneCmdClient.findLigneCmdClient(lineId);
@@ -674,6 +674,7 @@ public class SaleProcessController {
 		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 		int remiseAutorise = ProcessHelper.getRemise(line.getProduit()).intValue();
 		BigDecimal remise = BigDecimal.ZERO ;
+		line.setPrixUnitaire(pu);
 		if (!"".equals(rem)) {
 			remise  = new BigDecimal(rem);
 		}
