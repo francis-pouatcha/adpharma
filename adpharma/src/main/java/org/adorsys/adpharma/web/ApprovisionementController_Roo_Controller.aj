@@ -91,7 +91,7 @@ privileged aspect ApprovisionementController_Roo_Controller {
         uiModel.addAttribute("approvisionement_datecommande_date_format", "dd-MM-yyyy");
         uiModel.addAttribute("approvisionement_datelivraison_date_format", "dd-MM-yyyy");
         uiModel.addAttribute("approvisionement_datereglement_date_format", "dd-MM-yyyy");
-        uiModel.addAttribute("approvisionement_datecreation_date_format", "dd-MM-yyyy");
+        uiModel.addAttribute("approvisionement_datecreation_date_format", "dd-MM-yyyy HH:mm");
     }
     
     String ApprovisionementController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

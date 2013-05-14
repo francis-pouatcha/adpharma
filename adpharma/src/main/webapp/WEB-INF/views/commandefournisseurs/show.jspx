@@ -22,6 +22,8 @@
         <field:display field="exchangeBeanState" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" object="${commandefournisseur}" z="/V8WqWIlB0MXk6Dkva0PfeB++40="/>
         <field:display field="approvisionnementId" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" object="${commandefournisseur}" z="Dgc4fSeh9kbPLTha7nLSBKwly2k="/>
         <field:display field="commercialKey" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" object="${commandefournisseur}" z="X+7hky2AeYgUM16WuzhscZINOeM="/>
+        <field:display field="lastestUbipharmError" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_lastestUbipharmError" object="${commandefournisseur}" z="3Z8qEEQgIqdARQyfSY+aRlbO1mc="/>
+        <field:display field="commandType" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_commandType" object="${commandefournisseur}" z="jfnNOxvhHLMW5Qcv0QrwLEPOJSQ="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" object="${commandefournisseur}" z="83gkyuwkFVqDCHeFNQcvDUQBHPE="/>
