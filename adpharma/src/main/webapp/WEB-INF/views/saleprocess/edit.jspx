@@ -358,7 +358,6 @@
 		    		<th>${product_qty_cipm}</th>
 		    		<th>${product_qty_cip}</th>
 		    		<th>${product_date_of_record}</th>
-		    		<th>RAYON</th>
 		    		<th>${product_provider}</th>
 		    	
 				</tr>');
@@ -436,7 +435,6 @@
 										  <td>'+this.quantieEnStock+'</td>
 										  <td>'+this.qteCip+'</td>
 										  <td>'+this.saisiele+'</td>
-										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
 
 										  </tr>'
