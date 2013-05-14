@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_SalesConfiguration" object="${salesconfiguration}" path="/salesconfigurations" z="Kb0mEAD9AVSHGXYHl1Zr3xjyqPQ=">
+        <field:display field="typeVente" id="s_org_adorsys_adpharma_domain_SalesConfiguration_typeVente" object="${salesconfiguration}" z="nGDqB9+Lnyc4933jtXegR+pcHtE="/>
+        <field:display field="minValue" id="s_org_adorsys_adpharma_domain_SalesConfiguration_minValue" object="${salesconfiguration}" z="Pg+xaeyChpErMP+UNL3scS6IBN0="/>
+        <field:display field="maxValue" id="s_org_adorsys_adpharma_domain_SalesConfiguration_maxValue" object="${salesconfiguration}" z="NyfA+0WveaGkf5OliCXsDhd/Q6k="/>
+        <field:display field="tauxReduction" id="s_org_adorsys_adpharma_domain_SalesConfiguration_tauxReduction" object="${salesconfiguration}" z="j+UWbfWLXXrDQc3eUemL1d4MYJ8="/>
+        <field:display field="activeConfig" label="Actif?" id="s_org_adorsys_adpharma_domain_SalesConfiguration_activeConfig" object="${salesconfiguration}" z="user-managed"/>
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_SalesConfiguration_footPrint" object="${salesconfiguration}" z="vH64zX/E8XM5yhYLjem+uH5Zf2U="/>
+         
+    </page:show>
+</div>

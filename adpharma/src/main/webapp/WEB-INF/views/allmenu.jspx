@@ -2,8 +2,8 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
 	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"
- xmlns:security="http://www.springframework.org/security/tags" 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
-	 xmlns:spring="http://www.springframework.org/tags" version="2.0" id="menuDiv" class="menu" >
+    xmlns:security="http://www.springframework.org/security/tags" 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0" id="menuDiv" class="menu" >
   <jsp:directive.page contentType="text/html;charset=UTF-8"  />
   <jsp:output omit-xml-declaration="yes" />
   
@@ -252,6 +252,16 @@ if(Check == false){
 							<li><a href="${vente_jour_url}">${sales_sale_of_today }</a></li>
 				<spring:message code="allmenu_sales_list" var="sales_list" />
 							<li><a href="${list_url}">${sales_list }</a></li>
+							
+				<spring:url value="/salesconfigurations?form" var="config_create_url" />
+				<spring:url value="/salesconfigurations?page=1&amp;size=${empty param.size ? 10 : param.size}" var="config_list_url" />			
+							<li>
+							  <a href="#"> Configurations de vente </a>
+							  <ul>
+							       <li><a href="${config_create_url}">Creer</a></li>
+							       <li><a href="${config_list_url}">Lister</a></li>
+							  </ul>
+							</li>
 						</security:authorize>
 
 					</ul></li>

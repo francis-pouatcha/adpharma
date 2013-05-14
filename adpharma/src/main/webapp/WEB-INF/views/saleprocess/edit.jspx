@@ -160,24 +160,25 @@
 	<spring:url value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form" var="update_credit_client_url" />
 
 	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
+		    <span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
 		            
 		            
-		            <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
+
+     <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
 		<span><a href="${ enr_cmd_url}"
 			style="text-decoration: none;"><INPUT class="submits"
 				type="button" value="${close_sale }"
 				title="${save_command }" /></a></span>
-				</security:authorize>
+     </security:authorize>
 				
 
-				
-				 <security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
+	<!--			
+	<security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
+         <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+    </security:authorize>
+			--> 		
     <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-				</security:authorize>
-		<!-- 		
-    <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-		-->
+	
 				 <span>
 					 <a href="${ delete_cmd_url}" style="text-decoration: none;">
 					  <INPUT class="submits" type="button" value="${cancel_sale }" title="${cancel_sale }" onclick="return annCmd();" />
@@ -187,16 +188,49 @@
 				     <!-- <a href="${ord_cmd_url}" style="text-decoration: none;">  </a> -->
 				      <INPUT class="submits" type="button" value="${prescription_book}" title="${prescription_book_description }" id="btOrdo" />
 				 </span>
+
 				
-		<spring:message code="saleprocess_customer_information"  var="customer_information"/>
-		<spring:message code="saleprocess_customer_information_description"  var="customer_information_description"/>
-		<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
-			<span><a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
-					type="button" value="${customer_information }" title="${customer_information_description }" /></a></span>
-		</c:if>
-<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
-<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
-</c:if> -->
+			<spring:message code="saleprocess_customer_information"  var="customer_information"/>
+			<spring:message code="saleprocess_customer_information_description"  var="customer_information_description"/>
+			<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
+				<span>
+				        <a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
+						type="button" value="${customer_information }" title="${customer_information_description}" /></a>
+				</span>
+			</c:if>
+			<c:if test="${not empty  salesConfig}">
+			          <span>
+			               <a href="#" style="text-decoration: none;"> 
+			                  <INPUT type="button" class="submits" value="Configuration Vente" id="config_vente" title="Visualiser les configurations de vente"  />
+			               </a>   
+			          </span>
+			</c:if>
+			
+			<div id="configuration_vente" style="display: none; height: 400px;" title="Liste des configurations de Vente">
+			        <table>
+			             <tr>
+			                 <th>Prix 1</th>
+			                 <th>Prix 2</th>
+			                 <th>Prix 3</th>
+			             </tr>
+			             <tr>
+			                 <td>
+			                 
+			                 </td>
+			                 <td>
+			                 
+			                 </td>
+			                 <td>
+			                 
+			                 </td>
+			             </tr>
+			        </table>
+			
+			</div>
+		
+		<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
+		<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
+		</c:if> -->
 	</div> 
 	
 	<div id="ordonanceform" style="display: none; height: 400px;">
@@ -231,6 +265,37 @@
 				</tr>');
 	}
 	
+	//Variable qui sauvegarde le prix de vente unitaire du produit
+	var stock=null;
+
+	
+// fonction qui teste la configuration de vente pour la vente en details, semi-gros ou gros.	
+	function configuration(){
+		var config= '${salesConfig}';
+		if(stock==null){
+			stock= '${prixunit}';
+			console.log('Stock: '+stock);
+		}
+		console.log(config);
+		var obj= new Array();
+		obj= JSON.parse(config);
+		var qte= $('#qte').val();
+		for(var i=0; obj.length>i ; i++){
+			var taux= obj[i].tauxReduction;
+			if((obj[i].activeConfig==true)){
+				var minVal= obj[i].minValue;
+				var maxVal= obj[i].maxValue;
+				if(qte>= minVal){
+					if(maxVal>=qte){
+					console.log('taux: '+taux);
+					var form= stock * (1- taux/100);
+					document.getElementById('pu').value= eval(form);
+				};
+				};
+			};
+		};
+	}
+	
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
@@ -257,7 +322,12 @@
 		console.log("submits");
 	}
 	
+	// Test de la configuration
+	
+	
+	
 	$(function(){
+		
 		$('#cipm').focus();
 		$('#pu').click(function(){
 	 		$('#pu').removeAttr("disabled"); 
@@ -333,14 +403,21 @@
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
 											$('#qte').val(1);
-										//retireitrer les quatre ligne ci dessous 
+											stock= $('#pu').val();
+											// J'appele le script de configuration des types de vente par defaut
+											configuration();
+											document.getElementById("pt").value = $('#pu').val();
+											
+// 											$('#pt').val(data.prixVenteUnitaire);
+// 											$('#remax').val(data.remiseMax);
 											
 											$('#remax').val(data.remiseMax);
 											$('#pt').val(data.prixVenteUnitaire);
 											$('#remP').val("");
 											$('#remq').val("");											
 											// verification de l'existence d'1 promotion active pour ce produit
-											/*if(data.produit.configSolde.activeConfig == true){
+											if(data.produit.configSolde!= null){
+											  if(data.produit.configSolde.activeConfig == true){
 													document.getElementById("remP").value= data.produit.configSolde.tauxSolde;
 													// J'annule la remise max car le produit est en promotion
 													$('#remax').val(0);
@@ -348,14 +425,17 @@
 													document.getElementById("pt").value = ($('#pu').val() - $('#rem').val()) * $('#qte').val();
 													document.getElementById("remP").disabled=true;
 													document.getElementById("rem").readOnly=true;
-												}else{
+												}
+											}	
+											// Si le produit n'est pas en promotion
+											else{
 												$('#remax').val(data.remiseMax);
-												$('#pt').val(data.prixVenteUnitaire);
+// 												$('#pt').val(data.prixVenteUnitaire);
 												$('#remP').val("");
 												$('#rem').val("");
 												document.getElementById("remP").disabled=false;
 												document.getElementById("rem").readOnly=false;
-											 }*/
+											 }
 											
 													});
 										$('#findproduit').dialog("close"); 
@@ -394,6 +474,24 @@
 					$('#updateClient').dialog('open');
 					$(this).dialog("close"); 
 				} ,
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		$('#configuration_vente').dialog({
+			open:function(){
+			},
+			autoOpen: false,
+			width:700,
+			resizable:true,
+			draggable :true,
+            hide:'fade',
+            show:'slide',
+            position:'right',
+			buttons: {
 				"Cancel": function() { 
 					$(this).dialog("close"); 
 				} 
@@ -484,6 +582,10 @@ $('#updateClient').dialog("close");
 			return false;
 		});
 		
+		$('#config_vente').click(function(){
+			$('#configuration_vente').dialog('open');
+			return false;
+		});
 		
 		
 		
@@ -579,8 +681,8 @@ $('#updateClient').dialog("close");
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly" onmouseover="this.select();" onfocus="this.select();"  class="autres"
-								onkeyup="calculePt()" 
+							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
+								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
 								title="${enter_qty }" maxlength="4" /></td>
@@ -695,8 +797,8 @@ $('#updateClient').dialog("close");
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly" onmouseover="this.select();" onfocus="this.select();" 
-								onkeyup="calculePt()" value="${qte}" class="autres"
+							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();" 
+								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
 							<td style="width:135px;min-width: 135px;">

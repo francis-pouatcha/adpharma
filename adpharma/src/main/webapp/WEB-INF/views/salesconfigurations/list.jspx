@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_adorsys_adpharma_domain_SalesConfiguration" items="${salesconfigurations}" z="+4j0/JTqpj1rogoaJPGlGpg59Ik=">
+        <table:table data="${salesconfigurations}" id="l_org_adorsys_adpharma_domain_SalesConfiguration" path="/salesconfigurations" z="0U5lZQkpptoT2nTxBMUPmXxhLRQ=">
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_activeConfig" property="activeConfig" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_minValue" property="minValue" z="gEnfEcVCNcqaR70yJvtV+TzqmMc="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_maxValue" property="maxValue" z="wPrGfLqAhu6SBrU9KhJ73v9dyI0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_tauxReduction" property="tauxReduction" z="6LRDaZB71st7bf6R8xIHoJpic+I="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_typeVente" property="typeVente" z="nKT5ijH5hpRcoIjwPEVnM5HjaS4="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SalesConfiguration_footPrint" property="footPrint" z="user-managed" render="false"/>
+        </table:table>
+    </page:list>
+</div>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <form:create label="configuration de vente" id="fc_org_adorsys_adpharma_domain_SalesConfiguration" modelAttribute="salesConfiguration" path="/salesconfigurations" render="${empty dependencies}" z="2nvf8CpPRtY+tmdze/fhhfGGp4g=">
+        
+        <c:if test="${not empty configuration}">
+           <spring:url value="/salesconfigurations/${configuration}?form" var="update_url" />
+           <p><a href="${update_url}" style="font-weight: bold;">Modifier la configuration</a></p>
+        </c:if>
+        
+        <field:select field="typeVente" label="Type de vente" id="c_org_adorsys_adpharma_domain_SalesConfiguration_typeVente" items="${typeventes}" path="typeventes" z="q/35+EusvrjIFyOQ0YpwXTpzVBg="/>
+        <field:input field="minValue" label="Quantite min." required="true" id="c_org_adorsys_adpharma_domain_SalesConfiguration_minValue" validationMessageCode="field_invalid_integer" z="FTIPA+O2miCCiJvafqd1lEMdgKw="/>
+        <field:input field="maxValue" label="Quantite max." required="true" id="c_org_adorsys_adpharma_domain_SalesConfiguration_maxValue" validationMessageCode="field_invalid_integer" z="Y0m/h0DFn8MnyIS4L+34AxdwqT8="/>
+        <field:input field="tauxReduction" label="Taux de reduction(%)" id="c_org_adorsys_adpharma_domain_SalesConfiguration_tauxReduction" validationMessageCode="field_invalid_number" z="Uh5q7+Abn2UeXK/jv+KLd/0S8dw="/>
+        <field:checkbox field="activeConfig" label="Actif?" id="c_org_adorsys_adpharma_domain_SalesConfiguration_activeConfig" z="user-managed"/>
+        <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_SalesConfiguration_footPrint" z="user-managed" render="false" />
+        
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_SalesConfiguration" render="${not empty dependencies}" z="gmi3H3V1RKNPpqDHZoy02y5VkIw="/>
+</div>

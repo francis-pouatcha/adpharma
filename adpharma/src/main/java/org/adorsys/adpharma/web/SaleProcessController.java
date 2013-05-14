@@ -31,6 +31,7 @@ import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
+import org.adorsys.adpharma.domain.SalesConfiguration;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.SaleService;
@@ -192,7 +193,11 @@ public class SaleProcessController {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		List<SalesConfiguration> salesConfigurations= SalesConfiguration.findAllSalesConfigurations();
+		String configurations = SalesConfiguration.toJsonArray(salesConfigurations);
 		uiModel.addAttribute("saleProcess",saleProcess);
+		uiModel.addAttribute("salesConfig",configurations);
+		uiModel.addAttribute("configurations", salesConfigurations);
 		uiModel.addAttribute("apMessage", httpServletRequest.getAttribute("apMessage"));
 
 		return "saleprocess/edit";
@@ -437,7 +442,7 @@ public class SaleProcessController {
 	//@Transactional
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
-			@RequestParam String rem, @RequestParam(required=false) BigDecimal pu, Model uiModel,HttpServletRequest httpServletRequest) {
+		@RequestParam String rem, @RequestParam(required=false) BigDecimal pu, Model uiModel,HttpServletRequest httpServletRequest) {
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
@@ -510,6 +515,8 @@ public class SaleProcessController {
 				remise = BigDecimal.ZERO ;
 
 			}
+			
+			// Condition pour modifier le prix de vente pour les ventes en details, semi-gros et gros
 			
 			SaleProcess.addline(pId, qte, remise, commandeClient);
 
@@ -585,11 +592,15 @@ public class SaleProcessController {
 	@RequestMapping(value = "/{cmdId}/updateLine/{lnId}",  method = RequestMethod.GET)
 	public String updateLineForm(@PathVariable("lnId") Long lnId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-		LigneCmdClient ligne = LigneCmdClient.findLigneCmdClient(lnId); 
+		LigneCmdClient ligne = LigneCmdClient.findLigneCmdClient(lnId);
+		String cipm = ligne.getCipM();
+		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipm).getResultList().iterator().next();
+		BigDecimal prixVenteUnitaire = ligneApprovisionement.getPrixVenteUnitaire();
 		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 		saleProcess.setLineToUpdate(ligne);
 		uiModel.addAttribute("saleProcess",saleProcess);
+		uiModel.addAttribute("prixunit", prixVenteUnitaire);
 		return "saleprocess/edit";
 	}
 
@@ -839,5 +850,13 @@ public class SaleProcessController {
 	@ModelAttribute("etats")
 	public Collection<Etat> populateEtats() {
 		return Arrays.asList(Etat.class.getEnumConstants());
+	}
+	
+	// Retourne la liste des configurations 
+	@ModelAttribute("salesConfig")
+	public String getSalesConfiguration(){
+		List<SalesConfiguration> salesConfigurations= SalesConfiguration.findAllSalesConfigurations();
+		String configurations = SalesConfiguration.toJsonArray(salesConfigurations);
+		return configurations;
 	}
 }
