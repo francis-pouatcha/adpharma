@@ -730,7 +730,7 @@ $('#updateClient').dialog("close");
 							</td>
 							
 							<td><INPUT type="text" name="pu" id="pu"  onmouseover="this.select();" onfocus="this.select();" 
-								disabled="disabled" class="autres"
+								readonly="readonly" class="autres"
 								value="${saleProcess.lineToUpdate.prixUnitaire}"
 								onKeyPress="return scanTouche(event)" title="${enter_cip }"
 								style="color: blue; padding-left: 0px;"  />

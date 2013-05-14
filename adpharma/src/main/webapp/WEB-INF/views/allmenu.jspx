@@ -225,7 +225,8 @@ if(Check == false){
 			<security:authorize
 				ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
 				<spring:message code="allmenu_sales_salemenu" var="sales_salemenu" />
-				<li><a href="#">${sales_salemenu }</a>
+				<li>
+				    <a href="#">${sales_salemenu }</a>
 					<ul class="sub_menu">
 				<spring:message code="allmenu_sales_findproduct" var="sales_findproduct" />
 							<li><a id="rapidesearch" href="#">${sales_findproduct }</a></li>
@@ -253,18 +254,21 @@ if(Check == false){
 				<spring:message code="allmenu_sales_list" var="sales_list" />
 							<li><a href="${list_url}">${sales_list }</a></li>
 							
-				<spring:url value="/salesconfigurations?form" var="config_create_url" />
-				<spring:url value="/salesconfigurations?page=1&amp;size=${empty param.size ? 10 : param.size}" var="config_list_url" />			
-							<li>
+						</security:authorize>
+					<security:authorize ifAnyGranted="ROLE_SITE_MANAGER">	
+						<spring:url value="/salesconfigurations?form" var="config_create_url" />
+				        <spring:url value="/salesconfigurations?page=1&amp;size=${empty param.size ? 10 : param.size}" var="config_list_url" />	
+						<li>
 							  <a href="#"> Configurations de vente </a>
 							  <ul>
 							       <li><a href="${config_create_url}">Creer</a></li>
 							       <li><a href="${config_list_url}">Lister</a></li>
 							  </ul>
-							</li>
-						</security:authorize>
+					    </li>
+					 </security:authorize>   
 
-					</ul></li>
+					</ul>
+			      </li>
 			</security:authorize>
 
 			<!--  menu Caisse-->
