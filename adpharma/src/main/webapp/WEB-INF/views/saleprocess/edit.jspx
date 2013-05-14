@@ -207,6 +207,9 @@
 			</c:if>
 			
 			<div id="configuration_vente" style="display: none; height: 400px;" title="Liste des configurations de Vente">
+			        <c:set value="DETAILS" var="details" />
+			        <c:set value="SEMI_GROS" var="semigros" />
+			        <c:set value="GROS" var="gros" />
 			        <table>
 			             <tr>
 			                 <th style="text-align: center;">Configuration 1</th>
@@ -218,8 +221,18 @@
 			                 <td>
 			                   <span style="font-weight: bold;">Type de vente: </span> <c:out value="${configuration.typeVente}" /> <BR /><BR />
 			                   <span style="font-weight: bold;">Intervalle des Qtes: </span> [<c:out value="${configuration.minValue}" /> , <c:out value="${configuration.maxValue}" />] <BR /> <BR />
+			                   <span style="font-weight: bold;">Actif: </span> <c:out value="${configuration.activeConfig}" /> <BR /><BR />
 			                   <span style="font-weight: bold;">Taux de reduction: </span> <c:out value="${configuration.tauxReduction}" />% <BR /><BR />
-			                   <span style="font-weight: bold;">Actif: </span> <c:out value="${configuration.activeConfig}" /> 
+			                   <span style="font-weight: bold;">Prix: </span> 
+			                   <c:if test="${configuration.typeVente eq details}">
+			                       <span id="details"></span>
+			                   </c:if>
+			                   <c:if test="${configuration.typeVente eq semigros}">
+			                       <span id="semigros"></span>
+			                   </c:if>
+			                   <c:if test="${configuration.typeVente eq gros}">
+			                       <span id="gros"></span>
+			                   </c:if>
 			                 </td>
 			               </c:forEach>  
 			             </tr>
@@ -266,6 +279,11 @@
 	
 	//Variable qui sauvegarde le prix de vente unitaire du produit
 	var stock=null;
+	
+	// Variables des types de vente
+	var details;
+	var semiGros;
+	var gros;
 
 	
 // fonction qui teste la configuration de vente pour la vente en details, semi-gros ou gros.	
@@ -293,6 +311,41 @@
 				};
 			};
 		};
+	}
+	
+	// Calcul des prix de gros, de semi-gros et de details
+	function calculatePrice(){
+		var config= '${salesConfig}';
+		var obj= new Array();
+		var prix=null;
+		obj= JSON.parse(config);
+		for(var i=0; obj.length>i ; i++){
+			var taux= obj[i].tauxReduction;
+			var type= obj[i].typeVente;
+			if(type=="DETAILS"){
+				prix = stock * (1- taux/100);
+				details= eval(prix);
+			}
+			if(type=="SEMI_GROS"){
+			   prix = stock * (1- taux/100);
+			   semiGros= eval(prix);
+			}
+			if(type=="GROS"){
+				prix = stock * (1- taux/100);
+				gros= eval(prix);
+			};
+		};
+		
+	}
+	
+	
+	function getSalePrice(){
+	   var pu = document.getElementById('pu').value;
+	   if(pu!=""){
+		   $('#details').html(details);
+		   $('#semigros').html(semiGros);
+		   $('#gros').html(gros);
+	   };
 	}
 	
 	function clearProductTable(){
@@ -407,6 +460,10 @@
 											stock= $('#pu').val();
 											// J'appele le script de configuration des types de vente par defaut
 											configuration();
+											
+											// calcul des prix de gros, semi-gros et details
+											calculatePrice();
+											
 											document.getElementById("pt").value = $('#pu').val();
 											
 // 											$('#pt').val(data.prixVenteUnitaire);
@@ -480,6 +537,7 @@
 		
 		$('#configuration_vente').dialog({
 			open:function(){
+				getSalePrice();
 			},
 			autoOpen: false,
 			width:700,
