@@ -19,6 +19,7 @@
  <spring:url var="img" value="/resources/images/logo.png" />
  <spring:url value="/resources/j_spring_security_logout" var="logout"/>
  <spring:url value="/resources/images/icon-16-logout.png" var="icon_logout" />
+ <spring:url value="/etats/print/etatProduitPerisable.pdf" var="et_perisable_dette"/>
  <spring:message code="button_home" var="home_label" />
  <spring:message code="button_home" var="home_label" />
  <spring:message code="security_logout"  var="msg_logout"/>
@@ -38,7 +39,34 @@
 		}
 		}
 		$(function(){
+		
+			$('#et_perisable').click(function(){
+				 
+				$('<div id="nbreJourDialog" ><input id="nb" type="text" pattern="[0-9]*" /></div>').dialog({
+					
+					open: function(){},
+					title: 'Entrer le nombre jour restant',
+					width: 220,
+					resizable:false,
+					draggable :false,
+			         hide:'slide',
+			         show:'slide',
+			         position:'center', 
+					modal:true,
+					buttons: {
+						"Lancer l'edition": function() { 
+						
+							window.location.href ='${et_perisable_dette}'+"?value="+$('#nb').val();
+						}, 
+						"Cancel": function() { 
+							$(this).dialog("close"); 
+						} 
+					}
+					});
 			
+				return false;
+			});
+				
 		$('#userInfos').click(function(){
 			
 			$('<div class="userdialog"> </div>').dialog({
@@ -125,5 +153,6 @@
 	  </td>
 	</tr>
 </table>
+
 </div> 
 

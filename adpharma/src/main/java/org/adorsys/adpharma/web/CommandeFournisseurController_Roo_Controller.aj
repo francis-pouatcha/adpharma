@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.adorsys.adpharma.domain.CommandType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Fournisseur;
@@ -86,6 +87,11 @@ privileged aspect CommandeFournisseurController_Roo_Controller {
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/commandefournisseurs";
+    }
+    
+    @ModelAttribute("commandtypes")
+    public Collection<CommandType> CommandeFournisseurController.populateCommandTypes() {
+        return Arrays.asList(CommandType.class.getEnumConstants());
     }
     
     @ModelAttribute("modeselections")

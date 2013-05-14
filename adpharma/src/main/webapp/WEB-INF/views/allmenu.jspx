@@ -571,7 +571,9 @@ if(Check == false){
             <spring:url value="/statistics?form" var="create_statis_url"/>
             <spring:url value="/statistics/etatvente?form" var="etat_vente_url"/>
             <spring:url value="/statistics/courbeventecip?form" var="courbe_vente_url"/>
-            <spring:url value="/statistics/new?form" var="courbes" />        		
+            <spring:url value="/statistics/new?form" var="courbes" />  
+             <spring:url value="/typesortieproduits?form" var="typeSortie_add_url"/>
+            <spring:url value="/typesortieproduits?page=1&amp;size=${empty param.size ? 10 : param.size}" var="typeSortie_list_url" />       		
      
            <!-- Menu Supervisions -->
            <spring:message code="supervision_supervision_menu" var="supervision_menu"/>
@@ -612,6 +614,16 @@ if(Check == false){
            <spring:message code="supervision_conditionment_list" var="conditionment_list"/>
 		        						<li><a href="${conf_con_url}"> ${conditionment_add }</a></li>
 		        						<li><a href="${conf_list_con_url}">${conditionment_list }</a></li>	
+		        					</ul>
+		        			 </li>
+		    <spring:message code="supervision_typeSortie_menu" var="typeSortie_menu"/>
+
+		        			 <li>	<a href="#">${typeSortie_menu }</a>
+		        					<ul>
+           <spring:message code="supervision_typeSortie_add" var="typeSortie_add"/>
+           <spring:message code="supervision_typeSortie_list" var="typeSortie_list"/>
+		        						<li><a href="${typeSortie_add_url}"> ${typeSortie_add }</a></li>
+		        						<li><a href="${typeSortie_list_url}">${typeSortie_list }</a></li>	
 		        					</ul>
 		        			 </li>
            <spring:message code="supervision_marginrate_menu" var="marginrate_menu"/>
@@ -761,7 +773,7 @@ if(Check == false){
     	<spring:message code="reports_daily_sales_report" var="daily_sales_report"/>
 		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
     	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
-		        								<li><a id="et_per_vente" href="#">${expireable_product_report } </a></li>
+		        								<li><a id="et_perisable" href="#">${expireable_product_report } </a></li>
     	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
 		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
     	<spring:message code="reports_reclamations_reports" var="reclamations_reports"/>

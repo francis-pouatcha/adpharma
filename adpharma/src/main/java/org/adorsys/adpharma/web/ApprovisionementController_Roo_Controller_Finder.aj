@@ -23,7 +23,7 @@ privileged aspect ApprovisionementController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET)
-    public String ApprovisionementController.findApprovisionementsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+    public String ApprovisionementController.findApprovisionementsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "approvisionements/list";
@@ -37,7 +37,7 @@ privileged aspect ApprovisionementController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByFounisseurAndDateCreationBetween", method = RequestMethod.GET)
-    public String ApprovisionementController.findApprovisionementsByFounisseurAndDateCreationBetween(@RequestParam("founisseur") Fournisseur founisseur, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
+    public String ApprovisionementController.findApprovisionementsByFounisseurAndDateCreationBetween(@RequestParam("founisseur") Fournisseur founisseur, @RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("approvisionements", Approvisionement.findApprovisionementsByFounisseurAndDateCreationBetween(founisseur, minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "approvisionements/list";

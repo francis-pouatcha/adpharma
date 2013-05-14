@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="typesortieproduits/list">
+        <put-attribute name="body" value="/WEB-INF/views/typesortieproduits/list.jspx"/>
+    </definition>
+<definition extends="default" name="typesortieproduits/show">
+        <put-attribute name="body" value="/WEB-INF/views/typesortieproduits/show.jspx"/>
+    </definition>
+<definition extends="default" name="typesortieproduits/create">
+        <put-attribute name="body" value="/WEB-INF/views/typesortieproduits/create.jspx"/>
+    </definition>
+<definition extends="default" name="typesortieproduits/update">
+        <put-attribute name="body" value="/WEB-INF/views/typesortieproduits/update.jspx"/>
+    </definition>
+</tiles-definitions>

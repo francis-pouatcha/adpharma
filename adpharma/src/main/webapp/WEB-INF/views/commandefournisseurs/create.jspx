@@ -33,6 +33,8 @@
         <field:select field="exchangeBeanState" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" items="${exchangebeanstates}" path="exchangebeanstates" z="//5ju2sH+oK9iH/PlC8mXLSQj2U="/>
         <field:input field="approvisionnementId" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" validationMessageCode="field_invalid_integer" z="caGqNWjYtD07EkqXKcvnoRUpzXM="/>
         <field:input field="commercialKey" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" z="L4DRExT9Bl2Q3fyclyhKxyb+p/g="/>
+        <field:input field="lastestUbipharmError" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_lastestUbipharmError" z="6agV11hsBLwpzhUUy1v2obSfYTc="/>
+        <field:select field="commandType" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commandType" items="${commandtypes}" path="commandtypes" z="kNASDrivl+eXA3mCRB2x2LjGN2k="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeFournisseur" render="${not empty dependencies}" z="UcDvHNVInxTTrLZzTTtbd3+YIUU="/>
 </div>

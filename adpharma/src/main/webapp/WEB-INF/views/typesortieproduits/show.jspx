@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_adorsys_adpharma_domain_TypeSortieProduit" object="${typesortieproduit}" path="/typesortieproduits" z="QnFDEdWbMD31o/lavVEA3BnkksA=">
+        <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_TypeSortieProduit_footPrint" object="${typesortieproduit}" z="0HFyoVH1yKqS1O7j0LezrdyMDQo="/>
+        <field:display field="libelle" id="s_org_adorsys_adpharma_domain_TypeSortieProduit_libelle" object="${typesortieproduit}" z="OGMrPRPr/HoN/LZU1N3+U+Hy1w8="/>
+        <field:display field="description" id="s_org_adorsys_adpharma_domain_TypeSortieProduit_description" object="${typesortieproduit}" z="F1K1xUJrzxIG9nNOFMFvXQhPV1s="/>
+    </page:show>
+</div>
