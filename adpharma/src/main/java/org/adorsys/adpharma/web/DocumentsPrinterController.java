@@ -28,6 +28,7 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
@@ -35,6 +36,7 @@ import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,6 +96,27 @@ public class DocumentsPrinterController {
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PRODUIT_PERISABLE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatProduitSortie.pdf", method = RequestMethod.GET)
+	public void etatProduitSortie(@RequestParam(value="dateD") @DateTimeFormat(pattern="dd-mm-yy 00:00") Date dateD, 
+			@RequestParam("dateF") @DateTimeFormat(pattern="dd-mm-yy 00:00") Date dateF,
+			@RequestParam("typeSortie") String typeSortie,
+			HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",dateD);
+		parameters.put("DateF",dateF);
+		parameters.put("TypeSortie",typeSortie);
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PRODUIT_SORTIE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -401,6 +424,10 @@ public class DocumentsPrinterController {
 				return "reclamationsPdfView";
 			}
 
-
+			@RequestMapping(value = "/sortieProduitForm")
+			public String etatSortieProduitForm(HttpServletRequest request,HttpServletResponse response,Model uiModel) {
+				uiModel.addAttribute("typeSorties", TypeSortieProduit.findAllTypeSortieProduits());
+				return "etats/sortieproduit";
+			}
 
 }
