@@ -36,6 +36,39 @@ public class ApprovisonementProcess {
 	private LigneApprovisionement lineToUpdate ;
 
 	private List<Produit> productResult = new ArrayList<Produit>();
+	
+	private CommandeFournisseur commande;
+	
+	
+	// Variables pour la pagination dans la modifications des lignes d'approvisionement de la preparation
+	private int size;
+	
+	private int index;
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public int getIndex() {
+		return index;
+	}
+	
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	
+	public CommandeFournisseur getCommande() {
+		return commande;
+	}
+	
+	public void setCommande(CommandeFournisseur commande) {
+		this.commande = commande;
+	}
 
 	public Etat getEtat() {
 		return etat;

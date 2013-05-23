@@ -4,6 +4,9 @@
     <definition extends="public" name="approvisionementprocess/edit">
         <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/edit.jspx"/>
     </definition>
+    <definition extends="public" name="approvisionementprocess/editpreparation">
+        <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/editPreparation.jspx"/>
+    </definition>
 <definition extends="public" name="approvisionementprocess/findproduct">
         <put-attribute name="body" value="/WEB-INF/views/approvisionementprocess/findProduct.jspx"/>
     </definition>
