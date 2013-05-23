@@ -470,6 +470,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 		}else if (qteStock.intValue() < qte.intValue()) {
 			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE ACHETEE  DOIT ETRE INFERIEUR LA QTE EN STOCK : "+ligneApp.getQuantieEnStock().intValue());
+			ligneApp.setPrixVenteUnitaire(pu);
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
@@ -488,6 +489,7 @@ public class SaleProcessController {
 			uiModel.addAttribute("qte",qte);
 		} else if (ligneApp.getDatePeremtion().before(new Date())) {
 			uiModel.addAttribute("apMessage","Impossible d'effectuer la vente ! Ce produit est Perime Depuis Le : "+ PharmaDateUtil.format(ligneApp.getDatePeremtion(), "dd-MM-yyyy"));
+			ligneApp.setPrixVenteUnitaire(pu);
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);

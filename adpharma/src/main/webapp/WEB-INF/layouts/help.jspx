@@ -20,7 +20,7 @@
 		<spring:url value="/resources/bootstrap/css/docs.css" var="docs_url" />
 		<spring:url value="/resources/bootstrap/css/bootstrap-responsive.css" var="bootstraprespo_url" />
 		<spring:url value="/resources/bootstrap/css/custom.css" var="bootstraprespo_url" />
-		<spring:url value="/resources/bootstrap/js/jquery-1.8.1.js" var="jquery_url" />
+		<spring:url value="/resources/bootstrap/js/jquery.js" var="jquery_url" />
 		<spring:url value="/resources/bootstrap/js/application.js" var="app_url" />
 		<spring:url value="/resources/bootstrap/js/bootstrap-scrollspy.js" var="bootstrap_scroll_url" />
 		

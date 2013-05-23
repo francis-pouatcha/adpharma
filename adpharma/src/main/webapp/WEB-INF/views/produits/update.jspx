@@ -32,6 +32,7 @@
                         <field:display field="cip" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_cip" object="${produit }" z="user-managed"/>
                         <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant" z="PId8FnqnA6G5PhSA5xroeIGD/mI="/>
                         <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
+                                    <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" z="aBXRUfXCBzTP7rH3/WWL2Hbu+3U="/>
                         <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" render="false" z="user-managed"/>
                         <LEGEND> Infos Emplacement</LEGEND>
                         <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>

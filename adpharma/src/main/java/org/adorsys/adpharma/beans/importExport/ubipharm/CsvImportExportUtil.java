@@ -114,6 +114,7 @@ public class CsvImportExportUtil {
 			if(cmdList.isEmpty()) continue ;
 			LigneCmdFournisseur ligneCmdFournisseur = cmdList.iterator().next();
 			ligneCmdFournisseur.setQuantiteFournie(new BigInteger(responseProductItemRow.getQuantityDelivered().getStringValue()));
+			System.out.println(responseProductItemRow.getDeliveredProductPrice().getStringValue());
 			ligneCmdFournisseur.merge().flush();
 			productAndQtyDeliveredBalance.put(ligneCmdFournisseur, ligneCmdFournisseur.getQuantiteCommande().subtract(ligneCmdFournisseur.getQuantiteFournie()));
 			LOG.warn("Merging Command Item : CIP = "+ligneCmdFournisseur.getCip());
@@ -173,7 +174,7 @@ public class CsvImportExportUtil {
 			if(ResponseProductItemRow.assertThisIsAvalidResponseProductItemRow(lineContent) == false){
 				continue ;
 			}
-			responseProductItemRow = new ResponseProductItemRow(1, 113, lineContent);
+			responseProductItemRow = new ResponseProductItemRow(1, lineContent.length(), lineContent);
 			results.add(responseProductItemRow);
 		}
 		return results;

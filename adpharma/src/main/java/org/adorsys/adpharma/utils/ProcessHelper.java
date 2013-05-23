@@ -6,10 +6,12 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.adorsys.adpharma.domain.CategorieClient;
+import org.adorsys.adpharma.domain.ConfigurationSoldes;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.Filiale;
@@ -23,6 +25,7 @@ import org.adorsys.adpharma.domain.SousFamilleProduit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
@@ -179,6 +182,12 @@ public class ProcessHelper {
 	public static Long getRemise( LigneApprovisionement ligneApprovisionement){ 
 		BigDecimal remise = BigDecimal.ZERO ;
 		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		ConfigurationSoldes configSolde = ligneApprovisionement.getProduit().getConfigSolde();
+		if(configSolde!=null){
+			if(configSolde.getActiveConfig()){
+				if(configSolde.getFinSolde().before(new Date()))return ligneApprovisionement.getPrixVenteUnitaire().longValue();
+			}
+		}
 		if (ligneApprovisionement.getRemiseAutorise()) {
 			if (pharmaUser == null) return remise .longValue();
 			BigDecimal tauxRemise = pharmaUser.getTauxRemise();

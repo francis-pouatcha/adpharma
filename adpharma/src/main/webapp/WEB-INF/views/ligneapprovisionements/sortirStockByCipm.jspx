@@ -270,10 +270,9 @@ $('#subForm').submit(function(){
 							title="saisir la Quantite" /></td>
 						<td>
 						<SELECT name="raison" style="height: 22px;width: 180px;" id="raison">
-								<OPTION value="NON_COMMANDE" selected="selected">NON COMMANDE</OPTION>
-								<OPTION value="AVARIE">AVARIE</OPTION>
-								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
-								<OPTION value="NON_JUSTIFIE">NON JUSTIFIE</OPTION>
+							<c:forEach items="${typeSorties}" var="typeSortie" >
+								<OPTION value="${typeSortie.libelle}">${typeSortie.libelle}</OPTION>
+							</c:forEach>
 						</SELECT>
 						</td>
 

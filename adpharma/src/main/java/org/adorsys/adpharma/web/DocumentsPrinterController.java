@@ -88,7 +88,7 @@ public class DocumentsPrinterController {
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/etatProduitPerisable.pdf", method = RequestMethod.GET)
-	public void etatProduitPerisable(@RequestParam("value") BigInteger value ,HttpServletRequest request,HttpServletResponse response) {
+	public void etatProduitPerisable(@RequestParam("value") Long value ,HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
 		parameters.put("nombre_jour",value);
 		parameters.put("datejour",new Date());

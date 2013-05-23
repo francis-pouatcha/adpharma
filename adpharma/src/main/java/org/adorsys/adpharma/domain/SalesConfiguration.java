@@ -25,7 +25,7 @@ public class SalesConfiguration extends AdPharmaBaseEntity {
 
     private BigInteger maxValue;
 
-    @DecimalMin(value="1", message="Le taux de reduction ne doit pas etre inferieur a 1%")
+    @DecimalMin(value="0", message="Le taux de reduction ne doit pas etre inferieur a 0%")
     @DecimalMax(value="100", message="Le taux de reduction ne doit pas etre superieur a 100%")
     private BigDecimal tauxReduction;
     

@@ -17,6 +17,7 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 	private UbipharmCommandStringSequence returningProductKey;
 	private UbipharmCommandStringSequence productDeliveryCodificationType;
 	private UbipharmCommandStringSequence deliveredProductKey;
+	private UbipharmCommandStringSequence deliveredProductPrice;
 	
 	public ResponseProductItemRow(int startIndex, int endIndex) {
 		super(startIndex, endIndex);
@@ -56,7 +57,10 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 		return new UbipharmCommandStringSequence(63, 64, super.readValue(getStringValue(), 63, 64));
 	}
 	public UbipharmCommandStringSequence readDeliveryProductKey(){
-		return new UbipharmCommandStringSequence(64, 113, super.readValue(getStringValue(), 65, getStringValue().length()));
+		return new UbipharmCommandStringSequence(64, 113, super.readValue(getStringValue(), 64, 113));
+	}
+	public UbipharmCommandStringSequence readDeliveryProductPrice(){
+		return new UbipharmCommandStringSequence(116, getStringValue().length()+1, super.readValue(getStringValue(), 116, getStringValue().length()+1));
 	}
 	/**
 	 * Example
@@ -75,6 +79,7 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 		returningProductKey = readReturningKey();
 		productDeliveryCodificationType = readProductDeliveryCodificationType();
 		deliveredProductKey = readDeliveryProductKey();
+		deliveredProductPrice = readDeliveryProductPrice() ;
 	}
 	@Override
 	public boolean isCorrectLigne(String ligneWrapperFromCsvFile) {
@@ -109,5 +114,14 @@ public class ResponseProductItemRow extends AbstractUbipharmLigneWrapper {
 	public UbipharmCommandStringSequence getDeliveredProductKey() {
 		return deliveredProductKey;
 	}
+	public UbipharmCommandStringSequence getDeliveredProductPrice() {
+		return deliveredProductPrice;
+	}
+	public void setDeliveredProductPrice(
+			UbipharmCommandStringSequence deliveredProductPrice) {
+		this.deliveredProductPrice = deliveredProductPrice;
+	}
+	
+	
 	
 }

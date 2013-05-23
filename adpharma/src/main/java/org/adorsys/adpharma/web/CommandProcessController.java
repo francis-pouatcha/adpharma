@@ -419,6 +419,7 @@ public class CommandProcessController {
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
 
+	@Transactional
 	@RequestMapping(value="/ubipharm/{itemId}/import", method = RequestMethod.GET)
 	public String importFromUbipharmResponse(@PathVariable("itemId")Long cmdId, Model uiModel){
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);

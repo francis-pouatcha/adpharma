@@ -549,6 +549,15 @@ public class ApprovisionementProcessController {
 			return "ficheCodeBarePdfDocView";
 
 		}
+		@RequestMapping("/{apId}/printFicheCodeBare27/{ficheCodebarId}.pdf")
+		public String printFicheCodeBar27( @PathVariable("apId")Long apId, @PathVariable("ficheCodebarId")String ficheCodebarId, Model uiModel){
+			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+			List<LigneApprovisionement> ligneApprivisionement = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList();
+			uiModel.addAttribute("ligneApprivisionement", ligneApprivisionement);
+			uiModel.addAttribute("apNumber", approvisionement.getApprovisionementNumber());
+			return "ficheCodeBare27";
+
+		}
 		
 		// Formulaire d'impression des listes de reclamations
 		@RequestMapping(value="/reclamations", params="form", method=RequestMethod.GET)

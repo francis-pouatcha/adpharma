@@ -11,6 +11,8 @@
       <spring:url value="/approvisionementprocess/${itemId}/cloturer"  var="close_url" />
       <spring:url value="/approvisionementprocess/${itemId}/printFicheAp/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheAp_url" />
       <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url" />
+          <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare27/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url27" />
+         
            <spring:url value="/approvisionements/sortieProduit/${itemId}"  var="prd_out_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
       <spring:url value="/resources/images/print.png"  var="print" />
@@ -35,7 +37,9 @@ if(Check == false){
       <c:when test="${approvisionement.etat == etat}">
       <security:authorize ifAnyGranted="ROLE_IMPRESSION_CODE_BARE ,ROLE_SITE_MANAGER">
         <span><a href="${ print_xls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche EXCEL" title="Imprimer la fiche d approvisionnement au format excel" /></a></span>
-        <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare" title="Imprimer la fiche de code bare" /></a></span>
+        <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x25)" title="Imprimer la fiche de code bare" /></a></span>
+            <span><a href="${ print_ficheCB_url27}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x27)" title="Imprimer la fiche de code bare" /></a></span>
+               <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
      </security:authorize>
       </c:when>
       <c:otherwise>
@@ -43,7 +47,6 @@ if(Check == false){
     
       </c:otherwise>
    </c:choose>
-           <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
    <c:if test="${not approvisionement.cloturer}">
         <spring:url value="/approvisionementprocess/${itemId}/edit"  var="edit_url" />
    

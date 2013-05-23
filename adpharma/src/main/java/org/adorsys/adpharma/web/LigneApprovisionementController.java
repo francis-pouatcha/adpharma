@@ -22,6 +22,7 @@ import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.ClaimsService;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -145,6 +146,7 @@ public class LigneApprovisionementController {
 		Date maxDate =  PharmaDateUtil.getEndDayDate();
 		List<MouvementStock> mvts = MouvementStock.search(TypeMouvement.SORTIE_PRODUIT, minDate, maxDate);
 		uiModel.addAttribute("sorties", mvts);
+		uiModel.addAttribute("typeSorties", TypeSortieProduit.findAllTypeSortieProduits());
 		if(StringUtils.equals("ByCipm", mode)){
 			return "ligneapprovisionements/sortiesByCipm";
 		}else{
