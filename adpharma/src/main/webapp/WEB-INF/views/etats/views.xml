@@ -9,5 +9,8 @@
      <definition extends="approvisionnement" name="etats/docpages">
         <put-attribute name="body" value="/WEB-INF/views/etats/docs-page-manager.jspx"/>
     </definition>
+    <definition extends="approvisionnement" name="etats/sortieproduit">
+        <put-attribute name="body" value="/WEB-INF/views/etats/etat-sortie-produit.jspx"/>
+    </definition>
     
 </tiles-definitions>

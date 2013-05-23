@@ -3,6 +3,7 @@ package org.adorsys.adpharma.web;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -110,16 +111,65 @@ public class ApprovisionementProcessController {
 
 	// redirect to edit approvisionement form
 	@RequestMapping(value = "/{apId}/edit", method = RequestMethod.GET)
-	public String editApprovisionnement(@PathVariable("apId") Long apId, Model uiModel,HttpSession session) {
+	public String editApprovisionnement(@PathVariable("apId") Long apId, @RequestParam(required=false)String type, Model uiModel,HttpSession session) {
 		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+		
+		// Index pour le comptage des lignes d'approvisionement
+		int index=0;
 		String fournisseur = approvisionement.getFounisseur().getFournisseurNumber();
+		List<LigneApprovisionement> lignesAppro = new ArrayList<LigneApprovisionement>();
 		ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
-		approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
-		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
 		uiModel.addAttribute("numero", fournisseur);
 		initProcurementViewDependencies(uiModel);
-		return "approvisionementprocess/edit";
+		if(type.equals("PREPARATION")){
+			lignesAppro= LigneApprovisionement.findLigneApprovisionementsByApprovisionementOrdered(approvisionement).getResultList();
+			approvisonementProcess.setLigneApprovisionements(lignesAppro);
+			approvisonementProcess.setLineToUpdate(lignesAppro.get(index));
+			approvisonementProcess.setSize(lignesAppro.size());
+			approvisonementProcess.setIndex(index);
+			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			return "approvisionementprocess/editpreparation";
+		}else{
+			approvisonementProcess.setLigneApprovisionements(LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList());
+			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+			return "approvisionementprocess/edit";
+		}
+			
 	}
+	
+	// Cette methode permet de naviguer dans la liste des produits de l'approvisionnement
+	@RequestMapping(value = "/{apId}/navigate", method = RequestMethod.GET)
+	public String navigate(@PathVariable("apId") Long apId, @RequestParam("index")int index, @RequestParam("size")int size, 
+			@RequestParam(value="nav", required=false)String nav, Model uiModel){
+		List<LigneApprovisionement> lignesAppro = new ArrayList<LigneApprovisionement>();
+		LigneApprovisionement ligneApprovisionement= null;
+		Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+		int next;
+		if(StringUtils.isNotBlank(nav)){ 
+			next=index;
+		}else{
+			next= index + 1;
+		}
+		System.out.println("Index suivant: "+next);
+		lignesAppro= LigneApprovisionement.findLigneApprovisionementsByApprovisionementOrdered(approvisionement).getResultList();
+		try {
+			ligneApprovisionement = lignesAppro.get(next);
+		} catch (Exception e) {
+			ligneApprovisionement= new LigneApprovisionement();
+		}	
+			
+		
+		ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
+		approvisonementProcess.setLigneApprovisionements(lignesAppro);
+		approvisonementProcess.setLineToUpdate(ligneApprovisionement);
+		approvisonementProcess.setSize(size);
+		approvisonementProcess.setIndex(next);
+		uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
+		return "approvisionementprocess/editpreparation";
+	}
+	
+	
+	
 
 	@RequestMapping(value = "/{apId}/specialEdit", method = RequestMethod.GET)
 	public String specialEdit(@PathVariable("apId") Long apId, Model uiModel,HttpSession session) {
@@ -199,7 +249,6 @@ public class ApprovisionementProcessController {
 			uiModel.addAttribute("approvisonementProcess",approvisonementProcess);
 			initProcurementViewDependencies(uiModel);
 			return "approvisionementprocess/edit";
-
 		}
 		
 		@Transactional
@@ -251,6 +300,8 @@ public class ApprovisionementProcessController {
 
 		}
 
+		
+		// Methode de mise a jour d'une ligne d'approvisionnement.
 		@RequestMapping(value = "/{apId}/updateLine", method = RequestMethod.POST)
 		public String updatedLine(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte, @RequestParam BigInteger qteug,
 				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj,@RequestParam String prm, 
@@ -280,6 +331,57 @@ public class ApprovisionementProcessController {
 			approvisionement.merge();
 			return initViewContent(approvisionement, tvaj, uiModel);
 
+		}
+		
+		
+		
+       // Mise a jour d'une ligne d'approvisionnement issue d'une preparation		
+		@RequestMapping(value = "/{apId}/updateLineprepare", method = RequestMethod.GET)
+		public String updatedLinePreparation(@PathVariable("apId") Long apId,@RequestParam Long lineId,@RequestParam BigInteger qte, @RequestParam BigInteger qteug,
+				@RequestParam BigDecimal pa,@RequestParam String pv, @RequestParam(required = false) String tvaj, @RequestParam String prm, 
+				@RequestParam(required=false) BigInteger qterecl, @RequestParam("index")int index, @RequestParam("size")int size, Model uiModel,HttpSession session) {
+			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
+			LigneApprovisionement line = LigneApprovisionement.findLigneApprovisionement(lineId);
+			
+			List<LigneApprovisionement> lignesApprovisionements= new ArrayList<LigneApprovisionement>();
+			
+			if (!approvisionement.getEtat().equals(Etat.CLOS)) {
+				line.setQuantiteAprovisione(qte);
+				line.setQuantiteUniteGratuite(qteug);
+				line.setQuantiteReclame(qterecl!=null?qterecl:BigInteger.ZERO);
+				line.setPrixAchatUnitaire(pa);
+				if (!"".equals(pv)) {
+					line.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
+				}else {
+					line.setPrixVenteUnitaire(BigDecimal.ZERO);
+					line.CalculerPrixVente();
+				}
+				line.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2) );
+				line.CalculePaTotal();
+				line.merge();
+			}else{
+				uiModel.addAttribute("apMessage", "impposible d effectuer une mis a jour <b> Approvisionement CLOS </b>");
+				lignesApprovisionements= LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList();
+				return initViewPreparationContent(approvisionement, lignesApprovisionements, index, size, tvaj, uiModel);
+			}
+			approvisionement.calculateMontant();
+			approvisionement.merge();
+			
+			lignesApprovisionements = LigneApprovisionement.findLigneApprovisionementsByApprovisionementOrdered(approvisionement).getResultList();
+			return initViewPreparationContent(approvisionement, lignesApprovisionements, index, size, tvaj, uiModel);
+		}
+		
+		
+		// Methode de preparation de la vue de mise a jour des lignes d'approvisionement issues de la preparation.
+		public String initViewPreparationContent(Approvisionement approvisionement, List<LigneApprovisionement> lines, int index, int size, String tvaj,Model uiModel){
+			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(approvisionement.getId());
+			if (StringUtils.isNotBlank(tvaj)) {
+				approvisonementProcess.setTaux(new BigDecimal(tvaj.trim()));
+			}
+			approvisonementProcess.setLigneApprovisionements(lines);
+			approvisonementProcess.setSize(size);
+			approvisonementProcess.setIndex(index);
+			return "redirect:/approvisionementprocess/"+approvisionement.getId()+"/navigate?index="+approvisonementProcess.getIndex()+"&size="+approvisonementProcess.getSize();
 		}
 
 

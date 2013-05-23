@@ -680,6 +680,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("approvisionement", approvisionement);
 		return q;
 	}
+	
+	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByApprovisionementOrdered(Approvisionement approvisionement) {
+		if (approvisionement == null) throw new IllegalArgumentException("The approvisionement argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement = :approvisionement ORDER BY o.designation ASC", LigneApprovisionement.class);
+		q.setParameter("approvisionement", approvisionement);
+		return q;
+	}
 
 	public static List<Long> findLigneApprovisionementsByFourAndCip(String cip, Fournisseur fournisseur) {
 		fournisseur = fournisseur == null ? Fournisseur.findFournisseur(new Long(1)) : fournisseur;

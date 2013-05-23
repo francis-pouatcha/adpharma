@@ -1,25 +1,16 @@
 package org.adorsys.adpharma.web;
 
-import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 import org.adorsys.adpharma.beans.ReclamationForm;
 import org.adorsys.adpharma.beans.process.EtatManagerBean;
@@ -29,6 +20,7 @@ import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
@@ -36,15 +28,13 @@ import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.ibm.icu.math.BigDecimal;
 
 @RequestMapping("/etats")
 @Controller
@@ -95,6 +85,27 @@ public class DocumentsPrinterController {
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PRODUIT_PERISABLE_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatProduitSortie.pdf", method = RequestMethod.GET)
+	public void etatProduitSortie(@RequestParam(value="dateD") @DateTimeFormat(pattern="dd-mm-yy 00:00") Date dateD, 
+			@RequestParam("dateF") @DateTimeFormat(pattern="dd-mm-yy 00:00") Date dateF,
+			@RequestParam("typeSortie") String typeSortie,
+			HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",dateD);
+		parameters.put("DateF",dateF);
+		parameters.put("TypeSortie",typeSortie);
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PRODUIT_SORTIE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -408,6 +419,10 @@ public class DocumentsPrinterController {
 				return "reclamationsPdfView";
 			}
 
-
+			@RequestMapping(value = "/sortieProduitForm")
+			public String etatSortieProduitForm(HttpServletRequest request,HttpServletResponse response,Model uiModel) {
+				uiModel.addAttribute("typeSorties", TypeSortieProduit.findAllTypeSortieProduits());
+				return "etats/sortieproduit";
+			}
 
 }

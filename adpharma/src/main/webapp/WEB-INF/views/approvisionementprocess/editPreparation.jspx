@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	
+	
+    <util:display-box display="${approvisonementProcess.displayName}" />
+	
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/edit" var="edit_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct?form" var="find_product_url" />
+	<spring:url value="/produits/findProductByCipAjax" var="find_productajax_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findCmdFour?form" var="find_cmd_four_url" />
+	<c:choose>
+		<c:when test="${approvisonementProcess.etat eq 'CLOS'}">
+			<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/specialaddLine" var="find_add_url" />
+		</c:when>
+		<c:otherwise>
+	        <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/addLine"  var="find_add_url" />
+		</c:otherwise>
+	</c:choose>
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/updateLineprepare" var="find_upd_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/showProduct/" var="show_prd_url" />
+	<spring:url value="/resources/images/annuler.png" var="annuler" />
+	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/enregistrer" var="enr_cmd_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler" var="delete_cmd_url" />
+	
+	<style type="text/css">
+	    .qteClass{width: 80px; display:block; margin: auto;}
+	    .prixClass{width: 100px; display: block; margin: auto;}
+	</style>
+	
+	
+	<div style="margin-bottom: 6px; margin-top: 9px; font-weight: bold;">
+		<span class="firstTab selectedTab"><a href="${ edit_url}">APPROVISIONNEMENT</a></span>
+		
+		<span><a href="${ enr_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
+	    <span><a href="${ delete_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Annuler" title="Annuler L'approvisionnement" /></a></span>
+	    <span>
+	         <c:choose>
+	               <c:when test="${approvisonementProcess.index gt 0}">
+	                     <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/navigate" var="previousline_url">
+		                     <spring:param name="index" value="${approvisonementProcess.index - 1}" />
+		                     <spring:param name="size" value="${approvisonementProcess.size}" />
+		                     <spring:param name="nav" value="previous" />
+	                     </spring:url>
+			             <a href="${previousline_url}" style="text-decoration: none;">
+			              <input class="submits" type="button" value="Precedent" title="Produit precedent" />
+			             </a>
+	               </c:when>
+	               <c:otherwise>
+	                     <input class="submits" style="cursor: default;" type="button" value="Precedent" title="Produit precedent" disabled="disabled" />   
+	               </c:otherwise>
+	         </c:choose>
+	    </span>
+	    <span>
+	           <c:choose>
+	                 <c:when test="${approvisonementProcess.index lt approvisonementProcess.size}">
+	                       <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/navigate" var="nextline_url">
+		                       <spring:param name="index" value="${approvisonementProcess.index + 1}" />
+		                       <spring:param name="size" value="${approvisonementProcess.size}" />
+		                       <spring:param name="nav" value="next" />
+	                       </spring:url>
+	                       
+				           <a  href="${nextline_url}" style="text-decoration: none;">
+				              <input class="submits" type="button" value="Suivant" title="Produit suivant" />
+				           </a>
+	                 </c:when>
+	                 <c:otherwise>
+	                         <input class="submits" style="cursor: default;" type="button" value="Suivant" title="Produit suivant" disabled="disabled"/>
+	                 </c:otherwise>
+	           </c:choose>
+	    </span>
+
+	</div>
+
+
+
+   <!-- <c:choose>
+		<c:when test="${empty approvisonementProcess.produit}">
+			<c:set value="${approvisonementProcess.produit.id}" var="prd"></c:set>
+		</c:when>
+		<c:otherwise>
+			<c:set value="#" var="prd"></c:set>
+		</c:otherwise>
+	</c:choose> -->
+
+	<c:choose>
+		<c:when test="${not empty approvisonementProcess.lineToUpdate}">
+			<util:panel title="Mettre a jour Les Informations" id="upline">
+				<form action="${find_upd_url}" method="GET" name="formulaire" onsubmit="return verif_formulaire()">
+					<table>
+						<tr>
+							<th style="text-align: center;">CiP</th>
+							<th style="text-align: center;">Designation</th>
+							<th style="text-align: center;">CipM</th>
+							<th style="text-align: center;">QTE</th>
+							<!-- 
+							<th style="text-align: center;">Qte RC</th>
+							 -->
+							<th style="text-align: center;">Qte UG</th>
+							<th style="text-align: center;">Prix Vente</th>
+							<th style="text-align: center;">Prix Achat</th>
+							<th style="text-align: center;">TMul</th>
+							<th style="text-align: center;">Date Per</th>
+							<th colspan="2" style="text-align: center;">ACTION</th>
+						</tr>
+						<tr>
+							<td>
+							    <input type="hidden" name="tvaj" id="tvaj" value="${approvisonementProcess.taux}" /> 
+							    <input type="hidden" name="lineId" id="lineId" value="${approvisonementProcess.lineToUpdate.id}" />
+							    <input type="hidden" name="size" value="${approvisonementProcess.size}" />
+							    <input type="hidden" name="index" value="${approvisonementProcess.index}" /> 
+								<input type="text" name="cip" class="autres" value="${approvisonementProcess.lineToUpdate.produit.cip}"
+								title="Taux De Marge" style="color: blue; text-align: center;" disabled="disabled" id="mrg" />
+						    </td>
+						    
+							<td>
+							    <input type="text" name="des" class="des" title="Designation" value="${approvisonementProcess.lineToUpdate.designation}"
+								style="color: blue; text-align: center;" disabled="disabled" id="des" />
+						    </td>
+							<td>
+							    <input type="text" name="cipM"  disabled="disabled" class="autres" value="${approvisonementProcess.lineToUpdate.cipMaison}"
+								onkeypress="return scanTouche(event)" onkeyup="requete();" title="saisir le cip" style="color: blue; "
+								maxlength="7" autofocus="autofocus" id="cip" />
+							</td>
+							
+							<td>
+							    <input type="text" name="qte" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}" onkeypress="return scanTouche(event)" width="30px;"
+								title="saisir la Quantite" maxlength="4" id="qte" />
+						    </td>
+						   
+							<td>
+							    <input type="text" name="qteug" class="autres"
+								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}" onkeypress="return scanTouche(event)" width="30px;" 
+								onmouseover="this.select();" title="saisir la Quantite" maxlength="4" id="qteug" />
+						    </td>
+						   
+							<td>
+							    <input type="text" name="pv" id="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								value="${approvisonementProcess.lineToUpdate.prixVenteUnitaire}" onkeypress="return scanTouche(event)" maxlength="7"
+								title="saisir le Prix De Vente Unitaire" />
+						    </td>
+								
+							<td>
+							    <input type="text" name="pa" id="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
+								value="${approvisonementProcess.lineToUpdate.prixAchatUnitaire}" onkeypress="return scanTouche(event)" maxlength="7"
+								title="saisir le Prix D'achat unitaire" />
+						    </td>
+								
+							<td>
+							    <input type="text" class="autres" onmouseover="this.select();" onkeyup=" calculPriceTva();" 
+							    onkeypress="return scanTouche(event)" maxlength="6" name="tva" id="tva" title="saisir le Prix D'achat unitaire" />
+							</td>
+							
+							<td> <input type="text" name="prm" class="autres" title="format (MMYY)" id="prm" placeholder="MMYY" /> </td>
+
+							<td> <input class="submits" type="submit" value="Modifier" /> </td>
+							
+						</tr>
+					</table>
+				</form>
+				<center style="text-transform: uppercase;">
+					<c:if test="${not empty apMessage }">
+						<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
+					</c:if>
+				</center>
+			 </util:panel>
+		</c:when>
+	</c:choose>
+	
+
+	<!-- afficher les lignes d'approvisionnemnt ici -->
+	<util:panel title="Liste Des Produits en cours d'approvisionnement" id="lg">
+		<table>
+			<tr>
+				<th style="text-align: center;">CiP</th>
+				<th style="text-align: center; width: 300px;">Designation</th>
+				<th style="text-align: center;">CipM</th>
+				<th style="text-align: center;">Marge</th>
+				<th style="text-align: center;">PAUnit</th>
+				<th style="text-align: center;">QTE</th>
+				<!-- 
+				<th style="text-align: center;">Qte RC</th>
+				 -->
+				<th style="text-align: center;">Qte UG</th>
+				<th style="text-align: center;">PA Total</th>
+				<th style="text-align: center;">PV Unit</th>
+				<th style="text-align: center;">Date Perm</th>
+				<th colspan="2" style="text-align: center;">ACTION</th>
+			</tr>
+
+			<c:forEach items="${approvisonementProcess.ligneApprovisionements }" var="ligne">
+				<tr>
+					<td style="text-align: center;"><c:out value="${ligne.produit.cip}"></c:out></td>
+					
+					<td style="width: 300px; text-align: left; padding-left: 20px;"> <c:out value="${ligne.designation}"></c:out></td>
+					
+					<td style="text-align: center;"><c:out value="${ligne.cipMaison}"></c:out></td>
+					
+					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.margeBrute}" /></td>
+					
+					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.prixAchatUnitaire}" /></td>
+					
+					<td style="text-align: right; padding-right: 20px;"><c:out value="${ligne.quantiteAprovisione}"></c:out></td>
+					<!-- 
+					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.quantiteReclame}" /></td>
+					 -->
+					<td style="text-align: right; padding-right: 20px;"><c:out value="${ligne.quantiteUniteGratuite}"></c:out></td>
+					
+					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.prixAchatTotal}" /></td>
+							
+					<td style="text-align: right; padding-right: 20px;"><fmt:formatNumber value="${ligne.prixVenteUnitaire}" /></td>
+					
+					<td style="text-align: center;"><fmt:formatDate value="${ligne.datePeremtion}" pattern="dd-MM-yyyy" /></td>
+					
+					<c:choose>
+						<c:when test="${approvisonementProcess.etat != 'CLOS'}">
+							<td class="utilbox">
+							    <spring:url value="/resources/images/update.png" var="update_image_url" />
+								<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/updateLine/${ligne.id}" var="update_line_url" /> 
+								<a href="${update_line_url}" alt="update" title="update"> 
+								  <img alt="update" class="image" src="${ update_image_url}" title="mettre a jour la commande " />
+							    </a>
+							</td>
+							<td class="utilbox">
+							     <spring:url value="/resources/images/delete.png" var="delete_image_url" />
+								 <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/deleteLine/${ligne.id}" var="delete_line_url" /> 
+								   <a href="${ delete_line_url}" alt="Remove" title="Remove"> 
+								      <img alt="Unselect" class="image" src="${ delete_image_url}" title=" unselect this product" onclick="return conf()" />
+							       </a>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td class="utilbox">
+							    <spring:url value="/resources/images/delete.png" var="delete_image_url" />
+								<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/specialdeleteLine/${ligne.id}" var="delete_line_url" /> 
+								  <a href="${ delete_line_url}" alt="Remove" title="Remove"> 
+								    <img alt="Unselect" class="image" src="${delete_image_url}" title=" unselect this product" onclick="return conf()" />
+							      </a>
+							</td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+			</c:forEach>
+		</table>
+	</util:panel>
+	
+
+	<jsp:include page="scriptEditform.jspx" />
+
+</div>
