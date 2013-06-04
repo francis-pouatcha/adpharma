@@ -192,6 +192,7 @@ public class DocumentsPrinterController {
 	
 	
 	
+	
 	// Etat des mouvements de stock par cip
 	@Produces({"application/pdf"})
 	@Consumes({""})
@@ -219,10 +220,12 @@ public class DocumentsPrinterController {
 		parameters.put("DateD",etatBean.getDateDebut());
 		parameters.put("DateF",etatBean.getDateFin());
 		if(etatBean.getTypeOperation().equals(TypeOpCaisse.ENCAISSEMENT)){
-			parameters.put("typeOp", 0); 
+			parameters.put("typeOp", 0);
+			parameters.put("nomOP", "ENCAISSEMENT");
 		}
 		if(etatBean.getTypeOperation().equals(TypeOpCaisse.DECAISSEMENT)){
 			parameters.put("typeOp", 1);
+			parameters.put("nomOP", "DECAISSEMENT");
  		}
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DEC_GROUPES_FILE_PATH);
