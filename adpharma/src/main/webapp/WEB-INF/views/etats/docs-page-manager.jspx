@@ -1,120 +1,173 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" 
- xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  
+ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+ xmlns:jsp="http://java.sun.com/JSP/Page" 
+ xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
      <jsp:include page="etatscripts.jspx" />
      <center>  <legend> Veuillez Renseigner Les Informations  ci-dessous </legend>  </center>
      
-    <form:create label="Edition des Etats" hideallButton="true" labelButon="Editer" diseableSubmit="true" formId="dialogform"   id="fc_org_adorsys_adpharma_domain_Facture" modelAttribute="etatManagerBean" path="#" render="${empty dependencies}" z="Bhv4Tam9McEhTPjOWCl9c8c/qIE=">
-       <table>
-       <tr>
+<form:create label="Edition generale des Etats" hideallButton="true" labelButon="Editer" diseableSubmit="true" formId="dialogform" id="fc_org_adorsys_adpharma_domain_Facture" modelAttribute="etatManagerBean" path="#" render="${empty dependencies}" z="user-managed">
+   <table>
+     <tr>
        <td style="vertical-align: top;">
-        <legend > Saisir la periode : </legend>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="Date Debut"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="Date Fin"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:input label="Valeur"   field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+        <legend> Parametres de configuration des Etats </legend>
+        <div id="param1">
+            <ul>
+                <li> <a href="#param1_tab1"> Configuration des periodes </a> </li>
+                <li> <a href="#param1_tab2"> Autres configurations </a> </li>
+            </ul>
+            <div id="param1_tab1">
+		        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="Date Debut"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="Date Fin"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+            </div>
+            <div id="param1_tab2">
+		        <field:input label="Valeur"   field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+            </div>
+        </div>    
         
-        <legend> Definir la position : </legend>
+        <legend> Parametres d'edition des Etats: </legend>
+        <div id="param2">
+            <ul>
+                <li> <a href="#param2_tab1"> Parametres de position </a> </li>
+                <li> <a href="#param2_tab2"> Mouvements de stock </a> </li>
+                <li> <a href="#param2_tab3"> Operations de caisse </a> </li>
+            </ul>
+            <div id="param2_tab1">
+                    <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_rayon" z="user-managed"/>
+			        <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_filiale" z="user-managed"/>
+			        <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_user" z="user-managed"/>
+			        <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_produit" z="user-managed"/>
+            </div>
+            <div id="param2_tab2">
+                    <field:input label="Cip" field="cip" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_cip" required="false" />
+                    <field:input label="Designation" field="designation" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_designation" required="false"  />
+			        <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_typeMouvement" z="user-managed"/>
+            </div>
+            <div id="param2_tab3">
+                    <field:select path="/"  label="Type Operation"   field="typeOperation" items="${typesOperationsCaisses}" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_typeOperation" z="user-managed"/>
+            </div>
         
-        <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-         
-        <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-    </td>
-    <td style="vertical-align: top;"  width="45%">
-    <DIV style="overflow:auto;height: 400px; ">
-    <table   >
-       <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Ventes </i>
-          </td>
-          <td>
-               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  checked="checked" id="url1"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des caisses </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"   name="etats" id="url2"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Dettes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"  name="etats" id="url3"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Mouvements de stock</i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url4" />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Chiffre affaire periodique par vendeur </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url5" />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Etat periodique des Transformations / vendeur </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url6"  />
-          </td>
-     </tr>
-      
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique Taux Marque </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url7"  />
-          </td>
-     </tr>
-     <tr >
-          <td>
-               <i class="labeletat" > Etat Valorisation du stock par rayon  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url8"  />
-          </td>
-     </tr>
-     <tr >
-          <td>
-               <i class="labeletat" > Listing Catalogue par rayon  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
-          </td>
-     </tr>
-    <tr >
-          <td>
-               <i class="labeletat" > Etat Valorisation du stock par Filiale  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url10"  />
-          </td>
-     </tr>
+        </div>
+        
      
-    </table>
-    </DIV>
-    </td>
-    </tr>
-    </table>
-    </form:create>
+       </td>
+       <td style="vertical-align: top;"  width="45%">
+		    <DIV style="overflow:auto;height: 400px; ">
+				  <table>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Periodique des Ventes </i>
+				          </td>
+				          <td>
+				               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  checked="checked" id="url1"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Periodique des caisses </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"   name="etats" id="url2"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Periodique des Dettes </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"  name="etats" id="url3"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Periodique des Mouvements de stock</i>
+				          </td>
+				          <td>
+				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url4" />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Chiffre affaire periodique par vendeur </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url5" />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Etat periodique des Transformations / vendeur </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url6"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Periodique Taux Marque </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url7"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Valorisation du stock par rayon  </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url8"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Listing Catalogue par rayon  </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat Valorisation du stock par Filiale  </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url10"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat des mouvements de stock par cip  </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url11"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> Etat periodique des operations de caisses groupes / caisse  </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url12"  />
+				          </td>
+				     </tr>
+				    </table>
+		    </DIV>
+       </td>
+      </tr>
+   </table>
+</form:create>
+
+<SCRIPT type="text/javascript">
+   $(function(){
+	   $('#param1').tabs();
+	   $('#param2').tabs(); 
+   });
+</SCRIPT>
+
 </div>
  

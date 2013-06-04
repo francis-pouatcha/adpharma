@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,7 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DateConfig;
@@ -40,12 +43,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ibm.icu.math.BigDecimal;
 
 @RequestMapping("/etats")
 @Controller
@@ -68,6 +71,12 @@ public class DocumentsPrinterController {
 		uiModel.addAttribute("typeMouvements", ProcessHelper.populateTypeMouvements());
 		uiModel.addAttribute("users", ProcessHelper.populateUsers());
 		return "etats/docpages";
+	}
+	
+	// Liste des types d'operations de caisse
+	@ModelAttribute("typesOperationsCaisses")
+	public Collection<TypeOpCaisse> populateTypesOperationsCaisse(){
+		return Arrays.asList(TypeOpCaisse.class.getEnumConstants());
 	}
 	
 	@Produces({"application/pdf"})
@@ -124,6 +133,8 @@ public class DocumentsPrinterController {
 		}
 	}
 	
+	
+	// Etat periodique des ventes
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/etatPeriodiqueVente.pdf", method = RequestMethod.GET)
@@ -142,6 +153,7 @@ public class DocumentsPrinterController {
 	}
 	
 
+	// Etat periodique du chiffre d'affaire par vendeur
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/chiffeAffaireVendeur.pdf", method = RequestMethod.GET)
@@ -159,6 +171,8 @@ public class DocumentsPrinterController {
 		}
 	}
 	
+	
+	// Etat periodique des mouvements de stock
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/etatPeriodiqueMouvenentStock.pdf", method = RequestMethod.GET)
@@ -175,6 +189,52 @@ public class DocumentsPrinterController {
 			return ;
 		}
 	}
+	
+	
+	
+	// Etat des mouvements de stock par cip
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatMouvementByCip.pdf", method = RequestMethod.GET)
+	public void etatMouvenentStockParCip(EtatManagerBean etatBean, HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("cip",etatBean.getCip());
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_MVTS_CIP_FILE_PATH);
+			System.out.println("Impression ok...");
+		} catch (Exception e) {
+			System.out.println("Impression not ok...");
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	
+	// Etat periodique des decaissements groupes par caisse. 
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatperiodiqueDecaissementgrpes.pdf", method = RequestMethod.GET)
+	public void etatPeriodiqueDecaissementGrpesParCaisse(EtatManagerBean etatBean, HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		if(etatBean.getTypeOperation().equals(TypeOpCaisse.ENCAISSEMENT)){
+			parameters.put("typeOp", 0); 
+		}
+		if(etatBean.getTypeOperation().equals(TypeOpCaisse.DECAISSEMENT)){
+			parameters.put("typeOp", 1);
+ 		}
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DEC_GROUPES_FILE_PATH);
+			System.out.println("Impression ok...");
+		} catch (Exception e) {
+			System.out.println("Impression not ok...");
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	
 	
 	@Produces({"application/pdf"})
 	@Consumes({""})
@@ -217,8 +277,8 @@ public class DocumentsPrinterController {
 	public void etatJournalierDettes(HttpServletRequest request,HttpServletResponse response) {
 		DateConfigPeriod begingEndOfDay = DateConfig.getBegingEndOfDay(new Date());
 		Map parameters = new HashMap();
-		parameters.put("DateD",begingEndOfDay.getBegin());
-		parameters.put("DateF",begingEndOfDay.getEnd());
+		parameters.put("DateD", PharmaDateUtil.format(begingEndOfDay.getBegin(), PharmaDateUtil.DATE_PATTERN_LONG));
+		parameters.put("DateF",PharmaDateUtil.format(begingEndOfDay.getEnd(), PharmaDateUtil.DATE_PATTERN_LONG));
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DETTES);

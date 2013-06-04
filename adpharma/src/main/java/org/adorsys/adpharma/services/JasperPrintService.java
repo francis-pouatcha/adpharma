@@ -43,6 +43,7 @@ public class JasperPrintService
             Connection connection = DataSourceUtils.doGetConnection(getDataSource());
             parameters.put("PrintBy", SecurityUtil.getUserName());
             parameters.put("user", SecurityUtil.getUserName());
+            System.out.println("Liste des parametres: "+parameters.toString());
             net.sf.jasperreports.engine.JasperReport jasperReport = JasperCompileManager.compileReport(jasperFile);
             net.sf.jasperreports.engine.JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
