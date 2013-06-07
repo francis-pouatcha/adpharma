@@ -9,11 +9,9 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
             		    
-                  			<spring:url  value="/etatcreditses/print/${itemId}.pdf"  var="conv_cmd_url" />
-                                   			<spring:url  value="/etatcreditses/printfacture/${itemId}.pdf"  var="etat_gbl_url" />
-                 
-                        			<spring:url  value="/etatcreditses/${itemId}/annuler"  var="etat_annuler_url" />
-      
+      <spring:url value="/etatcreditses/print/${itemId}.pdf"  var="conv_cmd_url" />
+      <spring:url value="/etatcreditses/printfacture/${itemId}.pdf"  var="etat_gbl_url" />
+      <spring:url value="/etatcreditses/${itemId}/annuler"  var="etat_annuler_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
       <spring:url value="/resources/images/print.png"  var="print" />
       <spring:url value="/resources/images/cloturer.png"  var="close" />
@@ -54,11 +52,11 @@ function restoreCmd(){
    
   
               <span   ><a href="${ conv_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer l'Etat" title="Imprimer L'etat" /></a></span>
-                   <span   ><a href="${ etat_gbl_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer la Facture Globale" title="Imprimer La facture globale" /></a></span>
+               <span   ><a href="${ etat_gbl_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer la Facture Globale" title="Imprimer La facture globale" /></a></span>
      
       <c:if test="${not etatcredits.solder}">
-   
      <span ><INPUT id="pay" class="submits"  type="button" value="Encaisser" title="Encaisser" /> <INPUT id="payd" class="submits" style="display: none;"  type="button" value="Annuler L'encaissement" title="Annuller L'encaissement" /></span>
+     <span ><INPUT id="payc" class="submits"  type="button" value="Envoyer a la caisse" title="Envoyer a la caisse" /> </span>
       </c:if>
         <c:if test="${not etatcredits.encaisser}">
      <span > <a style="text-decoration: none;" href="${etat_annuler_url }"><INPUT id="pay" class="submits"  type="button" value="Annuler L'etat" title="Annuler Etat" /></a></span>

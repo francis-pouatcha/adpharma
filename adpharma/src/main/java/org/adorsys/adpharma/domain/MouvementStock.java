@@ -100,17 +100,20 @@ public class MouvementStock extends AdPharmaBaseEntity {
         dateCreation = new Date();
     }
 
-    @PostPersist
+	@PostPersist
     public void postPersist() {
         mvtNumber = NumberGenerator.getNumber("MVT-", getId(), 4);
     }
 
-    public static List<MouvementStock> search(TypeMouvement typeMouvement, String cipM, Date minDate, Date maxDate, String designation) {
+    public static List<MouvementStock> search(TypeMouvement typeMouvement, String cipM, String cip, Date minDate, Date maxDate, String designation) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
         minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
         maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
         if (StringUtils.isNotBlank(cipM)) {
             searchQuery.append(" AND o.cipM = :cipM ");
+        }
+        if (StringUtils.isNotBlank(cip)) {
+            searchQuery.append(" AND o.cip = :cip ");
         }
         if (!typeMouvement.equals(TypeMouvement.ALL)) {
             searchQuery.append(" AND o.typeMouvement = :typeMouvement ");
@@ -128,6 +131,9 @@ public class MouvementStock extends AdPharmaBaseEntity {
         }
         if (StringUtils.isNotBlank(cipM)) {
             q.setParameter("cipM", cipM);
+        }
+        if (StringUtils.isNotBlank(cip)) {
+            q.setParameter("cip", cip);
         }
         q.setParameter("minDateCreation", minDate);
         q.setParameter("maxDateCreation", maxDate);
@@ -159,10 +165,18 @@ public class MouvementStock extends AdPharmaBaseEntity {
         return entityManager().createQuery("SELECT o FROM MouvementStock o ORDER BY o.id DESC", MouvementStock.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
-    public static List<Object[]> getEtatVente(Date debut, Date fin) {
+    public static List<Object[]> getEtatVente(String cip , Date debut, Date fin) {
         if (debut == null || fin == null) throw new IllegalArgumentException("The debut or fin  arguments are required");
         EntityManager em = MouvementStock.entityManager();
-        Query q = em.createQuery("SELECT  o.designation ,SUM(o.qteDeplace)  ,SUM(o.pAchatTotal), SUM(o.pVenteTotal), SUM(o.remiseTotal)  FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement   GROUP BY o.designation  ORDER BY SUM(o.qteDeplace) DESC ");
+        StringBuilder searchQuery = new StringBuilder("SELECT  o.designation ,SUM(o.qteDeplace)  ,SUM(o.pAchatTotal), SUM(o.pVenteTotal), SUM(o.remiseTotal) ,o.cip  FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement  ");
+        if (StringUtils.isNotBlank(cip)) {
+            searchQuery.append(" AND o.cip = :cip  ");
+        }
+        searchQuery.append(" GROUP BY o.designation  ORDER BY SUM(o.qteDeplace) DESC ");
+        Query q = em.createQuery(searchQuery.toString());
+        if (StringUtils.isNotBlank(cip)) {
+        	 q.setParameter("cip", cip);
+        }
         q.setParameter("debut", debut);
         q.setParameter("fin", fin);
         q.setParameter("typeMouvement", TypeMouvement.VENTE);

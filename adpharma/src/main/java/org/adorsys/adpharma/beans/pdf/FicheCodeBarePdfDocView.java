@@ -120,7 +120,7 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 			PdfPCell textcell = new PdfPCell(cellBorderlessStyle);
 			imgCell.setBorder(0);
 			imgCell.setPaddingBottom(0);
-			imgCell.setPaddingTop(0);
+			imgCell.setPaddingTop(0.48f);
 			imgCell.setPaddingLeft(10);
 			imgCell.setPaddingRight(10);
 			textcell.setBorder(0);
@@ -152,7 +152,7 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
 		document.setPageSize(PageSize.A4);
-		document.setMargins(0,0, 5, 0);
+		document.setMargins(0,0,0, 0);
 		super.buildPdfMetadata(model, document, request);
 	}
 

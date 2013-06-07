@@ -32,7 +32,7 @@
      
    <script type="text/javascript">
     $(function(){
-    	$("#search").keypress( function(evt) { 
+    $("#search").keypress( function(evt) { 
     		if(evt.keyCode==13){
 	    		var val = this.value;
 	    		$("#myDiv").load("${search_url}?name="+val+" #myDiv");

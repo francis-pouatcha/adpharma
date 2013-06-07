@@ -113,14 +113,14 @@ public class FicheCodeBare23 extends   AbstractPdfView {
 		for (int i = 0; i < quantieEnStock ; i++) {
 			Barcode128 code128 = new Barcode128();
 			code128.setCodeType(code128.CODE128);
-			code128.setBarHeight(26);
+			code128.setBarHeight(28);
 			code128.setCode(ligneApprovisionement.getCipMaison());
 			Image imageEAN = code128.createImageWithBarcode(cb, null, null);
 			PdfPCell imgCell = new PdfPCell(cellBorderlessStyle);
 			PdfPCell textcell = new PdfPCell(cellBorderlessStyle);
 			imgCell.setBorder(0);
 			imgCell.setPaddingBottom(0);
-			imgCell.setPaddingTop(0);
+			imgCell.setPaddingTop(0.4f);
 			imgCell.setPaddingLeft(10);
 			imgCell.setPaddingRight(10);
 			textcell.setBorder(0);
@@ -152,7 +152,7 @@ public class FicheCodeBare23 extends   AbstractPdfView {
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
 		document.setPageSize(PageSize.A4);
-		document.setMargins(0,0, 5, 0);
+		document.setMargins(0,0, 2, 0);
 		super.buildPdfMetadata(model, document, request);
 	}
 	

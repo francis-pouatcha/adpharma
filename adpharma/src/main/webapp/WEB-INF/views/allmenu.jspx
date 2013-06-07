@@ -279,6 +279,7 @@ if(Check == false){
 			<spring:url value="/caisses/fermerCaisse" var="delete_caisse_url" />
 			<spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url" />
 			<spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url" />
+			<spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="cai_encdette_url" />
 			<spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url" />
 			<spring:url value="/caisses?form" var="cai_de_url" />
 			<spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url" />
@@ -302,13 +303,15 @@ if(Check == false){
 			<spring:message code="cashregister_cashregister_close" var="cashregister_close"/>
 						<li><a href="${delete_caisse_url}" onclick="return  fermer();">${cashregister_close }</a></li>
 			<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
-						<li><a href="${cai_enc_url}">${cashregister_collect }</a></li>
+						<li><a href="${cai_enc_url}">${cashregister_collect } Facture</a></li>
+						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_DETTE">
+							<li><a href="${cai_encdette_url}">Encaisser Paiement dette</a></li>
+							</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_CONTROLLER">
 			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
 							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
 			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
 							<li><a href="${etat_caisse_url}">${cashregisters_status }</a></li>
-
 
 							<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
 
@@ -433,7 +436,52 @@ if(Check == false){
         				</ul>
         	</li>
    			 </security:authorize>
-   		  
+   		   
+    <!-- menu etats -->
+    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
+    	<spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
+    	<spring:url value="/etats/print/listingRayon.pdf" var="list_rayon_url"/>
+    	<spring:url value="/etats/print/listingRelationDecomposition.pdf" var="list_relation_url"/>
+    	<spring:url value="/etats/print/listingClient.pdf" var="list_clt_url"/>
+    	<spring:url value="/etats/print/listingRupture.pdf" var="list_rup_url"/>
+    	<spring:url value="/etats/print/etatJournalierCaisse.pdf" var="cash_journalier_url"/>
+    	<spring:url value="/etats/print/etatValorisationStock.pdf" var="et_valeur_stock"/>
+    	<spring:url value="/etats/print/etatJournalierVente.pdf" var="et_jour_vente"/>
+    	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
+    	<spring:url value="/etats/sortieProduitForm" var="et_sortie_produit"/>
+    	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
+    	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
+    	<spring:message code="reports_reports_menu" var="reports_menu"/>
+		                                  <li><a href="#">${reports_menu } </a>
+		        							<ul>
+		        								
+    	<spring:message code="reports_listing_shelves" var="listing_shelves"/>
+    	<spring:message code="reports_client_listing" var="client_listing"/>
+		        								<li><a href="${list_rayon_url}">${listing_shelves }</a></li>
+		        								<li><a href="${list_clt_url}">${client_listing }</a></li>
+    	<spring:message code="reports_decomposition_relation_list" var="decomposition_relation_list"/>
+		        								<li><a href="${list_relation_url}">${decomposition_relation_list }</a></li>
+    	<spring:message code="reports_stock_valorisation_report" var="stock_valorisation_report"/>
+		        								<li><a href="${et_valeur_stock}">${stock_valorisation_report }</a></li>
+    	<spring:message code="reports_daily_debts_report" var="daily_debts_report"/>
+		        								<li><a href="${et_jour_dette}">${daily_debts_report }</a></li>
+    	<spring:message code="reports_daily_cashregister_debts_report" var="daily_cashregister_debts_report"/>
+		        								<li><a href="${cash_journalier_url}">${daily_cashregister_debts_report }</a></li>
+    	<spring:message code="reports_daily_sales_report" var="daily_sales_report"/>
+		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
+    	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
+		        								<li><a id="et_perisable" href="#">${expireable_product_report } </a></li>
+		<spring:message code="reports_sortie_product_report" var="sortie_product_report"/>
+		        								<li><a  href="${et_sortie_produit}">${sortie_product_report} </a></li>
+    	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
+		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
+    	<spring:message code="reports_reclamations_reports" var="reclamations_reports"/>
+		        								<li><a href="${list_reclam_url}">${reclamations_reports } </a></li>
+    	<spring:message code="reports_other_reports" var="other_reports"/>	
+		        								<li><a href="${autre_etats}">${other_reports }</a></li>	
+		        							</ul>
+		        						</li>
+      </security:authorize>
       <!--  menu Utilisateurs -->
     
             <spring:url value="/pharmausers?form" var="usr_cree_url"/>
@@ -746,52 +794,7 @@ if(Check == false){
 		        			 </li>
     </security:authorize>
     
-    
-    <!-- menu etats -->
-    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
-    	<spring:url value="/etats/print/listingCatalogue.pdf" var="list_cat_url"/>
-    	<spring:url value="/etats/print/listingRayon.pdf" var="list_rayon_url"/>
-    	<spring:url value="/etats/print/listingRelationDecomposition.pdf" var="list_relation_url"/>
-    	<spring:url value="/etats/print/listingClient.pdf" var="list_clt_url"/>
-    	<spring:url value="/etats/print/listingRupture.pdf" var="list_rup_url"/>
-    	<spring:url value="/etats/print/etatJournalierCaisse.pdf" var="cash_journalier_url"/>
-    	<spring:url value="/etats/print/etatValorisationStock.pdf" var="et_valeur_stock"/>
-    	<spring:url value="/etats/print/etatJournalierVente.pdf" var="et_jour_vente"/>
-    	<spring:url value="/etats/print/etatJournalierDettes.pdf" var="et_jour_dette"/>
-    	<spring:url value="/etats/sortieProduitForm" var="et_sortie_produit"/>
-    	<spring:url value="/etats/docsmanagerview?form" var="autre_etats"/>
-    	<spring:url value="/approvisionementprocess/reclamations?form" var="list_reclam_url" />
-    	<spring:message code="reports_reports_menu" var="reports_menu"/>
-		                                  <li><a href="#">${reports_menu } </a>
-		        							<ul>
-		        								
-    	<spring:message code="reports_listing_shelves" var="listing_shelves"/>
-    	<spring:message code="reports_client_listing" var="client_listing"/>
-		        								<li><a href="${list_rayon_url}">${listing_shelves }</a></li>
-		        								<li><a href="${list_clt_url}">${client_listing }</a></li>
-    	<spring:message code="reports_decomposition_relation_list" var="decomposition_relation_list"/>
-		        								<li><a href="${list_relation_url}">${decomposition_relation_list }</a></li>
-    	<spring:message code="reports_stock_valorisation_report" var="stock_valorisation_report"/>
-		        								<li><a href="${et_valeur_stock}">${stock_valorisation_report }</a></li>
-    	<spring:message code="reports_daily_debts_report" var="daily_debts_report"/>
-		        								<li><a href="${et_jour_dette}">${daily_debts_report }</a></li>
-    	<spring:message code="reports_daily_cashregister_debts_report" var="daily_cashregister_debts_report"/>
-		        								<li><a href="${cash_journalier_url}">${daily_cashregister_debts_report }</a></li>
-    	<spring:message code="reports_daily_sales_report" var="daily_sales_report"/>
-		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
-    	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
-		        								<li><a id="et_perisable" href="#">${expireable_product_report } </a></li>
-		<spring:message code="reports_sortie_product_report" var="sortie_product_report"/>
-		        								<li><a  href="${et_sortie_produit}">${sortie_product_report} </a></li>
-    	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
-		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
-    	<spring:message code="reports_reclamations_reports" var="reclamations_reports"/>
-		        								<li><a href="${list_reclam_url}">${reclamations_reports } </a></li>
-    	<spring:message code="reports_other_reports" var="other_reports"/>	
-		        								<li><a href="${autre_etats}">${other_reports }</a></li>	
-		        							</ul>
-		        						</li>
-      </security:authorize>
+   
       
       <!-- Changing theme -->
       <security:authorize access="isAuthenticated()">

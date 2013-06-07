@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.adorsys.adpharma.services.InventoryService;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.RandomStringUtils;
@@ -263,6 +264,8 @@ public class Produit extends AdPharmaBaseEntity {
 	
 	@PostUpdate
 	public void preUpdateProduct(){
+		//quantiteEnStock  = InventoryService.getStockIncludeNegativeQte(this);
+		
 		if(quantiteEnStock.intValue()==0){
 			dateDerniereRupture= new Date();
 		}

@@ -11,14 +11,14 @@
       <spring:url value="/approvisionementprocess/${itemId}/cloturer"  var="close_url" />
       <spring:url value="/approvisionementprocess/${itemId}/printFicheAp/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheAp_url" />
       <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url" />
-          <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare27/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url27" />
-         
-           <spring:url value="/approvisionements/sortieProduit/${itemId}"  var="prd_out_url" />
+      <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare27/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url27" />
+      <spring:url value="/approvisionementprocess/${itemId}/printFicheCodeBare23/${approvisionement.approvisionementNumber}.pdf"  var="print_ficheCB_url23" />
+      <spring:url value="/approvisionements/sortieProduit/${itemId}"  var="prd_out_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
       <spring:url value="/resources/images/print.png"  var="print" />
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
-            <spring:url value="/approvisionementprocess/${itemId}/exporto/${approvisionement.approvisionementNumber}.xls"  var="print_xls_url" />
+      <spring:url value="/approvisionementprocess/${itemId}/exporto/${approvisionement.approvisionementNumber}.xls"  var="print_xls_url" />
       
       <c:set value="CLOS" var="etat" />
       
@@ -39,15 +39,15 @@ if(Check == false){
         <span><a href="${ print_xls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche EXCEL" title="Imprimer la fiche d approvisionnement au format excel" /></a></span>
         <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x25)" title="Imprimer la fiche de code bare" /></a></span>
             <span><a href="${ print_ficheCB_url27}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x27)" title="Imprimer la fiche de code bare" /></a></span>
+                         <span><a href="${ print_ficheCB_url23}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x24)" title="Imprimer la fiche de code bare" /></a></span>
+             
                <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
      </security:authorize>
       </c:when>
       <c:otherwise>
       <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closeApp();"><INPUT class="submits" type="button" value="CLOTURER" title="Cloturer l'approvisionnement" /></a></span>
-    
       </c:otherwise>
    </c:choose>
-   <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
    <c:if test="${not approvisionement.cloturer}">
         <spring:url value="/approvisionementprocess/${itemId}/edit"  var="edit_url" />
         <span>
@@ -56,15 +56,14 @@ if(Check == false){
         </span>
     
    </c:if>
-   
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 	   <c:if test="${ approvisionement.cloturer and sessionBean.configuration.editCloseSupply}">
-	            <spring:url value="/approvisionementprocess/${itemId}/specialEdit"  var="edit_url" />
-			    <span>  
-			        <a href="${ edit_url}" style="text-decoration: none;">
+	          <spring:url value="/approvisionementprocess/${itemId}/specialEdit"  var="edit_url" />
+			  <span>  
+			      <a href="${ edit_url}" style="text-decoration: none;">
 			          <INPUT class="submits" type="button" value="Modifier detail" title="Modifier le Contenu" />
-			        </a>
-			    </span>
+			      </a>
+			  </span>
 	   </c:if>
    </security:authorize>
    
@@ -77,14 +76,12 @@ if(Check == false){
 	        </a>
 	     </span>
    </c:if>
-   
    <c:if test="${not empty appMessage}">
 		<hr style="margin-top: 2px;margin-bottom: -12px"/>
 		<center>
 				<p class="appMessage" style="color: green; margin-bottom: -18px;font-size: 16px;font-weight: bold;">${appMessage}</p>
 		</center>
    </c:if>
-   
    <c:if test="${not empty appMessages}">
 		<hr style="margin-top: 2px;margin-bottom: -12px"/>
 		<center>

@@ -76,6 +76,9 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	@Value("false")
 	private Boolean consommerAvoir;
 	
+	@Value("false")
+	private Boolean sendToCash;
+	
 	private Boolean addAllUnbilledInvoices = Boolean.FALSE;
 	
 	
@@ -208,7 +211,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	}
 
 	public static List<EtatCredits> findEtatCreditsEntries(int firstResult, int maxResults) {
-		return entityManager().createQuery("SELECT o FROM EtatCredits o ORDER BY o.dateEdition DESC", EtatCredits.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+		return entityManager().createQuery("SELECT o FROM EtatCredits o ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
 	public void consommerAvoir() {
 		List<AvoirClient> resultList = AvoirClient.search(null,null, null, getClient().getClientNumber(), null, Boolean.FALSE, Boolean.FALSE).getResultList();
@@ -332,10 +335,20 @@ public class EtatCredits extends AdPharmaBaseEntity {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
         nom =nom + "%";
         EntityManager em = EtatCredits.entityManager();
-        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.client.nom ASC", EtatCredits.class);
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
         q.setParameter("nom", nom);
         return q;
     }
+	
+	public static TypedQuery<EtatCredits> findEtatCreditNotSolderAndSendToCash() {
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE  o.solder :=solder AND o.sendToCash := sended ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
+        q.setParameter("solder", Boolean.FALSE);
+        q.setParameter("sended", Boolean.TRUE);
+        return q;
+    }
+	
+
 	
 	public Long getClientId() {
 		return clientId;
@@ -360,10 +373,18 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	public void setSolder(Boolean solder) {
 		this.solder = solder;
 	}
+    
+	public Boolean getSendToCash() {
+		return sendToCash;
+	}
+
+	public void setSendToCash(Boolean sendToCash) {
+		this.sendToCash = sendToCash;
+	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy HH:mm"));
+		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy hh:mm"));
 		return sb.toString();
 	}
 }

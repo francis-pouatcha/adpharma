@@ -3,6 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:url value="/produits/selectProduct/${produit.id}" var="next_prd_url"/>
+    <spring:url value="/produits/validatedStockToCipm/${produit.id}" var="stock_validate_prd_url"/>
+    
     <div>
         <form:update id="fu_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits" versionField="Version" z="THQA0hFhMa/u8aupR1mb/uF/XEg=">
             <c:if test="${not empty apMessage}">
@@ -21,6 +23,9 @@
                         <security:authorize ifAnyGranted="ROLE_FUSIONNER_CIP,ROLE_SITE_MANAGER">
                             <span>
                                 <INPUT class="submits" id="fusion_search_prd" title="Rechercher le produit a fusionne " type="button" value="Effectuer une Fusion"/>
+                              <a href="${stock_validate_prd_url}" style="text-decoration: none;">
+                                <INPUT class="submits" id="stock_validate_prd" title="corriger le stock par rapport aux cipm !" type="button" value="corriger le stock"/>
+                              </a>
                             </span>
                         </security:authorize>
                     </td>
@@ -37,7 +42,7 @@
                         <LEGEND> Infos Emplacement</LEGEND>
                         <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
                         <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
-                        <field:display field="quantiteEnStock" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit }" z="user-managed"/>
+                        <field:display field="quantiteEnStock"  hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit }" z="user-managed"/>
                     </td>
                     <td valign="top">
                         <LEGEND> Infos Stock</LEGEND>

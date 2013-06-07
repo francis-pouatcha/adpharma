@@ -24,9 +24,8 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-@Component("ficheCodeBare27")
-public class FicheCodeBare27 extends   AbstractPdfView{
-
+@Component("ficheCodeBare24")
+public class FicheCodeBare24 extends   AbstractPdfView {
 
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,
@@ -58,7 +57,7 @@ public class FicheCodeBare27 extends   AbstractPdfView{
 		PdfPTable adressTable = new PdfPTable(8);
 		adressTable.setWidthPercentage(100);
 		adressTable.setHeaderRows(0);
-		Font boddyStyle = new Font(Font.BOLD,5);
+		Font boddyStyle = new Font(Font.BOLD,10);
 		
 		boddyStyle.setStyle("bold");
 		PdfPCell emptyCell = new PdfPCell(cellBorderlessStyle);
@@ -114,14 +113,14 @@ public class FicheCodeBare27 extends   AbstractPdfView{
 		for (int i = 0; i < quantieEnStock ; i++) {
 			Barcode128 code128 = new Barcode128();
 			code128.setCodeType(code128.CODE128);
-			code128.setBarHeight(20);
+			code128.setBarHeight(26);
 			code128.setCode(ligneApprovisionement.getCipMaison());
 			Image imageEAN = code128.createImageWithBarcode(cb, null, null);
 			PdfPCell imgCell = new PdfPCell(cellBorderlessStyle);
 			PdfPCell textcell = new PdfPCell(cellBorderlessStyle);
 			imgCell.setBorder(0);
 			imgCell.setPaddingBottom(0);
-			imgCell.setPaddingTop(0.49f);
+			imgCell.setPaddingTop(0.6f);
 			imgCell.setPaddingLeft(10);
 			imgCell.setPaddingRight(10);
 			textcell.setBorder(0);
@@ -140,7 +139,7 @@ public class FicheCodeBare27 extends   AbstractPdfView{
 			imgTable.addCell(imgCell);
 			imgTable.addCell(textcell);
 			PdfPCell codeBareCell = new PdfPCell(imgTable);
-			codeBareCell.setFixedHeight(35f);
+			codeBareCell.setFixedHeight(60f);
 			table.addCell(imgTable);
 
 		}
@@ -153,8 +152,8 @@ public class FicheCodeBare27 extends   AbstractPdfView{
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
 		document.setPageSize(PageSize.A4);
-		document.setMargins(0,0, 0, 0);
+		document.setMargins(0,0,0, 0);
 		super.buildPdfMetadata(model, document, request);
 	}
-
+	
 }

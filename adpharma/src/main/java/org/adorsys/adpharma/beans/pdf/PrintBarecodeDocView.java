@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.adorsys.adpharma.beans.process.PrintBareCodeBean;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
-import org.adorsys.adpharma.domain.Site;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -56,10 +55,8 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 		// addresse de la pharmacie
 		float[] adColumnsWith = {.5f, .5f,.5f  ,.5f  ,.5f ,.5f ,.5f,.5f};
 		float[] imgColumnsWith = {.5f ,  .2f};
-		Site site = Site.findSite(new Long(1));
-		int nbline = 8 ;
-		if(site!=null) nbline = site.getBareCodePerLine()!=null ?site.getBareCodePerLine().intValue():8;
-		PdfPTable adressTable = new PdfPTable(nbline);
+		
+		PdfPTable adressTable = new PdfPTable(8);
 		adressTable.setWidthPercentage(100);
 		adressTable.setHeaderRows(0);
 		Font boddyStyle = new Font(Font.BOLD,10);
@@ -154,7 +151,7 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 	
 	public void printBareCode(LigneApprovisionement ligneApprovisionement ,int quantieEnStock,PdfPTable table,PdfContentByte cb){
 	 	   String filiale = ligneApprovisionement.getProduit().getFiliale()!=null?ligneApprovisionement.getProduit().getFiliale().getId().toString():"";
-		Font boddyStyles = new Font(Font.TIMES_ROMAN,6);
+		Font boddyStyles = new Font(Font.BOLD,4);
 		boddyStyles.setStyle("bold");
 		PdfPCell cellStyle = new PdfPCell();
 		cellStyle.setPadding(.1f);
@@ -163,34 +160,34 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 		for (int i = 0; i < quantieEnStock ; i++) {
 			Barcode128 code128 = new Barcode128();
 			code128.setCodeType(code128.CODE128);
-			code128.setBarHeight(24);
+			code128.setBarHeight(26);
 			code128.setCode(ligneApprovisionement.getCipMaison());
-			
 			Image imageEAN = code128.createImageWithBarcode(cb, null, null);
 			PdfPCell imgCell = new PdfPCell(cellBorderlessStyle);
 			PdfPCell textcell = new PdfPCell(cellBorderlessStyle);
 			imgCell.setBorder(0);
-			imgCell.setPadding(3);
+			imgCell.setPaddingBottom(0);
+			imgCell.setPaddingTop(0.5f);
+			imgCell.setPaddingLeft(10);
+			imgCell.setPaddingRight(10);
 			textcell.setBorder(0);
 			imgCell.setImage(imageEAN);
 			imgCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			String designation = ligneApprovisionement.getDesignation();
 			int length = designation.length();
-			if (length >19) {
-				designation = designation.substring(0, 18);
+			if (length >20) {
+				designation = designation.substring(0, 19);
 			}
 			
-			textcell.setPhrase(new Phrase(new Chunk(designation.toUpperCase()+"\n" +
-					filiale+ligneApprovisionement.getApprovisionement().getFounisseur().displayCodeName()+ligneApprovisionement.getPrixVenteUnitaire().longValueExact()+" FCFA", boddyStyles)));
+			textcell.setPhrase(new Phrase(new Chunk(designation.toUpperCase()+"\n" +filiale+ligneApprovisionement.getApprovisionement().getFounisseur().displayCodeName()+ligneApprovisionement.getPrixVenteUnitaire().longValueExact()+" FCFA", boddyStyles)));
 			textcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			PdfPTable imgTable = new PdfPTable(1);
 			imgTable.setWidthPercentage(100);
 			imgTable.addCell(imgCell);
 			imgTable.addCell(textcell);
 			PdfPCell codeBareCell = new PdfPCell(imgTable);
-			codeBareCell.setFixedHeight(27f);
-			codeBareCell.setNoWrap(true);
-			table.addCell(codeBareCell);
+			codeBareCell.setFixedHeight(60f);
+			table.addCell(imgTable);
 
 		}
 
@@ -201,8 +198,8 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
-		document.setPageSize(PageSize.LETTER);
-		document.setMargins(1,1, 2, 2);
+		document.setPageSize(PageSize.A4);
+		document.setMargins(0,0, 2, 0);
 		super.buildPdfMetadata(model, document, request);
 	}
 

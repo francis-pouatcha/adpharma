@@ -21,6 +21,7 @@ import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.ProductItemLigne
 import org.adorsys.adpharma.beans.importExport.ubipharm.wrapper.UbipharmCommandStringSequence;
 import org.adorsys.adpharma.domain.CipType;
 import org.adorsys.adpharma.domain.CommandeFournisseur;
+import org.adorsys.adpharma.domain.EtatCredits;
 import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -135,6 +136,12 @@ public class UbipharmTests {
 	public void testImport() throws Exception{
 		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
 		csvImportExportUtil.readCsvFile("/tools/ubipharm/receptions/CF-0014-reponse-retour-1362146340824-1");
+	}
+	
+	@Test
+	public void testFindEtatCredit(){
+	 List<EtatCredits> credits =	EtatCredits.findEtatCreditNotSolderAndSendToCash().getResultList();
+	 System.out.println(credits);
 	}
 
 	@Test

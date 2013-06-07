@@ -69,7 +69,6 @@ public class EtatCreditsController {
 		uiModel.addAttribute("results", EtatCredits.search(etat.getClientName(), etat.getEtatNumber(), etat.getDateEditionMin(), etat.getDateEditionMax(),etat.getSolder(), etat.getAnnuler(), etat.getEncaisser()).getResultList());
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("etatCreditFinder", new EtatCreditFinder());
-
 		return "etatcreditses/search";
 	}
 
@@ -170,14 +169,14 @@ public class EtatCreditsController {
 			Integer page = 1;
 			Integer size = 50;
 			int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("etatcredits", EtatCredits.findEtatCreditsEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            uiModel.addAttribute("etatcreditses", EtatCredits.findEtatCreditsEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) EtatCredits.countEtatCreditses() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
 		}else{
 				List<EtatCredits> list = EtatCredits.findEtatCreditsByNomClientLike(name).setMaxResults(50).getResultList();
-				uiModel.addAttribute("etatcredits", list);
+				uiModel.addAttribute("etatcreditses", list);
 		}
-		return "etatcredits/list";
+		return "etatcreditses/list";
 	}
 
 
