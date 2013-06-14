@@ -279,7 +279,7 @@ if(Check == false){
 			<spring:url value="/caisses/fermerCaisse" var="delete_caisse_url" />
 			<spring:url value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}" var="ap_list_url" />
 			<spring:url value="/paiementprocess/encaisser?form" var="cai_enc_url" />
-			<spring:url value="/etatcreditses?page=1&amp;size=${empty param.size ? 50 : param.size}" var="cai_encdette_url" />
+			<spring:url value="/etatcreditses/getDetteToPay" var="cai_encdette_url" />
 			<spring:url value="/paiements/encaissementGroupe?form" var="groupe_enc_url" />
 			<spring:url value="/caisses?form" var="cai_de_url" />
 			<spring:url value="/caisses?find=ByEtatCaisse&amp;form" var="etat_caisse_url" />

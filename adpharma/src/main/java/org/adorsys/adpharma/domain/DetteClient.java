@@ -40,8 +40,22 @@ public class DetteClient extends AdPharmaBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date dateCreation = new Date();
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private Date endDate ;
+    
+    
 
-    private BigInteger montantInitial = BigInteger.ZERO;
+    public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	private BigInteger montantInitial = BigInteger.ZERO;
 
     private BigInteger avance = BigInteger.ZERO;
 
@@ -236,26 +250,26 @@ public class DetteClient extends AdPharmaBaseEntity {
         return q;
     }
 
-    public static TypedQuery<DetteClient> search(String clientName, String assurer, Date dateCreation, Boolean solder, String factureNo) {
+    public static TypedQuery<DetteClient> search(String clientName, String assurer, Date beginDate , Date endDate ,Boolean solder, String factureNo) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM DetteClient AS o WHERE   o.id IS NOT NULL ");
         if (StringUtils.isNotBlank(factureNo)) {
             factureNo = "FAC-" + StringUtils.removeStart(factureNo, "FAC-");
-            searchQuery.append(" AND o.factureNo = :factureNo ");
+            searchQuery.append(" AND o.factureNo  = :factureNo ");
         }
         if (solder != null) {
             searchQuery.append(" AND o.solder = :solder ");
         }
-        if (dateCreation != null) {
-            searchQuery.append(" AND o.dateCreation >= :dateCreation ");
+        if (beginDate != null) {
+            searchQuery.append(" AND o.dateCreation >= :beginDate ");
+        }
+        if (endDate != null) {
+            searchQuery.append(" AND o.dateCreation <= :endDate ");
         }
         if (StringUtils.isNotBlank(clientName)) {
             clientName =clientName + "%";
             searchQuery.append(" AND  LOWER(o.clientName) LIKE LOWER(:clientName) ");
         }
-        if (StringUtils.isNotBlank(assurer)) {
-            assurer =assurer + "%";
-            searchQuery.append(" AND o.factureNo IN (SELECT f.factureNumber FROM Facture AS f WHERE LOWER(f.commande.client.nomComplet) LIKE LOWER(:assurer)  AND f.dateCreation >= :dateCreation ) ");
-        }
+        
         TypedQuery<DetteClient> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id DESC").toString(), DetteClient.class);
         if (StringUtils.isNotBlank(factureNo)) {
             q.setParameter("factureNo", factureNo);
@@ -266,12 +280,14 @@ public class DetteClient extends AdPharmaBaseEntity {
         if (StringUtils.isNotBlank(clientName)) {
             q.setParameter("clientName", clientName);
         }
-        if (StringUtils.isNotBlank(assurer)) {
-            q.setParameter("assurer", assurer);
+       
+        if (beginDate != null) {
+        	 q.setParameter("beginDate", beginDate);
         }
-        if (dateCreation != null) {
-        	 q.setParameter("dateCreation", dateCreation);
-        }
+        
+        if (endDate != null) {
+       	 q.setParameter("endDate", endDate);
+       }
        
         return q;
     }

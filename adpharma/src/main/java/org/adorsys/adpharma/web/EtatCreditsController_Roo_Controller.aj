@@ -41,6 +41,7 @@ privileged aspect EtatCreditsController_Roo_Controller {
             uiModel.addAttribute("etatcreditses", EtatCredits.findAllEtatCreditses());
         }
         addDateTimeFormatPatterns(uiModel);
+        uiModel.addAttribute("search",true);
         return "etatcreditses/list";
     }
     

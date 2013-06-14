@@ -6,14 +6,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.beans.process.EtatCreditFinder;
+import org.adorsys.adpharma.beans.process.PaiementProcess;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
+import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
+import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Paiement;
+import org.adorsys.adpharma.security.SecurityUtil;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -130,11 +134,63 @@ public class EtatCreditsController {
 		return initShowView(uiModel, etatCredits);
 	}
 
-	//@Transactional
+	@RequestMapping(value = "/sendToCash/{id}", method = RequestMethod.GET)
+	public String sendToCash(@PathVariable("id") Long id, Model uiModel) {
+		addDateTimeFormatPatterns(uiModel);
+		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
+		if(etatCredits.getSolder()){
+			uiModel.addAttribute("appMessage", "Impossible d'envoyer a la caisse deja solde !") ;
+		}else {
+			etatCredits.setSendToCash(Boolean.TRUE);
+			etatCredits = (EtatCredits) etatCredits.merge();
+			uiModel.addAttribute("appMessage", "Facture Envoyer avec Success !") ;
+		}
+		return initShowView(uiModel, etatCredits);
+	}
+
+	@RequestMapping(value = "/removeToCash/{id}", method = RequestMethod.GET)
+	public String removeToCash(@PathVariable("id") Long id, Model uiModel) {
+		addDateTimeFormatPatterns(uiModel);
+		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
+		etatCredits.setSendToCash(Boolean.FALSE);
+		EtatCredits merge = (EtatCredits) etatCredits.merge();
+		uiModel.addAttribute("appMessage", "Facture Retire de la caisse avec Success !") ;
+		return initShowView(uiModel, merge);
+	}
+
+	@RequestMapping(value = "/getDetteToPay", method = RequestMethod.GET)
+	public String getDetteToPay(Model uiModel) {
+		uiModel.addAttribute("search",false);
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			return "caisses/infos";
+		}else {
+			List<EtatCredits> list = EtatCredits.findEtatCreditsSendToCash().getResultList();
+			uiModel.addAttribute("etatcreditses", list);
+			return "etatcreditses/list";
+		}
+	}
+
+	@Transactional
 	@RequestMapping(value = "/encaisser/{id}", method = RequestMethod.POST)
 	public String encaisser( Paiement paiement,@PathVariable("id") Long id, Model uiModel ,HttpServletRequest httpServletRequest) {
 		addDateTimeFormatPatterns(uiModel);
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
+		Configuration configuration = Configuration.findConfiguration(new Long(1)) ;
+		if(configuration.getOnlyCashReceiveCreditPay()){
+			Caisse myOpenCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+			if(myOpenCaisse==null){
+				uiModel.addAttribute("apMessage","Impossible d'encaisse aucune Caisse Ouverte!" );
+			}else {
+				etatCredits.encaisser(paiement, myOpenCaisse);
+				myOpenCaisse.merge();
+				etatCredits.setSendToCash(Boolean.FALSE);
+				etatCredits.merge();
+				uiModel.addAttribute("apMessage","Encaissement effectuer avec Success !" );
+			}
+			return  initShowView(uiModel, etatCredits);
+		}
 		if (etatCredits.getSolder()) {
 			uiModel.addAttribute("apMessage","Impossible d'encaisse Etat deja Solde !" );
 			return  initShowView(uiModel, etatCredits);
@@ -146,7 +202,8 @@ public class EtatCreditsController {
 		}
 		etatCredits.encaisser(paiement);
 		etatCredits.merge();
-		return "redirect:/etatcreditses/" + encodeUrlPathSegment(etatCredits.getId().toString(), httpServletRequest);
+		uiModel.addAttribute("apMessage","Encaissement effectuer avec Success !" );
+		return   initShowView(uiModel, etatCredits);
 
 	}
 
@@ -161,20 +218,20 @@ public class EtatCreditsController {
 		return "etatcreditses/show";
 	} 
 
-	
+
 	@RequestMapping(value = "/searchCredit", method = RequestMethod.GET)
 	public String search(@RequestParam("name") String  name,  Model uiModel) {
-		
+		uiModel.addAttribute("search",true);
 		if("".equals(name)){
 			Integer page = 1;
 			Integer size = 50;
 			int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("etatcreditses", EtatCredits.findEtatCreditsEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) EtatCredits.countEtatCreditses() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			uiModel.addAttribute("etatcreditses", EtatCredits.findEtatCreditsEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+			float nrOfPages = (float) EtatCredits.countEtatCreditses() / sizeNo;
+			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
 		}else{
-				List<EtatCredits> list = EtatCredits.findEtatCreditsByNomClientLike(name).setMaxResults(50).getResultList();
-				uiModel.addAttribute("etatcreditses", list);
+			List<EtatCredits> list = EtatCredits.findEtatCreditsByNomClientLike(name).setMaxResults(50).getResultList();
+			uiModel.addAttribute("etatcreditses", list);
 		}
 		return "etatcreditses/list";
 	}

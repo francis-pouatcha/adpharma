@@ -46,9 +46,12 @@ public class DetteClientController {
        return  DetteClient.toJsonArray(detteclients);
 	 }
 
-		@RequestMapping(value = "/BySearch", method = RequestMethod.GET)
+		@RequestMapping(value = "/BySearch", method = RequestMethod.POST)
 		public String Search(DetteClient detteClient , Model uiModel) {
-			uiModel.addAttribute("results", DetteClient.search(detteClient.getClientName(),detteClient.getAssurer(), detteClient.getDateCreation(), detteClient.getSolder(), detteClient.getFactureNo()).getResultList());
+			List<DetteClient> resultList = DetteClient.search(detteClient.getClientName(),null, detteClient.getDateCreation() ,detteClient.getEndDate(),null, detteClient.getFactureNo()).getResultList();
+			uiModel.addAttribute("results",resultList );
+			System.out.println(resultList);
+			System.out.println(detteClient.getFactureNo());
 			addDateTimeFormatPatterns(uiModel);
 			uiModel.addAttribute("detteClient", detteClient);
 			return "detteclients/search";

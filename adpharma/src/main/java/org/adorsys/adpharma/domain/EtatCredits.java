@@ -166,6 +166,42 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 
 	}
+	
+	public void encaisser(Paiement paiement,Caisse caisse){
+		if(paiement==null || caisse ==null) throw new IllegalArgumentException("Paiement and Caisse is required !") ;
+		Facture facture = new Facture();
+		BigDecimal amount = BigDecimal.ZERO;
+		if (paiement.getMontant().intValue() <= paiement.getSommeRecue().intValue()) {
+			amount = paiement.getMontant();
+		}else {
+			amount = paiement.getSommeRecue();
+		}
+		avancer(amount);
+		caisse.updateCashDettel(amount);
+		listeDettes = DetteClient.search(null, this, null, null,null,null).getResultList();
+		for (DetteClient dette : listeDettes) {
+			if (!dette.getAnnuler()) {
+				facture =   Facture.findFacturesByFactureNumberEquals(dette.getFactureNo()).getResultList().iterator().next();
+				if (dette.getReste().intValue() <= amount.intValue()) {
+					amount = amount.subtract(BigDecimal.valueOf(dette.getReste().longValue()));
+					dette.avancer(dette.getReste());
+					facture.avancerPaiement(dette.getReste());
+					dette.merge();
+					facture.merge();
+				} else {
+					dette.avancer(amount.toBigInteger());
+					facture.avancerPaiement(amount.toBigInteger());
+					facture.merge();
+					dette.merge();
+					break;
+				}
+			}
+		}
+
+
+	}
+	
+	
 
 
 	public void validate(BindingResult bindingResult) {
@@ -337,6 +373,13 @@ public class EtatCredits extends AdPharmaBaseEntity {
         EntityManager em = EtatCredits.entityManager();
         TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
         q.setParameter("nom", nom);
+        return q;
+    }
+	
+	public static TypedQuery<EtatCredits> findEtatCreditsSendToCash() {
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE o.sendToCash =:sendToCash ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
+        q.setParameter("sendToCash", Boolean.TRUE);
         return q;
     }
 	

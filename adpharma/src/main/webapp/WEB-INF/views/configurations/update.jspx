@@ -14,5 +14,7 @@
         <field:input field="sendFolder" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" label="Repertoire Envoi" z="user-managed"/>
         <field:input field="receptionFolder" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" label="Repertoire De Reception" z="user-managed"/>
         <field:checkbox field="enableLicence" id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" z="uLkgoAWqOZfC0bIWe2C6J1OAdx8="/>
+       <field:checkbox field="onlyCashReceiveCreditPay"  label="Autoriser le Paiement des dettes a la caisse" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder"  z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
+    
     </form:update>
 </div>

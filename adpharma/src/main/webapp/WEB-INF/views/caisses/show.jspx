@@ -28,11 +28,11 @@
                     <field:display field="totalCash" id="s_org_adorsys_adpharma_domain_Caisse_totalCash" object="${caisse}" z="AsKI5HZEji8mzjLcLRCfDHv3XBw="/>
                     <field:display field="totalCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" object="${caisse}" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
                     <field:display field="totalCheque" id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" object="${caisse}" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
-                    <field:display field="totalProformat" id="s_org_adorsys_adpharma_domain_Caisse_totalProformat" object="${caisse}" render="false" z="user-managed"/>
+                    <field:display field="totalCashDette" label="Total Cash Dette" id="s_org_adorsys_adpharma_domain_Caisse_totalProformat" object="${caisse}"  z="user-managed"/>
                     <field:display field="totalCarteCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCarteCredit" object="${caisse}" z="w0dT6k/utjPcrqB+C65tnwsM0yA="/>
                     <field:display field="totalBonClient" id="s_org_adorsys_adpharma_domain_Caisse_totalBonClient" object="${caisse}" z="F2++MQ4grpX3UuLC0Qm9gZpMeMA="/>
                 <field:display field="totalVentePartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalVentePartiel" object="${caisse}" render="false" z="user-managed"/>
-        <field:display field="totalBonCmd" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmd" object="${caisse}" z="oQ8CEYL0Lj6weK3HOycLO48a/s8="/>
+                   <field:display field="totalBonCmd" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmd" object="${caisse}" z="oQ8CEYL0Lj6weK3HOycLO48a/s8="/>
         <field:display field="totalBonCmdPartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" object="${caisse}" z="lAhhyj6dRSRLs+65iLaUvRmqC9M="/>
    
                 </td>
