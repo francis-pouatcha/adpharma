@@ -149,24 +149,24 @@
 									<c:if test="${not empty compositePkField}">
 										<form:hidden id="_${fn:escapeXml(compositePkField)}_id"
 											path="${fn:escapeXml(compositePkField)}" />
-										<script type="text/javascript">
-          <![CDATA[
-            dojo.require("dojox.encoding.base64");
-            function encodePk() {
-              var obj = new Object();
-              dojo.query("input[name^=\"${compositePkField}.\"]").forEach(function(node, index, nodelist){
-                obj[node.name.substring('${compositePkField}'.length + 1)] = node.value;
-              });
-              var json = dojo.toJson(obj);
-              var tokArr = [];
-              for (var i = 0; i < json.length; i++) {
-                tokArr.push(json.charCodeAt(i));
-              }
-              var encoded = dojox.encoding.base64.encode(tokArr);
-              dojo.byId('_${fn:escapeXml(compositePkField)}_id').value = encoded;
-            }
-          ]]>
-          </script>
+							<script type="text/javascript">
+									          <![CDATA[
+									            dojo.require("dojox.encoding.base64");
+									            function encodePk() {
+									              var obj = new Object();
+									              dojo.query("input[name^=\"${compositePkField}.\"]").forEach(function(node, index, nodelist){
+									                obj[node.name.substring('${compositePkField}'.length + 1)] = node.value;
+									              });
+									              var json = dojo.toJson(obj);
+									              var tokArr = [];
+									              for (var i = 0; i < json.length; i++) {
+									                tokArr.push(json.charCodeAt(i));
+									              }
+									              var encoded = dojox.encoding.base64.encode(tokArr);
+									              dojo.byId('_${fn:escapeXml(compositePkField)}_id').value = encoded;
+									            }
+									          ]]>
+                             </script>
 									</c:if>
 									<jsp:doBody />
 								 

@@ -30,6 +30,8 @@ public class DocumentsPath
     public static final String ETAT_DES_SORTIE_RAISON_FILE_PATH = ROOT_DIR+"Etat_des_sortie_raison.jrxml";
     public static final String ETAT_VALORISATION_FILIALE_PATH = ROOT_DIR+"etat_valorisation_filiale.jrxml";
     public static final String ETAT_PRODUIT_SORTIE_FILE_PATH = ROOT_DIR+"etat_sortie_produit.jrxml";
+    public static final String ETAT_MVTS_CIP_FILE_PATH = ROOT_DIR+"mvtstock_cip.jrxml";
+    public static final String ETAT_PERIODIQUE_DEC_GROUPES_FILE_PATH = ROOT_DIR+"etat_decaissements_grpes.jrxml";
 
     
     

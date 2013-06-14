@@ -140,8 +140,8 @@
     
   <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.AccordionContainer");</script>
   <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.AccordionPane");</script>
-  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>
   <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.TabContainer");</script>
+  <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.ContentPane");</script>
   <script language="JavaScript" type="text/javascript">dojo.require("dojo.fx");</script>
     
 </jsp:root>
