@@ -122,7 +122,7 @@ public class EtatCreditsController {
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(etatId);
 		etatCredits.initListeDettes();
 		uiModel.addAttribute("etatCredits", etatCredits);
-		return "factureGlobalePayeur";
+		return "facturePayeur";
 
 	}
 

@@ -568,6 +568,7 @@ public class PaiementProcessController {
 				mouvementStock.setOrigine(DestinationMvt.MAGASIN);
 				mouvementStock.setQteDeplace(ligne.getQuantiteCommande());
 				mouvementStock.setTypeMouvement(TypeMouvement.VENTE);
+				mouvementStock.setRemiseTotal(ligne.getTotalRemise().toBigInteger());
 				mouvementStock.setSite(facture.getSite());
 				mouvementStock.setAgentCreateur(facture.getVendeur().getUserName());
 				LigneApprovisionement ligneApprovisionement = ligne.getProduit();

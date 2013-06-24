@@ -311,7 +311,7 @@ if(Check == false){
 			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
 							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
 			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
-							<li><a href="${etat_caisse_url}">${cashregisters_status }</a></li>
+							<li><a href="${etat_caisse_url}">Etat Periodique des Caisses</a></li>
 
 							<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
 

@@ -107,6 +107,16 @@ public class DetteClient extends AdPharmaBaseEntity {
     public void setAssurer(String assurer) {
         this.assurer = assurer;
     }
+    
+    public BigInteger getPartAssure(){
+    	BigInteger partAssure = BigInteger.ZERO ;
+    	if( sousTotal != null && montantInitial !=null) partAssure = sousTotal.subtract(montantInitial);
+    	return partAssure;
+    }
+    
+    public int getTauxAssure(){
+    	return 100 -taux ;
+    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")

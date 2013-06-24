@@ -19,9 +19,6 @@
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" property="approvisionnementId" z="lTl0Cb9YfEv/r6bqtWXTxxhKr3A="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" property="commercialKey" z="RNAvnZKqwyNJwlj5q41RhZgVG9c="/>
          -->
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" property="exchangeBeanState" z="XTljQjrTTxjAJoVQ9m/vcmoh91Q="/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" property="approvisionnementId" z="lTl0Cb9YfEv/r6bqtWXTxxhKr3A="/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" property="commercialKey" z="RNAvnZKqwyNJwlj5q41RhZgVG9c="/>
         </table:table>
     </page:list1>
 </div>

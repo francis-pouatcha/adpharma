@@ -379,7 +379,7 @@ public class SaleProcessController {
 
 	//@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrementValider",method = RequestMethod.POST)
-	public String emregistrementValider(@PathVariable("cmdId") Long cmdId, @RequestParam("cle") String key , Model uiModel, HttpServletRequest httpServletRequest) {
+	public String enregistrementValider(@PathVariable("cmdId") Long cmdId, @RequestParam("cle") String key , Model uiModel, HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		Caisse caisse = PaiementProcess.getOpenCaisse();
 		ArrayList<RoleName> role = new ArrayList<RoleName>();

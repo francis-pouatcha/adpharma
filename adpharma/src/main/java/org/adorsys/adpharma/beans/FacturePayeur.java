@@ -12,6 +12,7 @@ import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.EtatCredits;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
@@ -27,6 +28,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+@Component("facturePayeur")
 public class FacturePayeur extends   AbstractPdfView {
 
 
@@ -127,7 +129,7 @@ public class FacturePayeur extends   AbstractPdfView {
 		document.add(spaceTable);
 		
 		// la table d'approvisionement
-		float[] colWidths = {5f, 1.5f,1.7f, 1.5f,1.5f, 1.5f};
+		float[] colWidths = {4.5f, 2f,1.7f, 1.5f,1.5f, 1f};
 		PdfPTable table = new PdfPTable(colWidths);
 		table.setWidthPercentage(100);
 		table.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -198,7 +200,7 @@ public class FacturePayeur extends   AbstractPdfView {
 			
 		// taux
 				PdfPCell inPvCell = new PdfPCell(cellBorderless);
-				inPvCell.setPhrase(new Phrase(new Chunk(""+line.getTaux()+"%", boddyStyle)));
+				inPvCell.setPhrase(new Phrase(new Chunk(line.getPartAssure().toString(), boddyStyle)));
 				inPvCell.setPaddingBottom(2);
 				inPvCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(inPvCell);
@@ -206,14 +208,14 @@ public class FacturePayeur extends   AbstractPdfView {
 		// sous total
 				
 				PdfPCell napCell1 = new PdfPCell(cellBorderless);
-				napCell1.setPhrase(new Phrase(new Chunk(line.getSousTotal().toString(), boddyStyle)));
+				napCell1.setPhrase(new Phrase(new Chunk(line.getMontantInitial().toString(), boddyStyle)));
 				napCell1.setPaddingBottom(2);
 				napCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				table.addCell(napCell1);
 				
 		 // total
 				PdfPCell inPaCell = new PdfPCell(cellBorderless);
-				inPaCell.setPhrase(new Phrase(new Chunk(line.getMontantInitial().toString(), boddyStyle)));
+				inPaCell.setPhrase(new Phrase(new Chunk(line.getSousTotal().toString(), boddyStyle)));
 				inPaCell.setPaddingBottom(2);
 				inPaCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
@@ -222,7 +224,7 @@ public class FacturePayeur extends   AbstractPdfView {
 				
 				// net
 				PdfPCell snapCell1 = new PdfPCell(cellBorderless);
-				snapCell1.setPhrase(new Phrase(new Chunk(line.getReste().toString(), boddyStyle)));
+				snapCell1.setPhrase(new Phrase(new Chunk(""+line.getTauxAssure()+"%", boddyStyle)));
 				snapCell1.setPaddingBottom(5);
 				snapCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				table.addCell(snapCell1);
@@ -242,11 +244,10 @@ public class FacturePayeur extends   AbstractPdfView {
 			
 	    Document document, HttpServletRequest request) {
 		document.setPageSize(PageSize.A4);
-		document.setMargins(5, 5, 10, 10);
+		document.setMargins(10,10, 10, 10);
 		EtatCredits etatCredits = (EtatCredits) model.get("etatCredits");
 		Font headerStyle = new Font(Font.COURIER,8);
 		headerStyle.setStyle("bold");
-
 		HeaderFooter footer = new HeaderFooter(new Phrase(new Chunk(  " - Page " , headerStyle)), true);
 		footer.setAlignment(Element.ALIGN_CENTER);
 		document.setFooter(footer);

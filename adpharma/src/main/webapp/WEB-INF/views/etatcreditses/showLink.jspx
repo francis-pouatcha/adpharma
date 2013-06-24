@@ -59,7 +59,7 @@ function restoreCmd(){
       <c:if test="${not etatcredits.solder}">
      <span ><INPUT id="pay" class="submits"  type="button" value="Encaisser" title="Encaisser" /> <INPUT id="payd" class="submits" style="display: none;"  type="button" value="Annuler L'encaissement" title="Annuller L'encaissement" /></span>
    <c:choose>
-      <c:when test="${ etatcredits.sendToCash eq false }">
+      <c:when test="${ etatcredits.sendToCash}">
        <span >
        <a href="${remove_cash_url}" style="text-decoration: none;">
        <INPUT id="payc" class="submits"  style="color: red;" type="button" value="Retirer de la caisse" title="Retire de la caisse" /> 

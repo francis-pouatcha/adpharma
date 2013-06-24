@@ -174,8 +174,7 @@ public class DocumentsPrinterController {
 			if(TypeMouvement.SORTIE_PRODUIT.equals(etatBean.getTypeMouvement())){
 				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_DES_SORTIE_RAISON_FILE_PATH);
 			}else{
-				jasperPrintService.printDocument(parameters,
-						response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
+				jasperPrintService.printDocument(parameters,response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
 			}
 			
 		} catch (Exception e) {

@@ -53,100 +53,11 @@
             </div>
         
         </div>
-        
-        <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-        <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
           <!-- 
         <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
          -->
-       <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
     </td>
-    <td style="vertical-align: top;"  width="45%">
-    <DIV style="overflow:auto;height: 400px; ">
-    <table   >
-       <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Ventes </i>
-          </td>
-          <td>
-               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  checked="checked" id="url1"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des caisses </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"   name="etats" id="url2"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Dettes </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"  name="etats" id="url3"  />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique des Mouvements de stock</i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url4" />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Chiffre affaire periodique par vendeur </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url5" />
-          </td>
-     </tr>
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Etat periodique des Transformations / vendeur </i>
-          </td>
-          <td>
-                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url6"  />
-          </td>
-     </tr>
-      
-      <tr >
-          <td>
-               <i class="labeletat" > Etat Periodique Taux Marque </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url7"  />
-          </td>
-     </tr>
-     <tr >
-          <td>
-               <i class="labeletat" > Etat Valorisation du stock par rayon  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url8"  />
-          </td>
-     </tr>
-     <tr >
-          <td>
-               <i class="labeletat" > Listing Catalogue par rayon  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
-          </td>
-     </tr>
-    <tr >
-          <td>
-               <i class="labeletat" > Etat Valorisation du stock par Filiale  </i>
-          </td>
-          <td>
-                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url10"  />
-          </td>
-     </tr>
-       </td>
+    
        <td style="vertical-align: top;"  width="45%">
 		    <DIV style="overflow:auto;height: 400px; ">
 				  <table>

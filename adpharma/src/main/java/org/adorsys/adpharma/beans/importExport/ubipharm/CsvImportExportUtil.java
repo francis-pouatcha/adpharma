@@ -221,9 +221,9 @@ public class CsvImportExportUtil {
 			for (int i = 0; i < listFiles.length; i++) {
 				if(StringUtils.startsWithIgnoreCase(listFiles[i], commandeFournisseur.getCmdNumber())){
 					updateCommandToSended(commandeFournisseur);	
-					java.util.logging.Logger.getLogger("").log(Level.INFO, "File Not Transferred ! " +
-							"Please check If Ubipharm Module is Running on This Computer !");
-					throw new Exception("Command File Not Transfered! Please check If Ubipharm Module is Running on This Computer !");
+					java.util.logging.Logger.getLogger("").log(Level.INFO, "Fichier non Transfere ! " +
+							"Verifier si le module PHML est demarer ou verifier l'etat de votre connecttion internet !");
+					throw new Exception("Commande non Transfere !Verifier si le module PHML est demarer ou verifier l'etat de votre connecttion internet !");
 				
 				}
 			}
