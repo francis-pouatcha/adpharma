@@ -369,6 +369,19 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
     }
     
     
+    /**
+     * Methode qui permet de retourner le premier approvisionnement
+     * @return
+     */
+    public static Approvisionement getFirstApprovisionement(){
+        Approvisionement first = Approvisionement.findAllApprovisionements().iterator().next();
+    	return first;
+    }
+    
+    public static List<Approvisionement> findAllApprovisionements() {
+        return entityManager().createQuery("SELECT o FROM Approvisionement o", Approvisionement.class).getResultList();
+    }
+    
     
 
     @Override

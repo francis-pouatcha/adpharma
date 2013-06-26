@@ -451,13 +451,13 @@
 								$('table#resultproduit tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {
-										$.getJSON( '${select_product_url}/'+this.id,
-									                function(data){
+										$.getJSON( '${select_product_url}/'+this.id, function(data){
 											$('#pId').val(data.id);
 											$('#cip').val(data.cip);
 											$('#cipm').val(data.cipMaison);
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
+											$('#qteStock').val(data.produit.quantiteEnStock);
 											$('#qte').val(1);
 											stock= $('#pu').val();
 											// J'appele le script de configuration des types de vente par defaut
@@ -673,12 +673,12 @@ $('#updateClient').dialog("close");
 					} else {
 						
 						document.getElementById("cip").value = data.cip;
-						document.getElementById("des").value = data.designation ;
+						document.getElementById("des").value = data.designation;
 						document.getElementById("pu").value = data.prixVenteUnitaire;
 						document.getElementById("pId").value = data.id;
 						document.getElementById("remax").value = data.remiseMax;
-						document.getElementById("qte").value =  1 ;
-						document.getElementById("pt").value = 0 ;
+						document.getElementById("qte").value =  1;
+						document.getElementById("pt").value = 0;
 					}
 				});
 	}
@@ -711,6 +711,7 @@ $('#updateClient').dialog("close");
 						<tr>
 							<th style="text-align: center;witdh: 200px;">${inhouse_cip }</th>
 							<th style="text-align: center; witdh: 300px;">${product_designation }</th>
+							<th style="text-align: center; witdh: 300px;">Qte Stock</th>
 							<th style="text-align: center;">${product_unit_price }</th>
 							<th style="text-align: center;">${product_qty }</th>
 							<th style="text-align: center;">${product_discount }</th>
@@ -729,6 +730,10 @@ $('#updateClient').dialog("close");
 								value="${saleProcess.lineToUpdate.designation}"
 								style="color: blue; text-align: center;" disabled="disabled" />
 
+							</td>
+							<td><INPUT type="text"  class="des" id="qteStock"
+								title="Qte en Stock" value="${saleProcess.lineToUpdate.produit.quantiteEnStock}"
+								style="color: blue; text-align: center; width: 70px;" disabled="disabled" />
 							</td>
 							
 							<td><INPUT type="text" name="pu" id="pu"  onmouseover="this.select();" onfocus="this.select();" 
@@ -800,6 +805,7 @@ $('#updateClient').dialog("close");
 							<th style="text-align: center;  witdh: 200px;">${inhouse_cip }</th>
 							<th style="text-align: center;">${default_cip }</th>
 							<th style="text-align: center; witdh: 300px;">${product_designation }</th>
+							<th style="text-align: center; witdh: 300px;">Qte Stock</th>
 							<th style="text-align: center;">${product_unit_price }</th>
 							<th style="text-align: center;">${product_qty }</th>
 							<th style="text-align: center;">${product_discount }</th>
@@ -835,6 +841,10 @@ $('#updateClient').dialog("close");
 								title="${product_designation }" value="${saleProcess.produit.designation}"
 								style="color: blue; text-align: center;" disabled="disabled" />
 
+							</td>
+							<td><INPUT type="text"  class="des" id="qteStock"
+								title="Qte en Stock" value="${saleProcess.produit.produit.quantiteEnStock}"
+								style="color: blue; text-align: center; width: 70px;" disabled="disabled" />
 							</td>
 							<td>
 							<!--portion de code permettant sur la vue de changer le prix dun produit dependant si on a le droit ou pas  -->

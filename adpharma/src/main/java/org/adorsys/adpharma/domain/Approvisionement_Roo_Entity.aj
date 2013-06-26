@@ -4,7 +4,6 @@
 package org.adorsys.adpharma.domain;
 
 import java.lang.Long;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -18,10 +17,6 @@ privileged aspect Approvisionement_Roo_Entity {
     
     public static long Approvisionement.countApprovisionements() {
         return entityManager().createQuery("SELECT COUNT(o) FROM Approvisionement o", Long.class).getSingleResult();
-    }
-    
-    public static List<Approvisionement> Approvisionement.findAllApprovisionements() {
-        return entityManager().createQuery("SELECT o FROM Approvisionement o", Approvisionement.class).getResultList();
     }
     
     public static Approvisionement Approvisionement.findApprovisionement(Long id) {

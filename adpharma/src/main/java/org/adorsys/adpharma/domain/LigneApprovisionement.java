@@ -252,7 +252,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public String toJson() {
-		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon", "produit.configSolde.tauxSolde","datePeremtion", "produit.configSolde.activeConfig").exclude("*","*.class").serialize(this);
+		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon", "produit.configSolde.tauxSolde","datePeremtion", "produit.configSolde.activeConfig", "produit.quantiteEnStock").exclude("*","*.class").serialize(this);
 	}
 	
 	public String toJson2() {

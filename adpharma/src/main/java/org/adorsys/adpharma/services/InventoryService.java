@@ -190,7 +190,11 @@ public class InventoryService {
 			item.setPrixVenteUnitaire(prixVenteU);
 			item.CalculePaTotal();
 			item.CalculeQteEnStock();
-			item.setApprovisionement(Approvisionement.findApprovisionement(new Long(1)));
+			try {
+				item.setApprovisionement(Approvisionement.getFirstApprovisionement());
+			} catch (Exception e) {
+				System.out.println("Null Pointer exception");
+			}
 			item.persist();
 
 			//TODO:

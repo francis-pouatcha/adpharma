@@ -143,6 +143,9 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 				      <img src="${ordonnanceIco}" width="120" height="120" class="carousel cImgTitle imageDescription" id="image7" title="Lister les ordonnances" />
 				    </security:authorize> 
                  </div>  
+                 
+                
+                 
     	   </td>
     	   
     	   <!--  <td align="center" width="30%" valign="center" class="tblog">
