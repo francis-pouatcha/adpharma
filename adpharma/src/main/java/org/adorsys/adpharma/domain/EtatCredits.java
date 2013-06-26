@@ -76,6 +76,9 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	@Value("false")
 	private Boolean consommerAvoir;
 	
+	@Value("false")
+	private Boolean sendToCash;
+	
 	private Boolean addAllUnbilledInvoices = Boolean.FALSE;
 	
 	
@@ -163,6 +166,42 @@ public class EtatCredits extends AdPharmaBaseEntity {
 
 
 	}
+	
+	public void encaisser(Paiement paiement,Caisse caisse){
+		if(paiement==null || caisse ==null) throw new IllegalArgumentException("Paiement and Caisse is required !") ;
+		Facture facture = new Facture();
+		BigDecimal amount = BigDecimal.ZERO;
+		if (paiement.getMontant().intValue() <= paiement.getSommeRecue().intValue()) {
+			amount = paiement.getMontant();
+		}else {
+			amount = paiement.getSommeRecue();
+		}
+		avancer(amount);
+		caisse.updateCashDettel(amount);
+		listeDettes = DetteClient.search(null, this, null, null,null,null).getResultList();
+		for (DetteClient dette : listeDettes) {
+			if (!dette.getAnnuler()) {
+				facture =   Facture.findFacturesByFactureNumberEquals(dette.getFactureNo()).getResultList().iterator().next();
+				if (dette.getReste().intValue() <= amount.intValue()) {
+					amount = amount.subtract(BigDecimal.valueOf(dette.getReste().longValue()));
+					dette.avancer(dette.getReste());
+					facture.avancerPaiement(dette.getReste());
+					dette.merge();
+					facture.merge();
+				} else {
+					dette.avancer(amount.toBigInteger());
+					facture.avancerPaiement(amount.toBigInteger());
+					facture.merge();
+					dette.merge();
+					break;
+				}
+			}
+		}
+
+
+	}
+	
+	
 
 
 	public void validate(BindingResult bindingResult) {
@@ -208,7 +247,7 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	}
 
 	public static List<EtatCredits> findEtatCreditsEntries(int firstResult, int maxResults) {
-		return entityManager().createQuery("SELECT o FROM EtatCredits o ORDER BY o.dateEdition DESC", EtatCredits.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+		return entityManager().createQuery("SELECT o FROM EtatCredits o ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
 	public void consommerAvoir() {
 		List<AvoirClient> resultList = AvoirClient.search(null,null, null, getClient().getClientNumber(), null, Boolean.FALSE, Boolean.FALSE).getResultList();
@@ -332,10 +371,27 @@ public class EtatCredits extends AdPharmaBaseEntity {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
         nom =nom + "%";
         EntityManager em = EtatCredits.entityManager();
-        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.client.nom ASC", EtatCredits.class);
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE LOWER(o.client.nom) LIKE LOWER(:nom) OR LOWER(o.client.prenom) LIKE LOWER(:nom)   ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
         q.setParameter("nom", nom);
         return q;
     }
+	
+	public static TypedQuery<EtatCredits> findEtatCreditsSendToCash() {
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE o.sendToCash =:sendToCash ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
+        q.setParameter("sendToCash", Boolean.TRUE);
+        return q;
+    }
+	
+	public static TypedQuery<EtatCredits> findEtatCreditNotSolderAndSendToCash() {
+        EntityManager em = EtatCredits.entityManager();
+        TypedQuery<EtatCredits> q = em.createQuery("SELECT o FROM EtatCredits AS o WHERE  o.solder :=solder AND o.sendToCash := sended ORDER BY o.dateEdition DESC o.client.nom ASC", EtatCredits.class);
+        q.setParameter("solder", Boolean.FALSE);
+        q.setParameter("sended", Boolean.TRUE);
+        return q;
+    }
+	
+
 	
 	public Long getClientId() {
 		return clientId;
@@ -360,10 +416,18 @@ public class EtatCredits extends AdPharmaBaseEntity {
 	public void setSolder(Boolean solder) {
 		this.solder = solder;
 	}
+    
+	public Boolean getSendToCash() {
+		return sendToCash;
+	}
+
+	public void setSendToCash(Boolean sendToCash) {
+		this.sendToCash = sendToCash;
+	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy HH:mm"));
+		sb.append(getEtatNumber()).append(" DU :").append(PharmaDateUtil.format(dateEdition, "dd-MM-yyyy hh:mm"));
 		return sb.toString();
 	}
 }

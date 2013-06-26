@@ -1,8 +1,5 @@
 package org.adorsys.adpharma.web;
 
-import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,17 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 import org.adorsys.adpharma.beans.ReclamationForm;
 import org.adorsys.adpharma.beans.process.EtatManagerBean;
@@ -30,6 +21,7 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.services.JasperPrintService;
@@ -40,7 +32,6 @@ import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,8 +39,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
 @RequestMapping("/etats")
 @Controller
 public class DocumentsPrinterController {
@@ -182,7 +171,12 @@ public class DocumentsPrinterController {
 		parameters.put("DateF",etatBean.getDateFin());
 		
 		try {
-			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
+			if(TypeMouvement.SORTIE_PRODUIT.equals(etatBean.getTypeMouvement())){
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_DES_SORTIE_RAISON_FILE_PATH);
+			}else{
+				jasperPrintService.printDocument(parameters,response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,6 +243,7 @@ public class DocumentsPrinterController {
 		parameters.put("DateF",begingEndOfDay.getEnd());
 		
 		try {
+			
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_VENTE_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

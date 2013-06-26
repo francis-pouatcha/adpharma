@@ -236,7 +236,6 @@
 			});
 			$('tr.list').click(function() {
 				var rwoId = $(this).attr('id');
-				alert(rwoId) ;
 				if (isSavable(rwoId)) {
 				} else {
 					toggleToinput(rwoId);

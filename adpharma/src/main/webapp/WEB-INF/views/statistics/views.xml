@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="vendeur" name="statistics/statisticspage">
+    <definition extends="public" name="statistics/statisticspage">
         <put-attribute name="body" value="/WEB-INF/views/statistics/statisticspage.jspx"/>
     </definition>
-     <definition extends="vendeur" name="statistics/etatvente">
+     <definition extends="public" name="statistics/etatvente">
         <put-attribute name="body" value="/WEB-INF/views/statistics/etatvente.jspx"/>
     </definition>
-     <definition extends="vendeur" name="statistics/courbeventecip">
+     <definition extends="public" name="statistics/courbeventecip">
         <put-attribute name="body" value="/WEB-INF/views/statistics/courbeventecip.jspx"/>
     </definition>
-    <definition extends="vendeur" name="statistics/courbes">
+    <definition extends="public" name="statistics/courbes">
         <put-attribute name="body" value="/WEB-INF/views/statistics/chartview.jspx"/>
     </definition>
 </tiles-definitions>

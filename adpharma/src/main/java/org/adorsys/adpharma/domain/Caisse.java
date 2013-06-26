@@ -70,6 +70,18 @@ public class Caisse extends AdPharmaBaseEntity {
 
 
 	private BigDecimal totalProformat = BigDecimal.ZERO;
+	
+	private BigDecimal totalCashDette = BigDecimal.ZERO;
+	
+	
+
+	public BigDecimal getTotalCashDette() {
+		return totalCashDette;
+	}
+
+	public void setTotalCashDette(BigDecimal totalCashDette) {
+		this.totalCashDette = totalCashDette;
+	}
 
 	@Value("true")
 	private Boolean caisseOuverte;
@@ -170,6 +182,10 @@ public class Caisse extends AdPharmaBaseEntity {
 
 	public void updateBonCmdPartiel(BigDecimal amount) {
 		totalBonCmdPartiel = totalBonCmdPartiel.add(amount);
+		totalEncaissement = totalEncaissement.add(amount);
+	}
+	public void updateCashDettel(BigDecimal amount) {
+		totalCashDette = totalCashDette.add(amount);
 		totalEncaissement = totalEncaissement.add(amount);
 	}
 

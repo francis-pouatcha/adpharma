@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypePaiement;
+import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -39,6 +41,18 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
+	BigDecimal fondgbl = BigDecimal.ZERO ;
+	BigDecimal totalencgbl = BigDecimal.ZERO ;
+    BigDecimal remglbs = BigDecimal.ZERO ;
+	BigDecimal cashgbl = BigDecimal.ZERO ;
+	BigDecimal cashdgbl = BigDecimal.ZERO ;
+	BigDecimal cartecreditgbl = BigDecimal.ZERO ;
+	BigDecimal chequegbl = BigDecimal.ZERO ;
+	BigDecimal retraitgbl = BigDecimal.ZERO ;
+	BigDecimal boncmdgbl = BigDecimal.ZERO ;
+	BigDecimal boncltgbl = BigDecimal.ZERO ;
+	BigDecimal soldegbl = BigDecimal.ZERO ;
+	
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
@@ -46,8 +60,13 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		Caisse caisse = (Caisse) model.get("caisse");
 		List<Caisse> caisses = (List<Caisse>) model.get("caisses");
 		Site site = Site.findSite(Long.valueOf(1));
+
+		
+		
+		
 		if (caisse != null) {
 			addTexteToDocument(document, caisse, site);
+			addGlobalAmountToDocument(document) ;
 
 		}
 		
@@ -55,6 +74,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 			for (Caisse caisse2 : caisses) {
 				addTexteToDocument(document, caisse2, site);
 			}
+			addGlobalAmountToDocument(document) ;
 
 		}
 		
@@ -63,11 +83,11 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	
 	public void addTexteToDocument(Document document,Caisse caisse,Site site){
 
-		Font headerStyle = new Font(Font.COURIER,8);
+		Font headerStyle = new Font(Font.COURIER,7);
 		headerStyle.setStyle("bold");
-		Font boddyStyle = new Font(Font.COURIER,8);
+		Font boddyStyle = new Font(Font.COURIER,7);
 		
-		Font headerStyles = new Font(Font.COURIER,8);
+		Font headerStyles = new Font(Font.COURIER,7);
 		headerStyles.setStyle("bold");
 		
 		PdfPCell cellStyle = new PdfPCell();
@@ -136,7 +156,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		ouCell2.setPhrase(new Phrase(new Chunk("DATE OUVERTURE :", headerStyle)));
 		ouCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 		PdfPCell oudCell2 = new PdfPCell(cellBorderlessStyle);
-		oudCell2.setPhrase(new Phrase(new Chunk( PharmaDateUtil.format(caisse.getDateOuverture(), "dd-MM-yyyy HH:mm"), boddyStyle)));
+		oudCell2.setPhrase(new Phrase(new Chunk( PharmaDateUtil.format(caisse.getDateOuverture(), "dd-MM-yyyy hh:mm"), boddyStyle)));
 		oudCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable.addCell(ouCell2);
@@ -153,7 +173,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		PdfPCell fedrCell = new PdfPCell(cellBorderlessStyle);
 		adressTable.addCell(ferCell);
 		if (caisse.getDateFemeture()!=null) {
-			fedrCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(caisse.getDateFemeture(), "dd-MM-yyyy HH:mm"), boddyStyle)));
+			fedrCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(caisse.getDateFemeture(), "dd-MM-yyyy hh:mm"), boddyStyle)));
 			fedrCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(fedrCell);// 1:2
 
@@ -265,10 +285,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		pvCell.setPhrase(new Phrase(new Chunk("MARGE", headerStyle)));
 		pvCell.setBackgroundColor(Color.gray);
 		pvCell.setPaddingBottom(5);
-
 		table.addCell(pvCell);
-
-
 		
 /*
 		List<OperationCaisse> cash = OperationCaisse.findOperationCaissesByCaisseAndTypeOperation(TypePaiement.CASH, caisse).getResultList();
@@ -409,7 +426,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 // table detail de la caisse header		
 		float[] colWidthsDetail = {1.5f,1.5f, 1.5f, 1.5f ,1.5f,1.5f,1.5f,1.5f};
 
-		PdfPTable tableDetail = new PdfPTable(10);
+		PdfPTable tableDetail = new PdfPTable(11);
 		tableDetail.setWidthPercentage(100);
 		tableDetail.setHorizontalAlignment(Element.ALIGN_CENTER);
 		tableDetail.setHeaderRows(1);
@@ -418,21 +435,21 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		headerStyle.setColor(Color.WHITE);
 
 		PdfPCell font = new PdfPCell(cellStyle);
-		font.setPhrase(new Phrase(new Chunk("FOND", headerStyle)));
+		font.setPhrase(new Phrase(new Chunk("Fond", headerStyle)));
 		font.setBackgroundColor(Color.gray);
 		font.setPaddingBottom(5);
 		tableDetail.addCell(font );
 
 
 		PdfPCell enc = new PdfPCell(cellStyle);
-		enc.setPhrase(new Phrase(new Chunk("ENCASSEMENT", headerStyle)));
+		enc.setPhrase(new Phrase(new Chunk("Encaissement", headerStyle)));
 		enc.setBackgroundColor(Color.gray);
 		enc.setPaddingBottom(5);
 
 		tableDetail.addCell(enc);
 
 		PdfPCell retrait = new PdfPCell(cellStyle);
-		retrait.setPhrase(new Phrase(new Chunk("REMISE GLB", headerStyle)));
+		retrait.setPhrase(new Phrase(new Chunk("Remise GLB", headerStyle)));
 		retrait.setBackgroundColor(Color.gray);
 		retrait.setPaddingBottom(5);
 
@@ -440,27 +457,32 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 
 		PdfPCell cash = new PdfPCell(cellStyle);
-		cash.setPhrase(new Phrase(new Chunk("CASH", headerStyle)));
+		cash.setPhrase(new Phrase(new Chunk("Cash", headerStyle)));
 		cash.setBackgroundColor(Color.gray);
 		cash.setPaddingBottom(5);
-
 		tableDetail.addCell(cash);
+		
+		PdfPCell cashdette = new PdfPCell(cellStyle);
+		cashdette.setPhrase(new Phrase(new Chunk("Cash dette", headerStyle)));
+		cashdette.setBackgroundColor(Color.gray);
+		cashdette.setPaddingBottom(5);
+		tableDetail.addCell(cashdette);
 
 		PdfPCell cb = new PdfPCell(cellStyle);
-		cb.setPhrase(new Phrase(new Chunk("CARTE B", headerStyle)));
+		cb.setPhrase(new Phrase(new Chunk("Carte Bq", headerStyle)));
 		cb.setBackgroundColor(Color.gray);
 		cb.setPaddingBottom(5);
-
 		tableDetail.addCell(cb);
+		
 		PdfPCell cheque = new PdfPCell(cellStyle);
-		cheque.setPhrase(new Phrase(new Chunk("CHEQUE", headerStyle)));
+		cheque.setPhrase(new Phrase(new Chunk("Cheque", headerStyle)));
 		cheque.setBackgroundColor(Color.gray);
 		cheque.setPaddingBottom(5);
 
 		tableDetail.addCell(cheque);
 		
 		PdfPCell credit = new PdfPCell(cellStyle);
-		credit.setPhrase(new Phrase(new Chunk("RETRAIT", headerStyle)));
+		credit.setPhrase(new Phrase(new Chunk("Decaissement", headerStyle)));
 		credit.setBackgroundColor(Color.gray);
 		credit.setPaddingBottom(5);
 
@@ -483,7 +505,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell bcp = new PdfPCell(cellStyle);
-		bcp.setPhrase(new Phrase(new Chunk("SOlDE", headerStyle)));
+		bcp.setPhrase(new Phrase(new Chunk("Solde", headerStyle)));
 		bcp.setBackgroundColor(Color.gray);
 		bcp.setPaddingBottom(5);
 
@@ -492,18 +514,20 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	// contenu
 		PdfPCell fontc = new PdfPCell(cellStyle);
 		BigDecimal fond = caisse.getFondCaisse()==null?BigDecimal.ZERO:caisse.getFondCaisse();
+		fondgbl = fondgbl.add(fond);
 		fontc.setPhrase(new Phrase(new Chunk(""+fond.intValue(), headerStyles)));
 		fontc.setPaddingBottom(5);
 		tableDetail.addCell(fontc );
 
 
 		PdfPCell encv = new PdfPCell(cellStyle);
+		totalencgbl=totalencgbl.add(caisse.getTotalEncaissement());
 		encv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalEncaissement().intValue(), headerStyles)));
 		encv.setPaddingBottom(5);
 
 		tableDetail.addCell(encv);
-	BigDecimal remglb = caisse.getTotalProformat().subtract(BigDecimal.valueOf(totalremise.longValue()));
-
+	    BigDecimal remglb = caisse.getTotalProformat().subtract(BigDecimal.valueOf(totalremise.longValue()));
+	    remglbs= remglbs.add(remglb) ;
 		PdfPCell retraitv = new PdfPCell(cellStyle);
 		retraitv.setPhrase(new Phrase(new Chunk(""+remglb.intValue(), headerStyles)));
 		retraitv.setPaddingBottom(5);
@@ -512,24 +536,33 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 
 		PdfPCell cashv = new PdfPCell(cellStyle);
+		cashgbl=cashgbl.add(caisse.getTotalCash());
 		cashv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCash().intValue(), headerStyles)));
 		cashv.setPaddingBottom(5);
-
 		tableDetail.addCell(cashv);
+		
+		PdfPCell cashdv = new PdfPCell(cellStyle);
+		cashdgbl=cashdgbl.add(caisse.getTotalCashDette()==null?BigDecimal.ZERO:caisse.getTotalCashDette());
+		cashdv.setPhrase(new Phrase(new Chunk(""+(caisse.getTotalCashDette()==null?BigDecimal.ZERO.intValue():caisse.getTotalCashDette().intValue()), headerStyles)));
+		cashdv.setPaddingBottom(5);
+		tableDetail.addCell(cashdv);
 
 		PdfPCell cbv = new PdfPCell(cellStyle);
+		cartecreditgbl=cartecreditgbl.add(caisse.getTotalCarteCredit());
 		cbv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCarteCredit().intValue(), headerStyles)));
 		cbv.setPaddingBottom(5);
 
 		tableDetail.addCell(cbv);
 		
 		PdfPCell chequev = new PdfPCell(cellStyle);
+		chequegbl=chequegbl.add(caisse.getTotalCheque());
 		chequev.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCheque().intValue(), headerStyles)));
 		chequev.setPaddingBottom(5);
 
 		tableDetail.addCell(chequev);
 		
 		PdfPCell creditv = new PdfPCell(cellStyle);
+		retraitgbl=retraitgbl.add(caisse.getTotalRetrait());
 		creditv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalRetrait().intValue(), headerStyles)));
 		creditv.setPaddingBottom(5);
 
@@ -537,6 +570,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbc = new PdfPCell(cellStyle);
+		boncmdgbl=boncmdgbl.add(caisse.getTotalBonCmd());
 		tbc.setPhrase(new Phrase(new Chunk(""+caisse.getTotalBonCmd().intValue(), headerStyles)));
 		tbc.setPaddingBottom(5);
 
@@ -546,6 +580,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbclt = new PdfPCell(cellStyle);
+		boncltgbl=boncltgbl.add(caisse.getTotalBonClient());
 		tbclt.setPhrase(new Phrase(new Chunk(""+caisse.getTotalBonClient().intValue(), headerStyles)));
 		tbclt.setPaddingBottom(5);
 
@@ -553,6 +588,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbsolde = new PdfPCell(cellStyle);
+		soldegbl=soldegbl.add(caisse.calculateSolde());
 		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.calculateSolde().intValue(), headerStyles)));
 		tbsolde.setPaddingBottom(5);
 
@@ -567,7 +603,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		}
 		
 		try {
-			document.add(new Paragraph(new  Phrase(new Chunk("************************************************************************************************************************", boddyStyle))));
+			document.add(new Paragraph(new  Phrase(new Chunk("*********************************************************************************************************************************************", boddyStyle))));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -575,6 +611,191 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 		
 
+	}
+	
+	public void addGlobalAmountToDocument(Document document ){
+		Font boddyStyle = new Font(Font.COURIER,8);
+		boddyStyle.setColor(Color.BLUE) ;
+		Font headerStyle = new Font(Font.COURIER,7);
+		headerStyle.setStyle("bold");
+		Font headerStyles = new Font(Font.COURIER,7);
+		headerStyles.setStyle("bold");
+		
+		PdfPCell cellStyle = new PdfPCell();
+		cellStyle.setPadding(.5f);
+		cellStyle.setHorizontalAlignment(Element.ALIGN_CENTER);
+		try {
+			document.add(new Paragraph(new  Phrase(new Chunk(" ==================================================================DEBUT RESUME=========================================", boddyStyle))));
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		PdfPTable tablegbl = new PdfPTable(11); 
+		tablegbl.setWidthPercentage(100);
+		tablegbl.setHorizontalAlignment(Element.ALIGN_CENTER);
+		tablegbl.setHeaderRows(1);
+		tablegbl.setSpacingAfter(10);
+		tablegbl.setSpacingBefore(5);
+		headerStyle.setColor(Color.WHITE);
+
+		PdfPCell font = new PdfPCell(cellStyle);
+		font.setPhrase(new Phrase(new Chunk("Fond", headerStyle)));
+		font.setBackgroundColor(Color.gray);
+		font.setPaddingBottom(5);
+		tablegbl.addCell(font );
+
+
+		PdfPCell enc = new PdfPCell(cellStyle);
+		enc.setPhrase(new Phrase(new Chunk("Encaissement", headerStyle)));
+		enc.setBackgroundColor(Color.gray);
+		enc.setPaddingBottom(5);
+
+		tablegbl.addCell(enc);
+
+		PdfPCell retrait = new PdfPCell(cellStyle);
+		retrait.setPhrase(new Phrase(new Chunk("Remise GLB", headerStyle)));
+		retrait.setBackgroundColor(Color.gray);
+		retrait.setPaddingBottom(5);
+
+		tablegbl.addCell(retrait);
+
+
+		PdfPCell cash = new PdfPCell(cellStyle);
+		cash.setPhrase(new Phrase(new Chunk("Cash", headerStyle)));
+		cash.setBackgroundColor(Color.gray);
+		cash.setPaddingBottom(5);
+		tablegbl.addCell(cash);
+		
+		PdfPCell cashd = new PdfPCell(cellStyle);
+		cashd.setPhrase(new Phrase(new Chunk("Cash dette", headerStyle)));
+		cashd.setBackgroundColor(Color.gray);
+		cashd.setPaddingBottom(5);
+		tablegbl.addCell(cashd);
+
+		PdfPCell cb = new PdfPCell(cellStyle);
+		cb.setPhrase(new Phrase(new Chunk("Carte B", headerStyle)));
+		cb.setBackgroundColor(Color.gray);
+		cb.setPaddingBottom(5);
+
+		tablegbl.addCell(cb);
+		PdfPCell cheque = new PdfPCell(cellStyle);
+		cheque.setPhrase(new Phrase(new Chunk("Cheque", headerStyle)));
+		cheque.setBackgroundColor(Color.gray);
+		cheque.setPaddingBottom(5);
+
+		tablegbl.addCell(cheque);
+		
+		PdfPCell credit = new PdfPCell(cellStyle);
+		credit.setPhrase(new Phrase(new Chunk("Decaissement", headerStyle)));
+		credit.setBackgroundColor(Color.gray);
+		credit.setPaddingBottom(5);
+
+		tablegbl.addCell(credit);
+		
+		PdfPCell bc = new PdfPCell(cellStyle);
+		bc.setPhrase(new Phrase(new Chunk("Bon-Medi", headerStyle)));
+		bc.setBackgroundColor(Color.gray);
+		bc.setPaddingBottom(5);
+
+		tablegbl.addCell(bc);
+		
+		
+		PdfPCell bclt = new PdfPCell(cellStyle);
+		bclt.setPhrase(new Phrase(new Chunk("Bon-Avoir", headerStyle)));
+		bclt.setBackgroundColor(Color.gray);
+		bclt.setPaddingBottom(5);
+
+		tablegbl.addCell(bclt);
+		
+
+		PdfPCell bcp = new PdfPCell(cellStyle);
+		bcp.setPhrase(new Phrase(new Chunk("Solde", headerStyle)));
+		bcp.setBackgroundColor(Color.gray);
+		bcp.setPaddingBottom(5);
+
+		tablegbl.addCell(bcp);
+		
+	// contenu
+		PdfPCell fontc = new PdfPCell(cellStyle);
+		fontc.setPhrase(new Phrase(new Chunk(""+fondgbl.intValue(), headerStyles)));
+		fontc.setPaddingBottom(5);
+		tablegbl.addCell(fontc );
+
+
+		PdfPCell encv = new PdfPCell(cellStyle);
+		encv.setPhrase(new Phrase(new Chunk(""+totalencgbl.intValue(), headerStyles)));
+		encv.setPaddingBottom(5);
+
+		tablegbl.addCell(encv);
+
+		PdfPCell retraitv = new PdfPCell(cellStyle);
+		retraitv.setPhrase(new Phrase(new Chunk(""+remglbs.intValue(), headerStyles)));
+		retraitv.setPaddingBottom(5);
+
+		tablegbl.addCell(retraitv);
+
+
+		PdfPCell cashv = new PdfPCell(cellStyle);
+		cashv.setPhrase(new Phrase(new Chunk(""+cashgbl.intValue(), headerStyles)));
+		cashv.setPaddingBottom(5);
+
+		tablegbl.addCell(cashv);
+		
+		PdfPCell cashdv = new PdfPCell(cellStyle);
+		cashdv.setPhrase(new Phrase(new Chunk(""+cashdgbl.intValue(), headerStyles)));
+		cashdv.setPaddingBottom(5);
+
+		tablegbl.addCell(cashdv);
+
+		PdfPCell cbv = new PdfPCell(cellStyle);
+		cbv.setPhrase(new Phrase(new Chunk(""+cartecreditgbl.intValue(), headerStyles)));
+		cbv.setPaddingBottom(5);
+
+		tablegbl.addCell(cbv);
+		
+		PdfPCell chequev = new PdfPCell(cellStyle);
+		chequev.setPhrase(new Phrase(new Chunk(""+chequegbl.intValue(), headerStyles)));
+		chequev.setPaddingBottom(5);
+
+		tablegbl.addCell(chequev);
+		
+		PdfPCell creditv = new PdfPCell(cellStyle);
+		creditv.setPhrase(new Phrase(new Chunk(""+retraitgbl.intValue(), headerStyles)));
+		creditv.setPaddingBottom(5);
+
+		tablegbl.addCell(creditv);
+		PdfPCell tbc = new PdfPCell(cellStyle);
+		tbc.setPhrase(new Phrase(new Chunk(""+boncmdgbl.intValue(), headerStyles)));
+		tbc.setPaddingBottom(5);
+		
+		tablegbl.addCell(tbc);
+		PdfPCell tbclt = new PdfPCell(cellStyle);
+		tbclt.setPhrase(new Phrase(new Chunk(""+boncltgbl.intValue(), headerStyles)));
+		tbclt.setPaddingBottom(5);
+
+		tablegbl.addCell(tbclt);
+		PdfPCell tbsolde = new PdfPCell(cellStyle);
+		tbsolde.setPhrase(new Phrase(new Chunk(""+soldegbl.intValue(), headerStyles)));
+		tbsolde.setPaddingBottom(5);
+
+		tablegbl.addCell(tbsolde);
+		
+		
+		try {
+			document.add(tablegbl);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			document.add(new Paragraph(new  Phrase(new Chunk("=================================================================FIN RESUME=========================================", boddyStyle))));
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -586,13 +807,13 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		List<Caisse> caisses = (List<Caisse>) model.get("caisses");
 		
 		document.setPageSize(PageSize.A4);
-		document.setMargins(5, 5, 10, 5);
-		Font boddyStyle = new Font(Font.COURIER,8);
+		document.setMargins(5, 5, 25, 5);
+		Font boddyStyle = new Font(Font.COURIER,6);
 		Font headerStyle = new Font(Font.COURIER,14);
 		headerStyle.setStyle(Font.BOLD);
 
 
-		HeaderFooter footer = new HeaderFooter(new Phrase(new Chunk(  " Page" , boddyStyle)), true);
+		HeaderFooter footer = new HeaderFooter(new Phrase(new Chunk(  " Edite Par : "+SecurityUtil.getUserName()+" LE : "+PharmaDateUtil.format(new Date(), PharmaDateUtil.DATE_PATTERN_LONG_LIT) , boddyStyle)), true);
 		footer.setAlignment(Element.ALIGN_CENTER);
 		document.setFooter(footer);
 		HeaderFooter header = null ;

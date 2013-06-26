@@ -1,5 +1,7 @@
 package org.adorsys.adpharma.domain;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.PostPersist;
 import javax.persistence.TypedQuery;
@@ -52,6 +54,7 @@ public class Site extends AdPharmaBaseEntity {
     
     private String numeroRegistre;
     
+    private BigInteger bareCodePerLine = new BigInteger("8");
     @Size(max = 256)
     @Value("bonne guerison")
     private String messageTiket;
@@ -97,6 +100,16 @@ public class Site extends AdPharmaBaseEntity {
 
 	public void setOrderReceivePath(String orderReceivePath) {
 		this.orderReceivePath = orderReceivePath;
+	}
+	
+	
+
+	public BigInteger getBareCodePerLine() {
+		return bareCodePerLine;
+	}
+
+	public void setBareCodePerLine(BigInteger bareCodePerLine) {
+		this.bareCodePerLine = bareCodePerLine;
 	}
 
 	public static void initSite() {

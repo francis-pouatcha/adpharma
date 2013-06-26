@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<span xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	style="width: 100%;overflow: auto; height: 200px;">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
+    <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+    <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+    <c:choose>
+		<c:when test="${empty approvisonementProcess.apId}">
+             <spring:url value="/approvisionementprocess/0/findProduct/"  var="find_cip_url" />
+		</c:when>
+		<c:otherwise>
+             <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct/" var="find_cip_url" />
+		</c:otherwise>
+	</c:choose>
+  
+<script type="text/javascript">
+
+function videLigne(){
+    $("#_cip_id").val("");
+	$("#_cip_id").focus();
+
+  }
+function requete(){
+  var cip =	$("#cip").val();
+  	$.getJSON( "${find_cip_url }"+cip,
+  			function(data){
+  		if (data.id== null) {
+  			alert("Aucun produit Trouve de CIP "+cip);
+  			videLigne();
+  				}else{
+  					$("#_cip_id").val(data.cip);
+  				}
+  			
+  			});
+
+  }
+	$(function(){
+		$('#cip').select();
+		function clearProductTable(){
+			$('#resultproducts').html(
+					'<tr>
+					<th>CIP</th>
+			    		<th>DESIGNATION</th>
+			    		<th>QTE CIP</th>
+			    		 <th>RAYON</th>
+			    		 <th>FILIALE</th>
+
+					</tr>');
+		//	$('#designation').val(" ");
+			
+		};
+		
+
+
+		
+		$('form#produitfindforms').submit
+		(function(){
+			clearProductTable();
+				$.getJSON( '${find_productajax_url}',
+						$('#produitfindforms').serialize(),
+			                function(data){
+								$(data).each(function(){
+									
+									$('#resultproducts').append(
+										'<tr id="'+this.cip+'">
+										  <td>'+this.cip+'</td>
+										  <td>'+this.designation+'</td>
+										  <td>'+this.quantiteEnStock+'</td>
+										  <td>'+this.rayon.codeRayon+'</td>
+										  <td>'+this.filiale.libelle+'</td>
+										  </tr>'
+										
+								);
+									
+								});
+								$('table#resultproducts tr').each(function(){
+									var current = this;
+									this.onclick = function(event) {
+										console.log(current.id)
+										$('#findproducts').dialog("close");
+										requetes(current.id);
+									
+										
+									};
+									});
+							
+
+							});
+				return false ;
+		});
+		
+		$('img.loadimage').ajaxStart(function(){
+			$(this).show();
+		});
+		
+		$('img.loadimage').ajaxStop(function(){
+			$(this).hide();
+		});
+
+	
+		
+		// Dialog	find produit		
+		$('#findproducts').dialog({
+			open:function(){
+				clearProductTable();
+			},
+			autoOpen: false,
+			width: 1000,
+			resizable:true,
+			draggable :true,
+             hide:'fade',
+             show:'slide',
+             position:'top',
+			buttons: {
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
+		
+		$('#findcip').click(function(){
+			$('#findproducts').dialog('open');
+			return false;
+		});
+		
+		
+		
+		  
+		
+
+			  function requetes(cip){
+			  	$.getJSON( "${find_cip_url }"+cip,
+			  			function(data){
+			  		if (data.id== null) {
+			  			alert("Aucun produit Trouve de CIP "+cip);	
+			  			videLigne();
+			  				}else{
+			  					$("#_cip_id").val(data.cip);
+			  				}
+			  			
+			  			});
+
+			  	}
+
+			 
+		
+			 
+	
+
+	})
+	
+	</script>
+       
+</span>

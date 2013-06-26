@@ -19,7 +19,7 @@ public class PharmaDateUtil {
 	public static final String DATE_PATTERN_SHORT = "dd-MM";
 	public static final String DATE_PATTERN_SHORT_LIT = "EEE, dd MMM";
 	
-	public static final String DATETIME_PATTERN_LONG = "dd-MM-yyyy HH:mm";
+	public static final String DATETIME_PATTERN_LONG = "dd-MM-yyyy hh:mm";
 	public static final String DATETIME_PATTERN_LONG_LIT = "EEE, dd MMM yyyy HH:mm";
 	public static final String DATETIME_PATTERN_SHORT = "dd-MM HH:mm";
 	public static final String DATETIME_PATTERN_SHORT_LIT = "HH:mm EEE, dd MMM";

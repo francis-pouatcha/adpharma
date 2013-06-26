@@ -28,14 +28,16 @@
 	<spring:url  var="find_prdId_url" value="/produits/findProductByidAjax" />
 	<spring:url  var="findProductByCipm_url" value="/ligneapprovisionements/findProductByCipmAjax" />
 	<util:panel title="Modifier le CIP d'un Produit" id="">
+	<div style="height: 400px;">
 		<form>
 			<div style="color: red;font-size: 20px;font-style: italic; margin-bottom: 5px;" id="message">${message}</div>
-			
+			<br />
 				<INPUT type="hidden" name="id" id="id" />
 				<input name="cip" id="cip" style="margin-left: 10px;" />
-				<INPUT type="submit" value="Rechercher" id="find" style="margin-left: 10px;" /><br />
-				<input type="submit" value="Changer CIP" class="submits" style="width: 202px;margin-top: 7px;" />
+				<INPUT type="submit" value="Rechercher"  class="submits" id="find" style="margin-left: 10px;" /><br />
+				<input type="submit" value="Changer CIP" class="submits" style="width: 210px;margin-top: 7px;" />
 		</form>	
+   </div>
 	</util:panel>	
 
 

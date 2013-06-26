@@ -78,7 +78,7 @@ privileged aspect ApprovisionementController_Roo_Controller {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String ApprovisionementController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    public String ApprovisionementController.delete(@PathVariable("id") Long id , @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         Approvisionement.findApprovisionement(id).remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());

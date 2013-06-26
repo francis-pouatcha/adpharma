@@ -467,12 +467,10 @@ public class CommandeClientController {
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
 
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-		/*
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente a credit !");
 			return show(commandeClient.getId(), uiModel, request);
 		}
-		*/
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_PROFORMAT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
 			return show(commandeClient.getId(), uiModel, request);
@@ -486,7 +484,7 @@ public class CommandeClientController {
 		}else {
 			AvoirClient avoirClient = new AvoirClient(commandeClient,line.getPrixUnitaire().multiply(new BigDecimal(qte)));
 			avoirClient.setTypeBon(TypeBon.RETOUR);
-			avoirClient.setMontant(line.getPrixUnitaire().multiply(new BigDecimal(qte)));
+			avoirClient.setMontant((line.getPrixUnitaire().subtract(line.getRemise())).multiply(new BigDecimal(qte)));
 			avoirClient.setImprimer(Boolean.FALSE);
 			avoirClient.persist();
 			System.out.println(avoirClient.getMontant());

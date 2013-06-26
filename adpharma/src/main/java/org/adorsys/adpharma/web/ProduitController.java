@@ -6,33 +6,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.PostUpdate;
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
-import org.adorsys.adpharma.domain.CommandeClient;
-import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.ConfigurationSoldes;
-import org.adorsys.adpharma.domain.DetteClient;
-import org.adorsys.adpharma.domain.Etat;
-import org.adorsys.adpharma.domain.EtatSolde;
 import org.adorsys.adpharma.domain.FamilleProduit;
-import org.adorsys.adpharma.domain.Filiale;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
-import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
-import org.adorsys.adpharma.domain.TVA;
-import org.adorsys.adpharma.domain.TauxMarge;
 import org.adorsys.adpharma.services.InventoryService;
-import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -44,6 +30,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * @author clovisgakam
+ * product entity
+ *
+ */
 @RooWebScaffold(path = "produits", formBackingObject = Produit.class)
 @RequestMapping("/produits")
 @Controller
@@ -123,6 +114,17 @@ public class ProduitController {
 	    		nextProductId = resultList.iterator().next().getId() ;
 	    	}
 	        return updateForm(nextProductId, uiModel);
+	    }
+	    
+	    @RequestMapping(value = "validatedStockToCipm/{id}" , method = RequestMethod.GET)
+	    public String validatedStockToCipm( @PathVariable("id") Long id,Model uiModel) {
+	    	 Produit product = Produit.findProduit(id);
+	    	 BigInteger stockIncludeNegativeQte = InventoryService.getStockIncludeNegativeQte(product);
+	    	 product.setQuantiteEnStock(stockIncludeNegativeQte);
+	    	 product.merge();
+	    	 uiModel.addAttribute("appMessage", "stock modifier succes !") ;
+	    	 return updateForm(id, uiModel) ;
+	    	 
 	    }
 	    
 	    @RequestMapping(value = "updateProduct", params = "form", method = RequestMethod.GET)

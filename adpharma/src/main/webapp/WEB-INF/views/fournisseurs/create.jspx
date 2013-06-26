@@ -6,6 +6,7 @@
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" render="false" z="user-managed"/>
         <field:input field="fournisseurNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" render="false" z="user-managed"/>
         <field:input field="name" id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom" style="width: 50%;" z="user-managed"/>
+            <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="PHML KEY" z="bESuk/cLGJi0H605G33adCya5A4="/>
         <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom Abrege" z="5jBGemLv5dbNBA2RD967AzWN8Lw="/>
         <field:input field="phone" id="c_org_adorsys_adpharma_domain_Fournisseur_phone" label="Telephone" z="user-managed"/>
         <field:input field="mobile" id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" z="UPhP+OmmLci9A+9kkPMO4g3q/GQ="/>
@@ -20,11 +21,8 @@
         <field:input field="codePostal" id="c_org_adorsys_adpharma_domain_Fournisseur_codePostal" z="IUl+BTaT1M5sdXiWKSmdjVKt9rY="/>
         <field:input field="ContribuableNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_ContribuableNumber" z="W6U5wApb0z/YTOgqhUBu1TBMyP4="/>
         <field:input field="numRegistreComerce" id="c_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" z="dfmtcQ6DknxTgIVmRQc/6OFcmE4="/>
-        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Fournisseur_note" z="dqqWaxQVPZSbqUz4p/Wy2x88NC0="/>
+        <field:textarea field="note" render="false" id="c_org_adorsys_adpharma_domain_Fournisseur_note" z="dqqWaxQVPZSbqUz4p/Wy2x88NC0="/>
         <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
-        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="DistributorKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
-        <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" z="NwdpMS3w5XjOjdB/P/asBE+TVt4="/>
-        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_distributorKey" z="KMWitpk5toZzsPn8+PH6284aIAE="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Fournisseur" render="${not empty dependencies}" z="0LRvTgo5vHVjCteMVzhmsdmw4CM="/>
 </div>

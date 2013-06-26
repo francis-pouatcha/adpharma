@@ -39,15 +39,12 @@ public class StatisticsController {
 		uiModel.addAttribute("statistic", new Statistic());
 		return "statistics/statisticspage";
 	}
-
-
 	@RequestMapping(value="/new", params = "form", method = RequestMethod.GET)
 	public String createStatistics(Model uiModel) {
 		uiModel.addAttribute("statistic", new Statistic());
 		uiModel.addAttribute("currentDate", PharmaDateUtil.format(new Date(),PharmaDateUtil.DATE_PATTERN_YEAR));
 		return "statistics/courbes";
 	}
-
 	@RequestMapping(value="/displayChart", method = RequestMethod.GET)
 	@ResponseBody
 	public String displayChart( ChartDataViewModel dataViewModel,Model uiModel,HttpServletResponse response){
@@ -189,7 +186,7 @@ public class StatisticsController {
 	@RequestMapping( value ="/etatvente", method = RequestMethod.GET)
 	public String etatvente( Statistic statistic, Model uiModel) {
 		ArrayList<MouvementStock> mvts = new ArrayList<MouvementStock>();
-		List<Object[]> etatVente = MouvementStock.getEtatVente(statistic.getDateDebut(), statistic.getDateFin());
+		List<Object[]> etatVente = MouvementStock.getEtatVente(statistic.getCip(),statistic.getDateDebut(), statistic.getDateFin());
 		System.out.println(etatVente.size());
 		if (!etatVente.isEmpty()) {
 			for (Object[] obj : etatVente) {
@@ -199,6 +196,7 @@ public class StatisticsController {
 				mvt.setPAchatTotal((BigInteger)obj[2]);
 				mvt.setPVenteTotal((BigInteger)obj[3]);
 				mvt.setRemiseTotal((BigInteger)obj[4]);
+				mvt.setCip((String)obj[5]) ;
 				mvts.add(mvt);
 			}
 		}

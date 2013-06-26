@@ -25,6 +25,9 @@ public class DocumentsPath
     public static final String FICHE_INVENTAIRE_COMPTAGE_FILE_PATH = ROOT_DIR+"fiche_inventaire_comptage.jrxml";
     public static final String FICHE_APPROVISIONNEMENT_FILE_PATH = ROOT_DIR+"fiche_approsionnement.jrxml";
     public static final String BON_COMMANDE_FILE_PATH = ROOT_DIR+"bon_commande.jrxml";
+    public static final String BON_LIVRAISON_FILE_PATH = ROOT_DIR+"bon_livraison.jrxml";
+    public static final String BON_RUPTURE_OU_INCONNU_FILE_PATH = ROOT_DIR+"bon_ruptureORInconnu.jrxml";
+    public static final String ETAT_DES_SORTIE_RAISON_FILE_PATH = ROOT_DIR+"Etat_des_sortie_raison.jrxml";
     public static final String ETAT_VALORISATION_FILIALE_PATH = ROOT_DIR+"etat_valorisation_filiale.jrxml";
     public static final String ETAT_PRODUIT_SORTIE_FILE_PATH = ROOT_DIR+"etat_sortie_produit.jrxml";
     public static final String ETAT_MVTS_CIP_FILE_PATH = ROOT_DIR+"mvtstock_cip.jrxml";

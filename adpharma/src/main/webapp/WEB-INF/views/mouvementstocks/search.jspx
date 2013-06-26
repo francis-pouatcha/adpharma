@@ -27,12 +27,7 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
 	//	$('#designation').val(" ");
 		
 	}
-	
-	
 	$(function(){
-		
-		
-		
 		$('form#produitfindform').submit
 		(function(){
 			clearProductTable();
@@ -157,6 +152,7 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
             <tr>
                 <td style="border: none;">
           <field:input buttonId="find" buttonLabel="..." titleMessage="Cliquer le button ci-contre pour rechercher le cipm !" disableFormBinding="true" field="cipM" label="Code Barre (CIPM)"  id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
+        <field:input buttonId="findcip" buttonLabel="..." titleMessage="Cliquer le button ci-contre pour rechercher le cip !" disableFormBinding="true" field="cip" label="CIP"  id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
         <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_MouvementStock_designation" required="false" z="user-managed"/>
         <field:select disableFormBinding="true" field="typeMouvement" id="f_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" items="${typemouvements}" path="/typemouvements" required="false" z="user-managed"/>
           </td>
@@ -182,22 +178,46 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
    <page:list id="pl_org_adorsys_adpharma_domain_MouvementStock" items="${results}" z="user-managed">
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" property="mvtNumber" z="axWyghN8Isf0UeoVN3kBjrC2rvg="/>
-            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
-            <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" maxLength="-1" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
+                <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cip"  property="cip" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
+               <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
+               <table:column date="true" dateTimePattern="dd-MM-yyyy hh:mm" maxLength="-1" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" maxLength="-1" property="agentCreateur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" maxLength="-1" property="typeMouvement" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_designation" maxLength="-1" property="designation" z="Oxy9xJ8jH74fbm2mDw8LKT8H28I="/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale"  property="qteInitiale" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteDeplace"  property="qteDeplace" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
-            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" property="numeroTicket" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
-             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" render="false" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" render="false" property="numeroTicket" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_footPrint" property="footPrint" render="false" z="user-managed"/>
           </table:table>
     </page:list>
   </c:if> 
-  
-  
+   <div id="findproducts" style="display: none;" title="recherche un cip ">
+		
+		
+		
+		<form  id="produitfindforms" enctype="application/x-www-form-urlencoded">
+		<p>
+		<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;" type="text" name="designation"/>
+		</p>
+	
+		
+		</form>
+		
+		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ <div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproducts"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center;">CIP</th>
+		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+		    		<th style="text-align: center;">QTE CIP</th>
+		    	   <th style="text-align: center;" >RAYON</th>
+		    	   <th style="text-align: center;" >FILIALE</th>
+		    
+		    	</tr>
+		  </table>
+	</div>
+  </div>
   
   <div id="findproduit" style="display: none; width: 1000px;" title="recherche un cip maison">
 		
@@ -231,4 +251,6 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
 		  </table>
 	</div>	
 </div>
+
+<jsp:include page="ajaxSearchProductForm.jspx" />
 </div>

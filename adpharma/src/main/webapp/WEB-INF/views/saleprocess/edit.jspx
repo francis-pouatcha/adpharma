@@ -11,7 +11,6 @@
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-
 		<spring:message code="saleprocess_inhouse_cip"  var="inhouse_cip"/>
 		<spring:message code="saleprocess_default_cip"  var="default_cip"/>
 		<spring:message code="saleprocess_product_designation"  var="product_designation"/>
@@ -19,7 +18,6 @@
 		<spring:message code="saleprocess_product_qty"  var="product_qty"/>
 		<spring:message code="saleprocess_product_discount"  var="product_discount"/>
 		<spring:message code="saleprocess_product_total_price"  var="product_total_price"/>
-
 		<spring:message code="saleprocess_saleaction"  var="saleaction"/>
 		<spring:message code="saleprocess_enter_qty"  var="enter_qty"/>
 		<spring:message code="saleprocess_enter_cip"  var="enter_cip"/>
@@ -176,9 +174,9 @@
 	<security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
          <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
     </security:authorize>
-		<!-- 		
+		<!--			
     <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-		-->
+	--> 
 				 <span>
 					 <a href="${ delete_cmd_url}" style="text-decoration: none;">
 					  <INPUT class="submits" type="button" value="${cancel_sale }" title="${cancel_sale }" onclick="return annCmd();" />
@@ -199,11 +197,13 @@
 				</span>
 			</c:if>
 			<c:if test="${not empty  salesConfig}">
+			         <!-- 
 			          <span>
 			               <a href="#" style="text-decoration: none;"> 
 			                  <INPUT type="button" class="submits" value="Configurations Vente" id="config_vente" title="Visualiser les configurations de vente"  />
 			               </a>   
 			          </span>
+			           -->
 			</c:if>
 			
 			<div id="configuration_vente" style="display: none; height: 400px;" title="Liste des configurations de Vente">
@@ -360,7 +360,7 @@
 		    		<th>${product_qty_cipm}</th>
 		    		<th>${product_qty_cip}</th>
 		    		<th>${product_date_of_record}</th>
-		    		<th>RAYON</th>
+		    		<th>Rayons</th>
 		    		<th>${product_provider}</th>
 		    	
 				</tr>');
@@ -413,8 +413,6 @@
 											$('#cmdName').html(data);
 											$('#findClient').dialog("close"); 
 													});
-									
-										
 									};
 									});
 							
@@ -442,7 +440,6 @@
 										  <td>'+this.saisiele+'</td>
 										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
-
 										  </tr>'
 										
 								);
@@ -471,6 +468,10 @@
 // 											$('#pt').val(data.prixVenteUnitaire);
 // 											$('#remax').val(data.remiseMax);
 											
+											$('#remax').val(data.remiseMax);
+											$('#pt').val(data.prixVenteUnitaire);
+											$('#remP').val("");
+											$('#remq').val("");											
 											// verification de l'existence d'1 promotion active pour ce produit
 											if(data.produit.configSolde!= null){
 											  if(data.produit.configSolde.activeConfig == true){
@@ -743,7 +744,7 @@ $('#updateClient').dialog("close");
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
+							<td><INPUT type="text" name="qte" id="qte" readonly="readonly" onmouseover="this.select();" onfocus="this.select();"  class="autres"
 								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
@@ -864,7 +865,7 @@ $('#updateClient').dialog("close");
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte"  onmouseover="this.select();" onfocus="this.select();" 
+							<td><INPUT type="text" name="qte" id="qte" readonly="readonly" onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>

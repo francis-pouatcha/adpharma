@@ -108,6 +108,23 @@
         <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="AU" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
        <field:select id="" label="Frequence" items="${periodes }" field="periode" path="/periodes" />
     </form:custumcreate>
+    <BR />
+                           <HR />
+                          <div style="width: 80% ; "  id="legend">
+                         
+                            <P> LEGENDE </P>
+                          <TABLE>
+                          
+                             <TR>
+                                <TD style="background-color: rgb(51,204,255); width: 50%;"></TD>
+                                <TD id="firstYear" style=" width: 80%;">NB CLIENT</TD>
+                             </TR>
+                             <TR>
+                                <TD style="background-color:orange ; width: 50%;"></TD>
+                                <TD id="secondYear" style=" width: 80%;">PANIER MOYEN</TD>
+                             </TR>
+                          </TABLE>
+                          </div>
     		</fieldset>
     		</td>
     		<td align="center" width="80%" class="tblog">

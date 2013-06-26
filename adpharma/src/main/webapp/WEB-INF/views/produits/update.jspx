@@ -3,6 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:url value="/produits/selectProduct/${produit.id}" var="next_prd_url"/>
+    <spring:url value="/produits/validatedStockToCipm/${produit.id}" var="stock_validate_prd_url"/>
+    
     <div>
         <form:update id="fu_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits" versionField="Version" z="THQA0hFhMa/u8aupR1mb/uF/XEg=">
             <c:if test="${not empty apMessage}">
@@ -21,6 +23,9 @@
                         <security:authorize ifAnyGranted="ROLE_FUSIONNER_CIP,ROLE_SITE_MANAGER">
                             <span>
                                 <INPUT class="submits" id="fusion_search_prd" title="Rechercher le produit a fusionne " type="button" value="Effectuer une Fusion"/>
+                              <a href="${stock_validate_prd_url}" style="text-decoration: none;">
+                                <INPUT class="submits" id="stock_validate_prd" title="corriger le stock par rapport aux cipm !" type="button" value="corriger le stock"/>
+                              </a>
                             </span>
                         </security:authorize>
                     </td>
@@ -32,11 +37,12 @@
                         <field:display field="cip" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_cip" object="${produit }" z="user-managed"/>
                         <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant" z="PId8FnqnA6G5PhSA5xroeIGD/mI="/>
                         <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
+                                    <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" z="aBXRUfXCBzTP7rH3/WWL2Hbu+3U="/>
                         <field:textarea field="observation" id="c_org_adorsys_adpharma_domain_Produit_observation" render="false" z="user-managed"/>
                         <LEGEND> Infos Emplacement</LEGEND>
                         <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayons}" path="/rayons" z="Zg0uq1gDp43rfvNv1TwZCLKufp0="/>
                         <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiales}" path="/filiales" z="l18aF8XpIWTANR36w5lqnkBQYIY="/>
-                        <field:display field="quantiteEnStock" hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit }" z="user-managed"/>
+                        <field:display field="quantiteEnStock"  hiddenfield="true" id="c_org_adorsys_adpharma_domain_Produit_quantiteEnStock" object="${produit }" z="user-managed"/>
                     </td>
                     <td valign="top">
                         <LEGEND> Infos Stock</LEGEND>
@@ -78,16 +84,6 @@
                     </td>
                 </tr>
             </table>
-            <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Produit_footPrint" z="MCUWsF9rCTRehGDoCiIZAt3Wirk="/>
-            <field:input field="prixAchatU" id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" validationMessageCode="field_invalid_number" z="9iUgy1RUSEhKXBnvCQxa2kuQ8I8="/>
-            <field:input field="prixVenteU" id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" validationMessageCode="field_invalid_number" z="XYtWr+HgzPcpfkT3Fa16fQkyl2o="/>
-            <field:select field="cipType" id="c_org_adorsys_adpharma_domain_Produit_cipType" items="${ciptypes}" path="ciptypes" z="aBXRUfXCBzTP7rH3/WWL2Hbu+3U="/>
-            <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" z="wlhE2gDYfIv5r49ZFcER3FWJhGc="/>
-            <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Produit_actif" z="YirIMUT1Cmf86Y5J7Sut8EFLwow="/>
-            <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
-            <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
-            <field:select field="modeConditionement" id="c_org_adorsys_adpharma_domain_Produit_modeConditionement" itemValue="id" items="${modeconditionements}" path="/modeconditionements" z="/UXT0m1vgwe4bQ/lCksxWbhk/4c="/>
-            <field:input field="configSolde" id="c_org_adorsys_adpharma_domain_Produit_configSolde" z="NLCnenXtGlqUMxpZs4ZAzLQM/8Q="/>
         </form:update>
     </div>
     <jsp:include page="ajaxSearchProductForm.jspx"/>

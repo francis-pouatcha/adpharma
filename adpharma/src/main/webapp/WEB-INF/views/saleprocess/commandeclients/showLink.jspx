@@ -93,14 +93,13 @@ $('#conv_credit').click(function(){
 
 
 </SCRIPT>
-   
             <span>
                <a href="${ vente_public_url}" style="text-decoration: none;">
                  <INPUT class="submits" type="button" value="Effectuer une vente" title="Effectuer une Vente au comptant" />
                </a>
             </span>
   
- <c:if test="${commandeclient.typeCommande == 'VENTE_PROFORMAT' and not commandeclient.annuler and commandeclient.status =='CLOS'  }">
+             <c:if test="${commandeclient.typeCommande == 'VENTE_PROFORMAT' and not commandeclient.annuler and commandeclient.status =='CLOS'  }">
             <span>
                 <a href="${ conv_public_url}" style="text-decoration: none;">
                  <INPUT class="submits" type="button" value="CONVERTIR EN VENTE AU PUBLIC" title="Convertir en vente au public" />
@@ -112,7 +111,7 @@ $('#conv_credit').click(function(){
                </a>
             </span>
   
-</c:if>
+          </c:if>
 <c:choose>
    <c:when test="${commandeclient.status != etat }">
        <span>
@@ -127,7 +126,8 @@ $('#conv_credit').click(function(){
      </span>
    </c:when>
    <c:otherwise>
-      <c:if test="${not empty commandeclient.factureId }">
+     <!-- <c:if test="${not empty commandeclient.factureId }"> --> 
+      <c:if test="${commandeclient.encaisse }">
         <span>
             <a href="${ print_inv_url}" id="butfac" style="text-decoration: none;">
                 <INPUT class="submits" type="button" value="Imprimer La Facture" title="Imprimer Facture de Caisse" />

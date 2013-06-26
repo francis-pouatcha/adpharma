@@ -48,10 +48,26 @@ public class InventoryService {
 	 * @param produit
 	 * @return the true value of stock
 	 */
-	public BigInteger getTrueStockQuantity(Produit produit){
+	public static BigInteger getTrueStockQuantity(Produit produit){
 		BigInteger trueStock = BigInteger.ZERO;
 		if(produit == null) return trueStock ;
 		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, produit.getCip()).getResultList();
+		if (!resultList.isEmpty()) {
+			for (LigneApprovisionement line : resultList) {
+				trueStock = trueStock.add(line.getQuantieEnStock());
+			}
+		}
+		return trueStock ;
+	}
+	
+	/**
+	 * @param produit
+	 * @return the true value of stock include negative stock
+	 */
+	public static BigInteger getStockIncludeNegativeQte(Produit produit){
+		BigInteger trueStock = BigInteger.ZERO;
+		if(produit == null) return trueStock ;
+		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockNotEqualsAndCipEquals(BigInteger.ZERO, produit.getCip()).getResultList();
 		if (!resultList.isEmpty()) {
 			for (LigneApprovisionement line : resultList) {
 				trueStock = trueStock.add(line.getQuantieEnStock());
@@ -158,7 +174,7 @@ public class InventoryService {
 				if(quantity.intValue() <= 0) break ;
 				if(resultList.indexOf(line) == resultList.size() - 1)
 				{
-					quantity = line.pushAllInForInventory(quantity);
+				 	quantity = line.pushAllInForInventory(quantity);
 				} else
 				{
 					quantity = line.pushProductsInForInventory(quantity);

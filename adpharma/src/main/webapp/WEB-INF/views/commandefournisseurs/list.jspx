@@ -8,20 +8,17 @@
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" maxLength="-1" property="fournisseur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_site" maxLength="-1" property="site" render="false" z="h5Eh3bo77h2pL6uoY48X8jr+4tA="/>
-            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" property="etatCmd" z="Gmf2szu3Lcf8Jejcx5qNKdzOgHU="/>
+            <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_etatCmd" maxLength="-1" property="etatCmd" z="Gmf2szu3Lcf8Jejcx5qNKdzOgHU="/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_annuler" property="annuler" z="eH0pxOVGGnH4DisDLDumh3PGjRE="/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_creePar" maxLength="-1" property="creePar" z="ugviUdbbWfdnYqKp9c7bziqpDxE="/>
             <table:column id="s_org_adorsys_adpharma_domain_CommandeFournisseur_livre" property="livre" render="false" z="BF+syGDcRNZ/IMKCaMK/ckK5oPc="/>
-            <table:column date="true" dateTimePattern="${commandeFournisseur_submitiondate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" label="Envoye Le" property="submitionDate" z="user-managed"/>
-            <table:column date="true" dateTimePattern="${commandeFournisseur_traitmentdate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_traitmentDate" label="Traite Le" property="traitmentDate" z="user-managed"/>
-            <!-- 
+            <table:column  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_montantHt" property="montantHt" z="nmNWnaSYeuO03xxIm4q3lttpADs="/>
+            <table:column date="true" label="Envoye Le" maxLength="-1" dateTimePattern="${commandeFournisseur_submitiondate_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_submitionDate" property="submitionDate" z="i6P5JYyTaf0/nT9N1MG4Sw6kJJk="/>
+           <!-- 
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" property="exchangeBeanState" z="XTljQjrTTxjAJoVQ9m/vcmoh91Q="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" property="approvisionnementId" z="lTl0Cb9YfEv/r6bqtWXTxxhKr3A="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" property="commercialKey" z="RNAvnZKqwyNJwlj5q41RhZgVG9c="/>
          -->
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_exchangeBeanState" property="exchangeBeanState" z="XTljQjrTTxjAJoVQ9m/vcmoh91Q="/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_approvisionnementId" property="approvisionnementId" z="lTl0Cb9YfEv/r6bqtWXTxxhKr3A="/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commercialKey" property="commercialKey" z="RNAvnZKqwyNJwlj5q41RhZgVG9c="/>
         </table:table>
     </page:list1>
 </div>

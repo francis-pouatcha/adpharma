@@ -2,7 +2,7 @@
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:security="http://www.springframework.org/security/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <security:authorize ifAnyGranted="ROLE_STOCKER,ROLE_SITE_MANAGER">
+    <security:authorize ifAnyGranted="ROLE_MODIFIER_LIGNEAP,ROLE_SITE_MANAGER">
         <c:set value="true" var="permission"/>
     </security:authorize>
     <page:list1 id="pl_org_adorsys_adpharma_domain_LigneApprovisionement" items="${ligneapprovisionements}" label="Produits en Stock" z="user-managed" url="/ligneapprovisionements/searchLigneApp" search="true" placeholder="Rechercher par designation">

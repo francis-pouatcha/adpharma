@@ -53,9 +53,11 @@
             </div>
         
         </div>
-        
-     
-       </td>
+          <!-- 
+        <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+         -->
+    </td>
+    
        <td style="vertical-align: top;"  width="45%">
 		    <DIV style="overflow:auto;height: 400px; ">
 				  <table>

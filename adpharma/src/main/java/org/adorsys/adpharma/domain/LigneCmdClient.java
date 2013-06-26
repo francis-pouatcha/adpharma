@@ -107,11 +107,11 @@ public class LigneCmdClient extends AdPharmaBaseEntity {
 	}
 
 	public void calculPrixTotal() {
-		prixTotal = BigDecimal.valueOf(prixUnitaire.multiply(BigDecimal.valueOf(quantiteCommande.longValue())).longValueExact());
+		prixTotal = BigDecimal.valueOf(prixUnitaire.multiply(BigDecimal.valueOf(quantiteCommande.longValue())).longValue());
 	}
 
 	public void calculremiseTotal() {
-		totalRemise = BigDecimal.valueOf(remise.multiply(BigDecimal.valueOf(quantiteCommande.longValue())).longValueExact());
+		totalRemise = BigDecimal.valueOf(remise.multiply(BigDecimal.valueOf(quantiteCommande.longValue())).longValue());
 	}
 
 	@Override

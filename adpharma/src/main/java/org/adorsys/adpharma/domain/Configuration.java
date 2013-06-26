@@ -37,6 +37,9 @@ public class Configuration {
 	@Value("false")
 	private Boolean forceToSameLine;
 	
+	@Value("false")
+	private Boolean onlyCashReceiveCreditPay;
+	
 	private String receptionFolder ;
 	
 	private String sendFolder ;
@@ -117,6 +120,16 @@ public class Configuration {
 
 	public void setSendFolder(String sendFolder) {
 		this.sendFolder = sendFolder;
+	}
+
+
+	public Boolean getOnlyCashReceiveCreditPay() {
+		return onlyCashReceiveCreditPay;
+	}
+
+
+	public void setOnlyCashReceiveCreditPay(Boolean onlyCashReceiveCreditPay) {
+		this.onlyCashReceiveCreditPay = onlyCashReceiveCreditPay;
 	}
 
 
