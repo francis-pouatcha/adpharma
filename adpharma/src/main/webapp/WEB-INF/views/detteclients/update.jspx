@@ -22,5 +22,6 @@
         <field:input field="taux" id="c_org_adorsys_adpharma_domain_DetteClient_taux" z="IqG2XPKRm05EhncRPMob2jJPVIE="/>
         <field:input field="sousTotal" id="c_org_adorsys_adpharma_domain_DetteClient_sousTotal" validationMessageCode="field_invalid_integer" z="Xbgb/YZUUZ23wow4HYeTY1CM7G8="/>
         <field:input field="assurer" id="c_org_adorsys_adpharma_domain_DetteClient_assurer" z="fCKFRBWQw35bvnhhMO81CYHauKg="/>
+        <field:datetime dateTimePattern="${detteClient_enddate_date_format}" field="endDate" id="c_org_adorsys_adpharma_domain_DetteClient_endDate" z="4j5qt5MO0tw24pDv8AjszqmXv+k="/>
     </form:update>
 </div>

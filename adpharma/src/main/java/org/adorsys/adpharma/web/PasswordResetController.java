@@ -41,7 +41,6 @@ public class PasswordResetController {
         uiModel.asMap().clear();
         user.changePassword(passwordReset.getNewPassword());
         user.merge();
-        	
         return "passwordresets/confirm";
     }
     

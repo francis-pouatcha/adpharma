@@ -15,12 +15,13 @@
         <field:display field="siteInternet" id="s_org_adorsys_adpharma_domain_Site_siteInternet" object="${site}" z="LTIk6DbHTDQ4vOeyznhSp0SXXcI="/>
         <field:display field="mobile" id="s_org_adorsys_adpharma_domain_Site_mobile" object="${site}" z="0vOeRLWiI33L7SyQSP13y21nV5w="/>
         <field:display field="fax" id="s_org_adorsys_adpharma_domain_Site_fax" object="${site}" z="8ojNpS/7JKAmdtAklhhaiFTlH1M="/>
-        <field:display field="platformBaseUrl" render="false" id="s_org_adorsys_adpharma_domain_Site_platformBaseUrl" object="${site}" z="blAn8mC5uq4F4KXXSleDo5zVTK8="/>
+        <field:display field="platformBaseUrl" id="s_org_adorsys_adpharma_domain_Site_platformBaseUrl" object="${site}" render="false" z="user-managed"/>
         <field:display field="drugstoreKey" id="s_org_adorsys_adpharma_domain_Site_drugstoreKey" object="${site}" z="H/RzCyjrHqEF3zjx+UoGVC7kC3E="/>
         <field:display field="messageTiket" id="s_org_adorsys_adpharma_domain_Site_messageTiket" object="${site}" z="zJ+FotJBq7PsyB6KqqqYEekzB5Y="/>
-        <field:display field="orderSentPath" label="Dossier Messages PHML" id="s_org_adorsys_adpharma_domain_Site_orderSentPath" object="${site}" z="l+ZNVremc/Cjwr9IjTznxnKkzM8="/>
-        <field:display field="orderReceivePath" label="Dossier Reponses PHML" id="s_org_adorsys_adpharma_domain_Site_orderReceivePath" object="${site}" z="qlEqlNSStz2cC9Gub5nsvQ9J7Zo="/>
-    </page:show> 
+        <field:display field="orderSentPath" id="s_org_adorsys_adpharma_domain_Site_orderSentPath" label="Dossier Messages PHML" object="${site}" z="user-managed"/>
+        <field:display field="orderReceivePath" id="s_org_adorsys_adpharma_domain_Site_orderReceivePath" label="Dossier Reponses PHML" object="${site}" z="user-managed"/>
+        <field:display field="bareCodePerLine" id="s_org_adorsys_adpharma_domain_Site_bareCodePerLine" object="${site}" z="tPK20cZVjUceIhSnZiw4qRP5/2o="/>
+    </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Site_footPrint" object="${site}" z="user-managed"/>
     <HR style="margin-top: -12px;"/>

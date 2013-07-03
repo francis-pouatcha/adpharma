@@ -8,7 +8,6 @@ import java.lang.String;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
-import org.adorsys.adpharma.domain.Approvisionement;
 
 privileged aspect LigneApprovisionement_Roo_JavaBean {
     
@@ -162,14 +161,6 @@ privileged aspect LigneApprovisionement_Roo_JavaBean {
     
     public void LigneApprovisionement.setRemiseMax(BigDecimal remiseMax) {
         this.remiseMax = remiseMax;
-    }
-    
-    public Approvisionement LigneApprovisionement.getApprovisionement() {
-        return this.approvisionement;
-    }
-    
-    public void LigneApprovisionement.setApprovisionement(Approvisionement approvisionement) {
-        this.approvisionement = approvisionement;
     }
     
     public Boolean LigneApprovisionement.getRemiseAutorise() {

@@ -8,12 +8,9 @@ import java.lang.Long;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.adorsys.adpharma.domain.SalesConfiguration;
 import org.adorsys.adpharma.domain.TypeVente;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +44,6 @@ privileged aspect SalesConfigurationController_Roo_Controller {
         }
         return "salesconfigurations/list";
     }
-    
-    
     
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
     public String SalesConfigurationController.updateForm(@PathVariable("id") Long id, Model uiModel) {

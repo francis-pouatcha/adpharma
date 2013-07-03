@@ -3,6 +3,7 @@
 
 package org.adorsys.adpharma.domain;
 
+import java.lang.String;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -10,6 +11,14 @@ import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Etat;
 
 privileged aspect CommandeClient_Roo_Finder {
+    
+    public static TypedQuery<CommandeClient> CommandeClient.findCommandeClientsByCmdNumberEquals(String cmdNumber) {
+        if (cmdNumber == null || cmdNumber.length() == 0) throw new IllegalArgumentException("The cmdNumber argument is required");
+        EntityManager em = CommandeClient.entityManager();
+        TypedQuery<CommandeClient> q = em.createQuery("SELECT o FROM CommandeClient AS o WHERE o.cmdNumber = :cmdNumber", CommandeClient.class);
+        q.setParameter("cmdNumber", cmdNumber);
+        return q;
+    }
     
     public static TypedQuery<CommandeClient> CommandeClient.findCommandeClientsByDateCreationBetween(Date minDateCreation, Date maxDateCreation) {
         if (minDateCreation == null) throw new IllegalArgumentException("The minDateCreation argument is required");

@@ -12,20 +12,29 @@
      <spring:url value="/pharmausers/updateRole/${pharmauser.id}" var="update_role_url"/>
     <spring:message code="pharma_show_reset_password" var="fkuser_show_reset_password_label" htmlEscape="false" />
     
-              <span><a href="${ reset_password_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="RESET PASSWORD" title="${fn:escapeXml(fkuser_show_reset_password_label)}" /></a></span>
+    <span>
+         <a href="${ reset_password_url}" style="text-decoration: none;">
+            <INPUT class="submits"  type="button" value="RESET PASSWORD" title="${fn:escapeXml(fkuser_show_reset_password_label)}" />
+         </a>
+    </span>
     <c:choose>
     	<c:when test="${pharmauser.accountLocked}">
-		    <spring:url value="/pharmausers/resumeuser/${pharmauser.id}" var="resume_user_url"/>
-		    <spring:message code="pharma_show_resume_user" var="fkuser_show_resume_user_label" htmlEscape="false" />
-		    
-  <span><a href="${ resume_user_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="RESUME ACCOUNT" title="${fn:escapeXml(fkuser_show_resume_user_label)}" /></a></span>
-		    
+		 <spring:url value="/pharmausers/resumeuser/${pharmauser.id}" var="resume_user_url"/>
+		 <spring:message code="pharma_show_resume_user" var="fkuser_show_resume_user_label" htmlEscape="false" />
+         <span>
+            <a href="${ resume_user_url}" style="text-decoration: none;">
+              <INPUT class="submits"  type="button" value="RESUME ACCOUNT" title="${fn:escapeXml(fkuser_show_resume_user_label)}" />
+            </a>
+         </span>
     	</c:when>
     	<c:otherwise>
 		    <spring:url value="/pharmausers/suspenduser/${pharmauser.id}" var="suspend_user_url"/>
 		    <spring:message code="pharma_show_suspend_user" var="fkuser_show_suspend_user_label" htmlEscape="false" />
-		      <span><a href="${ suspend_user_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="SUSPEND ACCOUNT" title="${fn:escapeXml(fkuser_show_suspend_user_label)}" /></a></span>
-		    
+		    <span>
+		      <a href="${ suspend_user_url}" style="text-decoration: none;">
+		         <INPUT class="submits" type="button" value="SUSPEND ACCOUNT" title="${fn:escapeXml(fkuser_show_suspend_user_label)}" />
+		      </a>
+		    </span>
     	</c:otherwise>
     </c:choose>
     

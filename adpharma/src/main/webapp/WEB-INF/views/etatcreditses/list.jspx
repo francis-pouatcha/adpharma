@@ -2,7 +2,7 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${etatcreditses}" z="user-managed" url="/etatcreditses/searchCredit" search="${search}" placeholder="Rechercher par client">
+    <page:list1 id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${etatcreditses}" placeholder="Rechercher par client" search="${search}" url="/etatcreditses/searchCredit" z="user-managed">
         <table:table data="${etatcreditses}" delete="false" id="l_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy" id="c_org_adorsys_adpharma_domain_EtatCredits_dateEdition" property="dateEdition" z="ikmm2karrojRu92cXTrm3/oexms="/>
@@ -15,9 +15,9 @@
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_listeDettes" property="listeDettes" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_clientId" property="clientId" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_clientName" property="clientName" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" render="false" property="addAllUnbilledInvoices" z="l0WHivVMTFStBYPDXip5pSS/ogc="/>
-            <table:column date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" render="false" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" property="minDateDette" z="lceJHRuHuqYsoGEBomqcRYjCrwE="/>
-            <table:column date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" render="false" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" property="maxDateDette" z="ZuIFJ+4MVtfJsO3zdeo7aqrLopg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" property="addAllUnbilledInvoices" render="false" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" property="minDateDette" render="false" z="user-managed"/>
+            <table:column date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" property="maxDateDette" render="false" z="user-managed"/>
         </table:table>
     </page:list1>
 </div>

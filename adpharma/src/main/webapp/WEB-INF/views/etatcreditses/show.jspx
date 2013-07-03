@@ -151,9 +151,9 @@ $(function(){
                 </div>
             </springform:form>
         </div>
-        <field:display render="false" field="addAllUnbilledInvoices" id="s_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" object="${etatcredits}" z="YUio81R1CvhyeHXDAq9DWmgLA5k="/>
-        <field:display render="false" date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_minDateDette" object="${etatcredits}" z="l0d7qmoasjIVxxHuyYpjTU1sAOM="/>
-        <field:display render="false" date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" object="${etatcredits}" z="kyGYcY12AQwGOEi/dBJ7QgJgrXk="/>
+        <field:display field="addAllUnbilledInvoices" id="s_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" object="${etatcredits}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_minDateDette" object="${etatcredits}" render="false" z="user-managed"/>
+        <field:display date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="s_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" object="${etatcredits}" render="false" z="user-managed"/>
     </page:show1>
     <!--  formulaire de paiement -->
     <HR/>

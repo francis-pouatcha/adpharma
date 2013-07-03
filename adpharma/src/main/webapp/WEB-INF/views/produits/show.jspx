@@ -3,8 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Produit" object="${produit}" path="/produits" z="user-managed">
-        <field:display field="prixAchatSTock" id="s_org_adorsys_adpharma_domain_Produit_prixAchatSTock" object="${produit}"  z="user-managed"/>
-        <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_Produit_prixVenteStock" object="${produit}"  z="user-managed"/>
+        <field:display field="prixAchatSTock" id="s_org_adorsys_adpharma_domain_Produit_prixAchatSTock" object="${produit}" z="user-managed"/>
+        <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_Produit_prixVenteStock" object="${produit}" z="user-managed"/>
         <field:display field="qtevendu" id="s_org_adorsys_adpharma_domain_Produit_qtevendu" object="${produit}" render="false" z="user-managed"/>
         <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" render="false" z="user-managed"/>
         <field:display date="true" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" render="false" z="user-managed"/>
@@ -33,8 +33,10 @@
         <field:display field="posologie" id="s_org_adorsys_adpharma_domain_Produit_posologie" object="${produit}" z="gPKvPCUmN4Xseq4YXRdVxfzkpGM="/>
         <field:display field="principeActif" id="s_org_adorsys_adpharma_domain_Produit_principeActif" object="${produit}" z="+UORiI07q3v/ZUCbCW3GTOnVy9I="/>
         <field:display field="observation" id="s_org_adorsys_adpharma_domain_Produit_observation" object="${produit}" z="2OnzMv6w45/J0vIPypqSXyLqZY0="/>
-        <field:display field="cipType" id="s_org_adorsys_adpharma_domain_Produit_cipType" object="${produit}"  z="vqU9SuuJ78v0kLs08h+yfyrhuVQ="/>
- 
+        <field:display field="cipType" id="s_org_adorsys_adpharma_domain_Produit_cipType" object="${produit}" z="vqU9SuuJ78v0kLs08h+yfyrhuVQ="/>
+        <field:display field="prixAchatU" id="s_org_adorsys_adpharma_domain_Produit_prixAchatU" object="${produit}" z="xWIDDEDqkEEpjei+zLnSpA3LHWY="/>
+        <field:display field="prixVenteU" id="s_org_adorsys_adpharma_domain_Produit_prixVenteU" object="${produit}" z="jSgGBMFbEwkhYa/C5klhjMqLT9s="/>
+        <field:display field="configSolde" id="s_org_adorsys_adpharma_domain_Produit_configSolde" object="${produit}" z="1unW0lc25d12/PtxfCWCqMJKwwc="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Produit_footPrint" object="${produit}" z="sTmGDG3gdH1etdXs7ozgmjuXQDE="/>

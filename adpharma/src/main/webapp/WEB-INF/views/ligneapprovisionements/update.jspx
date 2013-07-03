@@ -62,6 +62,13 @@
                 </td>
             </tr>
         </table>
+        <field:checkbox field="skipPriceConvertion" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_skipPriceConvertion" z="alMTQgO0h2FiVuxQMolHz7s4yi0="/>
+        <field:input field="viewMsg" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" z="HBWzHwNDjtmzsud+JbHsyPBtOuA="/>
+        <field:input field="prixAchatSTock" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatSTock" validationMessageCode="field_invalid_number" z="ksODA1dPEp7GMrvqcuY8/bFwVjE="/>
+        <field:input field="prixVenteStock" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteStock" validationMessageCode="field_invalid_number" z="azxBSkIT3lN0HqLaEuL3+3ggufs="/>
+        <field:input field="nonRayon" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_nonRayon" z="2fBRmUlvvLaXX0VS9bSCOIhgcVo="/>
+        <field:input field="quantiteUniteGratuite" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteUniteGratuite" validationMessageCode="field_invalid_integer" z="xO4DCqgBaN+LfnALyyM4J99t0nU="/>
+        <field:input field="quantiteReclame" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" validationMessageCode="field_invalid_integer" z="ioGSRuQx2cb0mnUtVm8SUsqiw1E="/>
     </form:update>
     <jsp:include page="ajaxSearchProductForm.jspx"/>
 </div>

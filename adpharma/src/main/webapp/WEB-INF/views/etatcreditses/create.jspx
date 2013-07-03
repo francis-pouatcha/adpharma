@@ -133,6 +133,9 @@
         <field:datetime dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" z="6STCkcyBdjcCN81d2wuKO7Js39U="/>
         <field:datetime dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" z="4YbQBRGFQvXJUOt8mr+Xm2D44d8="/>
      -->
+        <field:checkbox field="addAllUnbilledInvoices" id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" z="ldRPm4k4QXzewi9AI5u5p081yZ0="/>
+        <field:datetime dateTimePattern="${etatCredits_mindatedette_date_format}" field="minDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" z="6STCkcyBdjcCN81d2wuKO7Js39U="/>
+        <field:datetime dateTimePattern="${etatCredits_maxdatedette_date_format}" field="maxDateDette" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" z="4YbQBRGFQvXJUOt8mr+Xm2D44d8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_EtatCredits" render="${not empty dependencies}" z="10E+Cq5xsOk6ZfMHkSAQLAovojg="/>
     <div id="findClient" style="display: none;" title="recherche client">

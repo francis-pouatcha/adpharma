@@ -34,6 +34,9 @@
         <field:input field="viewMsg" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_viewMsg" z="HBWzHwNDjtmzsud+JbHsyPBtOuA="/>
         <field:input field="quantiteReclame" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" validationMessageCode="field_invalid_integer" z="ioGSRuQx2cb0mnUtVm8SUsqiw1E="/>
         <field:input field="quantiteUniteGratuite" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteUniteGratuite" validationMessageCode="field_invalid_integer" z="xO4DCqgBaN+LfnALyyM4J99t0nU="/>
+        <field:input field="prixAchatSTock" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatSTock" validationMessageCode="field_invalid_number" z="ksODA1dPEp7GMrvqcuY8/bFwVjE="/>
+        <field:input field="prixVenteStock" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteStock" validationMessageCode="field_invalid_number" z="azxBSkIT3lN0HqLaEuL3+3ggufs="/>
+        <field:input field="nonRayon" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_nonRayon" z="2fBRmUlvvLaXX0VS9bSCOIhgcVo="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_LigneApprovisionement" render="${not empty dependencies}" z="lj53GTSyRFJj31Nv7HHG2oABFZA="/>
 </div>

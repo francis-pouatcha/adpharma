@@ -174,6 +174,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public void setQteCip(BigInteger qteCip) {
 		this.qteCip = qteCip;
 	}
+	
+	public Approvisionement getApprovisionement() {
+        return this.approvisionement;
+    }
+    
+    public void setApprovisionement(Approvisionement approvisionement) {
+        this.approvisionement = approvisionement;
+    }
 
 	private transient BigInteger qteCip;
 
@@ -862,6 +870,15 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison AND o.quantiteReclame > :qteReclame", LigneApprovisionement.class);
 	        q.setParameter("cipMaison", cipMaison);
 	        q.setParameter("qteReclame", BigInteger.ZERO);
+	        return q;
+	    }
+	 
+	 
+	 public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEquals(String cipMaison) {
+	        if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
+	        EntityManager em = LigneApprovisionement.entityManager();
+	        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison", LigneApprovisionement.class);
+	        q.setParameter("cipMaison", cipMaison);
 	        return q;
 	    }
 	

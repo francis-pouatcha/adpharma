@@ -266,6 +266,23 @@ public class InventaireProcessController {
 		return "inventaires/inventaireFicheQte";
 
 	}
+	
+	 // Impression de la fiche de code bar de l'inventaire
+	@RequestMapping(value="/{invId}/printCodeBar/{invNumber}.pdf", method=RequestMethod.GET)
+	public String printFicheCodeBare(@PathVariable("invId")Long invId, @PathVariable("invNumber")String invNumber,  Model uiModel, HttpServletRequest httpServletRequest){
+		Inventaire inventaire = Inventaire.findInventaire(invId);
+		List<LigneInventaire> lignesInventaire = LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList();
+		// Map to store all the data
+		Map<String, List<LigneApprovisionement>> mapping = new HashMap<String, List<LigneApprovisionement>>();
+		for(LigneInventaire ligne: lignesInventaire){
+			String cip = ligne.getProduit().getCip();
+			List<LigneApprovisionement> lines = LigneApprovisionement.findLigneApprovisionementsByProduit(ligne.getProduit()).getResultList();
+			mapping.put(cip, lines);
+		}
+		uiModel.addAttribute("produits", mapping);
+		uiModel.addAttribute("invNumber", inventaire.getNumeroInventaire());
+		return "inventaireCodebarPdfView";
+	}
 
 	@RequestMapping(value = "/ficheSuivieQte.pdf", method = RequestMethod.GET)
 	public String inventaireFicheQte(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
@@ -304,6 +321,14 @@ public class InventaireProcessController {
 		uiModel.addAttribute("filiale", ProcessHelper.populateFiliale());
 		return "produits/search";
 	}
+	
+	
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public String printFicheCodesBars(HttpServletRequest httpServletRequest){
+		
+		return "";
+	}
+	
 
 
 }

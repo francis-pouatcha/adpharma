@@ -1,12 +1,15 @@
 package org.adorsys.adpharma.beans.pdf;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.Site;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -24,14 +27,15 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-@Component("ficheCodeBarePdfDocView")
-public class FicheCodeBarePdfDocView extends   AbstractPdfView {
+
+@Component("inventaireCodebarPdfView")
+public class InventaireCodebarPdfView  extends AbstractPdfView{
+
+	private Object String;
 
 	@Override
-	protected void buildPdfDocument(Map<String, Object> model,
-			Document document, PdfWriter writer, HttpServletRequest request,
+	protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, 
 			HttpServletResponse response) throws Exception {
-
 		PdfContentByte cb = writer.getDirectContent();
 		Font headerStyle = new Font();
 		headerStyle.setStyle("bold");
@@ -64,43 +68,42 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 		emptyCell.setPhrase(new Phrase("\n"));
 		emptyCell.setMinimumHeight(8f);
 		PdfPCell empty = new PdfPCell(cellBorderlessStyle);
-		//PrintEmptyCell(12, 2, adressTable, emptyCell);
-		List<LigneApprovisionement>  ligne = ( List<LigneApprovisionement> ) model.get("ligneApprivisionement");
-		if (!ligne.isEmpty()) {
-			int size = ligne.size();
-		for (LigneApprovisionement ligneApprovisionement : ligne) {
-             int i = 1 ;
-			int quantieEnStock = ligneApprovisionement.getQuantiteAprovisione().intValue();
-		 	
-		printBareCode(ligneApprovisionement, quantieEnStock, adressTable, cb);
 		
-		 	
-		}
-		
-	}
-		adressTable.completeRow();
-
-			document.add(adressTable);
-			document.add(new Phrase(new Chunk(".")));
+	    Map<String, List<LigneApprovisionement>> entries= (Map<String, List<LigneApprovisionement>>)model.get("produits");
+	    Set<String> keySet = entries.keySet();
+	    for(String key: keySet){
+	    	List<LigneApprovisionement> list = entries.get(key);
+	    	for(LigneApprovisionement ligne: list){
+	    		int qteStock = ligne.getQuantieEnStock().intValue();
+	    		printBareCode(ligne, qteStock, adressTable, cb);
+	    	}
+	    }
+	    
+	    adressTable.completeRow();
+		document.add(adressTable);
+		document.add(new Phrase(new Chunk(".")));
+	    
 	}
 	
+	// Impression des lignes vides
 	public void PrintEmptyCell(int emptyLine,int emptyColumn,PdfPTable table,PdfPCell emptyCell){
-			for (int i = 1; i <= emptyLine; i++) {
-				if (i == emptyLine) {
-					for (int j = 1; j <= emptyColumn; j++) {
-						table.addCell(emptyCell);
-					}
-					
-				}else {
-					for (int j = 1; j <= 5; j++) {
-						table.addCell(emptyCell);
-					}
+		for (int i = 1; i <= emptyLine; i++) {
+			if (i == emptyLine) {
+				for (int j = 1; j <= emptyColumn; j++) {
+					table.addCell(emptyCell);
+				}
+				
+			}else {
+				for (int j = 1; j <= 5; j++) {
+					table.addCell(emptyCell);
 				}
 			}
-	}
+		}
+   }
 	
-	public void printBareCode(LigneApprovisionement ligneApprovisionement ,int quantieEnStock,PdfPTable table,PdfContentByte cb){
-	 	   String filiale = ligneApprovisionement.getProduit().getFiliale()!=null?ligneApprovisionement.getProduit().getFiliale().getId().toString():"";
+	// Methode d'impression de code barre
+	public void printBareCode(LigneApprovisionement ligneApprovisionement, int quantieEnStock, PdfPTable table, PdfContentByte cb){
+	 	String filiale = ligneApprovisionement.getProduit().getFiliale()!=null?ligneApprovisionement.getProduit().getFiliale().getId().toString():"";
 		Font boddyStyles = new Font(Font.BOLD,4);
 		boddyStyles.setStyle("bold");
 		PdfPCell cellStyle = new PdfPCell();
@@ -128,7 +131,6 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 			if (length >20) {
 				designation = designation.substring(0, 19);
 			}
-			
 			textcell.setPhrase(new Phrase(new Chunk(designation.toUpperCase()+"\n" +filiale+ligneApprovisionement.getApprovisionement().getFounisseur().displayCodeName()+ligneApprovisionement.getPrixVenteUnitaire().longValueExact()+" FCFA", boddyStyles)));
 			textcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			PdfPTable imgTable = new PdfPTable(1);
@@ -140,17 +142,16 @@ public class FicheCodeBarePdfDocView extends   AbstractPdfView {
 			table.addCell(imgTable);
 
 		}
-
 	}
 	
-	
-	
-
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model,	Document document, HttpServletRequest request) {
+		String numInventaire= (String)model.get("invNumber");
 		document.setPageSize(PageSize.A4);
 		document.setMargins(0,0,0, 0);
 		super.buildPdfMetadata(model, document, request);
 	}
+	
+	
 
 }

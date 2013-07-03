@@ -12,14 +12,6 @@ import org.adorsys.adpharma.domain.Produit;
 
 privileged aspect LigneApprovisionement_Roo_Finder {
     
-    public static TypedQuery<LigneApprovisionement> LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(String cipMaison) {
-        if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
-        EntityManager em = LigneApprovisionement.entityManager();
-        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison", LigneApprovisionement.class);
-        q.setParameter("cipMaison", cipMaison);
-        return q;
-    }
-    
     public static TypedQuery<LigneApprovisionement> LigneApprovisionement.findLigneApprovisionementsByProduit(Produit produit) {
         if (produit == null) throw new IllegalArgumentException("The produit argument is required");
         EntityManager em = LigneApprovisionement.entityManager();

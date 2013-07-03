@@ -163,13 +163,10 @@ xmlns:security="http://www.springframework.org/security/tags" xmlns:form="urn:js
             </tr>
         </table>
     </form:find>
-       <c:if test="${not empty apMessage}">
-		<hr/>
-	<center>
-			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
-	</center>
-			<hr/>
-	
+    <c:if test="${not empty apMessage}">
+		<center>
+				<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+		</center>
 	</c:if>
     <c:if test="${ not empty results}">
       <security:authorize ifAnyGranted="ROLE_STOCKER,ROLE_SITE_MANAGER">

@@ -76,12 +76,13 @@ public class ApprovisionementController {
 		uiModel.asMap().clear();
 		if (approvisionement.getFiliales()!=null)approvisionement.setFiliale(approvisionement.getFiliales().getFilialeNumber());
 		approvisionement.merge();
-		return "redirect:/approvisionements/" + encodeUrlPathSegment(approvisionement.getId().toString(), httpServletRequest);
+		return "redirect:/approvisionements/" + ProcessHelper.encodeUrlPathSegment(approvisionement.getId().toString(), httpServletRequest);
 	}
 
 	@ModelAttribute("approvisionements")
 	public Collection<Approvisionement> populateApprovisionements() {
-		return new ArrayList<Approvisionement>();	    }
+		return new ArrayList<Approvisionement>();	   
+		}
 
 	@ModelAttribute("commandefournisseurs")
 	public Collection<CommandeFournisseur> populateCommandeFournisseurs() {

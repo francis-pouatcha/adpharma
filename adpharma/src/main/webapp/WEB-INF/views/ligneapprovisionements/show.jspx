@@ -49,6 +49,9 @@
         <field:display field="saisiele" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_saisiele" object="${ligneapprovisionement}" z="D9ZXSKzC5PVvTUxjrGPVcnmHdlg="/>
         <field:display field="quantiteReclame" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteReclame" object="${ligneapprovisionement}" z="DbikkAwvRmAwu4yaSVwQ2NW9Z+0="/>
         <field:display field="quantiteUniteGratuite" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteUniteGratuite" object="${ligneapprovisionement}" z="DDl6wtXvHiBNBOQbCyKGJjz+GTo="/>
+        <field:display field="prixAchatSTock" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatSTock" object="${ligneapprovisionement}" z="wvTjnKgRHBa8+TlxJmwYUCk+7TA="/>
+        <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteStock" object="${ligneapprovisionement}" z="HGNq/ie4wX9qjL80c9Hz9bvefys="/>
+        <field:display field="nonRayon" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_nonRayon" object="${ligneapprovisionement}" z="VZx1pRbUioF+qq6f5FH/IUoP9uQ="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" object="${ligneapprovisionement}" z="9XRvYfBWuf7prrLbwUkRP29+bEk="/>

@@ -18,6 +18,7 @@ privileged aspect DetteClient_Roo_ToString {
         sb.append("DateCreation: ").append(getDateCreation()).append(", ");
         sb.append("DateDernierVersement: ").append(getDateDernierVersement()).append(", ");
         sb.append("DatePaiement: ").append(getDatePaiement()).append(", ");
+        sb.append("EndDate: ").append(getEndDate()).append(", ");
         sb.append("EtatCredit: ").append(getEtatCredit()).append(", ");
         sb.append("FactureId: ").append(getFactureId()).append(", ");
         sb.append("FactureNo: ").append(getFactureNo()).append(", ");
@@ -25,10 +26,12 @@ privileged aspect DetteClient_Roo_ToString {
         sb.append("Id: ").append(getId()).append(", ");
         sb.append("MontantInitial: ").append(getMontantInitial()).append(", ");
         sb.append("NumBon: ").append(getNumBon()).append(", ");
+        sb.append("PartAssure: ").append(getPartAssure()).append(", ");
         sb.append("Reste: ").append(getReste()).append(", ");
         sb.append("Solder: ").append(getSolder()).append(", ");
         sb.append("SousTotal: ").append(getSousTotal()).append(", ");
         sb.append("Taux: ").append(getTaux()).append(", ");
+        sb.append("TauxAssure: ").append(getTauxAssure()).append(", ");
         sb.append("Version: ").append(getVersion());
         return sb.toString();
     }

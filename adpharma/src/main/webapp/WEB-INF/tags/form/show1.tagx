@@ -43,7 +43,7 @@
     <util:panel id="${id}" title="${title_msg}" openPane="${openPane}">
      <c:if test="${not empty clientLinks}">
              	<jsp:include page="${clientLinks}"/>
-        </c:if>
+     </c:if>
       <c:choose>
         <c:when test="${not empty object}">
          <div class="quicklinks">

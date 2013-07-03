@@ -460,3 +460,11 @@ q
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-05-21 13:27:04
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-06-26 10:58:46
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-06-26 17:26:37
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-06-26 17:27:23
+focus --class ~.domain.CommandeClient
+finder list 
+finder add --finderName findCommandeClientsByCmdNumberEquals
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-06-26 18:25:19

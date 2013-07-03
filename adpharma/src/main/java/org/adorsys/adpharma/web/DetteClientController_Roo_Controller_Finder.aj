@@ -67,7 +67,7 @@ privileged aspect DetteClientController_Roo_Controller_Finder {
     }
     
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET)
-    public String DetteClientController.findDetteClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation, Model uiModel) {
+    public String DetteClientController.findDetteClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
         uiModel.addAttribute("detteclients", DetteClient.findDetteClientsByDateCreationBetween(minDateCreation, maxDateCreation).getResultList());
         addDateTimeFormatPatterns(uiModel);
         return "detteclients/list";
