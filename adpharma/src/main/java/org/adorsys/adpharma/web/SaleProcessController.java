@@ -798,7 +798,8 @@ public class SaleProcessController {
 		Facture facture = Facture.findFacture(invId);
 		uiModel.addAttribute("nom", nom);
 		uiModel.addAttribute("dateFacturation", dateFacturation);
-		if(remise!=null) facture.setPrintWithReduction(remise);
+		System.out.println(remise);
+		facture.setPrintWithReduction(remise!=null?Boolean.TRUE:Boolean.FALSE);
 		uiModel.addAttribute("facture", facture);
 		return "facturePdfDocViews";
 	}
@@ -812,7 +813,7 @@ public class SaleProcessController {
 		uiModel.addAttribute("dateTicket", dateTicket);
 		System.out.println(nom+" : "+dateTicket);
 		Paiement paiement = facture.getCommande().getPaiements();
-		//if(remise!=null) paiement.setReduction(remise);
+		 paiement.setReduction(remise!=null?Boolean.TRUE:Boolean.FALSE);
 		uiModel.addAttribute("paiement", paiement);
 		return "ticketPdfDocView";
 

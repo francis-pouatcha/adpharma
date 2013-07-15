@@ -3,6 +3,7 @@
 *.jar
 *.war
 *.ear
+*.log
 target/
 *.class
 bin/
