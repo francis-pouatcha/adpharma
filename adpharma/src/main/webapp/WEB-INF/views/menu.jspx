@@ -165,6 +165,7 @@
                     <menu:item id="i_commandeclient_list" messageCode="global_menu_list" url="/commandeclients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="SxgqtM7Plw/nYOSChc5zP9ssYbU="/>
                     <menu:item id="fi_commandeclient_datecreationbetween" messageCode="global_menu_find" url="/commandeclients?find=ByDateCreationBetween&amp;form" z="sNvfDT9cvA8z23Ojp7QrUlht/K8="/>
                     <menu:item id="fi_commandeclient_statusanddatecreationbetween" messageCode="global_menu_find" url="/commandeclients?find=ByStatusAndDateCreationBetween&amp;form" z="DAHhXbGQc6R249ptsFcHoEREcFU="/>
+                    <menu:item id="fi_commandeclient_cmdnumberequals" messageCode="global_menu_find" url="/commandeclients?find=ByCmdNumberEquals&amp;form" z="BFFFrwsUOHVaLbeLOXNIJvhiwF4="/>
                 </menu:category>
                 <menu:category id="c_lignecmdclient" z="bPloCpDdqX/svs9a9GztCpDUZ/M=">
                     <menu:item id="i_lignecmdclient_new" messageCode="global_menu_new" url="/lignecmdclients?form" z="80cohJ1nOurxL6+1j/8vg+udUIo="/>

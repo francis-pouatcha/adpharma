@@ -468,3 +468,5 @@ finder list
 finder add --finderName findCommandeClientsByCmdNumberEquals
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-06-26 18:25:19
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-08-23 09:50:10
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-08-23 10:10:13
