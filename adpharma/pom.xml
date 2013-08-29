@@ -70,14 +70,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   <artifactId>ehcache-core</artifactId>
   <version>2.3.0</version>
 </dependency>
-   -->     
+       
   
      <dependency>
          <groupId>org.adorsys.scriptlets</groupId>
          <artifactId>scriptlet</artifactId>
          <version>1.0</version>
      </dependency>
-   
+   --> 
    <dependency>
 <groupId>jfree</groupId>
 <artifactId>jfreechart</artifactId>

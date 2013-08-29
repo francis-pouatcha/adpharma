@@ -824,7 +824,8 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 		Facture facture = Facture.findFacture(invId);
 		uiModel.addAttribute("nom", nom);
 		uiModel.addAttribute("dateFacturation", dateFacturation);
-		if(remise!=null) facture.setPrintWithReduction(remise);
+		System.out.println(remise);
+		facture.setPrintWithReduction(remise!=null?Boolean.TRUE:Boolean.FALSE);
 		uiModel.addAttribute("facture", facture);
 		return "facturePdfDocViews";
 	}
@@ -837,6 +838,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 		uiModel.addAttribute("nom", nom);
 		uiModel.addAttribute("dateTicket", dateTicket);
 		Paiement paiement = facture.getCommande().getPaiements();
+		paiement.setReduction(remise!=null?Boolean.TRUE:Boolean.FALSE);
 		uiModel.addAttribute("paiement", paiement);
 		return "ticketPdfDocView";
 

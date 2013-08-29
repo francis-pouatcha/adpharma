@@ -252,7 +252,7 @@ return( false );
 						<tr>
 							<form action="${print_inv_url}"   method="GET" id="factures" name="factures" >
 							<td>
-							     <INPUT type="checkbox" name="remise" id="remise" class="autres" checked="checked"  style=" text-align: center;" />
+							<INPUT type="checkbox" name="remise" id="remise" class="autres" checked="checked"  style="text-align: center;" />
 							</td>
 							<td>
 							     <INPUT type="text" name="nom" id="nom" class="autres" value="" style=" text-align: center;" />

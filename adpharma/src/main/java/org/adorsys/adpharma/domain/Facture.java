@@ -94,6 +94,10 @@ public class Facture extends AdPharmaBaseEntity {
     private BigInteger avance = BigInteger.ZERO;
 
     private BigInteger reste = BigInteger.ZERO;
+    
+    public BigInteger calculateSoldeWhithoutRemise(){
+        return montantTotal.subtract(avance.add(montantRemise));
+    }
 
     @Transient
     private String cip;

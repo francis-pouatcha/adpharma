@@ -26,4 +26,7 @@
     <definition extends="vendeur" name="commandeclients/search">
         <put-attribute name="body" value="/WEB-INF/views/commandeclients/search.jspx"/>
     </definition>
+<definition extends="default" name="commandeclients/findCommandeClientsByCmdNumberEquals">
+        <put-attribute name="body" value="/WEB-INF/views/commandeclients/findCommandeClientsByCmdNumberEquals.jspx"/>
+    </definition>
 </tiles-definitions>

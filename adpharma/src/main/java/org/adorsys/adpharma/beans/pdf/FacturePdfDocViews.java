@@ -375,10 +375,14 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		// montant total remise 
 		PdfPCell avance = new PdfPCell(cellBorderless);
 		if(facture.getPrintWithReduction()){
-			
 			avance.setPhrase(new Phrase(new Chunk(payamount.toString(), headerStyle)));
 		}else {
-			avance.setPhrase(new Phrase(new Chunk(payamount.add(facture.getMontantRemise()).toString(), headerStyle)));
+		    if(isSaleCash){
+		        avance.setPhrase(new Phrase(new Chunk(payamount.toString(), headerStyle)));
+            }else {
+                avance.setPhrase(new Phrase(new Chunk(payamount.add(facture.getMontantRemise()).toString(), headerStyle)));
+                }
+			
 		}
 		avance.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		table.addCell(avance);
@@ -400,10 +404,10 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		if(facture.getPrintWithReduction()){
 			motantTc.setPhrase(new Phrase(new Chunk(reste.toString(), headerStyle)));
 		}else {
-			if(facture.getReste().intValue()==0){
-				motantTc.setPhrase(new Phrase(new Chunk(reste.toString(), headerStyle)));
+			if(isSaleCash){
+				motantTc.setPhrase(new Phrase(new Chunk(facture.getMontantTotal().toString(), headerStyle)));
 			}else {
-				motantTc.setPhrase(new Phrase(new Chunk(reste.add(facture.getMontantRemise()).toString(), headerStyle)));
+				motantTc.setPhrase(new Phrase(new Chunk((facture.calculateSoldeWhithoutRemise()).toString(), headerStyle)));
 			}
 
 		}
@@ -421,11 +425,11 @@ public class FacturePdfDocViews extends   AbstractPdfView {
 		if(facture.getPrintWithReduction()){
 			document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 		}else {
-			if(facture.getReste().intValue()==0){
-				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
+			if(isSaleCash){
+				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(facture.getMontantTotal()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 			}else {
-				motantTc.setPhrase(new Phrase(new Chunk(reste.add(facture.getMontantRemise()).toString(), headerStyle)));
-				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.add(facture.getMontantRemise()).intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
+				//motantTc.setPhrase(new Phrase(new Chunk(reste.add(facture.getMontantRemise()).toString(), headerStyle)));
+				document.add(new Paragraph(new Phrase(new Chunk("Arrete la facture a la somme de  :"+rbnf.format(reste.add(facture.calculateSoldeWhithoutRemise()).intValue()).replace("-", " ").toUpperCase()+" FRANCS CFA", headerStyle))));
 
 			}
 
