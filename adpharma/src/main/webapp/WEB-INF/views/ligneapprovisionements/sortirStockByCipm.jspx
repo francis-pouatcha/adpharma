@@ -13,8 +13,8 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<div style="margin-bottom: 5px; padding-bottom: 5px;">
-		<span style="font-weight: bold"> <c:out
-				value="${commandeProcess.displayName}" />
+		<span style="font-weight: bold"> 
+		<c:out value="${commandeProcess.displayName}" />
 		</span>
 	</div>
 	<spring:url value="/" var="home" />
@@ -22,40 +22,51 @@
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
-	<spring:url
-		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
-		var="delete_cmd_url" />
-			<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
-		<spring:url value="/saleprocess/0/findProduct/"   var="find_product_url" />
-	
-		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler" var="delete_cmd_url" />
+	<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
+	<spring:url value="/saleprocess/0/findProduct/"   var="find_product_url" />
+	<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+		
+		
+		<spring:message code="button_cancel" var="button_cancel" />
+		<spring:message code="sortie_title_cipm" var="sortie_title_cipm" />
+		<spring:message code="sortie_title_cip" var="sortie_title_cip" />
+		<spring:message code="button_find_product" var="button_find_product" />
+		<spring:message code="button_exit" var="button_exit" />
+		<spring:message code="sortie_panel_cipm" var="sortie_panel_cipm" />
+		<spring:message code="sortie_panel_list" var="sortie_panel_list" />
+		<spring:message code="column_prix_unit" var="column_prix_unit" />
+		<spring:message code="column_cipm_qty" var="column_cipm_qty" />
+		<spring:message code="column_cip_qty" var="column_cip_qty" />
+		<spring:message code="column_reason" var="column_reason" />
+		<spring:message code="column_qty_out" var="column_qty_out"  />
+		<spring:message code="column_qty_initial" var="column_qty_initial"  />
+		<spring:message code="column_qty_final" var="column_qty_final"  />
+		<spring:message code="column_agent" var="column_agent" />
+		<spring:message code="column_provider" var="column_provider" />
+		<spring:message code="column_entry_date" var="column_entry_date" />
+		<spring:message code="saleprocess_product_dosage" var="saleprocess_product_dosage" />
+		<spring:message code="button_save" var="button_save" />
+		
 	
 	<!-- recherche de produit par code identification -->
 
-	<script type="text/javascript">
-    	
+<script type="text/javascript">
 	dojo.ready(function(){   
-		
-		
-    		
 		function clearProductTable(){
 			$('#resultproduit').html(
 					'<tr>
-					<th>CIP</th>
+					    <th>CIP</th>
 				    	<th>CIPM</th>
 			    		<th>DESIGNATION</th>
-			    		 <th>PRIX UNIT</th>
-			    		<th>QTE CIPM</th>
-			    		<th>QTE CIP</th>
-			    		<th>SAISIE LE</th>
-			    		<th>FOURNISSEUR</th>
+			    		<th style="text-transform: uppercase;">${column_prix_unit}</th>
+			    		<th style="text-transform: uppercase;">${column_cipm_qty}</th>
+			    		<th style="text-transform: uppercase;">${column_cip_qty}</th>
+			    		<th style="text-transform: uppercase;">${column_entry_date}</th>
+			    		<th style="text-transform: uppercase;">${column_provider}</th>
 			    	
 					</tr>');
-		//	$('#designation').val(" ");
-			
 		}
-		
-		
 		$('form#produitfindform').submit
 		(function(){
 			clearProductTable();
@@ -65,7 +76,7 @@
 								$(data).each(function(){
 									
 									$('#resultproduit').append(
-											'<tr id="'+this.cipMaison+'">
+									    '<tr id="'+this.cipMaison+'">
 										  <td>'+this.cip+'</td>
 										  <td>'+this.cipMaison+'</td>
 										  <td>'+this.designation+'</td>
@@ -74,10 +85,8 @@
 										  <td>'+this.qteCip+'</td>
 										  <td>'+this.saisiele+'</td>
 										  <td>'+this.fournisseur+'</td>
-										  </tr>'
-										
+										 </tr>'
 								);
-									
 								});
 								$('table#resultproduit tr').each(function(){
 									var current = this;
@@ -91,12 +100,8 @@
 			    							$("#qtecipm").val(data.quantieEnStock) ;
 											$('#findproduit').dialog("close"); 
 													});
-									
-										
 									};
 									});
-							
-
 							});
 				return false ;
 		});
@@ -104,15 +109,10 @@
 		$('img.loadimage').ajaxStart(function(){
 			$(this).show();
 		});
-		
 		$('img.loadimage').ajaxStop(function(){
 			$(this).hide();
 		});
 
-	
-		
-		
-		
 		// Dialog	find produit		
 		$('#findproduit').dialog({
 			open:function(){
@@ -122,18 +122,16 @@
 			width: 1200,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}
 			
 		});
-    		
-    
     		function findline() {
     			var cipm = document.getElementById("cipm").value;
     			var url = "${find_cipm_url}/" + cipm ;
@@ -161,9 +159,6 @@
     			document.getElementById("pu").value = "";
     			document.getElementById("qte").value = "";
     			document.getElementById("qtecipm").value = "";
-
-    			
-    		   
     		}
 
 
@@ -192,56 +187,46 @@ $('#subForm').submit(function(){
 		  return true ;
 	  }
 });
- 
-
-
-
  });
 
-	
-			
-
-
-
 </script>
+
 		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm"   var="sorti_cipm_url" />
 		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCip"   var="sorti_cip_url" />
-	
+		
 
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab">
-			<a href="${sorti_cipm_url}">SORTIR DES PRODUITS PAR (C.I.P.M) </a>
+			<a href="${sorti_cipm_url}" style="text-transform: uppercase;"> ${sortie_title_cipm} </a>
 		</span>
 		<span  class="nextTab unselectedTab">
-			<a href="${sorti_cip_url}">SORTIR DES  PRODUITS PAR (C.I.P)</a>
+			<a href="${sorti_cip_url}" style="text-transform: uppercase;"> ${sortie_title_cip} </a>
 		</span> 
 		<span>
-			<a  style="text-decoration: none;" id="findprd"  >
-			
-				<INPUT class="submits" type="button" value="Recherche CIPM" title="rechercher un CIPM" />
+			<a  style="text-decoration: none;" id="findprd">
+				<INPUT class="submits" type="button" value="${button_find_product}" title="${button_find_product}" />
 			</a>
 		</span>
-		<span><a href="${ home}" style="text-decoration: none;"><INPUT
-				class="submits" type="button" value="Terminer"
-				title="Terminer la sortie" /></a></span>
-
+		<span>
+		     <a href="${ home}" style="text-decoration: none;">
+		     <INPUT class="submits" type="button" value="${button_exit}" title="${button_exit}" />
+		     </a>
+		</span>
 	</div>
 
 
-	<util:panel title="saisir le CIPM du Produit" id="cip">
+	<util:panel title="${sortie_panel_cipm}" id="cip">
 		<div id="sortie">
-			<form action="${add_sortie}?mode=byCipm" method="POST" id="subForm" >
+			<form action="${add_sortie}?mode=byCipm" method="POST" id="subForm">
 				<table>
 					<tr>
-				
-						
 						<th style="text-align: center;">CIPM</th>
 						<th style="text-align: center;">CIP</th>
 						<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
-						<th style="text-align: center;">PRIX UNITAIRE</th>
-						<th style="text-align: center;">QTE CIPM</th>
-						<th style="text-align: center;">QTE</th>
-						<th style="text-align: center;">RAISON</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_prix_unit}</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_cipm_qty}</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_reason}</th>
 						<th style="text-align: center;">ACTION</th>
 					</tr>
 					<tr>
@@ -257,7 +242,6 @@ $('#subForm').submit(function(){
 						<td><INPUT type="text" name="des" class="des" id="des"
 							title="Designation" value=""
 							style="color: blue; text-align: center;" disabled="disabled" />
-
 						</td>
 						<td><INPUT type="text" name="pu" id="pu" class="autres"
 							value="" style="color: blue; text-align: center;"
@@ -275,40 +259,29 @@ $('#subForm').submit(function(){
 							</c:forEach>
 						</SELECT>
 						</td>
-
-
-						<td align="center"><INPUT type="submit" value="Enregistrer"
-							class="submits"  /></td>
-
+						<td align="center"><INPUT type="submit" value="${button_save}" class="submits"  />
+						</td>
 					</tr>
 				</table>
 			</form>
-
 		</div>
-
 		<BR />
 		<b style="color: red; text-align: center;"> ${apMessage} </b>
-
 	</util:panel>
 	<BR />
 
-
-
 	<!-- afficher les produits sortie par les agent ce jour  -->
-	<util:panel
-		title="Liste Des Produits Sorties Par Tous les Agents ce jour" id="lg">
+	<util:panel title="${sortie_panel_list}" id="lg">
 		<table>
 			<tr>
-				<th style="size: 15">CiP</th>
-
-				<th>CipM</th>
+				<th style="size: 15">Cip</th>
+				<th>Cipm</th>
 				<th style="size: 50">Designation</th>
-				<th>Qte Init</th>
-				<th>Qte Sortie</th>
-				<th>Qte final</th>
-				<th>agent</th>
-
-				<th>Raison</th>
+				<th>${column_qty_initial}</th>
+				<th>${column_qty_out}</th>
+				<th>${column_qty_final}</th>
+				<th>${column_agent}</th>
+				<th>${column_reason}</th>
 				<th colspan="2" align="center">ACTION</th>
 			</tr>
 
@@ -341,30 +314,26 @@ $('#subForm').submit(function(){
 
 	</util:panel>
 
-	<div id="findproduit" style="display: none;" title="recherche un cip maison">
-		
-		
-		
+<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+	<div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input style="width: 60%;" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input style="width: 60%;" type="text" name="designation"/>
+			</p>
 		</form>
 		
 		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
- <div style="height:400px; overflow: auto; "  >
+ <div style="height:400px; overflow: auto; ">
 		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
 		    	<tr>
 		    		<th style="text-align: center;">CIPM</th>
 		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		<th style="text-align: center;" width="150px;">POSOLOGIE</th>
-		    		 <th style="text-align: center;" >PRIX UNIT</th>
-		    		<th style="text-align: center;">QTE CIPM</th>
-		    		<th style="text-align: center;">QTE CIP</th>
-		    		<th style="text-align: center;">SAISIE LE</th>
-		    		<th style="text-align: center;">FOURNISSEUR</th>
+		    		<th style="text-align: center;" width="150px;">${saleprocess_product_dosage}</th>
+		    		 <th style="text-align: center; text-transform: uppercase;" >${column_prix_unit}</th>
+		    		<th style="text-align: center;">${column_cipm_qty}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+		    		<th style="text-align: center;">${column_entry_date}</th>
+		    		<th style="text-align: center;">${column_provider}</th>
 		    	</tr>
 		  </table>
 	</div>	 

@@ -11,21 +11,26 @@
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-		<spring:message code="saleprocess_inhouse_cip"  var="inhouse_cip"/>
-		<spring:message code="saleprocess_default_cip"  var="default_cip"/>
-		<spring:message code="saleprocess_product_designation"  var="product_designation"/>
-		<spring:message code="saleprocess_product_unit_price"  var="product_unit_price"/>
-		<spring:message code="saleprocess_product_qty"  var="product_qty"/>
-		<spring:message code="saleprocess_product_discount"  var="product_discount"/>
-		<spring:message code="saleprocess_product_total_price"  var="product_total_price"/>
-		<spring:message code="saleprocess_saleaction"  var="saleaction"/>
+	
+		<spring:message code="column_cip" var="column_cip" />
+		<spring:message code="column_cipm" var="column_cipm" />
+		<spring:message code="column_designation" var="column_designation" />
+		<spring:message code="button_find_product" var="button_find_product" />
+		<spring:message code="column_qty" var="column_qty" />
+		<spring:message code="column_price" var="column_price" />
+		<spring:message code="column_total_price" var="column_total_price" />
+		<spring:message code="column_remise" var="column_remise" />
+		<spring:message code="column_ray" var="column_ray" />
+		
+		<spring:message code="button_cancel" var="button_cancel" />
+		<spring:message code="button_save" var="button_save" />
+		<spring:message code="button_find" var="button_find" />
+		
 		<spring:message code="saleprocess_enter_qty"  var="enter_qty"/>
 		<spring:message code="saleprocess_enter_cip"  var="enter_cip"/>
 		<spring:message code="saleprocess_enter_cipm"  var="enter_cipm"/>
-		<spring:message code="saleprocess_enter_qty"  var="enter_qty"/>
 		<spring:message code="saleprocess_update"  var="update_line"/>
 		<spring:message code="saleprocess_cancel"  var="cancel_line"/>
-		<spring:message code="allmenu_users_add"  var="add_action"/>
 		<spring:message code="saleprocess_close_sale"  var="close_sale"/>
 		<spring:message code="saleprocess_save_command"  var="save_command"/>
 
@@ -53,8 +58,9 @@
 		<spring:message code="saleprocess_client_dettes" var="client_dettes"/>
 		<spring:message code="saleprocess_client_credible" var="client_credible"/>
 		<spring:message code="saleprocess_product_out"  var="product_product_out"/>
-		<c:set value="${param.lang}" var="language" />
+		<spring:message code="saleprocess_header_title" var="saleprocess_header_title" />
 		
+		<c:set value="${param.lang}" var="language" />
 		<style type="text/css">
 		     .ordo_css{
 		           border: 1px solid #CCC; 
@@ -106,15 +112,14 @@
 				width: 500,
 				resizable:true,
 				draggable :true,
-				title:"Creer une ordonnance",
 		        hide:'fade',
 		        show:'fade',
 		        position:'top',
 				buttons: {
-					"Annuler": function() { 
+					"${button_cancel}": function() { 
 						$(this).dialog("close"); 
 					},
-					"Enregistrer": function() { 
+					"${button_save}": function() { 
 						$.get( '${save_ordonance_url}', $('#ordonnance_form').serialize(), function(data){
 							$('#other').html(data);
 						});
@@ -158,34 +163,34 @@
 	<spring:url value="/commandeclients/cmdCreditInfosClient/${saleProcess.cmdId}?form" var="update_credit_client_url" />
 
 	<div style="margin-bottom: 8px; font-weight: bold; margin-top: 6px;">
-		    <span class="firstTab selectedTab"><a href="${ edit_url}">VENTE EN COUR</a></span>
-		            
-		            
+		    <span class="firstTab selectedTab">
+		       <a href="${ edit_url}"> <span style="text-transform: uppercase;"> ${saleprocess_header_title} </span> </a>
+		    </span>
 
      <security:authorize ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER">
-		<span><a href="${ enr_cmd_url}"
-			style="text-decoration: none;"><INPUT class="submits"
-				type="button" value="${close_sale }"
-				title="${save_command }" /></a></span>
+		<span>
+		  <a href="${ enr_cmd_url}" style="text-decoration: none;">
+		  <INPUT class="submits" type="button" value="${close_sale}" title="${save_command}" />
+		  </a>
+	    </span>
      </security:authorize>
 				
-
-				
 	<security:authorize ifAnyGranted="ROLE_VENTE_DESIGNATION ,ROLE_SITE_MANAGER">
-         <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
+         <span>
+           <a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> 
+           <INPUT class="submits" value="${button_find_product}" type="button"/></a>
+         </span> 
     </security:authorize>
-		<!--			
-    <span ><a style="text-decoration: none;" id="findprd" href="javascript:void(0)"> <INPUT class="submits" value="Rechercher Un Produit" type="button"/></a></span> 
-	--> 
-				 <span>
-					 <a href="${ delete_cmd_url}" style="text-decoration: none;">
-					  <INPUT class="submits" type="button" value="${cancel_sale }" title="${cancel_sale }" onclick="return annCmd();" />
-				     </a>
-				 </span> 
-				 <span>
-				     <!-- <a href="${ord_cmd_url}" style="text-decoration: none;">  </a> -->
-				      <INPUT class="submits" type="button" value="${prescription_book}" title="${prescription_book_description }" id="btOrdo" />
-				 </span>
+	
+		 <span>
+			 <a href="${ delete_cmd_url}" style="text-decoration: none;">
+			  <INPUT class="submits" type="button" value="${cancel_sale}" title="${cancel_sale }" onclick="return annCmd();" />
+		     </a>
+		 </span> 
+		 <span>
+		     <!-- <a href="${ord_cmd_url}" style="text-decoration: none;">  </a> -->
+		      <INPUT class="submits" type="button" value="${prescription_book}" title="${prescription_book_description}" id="btOrdo" />
+		 </span>
 
 				
 			<spring:message code="saleprocess_customer_information"  var="customer_information"/>
@@ -193,7 +198,7 @@
 			<c:if test="${saleProcess.typeCommande != 'VENTE_A_CREDIT'}">
 				<span>
 				        <a href="#" style="text-decoration: none;"><INPUT id="infosclient" class="submits"
-						type="button" value="${customer_information }" title="${customer_information_description}" /></a>
+						type="button" value="${customer_information}" title="${customer_information_description}" /></a>
 				</span>
 			</c:if>
 			<c:if test="${not empty  salesConfig}">
@@ -243,16 +248,23 @@
 		<!-- <c:if test="${saleProcess.typeCommande eq 'VENTE_A_CREDIT'}">
 		<span ><a href="${ update_credit_client_url}" style="text-decoration: none;"><INPUT style="border-color: blue; color: blue ; margin-left: 10px;  height: 25px;" type="button" value="Infos Client" title="mettre a jour le client" /></a></span>
 		</c:if> -->
-	</div> 
+	</div>
+	 
 	
-	<div id="ordonanceform" style="display: none; height: 400px;">
+	<spring:message code="saleprocess_ordinance_title" var="saleprocess_ordinance_title" />
+	<spring:message code="saleprocess_ordinance_legend" var="saleprocess_ordinance_legend" />
+	<spring:message code="saleprocess_ordinance_prescriber" var="saleprocess_ordinance_prescriber" />
+	<spring:message code="saleprocess_ordinance_hospital" var="saleprocess_ordinance_hospital" />
+	<spring:message code="saleprocess_ordinance_patient" var="saleprocess_ordinance_patient" />
+	<spring:message code="saleprocess_ordinance_date" var="saleprocess_ordinance_date" />
+	<div id="ordonanceform" style="display: none; height: 400px;" title="${saleprocess_ordinance_title}">
 	          <form method="post" enctype="application/x-www-form-urlencoded" id="ordonnance_form">
 	              <fieldset class="ordo_css">
-	                 <legend>Infos Ordonnance</legend>
-	                   <p> <label style="font-size: 13px;">Prescripteur: </label><input type="text" name="Prescripteur" id="prescripteur" /> </p>
-	                   <p> <label style="font-size: 13px;">Hopital: </label><input type="text" name="hospital" id="hopital" /> </p>
-	                   <p> <label style="font-size: 13px;">Nom patient: </label><input type="text" name="nomDuPatient" id="nom_patient" /> </p>
-	                   <p> <label style="font-size: 13px;">Date prescription: </label><input type="text" name="datePrescrip" id="date_prescription"  pattern="dd-MM-yyy"/> </p>
+	                 <legend>${saleprocess_ordinance_legend}</legend>
+	                   <p> <label style="font-size: 13px;">${saleprocess_ordinance_prescriber}: </label><input type="text" name="Prescripteur" id="prescripteur" /> </p>
+	                   <p> <label style="font-size: 13px;">${saleprocess_ordinance_hospital}: </label><input type="text" name="hospital" id="hopital" /> </p>
+	                   <p> <label style="font-size: 13px;">${saleprocess_ordinance_patient}: </label><input type="text" name="nomDuPatient" id="nom_patient" /> </p>
+	                   <p> <label style="font-size: 13px;">${saleprocess_ordinance_date}: </label><input type="text" name="datePrescrip" id="date_prescription"  pattern="dd-MM-yyy"/> </p>
 	              </fieldset>
 	          </form>
 	</div>
@@ -266,16 +278,15 @@
 	  }
 	function clearClientTable(){
 		$('#result').html(
-				'<tr>
-	<th  align="center" valign="top" >${client_code}</th>
+			'<tr>
+	            <th  align="center" valign="top" >${client_code}</th>
 				<th  align="center" valign="top" >${client_nom}</th>
-		<th  align="center" valign="top">${client_telephonemobile}</th>
-		<th  align="center" valign="top" >${client_employeur}</th>
-		<th  align="center" valign="top" >${client_dettes}</th>
-		<th  align="center" valign="top" >${client_credible}</th>
-		
-				</tr>');
-	}
+		        <th  align="center" valign="top">${client_telephonemobile}</th>
+		        <th  align="center" valign="top" >${client_employeur}</th>
+		        <th  align="center" valign="top" >${client_dettes}</th>
+		        <th  align="center" valign="top" >${client_credible}</th>
+			</tr>');
+	};
 	
 	//Variable qui sauvegarde le prix de vente unitaire du produit
 	var stock=null;
@@ -353,15 +364,15 @@
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
-				<th>${default_cip}</th>
-			    	<th>${inhouse_cip}</th>
-		    		<th>${product_designation}</th>
-		    		 <th>${product_unit_price}</th>
-		    		<th>${product_qty_cipm}</th>
-		    		<th>${product_qty_cip}</th>
-		    		<th>${product_date_of_record}</th>
-		    		<th>Rayons</th>
-		    		<th>${product_provider}</th>
+				    <th style="text-transform: uppercase;">${column_cipm}</th>
+			    	<th style="text-transform: uppercase;">${column_cip}</th>
+		    		<th style="text-transform: uppercase;">${column_designation}</th>
+		    		<th style="text-transform: uppercase;">${column_price}</th>
+		    		<th style="text-transform: uppercase;">${product_qty_cipm}</th>
+		    		<th style="text-transform: uppercase;">${product_qty_cip}</th>
+		    		<th style="text-transform: uppercase;">${product_date_of_record}</th>
+		    		<th style="text-transform: uppercase;">${column_ray}</th>
+		    		<th style="text-transform: uppercase;">${product_provider}</th>
 		    	
 				</tr>');
 	}
@@ -527,11 +538,11 @@
             show:'slide',
             position:'top',
 			buttons: {
-				"creer un Client": function() { 
+				"${saleprocess_client_create}": function() { 
 					$('#updateClient').dialog('open');
 					$(this).dialog("close"); 
 				} ,
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}
@@ -566,11 +577,11 @@
 			width: 1000,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}
@@ -598,32 +609,24 @@
 			},
 			autoOpen: false,
 			width: 500,
-			title:"Information du Client",
 			resizable:true,
 			draggable :true,
             hide:'slide',
             show:'slide',
             position:'top',
 			buttons: {
-				"Enregistrer": function() { 
-				$.get( '/adpharma/saleprocess/${saleProcess.cmdId}/updateclientajax',
-$('#clientForm').serialize(),
-function(data){
-	$('#cmdName').html(data);
-$('#updateClient').dialog("close");
-
-		
-});
-					
-				
-
+				"${button_save}": function() { 
+				$.get( '/adpharma/saleprocess/${saleProcess.cmdId}/updateclientajax', $('#clientForm').serialize(), function(data){
+					$('#cmdName').html(data);
+					$('#updateClient').dialog("close");
+                  });
 				},
-				"Chercher": function() { 
+				"${button_find}": function() { 
 					$(this).dialog("close"); 
 					$('#findClient').dialog("open"); 
 					return false ;
 				}, 
-				"Fermer": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				}  
 			}
@@ -658,7 +661,7 @@ $('#updateClient').dialog("close");
 		var url = "${find_cipm_url}" + cipm ;
 			$.getJSON(url,
 				 function(data) {
-				var idproduct = data.cip;
+				var idproduct = data.cip;                                 
 				
 					if (!data.id) {
 						document.getElementById("cip").value = "";
@@ -696,28 +699,26 @@ $('#updateClient').dialog("close");
 		</c:when>
 		<c:otherwise>
 			<c:set value="#" var="prd"></c:set>
-
 		</c:otherwise>
 	</c:choose>
 	
 	<c:choose>
 		<c:when test="${not empty saleProcess.lineToUpdate}">
 			<!-- afficher ce formulaire pour la mis a jour des ligne -->
-			
 		<spring:message code="saleprocess_update_details"  var="update_details"/>
-			<util:panel title="${update_details }" id="upline">
+			<util:panel title="${update_details}" id="upline">
 				<form action="${find_upd_url}" method="POST" id="formulaire"
 					name="formulaire" onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;witdh: 200px;">${inhouse_cip }</th>
-							<th style="text-align: center; witdh: 300px;">${product_designation }</th>
-							<th style="text-align: center; witdh: 300px;">Qte Stock</th>
-							<th style="text-align: center;">${product_unit_price }</th>
-							<th style="text-align: center;">${product_qty }</th>
-							<th style="text-align: center;">${product_discount }</th>
-							<th style="text-align: center;">${product_total_price }</th>
-							<th colspan="2" style="text-align: center;">${saleaction }</th>
+							<th style="text-align: center;witdh: 200px;">${column_cipm}</th>
+							<th style="text-align: center; witdh: 300px;">${column_designation }</th>
+							<th style="text-align: center; witdh: 300px;">${column_stock_qty}</th>
+							<th style="text-align: center;">${column_price}</th>
+							<th style="text-align: center;">${column_qty}</th>
+							<th style="text-align: center;">${column_remise}</th>
+							<th style="text-align: center;">${column_total_price}</th>
+							<th colspan="2" style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
 							<td><INPUT type="hidden" name="lineId" id="pId"
@@ -744,7 +745,7 @@ $('#updateClient').dialog("close");
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-							<td><INPUT type="text" name="qte" id="qte" readonly="readonly" onmouseover="this.select();" onfocus="this.select();"  class="autres"
+							<td><INPUT type="text" name="qte" id="qte" onmouseover="this.select();" onfocus="this.select();"  class="autres"
 								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
@@ -798,20 +799,21 @@ $('#updateClient').dialog("close");
 		</c:when>
 		<c:otherwise>
 		<!--formulaire de vente proprement dit  -->
-			<util:panel title="saisir le CIP du Produit" id="cip">
-				<form action="${addLine_url}" method="POST" id="formulaire"
-					name="formulaire" onSubmit="return verif_formulaire()">
+		    <spring:message code="saleprocess_create_line_title" var="saleprocess_create_line_title" />
+		    <spring:message code="column_stock_qty" var="column_stock_qty" />
+			<util:panel title="${saleprocess_create_line_title}" id="cip">
+				<form action="${addLine_url}" method="POST" id="formulaire" name="formulaire" onSubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;  witdh: 200px;">${inhouse_cip }</th>
-							<th style="text-align: center;">${default_cip }</th>
-							<th style="text-align: center; witdh: 300px;">${product_designation }</th>
-							<th style="text-align: center; witdh: 300px;">Qte Stock</th>
-							<th style="text-align: center;">${product_unit_price }</th>
-							<th style="text-align: center;">${product_qty }</th>
-							<th style="text-align: center;">${product_discount }</th>
-							<th style="text-align: center;">${product_total_price }</th>
-							<th style="text-align: center;">${saleaction }</th>
+							<th style="text-align: center;  witdh: 200px;">${column_cipm}</th>
+							<th style="text-align: center;">${column_cip}</th>
+							<th style="text-align: center; witdh: 300px;">${column_designation}</th>
+							<th style="text-align: center; witdh: 300px;">${column_stock_qty}</th>
+							<th style="text-align: center;">${column_price}</th>
+							<th style="text-align: center;">${column_qty}</th>
+							<th style="text-align: center;">${column_remise}</th>
+							<th style="text-align: center;">${column_total_price}</th>
+							<th style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
 							<td><INPUT type="hidden" name="pId" id="pId"
@@ -820,30 +822,26 @@ $('#updateClient').dialog("close");
 										<INPUT type="text" name="cipm" maxlength="-1"  autofocus="autofocus" id="cipm" class="autres"
 											value="${saleProcess.produit.cipMaison}" readonly="readonly"
 											 onKeyPress="return scanTouche(event)"
-											  title="${enter_cipm }"
-											/>
-
+											  title="${enter_cipm }"/>
 									</c:when>
 									<c:otherwise> 
 										<INPUT type="text" name="cipm" maxlength="-1" id="cipm"  class="autres"  onmouseover="this.select();" onfocus="this.select();" 
-											value="${saleProcess.produit.cipMaison}" 
-											onKeyPress="return scanTouche(event)"  onchange="requete();"
-											title="${enter_cipm }" 
-											 />
-
+											value="${saleProcess.produit.cipMaison}"  onKeyPress="return scanTouche(event)"  onchange="requete();"
+											title="${enter_cipm }" />
 									</c:otherwise>
 								</c:choose></td>
-							<td><INPUT type="text" name="cip" id="cip" class="autres"
+							<td>
+							    <INPUT type="text" name="cip" id="cip" class="autres"
 								value="${saleProcess.produit.cip}"
 								style="color: blue; text-align: center;" disabled="disabled"   />
-
 							</td>
-							<td><INPUT type="text" name="des" class="des" id="des"
+							<td>
+							    <INPUT type="text" name="des" class="des" id="des"
 								title="${product_designation }" value="${saleProcess.produit.designation}"
 								style="color: blue; text-align: center;" disabled="disabled" />
-
 							</td>
-							<td><INPUT type="text"  class="des" id="qteStock"
+							<td>
+							    <INPUT type="text"  class="des" id="qteStock"
 								title="Qte en Stock" value="${saleProcess.produit.produit.quantiteEnStock}"
 								style="color: blue; text-align: center; width: 70px;" disabled="disabled" />
 							</td>
@@ -865,7 +863,7 @@ $('#updateClient').dialog("close");
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte" readonly="readonly" onmouseover="this.select();" onfocus="this.select();" 
+							<td><INPUT type="text" name="qte" id="qte" onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>
@@ -899,8 +897,8 @@ $('#updateClient').dialog("close");
 
 									</c:when>
 									<c:otherwise>
-										<INPUT type="submit" value="${add_action }" class="submits" />
-
+									    <spring:message code="button_add" var="button_add" />
+										<INPUT type="submit" value="${button_add}" class="submits" />
 									</c:otherwise>
 								</c:choose></td>
 
@@ -922,19 +920,19 @@ $('#updateClient').dialog("close");
 	</c:choose>
 
 	<table style="border: none; margin-bottom: 5px; margin-top: 5px;">
-		<tr >
+		<tr>
 			<td style="border: none; width: 30%;">
 
 				<DIV style="float: left; margin-right: 35%;">
 
 					<table style="border: none;">
 						<form action="${add_rem_url}" method="POST">
-
 							<tr style=" background-color: rgb(230, 242, 242);">
 								<td style="border: none;  background-color: rgb(230, 242, 242);"><INPUT type="text"  class="remise"
 									value="${discount_nettopay_text } :"
 									style=" text-align: center; background-color: rgb(230, 242, 242); width: 220px; color: black;"
-									disabled="disabled" /></td>
+									disabled="disabled" />
+								</td>
 								<td style="border: none;  background-color: rgb(230, 242, 242);"><INPUT type="text" class="remise"
 									maxlength="5" onKeyPress="return scanToucheminus(event)" name="rem2"
 									id="rem2"
@@ -942,33 +940,29 @@ $('#updateClient').dialog("close");
 
 								</td>
 								<td style="border: none;  background-color: rgb(230, 242, 242);"><INPUT type="submit"
-									value="${apply_text }" class="submits" /></td>
-
-							</tr>
+									value="${apply_text }" class="submits" />
+								</td>
+							 </tr>
 						</form>
 
 						<form action="${add_rempour_url}" method="POST">
-
-							<tr >
+							<tr>
 								<td style="border: none;  background-color: rgb(230, 242, 242);"><INPUT type="text" class="remise"
 									value="${discount_nettopay_text }(%) :"
 									style=" text-align: center; background-color: rgb(230, 242, 242); width: 265px; color: black;"
-									disabled="disabled" /></td>
+									disabled="disabled" />
+							    </td>
 								<td style="border: none;  background-color: rgb(230, 242, 242);"><INPUT type="text" class="remise"
 									maxlength="5" onKeyPress="return scanTouche(event)" name="rem3"
 									id="rem3"
 									style="color: red; text-align: center; border-style: solid; border-color: black;" />
 								</td>
 								<td style="border: none; background-color: rgb(230, 242, 242);"><INPUT type="submit"
-									value="${apply_text }" class="submits" /></td>
-
+									value="${apply_text }" class="submits" />
+							   </td>
 							</tr>
 						</form>
-
-
 					</table>
-
-
 				</DIV>
 			</td>
 			<td style="border: none; width:auto ; background-color: rgb(230, 242, 242); ">
@@ -977,54 +971,41 @@ $('#updateClient').dialog("close");
 				
 					<table style="border: none; margin-left: 20%;">
 						<form action="${valider_cmd_url}" method="post">
-
 							<tr>
-								<td style="border: none; background-color: rgb(230, 242, 242);  "><INPUT type="password"  maxlength="17" autocomplete="off" name="cle" id="cle"
-									style="color: red; text-align: center; border-style: solid; border-color: black; width: 80px;" />
+								<td style="border: none; background-color: rgb(230, 242, 242);  ">
+								<INPUT type="password"  maxlength="17" autocomplete="off" name="cle" id="cle"
+								style="color: red; text-align: center; border-style: solid; border-color: black; width: 80px;" />
 								</td>
-								</tr>
-								<tr>
+							</tr>
+							<tr>
 								<td style="border: none; background-color: rgb(230, 242, 242);"><INPUT type="submit"
-									value="${again_and_again }" class="submits"  /></td>
-
+									value="${again_and_again }" class="submits"  />
+								</td>
 							</tr>
 						</form>
-
-
 					</table>
                    </security:authorize>
-                  
-
 				</DIV>
-				
 			</td>
-
 			<td style="border: none; width: 35%;">
-
 				<DIV>
-
 					<table>
 						<tr>
 							<th style="text-align: center;">${total_command }</th>
 							<th style="text-align: center;">${total_discount }</th>
 							<th style="text-align: center;">${net_to_pay }</th>
-
 						</tr>
 						<tr>
+						  <td style=" width: 35%; background-color: rgb(230, 242, 242); color: blue; text-align: center; font-weight: bold; font-size: 22px;">
+                             <fmt:formatNumber value="${saleProcess.totalCommande }"/>
+						  </td>
 							
-									<td style=" width: 35%; background-color: rgb(230, 242, 242); color: blue; text-align: center; font-weight: bold; font-size: 22px;">
-
-                          <fmt:formatNumber value="${saleProcess.totalCommande }"/>
-							</td>
-							
-								<td style=" width: 25%; background-color: rgb(230, 242, 242); color: red; text-align: center; font-weight: bold; font-size: 22px;">
-
-                          <fmt:formatNumber value="${saleProcess.totalRemise }"/>
-							</td>
-							<td style="background-color: rgb(230, 242, 242); color: green; text-align: center; font-weight: bold; font-size: 22px;">
-                          <fmt:formatNumber minFractionDigits="0"  value="${saleProcess.netApayer }"/> ${currency_abbreviation }
-							</td>
-
+						  <td style=" width: 30%; background-color: rgb(230, 242, 242); color: red; text-align: center; font-weight: bold; font-size: 22px;">
+                             <fmt:formatNumber value="${saleProcess.totalRemise }"/>
+						  </td>
+						  <td style="background-color: rgb(230, 242, 242); color: green; text-align: center; font-weight: bold; font-size: 22px;">
+                             <fmt:formatNumber minFractionDigits="0"  value="${saleProcess.netApayer }"/> ${currency_abbreviation }
+						  </td>
 						</tr>
 					</table>
 				</DIV>
@@ -1035,22 +1016,22 @@ $('#updateClient').dialog("close");
 	</table>
 
 	<!-- afficher les lignes de commande  ici -->
-	<util:panel title="Liste Des Produits Commandes" id="lg"
-		openPane="true">
+	<spring:message code="saleprocess_list_lines_title" var="saleprocess_list_lines_title" />
+	<util:panel title="${saleprocess_list_lines_title}" id="lg" openPane="true" >
 		<div style="overflow: auto; height: 220px;">
 			<table>
 				<tr>
-					<th style="text-align: center;">${inhouse_cip }</th>
-					<th style="text-align: center;">${default_cip }</th>
-					<th style="width: 400px; text-align: center;">${product_designation }</th>
-					<th style="text-align: center; text-transform: uppercase;">${product_unit_price}</th>
-					<th style="text-align: center;">${product_qty }</th>
-					<th style="text-align: center;">${product_total_price }</th>
-					<th style="text-align: center;">${product_discount }</th>
-					<th colspan="2" style="text-align: center;">${saleaction }</th>
+					<th style="text-align: center;">${column_cipm}</th>
+					<th style="text-align: center;">${column_cip}</th>
+					<th style="width: 400px; text-align: center;">${column_designation}</th>
+					<th style="text-align: center; text-transform: uppercase;">${column_price}</th>
+					<th style="text-align: center;">${column_qty}</th>
+					<th style="text-align: center;">${column_total_price}</th>
+					<th style="text-align: center;">${column_remise}</th>
+					<th colspan="2" style="text-align: center;">ACTION</th>
 				</tr>
 
-				<c:forEach items="${saleProcess.ligneCommande }" var="ligne">
+				<c:forEach items="${saleProcess.ligneCommande}" var="ligne">
 					<tr>
 						<td style="text-align: center;"><c:out value="${ligne.cipM}"></c:out>
 						</td>
@@ -1100,36 +1081,40 @@ $('#updateClient').dialog("close");
 		</div>
 	</util:panel>
 	
-	
-<div id="updateClient" style="display: none;">
+<spring:message code="saleprocess_client_title" var="saleprocess_client_title" />	
+<div id="updateClient" style="display: none;" title="${saleprocess_client_title}">
     <form id="clientForm" >
        <INPUT id="cltid" type="hidden" name="cltid" />
                 <P>
-                <LABEL for="nom"> ${client_nom } :</LABEL> <INPUT id="nom" type="text" name="nom" value="Client Diver"/>
+                <LABEL for="nom"> ${client_nom} :</LABEL> <INPUT id="nom" type="text" name="nom" value="Client Diver"/>
                 </P>
                 
                  <P>
-                <LABEL for="prenom"> ${client_prenom } :</LABEL> <INPUT id="prenom" type="text" name="prenom" value=""/>
+                <LABEL for="prenom"> ${client_prenom} :</LABEL> <INPUT id="prenom" type="text" name="prenom" value=""/>
                 </P>
                 
                  <P>
-                <LABEL for="sexe"> ${client_sex } :</LABEL> <SELECT id="sexe" style="width: 165px; height: 25px;" name="sexe"> <OPTION selected="selected">Masculin</OPTION><OPTION >Feminin</OPTION><OPTION >Neutre</OPTION>
+                <LABEL for="sexe"> ${client_sex} :</LABEL> 
+                <SELECT id="sexe" style="width: 165px;" name="sexe"> 
+                     <OPTION selected="selected">Masculin</OPTION>
+                     <OPTION >Feminin</OPTION>
+                     <OPTION >Neutre</OPTION>
                 </SELECT> 
                 </P>
                 
                  <P>
-                <LABEL for="telephoneMobile"> ${client_telephonemobile } :</LABEL> <INPUT id="telephoneMobile" type="text" name="telephoneMobile" value=""/>
+                <LABEL for="telephoneMobile"> ${client_telephonemobile} :</LABEL> <INPUT id="telephoneMobile" type="text" name="telephoneMobile" value=""/>
                 </P>
                 
                 
                  <P>
-                <LABEL for="email"> ${client_email } :</LABEL> <INPUT id="email" type="text" name="email" value=""/>
+                <LABEL for="email"> ${client_email} :</LABEL> <INPUT id="email" type="text" name="email" value=""/>
                 </P>
                  <P>
-                <LABEL for="employeur"> ${client_employeur } :</LABEL> <INPUT id="employeur" type="text" name="employeur" value=""/>
+                <LABEL for="employeur"> ${client_employeur} :</LABEL> <INPUT id="employeur" type="text" name="employeur" value=""/>
                 </P>
                  <P>
-                <LABEL for="note"> ${client_note } :</LABEL> <INPUT type="text" id="note" name="note" value=""/>
+                <LABEL for="note"> ${client_note} :</LABEL> <INPUT type="text" id="note" name="note" value=""/>
                 </P>
               
         </form>
@@ -1149,32 +1134,27 @@ $('#updateClient').dialog("close");
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Ordonnancier" render="${not empty dependencies}" z="hvyzU/NHX6eqf0a9BYUYZcBNm2I="/>
 </div>
 </c:if>
+
 <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
- <div  id="findClient" style="display: none;" title="recherche client">
-		
-				<input type="hidden" id="select" />
-		
-		
+<spring:message code="saleprocess_client_find" var="saleprocess_client_find" />
+ <div  id="findClient" style="display: none;" title="${saleprocess_client_find}">
+	    <input type="hidden" id="select" />
 		<form  id="person" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="name">${client_nom }  :</label> <input class="searchInput" type="text" name="name"/>
-		</p>
-	
-		
+			<p>
+			<label for="name">${client_nom}  :</label> <input class="searchInput" type="text" name="name"/>
+			</p>
 		</form>
 		
 		 <center>	<IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;" /></center>
  <div style="height:300px; overflow: auto;"  >
 		<table cellpadding="0" cellspacing="0" border="0" class="result search" align="left" id="result"  valign="top" width="100%;" frame="box">
 		<tr align="top" valign="top">
-		<th  align="center" valign="top" >${client_code }</th>
-		<th  align="center" valign="top" >${client_nom }</th>
-		<th  align="center" valign="top">${client_telephonemobile }</th>
-		<th  align="center" valign="top" >${client_employeur }</th>
-		<th  align="center" valign="top" >${client_dettes }</th>
-		<th  align="center" valign="top" >${client_credible }</th>
-		
-		
+			<th  align="center" valign="top" >${client_code }</th>
+			<th  align="center" valign="top" >${client_nom }</th>
+			<th  align="center" valign="top">${client_telephonemobile }</th>
+			<th  align="center" valign="top" >${client_employeur }</th>
+			<th  align="center" valign="top" >${client_dettes }</th>
+			<th  align="center" valign="top" >${client_credible }</th>
 		</tr>
 		</table>
 	</div>	 
@@ -1182,15 +1162,18 @@ $('#updateClient').dialog("close");
 </div>
 
 
-<div id="findproduit" style="display: none; " title="Rechercher un produit">
-		
-		
+<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+<spring:message code="saleprocess_product_dosage" var="saleprocess_product_dosage" />
+<spring:message code="saleprocess_include_products" var="saleprocess_include_products" />
+<div id="findproduit" style="display: none; " title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
-			  <label for="designation">${product_designation } :</label> <input class="searchInput" style="width: 60%;"  type="text" name="designation"/>
+			  <label for="designation">${column_designation}:</label> 
+			  <input class="searchInput" style="width: 60%;"  type="text" name="designation"/>
 			</p>
 			<p>
-			  <label for="rp">Inclure les Ruptures ? :</label> <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
+			  <label for="rp" style="display: block; width: auto;">${saleprocess_include_products} :</label> 
+			  <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
 			</p> 
 		</form>
 		
@@ -1198,14 +1181,14 @@ $('#updateClient').dialog("close");
  		<div style="height:400px; overflow: auto; "  >
 		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
 		    	<tr>
-		    		<th style="text-align: center;">${inhouse_cip }</th>
-		    		<th style="text-align: center; width: 250px;">${product_designation }</th>
-		    		<th style="text-align: center;" width="150px;">${product_dosage }</th>
-		    		<th style="text-align: center;" >${product_unit_price }</th>
-		    		<th style="text-align: center;">${product_qty_cipm }</th>
-		    		<th style="text-align: center;">${product_qty_cip }</th>
-		    		<th style="text-align: center;">${product_date_of_record }</th>
-		    		<th style="text-align: center;">${product_provider }</th>
+		    		<th style="text-align: center;">${column_cipm}</th>
+		    		<th style="text-align: center; width: 250px;">${column_designation}</th>
+		    		<th style="text-align: center;" width="150px;">${saleprocess_product_dosage}</th>
+		    		<th style="text-align: center;" >${column_price}</th>
+		    		<th style="text-align: center;">${product_qty_cipm}</th>
+		    		<th style="text-align: center;">${product_qty_cip}</th>
+		    		<th style="text-align: center;">${product_date_of_record}</th>
+		    		<th style="text-align: center;">${product_provider}</th>
 		    	</tr>
 		  </table>
 	    </div>	 

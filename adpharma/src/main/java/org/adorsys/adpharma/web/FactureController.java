@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
@@ -18,8 +20,10 @@ import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +38,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/factures")
 @Controller
 public class FactureController {
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	// imprime les factures 
 	@RequestMapping(value = "/print/{invNumber}.pdf", method = RequestMethod.GET)
@@ -42,9 +49,8 @@ public class FactureController {
 		if (!resultList.isEmpty()) {
 			uiModel.addAttribute("facture", resultList.iterator().next());
 			return "facturePdfDocViews";
-
 		}else {
-			uiModel.addAttribute("apMessage", "Aucune Facture Trouvee");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("invoice_found_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 	}

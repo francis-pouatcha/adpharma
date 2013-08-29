@@ -18,13 +18,6 @@ xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.spring
   	<body class="tundra spring">
   
   	               <!-- Messages products internationalization -->
-  	                <spring:message code="saleprocess_inhouse_cip"  var="inhouse_cip" scope="session"/>
-					<spring:message code="saleprocess_default_cip"  var="default_cip" scope="session" />
-					<spring:message code="saleprocess_product_designation"  var="product_designation" scope="session" />
-					<spring:message code="saleprocess_product_unit_price"  var="product_unit_price" scope="session" />
-					<spring:message code="saleprocess_product_qty"  var="product_qty" scope="session" />
-					<spring:message code="saleprocess_product_discount"  var="product_discount" scope="session" />
-					<spring:message code="saleprocess_product_total_price"  var="product_total_price" scope="session" />
 					<spring:message code="saleprocess_product_qty_cipm"  var="product_qty_cipm" scope="session"/>
 					<spring:message code="saleprocess_product_qty_cip"  var="product_qty_cip" scope="session"/>
 					<spring:message code="saleprocess_product_date_of_record"  var="product_date_of_record" scope="session"/>
@@ -36,11 +29,11 @@ xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.spring
   	
   	
 					<tiles:insertAttribute  name="header" ignore="true" />
-					<tiles:insertAttribute name="allmenu" ignore="false" />
+					<tiles:insertAttribute name="allmenu" ignore="true" />
 			   		<div id="wrapper">
 					    <div id="main">		
-				    		<tiles:insertAttribute name="body"/> 
-					    	<tiles:insertAttribute name="footer" ignore="true"/>
+				    		<tiles:insertAttribute name="body" /> 
+					    	<tiles:insertAttribute name="footer" />
 					    </div>
 					</div>
   				

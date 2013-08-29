@@ -4,9 +4,10 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_org_adorsys_adpharma_domain_TauxMarge" modelAttribute="tauxMarge" path="/tauxmarges" render="${empty dependencies}" z="/v4Q5hnmI4Qeh080AqNpaqvrYEE=">
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_TauxMarge_footPrint" render="false" z="user-managed"/>
-        <field:checkbox field="valide" id="c_org_adorsys_adpharma_domain_TauxMarge_valide" z="GOU5L3rVwKHByzMzjTDpy0p2YhE="/>
         <field:input field="margeNumber" id="c_org_adorsys_adpharma_domain_TauxMarge_margeNumber" render="false" z="user-managed"/>
+        
         <field:input field="margeValue" id="c_org_adorsys_adpharma_domain_TauxMarge_margeValue" required="true" validationMessageCode="field_invalid_number" z="Nv/NHwwhmigwnuxsG9H01TeM88k="/>
+        <field:checkbox field="valide" id="c_org_adorsys_adpharma_domain_TauxMarge_valide" z="GOU5L3rVwKHByzMzjTDpy0p2YhE="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_TauxMarge" render="${not empty dependencies}" z="8Cj8s8IcbYzzSooh2ozuVyW9lxw="/>
 </div>

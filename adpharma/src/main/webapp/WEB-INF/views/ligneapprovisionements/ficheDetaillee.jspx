@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:security="http://www.springframework.org/security/tags"
- xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"   xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
- xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
-  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:security="http://www.springframework.org/security/tags"
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"   
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+xmlns:c="http://java.sun.com/jsp/jstl/core"  
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
+    
+    <spring:message code="inventory_details_product_title" var="inventory_details_product_title" />
+    <spring:message code="lignesappro_legend_product" var="lignesappro_legend_product" />
+    <spring:message code="lignesappro_legend_appro1" var="lignesappro_legend_appro1" />
+    <spring:message code="lignesappro_legend_mvts" var="lignesappro_legend_mvts" />
+    
+    
+    
     <form:find finderName="ByCipMaison" label=" C.I.P.M " id="ff_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="mfxSu9PxyKZFpc8Q1LJyLYCLqGA=">
-        <field:input disableFormBinding="true" field="cipMaison" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" min="7" required="true" z="user-managed"/>
+        <field:input disableFormBinding="true" label="CIPM" field="cipMaison" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" min="7" required="true" z="user-managed"/>
     </form:find>
         <BR />
         
-    <util:panel id="ficheDetail" title="Fiche Detail Produit de C.I.P.M : ${cipm}" openPane="true">
+    <util:panel id="ficheDetail" title="${inventory_details_product_title}: ${cipm}" openPane="true">
  <div style="overflow: auto; height: 500px;"> 
       <c:if test="${ not empty results }">
-                     <h2 style="margin-top: 5px">Infos Produit : </h2> 
+                     <h2 style="margin-top: 5px"> ${lignesappro_legend_product} : </h2> 
           
            <table:table create="false" data="${produit}" delete="false" show="false" update="false" id="l_org_adorsys_adpharma_domain_Produit" path="/produits" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Produit_cip" property="cip" z="lwxQZw1IKddvNjeg0GSHUNNrti0="/>
@@ -27,7 +40,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_Produit_rayon" maxLength="-1" property="rayon" z="user-managed"/>
            </table:table>
            
-           <h2 >Infos Approvisionnement :</h2> 
+           <h2> ${lignesappro_legend_appro1} :</h2> 
            
            <table:table data="${results}" delete="false"  show="false"   update="false" create="false" id="l_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_footPrint" property="footPrint" render="false" z="user-managed"/>
@@ -38,28 +51,27 @@
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" label="qte Initiale" property="quantiteAprovisione"  z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteVendu" label="qte Vendue" property="quantiteVendu"  z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteSortie" label="qte Sortie" property="quantiteSortie"  z="A07vvkOcTdaMnP0hkIpRBTFrsTM="/>
-              <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock"  label="Qte en Stock" property="quantieEnStock" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantieEnStock"  label="Qte en Stock" property="quantieEnStock" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixAchatUnitaire" property="prixAchatUnitaire"  z="3jRUZd4H8Ti4qs0WqY54vvw3bvo="/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" property="prixVenteUnitaire" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_approvisionement" maxLength="55" property="approvisionement" z="hvZ6XysTw/7jJ672SkEDY05DRp8="/>
-             </table:table>
+           </table:table>
        
-     <h2 >Infos Mouvements de stock : </h2> 
+     <h2 > ${lignesappro_legend_mvts} </h2> 
       
         <table:table create="false" data="${mouvements}" show="false" delete="false" id="l_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" property="mvtNumber" z="axWyghN8Isf0UeoVN3kBjrC2rvg="/>
-                       <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
+            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_MouvementStock_dateCreation" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_agentCreateur" maxLength="-1" property="agentCreateur" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" maxLength="-1" property="typeMouvement" z="user-managed"/>
-                                  <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale"  property="qteInitiale" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteInitiale"  property="qteInitiale" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteDeplace"  property="qteDeplace" z="user-managed"/>
-                       <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_qteFinale"  property="qteFinale" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_numeroTicket" property="numeroTicket" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
-             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_caisse" property="caisse" z="x/W41pxj4KfNXQznVjdyq7z7tDE="/>
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_footPrint" property="footPrint" render="false" z="user-managed"/>
         </table:table>
-        
         </c:if>
         </div>
     </util:panel>

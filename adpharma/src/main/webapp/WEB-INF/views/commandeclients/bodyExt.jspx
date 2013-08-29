@@ -3,8 +3,11 @@
 	xmlns:spring="http://www.springframework.org/tags" 
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
-	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
 	style="width: 100%; overflow: auto; height:100%; display:none ;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
@@ -119,24 +122,21 @@
 	</script>
 	
 	 <form:create  id="fc_org_adorsys_adpharma_domain_Client" otherBut="cancel" modelAttribute="client" path="/clients/createForCreditSale" render="${empty dependencies}" z="ys02dHc9phUWtWwquIgxG46avgY=">
-                  <field:input field="nom" id="c_org_adorsys_adpharma_domain_Client_nom" z="user-managed"/>
-                    <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom"  z="user-managed"/>
-                     <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
-                    <field:select field="typeClient" id="c_org_adorsys_adpharma_domain_Client_typeClient" items="${typeclients}" path="typeclients" z="lbsOvplF4uFPTMaHqzP5byR90Ow="/>
-                    <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
-                     <field:input field="telephoneFixe" label="Telephones"  id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
-                    <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
-                                           <field:input buttonId="cltId" buttonLabel="Rechercher" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" label="Client Payeur" z="user-managed"/>
-                                                                          <field:input field="tauxCouverture" id="c_org_adorsys_adpharma_domain_Client_tauxCouverture" validationMessageCode="field_invalid_number" z="v6ZD9zTSZAfbtdvn164WxHWe8Vc="/>
-               
-                        <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
-                   
-                    <field:input field="plafondCredit" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
-                    <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
-                    <field:checkbox field="remiseAutorise" id="c_org_adorsys_adpharma_domain_Client_remiseAutorise" z="8+oZZxMe4vZMA0wHjQNcjmMQcJw="/>
-                       <field:checkbox field="creditAutorise" id="c_org_adorsys_adpharma_domain_Client_creditAutorise" z="zEDzQc4bFRJoKrA3dPZwQM2X+zo="/>
-   
-         </form:create>
+           <field:input field="nom" id="c_org_adorsys_adpharma_domain_Client_nom" z="user-managed"/>
+	       <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom"  z="user-managed"/>
+	       <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
+	       <field:select field="typeClient" id="c_org_adorsys_adpharma_domain_Client_typeClient" items="${typeclients}" path="typeclients" z="lbsOvplF4uFPTMaHqzP5byR90Ow="/>
+	       <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
+	       <field:input field="telephoneFixe" label="Telephones"  id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
+	       <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
+	       <field:input buttonId="cltId" buttonLabel="Rechercher" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" label="Client Payeur" z="user-managed"/>
+	       <field:input field="tauxCouverture" id="c_org_adorsys_adpharma_domain_Client_tauxCouverture" validationMessageCode="field_invalid_number" z="v6ZD9zTSZAfbtdvn164WxHWe8Vc="/>
+	       <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
+	       <field:input field="plafondCredit" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
+	       <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
+	       <field:checkbox field="remiseAutorise" id="c_org_adorsys_adpharma_domain_Client_remiseAutorise" z="8+oZZxMe4vZMA0wHjQNcjmMQcJw="/>
+	       <field:checkbox field="creditAutorise" id="c_org_adorsys_adpharma_domain_Client_creditAutorise" z="zEDzQc4bFRJoKrA3dPZwQM2X+zo="/>
+     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Client" render="${not empty dependencies}" z="nSq/AjKH2v+IhEisFDeN0tNZUJc="/>
     
     

@@ -41,7 +41,6 @@
   <script type="text/javascript" language="JavaScript">dojo.require("dijit.layout.TabContainer");</script>
     <script type="text/javascript" language="JavaScript">dojo.require("dijit.form.DateTextBox");</script>
      <script language="JavaScript" type="text/javascript">dojo.require("dijit.Dialog");</script>
-      <script language="JavaScript" type="text/javascript">dojo.require("dijit.fx");</script>
    <spring:url value="/resources/js/jquery.jqplot.min.js" var="jqpl1" />
       <spring:url value="/resources/js/plugins/jqplot.logAxisRenderer.min.js" var="jqpl2" />
          <spring:url value="/resources/js/plugins/jqplot.canvasTextRenderer.min.js" var="jqpl3" />

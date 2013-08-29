@@ -75,9 +75,9 @@ public class CommandeClientController {
 		uiModel.addAttribute("itemId", id);
 		uiModel.addAttribute("appMessage", request.getAttribute("msg"));
 		uiModel.addAttribute("commandeclient",commandeClient);
-
 		return "saleprocess/showCmd";
 	}
+	
 	
 	@RequestMapping(value = "/find=venteJournalier", method = RequestMethod.GET)
 	public String venteJournalier(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {

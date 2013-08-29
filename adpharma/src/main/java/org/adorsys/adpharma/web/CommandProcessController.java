@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,12 +42,15 @@ import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TVA;
 import org.adorsys.adpharma.services.JasperPrintService;
+import org.adorsys.adpharma.utils.BundleMessages;
 import org.adorsys.adpharma.utils.DocumentsPath;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -57,12 +61,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 @RequestMapping("/commandprocesses")
 @Controller 
 public class CommandProcessController {
 	@Autowired
 	private JasperPrintService jasperPrintService;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 
 	private static Logger LOG = LoggerFactory.getLogger(CommandProcessController.class);
@@ -179,20 +187,20 @@ public class CommandProcessController {
 		}
 	}
 
-	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
+	@RequestMapping(value = "/{cmdId}/addLine", method = {RequestMethod.POST, RequestMethod.GET})
 	public String addLine(@PathVariable("cmdId") Long cmdId,
 			@RequestParam Long pId, @RequestParam BigInteger qte,
 			@RequestParam BigDecimal pa, @RequestParam BigDecimal pv,
-			Model uiModel, HttpSession session) {
+			Model uiModel, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		
 		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		Produit produit = Produit.findProduit(pId);
-		System.out.println("Designation du produit: "+produit.getDesignation());
 		pa = pa == null ? BigDecimal.ZERO : pa;
 		pv = pv == null ? BigDecimal.ZERO : pv;
 		qte = qte == null ? BigInteger.ONE : qte;
 		BigDecimal pt = pa.multiply(new BigDecimal(qte));
 		if (commandeFournisseur.contientProduit(produit)) {
-			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_product_exist", null, LocaleUtil.getCurrentLocale()));
 		} else {
 			LigneCmdFournisseur line = new LigneCmdFournisseur();
 			line.setCommande(commandeFournisseur);
@@ -336,14 +344,10 @@ public class CommandProcessController {
 	}
 
 	@RequestMapping(value = "/{cmdId}/editCommand", method = RequestMethod.GET)
-	public String editCommand(@PathVariable("cmdId") Long cmdId, Model uiModel,
-			HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+	public String editCommand(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		CommandeProcess commandeProcess = new CommandeProcess(cmdId,
-				LigneCmdFournisseur.findLigneCmdFournisseursByCommande(
-						commandeFournisseur).getResultList(),
-						commandeFournisseur.getFournisseur().getName());
+		LigneCmdFournisseur.findLigneCmdFournisseursByCommande(commandeFournisseur).getResultList(), commandeFournisseur.getFournisseur().getName());
 		uiModel.addAttribute("commandeProcess", commandeProcess);
 		uiModel.addAttribute("ligneCmdFournisseur", new LigneCmdFournisseur());
 
@@ -352,23 +356,17 @@ public class CommandProcessController {
 
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/closeCommand", method = RequestMethod.GET)
-	public String closeCommand(@PathVariable("cmdId") Long cmdId,
-			Model uiModel, HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+	public String closeCommand(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		if (commandeFournisseur.getLigneCommande().isEmpty()) {
-			uiModel.addAttribute(
-					"appMessages",
-					Arrays.asList("Impossible de cloturer Cette Commande ! Car ne contient Aucun Produit "));
+			uiModel.addAttribute("appMessages", Arrays.asList(messageSource.getMessage("command_close_warning", null, LocaleUtil.getCurrentLocale())));
 
 		} else {
 			commandeFournisseur.setEtatCmd(Etat.CLOS);
-			uiModel.addAttribute("appMessages",
-					Arrays.asList("Commande cloturer avec succes "));
+			uiModel.addAttribute("appMessages", Arrays.asList(messageSource.getMessage("command_close_sucess", null, LocaleUtil.getCurrentLocale())));
 
 		}
-		CommandeFournisseur merge = (CommandeFournisseur) commandeFournisseur
-				.merge();
+		CommandeFournisseur merge = (CommandeFournisseur) commandeFournisseur.merge();
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", merge);
 		uiModel.addAttribute("itemId", merge.getId());
@@ -378,8 +376,7 @@ public class CommandProcessController {
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrerCmd", method = RequestMethod.GET)
 	public String enregistrer(@PathVariable("cmdId") Long cmdId, Model uiModel) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 		uiModel.addAttribute("itemId", cmdId);
@@ -387,10 +384,11 @@ public class CommandProcessController {
 		checkAndInsertUbipharmActionsLogsInUIModel(uiModel);
 		return "commandprocesses/show";
 	}
+	
+	
 	private void checkAndInsertUbipharmActionsLogsInUIModel(Model uiModel){
-
 		if(sendedToUbipharm){
-			uiModel.addAttribute("apMessage", "Commande Envoyer Sur le Serveur PHML avec Succes ! .");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_send_phml_success", null, LocaleUtil.getCurrentLocale()));
 			sendedToUbipharm = false;//reset value to false.
 		}
 		if(this.sendToUbipharmFailed) {
@@ -442,6 +440,8 @@ public class CommandProcessController {
 		}
 		return "redirect:/commandprocesses/"+cmdId+"/enregistrerCmd";
 	}
+	
+	
 	@RequestMapping(value="/listcommandstoimport", method=RequestMethod.GET)
 	public String listCommandsToImport(Model uiModel,HttpServletRequest request){
 		CsvImportExportUtil csvImportExportUtil = new CsvImportExportUtil();
@@ -455,7 +455,7 @@ public class CommandProcessController {
 			listCommandToImports.add(commandeFournisseur);
 		}
 		if (listCommandToImports.isEmpty()) {
-			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur A importer pour le moment. Raffinez votre recherche ci-haut !" );
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_received_warning", null, LocaleUtil.getCurrentLocale()));
 		}else {
 			uiModel.addAttribute("results",listCommandToImports);
 
@@ -464,41 +464,31 @@ public class CommandProcessController {
 	}
 	@Transactional
 	@RequestMapping(value = "/{cmdId}/annulerCmd", method = RequestMethod.GET)
-	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel,
-			HttpSession session) {
-		CommandeFournisseur commandeFournisseur = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpSession session) {
+		CommandeFournisseur commandeFournisseur = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		session.removeAttribute("productResult");
 		if (commandeFournisseur != null) {
-			if (commandeFournisseur.getEtatCmd().equals(Etat.CLOS)
-					|| !commandeFournisseur.getLivre()) {
+			if (commandeFournisseur.getEtatCmd().equals(Etat.CLOS) || !commandeFournisseur.getLivre()) {
 				commandeFournisseur.setAnnuler(true);
 				commandeFournisseur.merge();
-				uiModel.addAttribute("appMessages",
-						Arrays.asList("Commande  Annuler Avec Succes ! "));
+				uiModel.addAttribute("appMessages", Arrays.asList(" ! "));
 				uiModel.addAttribute("commandefournisseur", commandeFournisseur);
 				uiModel.addAttribute("itemId", cmdId);
 				return "commandprocesses/show";
-
 			} else {
 				commandeFournisseur.remove();
-				uiModel.addAttribute("appMessages",
-						Arrays.asList("Commande Supprimee avec Success ! "));
+				uiModel.addAttribute("appMessages", Arrays.asList(messageSource.getMessage("command_cancel_success", null, LocaleUtil.getCurrentLocale()))); 
 			}
 		} else {
-			uiModel.addAttribute("appMessages",
-					Arrays.asList("Commande  deja Supprimee ou inexistant ! "));
-
+			uiModel.addAttribute("appMessages", Arrays.asList(messageSource.getMessage("command_null", null, LocaleUtil.getCurrentLocale())));
 		}
 		return "caisses/infos";
 	}
 
 	// imprime le bon de commande
 	@RequestMapping("/{cmdId}/print/{bonCmdId}.pdf")
-	public String print(@PathVariable("cmdId") Long cmdId,
-			@PathVariable("bonCmdId") String invoiceNumber, Model uiModel) {
-		CommandeFournisseur commande = CommandeFournisseur
-				.findCommandeFournisseur(cmdId);
+	public String print(@PathVariable("cmdId") Long cmdId, @PathVariable("bonCmdId") String invoiceNumber, Model uiModel) {
+		CommandeFournisseur commande = CommandeFournisseur.findCommandeFournisseur(cmdId);
 		uiModel.addAttribute("commande", commande);
 		return "commandProsessDocView";
 

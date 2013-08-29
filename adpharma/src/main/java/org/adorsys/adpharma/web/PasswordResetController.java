@@ -24,7 +24,7 @@ public class PasswordResetController {
     @RequestMapping(method = RequestMethod.PUT)
     public String update(@Valid PasswordReset passwordReset, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if(!passwordReset.passwordsEqual()){
-        	ObjectError error = new ObjectError("newPassword","Both password entered are not identical");
+        	ObjectError error = new ObjectError("newPassword", "Both password entered are not identical");
 			bindingResult.addError(error);
         }
         PharmaUser user = SecurityUtil.getPharmaUser();

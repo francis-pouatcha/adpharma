@@ -13,6 +13,16 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
+    <!-- Internationalization -->
+   <spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+   <spring:message code="column_cip_qty" var="column_cip_qty" />
+   <spring:message code="column_cip" var="column_cip" />
+   <spring:message code="column_designation" var="column_designation" />
+   <spring:message code="column_ray" var="column_ray" />
+   <spring:message code="column_filiale" var="column_filiale"/>
+   <spring:message code="button_save" var="button_save" />
+   <spring:message code="button_cancel" var="button_cancel" />
+    
     <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
     <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
     <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
@@ -188,19 +198,13 @@ function requete(){
 		function clearProductTable(){
 			$('#resultproduit').html(
 					'<tr>
-					<th>CIP</th>
-			    		<th>DESIGNATION</th>
-			    		<th>QTE CIP</th>
-			    		 <th>RAYON</th>
-			    		 <th>FILIALE</th>
-
+					    <th style="text-transform: uppercase;">${column_cip}</th>
+			    		<th style="text-transform: uppercase;">${column_designation}</th>
+			    		<th style="text-transform: uppercase;">${column_cip_qty}</th>
+			    		<th style="text-transform: uppercase;">${column_ray}</th>
+			    		<th style="text-transform: uppercase;">${column_filiale}</th>
 					</tr>');
-		//	$('#designation').val(" ");
-			
 		};
-		
-
-
 		
 		$('form#produitfindform').submit
 		(function(){
@@ -209,7 +213,6 @@ function requete(){
 						$('#produitfindform').serialize(),
 			                function(data){
 								$(data).each(function(){
-									
 									$('#resultproduit').append(
 										'<tr id="'+this.cip+'">
 										  <td>'+this.cip+'</td>
@@ -218,9 +221,7 @@ function requete(){
 										  <td>'+this.rayon.codeRayon+'</td>
 										  <td>'+this.filiale.libelle+'</td>
 										  </tr>'
-										
 								);
-									
 								});
 								$('table#resultproduit tr').each(function(){
 									var current = this;
@@ -228,8 +229,6 @@ function requete(){
 										console.log(current.id)
 										$('#findproduit').dialog("close");
 										requetes(current.id);
-									
-										
 									};
 									});
 							
@@ -245,8 +244,6 @@ function requete(){
 		$('img.loadimage').ajaxStop(function(){
 			$(this).hide();
 		});
-
-	
 		
 		// Dialog	find produit		
 		$('#findproduit').dialog({
@@ -257,11 +254,11 @@ function requete(){
 			width: 1000,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}
@@ -272,10 +269,6 @@ function requete(){
 			$('#findproduit').dialog('open');
 			return false;
 		});
-		
-		
-		
-		  
 		
 
 			  function requetes(cip){
@@ -300,39 +293,27 @@ function requete(){
 
 			  	}
 
-			 
-		
-			 
-	
-
-	})
-	
+	});
 	</script>
-   <div id="findproduit" style="display: none;" title="recherche un cip ">
-		
-		
-		
+        
+ <div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
+        
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;" type="text" name="designation"/>
+			</p>
 		</form>
-		
-		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
- <div style="height:400px; overflow: auto; "  >
+		<center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+    <div style="height:400px; overflow: auto;">
 		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
 		    	<tr>
-		    		<th style="text-align: center;">CIP</th>
-		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		<th style="text-align: center;">QTE CIP</th>
-		    	   <th style="text-align: center;" >RAYON</th>
-		    	   <th style="text-align: center;" >FILIALE</th>
-		    
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cip}</th>
+		    		<th style="text-align: center; width: 250px; text-transform: uppercase;">${column_designation}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+		    	   <th style="text-align: center; text-transform: uppercase;" >${column_ray}</th>
+		    	   <th style="text-align: center; text-transform: uppercase;" >${column_filiale}</th>
 		    	</tr>
 		  </table>
 	</div>	 
-   
 </div>      
 </span>

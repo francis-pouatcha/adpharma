@@ -12,12 +12,27 @@
 	<jsp:include page="orderEdit_script.jspx" />
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-
-	<!--  <div style="margin-bottom: 2px; padding-bottom: 2px;">
-		<span style="font-weight: bold"> <c:out
-				value="${commandeProcess.displayName}" />
-		</span>
-	</div> -->
+	
+<!-- Internationalization -->	
+	<spring:message code="commandefournisseur_edit" var="commandefournisseur_edit" />
+	<spring:message code="button_save" var="button_save" />
+    <spring:message code="button_cancel" var="button_cancel" />
+    <spring:message code="button_find_product" var="button_find_product" />
+    <spring:message code="button_export" var="button_export" />
+    <spring:message code="commandefournisseur_save_title" var="commandefournisseur_save_title" />
+    <spring:message code="commandefournisseur_cancel_title" var="commandefournisseur_cancel_title" />
+    <spring:message code="commandefournisseur_print_order" var="commandefournisseur_print_order" />
+    <spring:message code="commandefournisseur_export_title" var="commandefournisseur_export_title" />
+    <spring:message code="column_cip" var="column_cip" />
+    <spring:message code="column_designation" var="column_designation" />
+    <spring:message code="column_stock_qty" var="column_stock_qty" />
+    <spring:message code="column_stock_alert" var="column_stock_alert" />
+    <spring:message code="column_qty_order" var="column_qty_order" />
+    <spring:message code="column_sales_price" var="column_sales_price" />
+    <spring:message code="column_purchase_price" var="column_purchase_price" />
+    <spring:message code="commandline_pane_title_add" var="commandline_pane_title_add" />
+    <spring:message code="commandline_title_list" var="commandline_title_list" />
+    
 
 	<util:display-box display="${commandeProcess.displayName}" />
 
@@ -49,24 +64,29 @@
 		value="/commandprocesses/${commandeProcess.cmdId}/exporto.xls"
 		var="xls_cmd_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL
-				PREPARATION</a></span> <span><a href="${ enr_cmd_url}"
-			style="text-decoration: none;"> <INPUT class="submits"
-				type="button" value="Enregistrer"
-				title="Enregistre L'approvisionnement" /></a> </span> <span><a
-			href="${ delete_cmd_url}" style="text-decoration: none;"> <INPUT
-				class="submits" type="button" value="Annuler la Preparation"
-				title="Annuler la preparation" /></a> </span> <span><a href="#"
-			id="findprd" style="text-decoration: none;"> <INPUT
-				class="submits" type="button" value="Rechercher un produit"
-				title="Rechercher un produit" /></a> </span> <span><a
-			href="${bon_cmd_url}" style="text-decoration: none;"> <INPUT
-				class="submits" type="button" value="imprimer le bon de commande "
-				title="imprimer le bon " /></a> </span> <span><a href="${xls_cmd_url}"
-			style="text-decoration: none;"> <INPUT class="submits"
-				type="button" value="exporter (EXCEL) "
-				title="exporter au format xls " /></a> </span>
-
+		<span class="firstTab selectedTab" style="text-transform: uppercase;">
+		  <a href="${ edit_url}">${commandefournisseur_edit}</a>
+		</span> 
+		<span>
+		    <a href="${ enr_cmd_url}" style="text-decoration: none;"> 
+			<INPUT class="submits" type="button" value="${button_save}" title="${commandefournisseur_save_title}" /></a> 
+	    </span> 
+	    <span>
+	        <a href="${ delete_cmd_url}" style="text-decoration: none;"> 
+	        <INPUT class="submits" type="button" value="${button_cancel}" title="${commandefournisseur_cancel_title}" /></a> 
+	    </span> 
+	    <span>
+	        <a href="#" id="findprd" style="text-decoration: none;"> 
+	        <INPUT class="submits" type="button" value="${button_find_product}" title="${button_find_product}" /></a> 
+	    </span> 
+	    <span>
+	        <a href="${bon_cmd_url}" style="text-decoration: none;"> 
+	        <INPUT class="submits" type="button" value="${commandefournisseur_print_order}" title="${commandefournisseur_print_order}" /></a> 
+	    </span> 
+	    <span>
+	        <a href="${xls_cmd_url}" style="text-decoration: none;"> 
+	        <INPUT class="submits" type="button" value="${button_export}" title="${commandefournisseur_export_title}" /></a> 
+	    </span>
 	</div>
 
 	<spring:url
@@ -303,25 +323,19 @@
 		});
 	</script>
 
-	<!-- afficher ce formulaire ppour l ajout de produit -->
-	<util:panel title="saisir le CIP du Produit" id="cip">
+	<!-- afficher ce formulaire ppour l'ajout de produit -->
+	<util:panel title="${commandline_pane_title_add}" id="cip">
 		<form action="${cmd_add_url}" method="POST" name="formulaire"
 			onSubmit="return verif_formulaire()">
 			<table>
 				<tr>
-					<spring:message code="saleprocess_default_cip"
-						var="default_cip_text" />
-					<th style="text-align: center;">${default_cip_text }</th>
-					<spring:message code="saleprocess_product_designation"
-						var="product_designation_text" />
-					<th style="text-align: center;">${product_designation_text }</th>
-					<spring:message code="saleprocess_product_designation"
-						var="product_designation_text" />
-					<th style="text-align: center;">Stock</th>
-					<th style="text-align: center;">Stock alert</th>
-					<th style="text-align: center;">qte cmd</th>
-					<th style="text-align: center;">Prix achat</th>
-					<th style="text-align: center;">Prix Vente</th>
+					<th style="text-align: center;">${column_cip}</th>
+					<th style="text-align: center;">${column_designation}</th>
+					<th style="text-align: center;">${column_stock_qty}</th>
+					<th style="text-align: center;">${column_stock_alert}</th>
+					<th style="text-align: center;">${column_qty_order}</th>
+					<th style="text-align: center;">${column_purchase_price}</th>
+					<th style="text-align: center;">${column_sales_price}</th>
 					<th style="text-align: center;">ACTION</th>
 				</tr>
 				<tr>
@@ -366,33 +380,31 @@
 		</form>
 		<center style="text-transform: uppercase;">
 			<c:if test="${not empty apMessage }">
-				<hr />
 				<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-				<hr />
 			</c:if>
 
 		</center>
 	</util:panel>
 	<BR />
 	<center>
-		<IMG alt="loading ..." src="${loadimage }" class="loadimage"
-			style="display: none;" />
+		<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" />
 	</center>
+	
 	<!-- Show the list of product commanded here -->
 	<form:customList
 		id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected"
 		items="${commandeProcess.productSelected}" z="user-managed"
-		label="Liste Des Produits A Commander" objectName="Ligne Commande"
+		label="${commandline_title_list}" objectName="Ligne Commande"
 		openPane="${not empty  commandeProcess.productSelected}">
 		<div style="overflow-y: auto; height: 800px;">
 			<table id="orderItems">
 				<tr>
-					<th style="text-align: center;">CiP</th>
-					<th style="text-align: center; width: 300px;">Designation</th>
-					<th style="text-align: center;">Stock</th>
-					<th style="text-align: center;">Commande</th>
-					<th style="text-align: center;">Prix achat</th>
-					<th style="text-align: center;">Prix Vente</th>
+					<th style="text-align: center;">${column_cip}</th>
+					<th style="text-align: center; width: 300px;">${column_designation}</th>
+					<th style="text-align: center;">${column_stock_qty}</th>
+					<th style="text-align: center;">${column_qty_order}</th>
+					<th style="text-align: center;">${column_purchase_price}</th>
+					<th style="text-align: center;">${column_sales_price}</th>
 					<th style="text-align: center;">Agent</th>
 					<th colspan="2" style="text-align: center;">ACTION</th>
 				</tr>

@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
-     <script>
+    
+    <!-- Internationalization -->
+    <spring:message code="statistics_period_begin" var="statistics_period_begin" />
+    <spring:message code="statistics_period_end" var="statistics_period_end" />
+    <spring:message code="statistics_period_frequence" var="statistics_period_frequence" htmlEscape="false" />
+    <spring:message code="statistics_label_medium_order_set" var="statistics_label_medium_order_set" />
+    <spring:message code="statistics_legend" var="statistics_legend" />
+    <spring:message code="statistics_cart" var="statistics_cart" />
+    <spring:message code="statistics_customers" var="statistics_customers" />
+    <spring:message code="statistics_period" var="statistics_period" />
+    
+    
+<script>
   $(document).ready(function() {
 	  var s2 = ${graph1} ;
 	            var s1 =  ${graph2} ;
-	         
 	            plot1 = $.jqplot("chart1", [s2, s1], {
 	                // Turns on animatino for all series in this plot.
 	                animate: true,
@@ -19,7 +35,7 @@
 	                    showTooltip: false
 	                },
 	                title: {
-	                    text: 'PANIER MOYEN ET NB CLIENTS',   // title for the plot,
+	                    text: '${statistics_label_medium_order_set}',   // title for the plot,
 	                    show: true,
 	                },
 	                series:[
@@ -102,26 +118,25 @@
     		
     		<td align="left" valign="top" width="20%" class="tblog">
     		<fieldset>
-    		<legend> Saisir La Periode</legend>
+    		<legend> ${statistics_period} </legend>
     		<form:custumcreate label="Statistics" id="fc_org_adorsys_adpharma_domain_TauxMarge" modelAttribute="statistic" path="/statistics/courbeventecip" render="${empty dependencies}" z="/v4Q5hnmI4Qeh080AqNpaqvrYEE=">
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="Du" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="AU" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-       <field:select id="" label="Frequence" items="${periodes }" field="periode" path="/periodes" />
-    </form:custumcreate>
+              <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="${statistics_period_begin}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+              <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="${statistics_period_end}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+              <field:select id="" label="${statistics_period_frequence}" items="${periodes }" field="periode" path="/periodes" />
+            </form:custumcreate>
     <BR />
                            <HR />
-                          <div style="width: 80% ; "  id="legend">
-                         
-                            <P> LEGENDE </P>
+                          <div style="width: 80% ;" id="legend">
+                            <P style="text-transform: uppercase;"> ${statistics_legend} </P>
                           <TABLE>
                           
                              <TR>
                                 <TD style="background-color: rgb(51,204,255); width: 50%;"></TD>
-                                <TD id="firstYear" style=" width: 80%;">NB CLIENT</TD>
+                                <TD id="firstYear" style=" width: 80%;"> <span style="text-transform: uppercase;">${statistics_customers}</span> </TD>
                              </TR>
                              <TR>
                                 <TD style="background-color:orange ; width: 50%;"></TD>
-                                <TD id="secondYear" style=" width: 80%;">PANIER MOYEN</TD>
+                                <TD id="secondYear" style=" width: 80%;"> <span style="text-transform: uppercase;"> ${statistics_cart} </span></TD>
                              </TR>
                           </TABLE>
                           </div>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div id="header" xmlns:jsp="http://java.sun.com/JSP/Page" 
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
@@ -5,6 +6,7 @@
 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
+  
  <spring:url var="banner" value="/resources/images/fakoship_logo.png" />
  <spring:url var="ship" value="/resources/images/biglogo.png" />
  <spring:url var="loginimage" value="/resources/images/login.png" />
@@ -28,7 +30,17 @@
  <spring:message code="welcome_user1" var="welcome1" /> 
  <spring:message code="welcome_user2" var="welcome2" />
  <spring:message code="lang_user" var="lang_user" />
-<script type="text/javascript">
+ 
+ <!-- Message du dialogue informations utilisateur -->
+ <spring:message code="title_user_info" var="title_user_info" />
+ <spring:message code="identifier_user_info" var="identifier_user_info" />
+ <spring:message code="allname_user_info" var="allname_user_info" />
+ <spring:message code="phone_user_info" var="phone_user_info" />
+ <spring:message code="key_user_info" var="key_user_info" />
+ <spring:message code="reset_user_info" var="reset_user_info" />
+ <spring:message code="cancel_user_info" var="cancel_user_info" />
+
+<script type="text/javascript">         
 		function confHeader(){
 		Check = confirm("Voulez vous vraiment Ferner votre session? ");
 		if(Check == false){
@@ -75,14 +87,14 @@
 					$.getJSON( '/adpharma/pharmausers/userInfos',
 							function(data){
 											$('.userdialog').html(
-													'<p> IDENTIFIANT :  '+ data.userName+'</p>'
-													+'<p>NOM COMPLET :  '+data.fullName+'</p>'
-													+'<p> TELEPHONE :   '+data.phoneNumber+'</p>'
-													+'<p> CLE DE VENTE :  '+data.saleKey+'</p>'
+													'<p> ${identifier_user_info} :  '+ data.userName+'</p>'
+													+'<p> ${allname_user_info} :  '+data.fullName+'</p>'
+													+'<p> ${phone_user_info} :   '+data.phoneNumber+'</p>'
+													+'<p> ${key_user_info} :  '+data.saleKey+'</p>'
 													);	
 							                       });
 				},
-				title: 'User Information',
+				title: '${title_user_info}',
 				width: 400,
 				resizable:true,
 				draggable :true,
@@ -91,19 +103,19 @@
 		         position:'center', 
 				modal:true,
 				buttons: {
-					"Reset Your Key": function() { 
+					"${reset_user_info}": function() { 
 					
 					$.getJSON( '/adpharma/pharmausers/resetSaleKey', function(data){
 						$('.userdialog').html(
-								'<p> IDENTIFIANT :'+data.userName+'</p>'
-								+'<p> Nom Complet :'+data.fullName+'</p>'
-								+'<p> TELEPHONE :'+data.phoneNumber+'</p>'
-								+'<p> CLE DE VENTE :'+data.saleKey+'</p>'
+								'<p> ${identifier_user_info} :'+data.userName+'</p>'
+								+'<p> ${allname_user_info} :'+data.fullName+'</p>'
+								+'<p> ${phone_user_info} :'+data.phoneNumber+'</p>'
+								+'<p> ${key_user_info} :'+data.saleKey+'</p>'
 								
 								);	
 		              });
 					}, 
-					"Cancel": function() { 
+					"${cancel_user_info}": function() { 
 						$(this).dialog("close"); 
 					} 
 				}
@@ -130,9 +142,9 @@
 				  		<a href="#" class="welcome_user"> <span>${welcome1} </span> ${pageContext['request'].userPrincipal.name}</a> <span style="margin-left: 5px; margin-right: 5px; color: #6FEFC9;">|</span> 
 				  		<span style="color: #6FEFC9;">${sessionBean.connectedSiteName}</span>
 				    	<a id="userInfos" title="Vos Informations" href="#" style="margin-rigth: 1px;margin-left: 1px;padding-right: 5px;" >${msg_user}</a>
-				    	<!-- <a href="#">
+				    	<a href="#">
 			             ${lang_user}: <util:language locale="fr" label="Français"/> <util:language locale="en" label="English"/>
-			            </a> -->
+			            </a>
 	  				</c:when>
 	  			</c:choose>
 				<c:choose>

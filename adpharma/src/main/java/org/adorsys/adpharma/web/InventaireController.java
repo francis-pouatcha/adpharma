@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -24,9 +25,11 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +47,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class InventaireController {
 	@Autowired
 	private LigneInventaireImportExportService ligneinventaireImportExportService ;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 	
 	
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
@@ -170,7 +176,7 @@ public class InventaireController {
 	public String inventaireEnCour(Model uiModel,HttpServletRequest httpServletRequest ) {
 		List<Inventaire> resultList = Inventaire.findInventairesByEtat(Etat.EN_COUR).getResultList();
 		if (!resultList.iterator().hasNext()) {
-			uiModel.addAttribute("apMessage","Aucun inventaire  en cour !");
+			uiModel.addAttribute("apMessage",  messageSource.getMessage("inventory_found_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 
 		}else {

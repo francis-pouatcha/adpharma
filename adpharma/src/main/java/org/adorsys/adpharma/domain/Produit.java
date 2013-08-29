@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -257,18 +258,18 @@ public class Produit extends AdPharmaBaseEntity {
 
 	@Override
 	protected void internalPreUpdate() {
-		/*if (quantiteEnStock.intValue()<0) {
-    		quantiteEnStock = BigInteger.ZERO ;
-		}*/
 	}
 	
 	@PostUpdate
 	public void preUpdateProduct(){
 		//quantiteEnStock  = InventoryService.getStockIncludeNegativeQte(this);
-		
 		if(quantiteEnStock.intValue()==0){
 			dateDerniereRupture= new Date();
 		}
+     // Coherence des stock qte cip et qte cipm		
+		
+		/*quantiteEnStock= InventoryService.getTrueStockQuantity(this);
+		System.out.println("Quantite en stock apres mise a jour: "+quantiteEnStock);*/
 	}
 
 	
@@ -321,7 +322,7 @@ public class Produit extends AdPharmaBaseEntity {
 	public void postPersist() {
 		produitNumber = NumberGenerator.getNumber("PD-", getId(), 4);
 	}
-
+	
 	public boolean isOut(){
 		return quantiteEnStock.intValue() <= 0 ;
 	}

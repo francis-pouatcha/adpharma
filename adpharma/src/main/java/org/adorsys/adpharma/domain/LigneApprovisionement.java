@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
@@ -88,7 +89,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private String cipMaison = null;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Produit produit;
 
 	private String designation;
@@ -185,7 +186,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	private transient BigInteger qteCip;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Approvisionement approvisionement;
 
 	@Value("true")
@@ -542,7 +543,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	}
 
 	public void calculRemise() {
-		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		PharmaUser pharmaUser=null;
+		try {
+			pharmaUser = SecurityUtil.getPharmaUser();
+			System.out.println("Utilisateur: "+pharmaUser.getUserName());
+		} catch (Exception e) {
+			System.out.println("Utilisateur introuvable...");
+			System.out.println("Cause: "+e.getCause()+"\n"+"Message: "+e.getMessage());
+		}
 		remiseMax = BigDecimal.ZERO;
 		if(pharmaUser != null){
 			BigDecimal tauxRemise = pharmaUser.getTauxRemise();

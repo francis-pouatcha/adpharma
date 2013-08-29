@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
- xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+ xmlns:jsp="http://java.sun.com/JSP/Page" 
+ xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:create id="fc_org_adorsys_adpharma_domain_Inventaire"   multipart="true" modelAttribute="inventaire" path="/inventaires" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
-    <table >
-     <tr>
+    
+    
+    <!-- Internationalization -->
      <spring:message code="inventory_inventory_info" var="inventory_info"/>
-       <th>${inventory_info }</th>
      <spring:message code="inventory_product_to_be_inventored_information" var="product_to_be_inventored_information"/>
-        <th>${product_to_be_inventored_information }</th>
-     
-     </tr>
-        
+    
+    <form:create id="fc_org_adorsys_adpharma_domain_Inventaire"   multipart="true" modelAttribute="inventaire" path="/inventaires" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
+    <table>
      <tr>
-     
+       <th>${inventory_info }</th>
+       <th>${product_to_be_inventored_information }</th>
+     </tr>
+     <tr>
      <spring:message code="inventory_create_donotselectanyproduct" var="create_donotselectanyproduct"/>
      <spring:message code="inventory_create_do_inventory_by_cipm" var="create_do_inventory_by_cipm"/>
       <td style="background-color: white;" valign="top"> 
@@ -38,9 +42,8 @@
         <label   for="fichier" > ${inventory_file } : </label>  <input size="8" type="file" name="fichier" />
       </td>
        <td style="background-color: white;">
-        <field:select field="rayon"  label="Emplacement" itemValue="id" path="#" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" items="${rayons}"  z="user-managed"/>
+        <field:select field="rayon"  itemValue="id" path="#" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" items="${rayons}"  z="user-managed"/>
         <field:input field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" render="false"  z="user-managed"/>
-     
      <spring:message code="inventory_create_designation_title" var="create_designation_title"/>
         <field:input field="designation" titleMessage="${create_designation_title }"  id="c_org_adorsys_adpharma_domain_Inventaire_designation" z="user-managed"/>
      <spring:message code="inventory_create_beginby_title" var="create_beginby_title"/>
@@ -60,12 +63,9 @@
         <field:input field="cipProduct" titleMessage="${create_productcip_title }" buttonLabel="..." buttonId="cipbt" label="${create_productcip_label }" id="c_org_adorsys_adpharma_domain_Inventaire_produits"  z="user-managed"/>
       <field:input field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" render="false" z="user-managed"/>
         <field:input field="sousFamillePiroduit" id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" render="false" z="user-managed"/>
-      
        </td> 
-     
      </tr>
     </table> 
-       
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Inventaire" render="${not empty dependencies}" z="bj0ndsrhRDrpWZQUoyTSKhLY3eI="/>
 </div>

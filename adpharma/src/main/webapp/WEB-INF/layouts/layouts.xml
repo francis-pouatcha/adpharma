@@ -7,7 +7,7 @@
 
   <definition name="default" template="/WEB-INF/layouts/layout-dojo.jspx">
     <put-attribute name="header" value="/WEB-INF/views/header.jspx" />
-        <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
+    <put-attribute name="allmenu" value="/WEB-INF/views/allmenu.jspx" />
     <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
   </definition>
    <definition name="etat" template="/WEB-INF/layouts/etat-layout.jspx">

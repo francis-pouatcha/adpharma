@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,11 +45,13 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.ClaimsService;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.DocumentsPath;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -68,6 +71,9 @@ public class ApprovisionementProcessController {
 	
 	@Autowired
 	private ClaimsService reclamationsService;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
@@ -142,29 +148,27 @@ public class ApprovisionementProcessController {
 		qteug = StringUtils.isBlank(qteug)?"0":qteug;
 		
 		if (approvisionement.contientProduit(produit)) {
-			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_exist", null, LocaleUtil.getCurrentLocale()));
 			return initViewContent(approvisionement, tvaj, uiModel);
 		    }
 			if (approvisionement.CommandeContientProduit(produit)) {
-				uiModel.addAttribute("apMessage", "Ce produit ne fait Pas partie de la commande recuperer !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_command", null, LocaleUtil.getCurrentLocale()));
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
 			if ((new BigInteger(qteug)).compareTo(new BigInteger(qte))==1) {
-				uiModel.addAttribute("apMessage", "les unites gratuites sont superieur a la quantite approvisione !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_free_unit", null, LocaleUtil.getCurrentLocale()));
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
-			
 			LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 			if(prm==""){
 			       if(!produit.isPerissable()){
 			    	   ligneApprovisionement.setDatePeremtion(new DateUtils().addYears(new Date(), 1));
 			       }else{
-			    	   uiModel.addAttribute("apMessage", "Veuillez entrer la date de peremption du produit");
+			    	   uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_peremp", null, LocaleUtil.getCurrentLocale()));
 			    	   return initViewContent(approvisionement, tvaj, uiModel);
 			       }
 			}else{
 				ligneApprovisionement.setDatePeremtion( PharmaDateUtil.parseToDate(prm, PharmaDateUtil.DATE_PATTERN_LONG2));
-				System.out.println("Date de peremption: "+ligneApprovisionement.getDatePeremtion());
 			}
 			if(qteReclam!=null){
 				ligneApprovisionement.setQuantiteReclame(qteReclam);
@@ -176,7 +180,7 @@ public class ApprovisionementProcessController {
 			ligneApprovisionement.setPrixAchatUnitaire(new BigDecimal(pa.trim()));
 			if (StringUtils.isNotBlank(pv)) ligneApprovisionement.setPrixVenteUnitaire(new BigDecimal(pv.trim()));
 			if(!new Date().before(ligneApprovisionement.getDatePeremtion())){
-				uiModel.addAttribute("apMessage", "La date de Peremtion de ce produit Doit etre Superieure a la date du jour !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_date", null, LocaleUtil.getCurrentLocale()));
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
 			ligneApprovisionement.setProduit(produit);
@@ -209,12 +213,12 @@ public class ApprovisionementProcessController {
 			Approvisionement approvisionement = Approvisionement.findApprovisionement(apId);
 			Produit produit = Produit.findProduit(pId);
 			if (approvisionement.contientProduit(produit)) {
-				uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_exist", null, LocaleUtil.getCurrentLocale()));
 			}else if (approvisionement.CommandeContientProduit(produit)) {
-				uiModel.addAttribute("apMessage", "Ce produit ne fait Pas partie de la commande recuperer !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_command", null, LocaleUtil.getCurrentLocale()));
 
 			}else if((ProcessHelper.stringToBigInteger(qteug).compareTo(ProcessHelper.stringToBigInteger(qte))==1)) {
-				uiModel.addAttribute("apMessage", "les unites gratuites sont superieur a la quantite approvisione !");		
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_free_unit", null, LocaleUtil.getCurrentLocale()));		
 			}else{
 				LigneApprovisionement ligneApprovisionement = new LigneApprovisionement();
 				ligneApprovisionement.setAgentSaisie(SecurityUtil.getUserName());
@@ -273,7 +277,7 @@ public class ApprovisionementProcessController {
 				line.CalculePaTotal();
 				line.merge();
 			}else{
-				uiModel.addAttribute("apMessage", "impposible d effectuer une mis a jour <b> Approvisionement CLOS </b>");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_update_warning", null, LocaleUtil.getCurrentLocale()));
 				return initViewContent(approvisionement, tvaj, uiModel);
 			}
 			approvisionement.calculateMontant();
@@ -315,7 +319,7 @@ public class ApprovisionementProcessController {
 			initProcurementViewDependencies(uiModel);
 			return "approvisionementprocess/edit";
 		}
-		//assure la convertion des lignes de commande en ligne d'approvisionement 
+		//assure la conversion des lignes de commande en ligne d'approvisionement 
 
 		@RequestMapping(value = "/{apId}/recupererCmd/{cmId}",  method = RequestMethod.GET)
 		public String recupererCmd(@PathVariable("cmId") Long cmId,@PathVariable("apId") Long apId, Model uiModel) {
@@ -326,7 +330,7 @@ public class ApprovisionementProcessController {
 				approvisionement.calculateMontant();
 				approvisionement.merge();
 			}else {
-				uiModel.addAttribute("apMessage", "impposible d'effectuer la recuperation l'aprovisionnement est deja close !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("appro_convert_command", null, LocaleUtil.getCurrentLocale()));
 			}
 			
 			ApprovisonementProcess approvisonementProcess = new ApprovisonementProcess(apId);
@@ -342,7 +346,7 @@ public class ApprovisionementProcessController {
 			List<Approvisionement> appro = Approvisionement.findApprovisionementByCommandeFournisseur(cmd);
 			if(!appro.isEmpty()){
 				Approvisionement next = appro.iterator().next();
-				uiModel.addAttribute("apMessage", "Cette Commande a deja ete Convertie Voir L'approvisionnement No : "+next.getApprovisionementNumber());
+				uiModel.addAttribute("apMessage",  messageSource.getMessage("appro_convert_exist", null, LocaleUtil.getCurrentLocale())+ " " +next.getApprovisionementNumber());
 				return new CommandProcessController().enregistrer(cmId, uiModel);
 			}
 			Approvisionement approvisionement = new Approvisionement(cmd);
@@ -422,7 +426,7 @@ public class ApprovisionementProcessController {
 				}
 				approvisionement.remove();
 			}
-			uiModel.addAttribute("Approvisionnement suprimee avec sucess !");
+			uiModel.addAttribute(messageSource.getMessage("appro_close_success", null, LocaleUtil.getCurrentLocale()));
 
 			return "caisses/infos";
 		}
@@ -443,7 +447,7 @@ public class ApprovisionementProcessController {
 			ProcessHelper.addDateTimeFormatPatterns(uiModel);
 			uiModel.addAttribute("approvisionement", approvisionement);
 			uiModel.addAttribute("itemId",apId);
-			uiModel.addAttribute("appMessages",Arrays.asList("Approvisionement cloturer avec succes ! "));
+			uiModel.addAttribute("appMessages",Arrays.asList(messageSource.getMessage("appro_close_success", null, LocaleUtil.getCurrentLocale())));
 			return "approvisionementprocess/show";
 		}
 

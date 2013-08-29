@@ -2,23 +2,35 @@
 	xmlns:spring="http://www.springframework.org/tags" 
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
-	xmlns:jsp="http://java.sun.com/JSP/Page"  	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"  	
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
 	style="width: 100%;overflow: auto; height: 200px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
               <spring:url value="/detteclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
               
+              
+              <!-- Internationalization -->
+              <spring:message code="label_org_adorsys_adpharma_domain_client_plural" var="label_org_adorsys_adpharma_domain_client_plural" />
+              <spring:message code="column_invoice" var="column_invoice" />
+              <spring:message code="column_amount" var="column_amount" />
+              <spring:message code="column_advance" var="column_advance" />
+              <spring:message code="column_rest" var="column_rest" />
+              <spring:message code="customer_debts_title" var="customer_debts_title" />
+              
+              
   <script>
   function clearDetailTable(){
 		$('#detailTable').html(
 				'<tr>
-			<th>FACTURE</th> 
-             <th>CLIENTS</th> 
-              <th>MONTANT</th>
-               <th>AVANCE</th>
-               <th>RESTE</th>
+			      <th style="text-transform: uppercase;">${column_invoice}</th> 
+                  <th style="text-transform: uppercase;">${label_org_adorsys_adpharma_domain_client_plural}</th> 
+                  <th style="text-transform: uppercase;">${column_amount}</th>
+                  <th style="text-transform: uppercase;">${column_advance}</th>
+                  <th style="text-transform: uppercase;">${column_rest}</th>
 				</tr>');
 	//	$('#designation').val(" ");
 		
@@ -28,19 +40,17 @@
 	                function(data){
 				$(data).each(function(){
 	                  $('#detailTable').append(
-	          '<tr>
-	          <td>'+this.factureNo+'</td>
-	          <td>'+this.clientName+'</td>
-	          <td>'+this.montantInitial+'</td>
-	          <td>'+this.avance+'</td>
-	          <td>'+this.reste+'</td>
-	          
-	          </tr>'
-	                          
-	          );
-		}
-		)}
-			)};
+				          '<tr>
+				          <td>'+this.factureNo+'</td>
+				          <td>'+this.clientName+'</td>
+				          <td>'+this.montantInitial+'</td>
+				          <td>'+this.avance+'</td>
+				          <td>'+this.reste+'</td>
+				          </tr>'
+	                      );
+		                  });
+		});
+			};
 
 	$(function() {
 $('tr.list').each(function(){
@@ -59,43 +69,21 @@ $('tr.list').each(function(){
 							};
 							});
 	
-	})
-	</script>
+	});
+</script>
    <div id="detail">
 <div id="inner" style="overflow-y: scroll; height: 300px;">
-<center style="text-transform: uppercase; "> <H1 id="detailh">DETAILS DES DETTES</H1> </center>
+<center style="text-transform: uppercase; "> <H1 id="detailh" style="text-transform: capitalize;">${customer_debts_title}</H1> </center>
    		 <center>	<IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;" /></center>
    <table id="detailTable" style="margin-bottom: 20px;">
-        
               <tr>
-                                                                             
-                                                                             <th>FACTURE</th> 
-                                                                             <th>CLIENTS</th> 
-                                                                             <th>MONTANT</th>
-                                                                             <th>AVANCE</th>
-                                                                             <th>RESTE</th>
-                                                                             
+                  <th style="text-transform: uppercase;">${column_invoice}</th> 
+                  <th style="text-transform: uppercase;">${label_org_adorsys_adpharma_domain_client_plural}</th> 
+                  <th style="text-transform: uppercase;">${column_amount}</th>
+                  <th style="text-transform: uppercase;">${column_advance}</th>
+                  <th style="text-transform: uppercase;">${column_rest}</th>
              </tr>
-       </table>
-<!--  <span> 
-             <a href="${print_recu_url }"  style="color: blue;font-weight: bold;"  title="Imprimer Le recu D'inscription">
-                 Ticket
-                </a>
-                |
-                <a href="${print_recu_url }"  style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
-                 facture
-                </a>
-                |
-                <a href="${print_recu_url }" style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
-                 Borderau de Livraison
-                </a>
-                |
-                 <a href="${print_recu_url }" style="color: blue;font-weight: bold;"   title="Imprimer Le recu D'inscription">
-                 carte Scolaire
-                </a>
-                |
-</span>
- -->
+   </table>
 </div>
 
 </div>    

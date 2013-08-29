@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -24,8 +25,10 @@ import org.adorsys.adpharma.domain.QuiPaye;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypePaiement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +44,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/paiements")
 @Controller
 public class PaiementController {
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
@@ -67,9 +73,8 @@ public class PaiementController {
 	public String PaiementCaisseEnCour(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
 		Caisse caisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (caisse==null) {
-			uiModel.addAttribute("apMessage", "vous n'avez aucune caisse en cour !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_current_cash", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
-
 		}
 		if (page != null || size != null) {
 			int sizeNo = size == null ? 10 : size.intValue();
@@ -101,7 +106,7 @@ public class PaiementController {
 
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Groupe  Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_group_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 
@@ -119,7 +124,7 @@ public class PaiementController {
 
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Groupe  Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_group_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 
@@ -154,14 +159,14 @@ public class PaiementController {
 		client.calculeTotalDette();
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Groupe  Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_group_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
 			paiementProcess.setClient(client);
 
 			if (client.getTotalDette() == null || client.getTotalDette().intValue() <=0) {
-				uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Groupe  Ce client n a aucune dette !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_group_cash_customer", null, LocaleUtil.getCurrentLocale()));
 
 			}	else {
 				Paiement paiement = new Paiement() ;
@@ -187,20 +192,18 @@ public class PaiementController {
 			return "redirect:/paiements/selectclient/" + ProcessHelper.encodeUrlPathSegment(client.iterator().next().getId().toString(), httpServletRequest);
 
 		}else {
-			uiModel.addAttribute("apMessage","Aucun client trouve Verifier Le numero Saisie !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_find_customer", null, LocaleUtil.getCurrentLocale()));
 			return "paiements/encaissementGroupe";
-
 		}
-
-
 	}
+	
 
 	@Transactional
 	@RequestMapping(value = "/encaissementGlobal/{clientId}" , method = RequestMethod.POST)
 	public String encaisserPaiement(@PathVariable("clientId")Long clientId,@Valid Paiement paiement ,BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 		List<DetteClient> listeDette = DetteClient.findDetteClientsByClientIdEqualsAndSolderNot(clientId, Boolean.TRUE).getResultList();

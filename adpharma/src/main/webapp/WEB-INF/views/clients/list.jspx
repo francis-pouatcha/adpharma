@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_Client" items="${clients}" z="user-managed" url="/clients/searchCustomer" search="true" placeholder="Rechercher par nom">
+    
+    
+    <spring:message code="list_search_provider" var="list_search_provider" />
+    
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Client" items="${clients}" z="user-managed" url="/clients/searchCustomer" search="true" placeholder="${list_search_provider}">
         <table:table data="${clients}" delete="false" id="l_org_adorsys_adpharma_domain_Client" path="/clients" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Client_clientNumber" property="clientNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_typeClient" render="false" property="typeClient" z="7qmjlMoOcnATeYf5DNwSPXpV+tQ="/>

@@ -15,6 +15,18 @@
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
               <spring:url value="/paiements/printByCmd/" var="print_url" />
               
+              
+              <!-- Internationalization -->
+              <spring:message code="sales_details_title" var="sales_details_title" />
+              <spring:message code="sales_details_ticket" var="sales_details_ticket" />
+              <spring:message code="sales_details_ticket_title" var="sales_details_ticket_title" />
+              <spring:message code="sales_details_invoice" var="sales_details_invoice" />
+              <spring:message code="sales_details_invoice_title" var="sales_details_invoice_title" />
+              <spring:message code="column_total_price" var="column_total_price" />
+              <spring:message code="column_remise" var="column_remise" />
+              <spring:message code="column_cipm_qty" var="column_cipm_qty" />
+              
+              
       <style type="text/css">
               #nodata{
                   color: red;
@@ -56,11 +68,11 @@
   function clearDetailTable(){
 		$('#detailTable').html(
 				'<tr>
-				<th>CIP MAISON</th>
-		    		<th>DESIGNATION</th>
-		    		<th>QTE CIPM</th>
-		    		<th>PRIX TOTAL</th>
-		    		<th>REMISE</th>
+				    <th style="text-align: center; text-transform: uppercase;">CIPM</th>
+		    		<th style="text-align: center; text-transform: uppercase;">DESIGNATION</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cipm_qty}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_total_price}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_remise}</th>
 				</tr>');
 	//	$('#designation').val(" ");
 		
@@ -118,27 +130,28 @@ $('tr.list').each(function(){
 	})
 	</script>
    <div id="detail">
+   
 <div id="inner" style="overflow-y: scroll; height: 300px;">
-         <center style="text-transform: uppercase; "> <H1 id="detailh">DETAILS DE LA VENTE</H1> </center>
+         <center style="text-transform: uppercase; "> <H1 id="detailh" style="text-transform: uppercase;"> ${sales_details_title} </H1> </center>
    		 <center>	<IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;" /></center>
      <table id="detailTable" style="margin-bottom: 20px;">
               <tr>
-                  <th>CIP MAISON</th> 
-                  <th>DESIGNATION</th> 
-                  <th>QTE CIPM</th> 
-                  <th>PRix Total</th>
-                  <th>REMISE</th>
+                  <th style="text-align: center; text-transform: uppercase;">CIPM</th> 
+                  <th style="text-align: center; text-transform: uppercase;">DESIGNATION</th> 
+                  <th style="text-align: center; text-transform: uppercase;">${column_cipm_qty}</th> 
+                  <th style="text-align: center; text-transform: uppercase;">${column_total_price}</th>
+                  <th style="text-align: center; text-transform: uppercase;">${column_remise}</th>
              </tr>
        </table>
        
        <!-- Liens en cas de produits dans la commande -->
 	   <span id="liens"> 
-            <a href="#" id="ticket" style="color: blue;font-weight: bold;"  title="Imprimer Le Ticket de Caisse">
-                Ticket de Caisse 
+            <a href="#" id="ticket" style="color: blue;font-weight: bold;"  title="${sales_details_ticket_title}">
+                ${sales_details_ticket} 
             </a>
 		        |
-            <a href="#" id="facture" style="color: blue;font-weight: bold;"   title="Imprimer La Facture de Caisse">
-             Facture de Caisse
+            <a href="#" id="facture" style="color: blue;font-weight: bold;"   title="${sales_details_invoice_title}">
+             ${sales_details_invoice}
             </a>
 		</span>
 		

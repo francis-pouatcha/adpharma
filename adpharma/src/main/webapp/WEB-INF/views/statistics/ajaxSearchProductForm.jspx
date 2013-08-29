@@ -24,6 +24,11 @@
              <spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct/" var="find_cip_url" />
 		</c:otherwise>
 	</c:choose>
+	
+	<spring:message code="column_cip_qty" var="column_cip_qty" />
+	<spring:message code="column_ray" var="column_ray" />
+    <spring:message code="column_filiale" var="column_filiale"/>
+    <spring:message code="button_cancel" var="button_cancel" />
   
 <script type="text/javascript">
 
@@ -51,12 +56,11 @@ function requete(){
 		function clearProductTable(){
 			$('#resultproduit').html(
 					'<tr>
-					<th>CIP</th>
+					    <th>CIP</th>
 			    		<th>DESIGNATION</th>
-			    		<th>QTE CIP</th>
-			    		 <th>RAYON</th>
-			    		 <th>FILIALE</th>
-
+			    		<th>${column_cip_qty}</th>
+			    		<th>${column_ray}</th>
+			    		<th>${column_filiale}</th>
 					</tr>');
 		//	$('#designation').val(" ");
 			
@@ -120,11 +124,11 @@ function requete(){
 			width: 1000,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}

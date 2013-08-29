@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -42,13 +43,16 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypePaiement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.adorsys.adpharma.utils.TicketPrinter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,6 +67,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PaiementProcessController {
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@RequestMapping(value="/getUnpayCloseSalesNumber/ByAjax", method = RequestMethod.GET)
 	@ResponseBody
@@ -80,7 +87,7 @@ public class PaiementProcessController {
 
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 
@@ -99,8 +106,8 @@ public class PaiementProcessController {
 
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
-			return "caisses/infos";
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
+ 			return "caisses/infos";
 		}else {
 
 			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
@@ -119,29 +126,26 @@ public class PaiementProcessController {
 			return "redirect:/paiementprocess/selectFacture/" + ProcessHelper.encodeUrlPathSegment(invoice.iterator().next().getId().toString(), httpServletRequest);
 
 		}else {
-			uiModel.addAttribute("apMessage","Aucune Facture trouvee Verifier Le numero Saisie !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_notfound", null, LocaleUtil.getCurrentLocale()));
 			return "paiementprocess/encaisserPaiement";
-
 		}
-
-
 	}
 
 
 
-	//@Transactional
+	@Transactional
 	@RequestMapping(value = "/encaisser/{factureId}" , method = RequestMethod.POST)
 	public String encaisserPaiement(@PathVariable("factureId")Long factureId,@Valid Paiement paiement ,BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		Facture facture = Facture.findFacture(factureId);
 		if (facture == null) {
-			uiModel.addAttribute("apMessage", " impossible d'encaisser La Commande  est ANULLER !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_cancel_order", null, LocaleUtil.getCurrentLocale()));
 		}else {
 			if (facture.estSolder()) {
-				uiModel.addAttribute("apMessage", " impossible d'encaisser Facture deja soldee !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice", null, LocaleUtil.getCurrentLocale()));
 
 			}else if (facture.getEncaisser()) {
-				uiModel.addAttribute("apMessage", " Facture deja encaisser  !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_boxed", null, LocaleUtil.getCurrentLocale()));
 
 			}else{
 
@@ -159,7 +163,11 @@ public class PaiementProcessController {
 				uiModel.asMap().clear();
 				paiement.setCaisse(openCaisse);
 				paiement.persist();
-				encaisser(facture, openCaisse, paiement);
+				try {
+					encaisser(facture, openCaisse, paiement);
+				} catch (Exception e) {
+					System.out.println("Probleme au nivo de l'encaissement"+e.getMessage());
+				}
 				paiement.merge();
 				paiementProcess.setShowDetailForm(true);
 				uiModel.addAttribute("paiementProcess",paiementProcess);
@@ -186,26 +194,23 @@ public class PaiementProcessController {
 
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
-
-
 			Facture facture = Facture.findFacture(factureId);
 			PaiementProcess paiementProcess = new PaiementProcess(openCaisse ,facture);
 			uiModel.addAttribute("paiementProcess",paiementProcess);
 			if (facture.getEncaisser()) {
-				uiModel.addAttribute("apMessage"," Cette facture a deja ete encaisse !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_boxed", null, LocaleUtil.getCurrentLocale()));
 				return "paiementprocess/encaisserPaiement";
-
 			}
 			if (facture.estSolder()) {
-				uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement cette Facture est  deja soldee !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice", null, LocaleUtil.getCurrentLocale()));
 				return "paiementprocess/encaisserPaiement";
 
 			}
 			if (facture.getTypeFacture().equals(TypeFacture.PROFORMAT)) {
-				uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Facture Proformat !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_proformat", null, LocaleUtil.getCurrentLocale()));
 				return "paiementprocess/encaisserPaiement";
 
 			}
@@ -223,12 +228,12 @@ public class PaiementProcessController {
 		List<Facture> factureResult ;
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 			factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
 			if (factureResult.isEmpty()) {
-				uiModel.addAttribute("apMessage","Aucune Factures en attente de paiement  !");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_wait", null, LocaleUtil.getCurrentLocale()));
 				return "paiementprocess/encaisserPaiement";
 
 			}else {
@@ -259,20 +264,19 @@ public class PaiementProcessController {
 	public String getUnCashInvoicesNumber(){
 		List<Facture> resultList = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
 		return ""+resultList.size();
-
-
 	}
+	
 
 	//@Transactional
 	@RequestMapping(value = "/annulFacture/{cmdId}" ,method = RequestMethod.GET)
 	public String annulFacture(@PathVariable("cmdId") Long cmdId ,Model uiModel,  HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		if (commandeClient.getEncaisse()) {
-			uiModel.addAttribute("apMessage", "impossible d'annuler COMMANDE DEJA ENCAISSEE !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_cancel_warning", null, LocaleUtil.getCurrentLocale()));
 
 		}else {
 			commandeClient.annulerCommande(SecurityUtil.getUserName());
-			uiModel.addAttribute("apMessage", "Facture Annnuler Avec Succes !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_cancel_success", null, LocaleUtil.getCurrentLocale()));
 
 		}
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
@@ -287,15 +291,16 @@ public class PaiementProcessController {
 
 	@RequestMapping(value = "/findFacture" ,params = "find=ByClientAndDateCreationBetween", method = RequestMethod.GET)
 	public String findFacturesByClientAndDateCreationBetween(@RequestParam("client") Client client, @RequestParam("minDateCr") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCr") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
-
 		List<Facture> factures = Facture.findFacturesByClientAndDateCreationBetweenNotsolder(client, minDateCreation, maxDateCreation).getResultList();
 		return	showPoduct(factures, uiModel);
 	}
 
+	
+	
 	@RequestMapping(value = "/findFacture" ,params = "find=ByDateCreationBetween", method = RequestMethod.GET)
 	public String findFacturesByDateCreationBetween(@RequestParam("minDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
 		if (minDateCreation == null || maxDateCreation == null) {
-			uiModel.addAttribute("apMessage", " veuillez saisir les deux dates  ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_find_period", null, LocaleUtil.getCurrentLocale()));
 			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
 		}
 		List<Facture> factures = Facture.findFacturesByDateCreationBetweenNotsolder(minDateCreation, maxDateCreation).getResultList();
@@ -303,10 +308,12 @@ public class PaiementProcessController {
 
 	}
 
+	
+	
 	@RequestMapping(value = "/findFacture",params = "find=ByFactureNumberEquals", method = RequestMethod.GET)
 	public String findFacturesByFactureNumberEquals(@RequestParam("factureNumber") String factureNumber, Model uiModel) {
 		if (StringUtils.isBlank(factureNumber)) {
-			uiModel.addAttribute("apMessage", " veuillez saisir le numero de la facture ");
+			uiModel.addAttribute("apMessage",  messageSource.getMessage("payment_cash_invoice_number", null, LocaleUtil.getCurrentLocale()));
 			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
 		}
 		List<Facture> factures =  Facture.findFacturesByFactureNumberEqualsNotSolder(factureNumber).getResultList();
@@ -316,7 +323,7 @@ public class PaiementProcessController {
 	@RequestMapping(params = "find=ByVendeurAndDateCreationBetween", method = RequestMethod.GET)
 	public String findFacturesByVendeurAndDateCreationBetween(@RequestParam("vendeur") PharmaUser vendeur, @RequestParam("minDateC") @DateTimeFormat(pattern = "dd-MM-yyyy") Date minDateCreation, @RequestParam("maxDateC") @DateTimeFormat(pattern = "dd-MM-yyyy") Date maxDateCreation, Model uiModel) {
 		if (minDateCreation == null || maxDateCreation == null) {
-			uiModel.addAttribute("apMessage", " veuillez saisir les deux dates  ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_find_period", null, LocaleUtil.getCurrentLocale()));
 			return	showPoduct(new ArrayList<Facture>(), uiModel);	   
 		}
 		List<Facture> factures = Facture.findFacturesByVendeurAndDateCreationBetweenNotSolder(vendeur, minDateCreation, maxDateCreation).getResultList();
@@ -328,7 +335,7 @@ public class PaiementProcessController {
 	public String showPoduct(List<Facture>  factureResult ,Model uiModel){
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 
@@ -448,7 +455,7 @@ public class PaiementProcessController {
 
 	}
 
-
+    @Transactional
 	public void encaisserVenteComptant(Facture facture ,Caisse caisse,Paiement paiement){
 		genererMvtStock(facture , caisse);
 		genererOperationCaisse(caisse, paiement);
@@ -552,7 +559,7 @@ public class PaiementProcessController {
 	}
 
 	// genere les mvt de stock
-	//@Transactional
+	@Transactional(rollbackFor=Exception.class, isolation=Isolation.DEFAULT) 
 	public void genererMvtStock(Facture facture , Caisse caisse){
 		Set<LigneCmdClient> lineCommande = facture.getCommande().getLineCommande();
 		if (!lineCommande.isEmpty()) {
@@ -595,7 +602,7 @@ public class PaiementProcessController {
 					}
 				}
 
-				prd.merge();   
+				prd.merge().flush();   
 				mouvementStock.persist();
 			}
 		}

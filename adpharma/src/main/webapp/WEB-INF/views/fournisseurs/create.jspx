@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:message code="provider_content_infos" var="provider_content_infos" />
+    <spring:message code="provider_content_contacts" var="provider_content_contacts" />
+    <spring:message code="provider_content_parameters" var="provider_content_parameters" />
+    
     <form:create id="fc_org_adorsys_adpharma_domain_Fournisseur" modelAttribute="fournisseur" path="/fournisseurs" render="${empty dependencies}" z="oQmOnZw4Y9yjTl3f8FSUKDEmcMg=">
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Fournisseur_footPrint" render="false" z="user-managed"/>
         <field:input field="fournisseurNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" render="false" z="user-managed"/>
-        <field:input field="name" id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom" style="width: 50%;" z="user-managed"/>
-        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="PHML KEY" z="user-managed"/>
-        <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_name" label="Nom Abrege" z="5jBGemLv5dbNBA2RD967AzWN8Lw="/>
-        <field:input field="phone" id="c_org_adorsys_adpharma_domain_Fournisseur_phone" label="Telephone" z="user-managed"/>
-        <field:input field="mobile" id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" z="UPhP+OmmLci9A+9kkPMO4g3q/GQ="/>
-        <field:input field="fax" id="c_org_adorsys_adpharma_domain_Fournisseur_fax" z="meBrVAHPdpbwoYW7Cqv2R5ahovk="/>
-        <field:input field="email" id="c_org_adorsys_adpharma_domain_Fournisseur_email" validationMessageCode="field_invalid_email" z="Y6r1ZCO9dFhD/aRzin/P+NZ5vfs="/>
-        <field:input field="adresse" id="c_org_adorsys_adpharma_domain_Fournisseur_adresse" z="kXMkuJg+pScuBxYYZRvOnWsgH6c="/>
-        <field:input field="siteInternet" id="c_org_adorsys_adpharma_domain_Fournisseur_siteInternet" z="y6KHhfNPvHttvcT0ARrn5UdGS94="/>
-        <field:input field="responsable" id="c_org_adorsys_adpharma_domain_Fournisseur_responsable" z="6KLFIrNCRmNbZMB045Lxos0qcpo="/>
-        <field:input field="chiffreAffaire" id="c_org_adorsys_adpharma_domain_Fournisseur_chiffreAffaire" validationMessageCode="field_invalid_number" z="LN8KCinIDuo45+zMf+bewQkeJdk="/>
-        <field:input field="ville" id="c_org_adorsys_adpharma_domain_Fournisseur_ville" z="WKhtxtl2WVGrVQqaK2xPBhqyRrs="/>
-        <field:input field="pays" id="c_org_adorsys_adpharma_domain_Fournisseur_pays" z="OUyqKXRADIKifvxXifg0NTym8iw="/>
-        <field:input field="codePostal" id="c_org_adorsys_adpharma_domain_Fournisseur_codePostal" z="IUl+BTaT1M5sdXiWKSmdjVKt9rY="/>
-        <field:input field="ContribuableNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_ContribuableNumber" z="W6U5wApb0z/YTOgqhUBu1TBMyP4="/>
-        <field:input field="numRegistreComerce" id="c_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" z="dfmtcQ6DknxTgIVmRQc/6OFcmE4="/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Fournisseur_note" render="false" z="user-managed"/>
-        <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
-        <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" z="NwdpMS3w5XjOjdB/P/asBE+TVt4="/>
-        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_distributorKey" z="KMWitpk5toZzsPn8+PH6284aIAE="/>
+        <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_name" z="user-managed" render="false"/>
+        
+        <div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 1200px; height: 450px">
+               <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${provider_content_infos}">
+			        <field:input field="name" id="c_org_adorsys_adpharma_domain_Fournisseur_name" style="width: 50%;" z="user-managed"/>
+			        <field:input field="responsable" id="c_org_adorsys_adpharma_domain_Fournisseur_responsable" z="6KLFIrNCRmNbZMB045Lxos0qcpo="/>
+			        <field:input field="ContribuableNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_ContribuableNumber" z="W6U5wApb0z/YTOgqhUBu1TBMyP4="/>
+			        <field:input field="numRegistreComerce" id="c_org_adorsys_adpharma_domain_Fournisseur_numRegistreComerce" z="dfmtcQ6DknxTgIVmRQc/6OFcmE4="/>
+			        <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" z="NwdpMS3w5XjOjdB/P/asBE+TVt4="/>
+			        <field:input field="chiffreAffaire" id="c_org_adorsys_adpharma_domain_Fournisseur_chiffreAffaire" validationMessageCode="field_invalid_number" z="LN8KCinIDuo45+zMf+bewQkeJdk="/>
+               </div>
+               <div closable="false" dojoType="dijit.layout.ContentPane" selected="false" title="${provider_content_contacts}">
+			        <field:input field="phone" id="c_org_adorsys_adpharma_domain_Fournisseur_phone" z="user-managed"/>
+			        <field:input field="mobile" id="c_org_adorsys_adpharma_domain_Fournisseur_mobile" z="UPhP+OmmLci9A+9kkPMO4g3q/GQ="/>
+			        <field:input field="fax" id="c_org_adorsys_adpharma_domain_Fournisseur_fax" z="meBrVAHPdpbwoYW7Cqv2R5ahovk="/>
+			        <field:input field="email" id="c_org_adorsys_adpharma_domain_Fournisseur_email" validationMessageCode="field_invalid_email" z="Y6r1ZCO9dFhD/aRzin/P+NZ5vfs="/>
+			        <field:input field="adresse" id="c_org_adorsys_adpharma_domain_Fournisseur_adresse" z="kXMkuJg+pScuBxYYZRvOnWsgH6c="/>
+			        <field:input field="siteInternet" id="c_org_adorsys_adpharma_domain_Fournisseur_siteInternet" z="y6KHhfNPvHttvcT0ARrn5UdGS94="/>
+			        <field:input field="ville" id="c_org_adorsys_adpharma_domain_Fournisseur_ville" z="WKhtxtl2WVGrVQqaK2xPBhqyRrs="/>
+			        <field:input field="pays" id="c_org_adorsys_adpharma_domain_Fournisseur_pays" z="OUyqKXRADIKifvxXifg0NTym8iw="/>
+			        <field:input field="codePostal" id="c_org_adorsys_adpharma_domain_Fournisseur_codePostal" z="IUl+BTaT1M5sdXiWKSmdjVKt9rY="/>
+               </div>
+               <div closable="false" dojoType="dijit.layout.ContentPane" selected="false" title="${provider_content_parameters}">
+			        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="PHML KEY" z="user-managed"/>
+			        <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
+			        <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_distributorKey" z="KMWitpk5toZzsPn8+PH6284aIAE="/>
+               </div>
+			   <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Fournisseur" render="${not empty dependencies}" z="0LRvTgo5vHVjCteMVzhmsdmw4CM="/>
+            </div>   
     </form:create>
-    <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Fournisseur" render="${not empty dependencies}" z="0LRvTgo5vHVjCteMVzhmsdmw4CM="/>
 </div>

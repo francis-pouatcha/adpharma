@@ -12,14 +12,11 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 	
-	    <spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
-	   <spring:url value="/transformationproduits/livreeForm"  var="transf_url" />
-		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
-		<spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
-	   <spring:url value="/resources/images/globe32.gif" var="loadimage" />
-	
-	
-   		<!-- product selection  	    -->
+	<spring:url value="/produits/findByCipmAjax/"  var="find_cipm_url" />
+	<spring:url value="/transformationproduits/livreeForm"  var="transf_url" />
+    <spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+    <spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
+	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	
   <script type="text/javascript">
   
@@ -197,33 +194,47 @@ function verif_formulaire()
    return false;
   }
  
-
 }
-
-
-
-
 </script>
-<div style="margin-bottom: 6px;margin-top:9px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="#">DECOMPOSITION</a></span>
-	<span ><a id="findprd" href="#" style="text-decoration: none;"><INPUT class="submits" id="findcipm" type="button" value="Recherche CIPM" title="Annuler L'approvisionnement" /></a></span>
-		
-			
-</div>
-		
 
+<!-- Internationalization -->
+<spring:message code="button_find_product" var="button_find_product" />
+<spring:message code="panel_title_transform" var="panel_title_transform" />
+<spring:message code="column_qty_appro" var="column_qty_appro" />
+<spring:message code="column_qty_transform" var="column_qty_transform" />
+<spring:message code="column_stock_qty" var="column_stock_qty" />
+<spring:message code="column_stock_qty" var="column_stock_qty" />
+<spring:message code="lignesappro_totalprice" var="lignesappro_totalprice" />
+<spring:message code="lignesappro_purchaseprice" var="lignesappro_purchaseprice" />
+<spring:message code="lignesappro_margin" var="lignesappro_margin" />
+<spring:message code="lignesappro_qty" var="lignesappro_qty" />
+<spring:message code="lignesappro_saleprice" var="lignesappro_saleprice" />
+<spring:message code="lignesappro_permpdate" var="lignesappro_permpdate" />
+<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product"/>
+
+
+
+
+<div style="margin-bottom: 6px;margin-top:9px; font-weight: bold;">
+    <span class="firstTab selectedTab"><a href="#">DECOMPOSITION</a></span>
+	<span>
+	    <a id="findprd" href="#" style="text-decoration: none;">
+	    <INPUT class="submits" id="findcipm" type="button" value="${button_find_product}" title="${button_find_product}" />
+	    </a>
+    </span>
+</div>
      	<!-- afficher ce formulaire pour la mis a jour des ligne -->
  
- <util:panel title="SAISIR LE CIPM DU PRODUIT A TRANSFORMER" id="upline">
+ <util:panel title="${panel_title_transform}" id="upline">
  <form action="${transf_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
 		    <table>
 		    	<tr>
 		    		<th style="text-align: center;">CIPM</th>
 		    		<th style="text-align: center;">CIP</th>
 		    		<th style="text-align: center;width: 300px;">DESIGNATION</th>
-		    		<th style="text-align: center;">QTE APPROV</th>
-		            <th style="text-align: center;">QTE A TRANSF</th>
-		            <th style="text-align: center;">QTE EN STOCK</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_qty_appro}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_qty_transform}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_stock_qty}</th>
 		    		<th  style="text-align: center;">ACTION</th>
 		    	</tr>
 		    		<tr>
@@ -232,64 +243,50 @@ function verif_formulaire()
 		    		<INPUT type="text" name="cipm" class="autres" value="${ligne.cipMaison }" autofocus="autofocus"  onchange="requete();"   onKeyPress="return scanTouche(event)" style=" text-align: center;"   id="cipm" />
 		    			</td>
 		    			<td>
-		 	<INPUT type="text" name="cip" class="autres" value="${ligne.cip }" title="Designation"  style="color: blue; text-align: center;" disabled="disabled" id="cip" />
-		    			
+		 	              <INPUT type="text" name="cip" class="autres" value="${ligne.cip }" title="Designation"  style="color: blue; text-align: center;" disabled="disabled" id="cip" />
 		    			</td>
 		    			<td >
-		    		<INPUT type="text" value="${ligne.designation }"  name="des" class="des"  disabled="disabled"      style="color: blue; "  id="des" />
-
+		    		      <INPUT type="text" value="${ligne.designation }"  name="des" class="des"  disabled="disabled"      style="color: blue; "  id="des" />
 		    			</td>
 		    			<td>
-		    			
-		   	<INPUT type="text" name="qtea" value="${ligne.quantiteAprovisione }" style="color: blue;" class="autres"  disabled="disabled"     id="qtea" />
+		   	              <INPUT type="text" name="qtea" value="${ligne.quantiteAprovisione }" style="color: blue;" class="autres"  disabled="disabled"     id="qtea" />
 		    			</td>
-
 		    			<td>
-		    			
-		   	<INPUT type="text" name="qte" class="autres"   onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
-		    		
+		   	              <INPUT type="text" name="qte" class="autres"   onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
 		    			</td>
-		    		
 		    			<td>
-		     <INPUT type="text" name="qtes" class="autres" value="${ligne.quantieEnStock }"  style="color: blue;"   disabled="disabled"     id="qtes" />
-		    
+		                  <INPUT type="text" name="qtes" class="autres" value="${ligne.quantieEnStock }"  style="color: blue;"   disabled="disabled"     id="qtes" />
 		    			</td>
-		    			
 						<td>
-							<INPUT type="submit" class="submits"  value="decomposer" onclick="conf();"  />
+						  <INPUT type="submit" class="submits"  value="decomposer" onclick="conf();"  />
 						</td>
 												
 		    		</tr>
 		    </table>
 </form>
 
- 
 		     <c:if test="${not empty apMessage}">
-		<hr/>
-	<center>
-			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
-	</center>
-			<hr/>
-	
-	</c:if>      
-		     	  
+					<center>
+							<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+					</center>
+	         </c:if>      
 </util:panel> 
  		    
 
      	<!-- afficher ce formulaire ppour l ajout de produit -->
      	
-	<util:panel title="resultat tranformation" id="lg" openPane="true">
+	<util:panel title="${panel_title_result_transform}" id="lg" openPane="true">
 		    <table>
 		    	<tr>
-		    		<th style="text-align: center;">CiP</th>
+		    		<th style="text-align: center;">Cip</th>
 		    		<th style="text-align: center;witdh:300px;">Designation</th>
-		    	    <th style="text-align: center;">CipM</th>
-		    		<th style="text-align: center;">Marge </th>
-		    		<th style="text-align: center;">PAUnit</th>
-		    		<th style="text-align: center;">Quantite</th>
-		    		<th style="text-align: center;">PA Total</th>
-		            <th style="text-align: center;">PV Unit</th>
-		            <th style="text-align: center;">Date Perm</th>
+		    	    <th style="text-align: center;">Cipm</th>
+		    		<th style="text-align: center;">${lignesappro_margin} </th>
+		    		<th style="text-align: center;">${lignesappro_purchaseprice}</th>
+		    		<th style="text-align: center;">${lignesappro_qty}</th>
+		    		<th style="text-align: center;">${lignesappro_totalprice}</th>
+		            <th style="text-align: center;">${lignesappro_saleprice}</th>
+		            <th style="text-align: center;">${lignesappro_permpdate}</th>
 		            <th style="text-align: center;">Export</th>
 		    	</tr>
 		
@@ -352,16 +349,11 @@ function verif_formulaire()
 		    	  
 </util:panel>  
 
-<div id="findproduit" style="display: none;" title="recherche un cip maison">
-		
-		
-		
+<div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
+			</p>
 		</form>
 		
 		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
@@ -381,7 +373,5 @@ function verif_formulaire()
 	</div>	 
    
 </div>
-     
-    	
         
 </div>

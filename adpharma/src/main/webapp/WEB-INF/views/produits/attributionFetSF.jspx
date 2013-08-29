@@ -17,36 +17,47 @@
 				value="${commandeProcess.displayName}" />
 		</span>
 	</div>
-				    <spring:url value="/produits/findProductApByCipAjax/"  var="find_cip_url" />
-			<spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+	<spring:url value="/produits/findProductApByCipAjax/"  var="find_cip_url" />
+    <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
 	<spring:url value="/" var="home" />
 	<spring:url value="/produits/findProductByDesAjax" var="find_des_url" />
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
-	<spring:url
-		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
-		var="delete_cmd_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler" var="delete_cmd_url" />
 	<spring:url value="/produits/setFamilleAndSousFamille/" var="add_fsf_utl" />
-		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
-		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+	<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	
+	
+	<!-- Internationalization -->
+	<spring:message code="products_assignment_families_title" var="products_assignment_families_title" />
+	<spring:message code="button_find_product" var="button_find_product" />
+	<spring:message code="button_exit" var="button_exit" />
+	<spring:message code="products_assignment_families_cipm_title" var="products_assignment_families_cipm_title" />
+	<spring:message code="column_qty" var="column_qty" />
+	<spring:message code="column_family" var="column_family" />
+	<spring:message code="column_subfamily" var="column_subfamily" />
+	<spring:message code="column_discount_rate" var="column_discount_rate" />
+	<spring:message code="column_qty" var="column_qty" />
+	<spring:message code="column_cip_qty" var="column_cip_qty" />
+	<spring:message code="button_save" var="button_save" />
+	<spring:message code="products_assignment_families_result_title" var="products_assignment_families_result_title" />
+	
 	
 	<!-- recherche de produit par code identification -->
 
 	<script type="text/javascript">
-    	
 	dojo.ready(function(){   
-		
-		
 		function clearProductTable(){
 			$('#resultproduit').html(
 					'<tr>
-					<th>CIP</th>
+					    <th>CIP</th>
 			    		<th>DESIGNATION</th>
-			    		<th>QTE CIP</th>
-			    		 <th>FAMILLES</th>
-			    		 <th>SOUS FAMILLES</th>
-			    		 <th>TAUX REM</th>
+			    		<th>${column_cip_qty}</th>
+			    		<th>${column_family}</th>
+			    		<th>${column_subfamily}</th>
+			    		<th>${column_discount_rate}</th>
 					</tr>');
 		}	
 		function videLigne(){
@@ -117,9 +128,6 @@
 			$(this).hide();
 		});
 
-	
-		
-		
 		
 		// Dialog	find produit		
 		$('#findproduit').dialog({
@@ -130,9 +138,9 @@
 			width: 1200,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
 				"Cancel": function() { 
 					$(this).dialog("close"); 
@@ -158,8 +166,6 @@
     							$("#qtecipm").val(data.quantieEnStock) ;
     						}
     					});
-    				
-    				
     		}
 
     		function clear(){
@@ -169,17 +175,12 @@
     			document.getElementById("pu").value = "";
     			document.getElementById("qte").value = "";
     			document.getElementById("qtecipm").value = "";
-
-    			
-    		   
     		}
-
 
 $('#findprd').click(function(){
 	$('#findproduit').dialog('open');
 	return false;
 });
-
 
 $( "#cipm" )
 .change(
@@ -199,47 +200,37 @@ $('#subForm').submit(function(){
 	  }
 });
  
-
-
-
  });
-
-	
-			
-
-
 
 </script>
 	
 
 	<div style="margin-bottom: 4px; font-weight: bold;">
 		<span class="firstTab selectedTab">
-			<a href="#">ATTRIBUTION FAMILLES ET SOUS FAMILLES</a>
+			<a href="#">${products_assignment_families_title }</a>
 		</span> 
 		<span>
-			<a  style="text-decoration: none;" id="findprd"  >
-			
-				<INPUT class="submits" type="button" value="Recherche CIPM" title="rechercher un CIPM" />
+			<a  style="text-decoration: none;" id="findprd">
+				<INPUT class="submits" type="button" value="${button_find_product}" title="${button_find_product}" />
 			</a>
 		</span>
-		<span><a href="${ home}" style="text-decoration: none;"><INPUT
-				class="submits" type="button" value="Terminer"
-				title="Terminer la sortie" /></a></span>
-
+		<span><a href="${home}" style="text-decoration: none;">
+		<INPUT class="submits" type="button" value="${button_exit}" title="${button_exit}" /></a>
+		</span>
 	</div>
 
 
-	<util:panel title="saisir le CIPM du Produit" id="cip">
+	<util:panel title="${products_assignment_families_cipm_title}" id="cip">
 		<div id="sortie">
 			<form action="${add_fsf_utl}" method="GET" id="subForm" >
 				<table>
 					<tr>
 						<th style="text-align: center;">C.I.P</th>
 						<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
-						<th style="text-align: center;">QTE</th>
-						<th style="text-align: center;  witdh: 200px;">FAMILLE</th>
-						<th style="text-align: center; witdh: 230px;">SOUS FAMILLE</th>
-						<th style="text-align: center;">TAUX REM</th>
+						<th style="text-align: center;">${column_qty}</th>
+						<th style="text-align: center;  witdh: 200px;">${column_family}</th>
+						<th style="text-align: center; witdh: 230px;">${column_subfamily}</th>
+						<th style="text-align: center;">${column_discount_rate}</th>
 						<th style="text-align: center;">ACTION</th>
 					</tr>
 					<tr>
@@ -278,37 +269,35 @@ $('#subForm').submit(function(){
 							 width="50px;" />
 						</td>
 
-						<td align="center"><INPUT type="submit" value="save"
-							class="submits"  /></td>
+						<td align="center">
+						<INPUT type="submit" value="${button_save}" class="submits"  />
+					    </td>
 
 					</tr>
 				</table>
 			</form>
 
 		</div>
-
 		<BR />
 		<b style="color: red; text-align: center;"> ${apMessage} </b>
-
 	</util:panel>
 	<BR />
 
 
 
 	<!-- afficher les produits sortie par les agent ce jour  -->
-		<util:panel title="Resultat Attribution " id="resultattri">
+<util:panel title="${products_assignment_families_result_title}" id="resultattri">
 	
  <div  style="margin-bottom: 15%;">
-
 		<table>
 			<tr>
 				<th style="size: 15">C.I.P</th>
 				<th style="size: 50">Designation</th>
 				<th>qte En Stock</th>
 				<th>rayon</th>
-				<th>famille</th>
-				<th>Sous famille</th>
-				<th>taux rem</th>
+				<th>${column_family}</th>
+				<th>${column_subfamily}</th>
+				<th>${column_discount_rate}</th>
 			</tr>
 
 			<c:forEach items="${produits}" var="ligne">
@@ -327,16 +316,12 @@ $('#subForm').submit(function(){
 </div>	
 </util:panel>
 
-	<div id="findproduit" style="display: none;" title="recherche un cip ">
-		
-		
-		
+<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+	<div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation"/>
+			</p>
 		</form>
 		
 		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
@@ -345,10 +330,10 @@ $('#subForm').submit(function(){
 		    	<tr>
 		    		<th style="text-align: center;">CIP</th>
 		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		<th style="text-align: center;">QTE CIP</th>
-		    	   <th style="text-align: center;" >FAMILLES</th>
-		    	   <th style="text-align: center;" >SOUS FAMILLES</th>
-		    	   		    	    <th style="text-align: center;">TAUX REM</th>
+		    		<th style="text-align: center;">${column_cip_qty}</th>
+		    	   <th style="text-align: center;" >${column_family}</th>
+		    	   <th style="text-align: center;" >${column_subfamily}</th>
+		    	   <th style="text-align: center;">${column_discount_rate}</th>
 		    	   
 		    
 		    	</tr>

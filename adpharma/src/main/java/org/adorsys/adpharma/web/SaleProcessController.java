@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpUtils;
 import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.process.PaiementProcess;
@@ -35,9 +37,14 @@ import org.adorsys.adpharma.domain.SalesConfiguration;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.SaleService;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
@@ -58,9 +65,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @ManagedResource(objectName="org.adorsys.adpharma.web:name=SaleProcessControllerr") 
 public class SaleProcessController {
+	
+public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
+	
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
+	
 	@ResponseBody
 	@RequestMapping(value="/{saleId}/findByCipmAjax/{cipm}", method = RequestMethod.GET)
-	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel) {
+	public String findByCipmAjax(@PathVariable("saleId") Long saleId ,@PathVariable("cipm") String cipm,Model uiModel, HttpServletRequest httpServletRequest) {
+		
 		String	cipMaison = cipm;
 		Configuration config = Configuration.findConfiguration(new Long(1));
 		LigneApprovisionement item = new LigneApprovisionement() ;
@@ -73,12 +88,12 @@ public class SaleProcessController {
 				if(next.isOldItem(oldcimplist)){
 					return lines.iterator().next().clone().toJson();
 				}else {
-					item.setViewMsg("veullez saisir le cipm le plus ancien !") ;
+						item.setViewMsg(messageSource.getMessage("sale_enter_oldcipm", null, LocaleUtil.getCurrentLocale())) ;
 					return item.toJson() ;
 				}
 			}else {
-				item.setViewMsg("Aucun produit trouve !") ;
-				return item.toJson() ;
+					item.setViewMsg(messageSource.getMessage("sale_find_product", null, LocaleUtil.getCurrentLocale()));
+				    return item.toJson() ;
 			}	
 		}
 		return new ProduitController().findByCipmAjax(cipMaison, uiModel) ;
@@ -105,10 +120,10 @@ public class SaleProcessController {
 	@ResponseBody
 	public String getClientByAjax(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-		System.out.println("in");
 		return commandeClient.getClient().toJson();
 	}
 
+	// Visualize a Sale
 	@RequestMapping(value = "/{mvtId}/visualiserCmd/{factureNumber}", method = RequestMethod.GET)
 	public String visualiserCmd(@PathVariable("mvtId") Long mvtId,@PathVariable("factureNumber") String factureNumber, Model uiModel,HttpServletRequest httpServletRequest) {
 		List<Facture> resultList = Facture.findFacturesByFactureNumberEquals(factureNumber).getResultList();
@@ -117,8 +132,9 @@ public class SaleProcessController {
 			uiModel.asMap().clear();
 			return "redirect:/commandeclients/" + ProcessHelper.encodeUrlPathSegment( next.getCommande().getId().toString(), httpServletRequest);
 
-		}else
-			uiModel.addAttribute("apMessage","AUCUNE COMMANDE TROUVEE");
+		}else{
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_find_order", null, LocaleUtil.getCurrentLocale()));
+		}
 		uiModel.asMap().clear();
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
@@ -134,7 +150,7 @@ public class SaleProcessController {
 
 		}
 		uiModel.asMap().clear();
-		uiModel.addAttribute("apMessage","AUCUNE TICKET TROUVEE");
+		uiModel.addAttribute("apMessage", messageSource.getMessage("sale_find_ticket", null, LocaleUtil.getCurrentLocale()));
 		return "redirect:/mouvementstocks/" + ProcessHelper.encodeUrlPathSegment( mvtId.toString(), httpServletRequest);
 
 	}
@@ -252,16 +268,12 @@ public class SaleProcessController {
 	public String createOrUpdateOrdonnance(HttpServletRequest httpServletRequest, Ordonnancier ordonnancier, 
 			BindingResult bindingResult,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		Long id = ordonnancier.getId();
-		System.out.print(id);
-
 		uiModel.asMap().clear();
 		if (id==null) {
-			System.out.print(ordonnancier.toString());
 			ordonnancier.setCommande(CommandeClient.findCommandeClient(cmdId));
 			ordonnancier.persist();
 
 		}else {
-			System.out.print(ordonnancier.getVersion());
 			ordonnancier.merge();
 		}
 		ordonnancier.flush();
@@ -345,17 +357,27 @@ public class SaleProcessController {
 		 client.merge();
 		 return "redirect:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId, httpServletRequest)+"/edit";
 	}
+	
+	
 
 	//@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrer", method = RequestMethod.GET)
 	public String enregistrerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel, HttpServletRequest httpServletRequest) {
+		// Get the code language
+		String langue = (String)httpServletRequest.getSession().getAttribute("lang");
+		
 		SessionBean	  sessionBean = (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean");
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		Caisse caisse = PaiementProcess.getOpenCaisse();
 		if (caisse==null) {
-			uiModel.addAttribute("apMessage", "Impossible de cloturer la commande aucune Caisse ouverte") ;
+			/*if(langue.equals("fr")){
+				uiModel.addAttribute("apMessage", "Impossible de cloturer la commande, aucune Caisse ouverte") ;
+			}
+			if(langue.equals("en")){
+				uiModel.addAttribute("apMessage", "Impossible to close the order, no cash registry is open") ;
+			}*/
+			
 			return "forward:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
-
 		}
 		if (!commandeClient.validaterCmd(uiModel)) {
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
@@ -375,25 +397,27 @@ public class SaleProcessController {
 
 
 	}
-
+	
 
 	//@Transactional
 	@RequestMapping(value = "/{cmdId}/enregistrementValider",method = RequestMethod.POST)
 	public String enregistrementValider(@PathVariable("cmdId") Long cmdId, @RequestParam("cle") String key , Model uiModel, HttpServletRequest httpServletRequest) {
+		// Get the code language
+	    String langue = (String)httpServletRequest.getSession().getAttribute("lang");
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		Caisse caisse = PaiementProcess.getOpenCaisse();
 		ArrayList<RoleName> role = new ArrayList<RoleName>();
 		role.add(RoleName.ROLE_VENDEUR);
 		role.add(RoleName.ROLE_SITE_MANAGER);
 		if (caisse==null) {
-			uiModel.addAttribute("apMessage", "Impossible de cloturer la commande aucune Caisse ouverte") ;
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_close_warning", null, LocaleUtil.getCurrentLocale()));
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
 			return "saleprocess/edit";	
 		}
 		if (key == null) {
-			uiModel.addAttribute("apMessage", " veullez saisir  La cle de validation !") ;
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_enter_key", null, LocaleUtil.getCurrentLocale())) ;
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
@@ -401,21 +425,21 @@ public class SaleProcessController {
 		} 
 		PharmaUser pharmaUser = SecurityUtil.getPharmaUser(key);
 		if (pharmaUser == null) {
-			uiModel.addAttribute("apMessage", "La cle de validation est incorrecte") ;
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_key_warning", null, LocaleUtil.getCurrentLocale()));
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
 			return "saleprocess/edit";
 		} 
 		if(pharmaUser.isAccountLocked()){
-			uiModel.addAttribute("apMessage", "Votre compte a ete bloque veullez contatcter l'administrateur pour plus d'infos !") ;
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_account_locked", null, LocaleUtil.getCurrentLocale()));
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
 			return "saleprocess/edit";	
 		}
 		if (!pharmaUser.hasAnyRole(role)) {
-			uiModel.addAttribute("apMessage", "Vous n'avez pas les droits necessaire Pour Cloturer cette vente") ;
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_close_grant", null, LocaleUtil.getCurrentLocale())); 
 			SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
@@ -439,10 +463,12 @@ public class SaleProcessController {
 
 	// add line to de client commande 
 
-	//@Transactional
+	@Transactional
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
 		@RequestParam String rem, @RequestParam(required=false) BigDecimal pu, Model uiModel,HttpServletRequest httpServletRequest) {
+		// Get the code language
+	    String langue = (String)httpServletRequest.getSession().getAttribute("lang");
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
@@ -456,20 +482,22 @@ public class SaleProcessController {
 		if (!"".equals(rem)) {
 			remise  = new BigDecimal(rem);
 		}
-
 		// verifier si la commande est en cour ou annule ou encaisser
 		if (commandeClient.getStatus().equals(Etat.CLOS)) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : COMMANDE CLOS ! ");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_close_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (commandeClient.getEncaisse()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE DEJA ENCAISSEE ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_cash_warningsale_add_product_cash_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (commandeClient.getAnnuler()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE ANULLEE ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_cancel_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (qte.intValue() == 0) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE AJOUTEE DOIT ETRE SUPERIEUR A   0  ");
+			uiModel.addAttribute("apMessage",  messageSource.getMessage("sale_add_product_order_qty", null, LocaleUtil.getCurrentLocale())); 
+			// test Logger
+			LOGS.error("Impossible de vendre un produit dont la quantite est egale a 0");
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 		}else if (qteStock.intValue() < qte.intValue()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : LA QTE ACHETEE  DOIT ETRE INFERIEUR LA QTE EN STOCK : "+ligneApp.getQuantieEnStock().intValue());
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_order_stock", null, LocaleUtil.getCurrentLocale()) +ligneApp.getQuantieEnStock().intValue());
+			LOGS.error("Impossible de vendre un produit dont la quantite en stock est inferieure a la quantite commandee");
 			ligneApp.setPrixVenteUnitaire(pu);
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
@@ -484,11 +512,11 @@ public class SaleProcessController {
 			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
         return updateCmdLine(cmdId,  sameCipM.getId(), qte, rem, uiModel, httpServletRequest);
 		}*/ else if (!ligneApp.isVenteAutorise()) {
-			uiModel.addAttribute("apMessage","Ce produit N'est Plus Autorise a la vente Veuillez Contacter Le le Manager Pour Plus D'information !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_active", null, LocaleUtil.getCurrentLocale()));
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 		} else if (ligneApp.getDatePeremtion().before(new Date())) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer la vente ! Ce produit est Perime Depuis Le : "+ PharmaDateUtil.format(ligneApp.getDatePeremtion(), "dd-MM-yyyy"));
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_perime", null, LocaleUtil.getCurrentLocale())+" " + PharmaDateUtil.format(ligneApp.getDatePeremtion(), "dd-MM-yyyy"));
 			ligneApp.setPrixVenteUnitaire(pu);
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
@@ -507,13 +535,13 @@ public class SaleProcessController {
 					if(pu.compareTo(ligneApp.getPrixAchatUnitaire())==1 || pu.compareTo(ligneApp.getPrixAchatUnitaire())==0){
 						ligneApp.setPrixVenteUnitaire(pu);
 					}else{
-						uiModel.addAttribute("apMessage", "Impossible de modifier le prix de vente! le prix de vente ("+pu+"cfa) est inferieur au prix d'achact ("+ligneApp.getPrixAchatUnitaire()+"cfa)");
+						uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_update_price1", null, LocaleUtil.getCurrentLocale()) +"["+pu+"cfa"+"]"+  messageSource.getMessage("sale_add_product_update_price2", null, LocaleUtil.getCurrentLocale()) +"["+ligneApp.getPrixAchatUnitaire()+"cfa"+"]");
 					}
 				}
 			}
 
 			if (remiseAutorise < remise.intValue()) {
-				uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_discount_warning", null, LocaleUtil.getCurrentLocale())+" "+remiseAutorise);
 				remise = BigDecimal.ZERO ;
 
 			}
@@ -543,18 +571,18 @@ public class SaleProcessController {
 			remise  = new BigDecimal(rem);
 		}
 		if (remiseAutorise < remise.intValue()) {
-			uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_discount_warning", null, LocaleUtil.getCurrentLocale()) +remiseAutorise);
 		}
 
 		// verifier si la commande est en cour ou annuler ou encaisser
 		if (commandeClient.getStatus().equals(Etat.CLOS)) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : COMMANDE CLOS ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_close_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (commandeClient.getEncaisse()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE DEJA ENCAISSEE ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_cash_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (commandeClient.getAnnuler()) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : 	COMMANDE ANNULEE ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_cancel_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (qte.intValue() == 0) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : la qte ajoute  doit etre superieur a  0  ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_order_qty", null, LocaleUtil.getCurrentLocale()));
 		}else{
 
 			Configuration config = Configuration.findConfiguration(new Long(1));
@@ -614,7 +642,7 @@ public class SaleProcessController {
 		BigDecimal remises = BigDecimal.ZERO;
 		SaleProcess saleProcess = new SaleProcess(uiModel);
 		if (resultList.isEmpty()) {
-			uiModel.addAttribute("apMessage","impossible d'accorder une reduction ! la commande ne contient aucun produits:");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_discount_not", null, LocaleUtil.getCurrentLocale())); 
 
 		}else {
 			if (remise != null) {
@@ -622,8 +650,6 @@ public class SaleProcessController {
 					remises = remise ;
 				}				
 			}
-
-
 		}
 		saleProcess = new  SaleProcess(commandeClient,remises, null);
 		saleProcess.setLigneCommande(resultList);
@@ -638,7 +664,7 @@ public class SaleProcessController {
 		BigDecimal remises = BigDecimal.ZERO;
 		SaleProcess saleProcess = new SaleProcess(uiModel);
 		if (resultList.isEmpty()) {
-			uiModel.addAttribute("apMessage","impossible d'accorder une reduction ! la commande ne contient aucun produits:");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_discount_not", null, LocaleUtil.getCurrentLocale()));
 
 		}else {
 			if (remise != null) {
@@ -681,7 +707,7 @@ public class SaleProcessController {
 			remise  = new BigDecimal(rem);
 		}
 		if (commandeClient.getAnnuler()|| commandeClient.getEncaisse()||commandeClient.getStatus().equals(Etat.CLOS)) {
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : commande annuler Ou Encaisse Ou CLOS");
+			uiModel.addAttribute("apMessage","");
 			saleProcess.calculPrix(commandeClient);
 			saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
 			uiModel.addAttribute("saleProcess",saleProcess);
@@ -689,7 +715,7 @@ public class SaleProcessController {
 		}
 		if (line.getProduit().getQuantieEnStock().intValue() < qtc.intValue()) {
 			LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(line.getProduit().getId());
-			uiModel.addAttribute("apMessage","impossible d'effectuer cette Operation : la qte ajoute est superieur a la qte en stock :"+line.getProduit().getQuantieEnStock().intValue());
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_order_stock", null, LocaleUtil.getCurrentLocale()) +line.getProduit().getQuantieEnStock().intValue());
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
 			uiModel.addAttribute("rem",remise);
@@ -707,7 +733,7 @@ public class SaleProcessController {
 
 		}
 		if (remiseAutorise < remise.intValue()) {
-			uiModel.addAttribute("apMessage","la remise sur ce produit ne peu etre superieur a : "+remiseAutorise);
+			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_discount_warning", null, LocaleUtil.getCurrentLocale()) +remiseAutorise);
 			saleProcess.setLineToUpdate(line);
 			remise = BigDecimal.ZERO ;
 		}
@@ -767,7 +793,7 @@ public class SaleProcessController {
 		LigneCmdClient line =  LigneCmdClient.findLigneCmdClient(lnId);
 		CommandeClient commandeClient=line.getCommande();
 		if (commandeClient.getAnnuler()|| commandeClient.getEncaisse()||commandeClient.getStatus().equals(Etat.CLOS)) {
-			httpServletRequest.setAttribute("apMessage","impossible d'effectuer cette Operation : commande annuler Ou Encaisse Ou CLOS");
+			httpServletRequest.setAttribute("apMessage", messageSource.getMessage("sale_add_product_operation", null, LocaleUtil.getCurrentLocale()));
 			return "forward:/saleprocess/" + ProcessHelper.encodeUrlPathSegment(cmdId.toString(), httpServletRequest)+"/edit";
 		}
 		else{
@@ -810,9 +836,7 @@ public class SaleProcessController {
 		Facture facture = Facture.findFacture(invId);
 		uiModel.addAttribute("nom", nom);
 		uiModel.addAttribute("dateTicket", dateTicket);
-		System.out.println(nom+" : "+dateTicket);
 		Paiement paiement = facture.getCommande().getPaiements();
-		//if(remise!=null) paiement.setReduction(remise);
 		uiModel.addAttribute("paiement", paiement);
 		return "ticketPdfDocView";
 
@@ -829,12 +853,12 @@ public class SaleProcessController {
 			commandeClient.setAnnuler(true);
 			commandeClient.setStatus(Etat.EN_COUR);
 			commandeClient.merge();
-			uiModel.addAttribute("apMessage", "commande Anuller avec succes");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_cancel_success", null, LocaleUtil.getCurrentLocale()));
 		}
 
 		if (commandeClient.getStatus().equals(Etat.EN_COUR)) {
 			commandeClient.remove();
-			uiModel.addAttribute("apMessage", "commande suprimee avec succes");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_remove_success", null, LocaleUtil.getCurrentLocale()));
 		}
 		return "caisses/infos"	  ; 
 	}

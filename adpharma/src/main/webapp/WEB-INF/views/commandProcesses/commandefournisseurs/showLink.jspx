@@ -8,9 +8,10 @@
 	style="margin: 10px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-     <spring:url value="/commandprocesses/${itemId}/editCommand?form"  var="edit_url" />
+    
+      <spring:url value="/commandprocesses/${itemId}/editCommand?form"  var="edit_url" />
       <spring:url value="/approvisionementprocess/convertOrderToAppro/${itemId}"  var="close_url" />
-        <spring:url value="/approvisionements/${commandefournisseur.approvisionnementId}"  var="appro_url" />
+      <spring:url value="/approvisionements/${commandefournisseur.approvisionnementId}"  var="appro_url" />
       <spring:url value="/commandefournisseurs/sendToPlatform/${itemId}"  var="send_url" />
       <spring:url value="/commandprocesses/${itemId}/printBonCommande.pdf"  var="print_url" />
       <spring:url value="/commandprocesses/${itemId}/printBonLivraison.pdf"  var="print_liv_url" />
@@ -21,8 +22,28 @@
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
       <spring:url value="/commandprocesses/${itemId}/annulerCmd"  var="delete_cmd_url" />
-	      <spring:url value="/commandprocesses/ubipharm/${itemId}/send"  var="send_ubipharm_url" />
-	      <spring:url value="/commandprocesses/ubipharm/${itemId}/import"  var="import_ubipharm_url" />
+	  <spring:url value="/commandprocesses/ubipharm/${itemId}/send"  var="send_ubipharm_url" />
+	  <spring:url value="/commandprocesses/ubipharm/${itemId}/import"  var="import_ubipharm_url" />
+	  
+	<!-- Internationalization -->  
+	  <spring:message code="command_button_convert" var="command_button_convert" />
+	  <spring:message code="command_button_convert_title" var="command_button_convert_title" />
+	  <spring:message code="command_button_bordereau" var="command_button_bordereau" />
+	  <spring:message code="command_button_bordereau_title" var="command_button_bordereau_title" />
+	  <spring:message code="command_button_unknown" var="command_button_unknown" />
+	  <spring:message code="command_button_unknown_title" var="command_button_unknown_title" />
+	  <spring:message code="command_button_modify" var="command_button_modify" />
+	  <spring:message code="command_button_modify_title" var="command_button_modify_title" />
+	  <spring:message code="command_button_cancel" var="command_button_cancel" />
+	  <spring:message code="command_button_visualize" var="command_button_visualize" />
+	  <spring:message code="command_button_visualize_title" var="command_button_visualize_title" />
+	  <spring:message code="command_button_print" var="command_button_print" />
+	  <spring:message code="button_export" var="button_export" />
+	  <spring:message code="command_button_export" var="command_button_export" />
+	  <spring:message code="command_button_send" var="command_button_send" />
+	  <spring:message code="command_button_response" var="command_button_response" />
+	  <spring:message code="command_button_response_title" var="command_button_response_title" />
+	  
      
  
  <script type="text/javascript">
@@ -30,7 +51,6 @@ function closecmd(){
 Check = confirm("Voulez vous vraiment Convertir  cette commande? Apres la convertion il ne serra  plus possible de modifier les details. ");
 if(Check == false){
 	return false;
-	
 }else{
 	return true;
 }
@@ -48,46 +68,61 @@ function annulercmd(){
 </script>
        <c:choose>
     <c:when test="${not empty apId }">
-   <span>
-   <INPUT onclick="javascript:history.back();" class="submits" type="button" value="Retour" title="Annuler La commande" /></span>
-  
+      <span>
+       <INPUT onclick="javascript:history.back();" class="submits" type="button" value="Retour" title="Annuler La commande" />
+      </span>
     </c:when>
     <c:otherwise>
    <c:choose>
    <c:when test="${commandefournisseur.etatCmd eq 'CLOS' || commandefournisseur.etatCmd eq 'RECEIVED' and not commandefournisseur.annuler}">
-                <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
-                <INPUT class="submits" type="button" value="CONVERTIR EN ENTREE" title="cloturer la commande" /></a></span>
-     <span><a href="${print_liv_url }" style="text-decoration: none;"><INPUT class="submits" type="button" value="Bordereau de livraison" title="editer le Bordereau de livraison" /></a></span>
-     <span><a href="${print_rup_url }" style="text-decoration: none;"><INPUT class="submits" type="button" value="Produits inconnus/en rupture " title="editer la liste des produits inconnues du fournisseur ou en rupture" /></a></span>
+     <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closecmd();">
+     <INPUT class="submits" type="button" value="${command_button_convert}" title="${command_button_convert_title}" /></a></span>
+     <span><a href="${print_liv_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="${command_button_bordereau}" title="${command_button_bordereau_title}" /></a></span>
+     <span><a href="${print_rup_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="${command_button_unknown}" title="${command_button_unknown_title}" /></a></span>
     </c:when>
    </c:choose>
       <c:if test="${commandefournisseur.etatCmd eq 'EN_COUR'}">
-       <span><a href="${ edit_url}" style="text-decoration: none;">
-                 <INPUT class="submits" type="button" value="MODIFIER LA PREPARATION" title="modifier le detail de la commande" /></a></span>
-        <span><a href="${delete_cmd_url}" style="text-decoration: none;">
-        <INPUT onclick="return annulercmd();" class="submits" type="button" value="Annuler La PREPARATION" title="Annuler La commande" /></a></span>
+       <span>
+          <a href="${edit_url}" style="text-decoration: none;">
+             <INPUT class="submits" type="button" value="${command_button_modify}" title="${command_button_modify_title}" />
+          </a>
+       </span>
+        <span>
+          <a href="${delete_cmd_url}" style="text-decoration: none;">
+          <INPUT onclick="return annulercmd();" class="submits" type="button" value="${command_button_cancel}" title="${command_button_cancel}" /></a>
+        </span>
 		</c:if>
 	</c:otherwise>
    </c:choose>
    <c:if test="${ not empty commandefournisseur.approvisionnementId}">
-        <span><a href="${appro_url}" style="text-decoration: none;">
-        <INPUT  class="submits" type="button" value="VISUALISER APPRO"  /></a></span>
-		
-		</c:if>
-                  <span><a href="${print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer le Bon de Commande" title="imprimer le bon de commande" /></a></span>
-                  <span><a href="${printxls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Exporter (EXCEL)" title="exporter au format Excel" /></a></span>
+        <span>
+           <a href="${appro_url}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value="${command_button_visualize}" title="${command_button_visualize_title}"  /></a>
+        </span>
+   </c:if>
+        <span>
+           <a href="${print_url}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value="${command_button_print}" title="${command_button_print}" /></a>
+        </span>
+        <span>
+           <a href="${printxls_url}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value="${button_export}" title="${command_button_export}" /></a>
+        </span>
                  <!-- 
                   <span><a href="${ send_url}" style="text-decoration: none;" >
                   <INPUT class="submits" type="button" value="ENVOYER SUR LA PLATFORME" title="Envoyer sur la platforme" /></a></span>
                    -->
-                   
-      <c:if test="${commandefournisseur.etatCmd != 'CLOS' and commandefournisseur.etatCmd != 'SENDED_TO_PROVIDER' and commandefournisseur.etatCmd != 'RECEIVED'}">
-                  <span><a href="${ send_ubipharm_url}" style="text-decoration: none;" >
-                  <INPUT class="submits" type="button" value="Envoyer au serveur PHML" title="Envoyer a serveur PHML" /></a></span>
-      </c:if>
+        <c:if test="${commandefournisseur.etatCmd != 'CLOS' and commandefournisseur.etatCmd != 'SENDED_TO_PROVIDER' and commandefournisseur.etatCmd != 'RECEIVED'}">
+           <span>
+	           <a href="${ send_ubipharm_url}" style="text-decoration: none;" >
+	           <INPUT class="submits" type="button" value="${command_button_send}" title="${command_button_send}" /></a>
+	       </span>
+        </c:if>
        <c:if test="${commandefournisseur.etatCmd == 'SENDED_TO_PROVIDER'}">
-                  <span><a href="${ import_ubipharm_url}" style="text-decoration: none;" >
-                  <INPUT class="submits" type="button" value="IMPORTER LA REPONSE" title="Importer " /></a></span>
+          <span>
+	          <a href="${ import_ubipharm_url}" style="text-decoration: none;" >
+	          <INPUT class="submits" type="button" value="${command_button_response}" title="${command_button_response_title}" /></a>
+          </span>
       </c:if>
       
    

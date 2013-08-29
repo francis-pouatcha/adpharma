@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" z="user-managed" url="/pharmausers/search" search="true" placeholder="Rechercher par nom">
+    
+    <spring:message code="list_search_provider" var="list_search_provider" />
+    
+    <page:list1 id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" z="user-managed" url="/pharmausers/search" search="true" placeholder="${list_search_provider}">
         <table:table data="${pharmausers}" delete="false" id="l_org_adorsys_adpharma_domain_PharmaUser" path="/pharmausers" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" property="userNumber" z="user-managed"/>
