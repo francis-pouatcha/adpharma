@@ -13,11 +13,11 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<div style="margin-bottom: 5px; padding-bottom: 5px;">
-		<span style="font-weight: bold"> <c:out
-				value="${commandeProcess.displayName}" />
+		<span style="font-weight: bold"> 
+		   <c:out value="${commandeProcess.displayName}" />
 		</span>
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
 	function isValide(){
 	var qtecip = $("#qtecip").val();
     var qte = $("#qte").val();
@@ -27,50 +27,70 @@
 	  }else{
 		  return true ;
 	  }
-};
-	</script>
+     };
+</script>
 
 	<spring:url value="/" var="home" />
 	<spring:url value="/produits/findProductByDesAjax" var="find_des_url" />
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
 	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
 	<spring:url value="/saleprocess/0/findProduct"   var="find_des_url" />
-	<spring:url
-		value="/approvisionementprocess/${approvisonementProcess.apId}/annuler"
-		var="delete_cmd_url" />
+	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/annuler" var="delete_cmd_url" />
 	<spring:url value="/ligneapprovisionements/pushProductOut" var="add_sortie" />
-		<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+	<spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
+	<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
 	
-		<spring:url value="/produits/findByCipmAjax/"   var="select_product_url" />
+	
+	<!-- Internationalization -->
+	    <spring:message code="button_cancel" var="button_cancel" />
+		<spring:message code="button_save" var="button_save" />
+		<spring:message code="button_find_product" var="button_find_product" />
+		<spring:message code="button_exit" var="button_exit" />
+		<spring:message code="sortie_title_cipm" var="sortie_title_cipm" />
+		<spring:message code="sortie_title_cip" var="sortie_title_cip" />
+		<spring:message code="sortie_panel_cipm" var="sortie_panel_cipm" />
+		<spring:message code="sortie_panel_list" var="sortie_panel_list" />
+		<spring:message code="column_prix_unit" var="column_prix_unit" />
+		<spring:message code="column_cipm_qty" var="column_cipm_qty" />
+		<spring:message code="column_cip_qty" var="column_cip_qty" />
+		<spring:message code="column_reason" var="column_reason" />
+		<spring:message code="column_qty_out" var="column_qty_out"  />
+		<spring:message code="column_qty_initial" var="column_qty_initial"  />
+		<spring:message code="column_qty_final" var="column_qty_final"  />
+		<spring:message code="column_agent" var="column_agent" />
+		<spring:message code="column_provider" var="column_provider" />
+		<spring:message code="column_entry_date" var="column_entry_date" />
+		<spring:message code="saleprocess_product_dosage" var="saleprocess_product_dosage" />
+		<spring:message code="column_filiale" var="column_filiale" />
+		<spring:message code="column_qty" var="column_qty" />
 	
 	<!-- recherche de produit par code identification -->
-
-	
 	
 <spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCipm"   var="sorti_cipm_url" />
-		<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCip"   var="sorti_cip_url" />
+<spring:url value="/ligneapprovisionements/sortieProduit?mode=ByCip"   var="sorti_cip_url" />
 	
 	<div style="margin-bottom: 6px; font-weight: bold;">
 			<span class="firstTab unselectedTab">
-			<a href="${sorti_cipm_url}">SORTIR DES PRODUITS PAR (C.I.P.M) </a>
+			<a href="${sorti_cipm_url}"> ${sortie_title_cipm} </a>
 		</span>
 		<span  class="firstTab selectedTab">
-			<a href="${sorti_cip_url}">SORTIR DES  PRODUITS PAR (C.I.P)</a>
+			<a href="${sorti_cip_url}"> ${sortie_title_cip} </a>
 		</span> 
 		<span>
-			<a  style="text-decoration: none;" id="findprd"  >
-			
-				<INPUT class="submits" type="button" value="Recherche CIP" title="rechercher un CIP" />
+			<a style="text-decoration: none;" id="findprd"  >
+				<INPUT class="submits" type="button" value="${button_find_product}" title="${button_find_product}" />
 			</a>
 		</span>
-		<span><a href="${ home}" style="text-decoration: none;"><INPUT
-				class="submits" type="button" value="Terminer"
-				title="Terminer la sortie" /></a></span>
+		<span>
+		    <a href="${home}" style="text-decoration: none;">
+		      <INPUT class="submits" type="button" value="${button_exit}" title="${button_exit}" />
+		    </a>
+		</span>
 
 	</div>
 
 
-	<util:panel title="saisir le CIPM du Produit" id="cip">
+	<util:panel title="${sortie_panel_cipm}" id="cip">
 		<div id="sortie">
 			<form action="${add_sortie}?mode=byCip" method="POST" id="subForm" onsubmit="return isValide();" >
 				<table>
@@ -78,11 +98,11 @@
 				
 						
 						<th style="text-align: center;">CIP</th>
-						<th style="text-align: center;">FILIALE</th>
-						<th style="text-align: center; witdh: 300px; ">DESIGNATION</th>
-						<th style="text-align: center;">QTE CIP</th>
-						<th style="text-align: center;">QTE</th>
-						<th style="text-align: center;">RAISON</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_filiale}</th>
+						<th style="text-align: center; witdh: 300px;">DESIGNATION</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_qty}</th>
+						<th style="text-align: center; text-transform: uppercase;">${column_reason}</th>
 						<th style="text-align: center;">ACTION</th>
 					</tr>
 					<tr>
@@ -118,11 +138,9 @@
 								<OPTION value="NON_LIVRE">NON LIVRE</OPTION>
                                 <OPTION value="NON_JUSTIFIE">NON JUSTIFIE</OPTION> -->
 						</td>
-
-
-						<td align="center"><INPUT type="submit" value="Enregistrer"
-							class="submits"  /></td>
-
+						<td align="center"><INPUT type="submit" value="${button_save}"
+							class="submits"  />
+					    </td>
 					</tr>
 				</table>
 			</form>
@@ -139,18 +157,18 @@
 
 	<!-- afficher les produits sortie par les agent ce jour  -->
 	<util:panel
-		title="Liste Des Produits Sorties Par Tous les Agents ce jour" id="lg">
+		title="${sortie_panel_list}" id="lg">
 		<table>
 			<tr>
 				<th style="size: 15">CiP</th>
 
 				<th>CipM</th>
 				<th style="size: 50">Designation</th>
-				<th>Qte Init</th>
-				<th>Qte Sortie</th>
-				<th>Qte final</th>
-				<th>agent</th>
-				<th>Raison</th>
+				<th>${column_qty_initial}</th>
+				<th>${column_qty_out}</th>
+				<th>${column_qty_final}</th>
+				<th>${column_agent}</th>
+				<th>${column_reason}</th>
 				<th colspan="2" align="center">ACTION</th>
 			</tr>
 
@@ -159,31 +177,21 @@
 					<td><c:out value="${ligne.cip}"></c:out></td>
 					<td ><c:out value="${ligne.cipM}"></c:out></td>
 					<td class="des" style="text-align:left;"><c:out value="${ligne.designation}"></c:out></td>
-
 					<td><c:out value="${ligne.qteInitiale}"></c:out></td>
-
 					<td><c:out value="${ligne.qteDeplace}"></c:out></td>
-
 					<td><c:out value="${ligne.qteFinale}"></c:out></td>
 					<td><c:out value="${ligne.agentCreateur}"></c:out></td>
 					<td><c:out value="${ligne.note}"></c:out></td>
-
-
-
 					<td class="utilbox"><spring:url
 							value="/ligneapprovisionements/annulerSortie/${ligne.id}"
 							var="annuler_sortie_url" /> <a href="${ annuler_sortie_url}"
 						alt="Remove" title="Remove" onclick="return conf()"> <input
-							class="submits" type="button" value="Annuler" />
+							class="submits" type="button" value="${button_cancel}" />
 					</a></td>
 				</tr>
 			</c:forEach>
 		</table>
-
-
 	</util:panel>
-	
-
 	 <jsp:include page="../approvisionementprocess/ajaxSearchProductForm.jspx" />   	
 
 </div>

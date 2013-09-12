@@ -7,12 +7,13 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   <jsp:output omit-xml-declaration="yes" />
   
   <!-- <spring:message code="security_login_title" var="title" htmlEscape="false" /> -->
+  <spring:message code="login_title" var="title" />
   
   <spring:url value="/resources/images/userconn.png" var="users" />
   <spring:url value="/resources/images/adorsys.png" var="logo_adorsys" />
   <spring:url value="/resources/j_spring_security_check" var="form_url" />
   
-  <util:panel id="login" title="CONNEXION ADPHARMA">
+  <util:panel id="login" title="${title}">
     <c:if test="${not empty param.login_error}">
       <div class="errors">
         <p style="text-align: center; margin-right: 90px; color: red;">

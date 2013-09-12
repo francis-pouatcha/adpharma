@@ -11,15 +11,34 @@
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-	
-	<!--  <div style="margin-bottom: 6px; padding-bottom: 5px;">
-		<span style="font-weight: bold"> <c:out
-				value="${approvisonementProcess.displayName}" />
-		</span>
-	</div>-->
+
+   <!-- Messages d'internationalization -->
+                   <spring:message code="button_save" var="button_save" />
+				   <spring:message code="button_cancel" var="button_cancel" />
+				   <spring:message code="button_find_product" var="button_find_product" />
+				   <spring:message code="button_create_product" var="button_create_product" />
+				   <spring:message code="button_add" var="button_add" />
+				   <spring:message code="lignesappro_qty" var="lignesappro_qty" />
+				   <spring:message code="lignesappro_margin" var="lignesappro_margin" />
+				   <spring:message code="lignesappro_qtyUG" var="lignesappro_qtyUG" />
+				   <spring:message code="lignesappro_purchaseprice" var="lignesappro_purchaseprice" />
+				   <spring:message code="lignesappro_saleprice" var="lignesappro_saleprice" />
+				   <spring:message code="lignesappro_permpdate" var="lignesappro_permpdate" />
+				   <spring:message code="title_save_lignesappro" var="title_save_lignesappro" />
+				   <spring:message code="title_cancel_lignesappro" var="title_cancel_lignesappro" />
+				   <spring:message code="panel_title_update_lignesappro" var="panel_title_update_lignesappro" />
+				   <spring:message code="panel_title_add_lignesappro" var="panel_title_add_lignesappro" />
+				   <spring:message code="column_cip" var="column_cip" />
+				   <spring:message code="column_designation" var="column_designation" />
+				   <spring:message code="apply_saleprice" var="apply_saleprice" />
+				   <spring:message code="apply_purchaseprice" var="apply_purchaseprice" />
+				   <spring:message code="apply_tax" var="apply_tax" />
+				   <spring:message code="title_list_lignesappro" var="title_list_lignesappro" />
+				   <spring:message code="lignesappro_totalprice" var="lignesappro_totalprice" />
+				   <spring:message code="tab_supplying" var="tab_supplying" />
+				   
 	
     <util:display-box display="${approvisonementProcess.displayName}" />
-	
 	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/edit" var="edit_url" />
 	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/findProduct?form" var="find_product_url" />
 	<spring:url value="/produits/findProductByCipAjax" var="find_productajax_url" />
@@ -46,26 +65,13 @@
 	
 	
 	<div style="margin-bottom: 6px; margin-top: 9px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">APPROVISIONNEMENT</a></span>
-<!-- 
-		<span class="nextTab unselectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span> 
- -->		
-		<span><a href="${ enr_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Enregistrer" title="Enregistre L'approvisionnement" /></a></span>
-	    <span><a href="${ delete_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="Annuler" title="Annuler L'approvisionnement" /></a></span>
-	     <span><a  id="findprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="Recherche Un Produit" title="Rechercher Un produit " /></a></span>
-	     <span><a  id="createprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="Creer Un Produit" title="Creer Un produit " /></a></span>
-
+		<span class="firstTab selectedTab"><a href="${ edit_url}">${tab_supplying}</a></span>
+		<!-- <span class="nextTab unselectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span> --> 
+		<span><a href="${ enr_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="${button_save}" title="${title_save_lignesappro}" /></a></span>
+	    <span><a href="${ delete_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="${button_cancel}" title="${title_cancel_lignesappro}" /></a></span>
+	    <span><a  id="findprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="${button_find_product}" title="${button_find_product} " /></a></span>
+	    <span><a  id="createprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="${button_create_product}" title="${button_create_product}" /></a></span>
 	</div>
-
-
-	<!-- recherche de produit par code identification -->
-
-
-
-
-
-
-
 
 	<c:choose>
 		<c:when test="${empty approvisonementProcess.produit}">
@@ -81,22 +87,22 @@
 		<c:when test="${not empty approvisonementProcess.lineToUpdate}">
 			<!-- afficher ce formulaire pour la mis a jour des ligne -->
 
-			<util:panel title="Mettre a jour Les Informations" id="upline">
+			<util:panel title="${panel_title_update_lignesappro}" id="upline">
 				<form action="${find_upd_url}" method="POST" name="formulaire" onsubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CiP</th>
-							<th style="text-align: center;">Designation</th>
-							<th style="text-align: center;">CipM</th>
-							<th style="text-align: center;">QTE</th>
+							<th style="text-align: center;">${column_cip}</th>
+							<th style="text-align: center;">${column_designation}</th>
+							<th style="text-align: center;">Cipm</th>
+							<th style="text-align: center;">${lignesappro_qty}</th>
 							<!-- 
 							<th style="text-align: center;">Qte RC</th>
 							 -->
-							<th style="text-align: center;">Qte UG</th>
-							<th style="text-align: center;">Prix Vente</th>
-							<th style="text-align: center;">Prix Achat</th>
+							<th style="text-align: center;">${lignesappro_qtyUG}</th>
+							<th style="text-align: center;"> ${lignesappro_saleprice} </th>
+							<th style="text-align: center;">${lignesappro_purchaseprice}</th>
 							<th style="text-align: center;">TMul</th>
-							<th style="text-align: center;">Date Per</th>
+							<th style="text-align: center;">${lignesappro_permpdate}</th>
 							<th colspan="2" style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
@@ -106,10 +112,9 @@
 								value="${approvisonementProcess.lineToUpdate.id}" /> <input
 								type="text" name="cip" class="autres"
 								value="${approvisonementProcess.lineToUpdate.produit.cip}"
-								title="Taux De Marge" style="color: blue; text-align: center;"
+								title="Saisir le taux de marge du produit" style="color: blue; text-align: center;"
 								disabled="disabled" id="mrg" /></td>
 							<td><input type="text" name="des" class="des"
-								title="Designation"
 								value="${approvisonementProcess.lineToUpdate.designation}"
 								style="color: blue; text-align: center;" disabled="disabled"
 								id="des" /></td>
@@ -117,12 +122,12 @@
 								class="autres"
 								value="${approvisonementProcess.lineToUpdate.cipMaison}"
 								onkeypress="return scanTouche(event)" onkeyup="requete();"
-								title="saisir le cip" style="color: blue; "
+								title="Saisir le CIP du produit" style="color: blue; "
 								maxlength="7" autofocus="autofocus" id="cip" /></td>
 							<td><input type="text" name="qte" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.quantiteAprovisione}"
 								onkeypress="return scanTouche(event)" width="30px;"
-								title="saisir la Quantite" maxlength="4" id="qte" /></td>
+								title="Saisir la Quantite du produit" maxlength="4" id="qte" /></td>
 								<!-- 
 								<td><input type="text" name="qterecl" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteReclame}"
@@ -132,22 +137,22 @@
 							<td><input type="text" name="qteug" class="autres"
 								value="${approvisonementProcess.lineToUpdate.quantiteUniteGratuite}"
 								onkeypress="return scanTouche(event)" width="30px;" onmouseover="this.select();"
-								title="saisir la Quantite" maxlength="4" id="qteug" /></td>
+								title="Saisir la quantite d'unites gratuites" maxlength="4" id="qteug" /></td>
 
 							<td><input type="text" name="pv" id="pv" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.prixVenteUnitaire}"
 								onkeypress="return scanTouche(event)" maxlength="7"
-								title="saisir le Prix De Vente Unitaire" /></td>
+								title="Saisir le Prix de vente unitaire" /></td>
 								
 							<td><input type="text" name="pa" id="pa" class="autres" onmouseover="this.select();" onfocus="this.select();"
 								value="${approvisonementProcess.lineToUpdate.prixAchatUnitaire}"
 								onkeypress="return scanTouche(event)" maxlength="7"
-								title="saisir le Prix D'achat unitaire" /></td>
+								title="Saisir le prix d'achat unitaire" /></td>
 								
 							<td><input type="text" class="tva" onmouseover="this.select();"
 								onkeyup=" calculPriceTva();"
 								onkeypress="return scanTouche(event)" maxlength="6"
-								name="autres" id="tva" title="saisir le Prix D'achat unitaire" />
+								name="autres" id="tva" title="Saisir la taxe" />
 
 							</td>
 
@@ -163,9 +168,7 @@
 				</form>
 				<center style="text-transform: uppercase;">
 					<c:if test="${not empty apMessage }">
-						<hr />
 						<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-						<hr />
 					</c:if>
 				</center>
 
@@ -173,26 +176,26 @@
 
 		</c:when>
 		<c:otherwise>
-			<util:panel title="saisir le CIP du Produit" id="cippanel">
+			<util:panel title="${panel_title_add_lignesappro}" id="cippanel">
 				<form action="${find_add_url}" method="POST" name="formulaire"
 					onsubmit="return verif_formulaire()">
 					<table>
 						<tr>
-							<th style="text-align: center;">CiP</th>
-							<th style="text-align: center;">Designation</th>
-							<th style="text-align: center;">Marge(%)</th>
-							<th style="text-align: center;">QTE</th>
+							<th style="text-align: center;">${column_cip}</th>
+							<th style="text-align: center;">${column_designation}</th>
+							<th style="text-align: center;">${lignesappro_margin}(%)</th>
+							<th style="text-align: center;">${lignesappro_qty}</th>
 							<!-- 
 							<c:if test="${numero != 'F-0001'}">
 							 <th style="text-align: center;">Qte RC</th>
 							</c:if>
 							 -->
-							<th style="text-align: center;">Qte UG</th>
-							<th style="text-align: center;">Prix Vente</th>
-							<th style="text-align: center;">Prix Achat</th>
+							<th style="text-align: center;">${lignesappro_qtyUG}</th>
+							<th style="text-align: center;">${lignesappro_saleprice}</th>
+							<th style="text-align: center;">${lignesappro_purchaseprice}</th>
 							<th style="text-align: center;">T.Mul</th>
-							<th style="text-align: center;">Date Per.</th>
-							<th colspan="1" style="text-align: center;">ACTIONS</th>
+							<th style="text-align: center;">${lignesappro_permpdate}</th>
+							<th colspan="1" style="text-align: center;">ACTION</th>
 						</tr>
 						<tr>
 							<td>
@@ -261,7 +264,7 @@
 							</td>
 							
 							<td colspan="1">
-							     <input class="submits" type="submit" value="Ajouter" style=" margin:0px; float: left;" />
+							     <input class="submits" type="submit" value="${button_add}" style=" margin:0px; float: left;" />
 							</td>
 
 						</tr>
@@ -270,9 +273,7 @@
 
 				<center style="text-transform: uppercase;">
 					<c:if test="${not empty apMessage }">
-						<hr />
 						<p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-						<hr />
 					</c:if>
 				</center>
 			</util:panel>
@@ -282,9 +283,9 @@
 	<center>
 		<table style="width: 35%;">
 			<tr>
-				<th style="text-align: center;">APPLIQUER AU PVENTE ?</th>
-				<th style="text-align: center;">TAUX</th>
-				<th style="text-align: center;">APPLIQUER AU PACHAT ?</th>
+				<th style="text-align: center;"> <span style="text-transform: uppercase;">${apply_saleprice}</span> </th>
+				<th style="text-align: center;"> <span style="text-transform: uppercase;">${apply_tax}</span> </th>
+				<th style="text-align: center;"> <span style="text-transform: uppercase;">${apply_purchaseprice}</span> </th>
 			</tr>
 			<tr>
 
@@ -304,24 +305,21 @@
 
 
 	<!-- afficher les ligne d'approvisionnemnt ici -->
-	<util:panel title="Liste Des Produits en cour  d'Approvisionnement"
+	<util:panel title="${title_list_lignesappro}"
 		id="lg">
 		<table>
 			<tr>
-				<th style="text-align: center;">CiP</th>
-				<th style="text-align: center; width: 300px;">Designation</th>
-				<th style="text-align: center;">CipM</th>
-				<th style="text-align: center;">Marge</th>
-				<th style="text-align: center;">PAUnit</th>
-				<th style="text-align: center;">QTE</th>
-				<!-- 
-				<th style="text-align: center;">Qte RC</th>
-				 -->
-				<th style="text-align: center;">Qte UG</th>
-				<th style="text-align: center;">PA Total</th>
-				<th style="text-align: center;">PV Unit</th>
-				<th style="text-align: center;">Date Perm</th>
-				<th colspan="2" style="text-align: center;">ACTION</th>
+				<th style="text-align: center;">${column_cip}</th>
+				<th style="text-align: center; width: 300px;">${column_designation}</th>
+				<th style="text-align: center;">Cipm</th>
+				<th style="text-align: center;">${lignesappro_margin}</th>
+				<th style="text-align: center;">${lignesappro_purchaseprice}</th>
+				<th style="text-align: center;">${lignesappro_qty}</th>
+				<th style="text-align: center;">${lignesappro_qtyUG}</th>
+				<th style="text-align: center;">${lignesappro_totalprice}</th>
+				<th style="text-align: center;">${lignesappro_saleprice}</th>
+				<th style="text-align: center;">${lignesappro_permpdate}</th>
+				<th colspan="2" style="text-align: center;">ACTIONS</th>
 			</tr>
 
 			<c:forEach items="${approvisonementProcess.ligneApprovisionements }"

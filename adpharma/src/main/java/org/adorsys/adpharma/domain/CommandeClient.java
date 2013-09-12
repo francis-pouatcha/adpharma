@@ -215,7 +215,10 @@ public class CommandeClient extends AdPharmaBaseEntity {
         PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
         if (pharmaUser == null) return false;
         BigDecimal taux = pharmaUser.getTauxRemise() == null ? BigDecimal.ZERO : pharmaUser.getTauxRemise();
-        BigDecimal actualRemise = remise.add(getRemise());
+        BigDecimal actualRemise =  remise.add(getRemise());
+        BigDecimal otherRemise = getOtherRemise(); 
+        double remiseAbs = Math.abs(remise.doubleValue());
+//        BigDecimal actualRemise = new BigDecimal(Math.abs(remise.add(getRemise()).doubleValue()));
         BigDecimal remiseAdmicible = getMontantHt().multiply(taux).divide(BigDecimal.valueOf(100));
         if (remiseAdmicible.doubleValue() <= 0) {
             uiModel.addAttribute("apMessage", "vous n'etes pas autorise a acorder une remise ! ");
@@ -224,6 +227,13 @@ public class CommandeClient extends AdPharmaBaseEntity {
         if (remiseAdmicible.doubleValue() < actualRemise.doubleValue()) {
             uiModel.addAttribute("apMessage", "la remise pour  ce client  doit etre inferieur a : " + remiseAdmicible.doubleValue());
             return false;
+        }
+        if(remiseAbs > otherRemise.doubleValue()){
+        	setOtherRemise(new BigDecimal(0));
+        }else{
+        	setOtherRemise(getOtherRemise().subtract(new BigDecimal(remiseAbs)));
+        	this.merge();
+        	System.out.println("Nouvelle remise globale: "+this.getOtherRemise());
         }
         return valider;
     }
@@ -424,7 +434,9 @@ public class CommandeClient extends AdPharmaBaseEntity {
     public void addOtherRemise(BigDecimal other) {
         if (otherRemise == null) otherRemise = BigDecimal.ZERO;
         if (other != null) otherRemise = otherRemise.add(other);
+        // Voici d'ou viens le pb, que faire a ce niveau?
         if (otherRemise.intValue() < 0) otherRemise = BigDecimal.ZERO;
+        System.out.println("Other remise: "+otherRemise);
     }
 
     public void calculNetApayer() {

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,8 +18,10 @@ import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MouvementStockController {
 
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
@@ -48,7 +53,7 @@ public class MouvementStockController {
 		List<MouvementStock> search = MouvementStock.search(typeMouvement, cipM,cip, minDateCreation, maxDateCreation, designation);
 
 		if (search.isEmpty()) {
-			uiModel.addAttribute("apMessage",  "Aucun Mouvements trouves !");
+			uiModel.addAttribute("apMessage",  messageSource.getMessage("stock_movement_found_warning", null, LocaleUtil.getCurrentLocale()));
 
 		}else {
 			uiModel.addAttribute("results", search );

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_MouvementStock" items="${mouvementstocks}" placeholder="Rechercher par designation" search="true" url="/mouvementstocks/search" z="user-managed">
+    
+    <spring:message code="list_search_stockMovement" var="list_search_stockMovement" />
+    
+    <page:list1 id="pl_org_adorsys_adpharma_domain_MouvementStock" items="${mouvementstocks}" placeholder="${list_search_stockMovement}" search="true" url="/mouvementstocks/search" z="user-managed">
         <table:table create="false" data="${mouvementstocks}" delete="false" id="l_org_adorsys_adpharma_domain_MouvementStock" path="/mouvementstocks" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_MouvementStock_mvtNumber" property="mvtNumber" z="axWyghN8Isf0UeoVN3kBjrC2rvg="/>
             <table:column id="s_org_adorsys_adpharma_domain_MouvementStock_cipM" label="Cip Maison" property="cipM" z="GeNd+/CGFDSc7ufC5wfRJxWkRtM="/>

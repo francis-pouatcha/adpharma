@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:security="http://www.springframework.org/security/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:security="http://www.springframework.org/security/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    <!-- Internationalization -->
+    <spring:message code="list_search_providername" var="list_search_providername" />
+    
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
         <c:set value="true" var="hasrole"/>
     </security:authorize>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${approvisionements}" z="user-managed" url="/approvisionementprocess/searchAppro" search="true" placeholder="Rechercher par fournisseur" >
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Approvisionement" items="${approvisionements}" z="user-managed" url="/approvisionementprocess/searchAppro" search="true" placeholder="${list_search_providername}" >
         <table:table create="false" data="${approvisionements}" delete="false" id="l_org_adorsys_adpharma_domain_Approvisionement" path="/approvisionements" update="${hasrole }" z="user-managed">
             <table:column id="s_org_adorsys_adpharma_domain_Approvisionement_devise" property="devise" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Approvisionement_bordereauNumber" property="bordereauNumber" z="user-managed"/>

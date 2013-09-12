@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:message code="rayon_codegeo" var="rayon_codegeo" />
+    <spring:message code="rayon_emplacement" var="rayon_emplacement" />
+    <spring:message code="rayon_libelle" var="rayon_libelle" />
+    <spring:message code="rayon_magasin" var="rayon_magasin" />
+    <spring:message code="rayon_note" var="rayon_note" />
+    
     <form:create id="fc_org_adorsys_adpharma_domain_Rayon" modelAttribute="rayon" path="/rayons" render="${empty dependencies}" z="DA+XqfrvAFWF9ZZt/TcD4qAv/Rk=">
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Rayon_footPrint" render="false" z="user-managed"/>
         <field:input field="codeRayon" id="c_org_adorsys_adpharma_domain_Rayon_codeRayon" render="false" z="user-managed"/>
         <field:input field="displayName" id="c_org_adorsys_adpharma_domain_Rayon_displayName" render="false" z="user-managed"/>
-        <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" label="Code géographique" z="user-managed"/>
-        <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_note" label="Emplacement" z="user-managed"/>
-        <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="Libelle" required="true" z="user-managed"/>
-        <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Rayon_magasin" itemValue="id" items="${sites}" path="/sites" required="true" z="rdptbcN+MpGx9ZXhWDAmw/JS/Po="/>
-        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M="/>
         <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_emplacement" render="false" z="user-managed"/>
+        
+        <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" label="${rayon_codegeo}" z="user-managed"/>
+        <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_note" label="${rayon_emplacement}" z="user-managed"/>
+        <field:input field="name" id="c_org_adorsys_adpharma_domain_Rayon_name" label="${rayon_libelle}" required="true" z="user-managed"/>
+        <field:select field="magasin" id="c_org_adorsys_adpharma_domain_Rayon_magasin" itemValue="id" items="${sites}" label="${rayon_magasin}" path="/sites" required="true" z="rdptbcN+MpGx9ZXhWDAmw/JS/Po="/>
+        <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Rayon_note" z="w6muUKLtJdterl4ZtT6cm8eiy3M=" label="${rayon_note}"/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Rayon" render="${not empty dependencies}" z="8cN/WhuaTX1RjZNBau0oStEYWac="/>
 </div>

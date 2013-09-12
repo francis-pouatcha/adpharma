@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -16,8 +17,10 @@ import org.adorsys.adpharma.domain.LigneCmdFournisseur;
 import org.adorsys.adpharma.platform.rest.SImplePlatformRestService;
 import org.adorsys.adpharma.platform.rest.exchanges.AdpHarmaExchangeParser;
 import org.adorsys.adpharma.platform.rest.exchanges.ExchangeData;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
@@ -37,6 +40,9 @@ public class CommandeFournisseurController {
 
 	@Autowired
 	AdpHarmaExchangeParser exchangeParser ;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	
 	SImplePlatformRestService exchangeService = new SImplePlatformRestService();
@@ -84,12 +90,12 @@ public class CommandeFournisseurController {
 	}
 
 	@RequestMapping(params = "find=BySearch", method = RequestMethod.GET)
-	public String Search( @RequestParam("cmdNumber") String cmdNumber,@RequestParam("etatCmd") Etat etatCmd ,@RequestParam("fournisseur") Fournisseur fournisseur ,
-			@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation ,Model uiModel) {
+	public String Search( @RequestParam(value="cmdNumber", required=false)String cmdNumber,@RequestParam(value="etatCmd", required=false) Etat etatCmd ,@RequestParam(value="fournisseur", required=false) Fournisseur fournisseur ,
+			@RequestParam(value="minDateCreation", required=false) @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam(value="maxDateCreation", required=false) @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation ,Model uiModel) {
 		List<CommandeFournisseur> search = CommandeFournisseur.search(cmdNumber, etatCmd, minDateCreation, maxDateCreation, fournisseur);
 
 		if (search.isEmpty()) {
-			uiModel.addAttribute("apMessage", "Aucune commande Fournisseur trouvee" );
+			uiModel.addAttribute("apMessage", messageSource.getMessage("command_found_error", null, LocaleUtil.getCurrentLocale()));
 			addDateTimeFormatPatterns(uiModel);
 
 		}else {

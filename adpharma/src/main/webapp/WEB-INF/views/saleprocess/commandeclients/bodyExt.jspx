@@ -7,30 +7,39 @@
 	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
 	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0"  
-	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
-	style="width: 100%">
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" style="width: 100%">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
+    <spring:message code="saleprocess_list_sales" var="saleprocess_list_sales" />
+    <spring:message code="column_cip" var="column_cip" />
+	<spring:message code="column_cipm" var="column_cipm" />
+	<spring:message code="column_designation" var="column_designation" />
+	<spring:message code="button_find_product" var="button_find_product" />
+	<spring:message code="column_qty" var="column_qty" />
+	<spring:message code="column_qty_order" var="column_qty_order" />
+	<spring:message code="column_price" var="column_price" />
+	<spring:message code="column_total_price" var="column_total_price" />
+	<spring:message code="column_remise" var="column_remise" />
+	<spring:message code="column_qty_return" var="column_qty_return" />
+    
         <form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${commandeclient.lineCommande}" z="user-managed" 
-    		label="Cliquer ici Pour Voir Le Detail De la Vente" objectName="Ligne Commande" openPane="true">
-<div style="overflow: auto; height: 300px;" >
+    		label="${saleprocess_list_sales}" objectName="Ligne Commande" openPane="true">
+<div style="overflow: auto; height: 300px;">
 
-		 <table >
+		 <table>
 		    	<tr>
-		    		<th style="text-align: center;">CIP MAISON</th>
-		    		<th style="text-align: center;">CIP</th>
-		    		<th style="text-align: center;">DESIGNATION</th>
-		    		<th style="text-align: center;">PRIX UNIT</th>
-		            <th style="text-align: center;">QTE CMD</th>
-		             <th style="text-align: center;">QTE RET</th>
-		            <th style="text-align: center;">PRIX TOTAL</th>
-		           <th style="text-align: center;">REMISE</th>
-		        <!--<th style="text-align: center;">ANNULER</th>-->
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cipm}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cip}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_designation}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_price}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_qty_order}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_qty_return}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_total_price}</th>
+		            <th style="text-align: center; text-transform: uppercase;">${column_remise}</th>
 		    	</tr>
-		
 		   <c:forEach items="${commandeclient.lineCommande }" var="ligne">
-		   <tr>
+		        <tr>
 		    			<td style="text-align: center;">
 		    			<a  style="cursor: pointer;" id="${ligne.cipM}" onclick="return getCipm(this)" ><c:out value="${ligne.cipM}"></c:out></a>
 		    			</td>

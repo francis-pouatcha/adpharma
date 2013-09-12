@@ -20,13 +20,10 @@
         </table>
     </form:find>
        <c:if test="${not empty apMessage}">
-		<hr/>
-	<center>
-			<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
-	</center>
-			<hr/>
-	
-	</c:if>
+			<center>
+					<p class="appMessage" style="color: green; margin-bottom: 3px;">${apMessage}</p>
+			</center>
+	   </c:if>
     <c:if test="${ not empty results}">
      <page:list id="pl_org_adorsys_adpharma_domain_CommandeFournisseur" items="${results}" z="XfKNp4xlwXdf5nGL1niAegujyOk=">
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_CommandeFournisseur" path="/commandefournisseurs" z="user-managed">

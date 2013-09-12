@@ -108,16 +108,31 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
     <spring:url value="/produits/searchProductByCipAjax/" var="find_cip_url" />
     
     
+    <!-- Internationalization -->
+    <spring:message code="column_cip_qty" var="column_cip_qty" />
+    <spring:message code="column_ray" var="column_ray" />
+    <spring:message code="column_filiale" var="column_filiale" />
+    <spring:message code="button_save" var="button_save" />
+    
+    <spring:message code="config_solde_find_product" var="config_solde_find_product" />
+    <spring:message code="config_solde_begin_date" var="config_solde_begin_date" />
+    <spring:message code="config_solde_end_date" var="config_solde_end_date" />
+    <spring:message code="config_solde_rate" var="config_solde_rate" />
+    <spring:message code="config_solde_activate" var="config_solde_activate" />
+    <spring:message code="config_solde_state" var="config_solde_state" />
+    <spring:message code="button_find_product" var="button_find_product" />
+    
+    
     <script type="text/javascript">
            $(function(){
         	   function clearProductTable(){
        			$('#resultproduit').html(
        					'<tr>
-       					    <th>CIP</th>
-       			    		<th>DESIGNATION</th>
-       			    		<th>QTE CIP</th>
-       			    		<th>RAYON</th>
-       			    		<th>FILIALE</th>
+       					    <th style="text-align: center; text-transform: uppercase;">Cip</th>
+       			    		<th style="text-align: center; text-transform: uppercase;">Designation</th>
+       			    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+       			    		<th style="text-align: center; text-transform: uppercase;">${column_ray}</th>
+       			    		<th style="text-align: center; text-transform: uppercase;">${column_filiale}</th>
        					</tr>');
        		      };
        		   $('form#produitfindform').submit(function(){
@@ -132,7 +147,6 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
        										  <td>'+this.rayon.codeRayon+'</td>
        										  <td>'+this.filiale.libelle+'</td>
        										  </tr>'
-       										
        								);
        									
        								});
@@ -156,7 +170,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
        		});
         	      
         	   
-        	     dialog_widget('search_product', 'Rechercher un produit', 800, 'slide', 'fade', 'top');
+        	     dialog_widget('search_product', '${button_find_product}', 800, 'slide', 'fade', 'top');
            });
            
            function requete(cip){
@@ -229,7 +243,8 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
     
     <div id="courbes">
                      <div style="width: 28%; float: left; height:480px; padding-right:8px; overflow: auto;">
-                          <util:panel title="Creer Configuration de solde" id="param_edition">
+                          <spring:message code="config_solde_title" var="config_solde_title" htmlEscape="false" />
+                          <util:panel title="${config_solde_title}" id="param_edition">
                            <form:form action="${create_solde_url}" commandName="solde" method="POST" acceptCharset="UTF-8" onsubmit="return validForm();">
                              <c:if test="${not empty errors}">
                               <p><form:errors cssClass="error" /></p>
@@ -243,7 +258,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
                                      <tr>
                                          <td colspan="2">
                                              <input type="hidden" value="" name="pId" id="pId" />
-                                             <label for="cip">Rechercher un produit</label><BR />
+                                             <label for="cip">${config_solde_find_product }</label><BR />
                                              <form:input path="cipProduit" type="text" style="width: 200px; float: left;" dojoType="dijit.form.TextBox" id="cip"/>
                                              <input type="button" value="OK" class="submits" id="search" style="float: left;" /><BR />
                                              <form:errors path="cipProduit" cssClass="error"  />
@@ -259,32 +274,32 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
                                      <tr>
                                          <td colspan="2">
                                              <!-- dojoType="dijit.form.DateTextBox" constraints="{datePattern:'yyyy-MM-dd'}" -->
-                                             <label for="date_debut">Date Debut Solde</label><BR />
+                                             <label for="date_debut">${config_solde_begin_date }</label><BR />
                                              <form:input path="debutSolde" type="text" id="date_debut"/><BR /> 
                                              <form:errors path="debutSolde" cssClass="error" />
                                          </td>
                                      </tr>
                                      <tr>
                                          <td colspan="2">
-                                             <label for="date_fin">Date Fin Solde</label><BR />
+                                             <label for="date_fin">${config_solde_end_date }</label><BR />
                                              <form:input path="finSolde" type="text" id="date_fin"/><BR /> 
                                              <form:errors path="finSolde" cssClass="error" />
                                          </td>
                                      </tr>
                                      <tr>
                                           <td> 
-                                              <label for="taux">Taux du solde(%)</label><BR />
+                                              <label for="taux">${config_solde_rate}(%)</label><BR />
                                               <form:input path="tauxSolde" type="text"  dojoType="dijit.form.TextBox" id="taux" /><BR />
                                               <form:errors path="tauxSolde" cssClass="error" />
                                           </td>
                                           <td>
-                                               <label for="type">Activer?</label><BR />
+                                               <label for="type">${config_solde_activate}?</label><BR />
                                                <form:checkbox path="activeConfig"  dojoType="dijit.form.CheckBox" /><BR />
                                                <p></p>
                                           </td>
                                      </tr>
                                      <tr>
-                                         <td colspan="2"> <input type="submit" class="submits" value="Enregistrer" style="font-size:15px; width: 300px; height: 30px; float: left;"/> </td>
+                                         <td colspan="2"> <input type="submit" class="submits" value="${button_save}" style="font-size:15px; width: 300px; height: 30px; float: left;"/> </td>
                                      </tr>
                              </table>
                            </form:form>
@@ -294,24 +309,25 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
                      
                      
                      <div style="float: right; width: 70%; margin:5px 5px 0 0; height:480px; border: 1px solid #CCC;" duration="50" dojoType="dijit.layout.AccordionContainer">
-                          
-                            <div title="Liste des produits en solde" selected="true" dojoType="dijit.layout.ContentPane">
+                          <spring:message code="config_solde_list" var="config_solde_list" htmlEscape="false" />
+                            <div title="${config_solde_list}" selected="true" dojoType="dijit.layout.ContentPane">
                                   <p style="overflow: auto;">
                                       <spring:url value="/resources/images/create.png" var="create_url" />
                                      <spring:url value="/produits/soldes?form" var="create_config_url" />
+                                     <spring:message code="button_exit" var="button_exit" />
                                      <spring:url value="/" var="home" />
                                      <a href="${create_config_url}" title="Creer une configuration de solde" style="margin-right: 10px;"><IMG alt="create" src="${create_url}" /></a>
-                                     <a href="${home}" style="text-decoration: none;"><INPUT type="button" class="submits" value="Quitter" title="Quitter la configuration de soldes" /></a>
+                                     <a href="${home}" style="text-decoration: none;"><INPUT type="button" class="submits" value="${button_exit}" title="${button_exit}" /></a>
                                      
                                      <table id="soldes">
                                           <tr>
-                                             <th style="text-align: center;">CIP</th>
-                                             <th style="text-align: center;">DESIGNATION</th>
-                                             <th style="text-align: center;">DEBUT SOLDE</th>
-                                             <th style="text-align: center;">FIN SOLDE</th>
-                                             <th style="text-align: center;">TAUX SOLDE</th>
-                                             <th style="text-align: center;">ETAT SOLDE</th>
-                                             <th style="text-align: center;">ACTIONS</th>
+                                             <th style="text-align: center; text-transform: uppercase;">CIP</th>
+                                             <th style="text-align: center; text-transform: uppercase;">DESIGNATION</th>
+                                             <th style="text-align: center; text-transform: uppercase;">${config_solde_begin_date}</th>
+                                             <th style="text-align: center; text-transform: uppercase;">${config_solde_end_date}</th>
+                                             <th style="text-align: center; text-transform: uppercase;">${config_solde_rate}</th>
+                                             <th style="text-align: center; text-transform: uppercase;">${config_solde_state}</th>
+                                             <th style="text-align: center; text-transform: uppercase;">ACTIONS</th>
                                           </tr>
                                       <c:choose>
                                          <c:when test="${not empty produitsoldes}">   
@@ -339,15 +355,18 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
 		                                               <spring:url value="/resources/images/update.png" var="update" />
 		                                               <spring:url value="/produits/deletesolde/${produit.id}" var="delete_solde_url" />
 		                                               <spring:url value="/produits/updatesolde/${produit.id}" var="update_solde_url" />
-		                                               <a href="${update_solde_url}" title="Modifier le solde" style="margin-right: 15px;"> <IMG alt="update" src="${update}" /> </a>
-		                                               <a href="${delete_solde_url}" title="Supprimer le solde"> <IMG alt="delete" src="${delete}" onclick="return deleteBox('Voulez-vous vraiment supprimer ce solde? ')"/> </a>
+		                                               <spring:message code="config_solde_update" var="config_solde_update" />
+		                                               <spring:message code="config_solde_delete" var="config_solde_delete" />
+		                                               <a href="${update_solde_url}" title="${config_solde_update}" style="margin-right: 15px;"> <IMG alt="update" src="${update}" /> </a>
+		                                               <a href="${delete_solde_url}" title="${config_solde_delete}"> <IMG alt="delete" src="${delete}" onclick="return deleteBox('Voulez-vous vraiment supprimer ce solde? ')"/> </a>
 		                                           </td>
 		                                      </tr>     
                                           </c:forEach>
                                         </c:when>
                                         <c:otherwise>
                                                <tr>
-                                                    <td colspan="7"> <p class="appMessage" style="text-align: center;"> <c:out value="Aucun produit en solde..." /> </p> </td>
+                                                    <spring:message code="config_solde_product" var="config_solde_product" />
+                                                    <td colspan="7"> <p class="appMessage" style="text-align: center;"> <c:out value="${config_solde_product}" /> </p> </td>
                                                </tr>
                                         </c:otherwise>  
                                       </c:choose>  
@@ -357,7 +376,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
                             
                             <div title=" " dojoType="dijit.layout.ContentPane">
                                   <p style="overflow: auto;"> 
-                                     Autres informations
+                                     <!--  -->
                                   </p>
                             </div>
                           
@@ -373,20 +392,20 @@ xmlns:jsp="http://java.sun.com/JSP/Page"
     </script>                
          
         <!-- Formulaire a factoriser  --> 
-         <div style="display: none;" id="search_product">
+         <div style="display: none;" id="search_product" title="${button_find_product}">
              <form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 					<p>
-					 <label for="des"> ${product_designation} :</label> <input class="searchInput" type="text" name="designation" id="des"/>
+					 <label for="des"> Designation :</label> <input class="searchInput" type="text" name="designation" id="des"/>
 					</p>
 					<center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
 			 		<div style="height:400px; overflow: auto; "  >
 					<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
 					    	<tr>
-					    		<th style="text-align: center;">${default_cip }</th>
-					    		<th style="text-align: center; width: 250px;">${product_designation }</th>
-					    		<th style="text-align: center;">QTE CIP</th>
-					    		<th style="text-align: center;" >RAYON</th>
-					    		<th style="text-align: center;">FILIALE</th>
+					    		<th style="text-align: center; text-transform: uppercase;"> Cip </th>
+					    		<th style="text-align: center; width: 250px; text-transform: uppercase;">Designation</th>
+					    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty }</th>
+					    		<th style="text-align: center; text-transform: uppercase;" >${column_ray }</th>
+					    		<th style="text-align: center; text-transform: uppercase;">${column_filiale }</th>
 					    	</tr>
 					  </table>
 				    </div>

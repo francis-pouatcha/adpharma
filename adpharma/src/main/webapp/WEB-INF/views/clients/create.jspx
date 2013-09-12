@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:formsp="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:formsp="http://www.springframework.org/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
     <spring:url value="/resources/images/globe32.gif" var="loadimage"/>
     <spring:url value="/saleprocess/0/findProduct" var="find_product_url"/>
     <spring:url value="/saleprocess/0/selectProduct" var="select_product_url"/>
     <spring:url value="/clients/getClientByAjax" var="get_client_url"/>
     <spring:url value="/clients/findClientByAjax" var="find_cliet_url"/>
     
-    <script type="text/javascript">
-	
+    
+    <!-- Internationalization -->
+    <spring:message code="customer_content_infos" var="customer_content_infos" />
+    <spring:message code="customer_content_contacts" var="customer_content_contacts" />
+    <spring:message code="customer_content_others" var="customer_content_others" />
+    <spring:message code="button_find_customer" var="button_find_customer" />
+    <spring:message code="customer_name" var="customer_name" />
+    
+    <spring:message code="column_customer_code" var="column_customer_code" />
+    <spring:message code="column_phone" var="column_phone" />
+    <spring:message code="column_employer" var="column_employer" />
+    <spring:message code="column_debts" var="column_debts" />
+    <spring:message code="column_credible" var="column_credible" />
+    <spring:message code="button_find" var="button_find" />
+    <spring:message code="button_cancel" var="button_cancel" />
+    
+    
+<script type="text/javascript">
 	function clearClientTable(){
 		$('#result').html(
-				'<tr>
-            <th align="center" valign="top">CODE</th>
-            <th align="center" valign="top">NOM</th>
-            <th align="center" valign="top">TELEPHONE</th>
-            <th align="center" valign="top">EMPLOYEUR</th>
-            <th align="center" valign="top">DETTES</th>
-            <th align="center" valign="top">CREDIBLE</th>
+	   '<tr>
+            <th align="center" valign="top" style="text-transform: uppercase;">${column_customer_code}</th>
+            <th align="center" valign="top" style="text-transform: uppercase;">${customer_name}</th>
+            <th align="center" valign="top" style="text-transform: uppercase;">${column_phone}</th>
+            <th align="center" valign="top" style="text-transform: uppercase;">${column_employer}</th>
+            <th align="center" valign="top" style="text-transform: uppercase;">${column_debts}</th>
+            <th align="center" valign="top" style="text-transform: uppercase;">${column_credible}</th>
         </tr>');
 	}
-	
-	
 	$(function(){
 		$('form#person').submit
 		(function(){
@@ -49,16 +69,11 @@
 									    	 $('#_clientPayeurNumber_id').val(data.clientNumber);
 											$('#findClient').dialog("close"); 
 													});
-									
-										
 									};
 									});
-							
-
 							});
 				return false ;
 		});
-		
 		$('img.loadimage').ajaxStart(function(){
 			$(this).show();
 		});
@@ -77,11 +92,11 @@
 			width: 900,
 			resizable:true,
 			draggable :true,
-             hide:'fade',
-             show:'slide',
-             position:'top',
+            hide:'fade',
+            show:'slide',
+            position:'top',
 			buttons: {
-				"Cancel": function() { 
+				"${button_cancel}": function() { 
 					$(this).dialog("close"); 
 				} 
 			}
@@ -93,59 +108,53 @@
 			return false;
 		});
 		
-		
-		
-		
-		
-		
-		
 	});
-	
-		
-	
-	</script>
+</script>
+
+
+
     <form:create id="fc_org_adorsys_adpharma_domain_Client"  modelAttribute="client" path="/clients" render="${empty dependencies}" z="ys02dHc9phUWtWwquIgxG46avgY=">
-        <table class="tblog">
-            <tr>
-                <td class="tbcreate">
-                    <field:select field="typeClient" id="c_org_adorsys_adpharma_domain_Client_typeClient" items="${typeclients}" path="typeclients" z="lbsOvplF4uFPTMaHqzP5byR90Ow="/>
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Client_footPrint" render="false" z="user-managed"/>
                     <field:input field="clientNumber" id="c_org_adorsys_adpharma_domain_Client_clientNumber" render="false" z="user-managed"/>
-                    <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
+                    <field:input field="nomComplet" id="c_org_adorsys_adpharma_domain_Client_nomComplet" render="false" z="user-managed"/>
+                    <field:input field="totalDette" id="c_org_adorsys_adpharma_domain_Client_totalDette" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
+                    
+        <div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 100%; height: 450px">
+               <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${customer_content_infos}">
                     <field:input field="nom" id="c_org_adorsys_adpharma_domain_Client_nom" required="true" z="user-managed"/>
                     <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom" required="true" z="user-managed"/>
                     <field:select field="sexe" id="c_org_adorsys_adpharma_domain_Client_sexe" items="${genres}" path="genres" z="76qlaIFK/dUddgWyFZf+M9nxgLA="/>
-                    <field:input field="nomComplet" id="c_org_adorsys_adpharma_domain_Client_nomComplet" render="false" z="user-managed"/>
+                    <field:select field="typeClient" id="c_org_adorsys_adpharma_domain_Client_typeClient" items="${typeclients}" path="typeclients" z="lbsOvplF4uFPTMaHqzP5byR90Ow="/>
+                    <field:select field="categorie" id="c_org_adorsys_adpharma_domain_Client_categorie" itemValue="id" items="${categorieclients}" path="/categorieclients" z="uNEF1IoKpHcqiew0vqrUie+ieN0="/>
+                    <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
+                    <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
+                    <field:datetime dateTimePattern="${client_datenaissance_date_format}" field="dateNaissance" id="c_org_adorsys_adpharma_domain_Client_dateNaissance" z="ELbkD0T3EOInbSqx5X88ctouD7g="/>
+                </div>
+                <div closable="false" dojoType="dijit.layout.ContentPane" selected="false" title="${customer_content_contacts}">
                     <field:input field="telephoneFixe" id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
                     <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" z="UEVz4Qi38EfJSl81OAO5fxyACeo="/>
                     <field:input field="fax" id="c_org_adorsys_adpharma_domain_Client_fax" z="aOSu7ScTBW5cIY/nnmRzVfsL4UE="/>
                     <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
-                    <field:checkbox field="creditAutorise" id="c_org_adorsys_adpharma_domain_Client_creditAutorise" z="zEDzQc4bFRJoKrA3dPZwQM2X+zo="/>
-                </td>
-                <td class="tbcreate">
-                        <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
-                    <field:input buttonId="cltId" buttonLabel="Find" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" label="Code Payeur " z="user-managed"/>
-                    <field:input field="plafondCredit" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
-                    <field:input field="employeur" id="c_org_adorsys_adpharma_domain_Client_employeur" z="ytmiRzXYxaejFU7TJmHNdLkcdIw="/>
-                    <field:datetime dateTimePattern="${client_datenaissance_date_format}" field="dateNaissance" id="c_org_adorsys_adpharma_domain_Client_dateNaissance" z="ELbkD0T3EOInbSqx5X88ctouD7g="/>
-                    <field:input field="tauxCouverture" id="c_org_adorsys_adpharma_domain_Client_tauxCouverture" validationMessageCode="field_invalid_number" z="v6ZD9zTSZAfbtdvn164WxHWe8Vc="/>
                     <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Client_note" z="sQqHMh6y6j+33iNnM7I5LaZNQLo="/>
-                    <field:input field="totalDette" id="c_org_adorsys_adpharma_domain_Client_totalDette" render="false" validationMessageCode="field_invalid_integer" z="user-managed"/>
+                 </div>
+                 <div closable="false" dojoType="dijit.layout.ContentPane" selected="false" title="${customer_content_others}">
+                    <field:input buttonId="cltId" buttonLabel="${button_find}" field="clientPayeurNumber" id="c_org_adorsys_adpharma_domain_Client_clientPayeurNumber" z="user-managed"/>
+                    <field:select field="clientPayeur" id="c_org_adorsys_adpharma_domain_Client_clientPayeur" itemValue="id" items="${clients}" path="/clients" render="false" z="user-managed"/>
+                    <field:input field="plafondCredit" id="c_org_adorsys_adpharma_domain_Client_plafondCredit" validationMessageCode="field_invalid_number" z="1c4852KWLADy6ox7qmi7rf5HZh8="/>
+                    <field:input field="tauxCouverture" id="c_org_adorsys_adpharma_domain_Client_tauxCouverture" validationMessageCode="field_invalid_number" z="v6ZD9zTSZAfbtdvn164WxHWe8Vc="/>
+                    <field:checkbox field="creditAutorise" id="c_org_adorsys_adpharma_domain_Client_creditAutorise" z="zEDzQc4bFRJoKrA3dPZwQM2X+zo="/>
                     <field:checkbox field="remiseAutorise" id="c_org_adorsys_adpharma_domain_Client_remiseAutorise" z="8+oZZxMe4vZMA0wHjQNcjmMQcJw="/>
-              <field:select field="clientPayeur" id="c_org_adorsys_adpharma_domain_Client_clientPayeur" itemValue="id" items="${clients}" path="/clients" render="false" z="user-managed"/>
-   
-                </td>
-            </tr>
-        </table>
-         </form:create>
+                 </div>
+           </div>   
+     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Client" render="${not empty dependencies}" z="nSq/AjKH2v+IhEisFDeN0tNZUJc="/>
     
     
     
-    <div id="findClient" style="display: none;" title="recherche client">
+    <div id="findClient" style="display: none;" title="${button_find_customer}">
         <form enctype="application/x-www-form-urlencoded" id="person">
             <p>
-                <label for="name">Nom  :</label>
+                <label for="name">${customer_name} :</label>
                 <input name="name" class="searchInput" type="text" />
             </p>
         </form>
@@ -155,12 +164,12 @@
         <div style="height:300px; overflow: auto;">
             <table align="left" border="0" cellpadding="0"  cellspacing="0" class="result search" frame="box" id="result" valign="top" width="100%;">
                 <tr align="top" valign="top">
-                    <th align="center" valign="top">CODE</th>
-                    <th align="center" valign="top">NOM</th>
-                    <th align="center" valign="top">TELEPHONE</th>
-                    <th align="center" valign="top">EMPLOYEUR</th>
-                    <th align="center" valign="top">DETTES</th>
-                    <th align="center" valign="top">CREDIBLE</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${column_customer_code}</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${customer_name}</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${column_phone}</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${column_employer}</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${column_debts}</th>
+                    <th align="center" valign="top" style="text-transform: uppercase;">${column_credible}</th>
                 </tr>
             </table>
         </div>

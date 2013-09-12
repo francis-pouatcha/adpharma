@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +24,12 @@ import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.Contract;
 import org.adorsys.adpharma.utils.DocumentsPath;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -40,8 +43,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/inventaireProcess")
 @Controller
 public class InventaireProcessController {
+	
 	@Autowired
 	private JasperPrintService jasperPrintService ;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@Produces({"application/pdf"})
 	@Consumes({""})
@@ -114,7 +121,7 @@ public class InventaireProcessController {
 		Produit produit = Produit.findProduit(pId);
 		produit.calculPrixTotalStock();
 		if (inventaire.contientProduit(produit)) {
-			uiModel.addAttribute("apMessage", "Ce produit est deja dans la liste ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_exist", null, LocaleUtil.getCurrentLocale())); 
 		}else{
 			LigneInventaire ligneInventaire = new LigneInventaire();
 			ligneInventaire.setInventaire(inventaire);
@@ -176,6 +183,8 @@ public class InventaireProcessController {
 		inventaire.merge();
 		return "inventaireProcess/show";
 	}
+	
+	
 	@Transactional
 	@RequestMapping(value = "/{invId}/annulerInv", method = RequestMethod.GET)
 	public String annuler(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
@@ -189,11 +198,11 @@ public class InventaireProcessController {
 		Inventaire inventaire = Inventaire.findInventaire(invId);
 		List<LigneInventaire> resultList = LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList();
 		if (resultList.isEmpty()) {
-			uiModel.addAttribute("apMessage","imppossible de cloturer l'inventaire car ne contient aucune lignes ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("inventory_process_close_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 		if (inventaire.getEtat().equals(Etat.CLOS)) {
-			uiModel.addAttribute("apMessage","cette Inventaire est deja clos ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("inventory_process_closed", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 
 		}
@@ -204,7 +213,7 @@ public class InventaireProcessController {
 		uiModel.addAttribute("inventaire", merge);
 		uiModel.addAttribute("itemId", merge.getId());
 		ProcessHelper.addDateTimeFormatPatterns(uiModel);
-		uiModel.addAttribute("apMessage","inventaire  cloturer avec succes ");
+		uiModel.addAttribute("apMessage", messageSource.getMessage("inventory_process_close_success", null, LocaleUtil.getCurrentLocale()));
 		return "inventaireProcess/show";
 	}
 
@@ -232,7 +241,6 @@ public class InventaireProcessController {
 
 	@RequestMapping(value = "/ficheSuivieStock", method = RequestMethod.GET)
 	public String ficheSuivieStock(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
-
 		if (inp.isInventoryBycipm()) {
 			inp.setLigneApprovisionements(LigneApprovisionement.search(inp.getFamilleProduit(),inp.getSousFamilleProduit(),inp.getDesignation(), null, inp.getRayon(), inp.getBeginBy(), inp.getEndBy(), inp.getFiliale(), null, null,null,null).getResultList());
 
@@ -244,15 +252,12 @@ public class InventaireProcessController {
 					produit.calculTransientPrice();
 				}
 				inp.setProduits(resultList);
-
 			}
 		}
 		uiModel.asMap().clear();
 		uiModel.addAttribute("inventaire", inp);
 		uiModel.addAttribute("headTexte", "Fiche De Suivie de Stock Du "+PharmaDateUtil.format(inp.getDateDebut(), PharmaDateUtil.DATETIME_PATTERN_LONG)+" AU :" +
 				"" +PharmaDateUtil.format(inp.getDateFin(), PharmaDateUtil.DATETIME_PATTERN_LONG));
-
-
 		return "inventaires/ficheSuivieStock";
 	}
 
@@ -264,7 +269,6 @@ public class InventaireProcessController {
 		uiModel.addAttribute("rayons", ProcessHelper.populateRayon() );
 		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale() );
 		return "inventaires/inventaireFicheQte";
-
 	}
 	
 	 // Impression de la fiche de code bar de l'inventaire
@@ -302,11 +306,11 @@ public class InventaireProcessController {
 		return "ficheSuivieQtePdf";
 	}
 
-	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
-	public String Search(Model uiModel) {
+	@RequestMapping(params = {"find=BySearch", "form"}, method = RequestMethod.GET)
+	public String SearchForm(HttpServletRequest request, Model uiModel) {
 		uiModel.addAttribute("rayon", ProcessHelper.populateRayon());
 		uiModel.addAttribute("filiale", ProcessHelper.populateFiliale());
-		uiModel.addAttribute("produit",new Produit() );
+		uiModel.addAttribute("produit",new Produit());
 		return "produits/search";
 	}
 
@@ -322,13 +326,6 @@ public class InventaireProcessController {
 		return "produits/search";
 	}
 	
-	/**
-	@RequestMapping(value="", method=RequestMethod.GET)
-	public String printFicheCodesBars(HttpServletRequest httpServletRequest){
-		
-		return "";
-	}
-	*/
 
 
 }

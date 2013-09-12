@@ -10,12 +10,13 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code="title_find_payments" var="find_payment" />    
     
-        <form:custumcreate modelAttribute="paiement" label="${find_payment}" id="ff_org_adorsys_adpharma_domain_AvoirClient" path="/paiements/BySearch" z="user-managed">
+    <form:custumcreate modelAttribute="paiement" label="${find_payment}" id="ff_org_adorsys_adpharma_domain_AvoirClient" path="/paiements/BySearch" z="user-managed">
         <field:select field="cassier" id="c_org_adorsys_adpharma_domain_Paiement_cassier" itemValue="id" items="${pharmausers}" path="/pharmausers" z="ujA4mPXlMz2oqXFeLTbGn0jHYrE="/>
         <field:input field="caisses" id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" z="np7ibv91CZIaKMCCUpDZ77gqPTQ="/>
         <field:select field="typePaiement" id="c_org_adorsys_adpharma_domain_Paiement_typePaiement" items="${typepaiements}" path="typepaiements" z="Dzs9YGtnaM4pJOnIYbIfZkx1xgU="/>
-        <field:datetime dateTimePattern="${paiement_datesaisie_date_format}" field="dateSaisie" label="Min Date Saisie" id="c_org_adorsys_adpharma_domain_Paiement_dateSaisie" z="vFwtG0ZZuuEWjbBzdEWSMBJCKHM="/>
+        <field:datetime dateTimePattern="${paiement_datesaisie_date_format}" field="dateSaisie" id="c_org_adorsys_adpharma_domain_Paiement_dateSaisie" z="vFwtG0ZZuuEWjbBzdEWSMBJCKHM="/>
     </form:custumcreate>
+    
     <page:list id="pl_org_adorsys_adpharma_domain_Paiement" items="${results}" z="8ofs/1S7Py8D3rJJyf7v7YPALqE=">
         <table:table create="false" data="${results}" delete="false" id="l_org_adorsys_adpharma_domain_Paiement" path="/paiements" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Paiement_paiementNumber" property="paiementNumber" z="user-managed"/>

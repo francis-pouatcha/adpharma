@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -30,9 +31,11 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.DefaultDisbursementService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -51,12 +54,14 @@ public class CaisseController {
 
 	@Autowired
 	private DefaultDisbursementService disbursementService;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		uiModel.addAttribute("caisse", new Caisse());
 		return "caisses/search";
-
 	}
 
 	// Formualire de decaissement
@@ -64,7 +69,7 @@ public class CaisseController {
 	public String decaissementForm(Model uiModel){
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if(openCaisse == null){
-			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_open_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 		initDisbursementView(uiModel, openCaisse,null);
@@ -84,7 +89,7 @@ public class CaisseController {
 	public String decaissement(CashDisbursementBean disbursement, Decaissement decaissement ,BindingResult bindingResult, Model uiModel){
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if(openCaisse == null){
-			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_open_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 		if (!disbursement.isValid(uiModel, openCaisse)) {
@@ -130,7 +135,7 @@ public class CaisseController {
 		uiModel.addAttribute("chiffreAffaire", chiffreAffaire);
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(chiffreAffaire.getDateDebut(), chiffreAffaire.getDateFin()).getResultList();
 		if (caisses.isEmpty()) {
-			uiModel.addAttribute("appMessage", "aucun etat trouve !");
+			uiModel.addAttribute("appMessage", messageSource.getMessage("cash_report_not_found", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/chiffreaffaire";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
@@ -149,8 +154,8 @@ public class CaisseController {
 		}
 		List<Caisse> list = Caisse.findCaissesByCaisseOuverteNotAndCaissier(Boolean.FALSE,pharmaUser ).getResultList();
 		if (!list.isEmpty()) {
-			uiModel.addAttribute("apMessage", "Vous avez deja une caisse ouverte veuillez la fermer avant . !  ");
-			return "caisses/infos";
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_open_found", null, LocaleUtil.getCurrentLocale()));
+ 			return "caisses/infos";
 		}
 		uiModel.asMap().clear();
 		caisse.persist();
@@ -163,7 +168,7 @@ public class CaisseController {
 		List<Caisse> list = Caisse.findCaissesByCaisseOuverteNotAndCaissier(Boolean.FALSE,pharmaUser ).getResultList();
 		Caisse caisse = new Caisse() ;
 		if (!list.isEmpty()) {
-			uiModel.addAttribute("apMessage", "Vous avez deja une caisse ouverte veuillez la fermer avant . !  ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_open_found", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 
 		}else {
@@ -188,14 +193,14 @@ public class CaisseController {
 			}else {
 				Long number = unpaySalesNumber.iterator().next();
 				if(number >0){
-					uiModel.addAttribute("apMessage", "Impossible de Fermer La Caisse Vous Avez : "+number +" Factures en attente d'encaissement ");
+					uiModel.addAttribute("apMessage", messageSource.getMessage("cash_close_warning1", null, LocaleUtil.getCurrentLocale()) +number +  messageSource.getMessage("cash_close_warning2", null, LocaleUtil.getCurrentLocale()) );
 				}else {
 					closeCash(uiModel,caisse);
 				}
 
 			}
 		}else {
-			uiModel.addAttribute("apMessage", "Vous n'avez aucune caisse ouverte veuillez en ouvrir une ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_open_warning", null, LocaleUtil.getCurrentLocale()));
 		}
 
 		return "caisses/infos";
@@ -210,7 +215,7 @@ public class CaisseController {
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("caisse",merge);
 		uiModel.addAttribute("itemId", merge.getId());
-		uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
+		uiModel.addAttribute("apMessage", messageSource.getMessage("cash_close_success", null, LocaleUtil.getCurrentLocale()));
 	}
 
 	@RequestMapping(value = "/fermerCaisse/{caisseId}", method = RequestMethod.GET)
@@ -223,7 +228,7 @@ public class CaisseController {
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("caisse",merge);
 		uiModel.addAttribute("itemId", merge.getId());
-		uiModel.addAttribute("apMessage", "caisse fermee avec succes ! ");
+		uiModel.addAttribute("apMessage", messageSource.getMessage("cash_close_success", null, LocaleUtil.getCurrentLocale()));
 		return "caisses/show";		
 
 	}
@@ -238,7 +243,7 @@ public class CaisseController {
 	public String byEtatCaisse(@RequestParam("minDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateOuverture, @RequestParam("maxDateOuverture") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateOuverture, Model uiModel) {
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(minDateOuverture, maxDateOuverture).getResultList();
 		if (caisses.isEmpty()) {
-			uiModel.addAttribute("appMessage", "aucun etat trouve !");
+			uiModel.addAttribute("appMessage", messageSource.getMessage("cash_report_not_found", null, LocaleUtil.getCurrentLocale()));
 			ProcessHelper.addDateTimeFormatPatterns(uiModel);
 			return "caisses/ByEtatCaisse";
 		}else {
@@ -254,7 +259,7 @@ public class CaisseController {
 		DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date());
 		List<Caisse> caisses = Caisse.findCaissesByDateOuvertureBetween(period.getBegin(), period.getEnd()).getResultList();
 		if (caisses.isEmpty()) {
-			uiModel.addAttribute("apMessage", "aucun etat trouve  !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_report_not_found", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 			uiModel.addAttribute("caisses", caisses);
@@ -273,7 +278,7 @@ public class CaisseController {
 			uiModel.addAttribute("caisse", caisse);
 			return "bordereauCaissePdfDocView";
 		}else {
-			uiModel.addAttribute("apMessage", "un problem est survenu pendant l'operation veuillez contacter ADORSYS  ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("cash_operation_error", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 
@@ -287,7 +292,7 @@ public class CaisseController {
 		pharmaUser.setFirstName("ALL");
 		pharmaUser.setLastName("USERS");
 		pharmaUser.setId(new Long(0));
-		Collection<PharmaUser> pharmaUsers =	new ArrayList<PharmaUser>();
+		Collection<PharmaUser> pharmaUsers = new ArrayList<PharmaUser>();
 		pharmaUsers.add(pharmaUser);
 		pharmaUsers.addAll(PharmaUser.findAllPharmaUsers());
 		return pharmaUsers;

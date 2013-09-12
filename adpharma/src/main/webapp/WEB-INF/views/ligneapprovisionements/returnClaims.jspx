@@ -13,6 +13,18 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <spring:url value="/ligneapprovisionements/reclamation/retour" var="returnClaims_url" />
     
     
+    <!-- Internationalization -->
+    <spring:message code="reclamations_title" var="reclamations_title" htmlEscape="false" />
+    <spring:message code="reclamations_panel_list" var="reclamations_panel_list" htmlEscape="false" />
+    <spring:message code="column_purchase_price" var="column_purchase_price" />
+    <spring:message code="button_cancel" var="button_cancel" />
+    <spring:message code="button_save" var="button_save" />
+    <spring:message code="column_qty" var="column_qty" htmlEscape="false" />
+    <spring:message code="column_qty_reclam" var="column_qty_reclam" htmlEscape="false" />
+    <spring:message code="column_qty_return" var="column_qty_return" htmlEscape="false" />
+    <spring:message code="reclamations_panel_add" var="reclamations_panel_add" htmlEscape="false" />
+    
+    
     <style type="text/css">
          .title{text-align: center; font-size: 25px; color:#fff; height:50px; font-weight: bold; background:#ccc; text-align:center; vertical-align:middle; text-shadow: 2px 2px 2px #333; margin: 0 0 10px 0;}
          #edit_form { border: none;}
@@ -31,7 +43,6 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	    $(function(){
 	 	   document.getElementById("cipm").focus();
 	    });
-       
     </SCRIPT>
     
     <SCRIPT type="text/javascript">
@@ -52,25 +63,23 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
        					}
        				});
        	       }
-           
-    
     </SCRIPT>
     
    
-<util:panel title="Entree des reclamations fournisseur" id="return_reclam_id">
-   <div class="title">ENTREE DES RECLAMATIONS FOURNISSEUR</div>
+<util:panel title="${reclamations_title}" id="return_reclam_id">
+   <div class="title" style="text-transform: uppercase;">${reclamations_title}</div>
    <form:form commandName="reclamation" method="POST" action="${returnClaims_url}">
     <div style="margin: -15px 0 0 0;">
-      <util:panel title="Lignes de reclamations" id="reclam_lines">
+      <util:panel title="${reclamations_panel_add}" id="reclam_lines">
          <table id="edit_form" style="width: 100%;">
                <tr>
                    <th>Cipm</th>
                    <th>Cip</th>
                    <th>Designation</th>
-                   <th>P.A. Unitaire</th>
-                   <th>Qte lot</th>
-                   <th>Qte reclamee</th>
-                   <th>Qte retour</th>
+                   <th>${column_purchase_price}</th>
+                   <th>${column_qty}</th>
+                   <th>${column_qty_reclam}</th>
+                   <th>${column_qty_return}</th>
                    <th>Action</th>
                </tr>
                <tr>
@@ -82,8 +91,8 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
                    <td> <form:input path="reclamQuantity" class="inputText" cssClass="qties" disabled="true" id="reclam" /> </td>
                    <td> <form:input path="returnQuantity" class="inputText" cssClass="qties" id="retour"  /> </td>
                    <td colspan="2"> 
-                       <input type="submit" value="Retourner" class="submits" /> 
-                       <input type="reset" value="Annuler" class="submits" /> 
+                       <input type="submit" value="${button_save}" class="submits" /> 
+                       <input type="reset" value="${button_cancel}" class="submits" /> 
                    </td>
                </tr>
           </table> 
@@ -91,15 +100,15 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
       </div>        
    </form:form>
    
-   <util:panel title="Liste des entrees de reclamations" id="in_reclam">
+   <util:panel title="${reclamations_panel_list}" id="in_reclam">
    <table id="edit_form1" style="width: 100%;">
                <tr>
                    <th>Cipm</th>
                    <th>Cip</th>
                    <th>Designation</th>
-                   <th>P.A. Unitaire</th>
-                   <th>Qte lot</th>
-                   <th>Qte reclamee</th>
+                   <th>${column_purchase_price}</th>
+                   <th>${column_qty}</th>
+                   <th>${column_qty_reclam}</th>
                </tr>
                <tr>
                     <td> <c:out value="${ligneRetourne.cipMaison}" /> </td>

@@ -113,16 +113,16 @@ function scanTouche(event) {
 	var codeDecimal = codeTouche(event);
 	var car = String.fromCharCode(codeDecimal);
 	var autorisation = reCarValides.test(car) || reCarSpeciaux.test(car);
-
 	return autorisation;
 }
+
+
 function scanToucheminus(event) {
 	var reCarValides = /\d/;
 	var reCarSpeciaux = /[\x00\x08\x0D\x2D]/;
 	var codeDecimal = codeTouche(event);
 	var car = String.fromCharCode(codeDecimal);
 	var autorisation = reCarValides.test(car) || reCarSpeciaux.test(car);
-
 	return autorisation;
 }
 

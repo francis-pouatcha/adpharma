@@ -8,6 +8,7 @@
 	style=" margin: 10px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
        <!-- liste of link to use on this page  -->
        <spring:url value="/saleprocess/${itemId}/edit"  var="edit_url" />
        <spring:url value="/saleprocess/print/${commandeclient.factureId}.pdf"  var="print_inv_url" />
@@ -18,15 +19,35 @@
        <spring:url  value="/commandeclients/restorerCmd/${itemId}"  var="restore_cmd_url" />
        <spring:url  value="/commandeclients/restorerCmdByKey/${itemId}"  var="restore_cmdByKey_url" />
        <spring:url value="/saleprocess/newPublicCmd" var="vente_public_url"/>
-       
        <spring:url  value="/commandeclients/convertirEnVentePublic/${itemId}"  var="conv_public_url" />
        <spring:url value="/commandeclients/convertirEnVenteCredit/${itemId}" var="conv_credit_url" />
-       
        <spring:url value="/resources/images/sendmail.png"  var="mail" />
        <spring:url value="/resources/images/print.png"  var="print" />
        <spring:url value="/resources/images/cloturer.png"  var="close" />
        <spring:url value="/resources/images/modifier.png"  var="modifier" />
        <c:set value="CLOS" var="etat"/>
+       
+       
+       <!-- Internationalization -->
+       <spring:message code="saleprocess_button_create_sale" var="saleprocess_button_create_sale" />
+       <spring:message code="saleprocess_button_create_sale_title" var="saleprocess_button_create_sale_title" />
+       <spring:message code="saleprocess_button_convert_publicsale" var="saleprocess_button_convert_publicsale" />
+       <spring:message code="saleprocess_button_convert_creditsale" var="saleprocess_button_convert_creditsale"/>
+       <spring:message code="saleprocess_close_sale" var="saleprocess_close_sale" />
+       <spring:message code="saleprocess_button_update" var="saleprocess_button_update" />
+       <spring:message code="saleprocess_button_update_title" var="saleprocess_button_update_title" />
+       <spring:message code="saleprocess_button_print_bill" var="saleprocess_button_print_bill" />
+       <spring:message code="saleprocess_button_print_bill_title" var="saleprocess_button_print_bill_title" />
+       <spring:message code="saleprocess_button_print_ordinance" var="saleprocess_button_print_ordinance" />
+       <spring:message code="saleprocess_cancel_sale" var="saleprocess_cancel_sale" />
+       <spring:message code="saleprocess_button_return_product" var="saleprocess_button_return_product" />
+       <spring:message code="saleprocess_button_return_product_cancel" var="saleprocess_button_return_product_cancel" />
+       <spring:message code="saleprocess_button_return_product_cancel_title" var="saleprocess_button_return_product_cancel_title" />
+       <spring:message code="saleprocess_button_restore" var="saleprocess_button_restore" />
+       <spring:message code="saleprocess_button_restore_title" var="saleprocess_button_restore_title" />
+       <spring:message code="saleprocess_button_print_asset" var="saleprocess_button_print_asset" />
+       
+       
 <script type="text/javascript">
 		function closeFact(){
 		Check = confirm("Voulez vous vraiment cloturer cette Facture? Apres la cloture il ne serra  plus possible de modifier les details. ");
@@ -95,19 +116,18 @@ $('#conv_credit').click(function(){
 </SCRIPT>
             <span>
                <a href="${ vente_public_url}" style="text-decoration: none;">
-                 <INPUT class="submits" type="button" value="Effectuer une vente" title="Effectuer une Vente au comptant" />
+                 <INPUT class="submits" type="button" value="${saleprocess_button_create_sale}" title="${saleprocess_button_create_sale_title}" />
                </a>
             </span>
-  
-             <c:if test="${commandeclient.typeCommande == 'VENTE_PROFORMAT' and not commandeclient.annuler and commandeclient.status =='CLOS'  }">
+            <c:if test="${commandeclient.typeCommande == 'VENTE_PROFORMAT' and not commandeclient.annuler and commandeclient.status =='CLOS'  }">
             <span>
-                <a href="${ conv_public_url}" style="text-decoration: none;">
-                 <INPUT class="submits" type="button" value="CONVERTIR EN VENTE AU PUBLIC" title="Convertir en vente au public" />
+                <a href="${conv_public_url}" style="text-decoration: none;">
+                 <INPUT class="submits" type="button" value="${saleprocess_button_convert_publicsale}" title="${saleprocess_button_convert_publicsale}" />
                </a>
             </span>
              <span>
                 <a href="#" style="text-decoration: none;" id="conv_credit">
-                 <INPUT class="submits" type="button" value="CONVERTIR EN VENTE A CREDIT" title="Convertir en vente a credit" />
+                 <INPUT class="submits" type="button" value="${saleprocess_button_convert_creditsale}" title="${saleprocess_button_convert_creditsale}" />
                </a>
             </span>
   
@@ -116,45 +136,61 @@ $('#conv_credit').click(function(){
    <c:when test="${commandeclient.status != etat }">
        <span>
              <a href="${ edit_url}" style="text-decoration: none;">
-                  <INPUT class="submits" type="button" value="Modifier le  Detail" title="Imprimer Facture de Caisse" />
+                  <INPUT class="submits" type="button" value="${saleprocess_button_update}" title="${saleprocess_button_update_title}" />
              </a>
        </span>
        <span>
               <a href="${ enr_cmd_url}" style="text-decoration: none;" onclick="return closeFact();">
-                  <INPUT class="submits"  type="button" value="Cloturer la vente" title="cloturer la commande" />
+                  <INPUT class="submits"  type="button" value="${saleprocess_close_sale}" title="${saleprocess_close_sale}" />
              </a>
      </span>
    </c:when>
    <c:otherwise>
-     <!-- <c:if test="${not empty commandeclient.factureId }"> --> 
-      <c:if test="${commandeclient.encaisse }">
         <span>
             <a href="${ print_inv_url}" id="butfac" style="text-decoration: none;">
-                <INPUT class="submits" type="button" value="Imprimer La Facture" title="Imprimer Facture de Caisse" />
+                <INPUT class="submits" type="button" value="${saleprocess_button_print_bill}" title="${saleprocess_button_print_bill_title}" />
             </a>
        </span>
-       </c:if>
 	   <c:if test="${not empty ordNumber }">
-	   <span ><a href="${ ord_print_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer l'Ordonnancier" title="Imprimer Facture proforma" /></a></span>
+	     <span>
+	        <a href="${ ord_print_url}" style="text-decoration: none;">
+	        <INPUT class="submits" type="button" value="${saleprocess_button_print_ordinance}" title="${saleprocess_button_print_ordinance}" /></a>
+	     </span>
 	   </c:if>
     </c:otherwise>
 </c:choose>
    <c:if test="${commandeclient.status eq 'CLOS' and not commandeclient.encaisse and not commandeclient.annuler }">
 	     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASHIER,ROLE_VENDEUR">
-	         <span ><a href="${ anuller_cmd_url}" style="text-decoration: none;" onclick="return annCmd();"><INPUT class="submits" style="color: red ; " type="button" value="Anuller " title="Anuller la Commande" /></a></span>
+	         <span>
+	             <a href="${ anuller_cmd_url}" style="text-decoration: none;" onclick="return annCmd();">
+	             <INPUT class="submits" style="color: red ;" type="button" value="${saleprocess_cancel_sale}" title="${saleprocess_cancel_sale}" />
+	             </a>
+	         </span>
 	     </security:authorize>
     
 	     <security:authorize ifAnyGranted="ROLE_OPEN_SALE_SESSION">
-	     <span ><a href="#" onclick="anullerByKey();" style="text-decoration: none;"  ><INPUT class="submits"  style="color: red ; " type="button" value="Anuller La vente  " title="Anuller la Commande" /></a></span>
+	       <span>
+	          <a href="#" onclick="anullerByKey();" style="text-decoration: none;">
+	          <INPUT class="submits"  style="color: red ; " type="button" value="${saleprocess_cancel_sale}" title="${saleprocess_cancel_sale}" />
+	          </a>
+	       </span>
 	     </security:authorize>
    </c:if> 
    
    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR">
-	    <c:if test="${ commandeclient.encaisse and not commandeclient.annuler   }">
+	    <c:if test="${commandeclient.encaisse and not commandeclient.annuler}">
 	        <security:authorize ifAnyGranted="ROLE_RETOUR_PRODUIT ,ROLE_SITE_MANAGER">
-	         <span ><a id="butRetout" href="${ anuller_cmd_url}" style="text-decoration: none;"><INPUT class="submits"  type="button" value="Retourner Des Produits " title="retourner Des Produits" /></a></span>
+	         <span>
+	             <a id="butRetout" href="${anuller_cmd_url}" style="text-decoration: none;">
+	             <INPUT class="submits"  type="button" value="${saleprocess_button_return_product}" title="${saleprocess_button_return_product}" />
+	             </a>
+	         </span>
 	        </security:authorize>
-	        <span ><a id="butAnnulerRet"  href="${ anuller_cmd_url}" style="text-decoration: none; display: none; "><INPUT class="submits" style="color: red;" type="button" value="Terminer le retour " title="annuler " /></a></span>
+	        <span>
+	             <a id="butAnnulerRet"  href="${anuller_cmd_url}" style="text-decoration: none; display: none; ">
+	               <INPUT class="submits" style="color: red;" type="button" value="${saleprocess_button_return_product_cancel}" title="${saleprocess_button_return_product_cancel_title}" />
+	             </a>
+	        </span>
 	    </c:if> 
    </security:authorize>
    
@@ -163,21 +199,28 @@ $('#conv_credit').click(function(){
 		    <c:set value="true" var="isVente"/>
 	    </security:authorize>
 	    <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
-	        <span ><a href="${ restore_cmd_url}" style="text-decoration: none;" onclick="return restoreCmd();"><INPUT class="submits" type="button" value="Restore" title="Restorer La Commande" /></a></span>
+	        <span>
+	             <a href="${ restore_cmd_url}" style="text-decoration: none;" onclick="return restoreCmd();">
+	               <INPUT class="submits" type="button" value="${saleprocess_button_restore}" title="${saleprocess_button_restore_title}" />
+	             </a>
+	        </span>
 	    </security:authorize>
    </c:if>
    
    <c:if test="${not empty bonClient}">
           <c:if test="${not bonClient.imprimer}">
               <spring:url value="/avoirclients/print/${bonClient.id}.pdf" var="avoir_url"/>
-              <span><a href="${ avoir_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Imprimer Le bon" title="visualiser l'avoir" /></a></span>
-   			</c:if>
-     
-       </c:if> 
-      <c:if test="${not empty factureNumber}">
+              <span>
+                  <a href="${ avoir_url}" style="text-decoration: none;">
+                    <INPUT class="submits" type="button" value="${saleprocess_button_print_asset}" title="${saleprocess_button_print_asset}" />
+                  </a>
+              </span>
+   	      </c:if>
+   </c:if> 
+   <c:if test="${not empty factureNumber}">
         <span style="margin-left: 50px; font-weight: bold;font-size: 30px; color: green;">${factureNumber}  </span>  			
      
-       </c:if>     
+   </c:if>     
 
    <c:if test="${not empty apMessage}">
 			<center>
@@ -188,7 +231,6 @@ $('#conv_credit').click(function(){
        <div id="creditcmd" style="display: none;">
               <p>Test</p>   
        </div>
-   
 </span>
 
 

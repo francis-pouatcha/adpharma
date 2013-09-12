@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -25,10 +26,12 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.ClaimsService;
+import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -47,6 +50,9 @@ public class LigneApprovisionementController {
 	
 	@Autowired
 	private ClaimsService reclamationService;
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public String update(@Valid() LigneApprovisionement ligneApprovisionement, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -267,7 +273,7 @@ public class LigneApprovisionementController {
 
 		List<LigneApprovisionement> search = LigneApprovisionement.search(null,null,designation, cipMaison,rayon, null ,null, filiale, minDateSaisie, maxDateSaisie,null,null).getResultList();
 		if (search.isEmpty()) {
-			uiModel.addAttribute("apMessage",  "Aucun prosuits trouve !");
+			uiModel.addAttribute("apMessage",  messageSource.getMessage("sale_find_product", null, LocaleUtil.getCurrentLocale()));
 
 		}else {
 			uiModel.addAttribute("results", search );
@@ -340,9 +346,9 @@ public class LigneApprovisionementController {
 						approvisionement.merge();
 						approvisionement.flush();
 					}
-					uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+					uiModel.addAttribute("message", messageSource.getMessage("sale_modify_sale_price", null, LocaleUtil.getCurrentLocale()));
 				} catch (Exception e) {
-					uiModel.addAttribute("message", "vous n'avez pas entrer un bon cipm");
+					uiModel.addAttribute("message", messageSource.getMessage("sale_enter_cipm_warning", null, LocaleUtil.getCurrentLocale())); 
 				}
         		
         	}else{
@@ -351,7 +357,7 @@ public class LigneApprovisionementController {
             	approvisionement.setPrixVenteUnitaire(changeDatePrice.getNouveauPrix());
             	approvisionement.merge();
             	approvisionement.flush();
-            	uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+            	uiModel.addAttribute("message", messageSource.getMessage("sale_modify_sale_price", null, LocaleUtil.getCurrentLocale()));
         	}
         	
         }
@@ -367,9 +373,9 @@ public class LigneApprovisionementController {
 						approvisionement.merge();
 						approvisionement.flush();
 					}
-					uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+					uiModel.addAttribute("message", messageSource.getMessage("sale_modify_sale_price", null, LocaleUtil.getCurrentLocale())); 
 				} catch (Exception e) {
-					uiModel.addAttribute("message", "vous n'avez pas entrer un bon cipm");
+					uiModel.addAttribute("message", messageSource.getMessage("sale_enter_cipm_warning", null, LocaleUtil.getCurrentLocale()));
 				}
         		
         	}else{
@@ -378,7 +384,7 @@ public class LigneApprovisionementController {
         		approvisionement.setDatePeremtion(changeDatePrice.getNouvelDatePeremption());
             	approvisionement.merge();
             	approvisionement.flush();
-            	uiModel.addAttribute("message", "Prix et/ou la date de peremtion a ete modifie avec succes");
+            	uiModel.addAttribute("message", messageSource.getMessage("sale_modify_sale_price", null, LocaleUtil.getCurrentLocale()));
         	}
         	
         	

@@ -38,7 +38,6 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 @Component("bordereauCaissePdfDocView")
-
 public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 	BigDecimal fondgbl  ;
@@ -52,6 +51,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	BigDecimal boncmdgbl  ;
 	BigDecimal boncltgbl  ;
 	BigDecimal soldegbl  ;
+
 	
 	
 	public void initGlobalAmount(){
@@ -71,6 +71,8 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
+		
 		Caisse caisse = (Caisse) model.get("caisse");
 		List<Caisse> caisses = (List<Caisse>) model.get("caisses");
 		Site site = Site.findSite(Long.valueOf(1));
@@ -85,6 +87,10 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 		}
 		
+		System.out.println("Fond global: "+fondgbl);
+		System.out.println("\n");
+		System.out.println("Solde Global: "+soldegbl);
+		
 		if (caisses != null) {
 			initGlobalAmount();
 			for (Caisse caisse2 : caisses) {
@@ -96,7 +102,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	}
 
 	
-	public void addTexteToDocument(Document document,Caisse caisse,Site site){
+	public final void addTexteToDocument(Document document,Caisse caisse,Site site){
 
 		Font headerStyle = new Font(Font.COURIER,7);
 		headerStyle.setStyle("bold");
@@ -655,6 +661,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		headerStyle.setColor(Color.WHITE);
 
 		PdfPCell font = new PdfPCell(cellStyle);
+		
 		font.setPhrase(new Phrase(new Chunk("Fond", headerStyle)));
 		font.setBackgroundColor(Color.gray);
 		font.setPaddingBottom(5);
@@ -738,7 +745,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		tablegbl.addCell(fontc );
 
 
-		PdfPCell encv = new PdfPCell(cellStyle);
+		PdfPCell encv = new PdfPCell(cellStyle);	
 		encv.setPhrase(new Phrase(new Chunk(""+totalencgbl.intValue(), headerStyles)));
 		encv.setPaddingBottom(5);
 
@@ -811,6 +818,25 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 			e.printStackTrace();
 		}
 		
+		resetVariables();
+		
+	}
+	
+	
+	
+// Reinitialisation des variables du component 
+	public void resetVariables(){
+		fondgbl= BigDecimal.ZERO;
+		totalencgbl = BigDecimal.ZERO ;
+		remglbs = BigDecimal.ZERO ;
+		cashgbl = BigDecimal.ZERO ;
+		cashdgbl = BigDecimal.ZERO ;
+		cartecreditgbl = BigDecimal.ZERO ;
+		chequegbl = BigDecimal.ZERO ;
+		retraitgbl = BigDecimal.ZERO ;
+		boncmdgbl = BigDecimal.ZERO ;
+		boncltgbl = BigDecimal.ZERO ;
+		soldegbl = BigDecimal.ZERO ;
 	}
 
 	@Override

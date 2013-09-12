@@ -11,6 +11,21 @@
     
     <spring:url value="/produits/createByAjax"  var="create_prd_url" />
     <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
+    
+    <spring:message code="lignesappro_dialog_create_product" var="lignesappro_dialog_create_product" />
+    <spring:message code="lignesappro_legend_product" var="lignesappro_legend_product" />
+    <spring:message code="lignesappro_legend_location" var="lignesappro_legend_location" />
+    <spring:message code="lignesappro_legend_stock" var="lignesappro_legend_stock" />
+    <spring:message code="lignesappro_legend_appro" var="lignesappro_legend_appro" />
+    
+    
+    
+    <spring:message code="lignesappro_legend_fields_ray" var="lignesappro_legend_fields_ray" />
+    <spring:message code="lignesappro_legend_fields_filial" var="lignesappro_legend_fields_filial" />
+    <spring:message code="lignesappro_legend_fields_margin" var="lignesappro_legend_fields_margin" />
+    
+    
+    
 <script type="text/javascript">
 function clearCreateForm(){
 	$("#_designation_id").val("");
@@ -30,9 +45,9 @@ function clearCreateForm(){
 			width: 1000,
 			resizable:true,
 			draggable :true,
-             hide:'slide',
-             show:'slide',
-             position:'center',
+            hide:'slide',
+            show:'slide',
+            position:'center',
 		});
 		
 		$('#createprd').click(function(){
@@ -74,10 +89,8 @@ function clearCreateForm(){
 			  			});
 			}else{
 				
-				alert("Veulliez Saisir la designation du produit !  ");
+				alert("Veuillez Saisir la designation du produit !  ");
 			}
-			
-			
 			return false;
 		});
 		
@@ -85,42 +98,43 @@ function clearCreateForm(){
 	})
 	
 	</script>
-   <div id="create_product"  style="display: none;" title="Creer un nouveau Produit ">
+   <div id="create_product"  style="display: none;" title="${lignesappro_dialog_create_product}">
+         <spring:message code="button_cancel" var="button_cancel" />
          <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
-	    <form:create  formId="createPrd" diseableSubmit="true" otherBut="Annuler" id="fc_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits/create/${cip}" render="${empty dependencies}" z="user-managed">
+	    <form:create  formId="createPrd" diseableSubmit="true" otherBut="${button_cancel}" id="fc_org_adorsys_adpharma_domain_Produit" modelAttribute="produit" path="/produits/create/${cip}" render="${empty dependencies}" z="user-managed">
         <table>
             <tr>
                 <td valign="top">
-               <LEGEND> Infos Produits</LEGEND>              
+               <LEGEND> ${lignesappro_legend_product}</LEGEND>              
                     <field:input field="designation"  style="width: 93%;" id="c_org_adorsys_adpharma_domain_Produit_designation" required="true" z="QU7r5zqGZMyMej7Tr9SkqPafDG8="/>
                     <field:input field="cip"  id="c_org_adorsys_adpharma_domain_Produit_cip"  z="user-managed"/>
                     <field:input field="fabricant" id="c_org_adorsys_adpharma_domain_Produit_fabricant"  z="user-managed"/>
                     <field:checkbox field="venteAutorise" id="c_org_adorsys_adpharma_domain_Produit_venteAutorise" z="Yj5kVmbAmloE6eehxzX+ZPXHlLg="/>
-                  <LEGEND> Infos Emplacement</LEGEND> 
+                  <LEGEND> ${lignesappro_legend_location}</LEGEND> 
                    <div>
-                      <label   for="_rayon">Rayon : </label>
+                        <label for="_rayon"> ${lignesappro_legend_fields_ray} : </label>
                         <springform:select  id="rayon" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="rayon"  items="${rayons}"/>                 
                    </div> 
                    <BR /> 
                    <div>
-                      <label   for="_filiale">Filiale : </label>
+                      <label for="_filiale">${lignesappro_legend_fields_filial} : </label>
                         <springform:select  id="filiale" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="filiale"  items="${filiales}"/>                 
                    </div> 
                    <BR />  
                        </td>
                 <td valign="top">
-               <LEGEND> Infos Stock</LEGEND>   
+               <LEGEND> ${lignesappro_legend_stock} </LEGEND>   
                     <field:input field="seuilComande" label="stock alert" id="c_org_adorsys_adpharma_domain_Produit_seuilComande" validationMessageCode="field_invalid_integer" z="4f/ES3d9TyL7w8Br1piLgLR2kI0="/>
                     <field:input field="plafondStock" id="c_org_adorsys_adpharma_domain_Produit_plafondStock" validationMessageCode="field_invalid_integer" z="DPR1QqMyvQB+RqYN+gwAtskwqYU="/>
-                    <LEGEND> Infos appro / Vente</LEGEND> 
+                    <LEGEND> ${lignesappro_legend_appro} </LEGEND> 
                     <field:input field="tauxRemiseMax" label="Remise Max (%)" id="c_org_adorsys_adpharma_domain_Produit_tauxRemiseMax" validationMessageCode="field_invalid_number" z="9gA0y638OaDg4jn3XcAi8y146xw="/>
                     <div>
-                      <label for="tvaProduit">TVA : </label>
+                      <label for="tvaProduit"> T.V.A : </label>
                         <springform:select  id="tvaProduit" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tvaProduit"  items="${tvas}"/>                 
                    </div> 
                    <BR /> 
                     <div>
-                      <label for="_tauxDeMarge">Marge (%) : </label>
+                      <label for="_tauxDeMarge"> ${lignesappro_legend_fields_margin} (%) : </label>
                         <springform:select  id="tauxDeMarge" cssStyle=" width: 212px; height: 25px;" itemValue="id" path="tauxDeMarge"  items="${tauxmarges}"/>                 
                    </div> 
                    <BR />                
@@ -129,8 +143,6 @@ function clearCreateForm(){
         </table>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Produit" render="${not empty dependencies}" z="n4/IjG6lu5Bj/dySKMFveULZa44="/>
-	    	
-		
 	
  </div>      
 </span>

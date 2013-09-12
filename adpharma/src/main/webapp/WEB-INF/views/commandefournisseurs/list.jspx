@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:list1 id="pl_org_adorsys_adpharma_domain_CommandeFournisseur" items="${commandefournisseurs}" placeholder="Rechercher par fournisseur" search="true" url="/commandefournisseurs/searchCmd" z="user-managed">
+    
+    <spring:message code="list_search_providername" var="list_search_providername" />
+    <spring:message code="commandefournisseur_list_pane_title" var="commandefournisseur_list_pane_title" />
+    <page:list1 label="${commandefournisseur_list_pane_title}"  id="pl_org_adorsys_adpharma_domain_CommandeFournisseur" items="${commandefournisseurs}" placeholder="${list_search_providername}" search="true" url="/commandefournisseurs/searchCmd" z="user-managed">
         <table:table create="false" data="${commandefournisseurs}" delete="false" id="l_org_adorsys_adpharma_domain_CommandeFournisseur" path="/commandefournisseurs" z="user-managed">
             <table:column date="true" dateTimePattern="${commandeFournisseur_datecreation_date_format}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateCreation" label="Date Edition" property="dateCreation" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" maxLength="-1" property="fournisseur" z="user-managed"/>

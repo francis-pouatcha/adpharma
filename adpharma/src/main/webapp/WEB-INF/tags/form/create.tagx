@@ -80,9 +80,6 @@
 			<!--  display the content in a table if bodyExt is avalable   -->
 			<c:choose>
 				<c:when test="${not empty bodyExt}">
-
-
-
 					<table class="tblog" >
 						<tr>
 							<td class="tbcreate" valign="top"><form:form id="${formId }" action="${fn:escapeXml(form_url)}"

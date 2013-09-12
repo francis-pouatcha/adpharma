@@ -1,34 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"  	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
- xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"  	
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+ xmlns:c="http://java.sun.com/jsp/jstl/core" 
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+ xmlns:spring="http://www.springframework.org/tags" 
+ xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+ xmlns:jsp="http://java.sun.com/JSP/Page" 
+ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    <spring:message code="statistics_period_begin" var="statistics_period_begin" />
+    <spring:message code="statistics_period_end" var="statistics_period_end" />
+    <spring:message code="statistics_period" var="statistics_period" />
+    <spring:message code="statistics_sales_products" var="statistics_sales_products" />
+    <spring:message code="button_find_product" var="button_find_product" />
+    <spring:message code="column_remise" var="column_remise" />
+    <spring:message code="column_filiale" var="column_filiale" />
+    <spring:message code="column_ray" var="column_ray" />
+    <spring:message code="column_cip_qty" var="column_cip_qty" />
+    <spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+    <spring:message code="column_total_purchase" var="column_total_purchase" />
+    <spring:message code="column_total_sale" var="column_total_sale" />
+    <spring:message code="column_sale_qty" var="column_sale_qty" />
+    
+    
    <table class="tblog" border="0">
     	<tr>
-    		
     		<td align="left" valign="top" width="20%" class="tblog">
     		<fieldset>
-    		<legend align="center"> Saisir La Periode</legend>
+    		<legend align="center"> ${statistics_period}</legend>
     		<form:custumcreate label="Periode" id="fc_org_adorsys_adpharma_domain_TauxMarge" modelAttribute="statistic" path="/statistics/etatvente" render="${empty dependencies}" z="/v4Q5hnmI4Qeh080AqNpaqvrYEE=">
-                  <field:input buttonId="findcip" style="width: 70%;"  buttonLabel="..." titleMessage="Cliquer le button ci-contre pour rechercher le cip !" disableFormBinding="true" field="cip" label="CIP"  id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="Du" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="AU" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-    </form:custumcreate>
+                  <field:input buttonId="findcip" style="width: 70%;"  buttonLabel="OK" titleMessage="${button_find_product}" disableFormBinding="true" field="cip" label="CIP"  id="f_org_adorsys_adpharma_domain_MouvementStock_cipM" required="false" z="user-managed"/>
+                  <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="${statistics_period_begin}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+                  <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="${statistics_period_end}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+           </form:custumcreate>
     		</fieldset>
     		</td>
     		<td align="center" width="80%" valign="top" class="tblog">
     		<fieldset>
-    		<legend> ETAT DES VENTES PAR PRODUIT</legend>
+    		<legend> ${statistics_sales_products}</legend>
     <DIV style="height: 500px; overflow-y: scroll;">
     
          <table>
 				<tr style="height: 30px;">
-				<th style="text-align: center;">CIP</th>
+				    <th style="text-align: center;">CIP</th>
 					<th style="width: 400px; text-align: center;">DESIGNATION</th>
-					<th style="text-align: center;">QTE VENDUE</th>
-									<th style="text-align: center;">TOTAL ACHAT</th>
-									<th style="text-align: center;">TOTAL VENTE</th>
-					<th style="text-align: center;">REMISE </th>
+					<th style="text-align: center; text-transform: uppercase;">${column_sale_qty}</th>
+					<th style="text-align: center; text-transform: uppercase;">${column_total_purchase}</th>
+					<th style="text-align: center; text-transform: uppercase;">${column_total_sale}</th>
+					<th style="text-align: center; text-transform: uppercase;"> ${column_remise} </th>
 				</tr>
 
 				<c:forEach items="${result }" var="ligne">
@@ -57,32 +79,26 @@
     	</tr>
     	
    </table>
-   <div id="findproduit" style="display: none;" title="recherche un cip ">
-		
-		
-		
+   <div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input class="searchInput" style="width: 60%;" type="text" name="designation"/>
+			</p>
 		</form>
-		
-		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
- <div style="height:400px; overflow: auto; "  >
-		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
-		    	<tr>
-		    		<th style="text-align: center;">CIP</th>
-		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		<th style="text-align: center;">QTE CIP</th>
-		    	   <th style="text-align: center;" >RAYON</th>
-		    	   <th style="text-align: center;" >FILIALE</th>
-		    
-		    	</tr>
-		  </table>
-	</div>	 
-    <jsp:include page="ajaxSearchProductForm.jspx" />
+		 <center>	<IMG alt="loading ..." src="${loadimage}" class="loadimage" style="display: none;" /></center>
+	 <div style="height:400px; overflow: auto; "  >
+			<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
+			    	<tr>
+			    		<th style="text-align: center;">CIP</th>
+			    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
+			    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+			    	   <th style="text-align: center; text-transform: uppercase;" >${column_ray}</th>
+			    	   <th style="text-align: center; text-transform: uppercase;" >${column_filiale}</th>
+			    
+			    	</tr>
+			  </table>
+		</div>	 
+    <jsp:include page="ajaxSearchProductForm.jspx" flush="true" />
 </div>  
   
       

@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div  xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div  xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"  
+xmlns:c="http://java.sun.com/jsp/jstl/core"  
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:message code="inventory_stock_monitoring_report" var="inventory_stock_monitoring_report" />
+    <spring:message code="inventory_begin_title" var="inventory_begin_title" />
+    <spring:message code="inventory_end_title" var="inventory_end_title" />
+    
+    
     <util:load-print />
-    <form:custumcreate id="fc_org_adorsys_adpharma_domain_Inventaire" modelAttribute="inventaire" path="/inventaireProcess/ficheSuivieStock" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
-        <table class="tblog">
+ <form:custumcreate id="fc_org_adorsys_adpharma_domain_Inventaire" label="${inventory_stock_monitoring_report}" modelAttribute="inventaire" path="/inventaireProcess/ficheSuivieStock" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
+      <table class="tblog">
         <tr>
-          <td class="tbcreate">
-           <field:input field="designation" label="Designation" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
-        <field:input field="beginBy" label="Debut" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy"  z="user-managed"/>
-        <field:input field="endBy" label="Fin" id="c_org_adorsys_adpharma_domain_Inventaire_endBy"   z="user-managed"/>
-          
-          </td>
          <td class="tbcreate">
-          <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" path="" itemValue="id" items="${rayons}"  z="user-managed"/>
+           <field:input field="designation" label="Designation" id="c_org_adorsys_adpharma_domain_Inventaire_designation"  z="user-managed"/>
+           <field:input field="beginBy" id="c_org_adorsys_adpharma_domain_Inventaire_beginBy" titleMessage="${inventory_begin_title}" z="user-managed"/>
+           <field:input field="endBy"  id="c_org_adorsys_adpharma_domain_Inventaire_endBy" titleMessage="${inventory_end_title}"  z="user-managed"/>
+         </td>
+         <td class="tbcreate">
+           <field:select field="rayon" id="c_org_adorsys_adpharma_domain_Inventaire_rayon" path="" itemValue="id" items="${rayons}"  z="user-managed"/>
            <field:select field="filiale" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" path="" itemValue="id" items="${filiales}"  z="user-managed"/>
            <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" render="false" label="Date Rupture Min" field="dateRupture"  id="f_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-         <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" label="famille Prd" path="" itemValue="id" items="${familleProduits}"  z="user-managed"/>
-           <field:select field="sousFamilleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_filiale" path="" label="sous Famille Prd" itemValue="id" items="${sousFamilleProduits}"  z="user-managed"/>
-       
-          
+           <field:select field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" path="" itemValue="id" items="${familleProduits}"  z="user-managed"/>
+           <field:select field="sousFamilleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" path="" itemValue="id" items="${sousFamilleProduits}"  z="user-managed"/>
           </td>
-          
           <td class="tbcreate">
-          
-          <field:checkbox field="inventoryBycip" label="Par CIP?" id="c_org_adorsys_adpharma_domain_Inventaire_cip" z="user-managed"/>
-           <field:checkbox field="inventoryBycipm" label="Par CIPM ?" id="c_org_adorsys_adpharma_domain_Inventaire_cipm" z="user-managed"/>
-              <field:checkbox field="pAchat" label="Afficher le Pachat?" id="c_org_adorsys_adpharma_domain_Inventaire_pAchat" z="user-managed"/>
-          <field:checkbox field="pVente" label="Afficher Le Pvente" id="c_org_adorsys_adpharma_domain_Inventaire_pVente" z="user-managed"/>
-  
-          
+           <field:checkbox field="inventoryBycip" id="c_org_adorsys_adpharma_domain_Inventaire_inventoryBycip" z="user-managed"/>
+           <field:checkbox field="inventoryBycipm" id="c_org_adorsys_adpharma_domain_Inventaire_inventoryBycipm" z="user-managed"/>
+           <field:checkbox field="pAchat" id="c_org_adorsys_adpharma_domain_Inventaire_pAchat" z="user-managed"/>
+           <field:checkbox field="pVente" id="c_org_adorsys_adpharma_domain_Inventaire_pVente" z="user-managed"/>
           </td>
-        
         </tr>
-        
-        </table>
-                </form:custumcreate>
+   </table>
+</form:custumcreate>
               
  
       

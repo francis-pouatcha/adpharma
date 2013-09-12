@@ -18,9 +18,10 @@
             <div id="tab1">
                 <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" render="false" z="user-managed"/>
                 <field:input field="userNumber" id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" render="false" required="true" z="user-managed"/>
+                
                 <field:input field="userName" id="c_org_adorsys_adpharma_domain_PharmaUser_userName" required="true" z="dQ+MBxRIuLFpZB+9ZECHApYXwQM="/>
-                <field:input field="firstName" id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" required="true" z="pHoH+Xz8CIlhYYYzlJAU3gcF2d8="/>
                 <field:input field="lastName" id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" required="true" z="PuCOzoneB1lbeFE4VsN+0QScFjA="/>
+                <field:input field="firstName" id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" required="true" z="pHoH+Xz8CIlhYYYzlJAU3gcF2d8="/>
                 <field:input field="fullName" id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" render="false" z="user-managed"/>
                 <field:select field="gender" id="c_org_adorsys_adpharma_domain_PharmaUser_gender" items="${genres}" path="genres" z="5/L+JTepv8NohtXCtNjKjCDUsQA="/>
                 <field:input field="saleKey" id="c_org_adorsys_adpharma_domain_PharmaUser_saleKey" render="false" z="user-managed"/>

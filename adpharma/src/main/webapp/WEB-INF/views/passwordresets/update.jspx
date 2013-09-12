@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
-	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:spring="http://www.springframework.org/tags" 
 	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    <!-- Internationalization -->
+    <spring:message code="users_resetpassword_user" var="users_resetpassword_user" />
+    <spring:message code="users_resetpassword_current" var="users_resetpassword_current" />
+    <spring:message code="users_resetpassword_new" var="users_resetpassword_new" />
+    <spring:message code="users_resetpassword_confirmnew" var="users_resetpassword_confirmnew" />
+    
+    
+    
     <form:update id="fu_org_fakoship_fffako_domain_ctl_PasswordReset" modelAttribute="passwordReset" path="/passwordresets" z="user-managed" versionField="Version" label="Password">
-    	<field:display field="userName" object="${passwordReset}" label="Nom D'utilisateur" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_userName"  z="user-managed" />
-        <field:input field="currentPassword" label="Mot de Pass Actuel" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_currentPassword"  required="true" type="password" z="user-managed"/>
-    	<field:input field="newPassword" label="Nouveau mot de passe" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_newPassword"  required="true" type="password" z="user-managed"/>
-    	<field:input field="confirmNewPassword" label="Confirmer le nouveau mot de passe" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_confirmNewPassword"  required="true" type="password" z="user-managed"/>
+    	<field:display field="userName" object="${passwordReset}" label="${users_resetpassword_user}" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_userName"  z="user-managed" />
+        <field:input field="currentPassword" label="${users_resetpassword_current}" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_currentPassword"  required="true" type="password" z="user-managed"/>
+    	<field:input field="newPassword" label="${users_resetpassword_new}" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_newPassword"  required="true" type="password" z="user-managed"/>
+    	<field:input field="confirmNewPassword" label="${users_resetpassword_confirmnew}" id="c_org_fakoship_fffako_domain_ctl_PasswordReset_confirmNewPassword"  required="true" type="password" z="user-managed"/>
     </form:update>
 </div>

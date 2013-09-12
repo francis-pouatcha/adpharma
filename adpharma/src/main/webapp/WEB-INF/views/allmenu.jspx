@@ -123,8 +123,9 @@ if(Check == false){
 			
 			<spring:message code="allmenu_stockmanagement" var="stockmanagement" />
 			
+			<!-- Menu gestion de Stock -->
 				<li><a style="text-transform: capitalize;" class="headMenu"
-					href="#">${stockmanagement } </a>
+					href="#">${stockmanagement} </a>
 					<ul class="sub_menu">
 						<security:authorize
 							ifAnyGranted="ROLE_SAISIE_PRODUIT ,ROLE_SITE_MANAGER">
@@ -156,8 +157,7 @@ if(Check == false){
 									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
 									<li><a href="${ap_sortir_url}">${move_stock }</a></li>
 								</security:authorize>
-								<security:authorize
-									ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
+								<security:authorize ifAnyGranted="ROLE_SORTIE_ENTREE ,ROLE_SITE_MANAGER">
 						<spring:message code="allmenu_stockmanagement_enter_reclamations" var="enter_reclamations"/>
 									<li><a href="${ap_inreclam_url}">${enter_reclamations }</a></li>
 								</security:authorize>
@@ -221,6 +221,8 @@ if(Check == false){
 						</security:authorize>
 					</ul></li>
 			</security:authorize>
+			
+			
 			<!--  menu vente -->
 			<security:authorize
 				ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
@@ -306,21 +308,18 @@ if(Check == false){
 						<li><a href="${cai_enc_url}">${cashregister_collect } Facture</a></li>
 						<li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_DETTE">
-							<li><a href="${cai_encdette_url}">Encaisser Paiement dette</a></li>
-							</security:authorize>
+						    <spring:message code="cashregister_cashregister_collectdebt" var="cashregister_collectdebt"/>
+							<li><a href="${cai_encdette_url}">${cashregister_collectdebt}</a></li>
+						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_CONTROLLER">
-			<spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
+			                <spring:message code="cashregister_daily_cashregister_report" var="daily_cashregister_report"/>
 							<li><a href="${etat_jour_caisse_url}">${daily_cashregister_report }</a></li>
-			<spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
-							<li><a href="${etat_caisse_url}">Etat Periodique des Caisses</a></li>
+			                <spring:message code="cashregister_cashregisters_report" var="cashregisters_status"/>
+							<li><a href="${etat_caisse_url}"> ${cashregisters_status} </a></li>
 
-							<!--         				<li><a href="${groupe_enc_url}">Encaissement Groupe</a></li> -->
-
-
-			<spring:message code="cashregister_find_a_cashregister" var="find_a_cashregister"/>
+			                <spring:message code="cashregister_find_a_cashregister" var="find_a_cashregister"/>
 							<li><a href="${caisse_search_url }">${find_a_cashregister }</a></li>
 							<!-- 
-
 		        			 <li>
 		        				<a href="#">Operations des Caisses</a>
 		        					<ul>
@@ -328,7 +327,6 @@ if(Check == false){
 		        						<li><a href="${cai_op_url}">Lister par date</a></li>	
 		        					</ul>
 		        			 </li> -->
-		        			 
 			<spring:message code="cashregister_find_a_payment" var="find_a_payment"/>
 		        		  <li><a href="${cai_pays_url}">${find_a_payment }</a></li>
 			<spring:message code="cashregister_cash_collected" var="cash_collected"/>
@@ -341,9 +339,8 @@ if(Check == false){
             <spring:url value="/factures?find=BySolderNot&amp;form" var="conf_fip_url"/>
             <spring:url value="/paiements?find=ByFactureNumberEquals&amp;form" var="find_pay_url"/>
             <spring:url value="/factures?page=1&amp;size=${empty param.size ? 50 : param.size}" var="conf_list_fact_url"/>
-            
-                              <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
-          <li>  
+            <spring:url value="/factures?find=BySearch&amp;form" var="conf_fdp_url"/>
+            <li>  
 			<spring:message code="cashregister_billing_menu" var="billing_menu"/>
             <a href="#">${billing_menu }</a>
         			 	<ul class="sub_menu">
@@ -363,7 +360,7 @@ if(Check == false){
 		        			 </li>
 		        			 -->
 		        	    </ul> 
-		</li>
+		     </li>
 		        			 </security:authorize>
 		        		</ul>
                 
@@ -392,8 +389,7 @@ if(Check == false){
       <!--  menu Fournisseur-->  
          <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
             
-        
-        </security:authorize>
+         </security:authorize>
         
       <!--  menu Inventaire -->
      <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_rps_url"/>
@@ -429,7 +425,7 @@ if(Check == false){
 			<spring:message code="inventory_product_qty_monitoring_report" var="product_qty_monitoring_report"/>
 		        						<li><a href="${fiche_qte_url}">${product_qty_monitoring_report } </a></li>
 			<spring:message code="inventory_stock_monitoring_report" var="stock_monitoring_report"/>
-		        						<li><a href="${invAlpha_fiche_url}">${stock_monitoring_report } </a></li>	
+		        						<li><a href="${invAlpha_fiche_url}">${stock_monitoring_report} </a></li>	
 		        					</ul>
 		        			 </li>
 			<spring:message code="inventory_product_with_stock_out" var="product_with_stock_out"/>
@@ -472,7 +468,7 @@ if(Check == false){
 		        								<li><a href="${et_jour_vente}">${daily_sales_report} </a></li>
     	<spring:message code="reports_expireable_product_report" var="expireable_product_report"/>
 		        								<li><a id="et_perisable" href="#">${expireable_product_report } </a></li>
-		<spring:message code="reports_sortie_product_report" var="sortie_product_report"/>
+		<spring:message code="reports_sortie_products" var="sortie_product_report"/>
 		        								<li><a  href="${et_sortie_produit}">${sortie_product_report} </a></li>
     	<spring:message code="reports_stock_out_products" var="stock_out_products"/>
 		        								<li><a href="${list_rup_url}">${stock_out_products } </a></li>
@@ -500,7 +496,7 @@ if(Check == false){
         		 <spring:message code="allmenu_users_findbyname" var="users_findbyname"/>
         					<li><a href="${usr_cree_url}">${users_add }</a></li>
         					<li><a href="${usr_list_url}">${users_list }</a></li>
-        					<li><a href="${usr_name_url}">${users_findbyname }</a></li>
+        					<!--   <li><a href="${usr_name_url}">${users_findbyname }</a></li> -->
         					 <!--  menu Credential-->    
         	   </security:authorize>
           <spring:url value="/passwordresets?form" var="cre_pass_url"/>
@@ -534,7 +530,7 @@ if(Check == false){
             <spring:message code="catalogues_catalogue_menu" var="catalogue_menu"/>
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION">
 				<li>
-        		<a href="#">${catalogue_menu }</a>
+        		<a href="#">${catalogue_menu}</a>
         			 	<ul class="sub_menu">
         			 	<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_RECHERCHE_PAR_CIPM">
         					<li><a href="${search_lgap_url}">${find_product }</a></li>
@@ -561,7 +557,9 @@ if(Check == false){
 		        						</security:authorize>
 		        					    <li><a href="${aff_fsf_url}"> ${famillies_set } </a></li>
 		        						<li><a href="${prdf_des_url}"> ${find_product_by_cip }</a></li>
-		        						<li><a href="${soldes_form_url}">Configuration soldes</a></li>	
+		        						
+		        						<spring:message code="catalogues_product_balance" var="catalogues_product_balance" />
+		        						<li><a href="${soldes_form_url}"> ${catalogues_product_balance} </a></li>	
 		        					</ul>
 		        			 </li>
 		        			   <spring:url value="/familleproduits?form" var="fp_url"/>
@@ -730,10 +728,10 @@ if(Check == false){
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_VENDEUR,ROLE_OPEN_SALE_SESSION,ROLE_SUIVI_CLIENT">
     
      <li>
-     <spring:message code="client_followup_menu"  var="client_fellowup_menu"/>
-     <spring:message code="client_followup_create_client"  var="create_client"/>
-     <spring:message code="client_followup_list_client"  var="list_client"/>
-     <spring:message code="client_followup_find_client"  var="find_client"/>
+     <spring:message code="client_followup_menu"  var="client_fellowup_menu" htmlEscape="false"/>
+     <spring:message code="client_followup_create_client"  var="create_client" htmlEscape="false"/>
+     <spring:message code="client_followup_list_client"  var="list_client" htmlEscape="false"/>
+     <spring:message code="client_followup_find_client"  var="find_client" htmlEscape="false"/>
 		        				<a href="#"> ${client_fellowup_menu }</a>
 		        					<ul>
 		        						<li><a href="${clt_cree_url}">${create_client } </a></li>

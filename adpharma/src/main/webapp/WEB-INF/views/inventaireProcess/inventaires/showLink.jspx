@@ -4,11 +4,11 @@
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"  
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
-	style="margin: 10px;">
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0" style="margin: 10px;">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-     <spring:url value="/inventaireProcess/${itemId}/editInventaire"  var="edit_url" />
+    
+      <spring:url value="/inventaireProcess/${itemId}/editInventaire"  var="edit_url" />
       <spring:url value="/inventaireProcess/${itemId}/closeInventaire"  var="close_url" />
       <spring:url value="/inventaires/${itemId}/print/${inventaire.numeroInventaire}.pdf"  var="print_url" />
       <spring:url value="/resources/images/sendmail.png"  var="mail" />
@@ -19,22 +19,31 @@
           <spring:url value="/inventaireProcess/print/${itemId}/ficheDeComptage.pdf"  var="fiche_comp_url" />
       <spring:url value="/inventaireProcess/${itemId}/printCodeBar/${inventaire.numeroInventaire}.pdf" var="fiche_codebar_url" />
       
+      <!-- Internationalization -->
+      <spring:message code="inventory_process_button_modify" var="inventory_process_button_modify" />
+      <spring:message code="inventory_process_button_modify_title" var="inventory_process_button_modify_title" />
+      <spring:message code="inventory_process_button_close" var="inventory_process_button_close" />
+      <spring:message code="inventory_process_button_fiche" var="inventory_process_button_fiche" />
+      <spring:message code="inventory_process_button_fiche_title" var="inventory_process_button_fiche_title" />
+      <spring:message code="inventory_process_button_codebar" var="inventory_process_button_codebar" />
+      <spring:message code="inventory_process_button_codebar_title" var="inventory_process_button_codebar_title" />
+      
                  
       <c:if test="${inventaire.etat eq 'EN_COUR'}" >
             <span>
                  <a href="${ edit_url}" style="text-decoration: none;">
-                     <INPUT class="submits" type="button" value="MODIFIER DETAIL" title="modifier le detail de l'inventaire" />
+                     <INPUT class="submits" type="button" value="${inventory_process_button_modify}" title="${inventory_process_button_modify_title}" />
                  </a>
             </span>
             <span>
                  <a href="${ close_url}" style="text-decoration: none;">
-                     <INPUT class="submits" type="button" value="CLOTURER L'inventaire" title="cloturer l'inventaire" />
+                     <INPUT class="submits" type="button" value="${inventory_process_button_close}" title="${inventory_process_button_close}" />
                  </a>
             </span>
       </c:if>
       <span>
             <a href="${ fiche_inventaire_url}" style="text-decoration: none;">
-                 <INPUT class="submits" type="button" value="Fiche Inventaire " title="imprimer la fiche d'inventaire" />
+                 <INPUT class="submits" type="button" value="${inventory_process_button_fiche}" title="${inventory_process_button_fiche_title}" />
             </a>
       </span>
       
@@ -43,7 +52,7 @@
       <c:if test="${inventaire.etat eq 'CLOS'}">
             <span>
                  <a href="${fiche_codebar_url}" style="text-decoration: none;">
-                     <INPUT class="submits" type="button" value="Fiche codes bars" title="Imprimer la fiche de codes bars de l'inventaire" />
+                     	<INPUT class="submits" type="button" value="${inventory_process_button_codebar}" title="${inventory_process_button_codebar_title}" />
                  </a>
             </span>
       </c:if>

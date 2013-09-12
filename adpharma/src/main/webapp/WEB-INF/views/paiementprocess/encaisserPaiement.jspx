@@ -17,86 +17,73 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<spring:url value="/paiementprocess/encaisser?form" var="edit_url" />
-	<spring:url value="/paiementprocess/editPaiement"
-		var="find_facture_url" />
+	<spring:url value="/paiementprocess/editPaiement" var="find_facture_url" />
 	<c:choose>
 		<c:when test="${empty paiementProcess.factureSelected}">
-			<spring:url value="/paiementprocess/factureSuivante/0"
-				var="next_facture_url" />
+			<spring:url value="/paiementprocess/factureSuivante/0" var="next_facture_url" />
 		</c:when>
 		<c:otherwise>
-			<spring:url
-				value="/paiementprocess/factureSuivante/${paiementProcess.factureSelected.id}"
-				var="next_facture_url" />
+			<spring:url value="/paiementprocess/factureSuivante/${paiementProcess.factureSelected.id}" var="next_facture_url" />
 		</c:otherwise>
 	</c:choose>
-
 	<spring:url value="/avoirclients/findByNumberAjax" var="find_bon_url" />
-
 	<spring:url value="/produits/findByCipmAjax/" var="find_cipm_url" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine"
-		var="find_add_url" />
-	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine"
-		var="find_upd_url" />
-	<spring:url
-		value="/paiementprocess/encaisser/${paiementProcess.factureSelected.id}"
-		var="encaisser_url" />
-	<spring:url value="/paiementprocess/findFactureByFactureNumber"
-		var="findInvoice_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/addLine" var="find_add_url" />
+	<spring:url value="/saleprocess/${saleProcess.cmdId}/updateLine" var="find_upd_url" />
+	<spring:url value="/paiementprocess/encaisser/${paiementProcess.factureSelected.id}" var="encaisser_url" />
+	<spring:url value="/paiementprocess/findFactureByFactureNumber" var="findInvoice_url" />
 	<spring:url value="/paiements/findMyPaiements" var="mypaiements_url" />
-
 	<spring:url value="/resources/images/annuler.png" var="annuler" />
-	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
-	<div style="margin-bottom: 10px; font-weight: bold;">
 	
+	<!-- Internationalization -->
+	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
 	<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
 	<spring:message code="cashregister_paiement_voucher_amount" var="paiement_voucher_amount"/>
 	<spring:message code="cashregister_paiement_voucher_number" var="paiement_voucher_number"/>
 	<spring:message code="cashregister_my_own_tickets"  var="my_own_tickets"/>	
-	
-			<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
-		<span class="firstTab selectedTab"><a href="${ edit_url}">${cashregister_collect }</a></span>
-		<!-- 
-		 <span class="nextTab unselectedTab"> <a
-			href="${ find_facture_url}">${billing_invoice_search }</a>
-		</span> 
-		-->
+	<spring:message code="cashregister_billing_invoice_search" var="billing_invoice_search"/>
 	<spring:message code="cashregister_collect_find_ticket" var="collect_find_ticket"/>
 	<spring:message code="cashregister_collect_find_ticket_title" var="collect_find_ticket_title"/>
-		<SPAN><a style="padding-left: 25px; text-decoration: none;"
-			href="${ next_facture_url}"> <INPUT class="submits" type="button"
-				value="${collect_find_ticket }" title="${collect_find_ticket_title }" /></a></SPAN>
+    <spring:message code="cashregister_cancel_invoice" var="cancel_invoice"/>
+    <spring:message code="cashregister_cancel_invoice_title" var="cancel_invoice_title"/>
+    
+    <spring:message code="invoice_awaiting" var="invoice_awaiting" />
+    <spring:message code="invoice_waiting" var="invoice_waiting" />
+    <spring:message code="invoice_paiement" var="invoice_paiement" />
+    
+	<div style="margin-bottom: 10px; font-weight: bold;">
+		<span class="firstTab selectedTab">
+		   <a href="${ edit_url}">${cashregister_collect }</a>
+	    </span>
+		<SPAN>
+		   <a style="padding-left: 25px; text-decoration: none;" href="${ next_facture_url}"> 
+		        <INPUT class="submits" type="button" value="${collect_find_ticket }" title="${collect_find_ticket_title }" />
+		   </a>
+		</SPAN>
 		<c:if test="${ not empty paiementProcess.factureSelected }">
-			<spring:url
-				value="/paiementprocess/annulFacture/${paiementProcess.factureSelected.commande.id}"
-				var="annuler_facture_url" />
-
-	<spring:message code="cashregister_cancel_invoice" var="cancel_invoice"/>
-	<spring:message code="cashregister_cancel_invoice_title" var="cancel_invoice_title"/>
-			<SPAN><a style="padding-left: 20px; text-decoration: none;"
-				href="${ annuler_facture_url}"> <INPUT class="submits"
-					type="button" value="${cancel_invoice } " title="${cancel_invoice_title }" /></a></SPAN>
+		   <spring:url value="/paiementprocess/annulFacture/${paiementProcess.factureSelected.commande.id}" var="annuler_facture_url" />
+		   <SPAN>
+		     <a style="padding-left: 20px; text-decoration: none;" href="${ annuler_facture_url}"> 
+		        <INPUT class="submits" type="button" value="${cancel_invoice } " title="${cancel_invoice_title }" />
+		     </a>
+		   </SPAN>
 		</c:if>
 		<SPAN>
-			
-		<a style="padding-left: 20px; text-decoration: none;"
-			href="${ mypaiements_url}"> <INPUT class="submits"
-				style="color: black;" type="button" value="${my_own_tickets} "
-				title="Lister Mes Tickets " /></a></SPAN> <SPAN><a
-			style="padding-left: 20px; text-decoration: none;" href="#"> <INPUT
-				style="color: red; font-weight: bold; font-style: italic; border: none; text-decoration: blink; width: 300px;"
-				height="25px;  " type="text" value="" id="infos" /></a></SPAN>
+		   <a style="padding-left: 20px; text-decoration: none;" href="${ mypaiements_url}"> 
+		    <INPUT class="submits" style="color: black;" type="button" value="${my_own_tickets} " title="Lister Mes Tickets " />
+		   </a>
+		</SPAN> 
+		<SPAN>
+		   <a style="padding-left: 20px; text-decoration: none;" href="#"> 
+		     <INPUT style="color: red; font-weight: bold; font-style: italic; border: none; text-decoration: blink; width: 300px;" height="25px;" type="text" value="" id="infos" />
+		   </a>
+	    </SPAN>
 
 	</div>
-	<spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf"
-		var="print_ticket" />
-	<spring:url value="/paiementprocess/getUnpayCloseSalesNumber/ByAjax"
-		var="unpayCmd" />
-	<spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf"
-		var="print_ticket_url" />
-	<spring:url
-		value="/paiementprocess/printTicketWithourReduce/${paiement.id}.pdf"
-		var="print_ticketnr_url" />
+	<spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf" var="print_ticket" />
+	<spring:url value="/paiementprocess/getUnpayCloseSalesNumber/ByAjax" var="unpayCmd" />
+	<spring:url value="/paiementprocess/printTicket/${paiement.id}.pdf" var="print_ticket_url" />
+	<spring:url value="/paiementprocess/printTicketWithourReduce/${paiement.id}.pdf" var="print_ticketnr_url" />
 	<script type="text/javascript">
 		function printTicketConf() {
 			window.location = '${print_ticket_url}';
@@ -124,9 +111,9 @@
 		function generateWord() {
 			$.get('${unpayCmd}', function(data) {
 				if (data == '0') {
-					$("#infos").val("Aucune Factures en attente !");
+					$("#infos").val("${invoice_awaiting}");
 				} else {
-					$("#infos").val(data + " Factures En attente ! ");
+					$("#infos").val(data + "${invoice_waiting}");
 
 				}
 
@@ -138,7 +125,7 @@
 			var montant = document.getElementById("montant").value;
 			var recue = document.getElementById("sommeRecue").value;
 			if (montant == "") {
-				alert("saisir le montant du paiement !");
+				alert("${invoice_paiement}");
 
 			} else {
 				if (recue == "") {
@@ -161,7 +148,7 @@
 			var montantBon = $("#montantBon").val();
 
 			if (montant == "") {
-				alert("saisir le montant du paiement !");
+				alert("${invoice_paiement}");
 
 			} else {
 				if (recue == "") {
@@ -247,7 +234,7 @@
 				if (modep == 'CREDIT') {
 					return true;
 				} else {
-					alert("la somme saisie doit etre superieur au montant !");
+					alert("La somme saisie doit etre superieur au montant !");
 					$("#sommeRecue").focus();
 					return false;
 				}

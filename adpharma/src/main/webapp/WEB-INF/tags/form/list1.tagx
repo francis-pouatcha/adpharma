@@ -66,13 +66,13 @@
     
       <c:choose>
         <c:when test="${not empty items}">
-        <div class="printable" >
-         <c:if test="${not empty search or search}">
-        	<input type="text" class="tbcell" style="width: 30%;" name="search" placeholder="${placeholder}" id="search" />
-        </c:if>
-         <IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;margin-left: 400px;" />
-          <jsp:doBody />
-          </div>
+	        <div class="printable" >
+	         <c:if test="${not empty search or search}">
+	        	<input type="text" class="tbcell" style="width: 30%;" name="search" placeholder="${placeholder}" id="search" />
+	        </c:if>
+	         <IMG alt="loading ..." src="${loadimage } " class="loadimage" style="display: none;margin-left: 400px;" />
+	          <jsp:doBody />
+	          </div>
         </c:when>
         <c:otherwise>
    

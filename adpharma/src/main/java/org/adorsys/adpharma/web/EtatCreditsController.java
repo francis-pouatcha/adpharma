@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.adorsys.adpharma.domain.Configuration;
@@ -18,6 +19,8 @@ import org.adorsys.adpharma.domain.EtatCredits;
 import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Paiement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.LocaleUtil;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/etatcreditses")
 @Controller
 public class EtatCreditsController {
+	
+	
+	@Resource(name="messageSource")
+	ReloadableResourceBundleMessageSource messageSource;
+	
 	//@Transactional
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid EtatCredits etatCredits, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -81,9 +89,8 @@ public class EtatCreditsController {
 	public String anullerEtat(@PathVariable("etatId")Long etatId, Model uiModel){
 		EtatCredits etatCredits = 	EtatCredits.findEtatCredits(etatId);
 		if (etatCredits!=null) {
-
 			if (etatCredits.getEncaisser()) {
-				uiModel.addAttribute("apMessage", "IMPOSSIBLE D'ANNULER L' ETAT EST DEJA ENCAISSE! ");
+				uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_cancel", null, LocaleUtil.getCurrentLocale()));
 			}else {
 				etatCredits.initListDetteWhithoutSort();
 				List<DetteClient> listeDettes = etatCredits.getListeDettes();
@@ -92,20 +99,20 @@ public class EtatCreditsController {
 						detteClient.setEtatCredit(null);
 						detteClient.merge();
 						detteClient.flush();
-
 					}
 				}
 				etatCredits.remove();
-				uiModel.addAttribute("apMessage", "ETAT SUPRIME AVEC SUCCES ! ");
-
+				uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_remove_success", null, LocaleUtil.getCurrentLocale()));
 			}
 			return "caisses/infos";     
 		}else {
-			uiModel.addAttribute("apMessage", "ETAT DEJA SUPRIME  ! ");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_remove_ok", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";     
-
 		}
 	}
+	
+	
+	
 	// imprime les factures 
 	@RequestMapping("/print/{etatId}.pdf")
 	public String print(  @PathVariable("etatId")Long etatId, Model uiModel){
@@ -139,11 +146,11 @@ public class EtatCreditsController {
 		addDateTimeFormatPatterns(uiModel);
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
 		if(etatCredits.getSolder()){
-			uiModel.addAttribute("appMessage", "Impossible d'envoyer a la caisse deja solde !") ;
+			uiModel.addAttribute("appMessage", messageSource.getMessage("etatcredit_invoice_sendcash_warning", null, LocaleUtil.getCurrentLocale()));
 		}else {
 			etatCredits.setSendToCash(Boolean.TRUE);
 			etatCredits = (EtatCredits) etatCredits.merge();
-			uiModel.addAttribute("appMessage", "Facture Envoyer avec Success !") ;
+			uiModel.addAttribute("appMessage", messageSource.getMessage("etatcredit_invoice_send_success", null, LocaleUtil.getCurrentLocale()));
 		}
 		return initShowView(uiModel, etatCredits);
 	}
@@ -154,7 +161,7 @@ public class EtatCreditsController {
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
 		etatCredits.setSendToCash(Boolean.FALSE);
 		EtatCredits merge = (EtatCredits) etatCredits.merge();
-		uiModel.addAttribute("appMessage", "Facture Retire de la caisse avec Success !") ;
+		uiModel.addAttribute("appMessage", messageSource.getMessage("etatcredit_invoice_remove_success", null, LocaleUtil.getCurrentLocale()));
 		return initShowView(uiModel, merge);
 	}
 
@@ -163,7 +170,7 @@ public class EtatCreditsController {
 		uiModel.addAttribute("search",false);
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
-			uiModel.addAttribute("apMessage","Impossible d'effectuer un Encaissement Aucune caisse Ouverte !");
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}else {
 			List<EtatCredits> list = EtatCredits.findEtatCreditsSendToCash().getResultList();
@@ -181,28 +188,28 @@ public class EtatCreditsController {
 		if(configuration.getOnlyCashReceiveCreditPay()){
 			Caisse myOpenCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 			if(myOpenCaisse==null){
-				uiModel.addAttribute("apMessage","Impossible d'encaisse aucune Caisse Ouverte!" );
+				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			}else {
 				etatCredits.encaisser(paiement, myOpenCaisse);
 				myOpenCaisse.merge();
 				etatCredits.setSendToCash(Boolean.FALSE);
 				etatCredits.merge();
-				uiModel.addAttribute("apMessage","Encaissement effectuer avec Success !" );
+				uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_success", null, LocaleUtil.getCurrentLocale()));
 			}
 			return  initShowView(uiModel, etatCredits);
 		}
 		if (etatCredits.getSolder()) {
-			uiModel.addAttribute("apMessage","Impossible d'encaisse Etat deja Solde !" );
+			uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_warning", null, LocaleUtil.getCurrentLocale()));
 			return  initShowView(uiModel, etatCredits);
 		}
 
 		if (etatCredits.getAnnuler()) {
-			uiModel.addAttribute("apMessage","Impossible d'encaisse Etat Annuler !" );
+			uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_cancelled", null, LocaleUtil.getCurrentLocale()));
 			return initShowView(uiModel, etatCredits);
 		}
 		etatCredits.encaisser(paiement);
 		etatCredits.merge();
-		uiModel.addAttribute("apMessage","Encaissement effectuer avec Success !" );
+		uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_success", null, LocaleUtil.getCurrentLocale()));
 		return   initShowView(uiModel, etatCredits);
 
 	}

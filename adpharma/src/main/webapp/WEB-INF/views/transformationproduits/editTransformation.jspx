@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
- xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:formsp="http://www.springframework.org/tags/form" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:formsp="http://www.springframework.org/tags/form" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
     <spring:url value="/resources/images/globe32.gif" var="loadimage" />
     <spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
     <spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
     <spring:url value="/produits/findProductByCipAjax"  var="find_product_url" />
     <spring:url value="/produits/findProductByIdAjax"  var="find_prdId_url" />
+    
+    
+    <!-- Internationalization -->
+    <spring:message code="button_find" var="button_find" />
+    <spring:message code="button_find_product" var="button_find_product" />
+    <spring:message code="column_cip_qty" var="column_cip_qty" />
+    <spring:message code="column_filiale" var="column_filiale" />
+    <spring:message code="column_ray" var="column_ray" />
+    <spring:message code="column_margin_rate" var="column_margin_rate" />
+    
+    
+    
     	
     
-     <script type="text/javascript">
-     $(function(){
-   
+<script type="text/javascript">
+  $(function(){
     $('#orgBut').click(function(){
     	
     	$('#select').val(this.id);
@@ -36,12 +52,12 @@
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
-				    <th>CIP</th>
-		    		<th>DESIGNATION</th>
-		    		<th>QTE CIP</th>
-		    		<th>FILIALE</th>
-		    		<th>CODE RAYON</th>
-		    		<th>T Marge</th>
+				    <th style="text-align: center; text-transform: uppercase;">CIP</th>
+		    		<th style="text-align: center; text-transform: uppercase;">DESIGNATION</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_filiale}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_ray}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_margin_rate}</th>
 				</tr>');
 	//	$('#designation').val(" ");
 		
@@ -77,23 +93,14 @@
 								     if (select == "cibBut" ) {
 								    	 $('#_cibleName_id').val(data.designation);
 								    	 $('#_cibleId_id').val(data.id);
-
-								    	 
 									} else {
 										$('#_origineName_id').val(data.designation);
-								    	 $('#_origineId_id').val(data.id);
-
+								    	$('#_origineId_id').val(data.id);
 									}
-                                   
-										
 										$('#findproduit').dialog("close"); 
-												});
-								
-									
+									});
 								};
 								});
-						
-
 						});
 			return false ;
 	});
@@ -104,7 +111,7 @@
 		},
 		autoOpen: false,
 		width: 900,
-		 height: 600,
+		height: 600,
 		resizable:true,
 		draggable :true,
         hide:'fade',
@@ -123,40 +130,37 @@
 
     <form:create id="fc_org_adorsys_adpharma_domain_TransformationProduit" label="Relation de Decomposition" modelAttribute="transformationProduit" path="/transformationproduits" render="${empty dependencies}" z="D7X1VLLCnYN+9CTnsCrNAjWs6x8=">
    
-               <field:input field="origineName" label="Prd Compose" style="width: 40%;" required="true" buttonId="orgBut" buttonLabel="Rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
-               <field:input field="cibleName" label="Prd Composant" style="width: 40%;" required="true" buttonId="cibBut"  buttonLabel="rechercher" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
-                     <formsp:hidden id="_cibleId_id" path="cibleId" />
-                     <formsp:hidden  id="_origineId_id" path="origineId" />
-                     <formsp:hidden  id="_id_id" path="id" />
-                     <formsp:hidden  id="_version_id" path="version" />
-             
-              <field:input field="qteCible" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" min="1" required="true" validationMessageCode="field_invalid_integer" z="5BSGAhOJnFTxQSId2/qz+ifSlv4="/>
-        <field:input field="prixVente" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" min="0" required="true" validationMessageCode="field_invalid_number" z="2zampRApzekzajlMi21QHZ8swuw="/>
-                         <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" z="BxnqXpc+Hewrkb1dQ0/fJCndu0A="/>
+               <field:input field="origineName" style="width: 40%;" required="true" buttonId="orgBut" buttonLabel="${button_find}" id="c_org_adorsys_adpharma_domain_TransformationProduit_origineName" z="XzTqIHJgqkam6JiFfqZMukuINlI="/>
+               <field:input field="cibleName" style="width: 40%;" required="true" buttonId="cibBut"  buttonLabel="${button_find}" id="c_org_adorsys_adpharma_domain_TransformationProduit_cibleName" z="bVDFwbzItNCXeS7fbNXAKu2OZh4="/>
+               <formsp:hidden id="_cibleId_id" path="cibleId" />
+               <formsp:hidden  id="_origineId_id" path="origineId" />
+               <formsp:hidden  id="_id_id" path="id" />
+               <formsp:hidden  id="_version_id" path="version" />
+               <field:input field="qteCible" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_qteCible" min="1" required="true" validationMessageCode="field_invalid_integer" z="5BSGAhOJnFTxQSId2/qz+ifSlv4="/>
+               <field:input field="prixVente" style="width: 10%;" id="c_org_adorsys_adpharma_domain_TransformationProduit_prixVente" min="0" required="true" validationMessageCode="field_invalid_number" z="2zampRApzekzajlMi21QHZ8swuw="/>
+               <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_TransformationProduit_actif" z="BxnqXpc+Hewrkb1dQ0/fJCndu0A="/>
      </form:create>
      
- <div id="findproduit" style="display: none;" title="recherche un cip ">
-		
+   
+    
+ <div id="findproduit" style="display: none;" title="${button_find_product}">
 		<input type="hidden" id="select" />
-		
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
-		</p>
-	
-		
+			<p>
+			<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
+			</p>
 		</form>
 		
 		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
- <div style="height:400px; overflow: auto; "  >
+ <div style="height:400px; overflow: auto;">
 		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
 		    	<tr>
 		    		<th style="text-align: center;">CIP</th>
 		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		 <th style="text-align: center;" >QTE CIP</th>
-		    		<th style="text-align: center;">FILIALE</th>
-		    		<th style="text-align: center;">CODE RAYON</th>
-		  		    <th style="text-align: center;">T MARGE</th>
+		    		 <th style="text-align: center; text-transform: uppercase;">${column_cip_qty}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_filiale}</th>
+		    		<th style="text-align: center; text-transform: uppercase;">${column_ray}</th>
+		  		    <th style="text-align: center; text-transform: uppercase;">${column_margin_rate}</th>
 		    	</tr>
 		  </table>
 	</div>	 

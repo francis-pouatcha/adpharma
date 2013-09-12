@@ -1,8 +1,13 @@
 package org.adorsys.adpharma.security;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.adorsys.adpharma.utils.LocaleUtil;
+import org.apache.commons.lang.LocaleUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -11,10 +16,8 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-//		System.out.println("---------------------------- Avant requete ------------------------------");
-//		System.out.println("URL requete: "+request.getServletPath());
-//		System.out.println("-------------------------------------------------------------------------");
-		
+
+//		request.getSession().setAttribute("lang", LocaleUtil.getCurrentLocaleName());
 		
 		return super.preHandle(request, response, handler);
 	}
@@ -23,8 +26,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-//		System.out.println("---------------------------- Apres requete ------------------------------");
-//		System.out.println("URL requete: "+request.getPathInfo());
+  
 		
 		super.postHandle(request, response, handler, modelAndView);
 	}

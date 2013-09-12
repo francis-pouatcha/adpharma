@@ -160,16 +160,23 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
     	      <div id="bloc_accordion">
     	        <ul id="panel1" class="accordion"> 
 	                <li>
-	                    <h3>Les 10 premiers produits les plus vendus au cours de ce mois</h3>
+	                   <spring:message code="topten_salesProduct" var="topten_salesProduct" htmlEscape="true"/>
+	                    <h3>${topten_salesProduct}</h3>
 	                    <div class="panel loading">
 	                        <table>
 	                             <tr>
-	                                <th style="text-align: center;">Cip</th>
-	                                <th style="text-align: center;">Designation</th>
-	                                <th style="text-align: center;">Prix Unit.</th>
-	                                <th style="text-align: center;">Qte vendue</th>
-	                                <th style="text-align: center;">Prix total</th>
-	                                <th style="text-align: center;">Total remise</th>
+	                                <spring:message code="column_cip" var="column_cip" />
+	                                <spring:message code="column_designation" var="column_designation" />
+	                                <spring:message code="column_prix_unit" var="column_prix_unit" />
+	                                <spring:message code="column_sale_qty" var="column_sale_qty" />
+	                                <spring:message code="column_total_price" var="column_total_price" />
+	                                <spring:message code="column_total_remise" var="column_total_remise" />
+	                                <th style="text-align: center;">${column_cip}</th>
+	                                <th style="text-align: center;">${column_designation}</th>
+	                                <th style="text-align: center;">${column_prix_unit}</th>
+	                                <th style="text-align: center;">${column_sale_qty}</th>
+	                                <th style="text-align: center;">${column_total_price}</th>
+	                                <th style="text-align: center;">${column_total_remise}</th>
 	                             </tr>
 	                       <c:choose>      
 	                         <c:when test="${not empty products}">     
@@ -195,15 +202,21 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Etat des caisses ouvertes du jour</h3>
+	                    <spring:message code="opencashstate_today" var="opencashstate_today" htmlEscape="true" />
+	                    <h3>${opencashstate_today}</h3>
 	                    <div class="panel loading">
 	                        <table>
 	                             <tr>
-	                                <th style="text-align: center;">Num. Caisse</th>
-	                                <th style="text-align: center;">Caissier</th>
-	                                <th style="text-align: center;">Fond caisse</th>
-	                                <th style="text-align: center;">Total encaissement</th>
-	                                 <th style="text-align: center;">Total Retrait</th>
+	                                <spring:message code="column_cash_number" var="column_cash_number" />
+	                                <spring:message code="column_cashier" var="column_cashier" />
+	                                <spring:message code="column_cash_fund" var="column_cash_fund" />
+	                                <spring:message code="column_total_cash" var="column_total_cash" />
+	                                <spring:message code="column_total_remove" var="column_total_remove" />
+	                                <th style="text-align: center;">${column_cash_number}</th>
+	                                <th style="text-align: center;">${column_cashier}</th>
+	                                <th style="text-align: center;">${column_cash_fund}</th>
+	                                <th style="text-align: center;">${column_total_cash}</th>
+	                                <th style="text-align: center;">${column_total_remove}</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty cashs}">
@@ -228,15 +241,17 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                    </div>
 	                </li>
 	                <li> 
-	                     <h3>Les dix derniers produits en rupture de stock.</h3>
+	                     <spring:message code="topten_outproducts" var="topten_outproducts" />
+	                     <h3>${topten_outproducts}</h3>
 	                     <div class="panel loading">
 	                      <table>
 	                             <tr>
-	                                <th style="text-align: center;">Cip</th>
-	                                <th style="text-align: center;">Designation</th>
+	                                <spring:message code="column_break_date" var="column_break_date" />
+	                                <th style="text-align: center;">${column_cip}</th>
+	                                <th style="text-align: center;">${column_designation}</th>
 	                                <th style="text-align: center;">P.A.</th>
 	                                <th style="text-align: center;">P.V.</th>
-	                                <th style="text-align: center;">Date rupture</th>
+	                                <th style="text-align: center;">${column_break_date}</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty ruptures}">
@@ -261,14 +276,17 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                   </div>   
 	                </li>
 	                <li>
-	                    <h3>Les 10 derniers produits Avariés </h3>
+	                    <spring:message code="lastten_avariesproducts" var="lastten_avariesproducts" />
+	                    <h3> ${lastten_avariesproducts} </h3>
 	                    <div class="panel loading">
 	                           <table>
+	                             <spring:message code="column_qteavarie" var="column_qteavarie" />
+	                             <spring:message code="column_dateperemp" var="column_dateperemp" />
 	                             <tr>
-	                                <th style="text-align: center;">Cip</th>
-	                                <th style="text-align: center;">Designation</th>
-	                                <th style="text-align: center;">Qte avarie</th>
-	                                <th style="text-align: center;">Date peremption</th>
+	                                <th style="text-align: center;">${column_cip}</th>
+	                                <th style="text-align: center;">${column_designation}</th>
+	                                <th style="text-align: center;">${column_qteavarie}</th>
+	                                <th style="text-align: center;">${column_dateperemp}</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty avaries}">
@@ -292,16 +310,23 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Les 10 dernières dettes clients de ce mois</h3>
+	                    <spring:message code="lastten_customercredits" var="lastten_customercredits" />
+	                    <h3> ${lastten_customercredits} </h3>
 	                    <div class="panel loading">
 	                        <table>
+	                             <spring:message code="column_numdette" var="column_numdette" />
+	                             <spring:message code="column_client" var="column_client" />
+	                             <spring:message code="column_amount" var="column_amount" />
+	                             <spring:message code="column_advance" var="column_advance" />
+	                             <spring:message code="column_rest" var="column_rest" />
+	                             <spring:message code="column_datecreation" var="column_datecreation" />
 	                             <tr>
-	                                <th style="text-align: center;">Num. Dette</th>
-	                                <th style="text-align: center;">Client</th>
-	                                <th style="text-align: center;">Montant</th>
-	                                <th style="text-align: center;">Avance</th>
-	                                <th style="text-align: center;">Reste</th>
-	                                <th style="text-align: center;">Date creation</th>
+	                                <th style="text-align: center;">${column_numdette}</th>
+	                                <th style="text-align: center;">${column_client}</th>
+	                                <th style="text-align: center;">${column_amount}</th>
+	                                <th style="text-align: center;">${column_advance}</th>
+	                                <th style="text-align: center;">${column_rest}</th>
+	                                <th style="text-align: center;">${column_datecreation}</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty avoirs}">
@@ -327,16 +352,18 @@ xmlns:jsp="http://java.sun.com/JSP/Page"  version="2.0">
 	                    </div>
 	                </li>
 	                <li>
-	                    <h3>Les 10 derniers avoirs clients non soldes de ce mois</h3>
+	                    <spring:message code="lastten_unsolvedcredits" var="lastten_unsolvedcredits" />
+	                    <h3> ${lastten_unsolvedcredits} </h3>
 	                    <div class="panel loading">
 	                        <table>
+	                             <spring:message code="column_numavoir" var="column_numavoir" />
 	                             <tr>
-	                                <th style="text-align: center;">Num. Avoir</th>
-	                                <th style="text-align: center;">Client</th>
-	                                <th style="text-align: center;">Montant</th>
-	                                <th style="text-align: center;">Avance</th>
-	                                <th style="text-align: center;">Reste</th>
-	                                <th style="text-align: center;">Date creation</th>
+	                                <th style="text-align: center;">${column_numavoir}</th>
+	                                <th style="text-align: center;">${column_client}</th>
+	                                <th style="text-align: center;">${column_amount}</th>
+	                                <th style="text-align: center;">${column_advance}</th>
+	                                <th style="text-align: center;">${column_rest}</th>
+	                                <th style="text-align: center;">${column_datecreation}</th>
 	                             </tr>
 	                          <c:choose>   
 	                           <c:when test="${not empty avoirs}">

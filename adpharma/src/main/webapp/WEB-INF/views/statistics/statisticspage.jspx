@@ -2,10 +2,28 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
 xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"  
 xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+xmlns:spring="http://www.springframework.org/tags"
 xmlns:jsp="http://java.sun.com/JSP/Page" 
 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    <spring:message code="statistics_period_begin" var="statistics_period_begin" />
+    <spring:message code="statistics_period_end" var="statistics_period_end" />
+    <spring:message code="statistics_period_frequence" var="statistics_period_frequence" htmlEscape="false" />
+    <spring:message code="statistics_legend" var="statistics_legend" />
+    <spring:message code="statistics_period" var="statistics_period" />
+    <spring:message code="statistics_purchase" var="statistics_purchase" /> 
+    <spring:message code="statistics_sale" var="statistics_sale" />
+    <spring:message code="statistics_curvey_salespurchases" var="statistics_curvey_salespurchases" />
+    <spring:message code="statistics_curvey_purchase" var="statistics_curvey_purchase" />
+    <spring:message code="statistics_curvey_sales" var="statistics_curvey_sales" />
+    <spring:message code="statistics_periods" var="statistics_periods" />
+    
+   
+    
+    
      <script>
   $(document).ready(function() {
 	  var s2 = ${graph1} ;
@@ -23,12 +41,12 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    showTooltip: false
 	                },
 	                title: {
-	                    text: 'COURBE DES VENTES ET ACHATS',   // title for the plot,
+	                    text: '${statistics_curvey_sales}',   // title for the plot,
 	                },
 	                series:[
                      
-                     {label:'Courbe des Achats'},
-                     {label:'Courbe des Ventes'},
+                     {label:'${statistics_curvey_purchase}'},
+                     {label:'${statistics_curvey_sales}'},
 	                    
 	                    {
                     	 pointLabels: { show: true},
@@ -54,7 +72,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                        drawMajorGridlines: false,
 	                        drawMinorGridlines: true,
 	                        drawMajorTickMarks: false,
-	                        label:'periodes considerees ', 
+	                        label:'${statistics_periods}', 
 	                        rendererOptions: {
 	                        tickInset: 0.5,
 	                        minorTicks: 1
@@ -74,31 +92,29 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	            });
   });
   </script>
-   <table  >
+   <table>
     	<tr>
     		
     		<td align="left" valign="top" width="20%" >
     		<fieldset>
-    		<legend> Saisir La Periode</legend>
+    		<legend> ${statistics_period} </legend>
     		<form:custumcreate label="Statistics" id="fc_org_adorsys_adpharma_domain_TauxMarge" modelAttribute="statistic" path="/statistics" render="${empty dependencies}" z="/v4Q5hnmI4Qeh080AqNpaqvrYEE=">
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="Du" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="AU" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
-       <field:select id="" label="Frequence" items="${periodes }" field="periode" path="/periodes" />
-    </form:custumcreate>
-    <BR />
+               <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateDebut" label="${statistics_period_begin}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+               <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" field="dateFin" label="${statistics_period_end}" id="c_org_adorsys_adpharma_domain_Paiement_datePaiement" z="/x8NYzXaj6+OuJJF3lEoo+nHoOI="/>
+               <field:select id="" label="${statistics_period_frequence}" items="${periodes }" field="periode" path="/periodes" />
+            </form:custumcreate>
+                           <BR />
                            <HR />
                           <div style="width: 50% ; "  id="legend">
-                         
-                            <P> LEGENDE </P>
+                            <P> ${statistics_legend} </P>
                           <TABLE>
-                          
                              <TR>
                                 <TD style="background-color: rgb(51,204,255); width: 50%;"></TD>
-                                <TD id="firstYear" style=" width: 80%;">ACHAT</TD>
+                                <TD id="firstYear" style=" width: 80%;">${statistics_purchase}</TD>
                              </TR>
                              <TR>
                                 <TD style="background-color:orange ; width: 50%;"></TD>
-                                <TD id="secondYear" style=" width: 80%;">VENTE</TD>
+                                <TD id="secondYear" style=" width: 80%;">${statistics_sale}</TD>
                              </TR>
                           </TABLE>
                           </div>
@@ -106,7 +122,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     		
     		</td>
     		<td align="center" width="80%" >
-           <div id="chart1" style="height:450px;width:auto;"></div>
+                 <div id="chart1" style="height:450px;width:auto;"></div>
     		</td>
     	</tr>
    </table>

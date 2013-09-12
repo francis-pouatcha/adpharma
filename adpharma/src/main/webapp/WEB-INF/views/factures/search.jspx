@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core"  xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
- xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+xmlns:c="http://java.sun.com/jsp/jstl/core"  
+xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+ xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+ xmlns:spring="http://www.springframework.org/tags" 
+ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:message code="cashregister_invoice_search_amount" var="cashregister_invoice_search_amount" />
+    <spring:message code="cashregister_invoice_search_date" var="cashregister_invoice_search_date" />
+    <spring:message code="cashregister_invoice_search_check" var="cashregister_invoice_search_check" />
+    
     <form:custumcreate modelAttribute="facture"  id="ff_org_adorsys_adpharma_domain_Facture" path="/factures/search" z="Yee4XxJ5tW1cMi1p5ac3b6Xrd9M=">
         <table style="border: none;">
             <tr>
                 <td style="border: none;">
                     <field:input disableFormBinding="false" field="factureNumber" id="f_org_adorsys_adpharma_domain_Facture_factureNumber" required="false" z="user-managed"/>
-			        <field:input disableFormBinding="false" field="cip" label="Cip Produit" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="user-managed"/>
+			        <field:input disableFormBinding="false" field="cip" id="f_org_adorsys_adpharma_domain_Produit_cip" required="false" z="user-managed"/>
 			        <field:input disableFormBinding="false" field="designation" id="f_org_adorsys_adpharma_domain_Produit_designation" required="false" z="user-managed"/>
                 </td>
                 <td style="border: none;">
-			        <field:input disableFormBinding="true" field="netPayer" label="Montant Min" id="f_org_adorsys_adpharma_domain_Facture_netPayer" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-			        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="Date Min" field="dateCreation"  id="f_org_adorsys_adpharma_domain_Facture_dateCreation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
-			        <field:checkbox field="solder" id="f_org_adorsys_adpharma_domain_Facture_solder"  label="Solder ? "/>
+			        <field:input disableFormBinding="true" field="netPayer" label="${cashregister_invoice_search_amount}" id="f_org_adorsys_adpharma_domain_Facture_netPayer" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+			        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm"  label="${cashregister_invoice_search_date}" field="dateCreation"  id="f_org_adorsys_adpharma_domain_Facture_dateCreation" required="false" z="HbYmS5pZcrTft/hWO90vbx2GwlI="/>
+			        <field:checkbox field="solder" id="f_org_adorsys_adpharma_domain_Facture_solder"  label="${cashregister_invoice_search_check} ? "/>
                 </td>
             </tr>
          </table>
