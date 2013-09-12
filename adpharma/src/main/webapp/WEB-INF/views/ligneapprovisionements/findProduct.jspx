@@ -8,7 +8,6 @@
     <form:find finderName="ByDes" id="ff_org_adorsys_adpharma_domain_LigneApprovisionement" path="/ligneapprovisionements" z="RBdyWARIAU5WvUkmUMYrlt7zO0s=">
         <field:input disableFormBinding="true" field="designation" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_designation" required="true" z="fIbPR98z97fzjC5TeL+vkcw3mho="/>
     </form:find>
-    
         <security:authorize ifAnyGranted="ROLE_STOCKER,ROLE_SITE_MANAGER">
                 <c:set value="true" var="permission" ></c:set>
     </security:authorize>

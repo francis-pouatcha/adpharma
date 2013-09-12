@@ -322,13 +322,13 @@ public class InventaireProcessController {
 		return "produits/search";
 	}
 	
-	
+	/**
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String printFicheCodesBars(HttpServletRequest httpServletRequest){
 		
 		return "";
 	}
-	
+	*/
 
 
 }

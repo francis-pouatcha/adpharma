@@ -41,18 +41,32 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
-	BigDecimal fondgbl = BigDecimal.ZERO ;
-	BigDecimal totalencgbl = BigDecimal.ZERO ;
-    BigDecimal remglbs = BigDecimal.ZERO ;
-	BigDecimal cashgbl = BigDecimal.ZERO ;
-	BigDecimal cashdgbl = BigDecimal.ZERO ;
-	BigDecimal cartecreditgbl = BigDecimal.ZERO ;
-	BigDecimal chequegbl = BigDecimal.ZERO ;
-	BigDecimal retraitgbl = BigDecimal.ZERO ;
-	BigDecimal boncmdgbl = BigDecimal.ZERO ;
-	BigDecimal boncltgbl = BigDecimal.ZERO ;
-	BigDecimal soldegbl = BigDecimal.ZERO ;
+	BigDecimal fondgbl  ;
+	BigDecimal totalencgbl ;
+    BigDecimal remglbs  ;
+	BigDecimal cashgbl  ;
+	BigDecimal cashdgbl  ;
+	BigDecimal cartecreditgbl  ;
+	BigDecimal chequegbl  ;
+	BigDecimal retraitgbl  ;
+	BigDecimal boncmdgbl  ;
+	BigDecimal boncltgbl  ;
+	BigDecimal soldegbl  ;
 	
+	
+	public void initGlobalAmount(){
+		 fondgbl = BigDecimal.ZERO ;
+		 totalencgbl = BigDecimal.ZERO ;
+	     remglbs = BigDecimal.ZERO ;
+		 cashgbl = BigDecimal.ZERO ;
+		 cashdgbl = BigDecimal.ZERO ;
+		 cartecreditgbl = BigDecimal.ZERO ;
+		 chequegbl = BigDecimal.ZERO ;
+		 retraitgbl = BigDecimal.ZERO ;
+		 boncmdgbl = BigDecimal.ZERO ;
+		 boncltgbl = BigDecimal.ZERO ;
+		 soldegbl = BigDecimal.ZERO ;
+	}
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
@@ -65,17 +79,18 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 		
 		if (caisse != null) {
+			initGlobalAmount();
 			addTexteToDocument(document, caisse, site);
 			addGlobalAmountToDocument(document) ;
 
 		}
 		
 		if (caisses != null) {
+			initGlobalAmount();
 			for (Caisse caisse2 : caisses) {
 				addTexteToDocument(document, caisse2, site);
 			}
 			addGlobalAmountToDocument(document) ;
-
 		}
 		
 	}
@@ -156,7 +171,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		ouCell2.setPhrase(new Phrase(new Chunk("DATE OUVERTURE :", headerStyle)));
 		ouCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 		PdfPCell oudCell2 = new PdfPCell(cellBorderlessStyle);
-		oudCell2.setPhrase(new Phrase(new Chunk( PharmaDateUtil.format(caisse.getDateOuverture(), "dd-MM-yyyy hh:mm"), boddyStyle)));
+		oudCell2.setPhrase(new Phrase(new Chunk( PharmaDateUtil.format(caisse.getDateOuverture(), "dd-MM-yyyy HH:mm"), boddyStyle)));
 		oudCell2.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable.addCell(ouCell2);
@@ -173,7 +188,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		PdfPCell fedrCell = new PdfPCell(cellBorderlessStyle);
 		adressTable.addCell(ferCell);
 		if (caisse.getDateFemeture()!=null) {
-			fedrCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(caisse.getDateFemeture(), "dd-MM-yyyy hh:mm"), boddyStyle)));
+			fedrCell.setPhrase(new Phrase(new Chunk(PharmaDateUtil.format(caisse.getDateFemeture(), "dd-MM-yyyy HH:mm"), boddyStyle)));
 			fedrCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			adressTable.addCell(fedrCell);// 1:2
 
@@ -202,7 +217,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		decCell.setPhrase(new Phrase(new Chunk("CAISSE OUVERTE :", headerStyle)));
 		decCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		PdfPCell decmCell = new PdfPCell(cellBorderlessStyle);
-		decmCell.setPhrase(new Phrase(new Chunk(""+caisse.getCaisseOuverte(), boddyStyle)));
+		decmCell.setPhrase(new Phrase(new Chunk(caisse.getCaisseOuverte()?"OUI":"NON", boddyStyle)));
 		decmCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 
 		adressTable.addCell(decCell);
@@ -603,7 +618,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		}
 		
 		try {
-			document.add(new Paragraph(new  Phrase(new Chunk("*********************************************************************************************************************************************", boddyStyle))));
+			document.add(new Paragraph(new  Phrase(new Chunk("*****************************************************************************************************************************************", boddyStyle))));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

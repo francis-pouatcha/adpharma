@@ -28,7 +28,6 @@ public enum Genre {
 			if (genre.equals(Genre.Enfant.name())) return Genre.Enfant ;
 			if (genre.equals(Genre.Docteur.name())) return Genre.Docteur ;
 			if (genre.equals(Genre.Neutre.name())) return Genre.Neutre ;
-
 			return Genre.Neutre ;
 
 			
