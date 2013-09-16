@@ -173,12 +173,14 @@
 												<c:set var="save_button" value="${ labelButon}" />
 											</c:when>
 											<c:otherwise>
-												<spring:message code="button_save" var="save_button"
-													htmlEscape="false" />
+												<spring:message code="button_save" var="save_button" htmlEscape="false" />
+												<spring:message code="button_cancel" var="cancel_button" htmlEscape="false" />
 											</c:otherwise>
 										</c:choose>
 
-										<script type="text/javascript">Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));</script>
+										<script type="text/javascript">
+										  Spring.addDecoration(new Spring.ValidateAllDecoration({elementId:'proceed', event:'onclick'}));
+										</script>
 										
 										<c:choose>
 										<c:when test="${diseableSubmit}">
@@ -186,14 +188,14 @@
 											value="${fn:escapeXml(save_button)}" />
 										</c:when>
 										<c:otherwise>
-										<input id="proceed" type="submit"
-											value="${fn:escapeXml(save_button)}" />
+										   <spring:url value="/" var="home" />
+										   <input id="proceed" type="submit" value="${fn:escapeXml(save_button)}" style="margin-right: 20px;"/>
+										   <a href="${home}" style="text-decoration: none;"><input type="button" value="${fn:escapeXml(cancel_button)}" /> </a>
 										</c:otherwise>
 										</c:choose>
 										
 										<c:if test="${not empty otherBut}">
-											<input type="button" class="submits" value="Annuler"
-												id="${otherBut}" />
+											<input type="button" class="submits" value="${fn:escapeXml(button_cancel)}" id="${otherBut}" />
 										</c:if>
 									</div>
 								</form:form>

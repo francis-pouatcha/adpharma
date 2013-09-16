@@ -86,7 +86,13 @@ public class InventaireController {
 			return "inventaires/create";
 		}
 		Rayon rayon = inventaire.getRayon();
-		inventaire.setRayonId(rayon.getId());
+		
+		try {
+			inventaire.setRayonId(rayon.getId());
+		} catch (Exception e) {
+			inventaire.setRayonId(Long.valueOf(0));
+		}
+		
 		uiModel.asMap().clear();
 		inventaire.persist();
 		MultipartFile fichier = inventaire.getFichier();

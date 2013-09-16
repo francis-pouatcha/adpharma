@@ -32,7 +32,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    show: true,
 	                    zoom: true,
 	                    looseZoom: true,
-	                    showTooltip: false
+	                    showTooltip: true
 	                },
 	                title: {
 	                    text: '${statistics_label_medium_order_set}',   // title for the plot,
@@ -53,7 +53,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                            animation: {
 	                                speed: 2500
 	                            },
-	                            barWidth: 20,
+	                            barWidth: 50,
 	                            barPadding: -15,
 	                            barMargin: 0,
 	                            highlightMouseOver: false
@@ -143,7 +143,8 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     		</fieldset>
     		</td>
     		<td align="center" width="80%" class="tblog">
-           <div id="chart1" style="height:400px;width:auto;"></div>
+           <div id="chart1" style="height:400px;width:auto; overflow: scroll;">
+           </div>
     		</td>
     	</tr>
    </table>

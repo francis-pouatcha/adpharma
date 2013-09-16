@@ -8,19 +8,19 @@ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
-    <spring:message code="commandefournisseur_infos" var="commandefournisseur_infos" />
-    <spring:message code="commandefournisseur_search_area" var="commandefournisseur_search_area" />
-    <spring:message code="commandefournisseur_intervall" var="commandefournisseur_intervall" />
-    <spring:message code="commandefournisseur_others" var="commandefournisseur_others" />
-    <spring:message code="commandefournisseur_mode_selection" var="commandefournisseur_mode_selection"/>
-    <spring:message code="commandefournisseur_qty_selection" var="commandefournisseur_qty_selection" />
-    <spring:message code="commandefournisseur_product_title" var="commandefournisseur_product_title" />
-    <spring:message code="commandefournisseur_rayons" var="commandefournisseur_rayons" />
-    <spring:message code="commandefournisseur_filiales" var="commandefournisseur_filiales" />
-    <spring:message code="label_start_by" var="label_start_by" />
-    <spring:message code="label_end_by" var="label_end_by" />
-    <spring:message code="commandefournisseur_title_start_message" var="commandefournisseur_title_start_message" />
-    <spring:message code="commandefournisseur_title_end_message" var="commandefournisseur_title_end_message" />
+    <spring:message code="commandefournisseur_infos" var="commandefournisseur_infos" htmlEscape="false" />
+    <spring:message code="commandefournisseur_search_area" var="commandefournisseur_search_area" htmlEscape="false" />
+    <spring:message code="commandefournisseur_intervall" var="commandefournisseur_intervall" htmlEscape="false" />
+    <spring:message code="commandefournisseur_others" var="commandefournisseur_others" htmlEscape="false" />
+    <spring:message code="commandefournisseur_mode_selection" var="commandefournisseur_mode_selection" htmlEscape="false" />
+    <spring:message code="commandefournisseur_qty_selection" var="commandefournisseur_qty_selection" htmlEscape="false" />
+    <spring:message code="commandefournisseur_product_title" var="commandefournisseur_product_title" htmlEscape="false" />
+    <spring:message code="commandefournisseur_rayons" var="commandefournisseur_rayons" htmlEscape="false" />
+    <spring:message code="commandefournisseur_filiales" var="commandefournisseur_filiales" htmlEscape="false" />
+    <spring:message code="label_start_by" var="label_start_by" htmlEscape="false" />
+    <spring:message code="label_end_by" var="label_end_by" htmlEscape="false" />
+    <spring:message code="commandefournisseur_title_start_message" var="commandefournisseur_title_start_message" htmlEscape="false" />
+    <spring:message code="commandefournisseur_title_end_message" var="commandefournisseur_title_end_message" htmlEscape="false" />
     
     
     

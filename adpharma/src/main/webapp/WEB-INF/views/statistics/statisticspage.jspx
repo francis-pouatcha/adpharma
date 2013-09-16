@@ -84,8 +84,15 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                            formatString:'XAF %d'
 	                        },
 	                        rendererOptions: {
-	                            forceTickAt0: true
+	                            forceTickAt0: true,
 	                        }
+	                    },
+	                    
+	                    highlighter: {
+	                        show: true, 
+	                        showLabel: true, 
+	                        tooltipAxes: 'y',
+	                        sizeAdjust: 7.5 , tooltipLocation : 'ne'
 	                    }
 	                   
 	                }

@@ -1,6 +1,7 @@
 package org.adorsys.adpharma.web;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.persistence.TypedQuery;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,8 +116,10 @@ public class InventaireProcessController {
 		return "inventaireProcess/findProduct";
 	}
 	
+	
+	// Export des lignes d'approvisionnement des produits du rayon choisi pour l'inventaire
 	@RequestMapping(value = "/{invId}/exportLines", method = RequestMethod.GET)
-	public String exportLines(@PathVariable("invId") Long invId,Model uiModel, HttpServletResponse response) {
+	public void exportLines(@PathVariable("invId") Long invId,Model uiModel, HttpServletResponse response) throws IOException, ServletException {
 		Inventaire inventaire = Inventaire.findInventaire(invId);
 		List<LigneApprovisionementExcelRepresentation> data= new ArrayList<LigneApprovisionementExcelRepresentation>();
 		Rayon rayon = Rayon.findRayon(inventaire.getRayonId());
@@ -132,9 +136,29 @@ public class InventaireProcessController {
 			e.printStackTrace();
 		}
 		
-		FileSystemResource resource = new FileSystemResource("/tools/produits.xls");
-		String file = resource.getFilename();
-		return "inventaireProcess/editInventaire";
+		// Download the file to the Client
+		File file = new File("/tools/produits.xls");
+		String path = file.getAbsolutePath();
+		String name = file.getName();
+		String fileName=name;
+		FileInputStream fileToDownload = new FileInputStream(path);
+		ServletOutputStream outputStream = response.getOutputStream();
+		response.reset();
+		response.resetBuffer();
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition", "attachment; filename="+fileName);
+		ByteArrayOutputStream outputStream1 = new ByteArrayOutputStream();
+		int readBytes=0;
+	    byte[] buffer= new byte[10000];
+	    while ((readBytes=fileToDownload.read(buffer, 0, 10000))!=-1) {
+			outputStream.write(buffer, 0, readBytes);
+			outputStream1.write(buffer, 0, readBytes);
+		}
+	    outputStream.flush();
+	    outputStream.close();
+	    fileToDownload.close();
+//		return "inventaireProcess/editInventaire";
+	    return;
 	}
 
 
@@ -334,7 +358,7 @@ public class InventaireProcessController {
 		List<Object[]> etatVente = MouvementStock.findProduitAndQuantiteVendue(inp.getCipProduct(), inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(),inp.getDateDebut(), inp.getDateFin(),inp.getRayon(),inp.getFiliale());
 		if (!etatVente.isEmpty()) {
 			for (Object[] obj : etatVente) {
-				Produit produit =  (Produit)obj[0]  ; 
+				Produit produit =  (Produit)obj[0]; 
 				produit.setQtevendu((BigInteger)obj[1]);
 				result.add(produit);
 			}

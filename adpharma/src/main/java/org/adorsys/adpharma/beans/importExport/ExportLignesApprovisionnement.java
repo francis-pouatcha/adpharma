@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.beans.importExport;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class ExportLignesApprovisionnement extends ExportDataAbstractService<Lig
 		super.setSheetName("Produits Inventaire");
 		super.exportData(fileName, data, columns);
 		insertData(super.sheet, data);
-		FileOutputStream outputStream = new FileOutputStream("/tools/"+fileName);
+		FileOutputStream outputStream = new FileOutputStream(new File("/tools/"+fileName));
 		super.workbook.write(outputStream);
 		outputStream.close();
 	}
