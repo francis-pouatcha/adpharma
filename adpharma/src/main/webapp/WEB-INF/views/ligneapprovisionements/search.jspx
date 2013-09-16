@@ -18,10 +18,10 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
                  <field:select disableFormBinding="true" field="rayon" id="f_org_adorsys_adpharma_domain_Produit_rayon" itemValue="id" items="${rayon}" path="/rayons" required="true" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
                 </td>
                 <td style="border: none;" >
-                  <field:select disableFormBinding="true" field="filiale" id="f_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiale}" path="/filiales" required="true" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
-                  <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" disableFormBinding="true" field="minDateSaisie"  id="f_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie_min" required="false" z="user-managed"/>
-                  <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" disableFormBinding="true" field="maxDateSaisie" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie_max" required="false" z="user-managed"/>
-                </td>
+            <field:select disableFormBinding="true" field="filiale" id="f_org_adorsys_adpharma_domain_Produit_filiale" itemValue="id" items="${filiale}" path="/filiales" required="true" z="B0oyL/w26IpV1HUgaoYuU/9Ke3E="/>
+     <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" disableFormBinding="true" field="minDateSaisie"  id="f_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie_min" required="false" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" disableFormBinding="true" field="maxDateSaisie" id="f_org_adorsys_adpharma_domain_LigneApprovisionement_dateSaisie_max" required="false" z="user-managed"/>
+         </td>
             </tr>
         </table>
     </form:find>
@@ -44,7 +44,7 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_indexLine" property="indexLine" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_cip" property="cip" render="${permission }" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_LigneApprovisionement_produit"  property="produit" render="false" z="user-managed"/>
-            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" property="cipMaison" z="user-managed"/>
+            <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_cipMaison" maxLength="-1" property="cipMaison" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_designation" maxLength="-1" property="designation" z="user-managed"/>
             <table:column date="true" dateTimePattern="${ligneApprovisionement_dateperemtion_date_format}" id="s_org_adorsys_adpharma_domain_LigneApprovisionement_datePeremtion" maxLength="-1" property="datePeremtion" z="5iQ0LdWGtN/TvTcaeouHdx3Y2vU="/>
             <table:column id="s_org_adorsys_adpharma_domain_LigneApprovisionement_quantiteAprovisione" label="qte initiale" property="quantiteAprovisione" render="${permission }" z="+tDxrjig9Vhdn0SUPgOD9gEGz2g="/>

@@ -16,6 +16,7 @@
       <spring:url value="/resources/images/cloturer.png"  var="close" />
       <spring:url value="/resources/images/modifier.png"  var="modifier" />
       <spring:url value="/inventaireProcess/print/${itemId}/ficheInventaire.pdf"  var="fiche_inventaire_url" />
+          <spring:url value="/inventaireProcess/print/${itemId}/ficheDeComptage.pdf"  var="fiche_comp_url" />
       <spring:url value="/inventaireProcess/${itemId}/printCodeBar/${inventaire.numeroInventaire}.pdf" var="fiche_codebar_url" />
       
       <!-- Internationalization -->
@@ -45,6 +46,9 @@
                  <INPUT class="submits" type="button" value="${inventory_process_button_fiche}" title="${inventory_process_button_fiche_title}" />
             </a>
       </span>
+      
+       <span ><a href="${fiche_comp_url}" style="text-decoration: none;"> <INPUT type="button" class="submits" value="Fiche de comptage"/></a></span>
+      
       <c:if test="${inventaire.etat eq 'CLOS'}">
             <span>
                  <a href="${fiche_codebar_url}" style="text-decoration: none;">

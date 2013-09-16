@@ -23,6 +23,7 @@ import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.CipMgenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 
 @RooJavaBean
@@ -61,7 +62,7 @@ public class CommandeProcess {
 	}
 
 	public static List<Object[]> findProduitAndQuantiteVendue(String beginDes,String endDes,Date debut ,Date fin,Rayon rayon , Filiale filiale,BigInteger qte) {
-		if (debut == null) throw new IllegalArgumentException("The debut arguments are required");
+		if (debut == null) debut = DateUtils.addYears(new Date(), -1);
 		fin = fin ==null?new Date():fin;
 		EntityManager em = MouvementStock.entityManager();
 		StringBuilder searchQuery = new StringBuilder("SELECT p , SUM(o.qteDeplace) as qte ,(select MAX(l.prixAchatUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip ) as pa , (select MAX(l.prixVenteUnitaire ) FROM  LigneApprovisionement as l WHERE l.cip = p.cip )as pv  FROM MouvementStock AS o , Produit AS p WHERE o.cip = p.cip AND o.dateCreation BETWEEN :debut AND :fin AND o.typeMouvement = :typeMouvement ");

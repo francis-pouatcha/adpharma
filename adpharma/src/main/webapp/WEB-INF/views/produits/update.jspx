@@ -83,15 +83,6 @@
                     </td>
                 </tr>
             </table>
-            <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Produit_footPrint" z="MCUWsF9rCTRehGDoCiIZAt3Wirk="/>
-            <field:input field="prixAchatU" id="c_org_adorsys_adpharma_domain_Produit_prixAchatU" validationMessageCode="field_invalid_number" z="9iUgy1RUSEhKXBnvCQxa2kuQ8I8="/>
-            <field:input field="prixVenteU" id="c_org_adorsys_adpharma_domain_Produit_prixVenteU" validationMessageCode="field_invalid_number" z="XYtWr+HgzPcpfkT3Fa16fQkyl2o="/>
-            <field:input field="produitNumber" id="c_org_adorsys_adpharma_domain_Produit_produitNumber" z="wlhE2gDYfIv5r49ZFcER3FWJhGc="/>
-            <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Produit_actif" z="YirIMUT1Cmf86Y5J7Sut8EFLwow="/>
-            <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
-            <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
-            <field:select field="modeConditionement" id="c_org_adorsys_adpharma_domain_Produit_modeConditionement" itemValue="id" items="${modeconditionements}" path="/modeconditionements" z="/UXT0m1vgwe4bQ/lCksxWbhk/4c="/>
-            <field:input field="configSolde" id="c_org_adorsys_adpharma_domain_Produit_configSolde" z="NLCnenXtGlqUMxpZs4ZAzLQM/8Q="/>
         </form:update>
     </div>
     <jsp:include page="ajaxSearchProductForm.jspx"/>

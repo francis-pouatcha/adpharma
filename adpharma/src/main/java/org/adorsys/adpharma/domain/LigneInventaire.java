@@ -7,11 +7,14 @@ import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.config.MvcNamespaceHandler;
 import org.adorsys.adpharma.domain.Produit;
+
+import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 import java.math.BigInteger;
 import java.math.BigDecimal;
@@ -223,4 +226,14 @@ public class LigneInventaire {
 
 		}
 	}
+	
+	 public static TypedQuery<LigneInventaire> findLigneInventairesByInventaire(Inventaire inventaire) {
+	        if (inventaire == null) throw new IllegalArgumentException("The inventaire argument is required");
+	        EntityManager em = LigneInventaire.entityManager();
+
+	        TypedQuery<LigneInventaire> q = em.createQuery("SELECT o FROM LigneInventaire AS o WHERE o.inventaire = :inventaire ORDER BY o.produit.designation ", LigneInventaire.class);
+	        q.setParameter("inventaire", inventaire);
+	        return q;
+	    }
+	
 }
