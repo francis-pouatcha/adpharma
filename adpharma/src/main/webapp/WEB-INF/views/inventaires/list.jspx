@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="inventory_search_per_agent_field" var="search_per_agent_field" />
-    <page:list1 id="pl_org_adorsys_adpharma_domain_Inventaire" items="${inventaires}" z="user-managed" url="/inventaires/searchInv" search="true" placeholder="${search_per_agent_field }">
+    <spring:message code="inventory_search_per_agent_field" var="search_per_agent_field"/>
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Inventaire" items="${inventaires}" placeholder="${search_per_agent_field }" search="true" url="/inventaires/searchInv" z="user-managed">
         <table:table data="${inventaires}" delete="false" id="l_org_adorsys_adpharma_domain_Inventaire" path="/inventaires" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" maxLength="-1" property="numeroInventaire" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_agent" maxLength="-1" property="agent" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_etat" maxLength="-1" property="etat" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_etat" maxLength="-1" property="etat" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" maxLength="-1" property="dateInventaire" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
             <table:column id="s_org_adorsys_adpharma_domain_Inventaire_site" maxLength="-1" property="site" render="false" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_cipProduct" property="cipProduct" render="false" z="user-managed"/>
@@ -18,7 +18,10 @@
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_filiale" property="filiale" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_montant" maxLength="-1" property="montant" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_note" maxLength="-1" property="note" z="user-managed"/>
-       
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_fichier" property="fichier" z="cH2+ljA6dpY1A61wcNOspX9JisI="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" property="familleProduit" z="qeYdrlMZVGaJWb7uwv8ESzLnkpE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" property="sousFamilleProduit" z="xwS9t37FHoJMHuItbv6wkY3GS7E="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_cipmProduct" property="cipmProduct" z="HoLL0UUAZ/Q2/DVxZS0nSEhckl0="/>
         </table:table>
     </page:list1>
 </div>

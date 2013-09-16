@@ -115,7 +115,7 @@ public class EtatCreditsController {
 	
 	// imprime les factures 
 	@RequestMapping("/print/{etatId}.pdf")
-	public String print(  @PathVariable("etatId")Long etatId, Model uiModel){
+	public String print(@PathVariable("etatId")Long etatId, Model uiModel){
 
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(etatId);
 		etatCredits.initListeDettes();
@@ -125,11 +125,20 @@ public class EtatCreditsController {
 	}
 
 	@RequestMapping("/printfacture/{etatId}.pdf")
-	public String printfacuture(  @PathVariable("etatId")Long etatId, Model uiModel){
+	public String printfactureGlobale(  @PathVariable("etatId")Long etatId, Model uiModel){
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(etatId);
 		etatCredits.initListeDettes();
 		uiModel.addAttribute("etatCredits", etatCredits);
 		return "facturePayeur";
+
+	}
+	
+	@RequestMapping("/printfacturedetails/{etatId}.pdf")
+	public String printfactureDetaillee(@PathVariable("etatId")Long etatId, Model uiModel){
+		EtatCredits etatCredits = EtatCredits.findEtatCredits(etatId);
+		etatCredits.initListeDettes();
+		uiModel.addAttribute("etatCredits", etatCredits);
+		return "factureGlobaleDetaillee";
 
 	}
 

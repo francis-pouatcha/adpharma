@@ -8,7 +8,7 @@
 	<jsp:output omit-xml-declaration="yes" />
 	<style>
 #_title_fc_org_adorsys_adpharma_beans_ChangeDatePrice_id_pane {
-	height: 300px;
+	height: auto;
 }
 
 #proceed {
@@ -28,16 +28,16 @@
 	<spring:url  var="findProductByCipm_url" value="/ligneapprovisionements/findProductByCipmAjax" />
 	
 	
-	<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
+	<spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" htmlEscape="false" />
 	<spring:message code="column_price" var="column_price" />
 	<spring:message code="column_dateperemp" var="column_dateperemp" />
 	<spring:message code="button_cancel" var="button_cancel" />
-	<spring:message code="update_price_valid" var="update_price_valid" />
+	<spring:message code="update_price_valid" var="update_price_valid" htmlEscape="false" />
 	<spring:message code="button_find" var="button_find" />
-	<spring:message code="update_price_title" var="update_price_title" />
-	<spring:message code="update_price_tab_product" var="update_price_tab_product" />
-	<spring:message code="update_price_tab_price" var="update_price_tab_price" />
-	<spring:message code="update_price_tab_date" var="update_price_tab_date" />
+	<spring:message code="update_price_title" var="update_price_title" htmlEscape="false" />
+	<spring:message code="update_price_tab_product" var="update_price_tab_product" htmlEscape="false" />
+	<spring:message code="update_price_tab_price" var="update_price_tab_price" htmlEscape="false" />
+	<spring:message code="update_price_tab_date" var="update_price_tab_date" htmlEscape="false" />
 	
 	
 	
@@ -47,7 +47,7 @@
 <form:create id="fc_org_adorsys_adpharma_beans_ChangeDatePrice" modelAttribute="changeDatePrice" path="/ligneapprovisionements/changeDatePrice" label="${update_price_title}" z="">
 		<div style="color: red;font-size: 20px;font-style: italic; margin-bottom: 5px;">${message}</div>
 		
-		<div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 1200px; height: 450px">
+		<div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 1200px; height: 300px">
 		   <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${update_price_tab_product}">
 		     <table style="width: 300px;">
 		       <tr>

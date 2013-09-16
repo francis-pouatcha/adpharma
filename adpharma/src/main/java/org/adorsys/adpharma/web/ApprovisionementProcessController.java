@@ -61,6 +61,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/approvisionementprocess")
 @Controller
@@ -96,6 +97,7 @@ public class ApprovisionementProcessController {
 			uiModel.addAttribute("printBareCodeBean", printBareCodeBean);
 			return "/approvisionementprocess/printBareCode";
 		}
+		
 		uiModel.addAttribute("printBareCodeBean", printBareCodeBean);
 		return "printBarecodeDocView";
 	}

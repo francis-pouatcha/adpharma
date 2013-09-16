@@ -38,7 +38,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    show: true,
 	                    zoom: true,
 	                    looseZoom: true,
-	                    showTooltip: false
+	                    showTooltip: true
 	                },
 	                title: {
 	                    text: '${statistics_curvey_sales}',   // title for the plot,

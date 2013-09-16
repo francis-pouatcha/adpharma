@@ -31,6 +31,7 @@
     <spring:url value="/inventaireProcess/${inventaireProcess.invId}/annulerInv"  var="delete_cmd_url" />
 	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/deleteLine/" var="delete_line_url" />
 	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/updateLineByAjax" var="update_url" />
+	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/exportLines" var="exportlines_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL INVENTAIRE</a></span>
 		<span ><a href="#" style="text-decoration: none;" id="findcip"> <INPUT type="button" class="submits" value="rechercher un produit"/></a></span>
@@ -38,6 +39,7 @@
 	    <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT  class="submits" type="button" value="Annuler l'inventaire" title="Annuler L'inventaire" /></a></span>
    		<span ><a href="#" style="text-decoration: none;" id="loadfilebtn"> <INPUT type="button" class="submits" value="charger le Fichier"/></a></span>
    		<span ><a href="${fiche_comp_url}" style="text-decoration: none;"> <INPUT type="button" class="submits" value="Fiche de comptage"/></a></span>
+        <span ><a href="${exportlines_url}" style="text-decoration: none;"> <INPUT type="button" class="submits" value="Exporter les lignes"/></a></span>
    </div>
 		
 	

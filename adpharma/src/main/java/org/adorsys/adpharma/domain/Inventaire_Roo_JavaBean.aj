@@ -79,6 +79,14 @@ privileged aspect Inventaire_Roo_JavaBean {
         this.site = site;
     }
     
+    public Long Inventaire.getRayonId() {
+        return this.rayonId;
+    }
+    
+    public void Inventaire.setRayonId(Long rayonId) {
+        this.rayonId = rayonId;
+    }
+    
     public Set<LigneInventaire> Inventaire.getLigneInventaire() {
         return this.ligneInventaire;
     }

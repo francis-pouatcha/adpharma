@@ -134,7 +134,7 @@
                     <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom" required="true" z="user-managed"/>
                     <field:input field="nomComplet" id="c_org_adorsys_adpharma_domain_Client_nomComplet" render="false" z="user-managed"/>
                     <field:input field="telephoneFixe" id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
-                    <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" z="UEVz4Qi38EfJSl81OAO5fxyACeo="/>
+                    <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" required="true" z="cgA267/y+TXb15mcuplhD3RLmP8="/>
                     <field:input field="fax" id="c_org_adorsys_adpharma_domain_Client_fax" z="aOSu7ScTBW5cIY/nnmRzVfsL4UE="/>
                     <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
                 </td>

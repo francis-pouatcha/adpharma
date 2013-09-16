@@ -59,6 +59,8 @@ public class Inventaire extends AdPharmaBaseEntity {
 	@ManyToOne
 	private Site site;
 	
+	private Long rayonId;
+	
    transient MultipartFile fichier ;
 
 	/*

@@ -14,6 +14,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.adorsys.adpharma.utils.NumberGenerator;
@@ -45,6 +46,7 @@ public class Client extends AdPharmaBaseEntity {
 
     private String telephoneFixe;
 
+    @NotNull(message="Veuillez entrer le numero de telephone mobile")
     private String telephoneMobile;
 
     private String fax;
@@ -66,6 +68,7 @@ public class Client extends AdPharmaBaseEntity {
     @Enumerated
     private Genre sexe;
 
+    @NotNull(message="Veuillez entrer le taux de couverture")
     private BigDecimal tauxCouverture = BigDecimal.valueOf(100);
 
     @Size(max = 256)

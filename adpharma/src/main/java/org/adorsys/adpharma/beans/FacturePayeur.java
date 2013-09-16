@@ -139,7 +139,7 @@ public class FacturePayeur extends   AbstractPdfView {
 		
 
 		PdfPCell cipMCell = new PdfPCell(cellStyle);
-		cipMCell.setPhrase(new Phrase(new Chunk("Employes", headerStyle)));
+		cipMCell.setPhrase(new Phrase(new Chunk("Employe", headerStyle)));
 		cipMCell.setPaddingBottom(5);
 		table.addCell(cipMCell );
 		
@@ -231,7 +231,7 @@ public class FacturePayeur extends   AbstractPdfView {
 		}	
 		}
 		
-				RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(Locale.FRANCE, RuleBasedNumberFormat.SPELLOUT);
+	   RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(Locale.FRANCE, RuleBasedNumberFormat.SPELLOUT);
 				 
 		document.add(table);
 		headerStyle.setColor(Color.black);

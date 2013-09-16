@@ -9,49 +9,72 @@
     <jsp:output omit-xml-declaration="yes"/>
     
      <jsp:include page="etatscripts.jspx" />
-     <center>  <legend> Veuillez Renseigner Les Informations  ci-dessous </legend>  </center>
+     
+     <spring:message code="reports_other_reports_config_parameters" var="reports_other_reports_config_parameters" htmlEscape="false" />
+     <spring:message code="reports_other_reports_edit_parameters" var="reports_other_reports_edit_parameters" htmlEscape="false" />
+     <spring:message code="reports_other_reports_config_period" var="reports_other_reports_config_period" htmlEscape="false" />
+     <spring:message code="reports_other_reports_config_others" var="reports_other_reports_config_others" htmlEscape="false" />
+     <spring:message code="reports_other_reports_config_position" var="reports_other_reports_config_position" htmlEscape="false" />
+     <spring:message code="reports_other_reports_config_mvts" var="reports_other_reports_config_mvts" htmlEscape="false" />
+     <spring:message code="reports_other_reports_cash_operation" var="reports_other_reports_cash_operation" htmlEscape="false" />
+     <spring:message code="column_filiale" var="column_filiale" htmlEscape="false" />
+     <spring:message code="column_ray" var="column_ray" />
+     <spring:message code="column_agent" var="column_agent" />
+     <spring:message code="statistics_period_begin" var="statistics_period_begin" htmlEscape="false" />
+     <spring:message code="statistics_period_end" var="statistics_period_end" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_sales" var="reports_other_reports_periodic_sales" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_cash" var="reports_other_reports_periodic_cash" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_debts" var="reports_other_reports_periodic_debts" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_stock_mvts" var="reports_other_reports_periodic_stock_mvts" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_ca" var="reports_other_reports_periodic_ca" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_transform" var="reports_other_reports_periodic_transform" htmlEscape="false" />
+     <spring:message code="reports_other_reports_periodic_margin_rate" var="reports_other_reports_periodic_margin_rate" htmlEscape="false" />
+     <spring:message code="reports_other_reports_stock_valuation_ray" var="reports_other_reports_stock_valuation_ray" htmlEscape="false" />
+     <spring:message code="reports_other_reports_calalog" var="reports_other_reports_calalog" htmlEscape="false" />
+     <spring:message code="reports_other_reports_stock_valuation_ray_filial" var="reports_other_reports_stock_valuation_ray_filial" htmlEscape="false" />
+     <spring:message code="reports_other_reports_stock_movements_by_cip" var="reports_other_reports_stock_movements_by_cip" htmlEscape="false" />
+     <spring:message code="reports_other_reports_cash_operations" var="reports_other_reports_cash_operations" htmlEscape="false" />
      
 <form:create label="Edition generale des Etats" hideallButton="true" labelButon="Editer" diseableSubmit="true" formId="dialogform" id="fc_org_adorsys_adpharma_domain_Facture" modelAttribute="etatManagerBean" path="#" render="${empty dependencies}" z="user-managed">
    <table>
      <tr>
        <td style="vertical-align: top;">
-        <legend> Parametres de configuration des Etats </legend>
+        <legend> ${reports_other_reports_config_parameters} </legend>
         <div id="param1">
             <ul>
-                <li> <a href="#param1_tab1"> Configuration des periodes </a> </li>
-                <li> <a href="#param1_tab2"> Autres configurations </a> </li>
+                <li> <a href="#param1_tab1"> ${reports_other_reports_config_period} </a> </li>
+                <li> <a href="#param1_tab2"> ${reports_other_reports_config_others} </a> </li>
             </ul>
             <div id="param1_tab1">
-		        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="Date Debut"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-		        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="Date Fin"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="${statistics_period_begin}"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="${statistics_period_end}"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
             </div>
             <div id="param1_tab2">
-		        <field:input label="Valeur"   field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:input label="Valeur" field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
             </div>
         </div>    
         
-        <legend> Parametres d'edition des Etats: </legend>
+        <legend> ${reports_other_reports_config_parameters} </legend>
         <div id="param2">
             <ul>
-                <li> <a href="#param2_tab1"> Parametres de position </a> </li>
-                <li> <a href="#param2_tab2"> Mouvements de stock </a> </li>
-                <li> <a href="#param2_tab3"> Operations de caisse </a> </li>
+                <li> <a href="#param2_tab1"> ${reports_other_reports_config_position} </a> </li>
+                <li> <a href="#param2_tab2"> ${reports_other_reports_config_mvts} </a> </li>
+                <li> <a href="#param2_tab3"> ${reports_other_reports_cash_operation} </a> </li>
             </ul>
             <div id="param2_tab1">
-                    <field:select path="/rayons" items="${rayons}" label="Rayon" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_rayon" z="user-managed"/>
-			        <field:select path="/filiales" items="${filiales}" label="Filiales" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_filiale" z="user-managed"/>
-			        <field:select path="/pharmaUser" items="${users}" label="Agent" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_user" z="user-managed"/>
-			        <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_produit" z="user-managed"/>
+                    <field:select path="/rayons" items="${rayons}" label="${column_ray}" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_rayon" z="user-managed"/>
+			        <field:select path="/filiales" items="${filiales}" label="${column_filiale}" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_filiale" z="user-managed"/>
+			        <field:select path="/pharmaUser" items="${users}" label="${column_agent}" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_user" z="user-managed"/>
+			      <!--   <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_produit" z="user-managed"/>-->
             </div>
             <div id="param2_tab2">
                     <field:input label="Cip" field="cip" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_cip" required="false" />
                     <field:input label="Designation" field="designation" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_designation" required="false"  />
-			        <field:select path="/"  label="Type Mouvement"   field="typeMouvement" items="${typeMouvements }" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_typeMouvement" z="user-managed"/>
+			        <field:select path="/" field="typeMouvement" items="${typeMouvements}" id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" z="user-managed"/>
             </div>
             <div id="param2_tab3">
-                    <field:select path="/"  label="Type Operation"   field="typeOperation" items="${typesOperationsCaisses}" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_typeOperation" z="user-managed"/>
+                    <field:select path="/" field="typeOperation" items="${typesOperationsCaisses}" id="c_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" z="user-managed"/>
             </div>
-        
         </div>
           <!-- 
         <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
@@ -63,7 +86,7 @@
 				  <table>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Periodique des Ventes </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_sales} </i>
 				          </td>
 				          <td>
 				               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  checked="checked" id="url1"  />
@@ -71,7 +94,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Periodique des caisses </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_cash} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"   name="etats" id="url2"  />
@@ -79,7 +102,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Periodique des Dettes </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_debts} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"  name="etats" id="url3"  />
@@ -87,7 +110,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Periodique des Mouvements de stock</i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_stock_mvts}</i>
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url4" />
@@ -95,7 +118,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Chiffre affaire periodique par vendeur </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_ca} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url5" />
@@ -103,7 +126,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Etat periodique des Transformations / vendeur </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_transform} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio" onclick="defineGotoUrl(this);" name="etats" id="url6"  />
@@ -111,7 +134,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Periodique Taux Marque </i>
+				               <i class="labeletat"> ${reports_other_reports_periodic_margin_rate} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url7"  />
@@ -119,7 +142,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Valorisation du stock par rayon  </i>
+				               <i class="labeletat"> ${reports_other_reports_stock_valuation_ray}  </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url8"  />
@@ -127,7 +150,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Listing Catalogue par rayon  </i>
+				               <i class="labeletat"> ${reports_other_reports_calalog}  </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
@@ -135,7 +158,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat Valorisation du stock par Filiale  </i>
+				               <i class="labeletat"> ${reports_other_reports_stock_valuation_ray_filial}  </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url10"  />
@@ -143,7 +166,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat des mouvements de stock par cip  </i>
+				               <i class="labeletat"> ${reports_other_reports_stock_movements_by_cip} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url11"  />
@@ -151,7 +174,7 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> Etat periodique des operations de caisses groupes / caisse  </i>
+				               <i class="labeletat"> ${reports_other_reports_cash_operations} </i>
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url12"  />

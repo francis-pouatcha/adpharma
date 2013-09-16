@@ -1,5 +1,10 @@
 package org.adorsys.adpharma.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.persistence.TypedQuery;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +21,9 @@ import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
+import org.adorsys.adpharma.beans.LigneApprovisionementExcelRepresentation;
+import org.adorsys.adpharma.beans.importExport.ExportLignesApprovisionnement;
+import org.adorsys.adpharma.beans.importExport.ubipharm.FileSystemScanner;
 import org.adorsys.adpharma.beans.process.InventaireProcess;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Inventaire;
@@ -21,15 +31,19 @@ import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
+import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.Contract;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
+import org.apache.commons.io.FileSystemUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -46,6 +60,9 @@ public class InventaireProcessController {
 	
 	@Autowired
 	private JasperPrintService jasperPrintService ;
+	
+	@Autowired
+	ExportLignesApprovisionnement exportLignesApprovisionnement;
 	
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
@@ -95,6 +112,29 @@ public class InventaireProcessController {
 		InventaireProcess inventaireProcess = new InventaireProcess(invId);
 		uiModel.addAttribute("inventaireProcess",inventaireProcess);
 		return "inventaireProcess/findProduct";
+	}
+	
+	@RequestMapping(value = "/{invId}/exportLines", method = RequestMethod.GET)
+	public String exportLines(@PathVariable("invId") Long invId,Model uiModel, HttpServletResponse response) {
+		Inventaire inventaire = Inventaire.findInventaire(invId);
+		List<LigneApprovisionementExcelRepresentation> data= new ArrayList<LigneApprovisionementExcelRepresentation>();
+		Rayon rayon = Rayon.findRayon(inventaire.getRayonId());
+		List<LigneApprovisionement> list = LigneApprovisionement.findLignesApprovisionementByRayon(rayon);
+		for(LigneApprovisionement line: list){
+			LigneApprovisionementExcelRepresentation representation = new LigneApprovisionementExcelRepresentation(line.getCip(), line.getCipMaison(), line.getDesignation(), line.getQuantieEnStock(), line.getProduit().getRayon().getEmplacement());
+			data.add(representation);
+		}
+		try {
+			exportLignesApprovisionnement.exportData("produits.xls", data, exportLignesApprovisionnement.getColumns());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		FileSystemResource resource = new FileSystemResource("/tools/produits.xls");
+		String file = resource.getFilename();
+		return "inventaireProcess/editInventaire";
 	}
 
 
@@ -318,7 +358,6 @@ public class InventaireProcessController {
 	public String Search(Produit prd , Model uiModel) {
 		if (StringUtils.isBlank(prd.getDesignation())&& StringUtils.isBlank(prd.getCip()) && prd.getFiliale()==null && prd.getRayon() ==null ) {
 			return "redirect:/produits?page=1" ;
-
 		}
 		uiModel.addAttribute("results", Produit.search(prd.getFamilleProduit(),prd.getSousfamilleProduit(),prd.getCip(), prd.getDesignation(),null,null, prd.getRayon(), prd.getFiliale() ,prd.getDateDerniereRupture(),null ).getResultList());
 		uiModel.addAttribute("rayon", ProcessHelper.populateRayon());

@@ -6,15 +6,16 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
-    <spring:message code="list_search_provider" var="list_search_provider" />
+    <spring:message code="list_search_provider" var="list_search_provider" htmlEscape="false"/>
     
     <page:list1 id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" z="user-managed" url="/pharmausers/search" search="true" placeholder="${list_search_provider}">
         <table:table data="${pharmausers}" delete="false" id="l_org_adorsys_adpharma_domain_PharmaUser" path="/pharmausers" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc=" render="false"/>
+            
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" property="userNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userName" maxLength="-1" property="userName" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" maxLength="-1" property="fullName" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_gender" property="gender" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_phoneNumber" property="phoneNumber" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_office" maxLength="-1" property="office" render="false" z="wveNrUYLgXCSVaFfghPNzG1HDdk="/>

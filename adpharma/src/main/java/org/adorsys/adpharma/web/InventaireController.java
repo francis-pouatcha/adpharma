@@ -14,6 +14,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
+import org.adorsys.adpharma.beans.importExport.ExportLignesApprovisionnement;
 import org.adorsys.adpharma.beans.importExport.LigneInventaireImportExportService;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.Etat;
@@ -48,6 +49,9 @@ public class InventaireController {
 	@Autowired
 	private LigneInventaireImportExportService ligneinventaireImportExportService ;
 	
+	@Autowired
+	ExportLignesApprovisionnement exportLignesApprovisionnement;
+	
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
 	
@@ -81,6 +85,8 @@ public class InventaireController {
 			addDateTimeFormatPatterns(uiModel);
 			return "inventaires/create";
 		}
+		Rayon rayon = inventaire.getRayon();
+		inventaire.setRayonId(rayon.getId());
 		uiModel.asMap().clear();
 		inventaire.persist();
 		MultipartFile fichier = inventaire.getFichier();

@@ -4,17 +4,19 @@
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_org_adorsys_adpharma_domain_Site" items="${sites}" z="soeHrsDJfQ15ctm22jK/C+mHjtM=">
         <table:table create="false" data="${sites}" delete="false" id="l_org_adorsys_adpharma_domain_Site" path="/sites" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" property="drugstoreKey" z="3YrLCkdJI5JdE5Rmu3K2Y6X5qpY=" render="false"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_orderSentPath" property="orderSentPath" z="UBST3Fsg6n+D2kafnoQgk7jOhOA=" render="false"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" property="orderReceivePath" z="vp0mUiIavAQPp+Ye0eN67okBc64=" render="false"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" property="bareCodePerLine" z="wghG1jX3zxaTYCq+aGKyyqZlU2U=" render="false"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" property="platformBaseUrl" z="ZRDoZbewSJ8QNCzzrH+fVsItvuQ=" render="false"/>
+            
             <table:column id="c_org_adorsys_adpharma_domain_Site_siteManager" label="Codebare/ligne" property="bareCodePerLine" z="jIDFiTtVXzggNIK5yxX9/Rnp1Pg="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_siteManager" property="siteManager" z="ZRDoZbewSJ8QNCzzrH+fVsItvuQ="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_email" property="email" z="3YrLCkdJI5JdE5Rmu3K2Y6X5qpY="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_mobile" property="mobile" z="UBST3Fsg6n+D2kafnoQgk7jOhOA="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_phone" property="phone" z="vp0mUiIavAQPp+Ye0eN67okBc64="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_footPrint" property="footPrint" z="jIDFiTtVXzggNIK5yxX9/Rnp1Pg="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" property="platformBaseUrl" z="ZRDoZbewSJ8QNCzzrH+fVsItvuQ="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" property="drugstoreKey" z="3YrLCkdJI5JdE5Rmu3K2Y6X5qpY="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_orderSentPath" property="orderSentPath" z="UBST3Fsg6n+D2kafnoQgk7jOhOA="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" property="orderReceivePath" z="vp0mUiIavAQPp+Ye0eN67okBc64="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" property="bareCodePerLine" z="wghG1jX3zxaTYCq+aGKyyqZlU2U="/>
+            
         </table:table>
     </page:list>
 </div>

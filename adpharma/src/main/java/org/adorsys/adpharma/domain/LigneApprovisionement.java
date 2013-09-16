@@ -737,6 +737,16 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public static List<LigneApprovisionement> findAllLigneApprovisionements() {
 		return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ORDER BY o.designation ASC", LigneApprovisionement.class).setParameter("etat", Etat.CLOS).getResultList();
 	}
+	
+	public static List<LigneApprovisionement> findLignesApprovisionementByRayon(Rayon rayon){
+		List<Produit> produits = Produit.findProduitsByRayon(rayon).getResultList();
+		List<LigneApprovisionement> result= new ArrayList<LigneApprovisionement>();
+		for(Produit produit:produits){
+			List<LigneApprovisionement> lignes = LigneApprovisionement.findLigneApprovisionementsByProduit(produit).getResultList();
+			result.addAll(lignes);
+		}
+	return result;
+	}
 
 	public static List<BigDecimal> findlastPrices(Produit produit) {
 		EntityManager em = LigneApprovisionement.entityManager();

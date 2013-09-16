@@ -9,9 +9,9 @@ xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/> 
     
-    <spring:message code="customer_debts_search" var="customer_debts_search" />
-    <spring:message code="customer_debts_date_min" var="customer_debts_date_min" />
-    <spring:message code="customer_debts_date_max" var="customer_debts_date_max" />
+    <spring:message code="customer_debts_search" var="customer_debts_search" htmlEscape="false" />
+    <spring:message code="customer_debts_date_min" var="customer_debts_date_min" htmlEscape="false" />
+    <spring:message code="customer_debts_date_max" var="customer_debts_date_max" htmlEscape="false" />
     
     <form:create modelAttribute="detteClient"  label="${customer_debts_search}" id="fc_org_adorsys_adpharma_domain_DetteClient" path="/detteclients/BySearch" z="IwXNhea9GaiWbCo3LPsuS6T9ZFE=">
         <field:input field="assurer" render="false" label="Client" id="c_org_adorsys_adpharma_domain_DetteClient_clientName" z="NW4XOZ2psJV5MbwOHjXHwQt5dMM="/>
