@@ -189,6 +189,7 @@ public class Client extends AdPharmaBaseEntity {
             client.setNom("CLIENT");
             client.setPrenom("DIVERS");
             client.setCategorie(CategorieClient.findAllCategorieClients().iterator().next());
+            client.setTelephoneMobile("7");
             client.persist();
         }
     }
