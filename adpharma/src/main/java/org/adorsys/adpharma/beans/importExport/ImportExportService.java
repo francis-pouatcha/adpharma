@@ -1,12 +1,14 @@
 package org.adorsys.adpharma.beans.importExport;
 
-import java.util.List;
 import java.io.File;
-import org.apache.commons.lang.StringUtils;
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
+import java.io.IOException;
+import java.util.List;
 
 import jxl.Cell;
 import jxl.Sheet;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public abstract class ImportExportService<T> {
 	/**
@@ -27,9 +29,10 @@ public abstract class ImportExportService<T> {
 
 	public  <D> T importFromSheet(Sheet sheet,D dependClazz){return null ;} 
 
-	public  File exportToxlsFile(T clazz){ return null ;} 
+	public  HSSFWorkbook exportToxlsFile(T clazz){ return null ;} 
 
-	public  File exportToxlsFile(List<T> listclazz){ return null ;}
+	public  HSSFWorkbook exportToxlsFile(List<T> listclazz) { return null ;}
+	public  File exportToTxtFile(List<T> listclazz) throws IOException{ return null ;}
 	public abstract List<String> useFieldName();
 	public abstract T itemFromSheetRow(Cell...cells);
 	public boolean isfieldNamesMacthed(Sheet sheet , List<String> fieldNames){

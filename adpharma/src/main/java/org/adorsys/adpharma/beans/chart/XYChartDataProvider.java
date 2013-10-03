@@ -25,11 +25,11 @@ import com.ibm.icu.math.BigDecimal;
 @Component
 public class XYChartDataProvider implements ChartDataProvider {
 
+	
 	private EntityManager em ;
 
-
 	public XYChartDataProvider(){
-		em =LigneCmdClient.entityManager();
+		//em =LigneCmdClient.entityManager();
 	}
 
 	public EntityManager getEm() {

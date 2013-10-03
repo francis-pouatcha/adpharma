@@ -5,14 +5,20 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.DestinationMvt;
+import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
+import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.core.InventoryService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -25,8 +31,8 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class InventoryService {
-	private static final Logger  LOG =LoggerFactory.getLogger(InventoryService.class);
+public class DefaultInventoryService implements InventoryService {
+	private static final Logger  LOG =LoggerFactory.getLogger(DefaultInventoryService.class);
 	/**
 	 * use to set all negative sock of produit to zero
 	 * @param produit
@@ -51,15 +57,19 @@ public class InventoryService {
 	public static BigInteger getTrueStockQuantity(Produit produit){
 		BigInteger trueStock = BigInteger.ZERO;
 		if(produit == null) return trueStock ;
-		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ONE, produit.getCip()).getResultList();
-		if (!resultList.isEmpty()) {
-			for (LigneApprovisionement line : resultList) {
-				trueStock = trueStock.add(line.getQuantieEnStock());
-			}
+		EntityManager em = MouvementStock.entityManager();
+        StringBuilder searchQuery = new StringBuilder("SELECT SUM(o.quantieEnStock) FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock AND o.cip = :cip  ");
+        Query q = em.createQuery(searchQuery.toString());
+        q.setParameter("quantieEnStock", BigInteger.ZERO);
+        q.setParameter("cip", produit.getCip());
+        List<Object>  stock = q.getResultList();
+		if(!stock.isEmpty()){
+			trueStock = (BigInteger) stock.iterator().next();
+			trueStock = trueStock!=null ?trueStock :BigInteger.ZERO;
 		}
 		return trueStock ;
 	}
-	
+
 	/**
 	 * @param produit
 	 * @return the true value of stock include negative stock
@@ -81,17 +91,9 @@ public class InventoryService {
 	 * @return the true value of stock
 	 */
 	public static BigInteger stock(Produit produit){
-		BigInteger trueStock = BigInteger.ZERO;
-		if(produit == null) return trueStock ;
-		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockNotEqualsAndCipEquals(BigInteger.ZERO, produit.getCip()).getResultList();
-		if (!resultList.isEmpty()) {
-			for (LigneApprovisionement line : resultList) {
-				trueStock = trueStock.add(line.getQuantieEnStock());
-			}
-		}
-		return trueStock ;
+		return getTrueStockQuantity(produit);
 	}
-	
+
 	public void mergeProduct(Produit product,Produit mergeWith){
 		if(product==null||mergeWith==null) return;
 		if(product.equals(mergeWith)) return;
@@ -112,7 +114,7 @@ public class InventoryService {
 				if(pa!=null)line.setPrixAchatUnitaire(pa);
 				if(pv!=null)line.setPrixAchatUnitaire(pv);
 				line.merge();
-				
+
 			}
 			product.addproduct(trueStockQuantity);
 			MouvementStock mvt = new MouvementStock();
@@ -132,7 +134,7 @@ public class InventoryService {
 			mvt.setTypeMouvement(TypeMouvement.FUSION_CIP);
 			mvt.persist();
 		}
-		
+
 		mergeWith.setCip(RandomStringUtils.randomAlphabetic(3)+mergeWith.getId());
 		mergeWith.setActif(Boolean.FALSE);
 		mergeWith.merge();
@@ -144,7 +146,7 @@ public class InventoryService {
 	 * @param produit
 	 * @param quantity
 	 */
-	
+
 	public void updateStockToDown(Produit produit ,BigInteger quantity){
 		if(produit == null || quantity == null ) throw  new IllegalArgumentException(" produit or quantity arguments is required ")	;
 		if(quantity.intValue() <= 0) return ;
@@ -174,7 +176,7 @@ public class InventoryService {
 				if(quantity.intValue() <= 0) break ;
 				if(resultList.indexOf(line) == resultList.size() - 1)
 				{
-				 	quantity = line.pushAllInForInventory(quantity);
+					quantity = line.pushAllInForInventory(quantity);
 				} else
 				{
 					quantity = line.pushProductsInForInventory(quantity);
@@ -212,10 +214,57 @@ public class InventoryService {
 				System.out.println("Null Pointer exception");
 			}
 			item.persist();
-
-			//TODO:
 		}
 
+	}
+
+	@Override
+	public void makeStockCorrectionFromInventoryByCip(Inventaire inventaire) {
+		List<LigneInventaire> ligneInventaires = inventaire.getLigneInventaire();
+		for (LigneInventaire ligneInventaire : ligneInventaires) {
+			Produit produit = ligneInventaire.getProduit();
+			setNegativeStockToZero(produit);
+			BigInteger trueStock = getTrueStockQuantity(produit);
+			BigInteger qteReel = ligneInventaire.getQteReel();
+			if (qteReel.intValue() > trueStock.intValue()) {
+				BigInteger ecart = qteReel.subtract(trueStock);
+				updateStockToUp(produit, ecart);
+			}
+			if (qteReel.intValue() < trueStock.intValue()) {
+				BigInteger ecart = trueStock.subtract(qteReel);
+				updateStockToDown(produit, ecart);
+			}
+			produit.setQuantiteEnStock(qteReel);
+			produit.merge();		
+		}
+	}
+
+	@Override
+	public void makeStockCorrectionFromInventoryByCipm(Inventaire inventaire) {
+		List<LigneInventaire> ligneInventaires = inventaire.getLigneInventaire();
+		for (LigneInventaire ligneInventaire : ligneInventaires) {
+			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(ligneInventaire.getCipm()).getResultList();
+			if(!resultList.isEmpty()){
+				LigneApprovisionement next = resultList.iterator().next();
+				if(ligneInventaire.getEcart().intValue()!=0){
+					if(next.getQuantiteAprovisione().intValue() > ligneInventaire.getQteReel().intValue()){
+						next.setQuantiteVendu(next.getQuantiteAprovisione().subtract(ligneInventaire.getQteReel()));
+					}else{
+						next.setQuantiteAprovisione(ligneInventaire.getQteReel());
+						next.setQuantiteVendu(next.getQuantiteAprovisione().subtract(ligneInventaire.getQteReel()));
+					}
+					next.setQuantiteReclame(BigInteger.ZERO);
+					next.setQuantiteSortie(BigInteger.ZERO);
+					next.CalculeQteEnStock();
+				}
+				Produit produit = next.getProduit();
+				next.merge();
+				BigInteger trueStockQuantity = getTrueStockQuantity(produit);
+				produit.setQuantiteEnStock(trueStockQuantity);
+				produit.defineArchived();
+				produit.merge();
+			}
+		}
 	}
 
 }

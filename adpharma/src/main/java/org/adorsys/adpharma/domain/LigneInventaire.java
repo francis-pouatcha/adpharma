@@ -53,6 +53,8 @@ public class LigneInventaire {
 
 	private String agentSaisie ;
 
+	private String cipm ;
+
 	@ManyToOne
 	private Inventaire inventaire;
 
@@ -65,6 +67,28 @@ public class LigneInventaire {
 	private Produit produit;
 
 
+	public LigneInventaire() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public LigneInventaire(Produit produit,Inventaire inventaire,BigInteger qteReel) {
+		this.inventaire=inventaire;
+		setProduit(produit);
+		setQteEnStock(produit.getQuantiteEnStock());
+		setQteReel(qteReel);
+		calculerEcart();
+		caculMontantEcart();
+	}
+	public LigneInventaire(LigneApprovisionement ligne,Inventaire inventaire,BigInteger qteReel) {
+		this.inventaire=inventaire;
+		setProduit(ligne.getProduit());
+		setQteEnStock(ligne.getQuantieEnStock());
+		setPrixUnitaire(ligne.getPrixVenteUnitaire());
+		setQteReel(qteReel);
+		setCipm(ligne.getCipMaison());
+		calculerEcart();
+		caculMontantEcart();
+	}
 	public void calculerEcart(){
 		ecart = qteReel.subtract(qteEnStock);
 	}
@@ -85,12 +109,18 @@ public class LigneInventaire {
 	 * calculate price of product defficite ecart
 	 */
 	public void caculMontantEcart(){
-		List<BigDecimal> lastPrices = LigneApprovisionement.findlastPrices(produit);
-		prixUnitaire = BigDecimal.ZERO;
-		prixTotal = BigDecimal.ZERO;
-		if(!lastPrices.isEmpty()){
-			prixUnitaire = lastPrices.get(0);
+		if(prixUnitaire!=null){
 			prixTotal = prixUnitaire.multiply(BigDecimal.valueOf(ecart.longValue()));
+		}else {
+			List<BigDecimal> lastPrices = LigneApprovisionement.findlastPrices(produit);
+			prixUnitaire = BigDecimal.ZERO;
+			prixTotal = BigDecimal.ZERO;
+			if(!lastPrices.isEmpty()){
+				prixUnitaire = lastPrices.get(0);
+				prixTotal = prixUnitaire.multiply(BigDecimal.valueOf(ecart.longValue()));
+
+			}
+
 
 		}
 
@@ -98,6 +128,14 @@ public class LigneInventaire {
 
 
 	}
+	public String getCipm() {
+		return cipm;
+	}
+
+	public void setCipm(String cipm) {
+		this.cipm = cipm;
+	}
+
 	public String toJson() {
 		return new JSONSerializer().exclude("*.class").serialize(this);
 	}
@@ -177,11 +215,7 @@ public class LigneInventaire {
 						ligne.merge();
 						genereMvt(ligne, increaseQte, false);
 						restoreQte = restoreQte.subtract(increaseQte);
-
-
-
 					}
-
 				}
 				produit.setQuantiteEnStock(qteReel);
 				produit.setDateDerniereSortie(new  Date());
@@ -226,14 +260,14 @@ public class LigneInventaire {
 
 		}
 	}
-	
-	 public static TypedQuery<LigneInventaire> findLigneInventairesByInventaire(Inventaire inventaire) {
-	        if (inventaire == null) throw new IllegalArgumentException("The inventaire argument is required");
-	        EntityManager em = LigneInventaire.entityManager();
 
-	        TypedQuery<LigneInventaire> q = em.createQuery("SELECT o FROM LigneInventaire AS o WHERE o.inventaire = :inventaire ORDER BY o.produit.designation ", LigneInventaire.class);
-	        q.setParameter("inventaire", inventaire);
-	        return q;
-	    }
-	
+	public static TypedQuery<LigneInventaire> findLigneInventairesByInventaire(Inventaire inventaire) {
+		if (inventaire == null) throw new IllegalArgumentException("The inventaire argument is required");
+		EntityManager em = LigneInventaire.entityManager();
+
+		TypedQuery<LigneInventaire> q = em.createQuery("SELECT o FROM LigneInventaire AS o WHERE o.inventaire = :inventaire ORDER BY o.produit.designation ", LigneInventaire.class);
+		q.setParameter("inventaire", inventaire);
+		return q;
+	}
+
 }

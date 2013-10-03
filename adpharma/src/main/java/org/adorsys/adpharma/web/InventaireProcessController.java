@@ -1,19 +1,19 @@
 package org.adorsys.adpharma.web;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +22,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
+import org.adorsys.adpharma.beans.InventoryUisearchModel;
 import org.adorsys.adpharma.beans.LigneApprovisionementExcelRepresentation;
 import org.adorsys.adpharma.beans.importExport.ExportLignesApprovisionnement;
-import org.adorsys.adpharma.beans.importExport.ubipharm.FileSystemScanner;
+import org.adorsys.adpharma.beans.importExport.LigneApproImportExportService;
 import org.adorsys.adpharma.beans.process.InventaireProcess;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Inventaire;
@@ -34,18 +36,18 @@ import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.utils.Contract;
 import org.adorsys.adpharma.utils.DocumentsPath;
 import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
-import org.apache.commons.io.FileSystemUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -65,6 +67,9 @@ public class InventaireProcessController {
 	
 	@Autowired
 	ExportLignesApprovisionnement exportLignesApprovisionnement;
+	
+	@Autowired
+	LigneApproImportExportService  ligneApproImportExportService ;
 	
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
@@ -137,7 +142,7 @@ public class InventaireProcessController {
 		}
 		
 		// Download the file to the Client
-		File file = new File("/tools/produits.xls");
+		File file = new File("/tools/produits.kk");
 		String path = file.getAbsolutePath();
 		String name = file.getName();
 		String fileName=name;
@@ -182,18 +187,18 @@ public class InventaireProcessController {
 	@RequestMapping(value = "/{invId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("invId") Long invId,@RequestParam Long pId,@RequestParam BigInteger qte,Model uiModel,HttpSession session) {
 		Inventaire inventaire = Inventaire.findInventaire(invId);
+		LigneApprovisionement ligne = LigneApprovisionement.findLigneApprovisionement(pId);
 		Produit produit = Produit.findProduit(pId);
-		produit.calculPrixTotalStock();
-		if (inventaire.contientProduit(produit)) {
+		if (inventaire.contientProductOrOpproItems(produit,ligne)) {
 			uiModel.addAttribute("apMessage", messageSource.getMessage("appro_product_exist", null, LocaleUtil.getCurrentLocale())); 
 		}else{
-			LigneInventaire ligneInventaire = new LigneInventaire();
-			ligneInventaire.setInventaire(inventaire);
-			ligneInventaire.setProduit(produit);
-			ligneInventaire.setQteEnStock(produit.getQuantiteEnStock());
-			ligneInventaire.setQteReel(qte);
-			ligneInventaire.calculerEcart();
-			ligneInventaire.caculMontantEcart();
+			LigneInventaire ligneInventaire = null ;
+			if(inventaire.isInventoryBycipm()){
+				 ligneInventaire = new LigneInventaire(ligne, inventaire, qte);
+			}else {
+				 ligneInventaire = new LigneInventaire(Produit.findProduit(pId), inventaire, qte);
+			}
+			
 			ligneInventaire.persist();
 		}
 		InventaireProcess inventaireProcess = new InventaireProcess(invId, LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList());
@@ -248,6 +253,24 @@ public class InventaireProcessController {
 		return "inventaireProcess/show";
 	}
 	
+	@RequestMapping(value="/findApproLine", method = RequestMethod.GET)
+	@ResponseBody
+	public String findApproLine(Model uiModel,HttpServletRequest httpServletRequest) {
+		String designation = httpServletRequest.getParameter("designation") ;
+		List<LigneApprovisionement> search = LigneApprovisionement.findLigneApprovisionementsByDesignationLike(designation).getResultList();
+		ArrayList<LigneApprovisionement> arrayList = new ArrayList<LigneApprovisionement>();
+			for (LigneApprovisionement ligneApprovisionement : search) {
+				arrayList.add(ligneApprovisionement.clone());
+			}
+		return LigneApprovisionement.toJsonArray(arrayList);
+	}
+	@RequestMapping(value = "/selectedAprroLine/{cipm}",  method = RequestMethod.GET)
+	@ResponseBody
+	public String selectProduct(@PathVariable("cipm") String cipm, Model uiModel) {
+		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipm).getResultList().iterator().next();
+		/// return ligneApprovisionement.clone().toJson();
+		return ligneApprovisionement.toJson();
+	}
 	
 	@Transactional
 	@RequestMapping(value = "/{invId}/annulerInv", method = RequestMethod.GET)
@@ -258,7 +281,7 @@ public class InventaireProcessController {
 
 	//@Transactional
 	@RequestMapping(value = "/{invId}/closeInventaire", method = RequestMethod.GET)
-	public String closeCommand(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
+	public String closeInventaire(@PathVariable("invId") Long invId, Model uiModel,HttpSession session) {
 		Inventaire inventaire = Inventaire.findInventaire(invId);
 		List<LigneInventaire> resultList = LigneInventaire.findLigneInventairesByInventaire(inventaire).getResultList();
 		if (resultList.isEmpty()) {
@@ -334,7 +357,78 @@ public class InventaireProcessController {
 		uiModel.addAttribute("filiales", ProcessHelper.populateFiliale() );
 		return "inventaires/inventaireFicheQte";
 	}
+	@RequestMapping(value = "/cataloqueCipm",params = {"form" }, method = RequestMethod.GET)
+	public String catalogueCipmForm(Model uiModel) {
+		uiModel.addAttribute("InventoryUisearchModel", new InventoryUisearchModel());
+		uiModel.addAttribute("rayons", ProcessHelper.populateRayon() );
+		uiModel.addAttribute("catalogue", new ArrayList<LigneApprovisionement>());
+		return "inventaires/cataloqueCipm";
+	}
 	
+	@RequestMapping(value = "/cataloqueCipm", method = RequestMethod.POST)
+	public String cataloqueCipm(@Valid InventoryUisearchModel inventoryUisearchModel ,HttpServletRequest request , Model uiModel) throws IOException {
+		List<LigneApprovisionement> seach = inventoryUisearchModel.seach();
+		uiModel.addAttribute("catalogue", seach);
+		uiModel.addAttribute("InventoryUisearchModel", inventoryUisearchModel);
+		uiModel.addAttribute("rayons", ProcessHelper.populateRayon() );
+		return "inventaires/cataloqueCipm";
+	}
+	@RequestMapping(value = "/cataloqueCipm.pdf", method = RequestMethod.GET)
+	public String cataloqueCipmPdf(@Valid InventoryUisearchModel inventoryUisearchModel,HttpServletRequest request , Model uiModel) {
+		List<LigneApprovisionement> seach = inventoryUisearchModel.seach();
+		uiModel.addAttribute("catalogue", seach);
+		return "catalogueCipmPdf";
+	}
+	@RequestMapping(value = "/cataloqueCipm.xls", method = RequestMethod.GET)
+	public void cataloqueCipmXls(@Valid InventoryUisearchModel inventoryUisearchModel,HttpServletResponse response , Model uiModel) throws IOException {
+		List<LigneApprovisionement> seach = inventoryUisearchModel.seach();
+		HSSFWorkbook file = ligneApproImportExportService.exportToxlsFile(seach);
+		uiModel.addAttribute("catalogue", seach);
+		response.setContentType("application/vnd.ms-excel");
+		String fileName = "cataloqueCipm"+new Date()+"_.xls";
+		response.setHeader("Content-Disposition","attachement;filename=\"" + fileName + "\"");
+		ServletOutputStream outputStream = response.getOutputStream();
+		file.write(outputStream);
+	}
+	@ResponseBody
+	@RequestMapping(value = "/cataloqueCipm.txt", method = RequestMethod.GET)
+	public void cataloqueCipmTxt(@Valid InventoryUisearchModel inventoryUisearchModel,HttpServletResponse response , Model uiModel) throws IOException {
+		List<LigneApprovisionement> seach = inventoryUisearchModel.seach();
+		File file = ligneApproImportExportService.exportToTxtFile(seach);
+		response.setContentType("text/plain");
+		response.setHeader("Content-Disposition","attachement;filename=\"" + file.getName() + "\"");
+	    FileInputStream istr = null;
+        OutputStream ostr = null;
+	    try {  
+	          istr = new FileInputStream(file);
+	          ostr = response.getOutputStream();
+	          int curByte=-1;
+	                while( (curByte=istr.read()) !=-1)
+	                    ostr.write(curByte);
+
+	          ostr.flush();
+	        } catch(Exception ex){
+	          ex.printStackTrace(System.out);
+	        } finally{
+	          try {
+	            if(istr!=null)  istr.close();
+	            if(ostr!=null)  ostr.close();
+	          } catch(Exception ex){
+
+	              ex.printStackTrace();
+	            System.out.println(ex.getMessage());
+	          }
+	        }  
+	        try {
+	            response.flushBuffer();
+	        } catch(Exception ex){
+
+	            ex.printStackTrace();
+	            System.out.println(ex.getMessage());
+	        }
+
+		return  ;
+	}
 	 // Impression de la fiche de code bar de l'inventaire
 	@RequestMapping(value="/{invId}/printCodeBar/{invNumber}.pdf", method=RequestMethod.GET)
 	public String printFicheCodeBare(@PathVariable("invId")Long invId, @PathVariable("invNumber")String invNumber,  Model uiModel, HttpServletRequest httpServletRequest){
@@ -355,10 +449,12 @@ public class InventaireProcessController {
 	@RequestMapping(value = "/ficheSuivieQte.pdf", method = RequestMethod.GET)
 	public String inventaireFicheQte(@Valid Inventaire inp, BindingResult bindingResult,HttpServletRequest request , Model uiModel) {
 		List<Produit> result = new ArrayList<Produit>();
+		DefaultInventoryService inventoryService = new DefaultInventoryService();
 		List<Object[]> etatVente = MouvementStock.findProduitAndQuantiteVendue(inp.getCipProduct(), inp.getDesignation(), inp.getBeginBy(), inp.getEndBy(),inp.getDateDebut(), inp.getDateFin(),inp.getRayon(),inp.getFiliale());
 		if (!etatVente.isEmpty()) {
 			for (Object[] obj : etatVente) {
 				Produit produit =  (Produit)obj[0]; 
+				produit.setQuantiteEnStock(inventoryService.getTrueStockQuantity(produit));
 				produit.setQtevendu((BigInteger)obj[1]);
 				result.add(produit);
 			}

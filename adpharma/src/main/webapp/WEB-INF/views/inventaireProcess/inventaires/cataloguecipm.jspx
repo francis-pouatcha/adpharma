@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+     <spring:url value="/resources/catalogueCipm.txt" var="cataloguetxt_url" />
+    <form:create formId="searchfrom"  id="fc_org_adorsys_adpharma_domain_Inventaire" modelAttribute="InventoryUisearchModel" path="/inventaireProcess/cataloqueCipm" render="${empty dependencies}" z="H6XsMq/Lxu84kET4RQidFZ7oDK4=">
+      
+       <div style="float: left; width: 40%; height: 400px;">
+           
+        <field:select field="productRow" label="Emplacement" id="c_org_adorsys_adpharma_domain_Inventaire_agent" itemValue="id" items="${rayons}" path="rayons" z="amf50NLmpBNVp+k0jqM+/tTJG/g="/>
+        <field:input field="beginName" label="libelle entre le" id="c_org_adorsys_adpharma_domain_Inventaire_footPrint" z="wnej5WbqdZswrM30DWV4tXSBtO0="/>
+        <field:input field="endName" label="Et" id="c_org_adorsys_adpharma_domain_Inventaire_NumeroInventaire" z="IQXweMV80CaWl5IgumxynOo1IfI="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" label="Saisie entre" field="beginOrderedDate" id="c_org_adorsys_adpharma_domain_Inventaire_dateInventaire" z="LSsHNp4KoE3kNqz6EhUwlSmUksE="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" label="Et" field="endOrderedDate" id="c_org_adorsys_adpharma_domain_Inventaire_dateInventaire" z="LSsHNp4KoE3kNqz6EhUwlSmUksE="/>
+        <field:checkbox field="includeArchivedLine" id="c_org_adorsys_adpharma_domain_Inventaire_agent" label="Inclure les Archives" />
+    </div>
+    <div style="float: right; width: 59%; height: 400px; overflow: auto;">
+    <c:if test="${not empty catalogue}">
+    <span style="margin-bottom: 5px;">
+                     <INPUT class="submits" id="txtBtn" type="button" value="Exporter(.txt)"  />
+                     <INPUT class="submits" id="xlsBtn" type="button" value="Exporter(.xls)"  />
+                     <INPUT class="submits" id="pdfBtn" type="button" value="Exporter(.pdf)"  />
+            </span>
+            <BR />
+     </c:if>
+            
+    <table id="catalogue">
+							<thead>
+								<tr>			
+								
+									<th style="text-align: center; ">cip</th>
+									<th style="text-align: center;">cipm</th>
+									<th style="text-align: left;width: 50%;">designation</th>
+									<th style="text-align: center;">prix</th>
+									<th style="text-align: center;">stock</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${catalogue}" var="items">
+									<tr id="${items.id}">
+										<td>${items.produit.cip}</td>
+										<td style="text-align: center;">${items.cipMaison}</td>
+										<td style="text-align: center;">${items.designation}</td>
+										<td style="text-align: center;">${items.prixVenteUnitaire}</td>
+										<td style="text-align: center;">${items.quantieEnStock}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+</div>
+    </form:create>
+    <spring:url value="/inventaireProcess/cataloqueCipm.pdf?" var="pdfUrl"  />
+    <spring:url value="/inventaireProcess/cataloqueCipm.xls?" var="xlsUrl"  />
+    <spring:url value="/inventaireProcess/cataloqueCipm.txt?" var="txtUrl"  />
+    <script>
+		$('#pdfBtn').click(function() {
+			var url = '${pdfUrl}'+$('#searchfrom').serialize() ;
+			window.location = url ;
+		});
+		$('#xlsBtn').click(function() {
+			var url = '${xlsUrl}'+$('#searchfrom').serialize() ;
+			window.location = url ;
+		});
+		$('#txtBtn').click(function() {
+			var url = '${txtUrl}'+$('#searchfrom').serialize() ;
+			window.location = url ;
+		});
+	</script>
+</div>

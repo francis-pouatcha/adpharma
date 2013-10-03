@@ -386,11 +386,6 @@ if(Check == false){
        
             </security:authorize>
     
-      <!--  menu Fournisseur-->  
-         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
-            
-         </security:authorize>
-        
       <!--  menu Inventaire -->
      <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_rps_url"/>
              <spring:url value="/produits/ProduitAlerteStock?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_as_url"/>
@@ -404,6 +399,7 @@ if(Check == false){
             <spring:url value="/inventaires?find=ByDateInventaireBetween&amp;form" var="inv_date_url"/>
             <spring:url value="/inventaires?find=ByEtat&amp;form" var="inv_etat_url"/>
             <spring:url value="/ligneapprovisionements?find=ByCipMaison&amp;form" var="fichetDetail_cipm_url"/>
+            <spring:url value="/inventaireProcess/cataloqueCipm?form" var="invRayol"/>
            
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_INVENTAIRE">
 
@@ -421,7 +417,7 @@ if(Check == false){
 			<spring:message code="inventory_repports_edition" var="repports_edition"/>
 		        				<a href="#">${repports_edition }</a>
 		        					<ul>
-		        						<!--  <li><a href="${invRayol}">Fiche Inventaire</a></li>-->
+		        					 <li><a href="${invRayol}">Catalogue Cipm</a></li>
 			<spring:message code="inventory_product_qty_monitoring_report" var="product_qty_monitoring_report"/>
 		        						<li><a href="${fiche_qte_url}">${product_qty_monitoring_report } </a></li>
 			<spring:message code="inventory_stock_monitoring_report" var="stock_monitoring_report"/>

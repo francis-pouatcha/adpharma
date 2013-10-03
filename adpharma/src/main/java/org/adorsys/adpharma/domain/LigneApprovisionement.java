@@ -55,14 +55,6 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	private int indexLine;
 
-	public boolean isSkipPriceConvertion() {
-		return skipPriceConvertion;
-	}
-
-	public void setSkipPriceConvertion(boolean skipPriceConvertion) {
-		this.skipPriceConvertion = skipPriceConvertion;
-	}
-
 	private String cip;
 
 	private String viewMsg ;
@@ -70,21 +62,6 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public String getViewMsg() {
 		return viewMsg;
 	}
-
-	public void setViewMsg(String viewMsg) {
-		this.viewMsg = viewMsg;
-	}
-
-	public String getCip() {
-		return cip;
-	}
-
-	private transient boolean skipPriceConvertion = Boolean.FALSE;
-
-	public void setCip(String cip) {
-		this.cip = cip;
-	}
-
 	@Size(min = 7)
 	private String cipMaison = null;
 
@@ -109,28 +86,12 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private Date dateSaisie = new Date();
 
 	private BigInteger quantiteAprovisione;
-	
+
 	private BigInteger quantiteUniteGratuite = BigInteger.ZERO;
 
 	private BigInteger quantiteVendu = BigInteger.ZERO;
-	
+
 	private BigInteger quantiteReclame= BigInteger.ZERO;
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public BigInteger getQuantiteVendu() {
-		return quantiteVendu;
-	}
-
-	public void setQuantiteVendu(BigInteger quantiteVendu) {
-		this.quantiteVendu = quantiteVendu;
-	}
 
 	private BigInteger quantieEnStock = BigInteger.ZERO;
 
@@ -151,19 +112,73 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private transient BigDecimal prixAchatSTock;
 
 	private transient BigDecimal prixVenteStock;
+
+	private transient BigInteger qteCip;
 	
+
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Approvisionement approvisionement;
+
+	@Value("true")
+	private Boolean remiseAutorise;
+
+	private transient String fournisseur;
+
+	private transient String nonRayon;
+
+	private transient String saisiele;
+
+	public boolean isSkipPriceConvertion() {
+		return skipPriceConvertion;
+	}
+
+	public void setSkipPriceConvertion(boolean skipPriceConvertion) {
+		this.skipPriceConvertion = skipPriceConvertion;
+	}
+	public void setViewMsg(String viewMsg) {
+		this.viewMsg = viewMsg;
+	}
+
+	public String getCip() {
+		return cip;
+	}
+
+	private transient boolean skipPriceConvertion = Boolean.FALSE;
+
+	public void setCip(String cip) {
+		this.cip = cip;
+	}
+
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
+
+	public BigInteger getQuantiteVendu() {
+		return quantiteVendu;
+	}
+
+	public void setQuantiteVendu(BigInteger quantiteVendu) {
+		this.quantiteVendu = quantiteVendu;
+	}
+
+
+
 	public BigDecimal getPrixAchatSTock() {
 		return prixAchatSTock;
 	}
-	
+
 	public BigDecimal getPrixVenteStock() {
 		return prixVenteStock;
 	}
-	
+
 	public void setPrixAchatSTock(BigDecimal prixAchatSTock) {
 		this.prixAchatSTock = prixAchatSTock;
 	}
-	
+
 	public void setPrixVenteStock(BigDecimal prixVenteStock) {
 		this.prixVenteStock = prixVenteStock;
 	}
@@ -175,28 +190,15 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public void setQteCip(BigInteger qteCip) {
 		this.qteCip = qteCip;
 	}
-	
+
 	public Approvisionement getApprovisionement() {
-        return this.approvisionement;
-    }
-    
-    public void setApprovisionement(Approvisionement approvisionement) {
-        this.approvisionement = approvisionement;
-    }
+		return this.approvisionement;
+	}
 
-	private transient BigInteger qteCip;
+	public void setApprovisionement(Approvisionement approvisionement) {
+		this.approvisionement = approvisionement;
+	}
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	private Approvisionement approvisionement;
-
-	@Value("true")
-	private Boolean remiseAutorise;
-
-	private transient String fournisseur;
-	
-	private transient String nonRayon;
-
-	private transient String saisiele;
 
 	public LigneApprovisionement transforme(BigInteger qte, Model uiModel) {
 		List<TransformationProduit> relation = TransformationProduit.findTransformationProduitsByProduitOrigine(produit).getResultList();
@@ -263,11 +265,11 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public String toJson() {
 		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon", "produit.configSolde.tauxSolde","datePeremtion", "produit.configSolde.activeConfig", "produit.quantiteEnStock").exclude("*","*.class").serialize(this);
 	}
-	
+
 	public String toJson2() {
 		return new JSONSerializer().include("id","cip","cipMaison","prixVenteUnitaire","prixAchatUnitaire","designation","quantiteAprovisione","quantiteReclame","quantieEnStock","fournisseur","qteCip","nonRayon").exclude("*","*.class").serialize(this);
 	}
-	
+
 	public static String toJsonArray(Collection<LigneApprovisionement> collection) {
 		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy"), Date.class).include("id","cip","cipMaison","prixVenteUnitaire","designation","quantiteAprovisione","quantieEnStock","quantieEnStock","fournisseur","saisiele","remiseMax","viewMsg","qteCip","nonRayon","datePeremtion").exclude("*","*.class").serialize(collection);
 	}
@@ -455,11 +457,11 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	protected void internalPreUpdate() {
 		CalculerMargeBrute();
+		archived = (quantieEnStock.intValue() == 0 );
 	}
 
-	public boolean canCompencse(BigInteger qte){
+	public boolean isCompasable(BigInteger qte){
 		boolean test = quantieEnStock.subtract(qte).intValue() > 0 ;
-		System.out.println(test);
 		return test ;
 	}
 
@@ -509,8 +511,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		calculRemise();
 		designation = produit.getDesignation();
 	}
-	
-	
+
+
 
 	public void augmenterQteApprovisione(BigInteger qte) {
 		setQuantiteAprovisione(quantiteAprovisione.add(qte));
@@ -558,7 +560,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			remiseMax = prixVenteUnitaire.multiply(tauxRemiseMax).divide(BigDecimal.valueOf(100));
 			remiseMax =  BigDecimal.valueOf(remiseMax.longValue());
 		}
-		
+
 	}
 
 	public String toString() {
@@ -604,19 +606,19 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		return q;
 	}
 	public static TypedQuery<LigneApprovisionement> findNextProduits(Long id ) {
-        if (id == null ) throw new IllegalArgumentException("The id argument is required");
-        EntityManager em = LigneApprovisionement.entityManager();
-        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.id > :id ORDER BY o.id ", LigneApprovisionement.class);
-        q.setParameter("id", id);
-        return q;
-    }
- public static TypedQuery<LigneApprovisionement> findPreviousProduits(Long id ) {
-        if (id == null ) throw new IllegalArgumentException("The id argument is required");
-        EntityManager em = LigneApprovisionement.entityManager();
-        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.id < :id ORDER BY o.id DESC", LigneApprovisionement.class);
-        q.setParameter("id", id);
-        return q;
-    }
+		if (id == null ) throw new IllegalArgumentException("The id argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.id > :id ORDER BY o.id ", LigneApprovisionement.class);
+		q.setParameter("id", id);
+		return q;
+	}
+	public static TypedQuery<LigneApprovisionement> findPreviousProduits(Long id ) {
+		if (id == null ) throw new IllegalArgumentException("The id argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.id < :id ORDER BY o.id DESC", LigneApprovisionement.class);
+		q.setParameter("id", id);
+		return q;
+	}
 	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByQuantieEnStockLessThanAndCipEquals(BigInteger quantieEnStock, String cip) {
 		if (quantieEnStock == null) throw new IllegalArgumentException("The quantieEnStock argument is required");
 		if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
@@ -696,7 +698,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("approvisionement", approvisionement);
 		return q;
 	}
-	
+
 	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByApprovisionementOrdered(Approvisionement approvisionement) {
 		if (approvisionement == null) throw new IllegalArgumentException("The approvisionement argument is required");
 		EntityManager em = LigneApprovisionement.entityManager();
@@ -737,7 +739,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public static List<LigneApprovisionement> findAllLigneApprovisionements() {
 		return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ORDER BY o.designation ASC", LigneApprovisionement.class).setParameter("etat", Etat.CLOS).getResultList();
 	}
-	
+
 	public static List<LigneApprovisionement> findLignesApprovisionementByRayon(Rayon rayon){
 		List<Produit> produits = Produit.findProduitsByRayon(rayon).getResultList();
 		List<LigneApprovisionement> result= new ArrayList<LigneApprovisionement>();
@@ -745,7 +747,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			List<LigneApprovisionement> lignes = LigneApprovisionement.findLigneApprovisionementsByProduit(produit).getResultList();
 			result.addAll(lignes);
 		}
-	return result;
+		return result;
 	}
 
 	public static List<BigDecimal> findlastPrices(Produit produit) {
@@ -880,26 +882,26 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("etat", Etat.CLOS);
 		return q;
 	}
-	
-	
-	 public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEqualsAndReclamations(String cipMaison) {
-	        if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
-	        EntityManager em = LigneApprovisionement.entityManager();
-	        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison AND o.quantiteReclame > :qteReclame", LigneApprovisionement.class);
-	        q.setParameter("cipMaison", cipMaison);
-	        q.setParameter("qteReclame", BigInteger.ZERO);
-	        return q;
-	    }
-	 
-	 
-	 public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEquals(String cipMaison) {
-	        if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
-	        EntityManager em = LigneApprovisionement.entityManager();
-	        TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison", LigneApprovisionement.class);
-	        q.setParameter("cipMaison", cipMaison);
-	        return q;
-	    }
-	
-	
-	
+
+
+	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEqualsAndReclamations(String cipMaison) {
+		if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison AND o.quantiteReclame > :qteReclame", LigneApprovisionement.class);
+		q.setParameter("cipMaison", cipMaison);
+		q.setParameter("qteReclame", BigInteger.ZERO);
+		return q;
+	}
+
+
+	public static TypedQuery<LigneApprovisionement> findLigneApprovisionementsByCipMaisonEquals(String cipMaison) {
+		if (cipMaison == null || cipMaison.length() == 0) throw new IllegalArgumentException("The cipMaison argument is required");
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.cipMaison = :cipMaison", LigneApprovisionement.class);
+		q.setParameter("cipMaison", cipMaison);
+		return q;
+	}
+
+
+
 }

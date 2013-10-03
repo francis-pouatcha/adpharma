@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -15,7 +14,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
-import javax.persistence.PreUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +21,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.adorsys.adpharma.services.InventoryService;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.RandomStringUtils;
@@ -34,11 +32,8 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 
 import flexjson.JSONSerializer;
 
@@ -258,6 +253,12 @@ public class Produit extends AdPharmaBaseEntity {
 
 	@Override
 	protected void internalPreUpdate() {
+		//quantiteEnStock= DefaultInventoryService.getTrueStockQuantity(this);
+	}
+	
+	public void defineArchived(){
+		archived = LigneApprovisionement.findLigneApprovisionementsByProduit(this).setMaxResults(1).getResultList().isEmpty();
+
 	}
 	
 	@PostUpdate
@@ -266,10 +267,7 @@ public class Produit extends AdPharmaBaseEntity {
 		if(quantiteEnStock.intValue()==0){
 			dateDerniereRupture= new Date();
 		}
-     // Coherence des stock qte cip et qte cipm		
 		
-		/*quantiteEnStock= InventoryService.getTrueStockQuantity(this);
-		System.out.println("Quantite en stock apres mise a jour: "+quantiteEnStock);*/
 	}
 
 	

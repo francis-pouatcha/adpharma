@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"   
 xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
-xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
 xmlns:spring="http://www.springframework.org/tags" 
 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
@@ -24,6 +24,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
         <field:display field="etat" id="s_org_adorsys_adpharma_domain_Inventaire_etat" object="${inventaire}" z="FPPQjwYkVH2Aa5kkq6hX5DwZcC0="/>
         <field:display date="true" dateTimePattern="${inventaire_dateinventaire_date_format}" field="dateInventaire" id="s_org_adorsys_adpharma_domain_Inventaire_dateInventaire" object="${inventaire}" z="/OfHQ/49SUOewXRNlz+g7CNJkcw="/>
         <field:display field="site" id="s_org_adorsys_adpharma_domain_Inventaire_site" object="${inventaire}" z="it3tZQ9MRLqlpvl3hPpcvbtS7h8="/>
+        <field:display field="inventoryBycipm" id="s_org_adorsys_adpharma_domain_Inventaire_note" label="Inventaire Cipm " object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
         <field:display field="note" id="s_org_adorsys_adpharma_domain_Inventaire_note" object="${inventaire}" z="w9TPHDHWO8nIdZtq9+kAJQtZxPQ="/>
     </page:show1>
        <HR />
@@ -33,7 +34,11 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <div id="panel2">
       <page:list id="pl_org_adorsys_adpharma_domain_LigneInventaire" items="${inventaire.ligneInventaire}" z="3MEqxpA476LASp07433etslmugI=">
         <table:table delete="false" update="false" create="false" show="false" data="${inventaire.ligneInventaire}" id="l_org_adorsys_adpharma_domain_LigneInventaire" path="/ligneinventaires" z="oADU3jF9sp1Jk3bMOaCpzwZd/KM=">
-            <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="produit"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
+                    <c:if test="${inventaire.inventoryBycipm }">
+                                          <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="cipm" label="cipm"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
+                    
+                    </c:if>
+ <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_produit" property="produit"  maxLength="-1" z="D6Fq4AQdJVouiZCukwuiAYeb2QA="/>
             <table:column label="Stock Virtuel" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteEnStock" property="qteEnStock" z="0fbYI7MAuGD+MOC/It5ALpgKavE="/>
             <table:column label="Stock Reel" id="c_org_adorsys_adpharma_domain_LigneInventaire_qteReel" property="qteReel" z="VirQn2oOcr1cz4yh0ynbnIcdkBw="/>
             <table:column  id="c_org_adorsys_adpharma_domain_LigneInventaire_ecart" property="ecart" z="dJyibuOwUcOYmziU7GuplDGB8F0="/>

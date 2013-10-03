@@ -43,6 +43,7 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypePaiement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.adorsys.adpharma.utils.TicketPrinter;
@@ -67,7 +68,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PaiementProcessController {
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
 
@@ -107,7 +108,7 @@ public class PaiementProcessController {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
 			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
- 			return "caisses/infos";
+			return "caisses/infos";
 		}else {
 
 			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
@@ -265,7 +266,7 @@ public class PaiementProcessController {
 		List<Facture> resultList = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
 		return ""+resultList.size();
 	}
-	
+
 
 	//@Transactional
 	@RequestMapping(value = "/annulFacture/{cmdId}" ,method = RequestMethod.GET)
@@ -295,8 +296,8 @@ public class PaiementProcessController {
 		return	showPoduct(factures, uiModel);
 	}
 
-	
-	
+
+
 	@RequestMapping(value = "/findFacture" ,params = "find=ByDateCreationBetween", method = RequestMethod.GET)
 	public String findFacturesByDateCreationBetween(@RequestParam("minDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
 		if (minDateCreation == null || maxDateCreation == null) {
@@ -308,8 +309,8 @@ public class PaiementProcessController {
 
 	}
 
-	
-	
+
+
 	@RequestMapping(value = "/findFacture",params = "find=ByFactureNumberEquals", method = RequestMethod.GET)
 	public String findFacturesByFactureNumberEquals(@RequestParam("factureNumber") String factureNumber, Model uiModel) {
 		if (StringUtils.isBlank(factureNumber)) {
@@ -455,7 +456,7 @@ public class PaiementProcessController {
 
 	}
 
-    @Transactional
+	@Transactional
 	public void encaisserVenteComptant(Facture facture ,Caisse caisse,Paiement paiement){
 		genererMvtStock(facture , caisse);
 		genererOperationCaisse(caisse, paiement);
@@ -602,7 +603,8 @@ public class PaiementProcessController {
 					}
 				}
 
-				prd.merge().flush();   
+				prd.setQuantiteEnStock(new DefaultInventoryService().getTrueStockQuantity(prd));
+				prd.merge();
 				mouvementStock.persist();
 			}
 		}
