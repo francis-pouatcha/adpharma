@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -27,8 +28,17 @@ public abstract class ExportDataAbstractService<T> implements ExportDataService<
 	// The used used to fill data into row and cells
 	protected HSSFSheet sheet;
 	
+	public HSSFSheet getSheet() {
+		return sheet;
+	}
+	
+	public void setSheet(HSSFSheet sheet) {
+		this.sheet = sheet;
+	}
+	
+	
 	// The name of the created sheet
-	private String sheetName;
+	private String sheetName= RandomStringUtils.randomAlphabetic(10);
 	
 	public String getSheetName() {
 		return sheetName;

@@ -12,6 +12,14 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 
 privileged aspect MouvementStock_Roo_Finder {
     
+    public static TypedQuery<MouvementStock> MouvementStock.findMouvementStocksByCipEquals(String cip) {
+        if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
+        EntityManager em = MouvementStock.entityManager();
+        TypedQuery<MouvementStock> q = em.createQuery("SELECT o FROM MouvementStock AS o WHERE o.cip = :cip", MouvementStock.class);
+        q.setParameter("cip", cip);
+        return q;
+    }
+    
     public static TypedQuery<MouvementStock> MouvementStock.findMouvementStocksByCipMEquals(String cipM) {
         if (cipM == null || cipM.length() == 0) throw new IllegalArgumentException("The cipM argument is required");
         EntityManager em = MouvementStock.entityManager();
@@ -85,6 +93,14 @@ privileged aspect MouvementStock_Roo_Finder {
         EntityManager em = MouvementStock.entityManager();
         TypedQuery<MouvementStock> q = em.createQuery("SELECT o FROM MouvementStock AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)", MouvementStock.class);
         q.setParameter("designation", designation);
+        return q;
+    }
+    
+    public static TypedQuery<MouvementStock> MouvementStock.findMouvementStocksByTypeMouvement(TypeMouvement typeMouvement) {
+        if (typeMouvement == null) throw new IllegalArgumentException("The typeMouvement argument is required");
+        EntityManager em = MouvementStock.entityManager();
+        TypedQuery<MouvementStock> q = em.createQuery("SELECT o FROM MouvementStock AS o WHERE o.typeMouvement = :typeMouvement", MouvementStock.class);
+        q.setParameter("typeMouvement", typeMouvement);
         return q;
     }
     

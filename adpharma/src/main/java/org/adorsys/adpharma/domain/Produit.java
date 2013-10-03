@@ -5,17 +5,18 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.EntityListeners;
 import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
-import javax.persistence.PreUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +24,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.adorsys.adpharma.services.InventoryService;
+import org.adorsys.adpharma.beans.ProductMonitor;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.RandomStringUtils;
@@ -34,18 +35,17 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 
 import flexjson.JSONSerializer;
+
 
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Produit", finders = { "findProduitsByDesignationLike", "findProduitsByProduitNumberLike", "findProduitsByQuantiteEnStock", "findProduitsByFamilleProduit", "findProduitsByRayon", "findProduitsByCipEquals", "findProduitsByDesignationEquals" })
 @RooJson
+@EntityListeners(ProductMonitor.class)
 public class Produit extends AdPharmaBaseEntity {
 
 	private String produitNumber;
@@ -55,17 +55,31 @@ public class Produit extends AdPharmaBaseEntity {
 
 	private String fabricant;
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Rayon rayon;
 
 	 @Enumerated(EnumType.STRING)
 	 private CipType cipType = CipType.CIP39 ;
 	
+	/**
+	 * Indique si le produit le produit est actif ou pas, ie si des mouvements peuvent etre effectues dessus 
+	 */
 	public Boolean actif = Boolean.TRUE ;
-	@ManyToOne
+	
+	
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private FamilleProduit familleProduit;
+	
+	/**
+	 * Qte de produits a commander en cas d'alerte de stock
+	 */
+	private BigInteger qteCommande= BigInteger.ZERO;
+	
 
-	@ManyToOne
+	/**
+	 * Sous famille d'une famille de produits
+	 */
+	@ManyToOne(cascade=CascadeType.ALL)
 	private SousFamilleProduit SousfamilleProduit;
 
 	private BigInteger quantiteEnStock = BigInteger.ZERO;
@@ -145,6 +159,9 @@ public class Produit extends AdPharmaBaseEntity {
 
 
 
+	/**
+	 * Quantite de produits qui declanche une alerte de stock
+	 */
 	@Value("0")
 	private BigInteger seuilComande;
 
@@ -182,13 +199,13 @@ public class Produit extends AdPharmaBaseEntity {
 	@ManyToOne
 	private TVA tvaProduit;
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private TauxMarge tauxDeMarge;
 
 	@Column(unique = true)
 	private String cip;
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private ModeConditionement modeConditionement;
 
 	private boolean venteAutorise = true;
@@ -196,6 +213,11 @@ public class Produit extends AdPharmaBaseEntity {
 	private boolean commander;
 
 	private BigInteger plafondStock;
+	
+	/**
+	 * Cette variable indique si le produit a deja deja approvisionne en stock ou pas
+	 */
+	private boolean inStock= Boolean.FALSE;
 	
 	@Embedded
 	private ConfigurationSoldes configSolde;
@@ -211,7 +233,23 @@ public class Produit extends AdPharmaBaseEntity {
 		if (!venduByCip.isEmpty()) {
 			qtevendu = (BigInteger) venduByCip.iterator().next()[2];
 		}
-
+	}
+	
+	
+	
+	/**
+	 * This method verify if a product have been put once in stock
+	 * @param produit
+	 * @return true or false
+	 */
+	public static boolean alreadyInStock(Produit produit){
+		List<MouvementStock> mouvements = MouvementStock.findMouvementStocksByCipAndTypeMouvement(produit.getCip(), TypeMouvement.APPROVISIONEMENT).getResultList();
+		if(!mouvements.isEmpty()){
+			return true;
+		}else{
+			return false;
+		}
+	    
 	}
 
 	public void setTrueStockValue(){
@@ -219,7 +257,7 @@ public class Produit extends AdPharmaBaseEntity {
 		quantiteEnStock = trueStocK!=null?trueStocK:quantiteEnStock;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Filiale filiale;
 
 	public void desableOrEnableSale(boolean status) {
@@ -331,6 +369,7 @@ public class Produit extends AdPharmaBaseEntity {
 	return	!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty() ;
 	}
 
+	// Permet de verifier si un produit est en alerte de stock ou pas
 	public boolean isAlert(){
 		if (quantiteEnStock == null || seuilComande == null) return true ;
 		return quantiteEnStock.intValue() <= seuilComande.intValue();

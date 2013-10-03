@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.adorsys.adpharma.beans.LigneApprovisionementExcelRepresentation;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,18 @@ public class ExportLignesApprovisionnement extends ExportDataAbstractService<Lig
 	
 	@Override
 	public void exportData(String fileName, List<LigneApprovisionementExcelRepresentation> data, String[] columns) throws IOException, FileNotFoundException{
+		String filePath= "/tools/"+fileName;
+		File file = new File(filePath);
+		FileOutputStream outputStream=null;
 		super.setSheetName("Produits Inventaire");
 		super.exportData(fileName, data, columns);
 		insertData(super.sheet, data);
-		FileOutputStream outputStream = new FileOutputStream(new File("/tools/"+fileName));
+		if(file.exists()){
+			file.delete();
+			outputStream = new FileOutputStream(new File(filePath));
+		}else{
+			outputStream = new FileOutputStream(file);
+		}
 		super.workbook.write(outputStream);
 		outputStream.close();
 	}

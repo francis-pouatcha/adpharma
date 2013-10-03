@@ -63,6 +63,14 @@ privileged aspect Produit_Roo_JavaBean {
         this.familleProduit = familleProduit;
     }
     
+    public BigInteger Produit.getQteCommande() {
+        return this.qteCommande;
+    }
+    
+    public void Produit.setQteCommande(BigInteger qteCommande) {
+        this.qteCommande = qteCommande;
+    }
+    
     public SousFamilleProduit Produit.getSousfamilleProduit() {
         return this.SousfamilleProduit;
     }
@@ -221,6 +229,14 @@ privileged aspect Produit_Roo_JavaBean {
     
     public void Produit.setPlafondStock(BigInteger plafondStock) {
         this.plafondStock = plafondStock;
+    }
+    
+    public boolean Produit.isInStock() {
+        return this.inStock;
+    }
+    
+    public void Produit.setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
     
     public ConfigurationSoldes Produit.getConfigSolde() {

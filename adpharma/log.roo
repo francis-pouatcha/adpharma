@@ -478,3 +478,21 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-16 18:59:16
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-09-16 19:11:32
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-17 17:03:31
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-18 09:59:53
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-09-18 10:00:44
+// [failed] q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-18 10:08:26
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-27 17:24:03
+focus --class ~.domain.LigneApprovisionement
+finder list 
+finder add --finderName findLigneApprovisionementsByProduit
+finder add --finderName findLigneApprovisionementsByProduit
+finder add --finderName findLigneApprovisionementsByProduit
+focus --class ~.domain.MouvementStock
+finder list
+finder add --finderName findMouvementStocksByCipEquals
+finder add --finderName findMouvementStocksByTypeMouvement
+q
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-09-27 23:14:04

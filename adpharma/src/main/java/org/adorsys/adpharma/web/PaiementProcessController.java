@@ -166,7 +166,6 @@ public class PaiementProcessController {
 				try {
 					encaisser(facture, openCaisse, paiement);
 				} catch (Exception e) {
-					System.out.println("Probleme au nivo de l'encaissement"+e.getMessage());
 				}
 				paiement.merge();
 				paiementProcess.setShowDetailForm(true);
@@ -355,10 +354,7 @@ public class PaiementProcessController {
 			paiement.setTicketImprimer(true);
 			paiement.merge();
 		}
-
-		System.out.println("Adresse"+httpServletRequest.getRemoteAddr());
 		uiModel.addAttribute("paiement", paiement);
-
 		try {
 			String remoteAddr = httpServletRequest.getRemoteAddr();
 			List<PrinterConfiguration> printers = PrinterConfiguration.findPrinterConfigurationsByComputerAdresseEquals(remoteAddr).getResultList();
@@ -369,8 +365,6 @@ public class PaiementProcessController {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("ereur de construction de ticket !");
-			System.out.println(e.getMessage());
 			return "ticketPdfDocView";
 		}
 		/*if (PrintService.print(TicketPrinter.TICKET_FILE , httpServletRequest)) {
@@ -401,8 +395,6 @@ public class PaiementProcessController {
 			PrintService.silentPrint(TicketPrinter.TICKET_FILE);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("erreur d'impression de ticket !");
-			System.out.println(e.getMessage());
 			return "ticketPdfDocView";
 		}
 
@@ -539,7 +531,6 @@ public class PaiementProcessController {
 		BigDecimal amount = new BigDecimal(facture.getNetPayer());
 		amount=amount.multiply(BigDecimal.valueOf(commande.getTauxCouverture())).divide(BigDecimal.valueOf(100));
 		BigInteger partPayeur = amount.toBigInteger();
-		System.out.println(partPayeur);
 		//defini la dette du client  payeur
 		if (partPayeur.intValue()!=0) {
 			DetteClient dettePayeur = new DetteClient() ;
@@ -550,7 +541,6 @@ public class PaiementProcessController {
 			dettePayeur.setClientName(paiyeur.getNomComplet());
 			dettePayeur.setFactureId(facture.getId());
 			dettePayeur.avancer(BigInteger.ZERO);
-			System.out.println(dettePayeur);
 			dettePayeur.persist();
 			paiyeur.calculeTotalDette();
 			paiyeur.merge();

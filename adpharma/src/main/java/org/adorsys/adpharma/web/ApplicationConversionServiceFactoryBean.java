@@ -96,12 +96,11 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 	
 	private Converter<Etat, String> EnumEtatConverter(){
 		return new Converter<Etat, String>() {
-
 			@Override
 			public String convert(Etat source) {
-				String output= source.toString();
+				String output= source.toString1();
 				try {
-					output= messageSource.getMessage(source.toString(), null, LocaleUtil.getCurrentLocale());
+					output= messageSource.getMessage(source.toString1(), null, LocaleUtil.getCurrentLocale());
 				} catch (NoSuchMessageException e) {
 					LOGS.error("No message found for "+source);
 				}
@@ -111,14 +110,15 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 	}
 	
 	
+	
 	private Converter<Periode, String> EnumPeriodConverter(){
 	  return new Converter<Periode, String>() {
 
 		@Override
 		public String convert(Periode source) {
-			String output= source.toString();
+			String output= source.toString1();
 			try {
-				output= messageSource.getMessage(source.toString(), null, LocaleUtil.getCurrentLocale());
+				output= messageSource.getMessage(source.toString1(), null, LocaleUtil.getCurrentLocale());
 			} catch (Exception e) {
 				LOGS.error("No message found for "+source);
 			}
@@ -134,9 +134,9 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 
 			@Override
 			public String convert(TypeBon source) {
-				String output= source.toString();
+				String output= source.toString1();
 				try {
-					output= messageSource.getMessage(source.toString(), null, LocaleUtil.getCurrentLocale());
+					output= messageSource.getMessage(source.toString1(), null, LocaleUtil.getCurrentLocale());
 				} catch (Exception e) {
 					LOGS.error("No message found for "+source);
 				}
