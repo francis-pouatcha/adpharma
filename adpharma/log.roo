@@ -478,6 +478,7 @@ q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-16 18:59:16
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-09-16 19:11:32
+<<<<<<< HEAD
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-17 17:03:31
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-09-18 09:59:53
 q
@@ -496,3 +497,7 @@ finder add --finderName findMouvementStocksByCipEquals
 finder add --finderName findMouvementStocksByTypeMouvement
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-09-27 23:14:04
+=======
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-10-03 12:41:47
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-10-03 12:43:20
+>>>>>>> f54e7e8a84e56771f15498b99ebba4cd82ab3ad2
