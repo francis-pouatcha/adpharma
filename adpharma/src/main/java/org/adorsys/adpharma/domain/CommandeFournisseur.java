@@ -342,6 +342,13 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 		return  q;
 	}
 	
+	public static List<CommandeFournisseur> findPreparationAutomatiseeEnCours(){
+		TypedQuery<CommandeFournisseur> createQuery = entityManager().
+						createQuery("SELECT o FROM CommandeFournisseur AS o WHERE o.etatCmd = :etat AND o.ModeSelection = :modeSelection", CommandeFournisseur.class);
+		createQuery.setParameter("etat", Etat.EN_COUR);
+		createQuery.setParameter("modeSelection", ModeSelection.AUTOMATISEE);
+		return createQuery.getResultList();
+	}
 	public static TypedQuery<CommandeFournisseur> findCmdByFournisseurLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
 		designation ="%"+designation + "%";

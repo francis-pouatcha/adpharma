@@ -22,6 +22,9 @@ public class ProductMonitor {
 		if(produit.isAlert() && produit.getActif()==true){
 			LOGS.info("Produit en alerte de stock");
 			produit.setCommander(Boolean.TRUE);
+		}else if(!produit.isAlert() && produit.getActif() == true){
+			LOGS.info("Produit N'est pas en alerte de stock");
+			produit.setCommander(Boolean.FALSE);
 		}
 		if(Produit.alreadyInStock(produit)){
 			LOGS.info("Produit deja en stock");

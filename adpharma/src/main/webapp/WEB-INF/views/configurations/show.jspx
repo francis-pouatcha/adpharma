@@ -11,6 +11,7 @@
         <field:display field="editCloseSupply" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Editer Les Entrees Clos ?" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:display field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Toujour Vendre Les Plus Ancien ?" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:display field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Forcer Les ventes Sur le meme CIPM ?" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:display field="preparationAutomatisee" id="c_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" label="Allouer Les Preparations Automatisees ?" object="${configuration}" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:display field="enableLicence" id="s_org_adorsys_adpharma_domain_Configuration_enableLicence" object="${configuration}" z="TLOCC5MPP0Y/Uwr5CxChnsRN7uc="/>
         <field:display field="receptionFolder" id="s_org_adorsys_adpharma_domain_Configuration_receptionFolder" object="${configuration}" z="YjDoxYiAkfTlbO3a+1EVZZPaYvI="/>
         <field:display field="sendFolder" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder" object="${configuration}" z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>

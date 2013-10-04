@@ -39,6 +39,9 @@ public class Configuration {
 	
 	@Value("false")
 	private Boolean onlyCashReceiveCreditPay;
+
+	@Value("false")
+	private Boolean preparationAutomatisee;
 	
 	private String receptionFolder ;
 	
@@ -130,6 +133,16 @@ public class Configuration {
 
 	public void setOnlyCashReceiveCreditPay(Boolean onlyCashReceiveCreditPay) {
 		this.onlyCashReceiveCreditPay = onlyCashReceiveCreditPay;
+	}
+
+
+	public Boolean getPreparationAutomatisee() {
+		return preparationAutomatisee;
+	}
+
+
+	public void setPreparationAutomatisee(Boolean preparationAutomatisee) {
+		this.preparationAutomatisee = preparationAutomatisee;
 	}
 
 

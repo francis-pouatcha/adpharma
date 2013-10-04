@@ -24,12 +24,17 @@ import org.adorsys.adpharma.domain.AvoirClient;
 import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Client;
 import org.adorsys.adpharma.domain.CommandeClient;
+import org.adorsys.adpharma.domain.CommandeFournisseur;
+import org.adorsys.adpharma.domain.Configuration;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
+import org.adorsys.adpharma.domain.Fournisseur;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
+import org.adorsys.adpharma.domain.LigneCmdFournisseur;
+import org.adorsys.adpharma.domain.ModeSelection;
 import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.domain.Paiement;
@@ -37,6 +42,7 @@ import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.PrinterConfiguration;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.QuiPaye;
+import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
 import org.adorsys.adpharma.domain.TypeMouvement;
@@ -47,6 +53,7 @@ import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.adorsys.adpharma.utils.TicketPrinter;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -168,6 +175,12 @@ public class PaiementProcessController {
 				} catch (Exception e) {
 				}
 				paiement.merge();
+				
+				try {
+					gererPreparationAutomatisee(facture);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
 				paiementProcess.setShowDetailForm(true);
 				uiModel.addAttribute("paiementProcess",paiementProcess);
 				uiModel.addAttribute("paiement",paiement);
@@ -186,8 +199,68 @@ public class PaiementProcessController {
 		return "paiementprocess/encaisserPaiement";
 
 	}
+	void gererPreparationAutomatisee(Facture facture){
+		Configuration configuration = Configuration.findConfiguration(new Long(1));
+		if(configuration.getPreparationAutomatisee() == null || configuration.getPreparationAutomatisee() == Boolean.FALSE){
+			return;
+		}
+		Set<LigneCmdClient> ligneCmdClients = facture.getCommande().getLineCommande();
+		for (LigneCmdClient ligneCmdClient : ligneCmdClients) {
+			Produit produit = ligneCmdClient.getProduit().getProduit();
+			if(!produit.isCommander()){
+				continue;
+			}
+			CommandeFournisseur cmdFournEnCours = getPreparationAutomatiseeEnCours();
+			if(cmdFournEnCours == null){
+				cmdFournEnCours = creerPreparationAutomatisee();
+			}
+			ajouterLignePreparationAutomatisee(cmdFournEnCours, produit);
+		}
+	}
+	
+	LigneCmdFournisseur ajouterLignePreparationAutomatisee(CommandeFournisseur commandeFournisseur,Produit produit){
+		LigneCmdFournisseur ligneCmdFournisseur = new LigneCmdFournisseur();
+		BigDecimal pa = produit.getPrixAchatSTock();
+		BigDecimal pv = produit.getPrixVenteStock();
+		BigInteger qte = produit.getQteCommande();
+		pa = pa == null ? BigDecimal.ZERO : pa;
+		pv = pv == null ? BigDecimal.ZERO : pv;
+		qte = qte == null ? BigInteger.ONE : qte;
+		BigDecimal pt = pa.multiply(new BigDecimal(qte));
+		if (commandeFournisseur.contientProduit(produit)) {
+			
+		} else {
+			LigneCmdFournisseur line = new LigneCmdFournisseur();
+			line.setCommande(commandeFournisseur);
+			line.setPrixAchatMin(pa);
+			line.setPrixAVenteMin(pv);
+			line.setProduit(produit);
+			line.setQuantiteCommande(qte);
+			line.setPrixAchatTotal(pt);
+			line.persist();
+			commandeFournisseur.increaseMontant(pt);
+			commandeFournisseur.merge();
+		}
+		return ligneCmdFournisseur;
+	}
 
-
+	private CommandeFournisseur creerPreparationAutomatisee() {
+		CommandeFournisseur commandeFournisseur = new CommandeFournisseur();
+		commandeFournisseur.setModeDeSelection(ModeSelection.AUTOMATISEE);
+		commandeFournisseur.setEtatCmd(Etat.EN_COUR);
+		commandeFournisseur.setFournisseur(Fournisseur.findFournisseur(new Long(1)));
+		commandeFournisseur.setDateLimiteLivraison(DateUtils.addDays(new Date(), 2));
+		commandeFournisseur.setSite(Site.findSite(new Long(1)));
+		commandeFournisseur.persist();
+		return commandeFournisseur;
+	}
+	private CommandeFournisseur getPreparationAutomatiseeEnCours() {
+		List<CommandeFournisseur> preparationAutomatiseeEnCours = CommandeFournisseur.findPreparationAutomatiseeEnCours();
+		if(preparationAutomatiseeEnCours == null ||  preparationAutomatiseeEnCours.isEmpty()){
+			return null;
+		}
+		return preparationAutomatiseeEnCours.iterator().next();
+	}
 	@RequestMapping(value = "/selectFacture/{factureId}" ,method = RequestMethod.GET)
 	public String selectFacture(@PathVariable("factureId") Long factureId ,  Model uiModel,  HttpServletRequest httpServletRequest) {
 

@@ -9,6 +9,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" property="enableLicence" z="4cWVBkZD1/sDV4LtdwB35mNHFHA="/>
             <table:column id="c_org_adorsys_adpharma_domain_Configuration_onlySaleOld" property="onlySaleOld" z="GmiXN5qncUN9PNSwD0Q6icLVp1c="/>
             <table:column id="c_org_adorsys_adpharma_domain_Configuration_forceToSameLine" property="forceToSameLine" z="7f6Q6y+VjqbJwQ5dj96KwIpWDaw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" property="preparationAutomatisee" z="7f5Q5y+VjqbJwQ5dj96ZwIpWDba="/>
             <table:column id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" property="receptionFolder" z="DqkSZvjareQO4TTD6SvTr3dJ5hw="/>
         </table:table>
     </page:list>

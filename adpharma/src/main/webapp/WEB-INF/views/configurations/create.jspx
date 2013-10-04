@@ -12,6 +12,7 @@
         <field:checkbox field="enableLicence" id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" z="uLkgoAWqOZfC0bIWe2C6J1OAdx8="/>
         <field:checkbox field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_onlySaleOld" z="nWnoUuN5a3yKQ0OSe7k64bHt/Ng="/>
         <field:checkbox field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_forceToSameLine" z="fhFd7EQrDUKNXzbae16hHaeEJEk="/>
+        <field:checkbox field="preparationAutomatisee" id="c_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" label="Effectuer Les Preparations Automatisee" z="fhFd7EQrDUKNXzbaz16hKaeEJEk="/>
         <field:input field="receptionFolder" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" z="jhGmR5SniBJJfQynMEL/I9upqNA="/>
         <field:input field="sendFolder" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" z="MHEZGrd5PWGl4rgVtpgDJ86Ju6E="/>
     </form:create>
