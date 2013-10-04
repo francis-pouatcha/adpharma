@@ -117,6 +117,9 @@ if(Check == false){
 			value="/mouvementstocks?page=1&amp;size=${empty param.size ? 50 : param.size}"
 			var="mvt_list_url" />
 		<spring:url value="/ligneapprovisionements/changeDatePriceForm" var="modif_prix_date_url" ></spring:url>
+		
+		
+		<spring:url value="/commandefournisseurs/autocommands?page=1&amp;size=${empty param.size ? 50 : param.size}" var="list_automatic_commands_preparations" ></spring:url>
 
 		<ul class="dropdown">
 			<security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
@@ -181,7 +184,10 @@ if(Check == false){
 						<spring:message code="allmenu_stockmanagement_find_preparation" var="find_preparation"/>
 									<li><a href="${cmd_find_four_url}"> ${find_preparation }</a></li>
 						<spring:message code="allmenu_stockmanagement_list_preparation" var="list_preparation"/>
+						<spring:message code="allmenu_stockmanagement_list_automatics_preparation" var="list_automatic_commands_preparations_msg"/>
 									<li><a href="${cmd_list_url}">${list_preparation }</a></li>
+									<li><a href="${list_automatic_commands_preparations}">${list_automatic_commands_preparations_msg }</a></li>
+									
 						<spring:message code="allmenu_stockmanagement_preparation_toimport" var="preparation_toimport"/>
 									<li><a href="${cmd_list_toimpor_url}">${preparation_toimport }</a></li>
 								</ul></li>
