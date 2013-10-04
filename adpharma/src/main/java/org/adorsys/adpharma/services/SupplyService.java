@@ -23,17 +23,16 @@ public class SupplyService {
 						line.setQuantiteVendu(line.getQuantiteAprovisione());
 						line.setQuantiteSortie(BigInteger.ZERO);
 						line.CalculeQteEnStock();
+						line.merge();
 					}else {
 						if (quantieEnStock.intValue() > 0) {
 							ligneApprovisionement.setQuantiteSortie(ligneApprovisionement.getQuantiteSortie().add(quantieEnStock));
 							line.setQuantiteVendu(line.getQuantiteVendu().subtract(quantieEnStock));
 							line.CalculeQteEnStock();
+							line.merge();
 							break;
-
 						}
-
 					}
-					line.merge();
 				}
 
 				ligneApprovisionement.CalculeQteEnStock();
