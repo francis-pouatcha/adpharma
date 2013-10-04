@@ -35,10 +35,11 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                // Will animate plot on calls to plot1.replot({resetAxes:true})
 	                animateReplot: true,
 	                cursor: {
-	                    show: true,
+	                    show: false,
 	                    zoom: true,
-	                    looseZoom: true,
-	                    showTooltip: true
+	                    looseZoom: false,
+	                    showTooltip: true,
+	                    tooltipOffset: 10
 	                },
 	                title: {
 	                    text: '${statistics_curvey_sales}',   // title for the plot,
@@ -81,21 +82,21 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    
 	                    yaxis: {
 	                        tickOptions: {
-	                            formatString:'XAF %d'
+	                            formatString:'%d XAF'
 	                        },
 	                        rendererOptions: {
 	                            forceTickAt0: true,
 	                        }
 	                    },
-	                    
-	                    highlighter: {
-	                        show: true, 
-	                        showLabel: true, 
-	                        tooltipAxes: 'y',
-	                        sizeAdjust: 7.5 , tooltipLocation : 'ne'
-	                    }
-	                   
-	                }
+	                },
+	                highlighter: {
+                        show: true, 
+                        showLabel: true, 
+                        tooltipAxes: 'y',
+                        tooltipFormatString: '<b><i><span style="color:red; font-size: 14px;">Montant: </span></i></b>%d XAF',
+                        useAxesFormatters: false,
+                        sizeAdjust: 15
+                    },
 	            });
   });
   </script>

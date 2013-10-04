@@ -305,7 +305,7 @@ if(Check == false){
 			<spring:message code="cashregister_cashregister_close" var="cashregister_close"/>
 						<li><a href="${delete_caisse_url}" onclick="return  fermer();">${cashregister_close }</a></li>
 			<spring:message code="cashregister_cashregister_collect" var="cashregister_collect"/>
-						<li><a href="${cai_enc_url}">${cashregister_collect } Facture</a></li>
+						<li><a href="${cai_enc_url}">${cashregister_collect }</a></li>
 						<li><a href="${decaissement_url}">Effectuer un decaissement</a></li>
 						<security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_CASH_DETTE">
 						    <spring:message code="cashregister_cashregister_collectdebt" var="cashregister_collectdebt"/>

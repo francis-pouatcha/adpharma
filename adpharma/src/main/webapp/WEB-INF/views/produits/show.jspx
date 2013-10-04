@@ -10,8 +10,9 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
         <field:display field="prixVenteStock" id="s_org_adorsys_adpharma_domain_Produit_prixVenteStock" object="${produit}" z="user-managed"/>
         
         <field:display field="qtevendu" id="s_org_adorsys_adpharma_domain_Produit_qtevendu" object="${produit}" render="false" z="user-managed"/>
-        <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" render="false" z="user-managed"/>
         <field:display date="true" dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="s_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" object="${produit}" render="false" z="user-managed"/>
+        <field:display field="configSolde" id="s_org_adorsys_adpharma_domain_Produit_configSolde" object="${produit}" z="user-managed" render="false"/>
+        
         <field:display field="designation" id="s_org_adorsys_adpharma_domain_Produit_designation" object="${produit}" z="hNKyyhgRvKWUliyhOCuxR5LgCws="/>
         <field:display field="cip" id="s_org_adorsys_adpharma_domain_Produit_cip" object="${produit}" z="SOM6jdpsRy9JB/MEx/EH3JlTAIQ="/>
         <field:display field="produitNumber" id="s_org_adorsys_adpharma_domain_Produit_produitNumber" object="${produit}" render="false" z="user-managed"/>
@@ -40,7 +41,8 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
         <field:display field="cipType" id="s_org_adorsys_adpharma_domain_Produit_cipType" object="${produit}" z="vqU9SuuJ78v0kLs08h+yfyrhuVQ="/>
         <field:display field="prixAchatU" id="s_org_adorsys_adpharma_domain_Produit_prixAchatU" object="${produit}" z="xWIDDEDqkEEpjei+zLnSpA3LHWY="/>
         <field:display field="prixVenteU" id="s_org_adorsys_adpharma_domain_Produit_prixVenteU" object="${produit}" z="jSgGBMFbEwkhYa/C5klhjMqLT9s="/>
-        <field:display field="configSolde" id="s_org_adorsys_adpharma_domain_Produit_configSolde" object="${produit}" z="1unW0lc25d12/PtxfCWCqMJKwwc="/>
+        <field:display field="qteCommande" id="s_org_adorsys_adpharma_domain_Produit_qteCommande" object="${produit}" z="user-managed"/>
+        <field:display field="commander" id="s_org_adorsys_adpharma_domain_Produit_commander" object="${produit}" z="user-managed"/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Produit_footPrint" object="${produit}" z="sTmGDG3gdH1etdXs7ozgmjuXQDE="/>

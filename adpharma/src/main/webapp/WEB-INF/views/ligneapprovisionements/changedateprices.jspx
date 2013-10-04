@@ -49,15 +49,13 @@
 		
 		<div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 1200px; height: 300px">
 		   <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${update_price_tab_product}">
-		     <table style="width: 300px;">
+		     <table style="width: auto;">
 		       <tr>
 		        <td style="border: none;">
 			    <INPUT type="hidden" name="id" id="ligneId" />
-				<field:input field="cipm" required="true" validationMessage="${update_price_valid}" validationRegex="[0-9]*" min="7"  id="c_org_adorsys_adpharma_beans_ChangeDatePrice_cipm" z="" />
+				<field:input field="cipm" required="true" buttonId="find" buttonLabel="${button_find}" validationMessage="${update_price_valid}" validationRegex="[0-9]*" min="7"  id="c_org_adorsys_adpharma_beans_ChangeDatePrice_cipm" z="" />
+				<!-- <INPUT type="submit" value="${button_find}"  style="float: right;" class="submits" id="find" /> -->
 				</td>
-				<td style="border: none;">
-				<INPUT type="submit" value="${button_find}"  style="float: right;" class="submits" id="find" />
-			    </td>
 			   </tr>
 			</table>
 			<field:input field="designation" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_designation" readonly="true" z="" />

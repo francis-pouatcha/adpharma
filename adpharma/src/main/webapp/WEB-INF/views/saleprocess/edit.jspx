@@ -12,53 +12,56 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 	
-		<spring:message code="column_cip" var="column_cip" />
-		<spring:message code="column_cipm" var="column_cipm" />
-		<spring:message code="column_designation" var="column_designation" />
-		<spring:message code="button_find_product" var="button_find_product" />
-		<spring:message code="column_qty" var="column_qty" />
-		<spring:message code="column_price" var="column_price" />
-		<spring:message code="column_total_price" var="column_total_price" />
-		<spring:message code="column_remise" var="column_remise" />
-		<spring:message code="column_ray" var="column_ray" />
+		<spring:message code="column_cip" var="column_cip" htmlEscape="false" />
+		<spring:message code="column_cipm" var="column_cipm" htmlEscape="false" />
+		<spring:message code="column_designation" var="column_designation" htmlEscape="false"/>
+		<spring:message code="button_find_product" var="button_find_product" htmlEscape="false" />
+		<spring:message code="column_qty" var="column_qty" htmlEscape="false" />
+		<spring:message code="column_price" var="column_price" htmlEscape="false" />
+		<spring:message code="column_total_price" var="column_total_price" htmlEscape="false" />
+		<spring:message code="column_remise" var="column_remise" htmlEscape="false" />
+		<spring:message code="column_ray" var="column_ray" htmlEscape="false" />
+		<spring:message code="column_max_order" var="column_max_order" htmlEscape="false" />
+		<spring:message code="column_qty_order" var="column_qty_order" htmlEscape="false" />
 		
-		<spring:message code="button_cancel" var="button_cancel" />
-		<spring:message code="button_save" var="button_save" />
-		<spring:message code="button_find" var="button_find" />
 		
-		<spring:message code="saleprocess_enter_qty"  var="enter_qty"/>
-		<spring:message code="saleprocess_enter_cip"  var="enter_cip"/>
-		<spring:message code="saleprocess_enter_cipm"  var="enter_cipm"/>
-		<spring:message code="saleprocess_update"  var="update_line"/>
-		<spring:message code="saleprocess_cancel"  var="cancel_line"/>
-		<spring:message code="saleprocess_close_sale"  var="close_sale"/>
-		<spring:message code="saleprocess_save_command"  var="save_command"/>
+		<spring:message code="button_cancel" var="button_cancel" htmlEscape="false" />
+		<spring:message code="button_save" var="button_save" htmlEscape="false" />
+		<spring:message code="button_find" var="button_find" htmlEscape="false" />
+		
+		<spring:message code="saleprocess_enter_qty"  var="enter_qty" htmlEscape="false"/>
+		<spring:message code="saleprocess_enter_cip"  var="enter_cip" htmlEscape="false"/>
+		<spring:message code="saleprocess_enter_cipm"  var="enter_cipm" htmlEscape="false"/>
+		<spring:message code="saleprocess_update"  var="update_line" htmlEscape="false"/>
+		<spring:message code="saleprocess_cancel"  var="cancel_line" htmlEscape="false"/>
+		<spring:message code="saleprocess_close_sale"  var="close_sale" htmlEscape="false"/>
+		<spring:message code="saleprocess_save_command"  var="save_command" htmlEscape="false"/>
 
-        <spring:message code="label_org_adorsys_adpharma_domain_client_nom" var="client_nom"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_prenom" var="client_prenom"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_sexe" var="client_sex"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_telephonemobile" var="client_telephonemobile"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_email" var="client_email"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_employeur" var="client_employeur"/>
-        <spring:message code="label_org_adorsys_adpharma_domain_client_note" var="client_note"/>
-		<spring:message code="saleprocess_cancel_sale"  var="cancel_sale"/>
-		<spring:message code="saleprocess_prescription_book"  var="prescription_book"/>
-		<spring:message code="saleprocess_prescription_book_description"  var="prescription_book_description"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_nom" var="client_nom" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_prenom" var="client_prenom" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_sexe" var="client_sex" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_telephonemobile" var="client_telephonemobile" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_email" var="client_email" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_employeur" var="client_employeur" htmlEscape="false"/>
+        <spring:message code="label_org_adorsys_adpharma_domain_client_note" var="client_note" htmlEscape="false"/>
+		<spring:message code="saleprocess_cancel_sale"  var="cancel_sale" htmlEscape="false"/>
+		<spring:message code="saleprocess_prescription_book"  var="prescription_book" htmlEscape="false"/>
+		<spring:message code="saleprocess_prescription_book_description"  var="prescription_book_description" htmlEscape="false"/>
 		
-		<spring:message code="saleprocess_apply" var="apply_text"/>
-		<spring:message code="saleprocess_discount_nettopay" var="discount_nettopay_text"/>
-		<spring:message code="saleprocess_total_command" var="total_command" />
-		<spring:message code="saleprocess_total_discount" var="total_discount" />
-		<spring:message code="saleprocess_net_to_pay" var="net_to_pay" />
-		<spring:message code="saleprocess_again_and_again" var="again_and_again" />
-		<spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation" />
-		<spring:message code="saleproccess_update_command" var="update_command" />
-		<spring:message code="saleprocess_unselect_product" var="unselect_product"  />
-		<spring:message code="saleprocess_client_code" var="client_code"/>
-		<spring:message code="saleprocess_client_dettes" var="client_dettes"/>
-		<spring:message code="saleprocess_client_credible" var="client_credible"/>
-		<spring:message code="saleprocess_product_out"  var="product_product_out"/>
-		<spring:message code="saleprocess_header_title" var="saleprocess_header_title" />
+		<spring:message code="saleprocess_apply" var="apply_text" htmlEscape="false"/>
+		<spring:message code="saleprocess_discount_nettopay" var="discount_nettopay_text" htmlEscape="false"/>
+		<spring:message code="saleprocess_total_command" var="total_command" htmlEscape="false" />
+		<spring:message code="saleprocess_total_discount" var="total_discount" htmlEscape="false" />
+		<spring:message code="saleprocess_net_to_pay" var="net_to_pay" htmlEscape="false" />
+		<spring:message code="saleprocess_again_and_again" var="again_and_again" htmlEscape="false" />
+		<spring:message code="saleprocess_currency_abbreviation" var="currency_abbreviation" htmlEscape="false" />
+		<spring:message code="saleproccess_update_command" var="update_command" htmlEscape="false" />
+		<spring:message code="saleprocess_unselect_product" var="unselect_product" htmlEscape="false" />
+		<spring:message code="saleprocess_client_code" var="client_code" htmlEscape="false"/>
+		<spring:message code="saleprocess_client_dettes" var="client_dettes" htmlEscape="false"/>
+		<spring:message code="saleprocess_client_credible" var="client_credible" htmlEscape="false"/>
+		<spring:message code="saleprocess_product_out"  var="product_product_out" htmlEscape="false"/>
+		<spring:message code="saleprocess_header_title" var="saleprocess_header_title" htmlEscape="false"/>
 		
 		<c:set value="${param.lang}" var="language" />
 		<style type="text/css">
@@ -251,12 +254,12 @@
 	</div>
 	 
 	
-	<spring:message code="saleprocess_ordinance_title" var="saleprocess_ordinance_title" />
-	<spring:message code="saleprocess_ordinance_legend" var="saleprocess_ordinance_legend" />
-	<spring:message code="saleprocess_ordinance_prescriber" var="saleprocess_ordinance_prescriber" />
-	<spring:message code="saleprocess_ordinance_hospital" var="saleprocess_ordinance_hospital" />
-	<spring:message code="saleprocess_ordinance_patient" var="saleprocess_ordinance_patient" />
-	<spring:message code="saleprocess_ordinance_date" var="saleprocess_ordinance_date" />
+	<spring:message code="saleprocess_ordinance_title" var="saleprocess_ordinance_title" htmlEscape="false"/>
+	<spring:message code="saleprocess_ordinance_legend" var="saleprocess_ordinance_legend" htmlEscape="false" />
+	<spring:message code="saleprocess_ordinance_prescriber" var="saleprocess_ordinance_prescriber" htmlEscape="false" />
+	<spring:message code="saleprocess_ordinance_hospital" var="saleprocess_ordinance_hospital" htmlEscape="false" />
+	<spring:message code="saleprocess_ordinance_patient" var="saleprocess_ordinance_patient" htmlEscape="false" />
+	<spring:message code="saleprocess_ordinance_date" var="saleprocess_ordinance_date" htmlEscape="false" />
 	<div id="ordonanceform" style="display: none; height: 400px;" title="${saleprocess_ordinance_title}">
 	          <form method="post" enctype="application/x-www-form-urlencoded" id="ordonnance_form">
 	              <fieldset class="ordo_css">
@@ -276,6 +279,9 @@
 	  {
 	  window.location.reload()
 	  }
+	  
+	
+	
 	function clearClientTable(){
 		$('#result').html(
 			'<tr>
@@ -373,7 +379,9 @@
 		    		<th style="text-transform: uppercase;">${product_date_of_record}</th>
 		    		<th style="text-transform: uppercase;">${column_ray}</th>
 		    		<th style="text-transform: uppercase;">${product_provider}</th>
-		    	
+		    		<th style="text-transform: uppercase;">${column_max_order}</th>
+		    		<th style="text-transform: uppercase;">${column_qty_order}</th>
+		    		<th style="text-transform: uppercase;">ACTION</th>
 				</tr>');
 	}
 	
@@ -390,6 +398,15 @@
 	// Test de la configuration
 	
 	
+		function displayOrder(){
+			$('table#resultproduit tr').each(function(){
+			var text= $('td #order #text_order').text();
+			console.log("commander: "+text);
+			if(text=="true"){
+				$('td #order #order_link').append('<span style="color: red;">Commander</span>');
+			};
+			});
+		}
 	
 	$(function(){
 		
@@ -412,7 +429,6 @@
 											<td>'+this.employeur+'</td>
 											<td>'+this.totalDette+'</td>
 											<td>'+this.creditAutorise+'</td>
-
 											</tr>'
 										
 								);});
@@ -439,7 +455,6 @@
 						$('#produitfindform').serialize(),
 			                function(data){
 								$(data).each(function(){
-									
 									$('#resultproduit').append(
 									 '<tr id="'+this.id+'">
 										  <td>'+this.cip+'</td>
@@ -451,11 +466,16 @@
 										  <td>'+this.saisiele+'</td>
 										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
-										  </tr>'
-										
-								);
-									
+										  <td>'+this.produit.seuilComande+'</td>
+										  <td>'+this.produit.qteCommande+'</td>
+										  <td id="order">
+										    <span id="text_order"> '+this.produit.commander+'</span>
+										    <a href="#"> <span id="order_link"> </span> </a> 
+										  </td>
+										  </tr>');
+										  displayOrder();
 								});
+							  
 								$('table#resultproduit tr').each(function(){
 									var current = this;
 									this.onclick = function(event) {

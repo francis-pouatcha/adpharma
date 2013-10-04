@@ -19,8 +19,6 @@ public class TypeSortieProduit extends AdPharmaBaseEntity {
 
     @NotNull
     private String libelle;
-
- 
     private String description;
 
     

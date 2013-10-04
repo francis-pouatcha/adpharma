@@ -29,9 +29,9 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                // Will animate plot on calls to plot1.replot({resetAxes:true})
 	                animateReplot: true,
 	                cursor: {
-	                    show: true,
+	                    show: false,
 	                    zoom: true,
-	                    looseZoom: true,
+	                    looseZoom: false,
 	                    showTooltip: true
 	                },
 	                title: {
@@ -108,7 +108,7 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
 	                    show: true, 
 	                    showLabel: true, 
 	                    tooltipAxes: 'y',
-	                    sizeAdjust: 7.5 , tooltipLocation : 'ne'
+	                    sizeAdjust: 7.5 ,
 	                }
 	            });
   });
