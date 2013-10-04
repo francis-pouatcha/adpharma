@@ -567,6 +567,15 @@ public class Produit extends AdPharmaBaseEntity {
 	public static List<Produit> findProduitRuptureStockEntries(int firstResult, int maxResults) {
 		return Produit.findProduitsByQuantiteEnStock(BigInteger.ZERO).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 	}
+	
+	// Alternative requete native
+	public static List<Produit> findProduitRuptureStockEntries1(int firstResult, int maxResults) {
+		EntityManager em = Produit.entityManager();
+		String test= "SELECT o FROM Produit AS o WHERE o.quantiteEnStock <= :quantiteEnStock  And o.actif =:actif  ORDER BY o.designation ASC";
+		em.createNativeQuery("SELECT * FROM produit as p WHERE p.quantite_en_stock <= ?1 AND p.actif= ?2 ORDER BY p.designation ASC", Produit.class);
+		
+		return null;
+	}
 
 	public static List<Produit> findProduitEntries(int firstResult, int maxResults) {
 		return entityManager().createQuery("SELECT o FROM Produit o WHERE o.actif =:actif  ORDER BY o.designation ASC", Produit.class).setParameter("actif", Boolean.TRUE).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

@@ -381,7 +381,6 @@
 		    		<th style="text-transform: uppercase;">${product_provider}</th>
 		    		<th style="text-transform: uppercase;">${column_max_order}</th>
 		    		<th style="text-transform: uppercase;">${column_qty_order}</th>
-		    		<th style="text-transform: uppercase;">ACTION</th>
 				</tr>');
 	}
 	
@@ -468,10 +467,6 @@
 										  <td>'+this.fournisseur+'</td>
 										  <td>'+this.produit.seuilComande+'</td>
 										  <td>'+this.produit.qteCommande+'</td>
-										  <td id="order">
-										    <span id="text_order"> '+this.produit.commander+'</span>
-										    <a href="#"> <span id="order_link"> </span> </a> 
-										  </td>
 										  </tr>');
 										  displayOrder();
 								});
