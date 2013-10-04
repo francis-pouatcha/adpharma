@@ -344,9 +344,9 @@ public class CommandeFournisseur extends AdPharmaBaseEntity {
 	
 	public static List<CommandeFournisseur> findPreparationAutomatiseeEnCours(){
 		TypedQuery<CommandeFournisseur> createQuery = entityManager().
-						createQuery("SELECT o FROM CommandeFournisseur AS o WHERE o.etatCmd = :etat AND o.ModeSelection = :modeSelection", CommandeFournisseur.class);
+						createQuery("SELECT o FROM CommandeFournisseur AS o WHERE o.etatCmd = :etat AND o.ModeDeSelection = :modeDeSelection", CommandeFournisseur.class);
 		createQuery.setParameter("etat", Etat.EN_COUR);
-		createQuery.setParameter("modeSelection", ModeSelection.AUTOMATISEE);
+		createQuery.setParameter("modeDeSelection", ModeSelection.AUTOMATISEE);
 		return createQuery.getResultList();
 	}
 	public static TypedQuery<CommandeFournisseur> findCmdByFournisseurLike(String designation) {
