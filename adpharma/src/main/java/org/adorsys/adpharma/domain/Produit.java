@@ -44,11 +44,11 @@ import flexjson.JSONSerializer;
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Produit", finders = { "findProduitsByDesignationLike", "findProduitsByProduitNumberLike", "findProduitsByQuantiteEnStock", "findProduitsByFamilleProduit", "findProduitsByRayon", "findProduitsByCipEquals", "findProduitsByDesignationEquals" })
 @RooJson
-@EntityListeners(ProductMonitor.class)
+//@EntityListeners(ProductMonitor.class)
 public class Produit extends AdPharmaBaseEntity {
 
 	private String produitNumber;
-
+    
 	@NotNull
 	private String designation;
 

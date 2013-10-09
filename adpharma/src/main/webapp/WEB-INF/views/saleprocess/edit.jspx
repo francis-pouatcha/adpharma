@@ -380,8 +380,6 @@
 		    		<th style="text-transform: uppercase;">${column_ray}</th>
 		    		<th style="text-transform: uppercase;">${product_provider}</th>
 		    		<th style="text-transform: uppercase;">${column_max_order}</th>
-		    		<th style="text-transform: uppercase;">${column_qty_order}</th>
-		    		<th style="text-transform: uppercase;">ACTION</th>
 				</tr>');
 	}
 	
@@ -467,11 +465,6 @@
 										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
 										  <td>'+this.produit.seuilComande+'</td>
-										  <td>'+this.produit.qteCommande+'</td>
-										  <td id="order">
-										    <span id="text_order"> '+this.produit.commander+'</span>
-										    <a href="#"> <span id="order_link"> </span> </a> 
-										  </td>
 										  </tr>');
 										  displayOrder();
 								});
@@ -485,7 +478,7 @@
 											$('#cipm').val(data.cipMaison);
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
-											$('#qteStock').val(data.produit.quantiteEnStock);
+											$('#qteStock').val(data.produit.quantieEnStock);
 											$('#qte').val(1);
 											stock= $('#pu').val();
 											// J'appele le script de configuration des types de vente par defaut
@@ -754,7 +747,7 @@
 
 							</td>
 							<td><INPUT type="text"  class="des" id="qteStock"
-								title="Qte en Stock" value="${saleProcess.lineToUpdate.produit.quantiteEnStock}"
+								title="Qte en Stock" value="${saleProcess.lineToUpdate.produit.quantieEnStock}"
 								style="color: blue; text-align: center; width: 70px;" disabled="disabled" />
 							</td>
 							
@@ -797,10 +790,8 @@
 							<td><INPUT type="text" name="pt" id="pt" class="autres"
 								value="${saleProcess.lineToUpdate.prixTotal}"
 								disabled="disabled" style="color: red;" /></td>
-
-							<td><INPUT type="submit" value="${update_line }" class="submits" />
-							</td>
 							<td class="utilbox">
+							<INPUT type="submit" value="${update_line }" class="submits" />
 							<A href="${edit_url}" style="text-decoration: none;"><INPUT type="button" class="submits"
 								value="${ cancel_line}"
 								style="color: red;" /> </A></td>
