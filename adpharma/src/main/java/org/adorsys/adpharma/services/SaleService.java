@@ -7,12 +7,17 @@ import java.util.List;
 
 import org.adorsys.adpharma.domain.CommandeClient;
 import org.adorsys.adpharma.domain.Configuration;
+import org.adorsys.adpharma.domain.DetteClient;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
+import org.adorsys.adpharma.domain.MouvementStock;
+import org.adorsys.adpharma.domain.OperationCaisse;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.SalesConfiguration;
+import org.adorsys.adpharma.domain.TypeMouvement;
+import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.springframework.stereotype.Service;
 
 
@@ -225,6 +230,30 @@ public class SaleService {
 		}
 		return oldProductsList ;
 
+	}
+	
+	
+	/**
+	 * 
+	 * @return the first sale
+	 */
+	public MouvementStock getFirstSale(){
+		MouvementStock mouvementStock = MouvementStock.findMouvementStocksByTypeMouvement(TypeMouvement.VENTE).getResultList().get(0); 
+		return mouvementStock;
+	}
+	
+	/**
+	 * 
+	 * @return the first cash
+	 */
+	public OperationCaisse getFirstCash(){
+		OperationCaisse operationCaisse = OperationCaisse.findOperationCaissesByTypeOperation(TypeOpCaisse.ENCAISSEMENT).getResultList().get(0);
+		return operationCaisse;
+	}
+	
+	public DetteClient getFirstDebt(){
+		DetteClient detteClient = DetteClient.findDetteClientsBySolderNotAndAnnulerNot(Boolean.TRUE, Boolean.TRUE).getResultList().get(0);
+ 		return detteClient;
 	}
 
 

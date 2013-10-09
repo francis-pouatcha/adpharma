@@ -18,10 +18,10 @@
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_filiale" property="filiale" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_montant" maxLength="-1" property="montant" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Inventaire_note" maxLength="-1" property="note" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_fichier" property="fichier" z="cH2+ljA6dpY1A61wcNOspX9JisI="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" property="familleProduit" z="qeYdrlMZVGaJWb7uwv8ESzLnkpE="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" property="sousFamilleProduit" z="xwS9t37FHoJMHuItbv6wkY3GS7E="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_cipmProduct" property="cipmProduct" z="HoLL0UUAZ/Q2/DVxZS0nSEhckl0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_fichier" property="fichier" render="false" z="cH2+ljA6dpY1A61wcNOspX9JisI="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" render="false" property="familleProduit" z="qeYdrlMZVGaJWb7uwv8ESzLnkpE="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" render="false" property="sousFamilleProduit" z="xwS9t37FHoJMHuItbv6wkY3GS7E="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Inventaire_cipmProduct" render="false" property="cipmProduct" z="HoLL0UUAZ/Q2/DVxZS0nSEhckl0="/>
         </table:table>
     </page:list1>
 </div>

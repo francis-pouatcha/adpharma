@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-xmlns:spring="http://www.springframework.org/tags" 
-xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    
-    <spring:message code="list_search_provider" var="list_search_provider" />
-    
+    <spring:message code="list_search_provider" var="list_search_provider"/>
     <page:list1 id="pl_org_adorsys_adpharma_domain_Fournisseur" items="${fournisseurs}" placeholder="${list_search_provider}" search="true" url="/fournisseurs/search" z="user-managed">
         <table:table data="${fournisseurs}" delete="false" id="l_org_adorsys_adpharma_domain_Fournisseur" path="/fournisseurs" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" property="fournisseurNumber" z="vt5qh/Ndv1Fov03/fWFaonr77yU="/>
@@ -19,6 +14,7 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" label="DistributorKey" property="distributorKey" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" property="shortname" z="Be1e6Smmrx5vh4/VOwz0abNDv48="/>
             <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_distributorKey" property="distributorKey" z="EuLh7jrqcVDn1ahbcVXteiV36wg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Fournisseur_archived" property="archived" z="Kn9dl1esNfvEYsiFh/VX9n7dSUg="/>
         </table:table>
     </page:list1>
 </div>

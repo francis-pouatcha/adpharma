@@ -7,6 +7,7 @@ import java.lang.Long;
 import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneInventaire;
@@ -87,11 +88,11 @@ privileged aspect Inventaire_Roo_JavaBean {
         this.rayonId = rayonId;
     }
     
-    public Set<LigneInventaire> Inventaire.getLigneInventaire() {
+    public List<LigneInventaire> Inventaire.getLigneInventaire() {
         return this.ligneInventaire;
     }
     
-    public void Inventaire.setLigneInventaire(Set<LigneInventaire> ligneInventaire) {
+    public void Inventaire.setLigneInventaire(List<LigneInventaire> ligneInventaire) {
         this.ligneInventaire = ligneInventaire;
     }
     

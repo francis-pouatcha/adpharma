@@ -12,6 +12,7 @@ import jxl.Cell;
 import jxl.Sheet;
 
 import org.adorsys.adpharma.domain.Inventaire;
+import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
@@ -28,6 +29,12 @@ public class LigneInventaireImportExportService extends ImportExportService<Lign
 	@Override
 	public  List<String> useFieldName(){
 		String[] fieldNames = {"cip","qte"} ;
+	    return	Arrays.asList(fieldNames);
+		
+		
+	}
+	public  List<String> useFieldNameWhithCipm(){
+		String[] fieldNames = {"cipm","quantite"} ;
 	    return	Arrays.asList(fieldNames);
 		
 		
@@ -52,7 +59,27 @@ public class LigneInventaireImportExportService extends ImportExportService<Lign
 		
 		
 	}
-	
+	public LigneInventaire itemWhithCipmFromSheetRow(Cell...cells ){
+		if(cells == null )return null ;
+		LigneInventaire item = new LigneInventaire();
+		List<LigneApprovisionement> ligneapro = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cells[0].getContents()).getResultList();
+		BigInteger qte = new BigInteger(cells[1].getContents());
+		if(!ligneapro.isEmpty()){
+			LigneApprovisionement line = ligneapro.iterator().next();
+			item.setProduit(line.getProduit());
+			item.setCipm(line.getCipMaison());
+			item.setQteEnStock(line.getQuantieEnStock());
+			item.setQteReel(qte);
+			item.setDateSaisie(new Date());
+			item.calculerEcart();
+			item.setPrixUnitaire(line.getPrixVenteUnitaire());
+			item.caculMontantEcart();
+			return item ;
+		}
+		return null ;
+		
+		
+	}
 	
 	public void mergeFromWorkbook(Inventaire targetClazz, Sheet sheet)
     {
@@ -91,8 +118,8 @@ public class LigneInventaireImportExportService extends ImportExportService<Lign
 	 * @return
 	 */
 	public   List<LigneInventaire> importListFromSheet(Sheet sheet,Inventaire inventaire) {
+		ArrayList<LigneInventaire> items = new ArrayList<LigneInventaire>();
 		if(isfieldNamesMacthed(sheet, useFieldName())){
-			ArrayList<LigneInventaire> items = new ArrayList<LigneInventaire>();
 			int rows = sheet.getRows();
 			for (int i = 1; i < rows; i++) {
 				Cell[] row = sheet.getRow(i);
@@ -103,9 +130,26 @@ public class LigneInventaireImportExportService extends ImportExportService<Lign
 				items.add(itemFromSheetRow);
 				}
 			}
-			return items ;
 		}
-		return null ;
+		return items ;
+	}
+	public   List<LigneInventaire> importListFromSheetWhithCipm(Sheet sheet,Inventaire inventaire) {
+		if(sheet== null) throw new IllegalArgumentException("sheet argument is required ! ");
+		ArrayList<LigneInventaire> items = new ArrayList<LigneInventaire>();
+		if(isfieldNamesMacthed(sheet, useFieldNameWhithCipm())){
+			int rows = sheet.getRows();
+			for (int i = 1; i < rows; i++) {
+				Cell[] row = sheet.getRow(i);
+				LigneInventaire itemFromSheetRow = itemWhithCipmFromSheetRow(row);
+				if(itemFromSheetRow!=null){
+				itemFromSheetRow.setInventaire(inventaire);
+				itemFromSheetRow.persist();
+				items.add(itemFromSheetRow);
+				}
+			}
+			
+		}
+		return items ;
 	}
 
 }

@@ -19,7 +19,7 @@
     <spring:url value="/etats/print/etatPeriodiqueMouvenentStock.pdf?"  var="url4" />
     <spring:url value="/etats/print/chiffeAffaireVendeur.pdf?"  var="url5" />
     <spring:url value="/etats/print/etatPeriodiqueTransformation.pdf?"  var="url6" />
-    <spring:url value="/etats/print/etatPeriodiqueTauxMarque.pdf?"  var="url7" />    
+    <spring:url value="/etats/print/etatPeriodiqueMarges.pdf?"  var="url7" />    
     <spring:url value="/etats/print/etatVAlorisationRayon.pdf?"  var="url8" />
     <spring:url value="/etats/print/etatFicheStockRayon.pdf?"  var="url9" />  
     <spring:url value="/etats/print/etatValorisationFiliale.pdf?"  var="url10" />
@@ -73,7 +73,6 @@
     			 window.location = pdfUrl;
     			 
     		 };
-    		 
     	
     $("input#proceed").click(function(){
     	var pdfUrl = gotoUrl+$('form#dialogform').serialize();
@@ -83,32 +82,116 @@
 	  var value =  prompt("nombre de jours :");
 	  alert(value);
    }) ;
-   
    $("a#et_per_cash").click(function(){
 	  // openDialog(date_form_url,"Etat Periode Des Caisses",cash_Periodique_url);
-	   
    }) ;
    
    $("a#et_per_dette").click(function(){
 	  // openDialog(date_form_url,"Etat Periode Des Caisses",dette_Periodique_url);
-	   
    });
     });
     
+    function hide1(){
+   	 $("#param1_tab2 input").hide();
+   	 $("#param2_tab1 input").hide();
+   	 $("#param2_tab2 input").hide();
+   	 $("#param2_tab3 input").hide();
+    }
+    function hide2(){
+      	 $("#param1_tab2 input").hide();
+      	 $("#param2_tab1 input").hide();
+      	 $("#_cip_id").hide();
+      	 $("#_designation_id").hide();
+      	 $("#param2_tab3 input").hide();
+    }
+    function hide3(){
+      	 $("#param1_tab1 input").hide();
+      	 $("#param1_tab2 input").hide();
+      	 $("#param2_tab1 input").hide();
+      	 $("#param2_tab2 input").hide();
+      	 $("#_cip_id").show();
+      	 $("#param2_tab3 input").hide();
+    }
+    function hide4(){
+     	 $("#param1_tab2 input").hide();
+     	 $("#param2_tab1 input").hide();
+     	 $("#param2_tab2 input").hide();
+     	 $("#param2_tab3 input").hide();
+    }
+    function hide5(){
+    	 $("#param1_tab1 input").hide();
+    	 $("#param1_tab2 input").hide();
+         $("#_filiale_id").hide();
+         $("#_user_id").hide();
+    	 $("#param2_tab2 input").hide();
+    	 $("#param2_tab3 input").hide();
+     }
+    function hide6(){
+   	 $("#param1_tab1 input").hide();
+   	 $("#param1_tab2 input").hide();
+   	 $("#_rayon_id").hide();
+     $("#_user_id").hide();
+   	 $("#param2_tab2 input").hide();
+   	 $("#param2_tab3 input").hide();
+    }
+    function hide7(){
+      	 $("#param1_tab2 input").hide();
+      	 $("#param2_tab1 input").hide();
+      	 $("#param2_tab2 input").hide();
+    }
+    function hide8(){
+    	 $("#param1_tab1 input").hide();
+     	 $("#param1_tab2 input").hide();
+     	 $("#_user_id").hide();
+     	 $("#_filiale_id").hide();
+     	 $("#param2_tab2 input").hide();
+     	 $("#param2_tab3 input").hide();
+   }
+    function reset(){
+     $("#param1_tab1 input").show();
+     $("#param1_tab2 input").show();
+   	 $("#param2_tab1 input").show();
+   	 $("#param2_tab2 input").show();
+   	 $("#param2_tab3 input").show(); 
+    }
     function defineGotoUrl(clickedElt){
- 		  id = clickedElt.id ;
- 		  if(id=="url1")gotoUrl =url1 ;
- 		  if(id=="url2")gotoUrl =url2 ;
- 		  if(id=="url3")gotoUrl =url3 ;
- 		  if(id=="url4")gotoUrl =url4 ;
- 	      if(id=="url5")gotoUrl =url5 ;
- 	      if(id=="url6")gotoUrl =url6 ;
- 	      if(id=="url7")gotoUrl =url7 ;
- 	      if(id=="url8")gotoUrl =url8 ;
- 	      if(id=="url9")gotoUrl =url9 ;
- 	      if(id=="url10")gotoUrl =url10 ;
- 	      if(id=="url11")gotoUrl =url11;
- 	     if(id=="url12")gotoUrl =url12;
+ 		  id = clickedElt.id;
+ 		  if(id=="url1"){
+ 			 gotoUrl =url1; reset(); hide1();
+ 		  }
+ 		  if(id=="url2"){
+ 			 gotoUrl =url2; reset(); hide1();
+ 		  }
+ 		  if(id=="url3"){
+ 			 gotoUrl =url3; reset(); hide1();
+ 		  }
+ 		  if(id=="url4"){
+ 			  gotoUrl =url4; reset(); hide2();
+ 		  }
+ 	      if(id=="url5"){
+ 	    	  gotoUrl =url5; reset(); hide4();
+ 	      }
+ 	      if(id=="url6"){
+ 	    	  gotoUrl =url6; reset(); hide1();
+ 	      }
+ 	      if(id=="url7"){
+ 	    	  gotoUrl =url7; reset(); hide1();
+ 	      }
+ 	      if(id=="url8"){
+ 	    	  gotoUrl =url8; reset(); hide5();
+ 	      }
+ 	      if(id=="url9"){
+ 	    	  gotoUrl =url9; reset(); hide8();
+ 	      }
+ 	      if(id=="url10"){
+ 	    	  gotoUrl =url10; reset(); hide6();
+ 	      }
+ 	      if(id=="url11"){
+ 	    	  gotoUrl =url11; reset(); hide3();
+ 	      }
+ 	      if(id=="url12"){
+ 	    	  gotoUrl =url12; reset(); hide7();
+ 	      }
  		  }
 </script>
 <div id="dialog"><!--  --></div>   

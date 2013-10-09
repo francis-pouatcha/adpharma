@@ -35,6 +35,10 @@
      <spring:message code="reports_other_reports_stock_movements_by_cip" var="reports_other_reports_stock_movements_by_cip" htmlEscape="false" />
      <spring:message code="reports_other_reports_cash_operations" var="reports_other_reports_cash_operations" htmlEscape="false" />
      
+     
+    
+     
+     
 <form:create label="Edition generale des Etats" hideallButton="true" labelButon="Editer" diseableSubmit="true" formId="dialogform" id="fc_org_adorsys_adpharma_domain_Facture" modelAttribute="etatManagerBean" path="#" render="${empty dependencies}" z="user-managed">
    <table>
      <tr>
@@ -46,8 +50,8 @@
                 <li> <a href="#param1_tab2"> ${reports_other_reports_config_others} </a> </li>
             </ul>
             <div id="param1_tab1">
-		        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="true" label="${statistics_period_begin}"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-		        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="true"  label="${statistics_period_end}"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" required="false" label="${statistics_period_begin}"  field="dateDebut" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
+		        <field:datetime  dateTimePattern="dd-MM-yyyy HH:mm"  required="false"  label="${statistics_period_end}"   field="dateFin" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
             </div>
             <div id="param1_tab2">
 		        <field:input label="Valeur" field="value" id="c_org_adorsys_adpharma_domain_Client_prenom" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
@@ -65,7 +69,6 @@
                     <field:select path="/rayons" items="${rayons}" label="${column_ray}" itemValue="id" itemLabel="name" field="rayon" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_rayon" z="user-managed"/>
 			        <field:select path="/filiales" items="${filiales}" label="${column_filiale}" itemValue="id" itemLabel="libelle" field="filiale" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_filiale" z="user-managed"/>
 			        <field:select path="/pharmaUser" items="${users}" label="${column_agent}" itemValue="id" itemLabel="userName" field="user" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_user" z="user-managed"/>
-			      <!--   <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_produit" z="user-managed"/>-->
             </div>
             <div id="param2_tab2">
                     <field:input label="Cip" field="cip" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_cip" required="false" />
@@ -76,9 +79,6 @@
                     <field:select path="/" field="typeOperation" items="${typesOperationsCaisses}" id="c_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" z="user-managed"/>
             </div>
         </div>
-          <!-- 
-        <field:display isList="true" createBut=". . ."  object="${etatManagerBean}" label="Produit"  field="produit" id="c_org_adorsys_adpharma_domain_Facture_dateCreation" z="1vdtIm4UJa9xg1iEfuxDwiizWIM="/>
-         -->
     </td>
     
        <td style="vertical-align: top;"  width="45%">
@@ -89,7 +89,7 @@
 				               <i class="labeletat"> ${reports_other_reports_periodic_sales} </i>
 				          </td>
 				          <td>
-				               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  checked="checked" id="url1"  />
+				               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  id="url1"  />
 				          </td>
 				     </tr>
 				     <tr>
@@ -97,7 +97,7 @@
 				               <i class="labeletat"> ${reports_other_reports_periodic_cash} </i>
 				          </td>
 				          <td>
-				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);"   name="etats" id="url2"  />
+				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url2"  />
 				          </td>
 				     </tr>
 				     <tr>
@@ -114,6 +114,14 @@
 				          </td>
 				          <td>
 				                <input style="float: right;" type="radio"  onclick="defineGotoUrl(this);" name="etats" id="url4" />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
+				               <i class="labeletat"> ${reports_other_reports_stock_movements_by_cip} </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url11"  />
 				          </td>
 				     </tr>
 				     <tr>
@@ -150,14 +158,6 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> ${reports_other_reports_calalog}  </i>
-				          </td>
-				          <td>
-				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
-				          </td>
-				     </tr>
-				     <tr>
-				          <td>
 				               <i class="labeletat"> ${reports_other_reports_stock_valuation_ray_filial}  </i>
 				          </td>
 				          <td>
@@ -166,10 +166,10 @@
 				     </tr>
 				     <tr>
 				          <td>
-				               <i class="labeletat"> ${reports_other_reports_stock_movements_by_cip} </i>
+				               <i class="labeletat"> ${reports_other_reports_calalog}  </i>
 				          </td>
 				          <td>
-				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url11"  />
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url9"  />
 				          </td>
 				     </tr>
 				     <tr>

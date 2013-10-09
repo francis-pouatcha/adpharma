@@ -15,7 +15,7 @@ import org.adorsys.adpharma.domain.MouvementStock;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
-import org.adorsys.adpharma.services.InventoryService;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.Contract;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 
@@ -118,12 +118,12 @@ public class ApprovisonementProcess {
 			mouvementStock.setPAchatTotal(ligneApprovisionement.getPrixAchatTotal().toBigInteger());
 			mouvementStock.setPVenteTotal(ligneApprovisionement.getPrixVenteUnitaire().toBigInteger().multiply(ligneApprovisionement.getQuantiteAprovisione()));
 			ligneApprovisionement.setQuantieEnStock(ligneApprovisionement.getQuantiteAprovisione());//initialisation de la quantite en stock de cette ligne 
-			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mis a jour de la date de derniere entree
+			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mise a jour de la date de derniere entree
 			ligneApprovisionement.setVenteAutorise(produit.isVenteAutorise());
 			//ligneApprovisionement.merge();
-			produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mis a jou du stock de produit 
+			//produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mise a jour du stock de produit 
 			ligneApprovisionement.compenserStock();
-			produit.setQuantiteEnStock(InventoryService.stock(produit));
+			produit.setQuantiteEnStock(DefaultInventoryService.stock(produit));
 			produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
 			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
 			produit.merge();
@@ -133,10 +133,6 @@ public class ApprovisonementProcess {
 		}
 		approvisionement.close();
 		approvisionement.merge();
-
-
-
-
 	}
 
 	public static void specialDeleteLine(LigneApprovisionement ligne){

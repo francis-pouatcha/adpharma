@@ -1,5 +1,7 @@
 package org.adorsys.adpharma.beans.importExport;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -14,8 +16,13 @@ import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.utils.DocumentsPath;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 @Service
 public class LigneApproImportExportService extends ImportExportService<LigneApprovisionement> {
@@ -90,4 +97,58 @@ public class LigneApproImportExportService extends ImportExportService<LigneAppr
 		}
 		return null ;
 	}
+	
+	@Override
+	public HSSFWorkbook exportToxlsFile(List<LigneApprovisionement> listclazz) {
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = createSheetWithHeader(workbook);
+		insertDataIntheSheet(sheet, listclazz);
+		return workbook ;
+	}
+	@Override
+	public File exportToTxtFile(List<LigneApprovisionement> listclazz) throws IOException {
+		String SEPARATEUR= "$" ;
+		File fileToSend = new File(DocumentsPath.ROOT_DIR+"catalogueCipm.txt");
+		String lineToWrite ="cipm"+SEPARATEUR+"cip"+SEPARATEUR+"designation"+SEPARATEUR+"quantite"+SEPARATEUR +"prix"+SEPARATEUR+"emplacement";
+		ArrayList<String> arrayList = new ArrayList<String>();
+		arrayList.add(lineToWrite);
+		for (LigneApprovisionement ligne : listclazz) {
+			lineToWrite = ligne.getCipMaison()+SEPARATEUR+ligne.getCip()+SEPARATEUR+ligne.getDesignation()+SEPARATEUR+ligne.getQuantieEnStock()+
+					SEPARATEUR+ligne.getPrixVenteUnitaire().intValue()+SEPARATEUR+ligne.getProduit().getRayon().getName();
+			arrayList.add(lineToWrite);
+		}
+		FileUtils.writeLines(fileToSend, arrayList);
+		return fileToSend ;
+	}
+	
+	
+	
+	private HSSFSheet createSheetWithHeader(HSSFWorkbook workbook) {
+		if(workbook == null )throw new IllegalArgumentException("Null Argument Is not required here. Invalid sheet value !");
+		HSSFSheet sheet = workbook.createSheet("cataloqueCipm");
+		HSSFRow row = sheet.createRow(0);
+		row.createCell(0).setCellValue("cipm");
+		row.createCell(1).setCellValue("cip");
+		row.createCell(2).setCellValue("designation");
+		row.createCell(3).setCellValue("quantite");
+		row.createCell(4).setCellValue("prix");
+		row.createCell(5).setCellValue("emplacement");
+		return sheet;
+	}
+	
+	private void insertDataIntheSheet(HSSFSheet sheet,List<LigneApprovisionement> data){
+		for(int i = 0; i < data.size(); i++){
+			int j = i+1;
+			LigneApprovisionement rowData = data.get(i);
+			HSSFRow row = sheet.createRow(j);
+			row.createCell(0 ).setCellValue(rowData.getCipMaison());
+			row.createCell(1).setCellValue(rowData.getCip());
+			row.createCell(2).setCellValue(rowData.getDesignation());
+			row.createCell(3).setCellValue(rowData.getQuantieEnStock()+"");
+			row.createCell(4).setCellValue(rowData.getPrixVenteUnitaire()+"");
+			row.createCell(5).setCellValue(rowData.getProduit().getRayon().getName());
+		}
+		return ;
+	}
 }
+

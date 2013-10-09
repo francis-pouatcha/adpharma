@@ -8,7 +8,7 @@
     <form:create id="fc_org_adorsys_adpharma_domain_Inventaire" modelAttribute="inventaire" multipart="true" path="/inventaires" render="${empty dependencies}" z="user-managed">
         <table>
             <tr>
-                <th>${inventory_info }</th>
+                <th>${inventory_info } </th>
                 <th>${product_to_be_inventored_information }</th>
             </tr>
             <tr>
@@ -48,10 +48,10 @@
                     <field:input field="endBy" id="c_org_adorsys_adpharma_domain_Inventaire_endBy" label="${create_endingwith_label } ? " titleMessage="${create_endingwith_title } " z="user-managed"/>
                     <spring:message code="inventory_create_productcipm_title" var="create_productcipm_title"/>
                     <spring:message code="inventory_create_productcipm_label" var="create_productcipm_label"/>
-                    <field:input buttonId="cipmbt" buttonLabel="..." field="cipmProduct" id="c_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements" label="${create_productcipm_label }" titleMessage="${create_productcipm_title }" z="user-managed"/>
-                    <spring:message code="inventory_create_productcip_title" var="create_productcip_title"/>
+                    <field:input render="false" buttonId="cipmbt" buttonLabel="..." field="cipmProduct" id="c_org_adorsys_adpharma_domain_Inventaire_ligneApprovisionements" label="${create_productcipm_label }" titleMessage="${create_productcipm_title }" z="user-managed"/>
+                    <spring:message  code="inventory_create_productcip_title" var="create_productcip_title"/>
                     <spring:message code="inventory_create_productcip_label" var="create_productcip_label"/>
-                    <field:input buttonId="cipbt" buttonLabel="..." field="cipProduct" id="c_org_adorsys_adpharma_domain_Inventaire_produits" label="${create_productcip_label }" titleMessage="${create_productcip_title }" z="user-managed"/>
+                    <field:input render="false" buttonId="cipbt" buttonLabel="..." field="cipProduct" id="c_org_adorsys_adpharma_domain_Inventaire_produits" label="${create_productcip_label }" titleMessage="${create_productcip_title }" z="user-managed"/>
                     <field:input field="familleProduit" id="c_org_adorsys_adpharma_domain_Inventaire_familleProduit" render="false" z="user-managed"/>
                     <field:input field="sousFamillePiroduit" id="c_org_adorsys_adpharma_domain_Inventaire_sousFamilleProduit" render="false" z="user-managed"/>
                 </td>
@@ -61,7 +61,6 @@
         <field:input field="cipmProduct" id="c_org_adorsys_adpharma_domain_Inventaire_cipmProduct" z="x68cNDO/VQj0bUa/lpj66zpwnZA="/>
         <field:checkbox field="inventoryBycip" id="c_org_adorsys_adpharma_domain_Inventaire_inventoryBycip" z="YTyXV3ogUXibLytMHSIi6XbieLo="/>
         <field:checkbox field="doNotSelectAnyProduct" id="c_org_adorsys_adpharma_domain_Inventaire_doNotSelectAnyProduct" z="bHR8zURtPq2cm6a+7fx8awFA5DA="/>
-        <field:checkbox field="inventoryBycipm" id="c_org_adorsys_adpharma_domain_Inventaire_inventoryBycipm" z="CBYT8EXSp1uizcdxekSOqfIRzHE="/>
         <field:input field="aproId" id="c_org_adorsys_adpharma_domain_Inventaire_aproId" validationMessageCode="field_invalid_integer" z="5S2onnT5Ra5gYdmbwfz2dPjdnn0="/>
         <field:input field="rayonId" id="c_org_adorsys_adpharma_domain_Inventaire_rayonId" validationMessageCode="field_invalid_integer" z="user-managed" render="false"/> -->
     </form:create>

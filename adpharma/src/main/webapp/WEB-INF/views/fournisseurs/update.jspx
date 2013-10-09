@@ -25,5 +25,6 @@
         <field:input field="providerKey" id="c_org_adorsys_adpharma_domain_Fournisseur_providerKey" z="bESuk/cLGJi0H605G33adCya5A4="/>
         <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_shortname" z="NwdpMS3w5XjOjdB/P/asBE+TVt4="/>
         <field:input field="distributorKey" id="c_org_adorsys_adpharma_domain_Fournisseur_distributorKey" z="KMWitpk5toZzsPn8+PH6284aIAE="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Fournisseur_archived" z="DDu2eH0dPXdqlpqsQC5oV6Q99dc="/>
     </form:update>
 </div>

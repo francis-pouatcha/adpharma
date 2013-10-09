@@ -10,6 +10,7 @@ privileged aspect LigneCmdFournisseur_Roo_ToString {
     public String LigneCmdFournisseur.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("AgentSaisie: ").append(getAgentSaisie()).append(", ");
+        sb.append("Archived: ").append(getArchived()).append(", ");
         sb.append("Cip: ").append(getCip()).append(", ");
         sb.append("Commande: ").append(getCommande()).append(", ");
         sb.append("DateSaisie: ").append(getDateSaisie()).append(", ");

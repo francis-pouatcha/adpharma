@@ -25,6 +25,7 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.services.JasperPrintService;
+import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.DocumentsPath;
@@ -44,7 +45,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DocumentsPrinterController {
 	@Autowired
 	private JasperPrintService jasperPrintService ;
-
+	
+	@Autowired
+    private SaleService saleService;
 	
 	@RequestMapping(value = "/etatPeriodique",params="form", method = RequestMethod.GET)
 	public String ventes(Model uiModel) {
@@ -129,8 +132,16 @@ public class DocumentsPrinterController {
 	@RequestMapping(value = "/print/etatPeriodiqueVente.pdf", method = RequestMethod.GET)
 	public void etatPeriodiqueVente(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
-		parameters.put("DateD",etatBean.getDateDebut());
-		parameters.put("DateF",etatBean.getDateFin());
+		if(etatBean.getDateDebut()==null){
+			parameters.put("DateD",saleService.getFirstSale().getDateCreation());
+		}else{
+			parameters.put("DateD",etatBean.getDateDebut());
+		}
+		if(etatBean.getDateFin()==null){
+			parameters.put("DateF", new Date());
+		}else{
+			parameters.put("DateF",etatBean.getDateFin());
+		}
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_VENTE_FILE_PATH);
@@ -150,7 +161,6 @@ public class DocumentsPrinterController {
 		Map parameters = new HashMap();
 		parameters.put("DateD",etatBean.getDateDebut());
 		parameters.put("DateF",etatBean.getDateFin());
-		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_CHIFFRE_AFFAIRE_VENDEUR_FILE_PATH);
 		} catch (Exception e) {
@@ -176,6 +186,25 @@ public class DocumentsPrinterController {
 			}else{
 				jasperPrintService.printDocument(parameters,response, DocumentsPath.ETAT_PERIODIQUE_MVTS_FILE_PATH);
 			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatPeriodiqueMarges.pdf", method = RequestMethod.GET)
+	public void etatPeriodiqueTauxMarge(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_TAUX_MARQUE_PATH);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -257,8 +286,16 @@ public class DocumentsPrinterController {
 	@RequestMapping(value = "/print/etatPeriodiqueDettes.pdf", method = RequestMethod.GET)
 	public void etatPeriodiqueDette(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
-		parameters.put("DateD",etatBean.getDateDebut());
-		parameters.put("DateF",etatBean.getDateFin());
+		if(etatBean.getDateDebut()==null){
+			parameters.put("DateD", saleService.getFirstDebt().getDateCreation());
+		}else{
+			parameters.put("DateD",etatBean.getDateDebut());
+		}
+		if(etatBean.getDateFin()==null){
+			parameters.put("DateF", new Date());
+		}else{
+			parameters.put("DateF",etatBean.getDateFin());
+		}
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DETTES);
@@ -292,8 +329,16 @@ public class DocumentsPrinterController {
 	@RequestMapping(value = "/print/etatPeriodiqueCaisse.pdf", method = RequestMethod.GET)
 	public void etatPeriodiqueCaisse(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
-		parameters.put("DateD",etatBean.getDateDebut());
-		parameters.put("DateF",etatBean.getDateFin());
+		if(etatBean.getDateDebut()==null){
+			parameters.put("DateD", saleService.getFirstCash().getDateOperation());
+		}else{
+			parameters.put("DateD",etatBean.getDateDebut());
+		}
+		if(etatBean.getDateFin()==null){
+			parameters.put("DateF", new Date());
+		}else{
+			parameters.put("DateF",etatBean.getDateFin());
+		}
 		
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_CAISSE_FILE_PATH);
@@ -328,20 +373,26 @@ public class DocumentsPrinterController {
 	@Produces({"application/pdf"})
 	@Consumes({""})
 	@RequestMapping(value = "/print/etatVAlorisationRayon.pdf", method = RequestMethod.GET)
-	public void etatVAlorisationRayon(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+	public void etatVAlorisationRayon(EtatManagerBean etatBean, HttpServletRequest request,HttpServletResponse response) {
 		Map parameters = new HashMap();
-		Rayon rayon = etatBean.getRayon();
-		parameters.put("rayonId",rayon.getId());
+		Rayon rayon=null;
+	    try {
+	    	rayon = etatBean.getRayon();
+	    	parameters.put("rayonId",rayon.getId());
+		} catch (Exception e) {
+			System.out.println("Null Rayon");
+		}
 		
 		try {
-			if(rayon.getId().intValue()==0){
+			if(rayon==null){
 				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETA_VALORISATION_STOCK_FILE_PATH);
 			}else {
-				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_VALORISATION_RAYON_FILE_PATH);
+				if(rayon.getId()!=0){
+					jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_VALORISATION_RAYON_FILE_PATH);
+				}
 			}
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ;
 		}
@@ -465,11 +516,8 @@ public class DocumentsPrinterController {
 			@RequestMapping(value="/print/ficheReclamations.pdf", method=RequestMethod.GET)
 			public String ficheReclamation(@Valid ReclamationForm data, Model uiModel){
 				Fournisseur fournisseur = Fournisseur.findFournisseur(new Long(data.getProvider_id()));
-				System.out.println("Fournisseur:"+fournisseur);
 				Date dateMin = PharmaDateUtil.parseToDate(data.getDate_min(), PharmaDateUtil.DATE_PATTERN_LONG2);
-				System.out.println("Date minimum: "+dateMin);
 				Date dateMax = PharmaDateUtil.parseToDate(data.getDate_max(), PharmaDateUtil.DATE_PATTERN_LONG2);
-				System.out.println("Date Maximum:"+dateMax);
 				List<Approvisionement> approvisionements = Approvisionement.findApprovisionementsByFounisseurAndDateCreationBetweenAndReclamationsNot(fournisseur, dateMin, dateMax, Boolean.FALSE).getResultList();
 				List<ReclamationBean> reclamations= new ArrayList<ReclamationBean>();
 				if(!approvisionements.isEmpty()){

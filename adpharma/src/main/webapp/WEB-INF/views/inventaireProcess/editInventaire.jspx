@@ -1,52 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
-	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
-	xmlns:jsp="http://java.sun.com/JSP/Page" 
-	xmlns:security="http://www.springframework.org/security/tags" 
+<div xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:security="http://www.springframework.org/security/tags"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
 	xmlns:spring="http://www.springframework.org/tags"
 	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
 	<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
-	
-<!-- 	<div style="margin-bottom: 10px; padding-bottom: 5px;">
+
+	<!-- 	<div style="margin-bottom: 10px; padding-bottom: 5px;">
  		<span style="font-weight: bold"> 
 		<c:out value="${inventaireProcess.displayName}"/>
 		</span> 
 	</div> -->
-	<util:display-box display="${inventaireProcess.displayName}" />    
-	<spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
-	<spring:url value="/resources/images/enregistrer.png"  var="enregistrer" />
-	<spring:url value="/resources/images/annuler.png"  var="annuler" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/editInventaire?form"  var="edit_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/findProduct?form"  var="find_product_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/enregistrerInv"  var="enr_cmd_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/addLine"  var="cmd_add_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/showProduct/"  var="show_prd_url" />
-    <spring:url value="/inventaireProcess/print/${inventaireProcess.invId}/ficheDeComptage.pdf"  var="fiche_comp_url" />
-    <spring:url value="/produits/findProductApByCipAjax/"  var="find_cip_url" />
-    <spring:url value="/inventaireProcess/${inventaireProcess.invId}/annulerInv"  var="delete_cmd_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/deleteLine/" var="delete_line_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/updateLineByAjax" var="update_url" />
-	<spring:url value="/inventaireProcess/${inventaireProcess.invId}/exportLines" var="exportlines_url" />
+	<util:display-box display="${inventaireProcess.displayName}" />
+	<spring:url value="/inventaireProcess/findApproLine" var="find_approLine_url" />
+	<spring:url value="/inventaireProcess/selectedAprroLine/" var="find_cipm_url" />
+	<spring:url value="/produits/findProductByCipAjax" var="find_productajax_url" />
+	<spring:url value="/resources/images/enregistrer.png" var="enregistrer" />
+	<spring:url value="/resources/images/annuler.png" var="annuler" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/editInventaire?form"
+		var="edit_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/findProduct?form"
+		var="find_product_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/enregistrerInv"
+		var="enr_cmd_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/addLine"
+		var="cmd_add_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/showProduct/"
+		var="show_prd_url" />
+	<spring:url
+		value="/inventaireProcess/print/${inventaireProcess.invId}/ficheDeComptage.pdf"
+		var="fiche_comp_url" />
+	<spring:url value="/produits/findProductApByCipAjax/" var="find_cip_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/annulerInv"
+		var="delete_cmd_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/deleteLine/"
+		var="delete_line_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/updateLineByAjax"
+		var="update_url" />
+	<spring:url
+		value="/inventaireProcess/${inventaireProcess.invId}/exportLines"
+		var="exportlines_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
-		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL INVENTAIRE</a></span>
-		<span ><a href="#" style="text-decoration: none;" id="findcip"> <INPUT type="button" class="submits" value="rechercher un produit"/></a></span>
-	    <span ><a href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Enregistrer l'inventaire" title="Enregistre L'inventaire" /></a></span>
-	    <span ><a href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT  class="submits" type="button" value="Annuler l'inventaire" title="Annuler L'inventaire" /></a></span>
-   		<span ><a href="#" style="text-decoration: none;" id="loadfilebtn"> <INPUT type="button" class="submits" value="charger le Fichier"/></a></span>
-   		<span ><a href="${fiche_comp_url}" style="text-decoration: none;"> <INPUT type="button" class="submits" value="Fiche de comptage"/></a></span>
-        <span ><a href="${exportlines_url}" style="text-decoration: none;"> <INPUT type="button" class="submits" value="Exporter les lignes"/></a></span>
-   </div>
-		
-	
-   		<!-- product selection  	    -->
-	
- 
-<script type="text/javascript">
+		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL
+				INVENTAIRE</a></span> <span><a href="#" style="text-decoration: none;"
+			id="findcip"> <INPUT type="button" class="submits"
+				value="rechercher un produit" /></a></span> <span><a
+			href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Enregistrer l'inventaire"
+				title="Enregistre L'inventaire" /></a></span> <span><a
+			href="${ delete_cmd_url}" style="text-decoration: none;"><INPUT
+				class="submits" type="button" value="Annuler l'inventaire"
+				title="Annuler L'inventaire" /></a></span> <span><a href="#"
+			style="text-decoration: none;" id="loadfilebtn"> <INPUT
+				type="button" class="submits" value="charger le Fichier" /></a></span> <span><a
+			href="${fiche_comp_url}" style="text-decoration: none;"> <INPUT
+				type="button" class="submits" value="Fiche de comptage" /></a></span> <span><a
+			href="${exportlines_url}" style="text-decoration: none;"> <INPUT
+				type="button" class="submits" value="Exporter les lignes" /></a></span>
+	</div>
+
+
+	<!-- product selection  	    -->
+
+
+	<script type="text/javascript">
 function deleteRow(row) {
 	$.get('${delete_line_url}' + row, function(data) {
 		if (data == "ok") {
@@ -183,7 +215,7 @@ var cip =	document.getElementById("cip").value ;
 	$.getJSON( "${find_cip_url }"+cip,
 			function(data){
 		if (data.id== null) {
-			alert("Aucun produit Trouve de CIP "+cip);	
+			alert("Aucun produit Trouve de CIP(M) "+cip);	
 			videLigne();
 				}else{
 					$("#cip").val(data.cip);
@@ -201,19 +233,33 @@ var cip =	document.getElementById("cip").value ;
 }
 
 function requetes(cip){
-	
-	$.getJSON( "${find_cip_url }"+cip,
+	var iscipm = ${inventaireProcess.isInventoryByCipm};
+	var url = "${find_cip_url }"+cip ;
+	if(iscipm){
+		url="${find_cipm_url }"+cip
+	}
+	$.getJSON( url,
 			function(data){
 		if (data.id== null) {
-			alert("Aucun produit Trouve de CIP "+cip);	
+			alert("Aucun produit Trouve de cip(M) "+cip);	
 			videLigne();
 				}else{
-					$("#cip").val(data.cip);
-					$("#des").val(data.designation);
-					$("#pId").val(data.id);
-					$("#qte").focus();
-					$("#qtes").val(data.quantiteEnStock);
-					$("#pt").val(data.prixTotalStock);
+					if(iscipm){
+						$("#cip").val(data.cipMaison);
+						$("#des").val(data.designation);
+						$("#pId").val(data.id);
+						$("#qte").focus();
+						$("#qtes").val(data.quantieEnStock);
+						$("#pt").val(data.prixVenteUnitaire);
+					}else{
+						$("#cip").val(data.cip);
+						$("#des").val(data.designation);
+						$("#pId").val(data.id);
+						$("#qte").focus();
+						$("#qtes").val(data.quantiteEnStock);
+						$("#pt").val(data.prixTotalStock);
+					}
+					
 
 				}
 			
@@ -266,7 +312,7 @@ function verif_formulaire()
 
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	function calculEcart()
 	  {
 	var qtes=	$('#qtes').val() ;
@@ -279,12 +325,10 @@ function verif_formulaire()
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
-				<th>CIP</th>
-		    		<th>DESIGNATION</th>
-		    		<th>QTE CIP</th>
-		    		 <th>RAYON</th>
-		    		 <th>FILIALE</th>
-
+				<th>Cip(M)</th>
+		    		<th>Designation</th>
+		    		<th>Qte Virtuel</th>
+		    		 <th>Rayon</th>
 				</tr>');
 	}
 	$(function(){
@@ -292,21 +336,37 @@ function verif_formulaire()
 		$('form#produitfindform').submit
 		(function(){
 			clearProductTable();
-				$.getJSON( '${find_productajax_url}',
+			var iscipm = ${inventaireProcess.isInventoryByCipm};
+			var url = '${find_productajax_url}' ;
+			if(iscipm){
+				url='${find_approLine_url}' ;
+			}
+				$.getJSON( url,
 						$('#produitfindform').serialize(),
 			                function(data){
 								$(data).each(function(){
+									if(iscipm){
+										$('#resultproduit').append(
+											     '<tr id="'+this.cipMaison+'">
+												  <td>'+this.cipMaison+'</td>
+												  <td>'+this.designation+'</td>
+												  <td>'+this.quantieEnStock+'</td>
+												  <td>'+this.nonRayon+'</td>
+												  </tr>'
+												
+										);
+									}else{
+										$('#resultproduit').append(
+											     '<tr id="'+this.cip+'">
+												  <td>'+this.cip+'</td>
+												  <td>'+this.designation+'</td>
+												  <td>'+this.quantiteEnStock+'</td>
+												  <td>'+this.rayon.codeRayon+'</td>
+												  </tr>'
+												
+										);
+									}
 									
-									$('#resultproduit').append(
-									     '<tr id="'+this.cip+'">
-										  <td>'+this.cip+'</td>
-										  <td>'+this.designation+'</td>
-										  <td>'+this.quantiteEnStock+'</td>
-										  <td>'+this.rayon.codeRayon+'</td>
-										  <td>'+this.filiale.libelle+'</td>
-										  </tr>'
-										
-								);
 							});
 								$('table#resultproduit tr').each(function(){
 									var current = this;
@@ -314,8 +374,6 @@ function verif_formulaire()
 										console.log(current.id)
 										$('#findproduit').dialog("close");
 										requetes(current.id);
-									
-										
 									};
 									});
 							
@@ -391,165 +449,185 @@ function verif_formulaire()
 	</script>
 
 
-     	<!-- afficher ce formulaire pour l ajout de produit -->
+	<!-- afficher ce formulaire pour l ajout de produit -->
 
- <util:panel title="saisir le CIP du Produit" id="cip">
- <form action="${cmd_add_url}" method="POST" name="formulaire" onSubmit="return verif_formulaire()">
-		    <table>
-		    	<tr>
-		    		<th style="text-align: center;">CiP</th>
-		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Stock Virtuel</th>
-		    		<th style="text-align: center;">Stock Reel</th>
-		            <th style="text-align: center;">Ecart</th>
-		            <th style="text-align: center;">Montant Ecart</th>
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
-		    	</tr>
-		    		<tr>
-		    			<td>
-		    				
-		    		<INPUT type="hidden" name="pId" id="pId" value="${inventaireProcess. produit.id}" />	
-		    		<INPUT type="text" name="cip" onmouseover="this.select();" onfocus="this.select();" onchange="requete();" autofocus="autofocus" class="autres" value="${inventaireProcess.produit.cip}" onKeyPress="return scanTouche(event)"   style=" text-align: center;"   id="cip" />
-		    			</td>
-		    			<td>
-		 	<INPUT type="text" name="des" class="des" title="Designation" value="${inventaireProcess.produit.designation}" style="color: blue; text-align: center;" disabled="disabled" id="des" />
-		    	
-		    			</td>
-		    			<td >
-		    		<INPUT type="text"  name="qtes" class="autres" value="${inventaireProcess.produit.quantiteEnStock}" disabled="disabled"      style="color: blue; "  id="qtes" />
+	<util:panel title="saisir le code du Produit" id="cip">
+		<form action="${cmd_add_url}" method="POST" name="formulaire"
+			onSubmit="return verif_formulaire()">
+			<table>
+				<tr>
+					<c:choose>
+						<c:when test="${inventaireProcess.isInventoryByCipm}">
+							<th style="text-align: center;">CiPM</th>
+						</c:when>
+						<c:otherwise>
+							<th style="text-align: center;">CiP</th>
+						</c:otherwise>
+					</c:choose>
+					<th style="text-align: center;">Designation</th>
+					<th style="text-align: center;">Qte Vir.</th>
+					<th style="text-align: center;">Qte Reel</th>
+					<th style="text-align: center;">Ecart</th>
+					<th style="text-align: center;">Montant</th>
+					<th colspan="2" style="text-align: center;">ACTION</th>
+				</tr>
+				<tr>
+					<td><INPUT type="hidden" name="pId" id="pId"
+						value="${inventaireProcess. produit.id}" /> <INPUT type="text"
+						name="cip" onmouseover="this.select();" onfocus="this.select();"
+						onchange="requete();" autofocus="autofocus" class="autres"
+						value="${inventaireProcess.produit.cip}"
+						onKeyPress="return scanTouche(event)" style="text-align: center;"
+						id="cip" /></td>
+					<td><INPUT type="text" name="des" class="des"
+						title="Designation"
+						value="${inventaireProcess.produit.designation}"
+						style="color: blue; text-align: center;" disabled="disabled"
+						id="des" /></td>
+					<td><INPUT type="text" name="qtes" class="autres"
+						value="${inventaireProcess.produit.quantiteEnStock}"
+						disabled="disabled" style="color: blue;" id="qtes" /></td>
 
-		    			</td>
-		    		
-		    			<td>
-		    			
-		   	<INPUT type="text" name="qte" onmouseover="this.select();" onfocus="this.select();" class="autres" style=" text-align: center;" onkeyup="calculEcart();" onKeyPress="return scanTouche(event)"  maxlength="7"   title="quantite a Commander"   id="qte" />
-		    		
-		    			</td>
-		    			<td>
-		     <INPUT type="text" name="ec" id="ec"    class="autres"  style="color:red; text-align: center;"  title="saisir le Prix De Vente Unitaire"   disabled="disabled" />
-		    			</td>
-		    			<td>
-		     <INPUT type="text" name="pt" id="pt" class="autres"  style="color:blue; text-align: center;"   title="saisir le Prix De Vente Unitaire"   disabled="disabled" />
-		                </td>
-		    			<td>
-							<INPUT type="submit"  value="Ajouter"  class="submits"/>
-						</td>
-		    		</tr>
-		    </table>
-</form>
+					<td><INPUT type="text" name="qte" onmouseover="this.select();"
+						onfocus="this.select();" class="autres"
+						style="text-align: center;" onkeyup="calculEcart();"
+						onKeyPress="return scanTouche(event)" maxlength="7"
+						title="quantite a Commander" id="qte" /></td>
+					<td><INPUT type="text" name="ec" id="ec" class="autres"
+						style="color: red; text-align: center;"
+						title="saisir le Prix De Vente Unitaire" disabled="disabled" /></td>
+					<td><INPUT type="text" name="pt" id="pt" class="autres"
+						style="color: blue; text-align: center;"
+						title="saisir le Prix De Vente Unitaire" disabled="disabled" /></td>
+					<td><INPUT type="submit" value="Ajouter" class="submits" /></td>
+				</tr>
+			</table>
+		</form>
 
-		     <BR />
-		  <b style="color: red; text-align: center;">   ${apMessage} </b>  
-		    	  
-</util:panel> 
-  <BR />     
+		<BR />
+		<b style="color: red; text-align: center;"> ${apMessage} </b>
 
-  		<center>
+	</util:panel>
+	<BR />
+
+	<center>
 		<IMG alt="loading ..." src="${loadimage }" class="loadimage"
 			style="display: none;" />
 	</center>
-    	
-    	<form:customList id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected" items="${inventaireProcess.productSelected}" z="user-managed" 
-    		label="Liste Des Produits Inventories" objectName="Ligne Inventaire" openPane="${not empty  inventaireProcess.productSelected}">
 
-		    <table>
-		    	<tr>
-		    		 
-		           <th style="text-align: center;">CiP</th>
-		    		<th style="text-align: center;" >Designation</th>
-		    		<th style="text-align: center;">Stock Virtuel</th>
-		    		<th style="text-align: center;">Stock Reel</th>
-		            <th style="text-align: center;">Ecart</th>
-		            <th style="text-align: center;">Montant Ecart</th>
-		            <th style="text-align: center;">Agent Saisie</th>
-		    		<th colspan="2" style="text-align: center;">ACTION</th>
-		    	</tr>
-		    	<c:forEach items="${inventaireProcess.productSelected}" var="ligneCommande">
-		    		<tr onclick="toggleToinput(this.id);" class="list" id="${ ligneCommande.id}">
-		    		<td style="text-align: center;">
-		    				<c:out value="${ligneCommande.produit.cip}"></c:out>
-		    			</td >
-		    			<td style="text-align: left;padding-left:20px;width: 400px">
-		    				<c:out value="${ligneCommande.produit.designation}"></c:out>
-		    			
-		    			</td>
-		    			<td style="text-align:right;padding-right: 20px">
-		    				<c:out value="${ligneCommande.qteEnStock}"></c:out>
+	<form:customList
+		id="pl_org_adorsys_adpharma_beans_commadProcess_productSelected"
+		items="${inventaireProcess.productSelected}" z="user-managed"
+		label="Liste Des Produits Inventories" objectName="Ligne Inventaire"
+		openPane="${not empty  inventaireProcess.productSelected}">
+<div style="overflow: auto; height: 450px;">
+		<table>
+			<tr>
+				<c:choose>
+					<c:when test="${inventaireProcess.isInventoryByCipm}">
+						<th style="text-align: center;">CiPM</th>
+					</c:when>
+					<c:otherwise>
+						<th style="text-align: center;">CiP</th>
+					</c:otherwise>
+				</c:choose>
 
-		    			</td>
-		    			<td style="text-align:right;padding-right: 20px">
-		    			
-		    				<c:out value="${ligneCommande.qteReel}"></c:out>
-		    			</td>
+				<th style="text-align: center;">Designation</th>
+				<th style="text-align: center;">Qte Vir.</th>
+				<th style="text-align: center;">Qte Reel</th>
+				<th style="text-align: center;">Ecart</th>
+				<th style="text-align: center;">Montant</th>
+				<th style="text-align: center;">Agent Saisie</th>
+				<th colspan="2" style="text-align: center;">ACTION</th>
+			</tr>
+		
+			<c:forEach items="${inventaireProcess.productSelected}"
+				var="ligneCommande">
+				<tr onclick="toggleToinput(this.id);" class="list"
+					id="${ ligneCommande.id}">
+					<td style="text-align: center;"><c:choose>
+							<c:when test="${inventaireProcess.isInventoryByCipm}">
+								<c:out value="${ligneCommande.cipm}"></c:out>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${ligneCommande.produit.cip}"></c:out>
+							</c:otherwise>
+						</c:choose></td>
+					<td style="text-align: left; padding-left: 20px; width: 400px">
+						<c:out value="${ligneCommande.produit.designation}"></c:out>
 
-		    			<td style="text-align:right;padding-right: 20px">
-		    			
-		    				<c:out value="${ligneCommande.ecart}"></c:out>
-		    		
-		    			</td>
-		    			<td style="text-align:right;padding-right: 20px">
-		     		    				<c:out value="${ligneCommande.prixTotal}"></c:out>
+					</td>
+					<td style="text-align: right; padding-right: 20px"><c:out
+							value="${ligneCommande.qteEnStock}"></c:out></td>
+					<td style="text-align: right; padding-right: 20px"><c:out
+							value="${ligneCommande.qteReel}"></c:out></td>
 
-		    			</td>
-		    			<td style="text-align: center;">
-		    				<c:out value="${ligneCommande.agentSaisie}"></c:out>
-		    
-		    			</td>
-		    				<td class="utilbox">
-						<spring:url value="/resources/images/update.png" var="update_image_url" />
-							<img style="display: none;" id="${ligneCommande.id}save" alt="${ligneCommande.id}" class="image"
-							src="${ update_image_url}" title=" Supprimer la selection"
-							onclick="saveLine(this.alt);" />
-						</td>
-						<td class="utilbox">
-						<spring:url
-								value="/resources/images/delete.png" var="delete_image_url" />
-							<img alt="${ligneCommande.id}" class="image"
-							src="${ delete_image_url}" title=" Supprimer la selection"
-							onclick="hideRow(this.alt);" />
-						</td>							
-		    		</tr>
-		    	</c:forEach>
-		    </table>
-		    
-        </form:customList>
-   <div id="findproduit" style="display: none;" title="recherche un cip ">
+					<td style="text-align: right; padding-right: 20px"><c:out
+							value="${ligneCommande.ecart}"></c:out></td>
+					<td style="text-align: right; padding-right: 20px"><c:out
+							value="${ligneCommande.prixTotal}"></c:out></td>
+					<td style="text-align: center;"><c:out
+							value="${ligneCommande.agentSaisie}"></c:out></td>
+					<td class="utilbox"><spring:url
+							value="/resources/images/update.png" var="update_image_url" /> <img
+						style="display: none;" id="${ligneCommande.id}save"
+						alt="${ligneCommande.id}" class="image" src="${ update_image_url}"
+						title=" Supprimer la selection" onclick="saveLine(this.alt);" />
+					</td>
+					<td class="utilbox"><spring:url
+							value="/resources/images/delete.png" var="delete_image_url" /> <img
+						alt="${ligneCommande.id}" class="image" src="${ delete_image_url}"
+						title=" Supprimer la selection" onclick="hideRow(this.alt);" /></td>
+				</tr>
+			</c:forEach>
 		
-		
-		
-		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
-		<p>
-		<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation"/>
-		</p>
-	
-		
+		</table>
+</div>
+	</form:customList>
+	<div id="findproduit" style="display: none;" title="recherche un produit ">
+
+
+
+		<form id="produitfindform" enctype="application/x-www-form-urlencoded">
+			<p>
+				<label for="designation">Designation :</label> <input class="searchInput" type="text" name="designation" />
+			</p>
+
+
 		</form>
-		
-		 <center>	<IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
- <div style="height:400px; overflow: auto; "  >
-		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="resultproduit"  valign="top" width="100%;" frame="box">
-		    	<tr>
-		    		<th style="text-align: center;">CIP</th>
-		    		<th style="text-align: center; width: 250px;">DESIGNATION</th>
-		    		<th style="text-align: center;">QTE CIP</th>
-		    	   <th style="text-align: center;" >RAYON</th>
-		    	   <th style="text-align: center;" >FILIALE</th>
-		    
-		    	</tr>
-		  </table>
-	</div>	 
-   
-</div>
-<spring:url value="/inventaires/loadfile/${inventaireProcess.invId}"  var="load_Form_url" />
-<!-- load file div  -->
- <div id="loadfilediv" style="display: none;" title="charger le fichier d'inventaire ">
-		
-		<form action="${load_Form_url}" id="loadfileform" method="post" enctype="multipart/form-data">
-		<LABEL> Fichier Inventaire :</LABEL>
-            <input size="50" type="file" name="fichier" /> <br /><br />
-           <input type="submit" class="submits" value="Charger Le Fichier" />
-       </form>
-</div>
- 
+
+		<center>
+			<IMG alt="loading ..." src="${loadimage }" class="loadimage"
+				style="display: none;" />
+		</center>
+		<div style="height: 400px; overflow: auto;">
+			<table cellpadding="0" class="result search" cellspacing="0"
+				border="0" align="left" id="resultproduit" valign="top"
+				width="100%;" frame="box">
+				<tr>
+					<th style="text-align: center;">Cip(M)</th>
+					<th style="text-align: center; width: 250px;">Designation</th>
+					<th style="text-align: center;">Qte virtuel</th>
+					<th style="text-align: center;">Rayon</th>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	<spring:url value="/inventaires/loadfile/${inventaireProcess.invId}"
+		var="load_Form_url" />
+	<!-- load file div  -->
+	<div id="loadfilediv" style="display: none;"
+		title="charger le fichier d'inventaire ">
+
+		<form action="${load_Form_url}" id="loadfileform" method="post"
+			enctype="multipart/form-data">
+			<LABEL> Fichier Inventaire :</LABEL> <input size="50" type="file"
+				name="fichier" /> <br />
+			<br /> <input type="submit" class="submits"
+				value="Charger Le Fichier" />
+		</form>
+	</div>
+
 
 </div>

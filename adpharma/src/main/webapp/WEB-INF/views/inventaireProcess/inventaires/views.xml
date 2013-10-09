@@ -4,4 +4,7 @@
     <definition extends="inventaire" name="inventaireProcess/show">
         <put-attribute name="body" value="/WEB-INF/views/inventaireProcess/inventaires/show.jspx"/>
     </definition>
+    <definition extends="inventaire" name="inventaires/cataloqueCipm">
+        <put-attribute name="body" value="/WEB-INF/views/inventaireProcess/inventaires/cataloguecipm.jspx"/>
+    </definition>
 </tiles-definitions>

@@ -124,7 +124,12 @@ public class CommandeFournisseurController {
 		}
 		return "commandefournisseurs/list";
 	}
-
+	@RequestMapping(method = RequestMethod.GET,value="/autocommands")
+	public String listAutomaticsPreparations(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+			uiModel.addAttribute("commandefournisseurs", CommandeFournisseur.findPreparationAutomatiseeEnCours());
+	        addDateTimeFormatPatterns(uiModel);
+	        return "commandefournisseurs/list";
+	}
 	@ModelAttribute("commandefournisseurs")
 	public Collection<CommandeFournisseur> populateCommandeFournisseurs() {
 		return new ArrayList<CommandeFournisseur>();

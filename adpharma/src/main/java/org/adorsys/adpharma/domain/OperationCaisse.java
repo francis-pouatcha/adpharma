@@ -8,7 +8,6 @@ import org.adorsys.adpharma.domain.Caisse;
 import javax.validation.constraints.NotNull;
 import javax.persistence.ManyToOne;
 import org.adorsys.adpharma.domain.PharmaUser;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -23,20 +22,17 @@ import org.adorsys.adpharma.domain.TypeOpCaisse;
 import javax.persistence.Enumerated;
 import org.adorsys.adpharma.domain.TypePaiement;
 import org.adorsys.adpharma.utils.NumberGenerator;
-
 import flexjson.JSONSerializer;
-
 import java.math.BigDecimal;
 import javax.validation.constraints.Size;
 
 @RooJavaBean
 @RooToString
-@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "OperationCaisse", finders = { "findOperationCaissesByCaisse", "findOperationCaissesByDateOperationBetween" })
+@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "OperationCaisse", finders = { "findOperationCaissesByCaisse", "findOperationCaissesByDateOperationBetween", "findOperationCaissesByTypeOperation" })
 public class OperationCaisse extends AdPharmaBaseEntity {
 
     private String opNumber;
 
-   // @NotNull
     @ManyToOne
     private Caisse caisse;
 
@@ -60,46 +56,46 @@ public class OperationCaisse extends AdPharmaBaseEntity {
     private String raisonOperation;
 
     private String note;
-    
-    public String havenumber ;
-    
-    public String giveTo ;
-    
-    public String orderBy ;
-    
+
+    public String havenumber;
+
+    public String giveTo;
+
+    public String orderBy;
 
     public String getHavenumber() {
-		return havenumber;
-	}
+        return havenumber;
+    }
 
-	public void setHavenumber(String havenumber) {
-		this.havenumber = havenumber;
-	}
+    public void setHavenumber(String havenumber) {
+        this.havenumber = havenumber;
+    }
 
-	public String getGiveTo() {
-		return giveTo;
-	}
+    public String getGiveTo() {
+        return giveTo;
+    }
 
-	public void setGiveTo(String giveTo) {
-		this.giveTo = giveTo;
-	}
+    public void setGiveTo(String giveTo) {
+        this.giveTo = giveTo;
+    }
 
-	public String getOrderBy() {
-		return orderBy;
-	}
+    public String getOrderBy() {
+        return orderBy;
+    }
 
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
 
-	public String toJson() {
-		return new JSONSerializer().include("opNumber","montant","havenumber","giveTo","orderBy","id").exclude("*","*.class").serialize(this);
-	}
-	
-	public static String toJsonArray(Collection<OperationCaisse> collection) {
-		return new JSONSerializer().include("opNumber","montant","havenumber","giveTo","orderBy","id").exclude("*","*.class").serialize(collection);
-	}
-	@PostPersist
+    public String toJson() {
+        return new JSONSerializer().include("opNumber", "montant", "havenumber", "giveTo", "orderBy", "id").exclude("*", "*.class").serialize(this);
+    }
+
+    public static String toJsonArray(Collection<OperationCaisse> collection) {
+        return new JSONSerializer().include("opNumber", "montant", "havenumber", "giveTo", "orderBy", "id").exclude("*", "*.class").serialize(collection);
+    }
+
+    @PostPersist
     public void postPersit() {
         opNumber = NumberGenerator.getNumber("OPC-", getId(), 4);
     }
@@ -121,7 +117,7 @@ public class OperationCaisse extends AdPharmaBaseEntity {
         q.setParameter("typeOperation", typeOperation);
         return q;
     }
-    
+
     public static TypedQuery<OperationCaisse> findOperationCaissesByCaisseAndmodePaiement(TypePaiement modePaiement, Caisse caisse) {
         if (caisse == null) throw new IllegalArgumentException("The caisse argument is required");
         if (modePaiement == null) throw new IllegalArgumentException("The modePaiement argument is required");
@@ -140,8 +136,7 @@ public class OperationCaisse extends AdPharmaBaseEntity {
     public static List<OperationCaisse> findOperationCaisseEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM OperationCaisse o ORDER BY o.id DESC", OperationCaisse.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
-    
-    
+
     public static TypedQuery<OperationCaisse> findOperationCaissesByDateOperationBetween(Date minDateOperation, Date maxDateOperation) {
         if (minDateOperation == null) throw new IllegalArgumentException("The minDateOperation argument is required");
         if (maxDateOperation == null) throw new IllegalArgumentException("The maxDateOperation argument is required");
@@ -151,6 +146,4 @@ public class OperationCaisse extends AdPharmaBaseEntity {
         q.setParameter("maxDateOperation", maxDateOperation);
         return q;
     }
-    
-    
 }

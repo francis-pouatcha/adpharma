@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mvtstock_cip" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="com.adorsys.jasperscriptlets.MvtstockScriptlet" whenResourceMissingType="Empty" uuid="0827336b-dde4-4770-b4db-f5349cb0ad1a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cip" class="java.lang.String"/>
+	<parameter name="PrintBy" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select s.display_name as nameSite, s.phone as phoneSite, s.adresse as adresseSite, m.cipm as cipm, m.designation as des, m.date_creation as datecrea, m.qte_deplace as qte_mvt, m.type_mouvement as type_mvt, m.agent_createur as agent,
+m.p_achat_total as t_achat, m.p_vente_total as t_vente
+from mouvement_stock as m, site as s
+where m.cip= $P{cip}
+and m.site=s.id]]>
+	</queryString>
+	<field name="nameSite" class="java.lang.String"/>
+	<field name="phoneSite" class="java.lang.String"/>
+	<field name="adresseSite" class="java.lang.String"/>
+	<field name="cipm" class="java.lang.String"/>
+	<field name="des" class="java.lang.String"/>
+	<field name="datecrea" class="java.sql.Timestamp"/>
+	<field name="qte_mvt" class="java.math.BigDecimal"/>
+	<field name="type_mvt" class="java.lang.Integer"/>
+	<field name="agent" class="java.lang.String"/>
+	<field name="t_achat" class="java.math.BigDecimal"/>
+	<field name="t_vente" class="java.math.BigDecimal"/>
+	<variable name="typeMvt" class="java.lang.String" resetType="Page">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{type_mvt}]]></initialValueExpression>
+	</variable>
+	<variable name="total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="492cfb45-3b71-4546-952a-67cbd47213ca" x="201" y="3" width="448" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTE DES MOUVEMENTS DE STOCK DU PRODUIT DE CIP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="50cfe7cb-c26b-4c46-840b-64b4b982566c" x="649" y="3" width="62" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cip}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="00684d94-de5e-4355-9bd9-a1afbb16f32b" x="572" y="25" width="85" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Imprime par: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8bc3bff6-a77d-4809-a920-ae2352b45dca" x="657" y="25" width="119" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PrintBy}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="989f198d-2d8a-4260-9278-3260e2672cfb" key="textField-13" x="2" y="4" width="146" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nameSite}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a0516c03-f36a-411c-8886-f03ec6e5242d" key="textField-14" x="2" y="21" width="145" height="12"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tél :"+($F{phoneSite}==null ?"":$F{phoneSite})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="641c5fda-82f7-4895-945e-1c774daade2e" x="2" y="36" width="161" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adresseSite}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="8c6a855e-a412-41aa-b148-153a2a7a50bf" x="0" y="3" width="802" height="25" backcolor="#C0C0C0"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="ce5f4150-b9ef-435c-a99d-0441b41d6628" x="0" y="11" width="43" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  CIPM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93442983-75fa-4847-b169-1040eb949ea0" x="87" y="11" width="95" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ DESIGNATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="14e024c2-592b-47c5-8ae6-f2a14bd31ecd" x="347" y="11" width="61" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTE MVT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4f8e42c2-81a9-4d5c-aafc-8aba6ee47939" x="461" y="11" width="64" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TYPE MVT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aba84910-7b0b-4e67-ad94-a08d89d5b9db" x="223" y="10" width="70" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE MVT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4f8e42c2-81a9-4d5c-aafc-8aba6ee47939" x="598" y="11" width="46" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4f8e42c2-81a9-4d5c-aafc-8aba6ee47939" x="709" y="10" width="75" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL MVT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cd0901ff-b081-48ff-88a3-7b21c989776b" x="0" y="3" width="92" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cipm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ac5d377a-dcd5-4009-8aad-f426db429095" x="92" y="3" width="131" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="5e985fc1-05cd-4eca-a8f9-6b35904c71d5" x="222" y="3" width="125" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datecrea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="667435f8-0de4-4165-bcd5-803e3ad70781" x="347" y="3" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{qte_mvt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c276dbb4-9a0d-4085-9db5-d69727b73903" x="598" y="4" width="91" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{agent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f65ecdb9-4a35-4a65-a8fa-92f2e8f63025" x="461" y="2" width="121" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$P{REPORT_SCRIPTLET}.getTypeMouvement()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4e1b6205-d6cb-4314-bdbc-19f3622c93c7" x="711" y="2" width="91" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[""+$P{REPORT_SCRIPTLET}.getTotal()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ed779786-dbe8-4729-b92b-5b16a40738b7" key="staticText-2" x="277" y="7" width="217" height="17"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<text><![CDATA[Copyright Adorsys S.A, Tél. 33 42 32 44]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e77823b0-7d52-426d-a60b-82cb17c8e397" x="689" y="5" width="65" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="5d5151c8-1331-4074-b13d-b35305330d60" x="754" y="5" width="36" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="1545958c-6d48-4cb7-8ab2-2d0188508858" x="16" y="5" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="17" splitType="Stretch"/>
+	</summary>
+</jasperReport>

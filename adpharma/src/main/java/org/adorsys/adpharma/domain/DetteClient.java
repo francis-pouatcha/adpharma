@@ -26,7 +26,7 @@ import javax.persistence.ManyToOne;
 
 @RooJavaBean
 @RooToString
-@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "DetteClient", finders = { "findDetteClientsByFactureIdEqualsAndClientIdEquals", "findDetteClientsByClientIdEqualsAndSolderNot", "findDetteClientsByClientNameLike", "findDetteClientsByClientNameLikeAndSolderNot", "findDetteClientsByDateCreationBetween", "findDetteClientsBySolderNotOrClientNoEquals", "findDetteClientsByClientNoLike" })
+@RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "DetteClient", finders = { "findDetteClientsByFactureIdEqualsAndClientIdEquals", "findDetteClientsByClientIdEqualsAndSolderNot", "findDetteClientsByClientNameLike", "findDetteClientsByClientNameLikeAndSolderNot", "findDetteClientsByDateCreationBetween", "findDetteClientsBySolderNotOrClientNoEquals", "findDetteClientsByClientNoLike", "findDetteClientsBySolderNotAndAnnulerNot" })
 public class DetteClient extends AdPharmaBaseEntity {
 
     @NotNull
@@ -40,22 +40,20 @@ public class DetteClient extends AdPharmaBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date dateCreation = new Date();
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private Date endDate ;
-    
-    
+    private Date endDate;
 
     public Date getEndDate() {
-		return endDate;
-	}
+        return endDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-	private BigInteger montantInitial = BigInteger.ZERO;
+    private BigInteger montantInitial = BigInteger.ZERO;
 
     private BigInteger avance = BigInteger.ZERO;
 
@@ -107,15 +105,15 @@ public class DetteClient extends AdPharmaBaseEntity {
     public void setAssurer(String assurer) {
         this.assurer = assurer;
     }
-    
-    public BigInteger getPartAssure(){
-    	BigInteger partAssure = BigInteger.ZERO ;
-    	if( sousTotal != null && montantInitial !=null) partAssure = sousTotal.subtract(montantInitial);
-    	return partAssure;
+
+    public BigInteger getPartAssure() {
+        BigInteger partAssure = BigInteger.ZERO;
+        if (sousTotal != null && montantInitial != null) partAssure = sousTotal.subtract(montantInitial);
+        return partAssure;
     }
-    
-    public int getTauxAssure(){
-    	return 100 -taux ;
+
+    public int getTauxAssure() {
+        return 100 - taux;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -260,7 +258,7 @@ public class DetteClient extends AdPharmaBaseEntity {
         return q;
     }
 
-    public static TypedQuery<DetteClient> search(String clientName, String assurer, Date beginDate , Date endDate ,Boolean solder, String factureNo) {
+    public static TypedQuery<DetteClient> search(String clientName, String assurer, Date beginDate, Date endDate, Boolean solder, String factureNo) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM DetteClient AS o WHERE   o.id IS NOT NULL ");
         if (StringUtils.isNotBlank(factureNo)) {
             factureNo = "FAC-" + StringUtils.removeStart(factureNo, "FAC-");
@@ -276,10 +274,9 @@ public class DetteClient extends AdPharmaBaseEntity {
             searchQuery.append(" AND o.dateCreation <= :endDate ");
         }
         if (StringUtils.isNotBlank(clientName)) {
-            clientName =clientName + "%";
+            clientName = clientName + "%";
             searchQuery.append(" AND  LOWER(o.clientName) LIKE LOWER(:clientName) ");
         }
-        
         TypedQuery<DetteClient> q = entityManager().createQuery(searchQuery.append(" ORDER BY o.id DESC").toString(), DetteClient.class);
         if (StringUtils.isNotBlank(factureNo)) {
             q.setParameter("factureNo", factureNo);
@@ -290,25 +287,21 @@ public class DetteClient extends AdPharmaBaseEntity {
         if (StringUtils.isNotBlank(clientName)) {
             q.setParameter("clientName", clientName);
         }
-       
         if (beginDate != null) {
-        	 q.setParameter("beginDate", beginDate);
+            q.setParameter("beginDate", beginDate);
         }
-        
         if (endDate != null) {
-       	 q.setParameter("endDate", endDate);
-       }
-       
+            q.setParameter("endDate", endDate);
+        }
         return q;
     }
-    
+
     public static TypedQuery<DetteClient> findDetteClientsByClient(String name) {
         if (name == null) throw new IllegalArgumentException("The name argument is required");
-        	name = name + "%";
+        name = name + "%";
         EntityManager em = DetteClient.entityManager();
         TypedQuery<DetteClient> q = em.createQuery("SELECT o FROM DetteClient AS o WHERE o.factureNo IN (SELECT f.factureNumber FROM Facture AS f WHERE LOWER(f.client.nom) LIKE LOWER(:name) OR LOWER(f.client.prenom) LIKE LOWER(:name) )", DetteClient.class);
         q.setParameter("name", name);
-       
         return q;
     }
 }

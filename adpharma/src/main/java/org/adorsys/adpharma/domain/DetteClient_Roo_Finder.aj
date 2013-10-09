@@ -69,6 +69,16 @@ privileged aspect DetteClient_Roo_Finder {
         return q;
     }
     
+    public static TypedQuery<DetteClient> DetteClient.findDetteClientsBySolderNotAndAnnulerNot(Boolean solder, Boolean annuler) {
+        if (solder == null) throw new IllegalArgumentException("The solder argument is required");
+        if (annuler == null) throw new IllegalArgumentException("The annuler argument is required");
+        EntityManager em = DetteClient.entityManager();
+        TypedQuery<DetteClient> q = em.createQuery("SELECT o FROM DetteClient AS o WHERE o.solder IS NOT :solder  AND o.annuler IS NOT :annuler", DetteClient.class);
+        q.setParameter("solder", solder);
+        q.setParameter("annuler", annuler);
+        return q;
+    }
+    
     public static TypedQuery<DetteClient> DetteClient.findDetteClientsBySolderNotOrClientNoEquals(Boolean solder, String clientNo) {
         if (solder == null) throw new IllegalArgumentException("The solder argument is required");
         if (clientNo == null || clientNo.length() == 0) throw new IllegalArgumentException("The clientNo argument is required");

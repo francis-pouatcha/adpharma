@@ -24,6 +24,7 @@
         <field:display field="providerKey" id="s_org_adorsys_adpharma_domain_Fournisseur_providerKey" object="${fournisseur}" z="wvICCkQRbQ+TDUZ4+HqgM+XxzsY="/>
         <field:display field="shortname" id="s_org_adorsys_adpharma_domain_Fournisseur_shortname" object="${fournisseur}" z="KorHWFXuBJwBTfMO5D3Hsnx/g1Y="/>
         <field:display field="distributorKey" id="s_org_adorsys_adpharma_domain_Fournisseur_distributorKey" object="${fournisseur}" z="BiU/e9pUc95h6NpDlfau72dW9MY="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Fournisseur_archived" object="${fournisseur}" z="4ap55NiXTiZEH/y/86BsHge6lTo="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Fournisseur_footPrint" object="${fournisseur}" z="qhIf9P6Y33xHj0ClvoJqsiNy1GQ="/>

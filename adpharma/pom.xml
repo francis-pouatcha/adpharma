@@ -71,13 +71,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   <version>2.3.0</version>
 </dependency>
        
-  
+  -->
+  <!-- Scriptlet used to compile some reports -->
      <dependency>
          <groupId>org.adorsys.scriptlets</groupId>
          <artifactId>scriptlet</artifactId>
          <version>1.0</version>
      </dependency>
-   --> 
+    
    <dependency>
 <groupId>jfree</groupId>
 <artifactId>jfreechart</artifactId>

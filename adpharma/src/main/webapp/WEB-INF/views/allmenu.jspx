@@ -39,10 +39,10 @@ if(Check == false){
 		var="vente_credit_url" />
 	<spring:url value="/saleprocess/newProformat" var="vente_proformat_url" />
 	<spring:url
-		value="/commandeclients?page=1&amp;size=${empty param.size ? 50 : param.size}"
+		value="/commandeclients?page=1&amp;size=${empty param.size ? 20 : param.size}"
 		var="list_url" />
 	<spring:url
-		value="/commandeclients/find=venteJournalier?page=1&amp;size=${empty param.size ? 50 : param.size}"
+		value="/commandeclients/find=venteJournalier?page=1&amp;size=${empty param.size ? 20 : param.size}"
 		var="vente_jour_url" />
 
 	<spring:url value="/commandeclients?find=BySearch&amp;form"
@@ -52,15 +52,15 @@ if(Check == false){
 		var="status_date_url" />
 	<spring:url value="/saleprocess/rechercheCmd?form" var="cmd_client_url" />
 	<spring:url
-		value="/ordonnanciers?page=1&amp;size=${empty param.size ? 50 : param.size}"
+		value="/ordonnanciers?page=1&amp;size=${empty param.size ? 20 : param.size}"
 		var="conf_list_ord_url" />
 	<spring:url value="/rayons?form" var="conf_ray_url" />
 	<spring:url
-		value="/rayons?page=1&amp;size=${empty param.size ? 50 : param.size}"
+		value="/rayons?page=1&amp;size=${empty param.size ? 20 : param.size}"
 		var="conf_list_ray_url" />
 	<spring:url value="/fournisseurs?form" var="four_site_url" />
 	<spring:url
-		value="/fournisseurs?page=1&amp;size=${empty param.size ? 50 : param.size}"
+		value="/fournisseurs?page=1&amp;size=${empty param.size ? 20 : param.size}"
 		var="four_list_url" />
 	<spring:url value="/caisses?find=chiffreAffaire&amp;form"
 		var="chiffre_affaire_url" />
@@ -73,7 +73,7 @@ if(Check == false){
 
 		<spring:url value="/commandprocesses?form" var="cmd_four_url" />
 		<spring:url
-			value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 50 : param.size}"
+			value="/commandefournisseurs?page=1&amp;size=${empty param.size ? 20 : param.size}"
 			var="cmd_list_url" />
 			<spring:url
 			value="/commandprocesses/listcommandstoimport"
@@ -90,7 +90,7 @@ if(Check == false){
 			var="imp_code_url" />
 
 		<spring:url
-			value="/approvisionements?page=1&amp;size=${empty param.size ? 50 : param.size}"
+			value="/approvisionements?page=1&amp;size=${empty param.size ? 20 : param.size}"
 			var="ap_list_url" />
 		<spring:url value="/transformationproduits/livreeForm?form"
 			var="ap_trans_url" />
@@ -109,7 +109,7 @@ if(Check == false){
 		<spring:url value="/approvisionements?find=BySearch&amp;form"
 			var="search_list_url" />
 		<spring:url
-			value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 50 : param.size}"
+			value="/ligneapprovisionements?page=1&amp;size=${empty param.size ? 20 : param.size}"
 			var="lap_list_url" />
 		<spring:url value="/mouvementstocks?find=BySearch&amp;form"
 			var="mvt_search_url" />
@@ -117,6 +117,9 @@ if(Check == false){
 			value="/mouvementstocks?page=1&amp;size=${empty param.size ? 50 : param.size}"
 			var="mvt_list_url" />
 		<spring:url value="/ligneapprovisionements/changeDatePriceForm" var="modif_prix_date_url" ></spring:url>
+		
+		
+		<spring:url value="/commandefournisseurs/autocommands?page=1&amp;size=${empty param.size ? 50 : param.size}" var="list_automatic_commands_preparations" ></spring:url>
 
 		<ul class="dropdown">
 			<security:authorize ifAnyGranted="ROLE_STOCKER ,ROLE_SITE_MANAGER">
@@ -181,7 +184,10 @@ if(Check == false){
 						<spring:message code="allmenu_stockmanagement_find_preparation" var="find_preparation"/>
 									<li><a href="${cmd_find_four_url}"> ${find_preparation }</a></li>
 						<spring:message code="allmenu_stockmanagement_list_preparation" var="list_preparation"/>
+						<spring:message code="allmenu_stockmanagement_list_automatics_preparation" var="list_automatic_commands_preparations_msg"/>
 									<li><a href="${cmd_list_url}">${list_preparation }</a></li>
+									<li><a href="${list_automatic_commands_preparations}">${list_automatic_commands_preparations_msg }</a></li>
+									
 						<spring:message code="allmenu_stockmanagement_preparation_toimport" var="preparation_toimport"/>
 									<li><a href="${cmd_list_toimpor_url}">${preparation_toimport }</a></li>
 								</ul></li>
@@ -386,11 +392,6 @@ if(Check == false){
        
             </security:authorize>
     
-      <!--  menu Fournisseur-->  
-         <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_STOCKER">  
-            
-         </security:authorize>
-        
       <!--  menu Inventaire -->
      <spring:url value="/produits/ProduitRuptureStock?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_rps_url"/>
              <spring:url value="/produits/ProduitAlerteStock?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_as_url"/>
@@ -404,6 +405,7 @@ if(Check == false){
             <spring:url value="/inventaires?find=ByDateInventaireBetween&amp;form" var="inv_date_url"/>
             <spring:url value="/inventaires?find=ByEtat&amp;form" var="inv_etat_url"/>
             <spring:url value="/ligneapprovisionements?find=ByCipMaison&amp;form" var="fichetDetail_cipm_url"/>
+            <spring:url value="/inventaireProcess/cataloqueCipm?form" var="invRayol"/>
            
             <security:authorize ifAnyGranted="ROLE_SITE_MANAGER,ROLE_INVENTAIRE">
 
@@ -421,7 +423,7 @@ if(Check == false){
 			<spring:message code="inventory_repports_edition" var="repports_edition"/>
 		        				<a href="#">${repports_edition }</a>
 		        					<ul>
-		        						<!--  <li><a href="${invRayol}">Fiche Inventaire</a></li>-->
+		        					 <li><a href="${invRayol}">Catalogue Cipm</a></li>
 			<spring:message code="inventory_product_qty_monitoring_report" var="product_qty_monitoring_report"/>
 		        						<li><a href="${fiche_qte_url}">${product_qty_monitoring_report } </a></li>
 			<spring:message code="inventory_stock_monitoring_report" var="stock_monitoring_report"/>
@@ -521,7 +523,7 @@ if(Check == false){
                         <spring:url value="/transformationproduits/editTransformation/0" var="transf_url"/>
                         <spring:url value="/transformationproduits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="trans_list_url"/>
                         <spring:url value="/produits/create/true?form" var="prd_cip_url"/>
-                        <spring:url value="/produits?page=1&amp;size=${empty param.size ? 50 : param.size}" var="prd_list_url"/>
+                        <spring:url value="/produits?page=1&amp;size=${empty param.size ? 20 : param.size}" var="prd_list_url"/>
                         <spring:url value="/produits/create/false?form" var="prd_scip_url"/>
                         <spring:url value="/inventaireProcess?find=BySearch&amp;form" var="prdf_des_url"/>
                         <spring:url value="/produits/soldes?form" var="soldes_form_url" />

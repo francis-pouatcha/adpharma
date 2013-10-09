@@ -9,6 +9,7 @@ privileged aspect OperationCaisse_Roo_ToString {
     
     public String OperationCaisse.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Archived: ").append(getArchived()).append(", ");
         sb.append("Caisse: ").append(getCaisse()).append(", ");
         sb.append("DateOperation: ").append(getDateOperation()).append(", ");
         sb.append("FootPrint: ").append(getFootPrint()).append(", ");

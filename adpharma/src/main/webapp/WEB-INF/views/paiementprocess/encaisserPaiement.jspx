@@ -21,9 +21,11 @@
 	<c:choose>
 		<c:when test="${empty paiementProcess.factureSelected}">
 			<spring:url value="/paiementprocess/factureSuivante/0" var="next_facture_url" />
+			<spring:url value="/paiementprocess/facturePrecc/0" var="previous_facture_url" />
 		</c:when>
 		<c:otherwise>
 			<spring:url value="/paiementprocess/factureSuivante/${paiementProcess.factureSelected.id}" var="next_facture_url" />
+			<spring:url value="/paiementprocess/facturePrecc/${paiementProcess.factureSelected.id}" var="previous_facture_url" />
 		</c:otherwise>
 	</c:choose>
 	<spring:url value="/avoirclients/findByNumberAjax" var="find_bon_url" />
@@ -56,6 +58,9 @@
 		   <a href="${ edit_url}">${cashregister_collect }</a>
 	    </span>
 		<SPAN>
+		    <a style="padding-left: 25px; text-decoration: none;" href="${ previous_facture_url}"> 
+		        <INPUT class="submits" type="button" value="Ticket Prec." title="${collect_find_ticket_title }" />
+		   </a>
 		   <a style="padding-left: 25px; text-decoration: none;" href="${ next_facture_url}"> 
 		        <INPUT class="submits" type="button" value="${collect_find_ticket }" title="${collect_find_ticket_title }" />
 		   </a>

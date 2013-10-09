@@ -48,14 +48,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class InventaireController {
 	@Autowired
 	private LigneInventaireImportExportService ligneinventaireImportExportService ;
-	
+
 	@Autowired
 	ExportLignesApprovisionnement exportLignesApprovisionnement;
-	
+
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
-	
-	
+
+
 	@RequestMapping(params = { "find=BySearch", "form" }, method = RequestMethod.GET)
 	public String Search(Model uiModel) {
 		uiModel.addAttribute("pharmausers", ProcessHelper.populateUsers());
@@ -70,13 +70,13 @@ public class InventaireController {
 		uiModel.addAttribute("inventaire",inventaire);
 		return "inventaire/search";
 	}
-	
+
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String createForm(Model uiModel) {
-		
-			uiModel.addAttribute("inventaire", new Inventaire());
-			addDateTimeFormatPatterns(uiModel);
-			return "inventaires/create";
+
+		uiModel.addAttribute("inventaire", new Inventaire());
+		addDateTimeFormatPatterns(uiModel);
+		return "inventaires/create";
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid Inventaire inventaire, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -86,79 +86,85 @@ public class InventaireController {
 			return "inventaires/create";
 		}
 		Rayon rayon = inventaire.getRayon();
-		
 		try {
 			inventaire.setRayonId(rayon.getId());
 		} catch (Exception e) {
 			inventaire.setRayonId(Long.valueOf(0));
 		}
-		
-		uiModel.asMap().clear();
 		inventaire.persist();
 		MultipartFile fichier = inventaire.getFichier();
 		if(fichier!=null){
-		 Workbook workbook = null;
-		try {
-			workbook = Workbook.getWorkbook(fichier.getInputStream());
-			if(workbook != null){
-				 List<LigneInventaire> importListFromSheet = ligneinventaireImportExportService.importListFromSheet(workbook.getSheet(0), inventaire);
-				 inventaire.getLigneInventaire().addAll(importListFromSheet);
-				 inventaire.calculateMontantEcart();
+			Workbook workbook = null;
+			try {
+				workbook = Workbook.getWorkbook(fichier.getInputStream());
+				if(workbook != null){
+					List<LigneInventaire> importListFromSheet = new ArrayList<LigneInventaire>();
+					System.out.println("iscipm = "+inventaire.getInventoryBycipm());
+					if(inventaire.isInventoryBycipm()){
+						importListFromSheet = ligneinventaireImportExportService.importListFromSheetWhithCipm(workbook.getSheet(0), inventaire);
+
+					}else {
+						importListFromSheet = ligneinventaireImportExportService.importListFromSheet(workbook.getSheet(0), inventaire);
+					}
+					inventaire.getLigneInventaire().addAll(importListFromSheet);
+					inventaire.calculateMontantEcart();
 				}
-		} catch (BiffException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (BiffException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if(!inventaire.isDoNotSelectAnyProduct()){
-		List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
-		for (Produit produit : search) {
-			if(!inventaire.contientProduit(produit)){
-				LigneInventaire itemFromProduct = Inventaire.itemFromProduct(produit);
-				if(itemFromProduct!=null){
-					itemFromProduct.setInventaire(inventaire);
-					itemFromProduct.persist();
+			if(!inventaire.isInventoryBycipm()){
+				List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
+				for (Produit produit : search) {
+					if(!inventaire.contientProduit(produit)){
+						LigneInventaire itemFromProduct = Inventaire.itemFromProduct(produit);
+						if(itemFromProduct!=null){
+							itemFromProduct.setInventaire(inventaire);
+							itemFromProduct.persist();
+						}
+					}
+
+
 				}
 			}
-			
-			
-		}
 		}
 		inventaire = (Inventaire) inventaire.merge();
-		
+    uiModel.asMap().clear();
 		return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
 	}
-	
+
 	@RequestMapping(value="/loadfile/{id}",method = RequestMethod.POST)
-	  public String loadfile(@PathVariable("id")Long id, @RequestParam("fichier")MultipartFile fichier, Model uiModel, HttpServletRequest httpServletRequest)
-	    {
-	        Inventaire inventaire = Inventaire.findInventaire(id);
-	        try
-	        {
-	            Workbook workbook = Workbook.getWorkbook(fichier.getInputStream());
-	            Sheet sheet = workbook.getSheet(0);
-	                ligneinventaireImportExportService.mergeFromWorkbook(inventaire, sheet);
-	                inventaire.calculateMontantEcart();
-	                inventaire.merge();
-	        }
-	        catch(BiffException e)
-	        {
-	            e.printStackTrace();
-	        }
-	        catch(IOException e)
-	        {
-	            e.printStackTrace();
-	        }
-	        uiModel.asMap().clear();
-			return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
-	    }
-	  
-	  
-	  
-	  
+	public String loadfile(@PathVariable("id")Long id, @RequestParam("fichier")MultipartFile fichier, Model uiModel, HttpServletRequest httpServletRequest)
+	{
+		Inventaire inventaire = Inventaire.findInventaire(id);
+		try
+		{
+			Workbook workbook = Workbook.getWorkbook(fichier.getInputStream());
+			Sheet sheet = workbook.getSheet(0);
+			ligneinventaireImportExportService.mergeFromWorkbook(inventaire, sheet);
+			inventaire.calculateMontantEcart();
+			inventaire.merge();
+		}
+		catch(BiffException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		uiModel.asMap().clear();
+		return "redirect:/inventaireProcess/" + encodeUrlPathSegment(inventaire.getId().toString(), httpServletRequest)+"/editInventaire";
+	}
+
+
+
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") Long id, Model uiModel) {
 		addDateTimeFormatPatterns(uiModel);
@@ -169,17 +175,17 @@ public class InventaireController {
 
 	@RequestMapping(value = "/searchInv", method = RequestMethod.GET)
 	public String search(@RequestParam("name") String  name,  Model uiModel) {
-		
+
 		if("".equals(name)){
 			Integer page = 1;
 			Integer size = 50;
 			int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("inventaires", Inventaire.findInventaireEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) Inventaire.countInventaires() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			uiModel.addAttribute("inventaires", Inventaire.findInventaireEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+			float nrOfPages = (float) Inventaire.countInventaires() / sizeNo;
+			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
 		}else{
-				List<Inventaire> list = Inventaire.findInventaireByNomAgentLike(name).setMaxResults(50).getResultList();
-				uiModel.addAttribute("inventaires", list);
+			List<Inventaire> list = Inventaire.findInventaireByNomAgentLike(name).setMaxResults(50).getResultList();
+			uiModel.addAttribute("inventaires", list);
 		}
 		return "inventaires/list";
 	}
@@ -197,7 +203,7 @@ public class InventaireController {
 		}	
 	}
 
-	
+
 	// imprime les inventaires 
 	@RequestMapping("/{invId}/print/{invNumber}.pdf")
 	public String print(@PathVariable("invId")Long invId, Model uiModel){
@@ -222,56 +228,56 @@ public class InventaireController {
 
 	}
 
-	 @ModelAttribute("inventaires")
-	   public Collection<Inventaire> populateInventaires() {
-	     //   return Inventaire.findAllInventaires();
-		 return null;
-	    }
-	    
-	    @ModelAttribute("ligneinventaires")
-	    public Collection<LigneInventaire> populateLigneInventaires() {
-	       // return LigneInventaire.findAllLigneInventaires();
-	    	return null;
-	    }
-	    
-	    @ModelAttribute("etats")
-	    public Collection<Etat> populateEtats() {
-	        return Arrays.asList(Etat.class.getEnumConstants());
-	    }
-	    
-	    @ModelAttribute("filiales")
-	    public Collection<Filiale> populateFiliales() {
-	        //return Filiale.findAllFiliales();
-	    	return new ArrayList<Filiale>();
-	    }
-	    
-	    @ModelAttribute("ligneapprovisionements")
-	    public Collection<LigneApprovisionement> populateLigneApprovisionements() {
-	      //  return LigneApprovisionement.findAllLigneApprovisionements();
-	    	return new ArrayList<LigneApprovisionement>();
-	    }
-	    
-	    @ModelAttribute("pharmausers")
-	    public Collection<PharmaUser> populatePharmaUsers() {
-	       // return PharmaUser.findAllPharmaUsers();
-	    	return new ArrayList<PharmaUser>();
-	    }
-	    
-	    @ModelAttribute("produits")
-	    public Collection<Produit> populateProduits() {
-	      //  return Produit.findAllProduits();
-	    	return new ArrayList<Produit>();
-	    }
-	    
-	    @ModelAttribute("rayons")
-	    public Collection<Rayon> populateRayons() {
-	    	return ProcessHelper.populateRayon();
-	    }
-	    
-	    @ModelAttribute("sites")
-	    public Collection<Site> populateSites() {
-	        return Site.findAllSites();
-	    }
+	@ModelAttribute("inventaires")
+	public Collection<Inventaire> populateInventaires() {
+		//   return Inventaire.findAllInventaires();
+		return null;
+	}
+
+	@ModelAttribute("ligneinventaires")
+	public Collection<LigneInventaire> populateLigneInventaires() {
+		// return LigneInventaire.findAllLigneInventaires();
+		return null;
+	}
+
+	@ModelAttribute("etats")
+	public Collection<Etat> populateEtats() {
+		return Arrays.asList(Etat.class.getEnumConstants());
+	}
+
+	@ModelAttribute("filiales")
+	public Collection<Filiale> populateFiliales() {
+		//return Filiale.findAllFiliales();
+		return new ArrayList<Filiale>();
+	}
+
+	@ModelAttribute("ligneapprovisionements")
+	public Collection<LigneApprovisionement> populateLigneApprovisionements() {
+		//  return LigneApprovisionement.findAllLigneApprovisionements();
+		return new ArrayList<LigneApprovisionement>();
+	}
+
+	@ModelAttribute("pharmausers")
+	public Collection<PharmaUser> populatePharmaUsers() {
+		// return PharmaUser.findAllPharmaUsers();
+		return new ArrayList<PharmaUser>();
+	}
+
+	@ModelAttribute("produits")
+	public Collection<Produit> populateProduits() {
+		//  return Produit.findAllProduits();
+		return new ArrayList<Produit>();
+	}
+
+	@ModelAttribute("rayons")
+	public Collection<Rayon> populateRayons() {
+		return ProcessHelper.populateRayon();
+	}
+
+	@ModelAttribute("sites")
+	public Collection<Site> populateSites() {
+		return Site.findAllSites();
+	}
 	public Collection<String> populateLettress() {
 		Collection<String> list = new ArrayList<String>();
 		list.add("A");

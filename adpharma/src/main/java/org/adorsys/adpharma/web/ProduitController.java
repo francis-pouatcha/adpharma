@@ -14,7 +14,7 @@ import org.adorsys.adpharma.domain.FamilleProduit;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.SousFamilleProduit;
-import org.adorsys.adpharma.services.InventoryService;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProduitController {
 	@Autowired
-	InventoryService inventoryService ;
+	DefaultInventoryService inventoryService ;
 
 	//a redefinir
 	@RequestMapping(value="/findByCipAjax/{cip}", method = RequestMethod.GET)
@@ -119,7 +119,7 @@ public class ProduitController {
 	    @RequestMapping(value = "validatedStockToCipm/{id}" , method = RequestMethod.GET)
 	    public String validatedStockToCipm( @PathVariable("id") Long id,Model uiModel) {
 	    	 Produit product = Produit.findProduit(id);
-	    	 BigInteger stockIncludeNegativeQte = InventoryService.getStockIncludeNegativeQte(product);
+	    	 BigInteger stockIncludeNegativeQte = DefaultInventoryService.getStockIncludeNegativeQte(product);
 	    	 product.setQuantiteEnStock(stockIncludeNegativeQte);
 	    	 product.merge();
 	    	 uiModel.addAttribute("appMessage", "stock modifier succes !") ;

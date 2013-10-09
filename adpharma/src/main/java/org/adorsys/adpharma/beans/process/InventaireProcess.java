@@ -27,6 +27,7 @@ public class InventaireProcess {
 	private List<Produit> productResult = new ArrayList<Produit>();
 	private String displayName ;
 	private PharmaUser agent ;
+	private Boolean isInventoryByCipm = Boolean.FALSE;
 
 
 
@@ -35,6 +36,7 @@ public class InventaireProcess {
 	public  InventaireProcess(Long invId ){
 		this.invId= invId ;
 		displayName = displayName() ;
+		isInventoryByCipm = Inventaire.findInventaire(invId).isInventoryBycipm();
 
 	}
 	public  InventaireProcess( ){
@@ -47,6 +49,7 @@ public class InventaireProcess {
 		this.invId= invId ;
 		productSelected = line ;
 		displayName = displayName() ;
+		isInventoryByCipm = Inventaire.findInventaire(invId).isInventoryBycipm();
 	}
 
 	public String displayName(){
@@ -56,6 +59,12 @@ public class InventaireProcess {
 
 	public static void makeStockCorrection(LigneApprovisionement line){
 
+	}
+	public Boolean getIsInventoryByCipm() {
+		return isInventoryByCipm;
+	}
+	public void setIsInventoryByCipm(Boolean isInventoryByCipm) {
+		this.isInventoryByCipm = isInventoryByCipm;
 	}
 
 

@@ -10,6 +10,7 @@ privileged aspect DetteClient_Roo_ToString {
     public String DetteClient.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Annuler: ").append(getAnnuler()).append(", ");
+        sb.append("Archived: ").append(getArchived()).append(", ");
         sb.append("Assurer: ").append(getAssurer()).append(", ");
         sb.append("Avance: ").append(getAvance()).append(", ");
         sb.append("ClientId: ").append(getClientId()).append(", ");

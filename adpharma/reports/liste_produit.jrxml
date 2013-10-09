@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="liste_produit" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54ddc901-d54e-4c8f-84be-37364158720b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontSize="12" isBold="true"/>
+	<style name="Detail" fontSize="12"/>
+	<queryString>
+		<![CDATA[select  * from produit  order by id  ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="create_user" class="java.lang.String"/>
+	<field name="business_key" class="java.lang.String"/>
+	<field name="business_name" class="java.lang.String"/>
+	<field name="created" class="java.sql.Timestamp"/>
+	<field name="modified" class="java.sql.Timestamp"/>
+	<field name="modifying_user" class="java.lang.String"/>
+	<field name="tech_id" class="java.lang.Long"/>
+	<field name="version" class="java.lang.Integer"/>
+	<field name="cip" class="java.lang.String"/>
+	<field name="commander" class="java.lang.Boolean"/>
+	<field name="date_derniere_entre" class="java.sql.Timestamp"/>
+	<field name="date_derniere_sortie" class="java.sql.Timestamp"/>
+	<field name="designation" class="java.lang.String"/>
+	<field name="fabricant" class="java.lang.String"/>
+	<field name="observation" class="java.lang.String"/>
+	<field name="plafond_stock" class="java.math.BigDecimal"/>
+	<field name="posologie" class="java.lang.String"/>
+	<field name="principe_actif" class="java.lang.String"/>
+	<field name="prix_total_stock" class="java.math.BigDecimal"/>
+	<field name="produit_compose" class="java.lang.Boolean"/>
+	<field name="produit_number" class="java.lang.String"/>
+	<field name="quantite_en_stock" class="java.math.BigDecimal"/>
+	<field name="seuil_comande" class="java.math.BigDecimal"/>
+	<field name="taux_remise_max" class="java.math.BigDecimal"/>
+	<field name="vente_autorise" class="java.lang.Boolean"/>
+	<field name="sousfamille_produit" class="java.lang.Long"/>
+	<field name="famille_produit" class="java.lang.Long"/>
+	<field name="filiale" class="java.lang.Long"/>
+	<field name="mode_conditionement" class="java.lang.Long"/>
+	<field name="rayon" class="java.lang.Long"/>
+	<field name="taux_de_marge" class="java.lang.Long"/>
+	<field name="tva_produit" class="java.lang.Long"/>
+	<field name="date_derniere_rupture" class="java.sql.Timestamp"/>
+	<field name="boutique_id" class="java.lang.Long"/>
+	<field name="actif" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a490e19f-041f-40f2-85ec-869c687de7b4" style="Title" x="0" y="5" width="263" height="33"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Listing Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b2ce66a-abba-4746-b8e9-10d81b3c4722" style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[Produit du catalogue]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement uuid="7780ad43-292f-46e8-9cdc-8912e5011e8e" positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="c68fda3e-cacd-4fbe-939f-656d7cf902fa" style="Column header" x="0" y="19" width="48" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cf5d92bb-611b-4e80-86b2-51a9b0c4f4a7" style="Column header" x="48" y="19" width="92" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[cip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="51058d5b-a257-4964-bcea-0f4ad4c42fc0" style="Column header" x="140" y="19" width="247" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[designation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c842d021-6c9d-4df4-8019-c87f98909113" style="Column header" x="387" y="19" width="63" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c165c9d9-c954-449d-8377-60bfcc6278f8" style="Column header" x="449" y="19" width="51" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[filiale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0b5b942f-945f-453e-ad85-95922c348161" style="Column header" x="499" y="19" width="53" height="15" backcolor="#ADA9A5"/>
+				<textElement>
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<text><![CDATA[Marge]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="0d3e4a9f-1471-4e07-a879-a3bbe7a3ab3e" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="4e8fb474-ea2e-4fe4-9510-ab17b788d031" style="Detail" x="0" y="0" width="48" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a66236a8-2f8c-44bc-a6c2-deff5574771b" style="Detail" x="48" y="0" width="92" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cip}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="67c46a1e-3197-4b25-9447-6ab4f121f0f6" style="Detail" x="140" y="0" width="247" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement uuid="4d610585-587f-4627-b352-17420ae55cf4" style="Detail" x="387" y="0" width="63" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{quantite_en_stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e54ebd94-6865-43db-9662-87504d4c8c82" style="Detail" x="449" y="0" width="51" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{filiale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="262b9af8-3a59-43d6-9f7b-aed5bfe1ad3d" style="Detail" x="499" y="0" width="53" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{taux_de_marge}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="4711b784-f3b0-4de5-9f35-1f80a964e742" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b1d390c6-5ae2-403e-bf0b-c58732945373" style="Column header" x="433" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="51c166ee-bdc6-4027-b5b2-c5487ff3fd0a" style="Column header" x="513" y="0" width="40" height="20"/>
+				<textElement>
+					<font fontName="Courier 10 Pitch" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="db450637-3626-4e04-9b63-1e7285059577" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

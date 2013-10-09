@@ -26,6 +26,7 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.ClaimsService;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.LocaleUtil;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.adorsys.adpharma.utils.ProcessHelper;
@@ -258,6 +259,7 @@ public class LigneApprovisionementController {
 		mouvementStock.setNumeroTicket("-//-");
 		mouvementStock.persist();
 		line.merge();
+		produit.setQuantiteEnStock(new DefaultInventoryService().getTrueStockQuantity(produit));
 		produit.merge();
 	}
 

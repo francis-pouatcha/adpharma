@@ -17,7 +17,7 @@ public class ProductMonitor {
 	private static Logger LOGS= Logger.getLogger(ProductMonitor.class);
 	
 	@PostLoad
-	@Transactional
+	@Transactional(readOnly=true)
 	public void notifyProduct(Produit produit){
 		if(produit.isAlert() && produit.getActif()==true){
 			LOGS.info("Produit en alerte de stock");

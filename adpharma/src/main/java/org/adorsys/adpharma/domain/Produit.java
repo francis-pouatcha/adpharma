@@ -13,8 +13,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Query;
@@ -35,6 +35,7 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
@@ -45,7 +46,7 @@ import flexjson.JSONSerializer;
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Produit", finders = { "findProduitsByDesignationLike", "findProduitsByProduitNumberLike", "findProduitsByQuantiteEnStock", "findProduitsByFamilleProduit", "findProduitsByRayon", "findProduitsByCipEquals", "findProduitsByDesignationEquals" })
 @RooJson
-@EntityListeners(ProductMonitor.class)
+//@EntityListeners(ProductMonitor.class)
 public class Produit extends AdPharmaBaseEntity {
 
 	private String produitNumber;
@@ -296,18 +297,21 @@ public class Produit extends AdPharmaBaseEntity {
 
 	@Override
 	protected void internalPreUpdate() {
+		//quantiteEnStock= DefaultInventoryService.getTrueStockQuantity(this);
+	}
+	
+	public void defineArchived(){
+		archived = LigneApprovisionement.findLigneApprovisionementsByProduit(this).setMaxResults(1).getResultList().isEmpty();
+
 	}
 	
 	@PostUpdate
-	public void preUpdateProduct(){
+	public void postUpdateProduct(){
 		//quantiteEnStock  = InventoryService.getStockIncludeNegativeQte(this);
 		if(quantiteEnStock.intValue()==0){
 			dateDerniereRupture= new Date();
 		}
-     // Coherence des stock qte cip et qte cipm		
 		
-		/*quantiteEnStock= InventoryService.getTrueStockQuantity(this);
-		System.out.println("Quantite en stock apres mise a jour: "+quantiteEnStock);*/
 	}
 
 	
@@ -465,6 +469,21 @@ public class Produit extends AdPharmaBaseEntity {
 			setPrixVenteStock(prixVenteU != null ?prixVenteU :BigDecimal.ZERO);
 		}
 
+	}
+	
+	
+	@PostLoad
+	@Transactional(readOnly=true)
+	public void notifyProduct(){
+		if(this.isAlert() && this.getActif()==true){
+			this.setCommander(Boolean.TRUE);
+		}else if(!this.isAlert() && this.getActif() == true){
+			this.setCommander(Boolean.FALSE);
+		}
+		if(Produit.alreadyInStock(this)){
+			this.setInStock(Boolean.TRUE);
+		}
+		this.merge().flush();
 	}
 
 	@Override

@@ -14,32 +14,25 @@ import org.springframework.stereotype.Service;
 public class SupplyService {
 
 	public void compenserStock(BigInteger quantieEnStock, LigneApprovisionement ligneApprovisionement){
-
 		if (quantieEnStock.intValue() > 0) {
-
 			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockLessThanAndCipEquals(BigInteger.ZERO, ligneApprovisionement.getCip()).getResultList();
-
 			if (!resultList.isEmpty()) {
-
 				for (LigneApprovisionement line : resultList) {
-
-
-					if(ligneApprovisionement.canCompencse(line.getQuantieEnStock().abs())){
+					if(ligneApprovisionement.isCompasable(line.getQuantieEnStock().abs())){
 						ligneApprovisionement.setQuantiteSortie(ligneApprovisionement.getQuantiteSortie().add(line.getQuantieEnStock().abs()));
 						line.setQuantiteVendu(line.getQuantiteAprovisione());
 						line.setQuantiteSortie(BigInteger.ZERO);
 						line.CalculeQteEnStock();
+						line.merge();
 					}else {
 						if (quantieEnStock.intValue() > 0) {
 							ligneApprovisionement.setQuantiteSortie(ligneApprovisionement.getQuantiteSortie().add(quantieEnStock));
 							line.setQuantiteVendu(line.getQuantiteVendu().subtract(quantieEnStock));
 							line.CalculeQteEnStock();
+							line.merge();
 							break;
-
 						}
-
 					}
-					line.merge();
 				}
 
 				ligneApprovisionement.CalculeQteEnStock();
@@ -49,17 +42,17 @@ public class SupplyService {
 		}
 
 	}
-	
-	
+
+
 	public static boolean enableCloseSupplyEdition(Configuration configuration,PharmaUser user){
-		 ArrayList<RoleName> enableRole = new ArrayList<RoleName>();
-		 enableRole.add(RoleName.ROLE_SITE_MANAGER);
+		ArrayList<RoleName> enableRole = new ArrayList<RoleName>();
+		enableRole.add(RoleName.ROLE_SITE_MANAGER);
 		if(configuration==null || user==null)throw new IllegalArgumentException("conf or user are required !");
 		if(!configuration.getEditCloseSupply()) return false;
 		if(!user.hasAnyRole(enableRole)) return false ;
 		return true ;
 	}
-	
-	
+
+
 
 }
