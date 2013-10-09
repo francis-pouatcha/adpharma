@@ -15,15 +15,12 @@
         <field:checkbox field="includeArchivedLine" id="c_org_adorsys_adpharma_domain_Inventaire_agent" label="Inclure les Archives" />
     </div>
     <div style="float: right; width: 59%; height: 400px; overflow: auto;">
-    <c:if test="${not empty catalogue}">
     <span style="margin-bottom: 5px;">
-                     <INPUT class="submits" id="txtBtn" type="button" value="Exporter(.txt)"  />
+                     <INPUT class="submits" id="txtBtn" type="button" value="Exporter(.xml)"  />
                      <INPUT class="submits" id="xlsBtn" type="button" value="Exporter(.xls)"  />
                      <INPUT class="submits" id="pdfBtn" type="button" value="Exporter(.pdf)"  />
             </span>
             <BR />
-     </c:if>
-            
     <table id="catalogue">
 							<thead>
 								<tr>			
@@ -51,7 +48,7 @@
     </form:create>
     <spring:url value="/inventaireProcess/cataloqueCipm.pdf?" var="pdfUrl"  />
     <spring:url value="/inventaireProcess/cataloqueCipm.xls?" var="xlsUrl"  />
-    <spring:url value="/inventaireProcess/cataloqueCipm.txt?" var="txtUrl"  />
+    <spring:url value="/inventaireProcess/cataloqueCipm.xml?" var="xmlUrl"  />
     <script>
 		$('#pdfBtn').click(function() {
 			var url = '${pdfUrl}'+$('#searchfrom').serialize() ;
@@ -62,7 +59,7 @@
 			window.location = url ;
 		});
 		$('#txtBtn').click(function() {
-			var url = '${txtUrl}'+$('#searchfrom').serialize() ;
+			var url = '${xmlUrl}'+$('#searchfrom').serialize() ;
 			window.location = url ;
 		});
 	</script>

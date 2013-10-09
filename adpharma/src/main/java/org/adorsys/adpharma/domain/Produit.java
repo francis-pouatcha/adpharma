@@ -50,7 +50,7 @@ import flexjson.JSONSerializer;
 public class Produit extends AdPharmaBaseEntity {
 
 	private String produitNumber;
-
+    
 	@NotNull
 	private String designation;
 

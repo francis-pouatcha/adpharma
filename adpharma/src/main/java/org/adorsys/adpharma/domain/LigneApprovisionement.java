@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.SupplyService;
@@ -45,6 +47,7 @@ import flexjson.transformer.DateTransformer;
  * @author adorsys-clovis
  *
  */
+@XmlRootElement
 @RooJavaBean
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "LigneApprovisionement", finders = { "findLigneApprovisionementsByProduit", "findLigneApprovisionementsByApprovisionement", "findLigneApprovisionementsByCipMaisonEquals", "findLigneApprovisionementsByDesignationLike", "findLigneApprovisionementsByQuantieEnStockAndDesignationLike", "findLigneApprovisionementsByQuantieEnStockAndCipEquals" })
@@ -55,6 +58,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	private int indexLine;
 
+	@XmlElement
 	private String cip;
 
 	private String viewMsg ;
@@ -62,13 +66,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	public String getViewMsg() {
 		return viewMsg;
 	}
+	@XmlElement
 	@Size(min = 7)
 	private String cipMaison = null;
 
 	@NotNull
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Produit produit;
-
+	@XmlElement
 	private String designation;
 
 	@Temporal(TemporalType.DATE)
@@ -92,7 +97,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private BigInteger quantiteVendu = BigInteger.ZERO;
 
 	private BigInteger quantiteReclame= BigInteger.ZERO;
-
+	@XmlElement
 	private BigInteger quantieEnStock = BigInteger.ZERO;
 
 	private BigInteger quantiteSortie = BigInteger.ZERO;
@@ -102,7 +107,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private BigDecimal prixAchatTotal;
 
 	private BigDecimal margeBrute = BigDecimal.ZERO;
-
+	@XmlElement
 	private BigDecimal prixVenteUnitaire = BigDecimal.ZERO;
 
 	private boolean venteAutorise = true;

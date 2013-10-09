@@ -152,7 +152,7 @@ public class TransformationProduitController {
 		return "redirect:/transformationproduits/editTransformation/0";
 	}
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value="/livreeForm" , method = RequestMethod.POST)
 	public String transform(@RequestParam("qte")BigInteger qte ,@RequestParam("lineId") Long lineId, Model uiModel, HttpServletRequest httpServletRequest) {
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(lineId);
@@ -162,9 +162,9 @@ public class TransformationProduitController {
 			uiModel.addAttribute("apMessage", "imppossible d effectuer la tranformation ! veuillez  cloturer l'aprovisionnement avant");
 		}else {
 			LigneApprovisionement transforme = ligneApprovisionement.transforme(qte,uiModel);
-			System.out.println(transforme);
 			if (transforme!=null) {
 				transforme.persist();
+				transforme.compenserStock();
 				Produit produit = transforme.getProduit();
 				Produit produit2 = ligneApprovisionement.getProduit();
 				produit2.setDateDerniereSortie(new Date());
@@ -202,7 +202,9 @@ public class TransformationProduitController {
 				mvt2.setAgentCreateur(SecurityUtil.getUserName());
 				mvt1.persist();
 				mvt2.persist();
+				produit.setTrueStockValue();
 				produit.merge();
+				produit2.setTrueStockValue();
 				produit2.merge();
 				uiModel.addAttribute("transforme", transforme);
 				uiModel.addAttribute("ligne", ligneApprovisionement);	

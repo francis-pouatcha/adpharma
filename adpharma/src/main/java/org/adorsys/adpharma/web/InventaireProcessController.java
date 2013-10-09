@@ -28,6 +28,7 @@ import org.adorsys.adpharma.beans.InventoryUisearchModel;
 import org.adorsys.adpharma.beans.LigneApprovisionementExcelRepresentation;
 import org.adorsys.adpharma.beans.importExport.ExportLignesApprovisionnement;
 import org.adorsys.adpharma.beans.importExport.LigneApproImportExportService;
+import org.adorsys.adpharma.beans.importExport.LigneApprovisionementXmlImportExportService;
 import org.adorsys.adpharma.beans.process.InventaireProcess;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Inventaire;
@@ -70,6 +71,9 @@ public class InventaireProcessController {
 	
 	@Autowired
 	LigneApproImportExportService  ligneApproImportExportService ;
+	
+	@Autowired
+	LigneApprovisionementXmlImportExportService ligneApprovisionementXmlImportExportService;
 	
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
@@ -391,13 +395,16 @@ public class InventaireProcessController {
 		file.write(outputStream);
 	}
 	@ResponseBody
-	@RequestMapping(value = "/cataloqueCipm.txt", method = RequestMethod.GET)
+	@RequestMapping(value = "/cataloqueCipm.xml", method = RequestMethod.GET)
 	public void cataloqueCipmTxt(@Valid InventoryUisearchModel inventoryUisearchModel,HttpServletResponse response , Model uiModel) throws IOException {
-		List<LigneApprovisionement> seach = inventoryUisearchModel.seach();
-		File file = ligneApproImportExportService.exportToTxtFile(seach);
-		response.setContentType("text/plain");
-		response.setHeader("Content-Disposition","attachement;filename=\"" + file.getName() + "\"");
-	    FileInputStream istr = null;
+		List<LigneApprovisionement> ligneApprovisionements = inventoryUisearchModel.seach();
+		File file = ligneApprovisionementXmlImportExportService.export(ligneApprovisionements);
+		response.setContentType(MediaType.APPLICATION_XML);
+	    response.setHeader("Content-Disposition","attachement;filename=\"" + file.getName() + "\"");
+	    ServletOutputStream outputStream = response.getOutputStream();
+	    ligneApprovisionementXmlImportExportService.export(ligneApprovisionements, outputStream);
+		
+		/* FileInputStream istr = null;
         OutputStream ostr = null;
 	    try {  
 	          istr = new FileInputStream(file);
@@ -427,7 +434,7 @@ public class InventaireProcessController {
 	            System.out.println(ex.getMessage());
 	        }
 
-		return  ;
+		return  ;*/
 	}
 	 // Impression de la fiche de code bar de l'inventaire
 	@RequestMapping(value="/{invId}/printCodeBar/{invNumber}.pdf", method=RequestMethod.GET)
