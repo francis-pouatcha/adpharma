@@ -10,6 +10,7 @@
         <field:input field="fournisseurNumber" id="c_org_adorsys_adpharma_domain_Fournisseur_fournisseurNumber" render="false" z="user-managed"/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_Fournisseur_note" render="false" z="user-managed"/>
         <field:input field="shortname" id="c_org_adorsys_adpharma_domain_Fournisseur_name" render="false" z="user-managed"/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Fournisseur_archived" z="user-managed" render="false"/>
         <div dojoType="dijit.layout.TabContainer" id="tabs" style="width: 1200px; height: 450px">
             <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${provider_content_infos}">
                 <field:input field="name" id="c_org_adorsys_adpharma_domain_Fournisseur_name" style="width: 50%;" z="user-managed"/>
@@ -37,6 +38,5 @@
             </div>
             <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Fournisseur" render="${not empty dependencies}" z="0LRvTgo5vHVjCteMVzhmsdmw4CM="/>
         </div>
-        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Fournisseur_archived" z="DDu2eH0dPXdqlpqsQC5oV6Q99dc="/>
     </form:create>
 </div>

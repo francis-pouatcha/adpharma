@@ -440,7 +440,7 @@ public class Produit extends AdPharmaBaseEntity {
 	
 	// Override json product
 	public String toJson(){
-		return new JSONSerializer().exclude("*.class").serialize(this);
+		return new JSONSerializer().include("cip", "designation", "quantiteEnStock").exclude("*.class").serialize(this);
 	}
 	
 	public String toJson1(){

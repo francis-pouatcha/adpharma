@@ -755,8 +755,8 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 	public String selectProduct(@PathVariable("pId") Long pId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(pId);
 		ligneApprovisionement.calculRemise();
-		/// return ligneApprovisionement.clone().toJson();
-		return ligneApprovisionement.toJson();
+		 return ligneApprovisionement.clone().toJson();
+//		return ligneApprovisionement.toJson();
 	}
 	@Transactional
 	public void saveAndCloseCmd(CommandeClient commandeClient ,Caisse caisse , PharmaUser vendeur){

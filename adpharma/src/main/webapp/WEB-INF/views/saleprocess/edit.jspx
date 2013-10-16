@@ -397,18 +397,8 @@
 	// Test de la configuration
 	
 	
-		function displayOrder(){
-			$('table#resultproduit tr').each(function(){
-			var text= $('td #order #text_order').text();
-			console.log("commander: "+text);
-			if(text=="true"){
-				$('td #order #order_link').append('<span style="color: red;">Commander</span>');
-			};
-			});
-		}
 	
 	$(function(){
-		
 		$('#cipm').focus();
 		$('#pu').click(function(){
 	 		$('#pu').removeAttr("disabled"); 
@@ -468,7 +458,6 @@
 										  <td>'+this.produit.seuilComande+'</td>
 										  <td>'+this.produit.qteCommande+'</td>
 										  </tr>');
-										  displayOrder();
 								});
 							  
 								$('table#resultproduit tr').each(function(){
@@ -480,7 +469,7 @@
 											$('#cipm').val(data.cipMaison);
 											$('#des').val(data.designation);
 											$('#pu').val(data.prixVenteUnitaire);
-											$('#qteStock').val(data.produit.quantieEnStock);
+											$('#qteStock').val(data.quantieEnStock);
 											$('#qte').val(1);
 											stock= $('#pu').val();
 											// J'appele le script de configuration des types de vente par defaut

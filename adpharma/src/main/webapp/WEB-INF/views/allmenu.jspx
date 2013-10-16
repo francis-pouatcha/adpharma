@@ -176,15 +176,15 @@ if(Check == false){
 						</security:authorize>
 						<security:authorize
 							ifAnyGranted="ROLE_PREPARATION_CMD ,ROLE_SITE_MANAGER">
-						<spring:message code="allmenu_stockmanagement_prepare_commands" var="prepare_commands"/>
+						<spring:message code="allmenu_stockmanagement_prepare_commands" var="prepare_commands" htmlEscape="false"/>
 							<li><a href="#">${prepare_commands }</a>
 								<ul>
-						<spring:message code="allmenu_stockmanagement_make_a_preparation" var="make_a_preparation"/>
+						<spring:message code="allmenu_stockmanagement_make_a_preparation" var="make_a_preparation" htmlEscape="false"/>
 									<li><a href="${cmd_four_url}"> ${make_a_preparation }</a></li>
 						<spring:message code="allmenu_stockmanagement_find_preparation" var="find_preparation"/>
 									<li><a href="${cmd_find_four_url}"> ${find_preparation }</a></li>
-						<spring:message code="allmenu_stockmanagement_list_preparation" var="list_preparation"/>
-						<spring:message code="allmenu_stockmanagement_list_automatics_preparation" var="list_automatic_commands_preparations_msg"/>
+						<spring:message code="allmenu_stockmanagement_list_preparation" var="list_preparation" htmlEscape="false"/>
+						<spring:message code="allmenu_stockmanagement_list_automatics_preparation" var="list_automatic_commands_preparations_msg" htmlEscape="false"/>
 									<li><a href="${cmd_list_url}">${list_preparation }</a></li>
 									<li><a href="${list_automatic_commands_preparations}">${list_automatic_commands_preparations_msg }</a></li>
 									
