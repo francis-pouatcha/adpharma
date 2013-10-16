@@ -74,7 +74,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PaiementProcessController {
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Resource(name="messageSource")
 	ReloadableResourceBundleMessageSource messageSource;
 
@@ -114,7 +114,7 @@ public class PaiementProcessController {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
 		if (openCaisse == null) {
 			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
- 			return "caisses/infos";
+			return "caisses/infos";
 		}else {
 
 			PaiementProcess paiementProcess = new PaiementProcess(openCaisse);
@@ -175,7 +175,7 @@ public class PaiementProcessController {
 				} catch (Exception e) {
 				}
 				paiement.merge();
-				
+
 				try {
 					gererPreparationAutomatisee(facture);
 				} catch (Exception e) {
@@ -217,7 +217,7 @@ public class PaiementProcessController {
 			ajouterLignePreparationAutomatisee(cmdFournEnCours, produit);
 		}
 	}
-	
+
 	LigneCmdFournisseur ajouterLignePreparationAutomatisee(CommandeFournisseur commandeFournisseur,Produit produit){
 		LigneCmdFournisseur ligneCmdFournisseur = new LigneCmdFournisseur();
 		BigDecimal pa = produit.getPrixAchatSTock();
@@ -228,7 +228,7 @@ public class PaiementProcessController {
 		qte = qte == null ? BigInteger.ONE : qte;
 		BigDecimal pt = pa.multiply(new BigDecimal(qte));
 		if (commandeFournisseur.contientProduit(produit)) {
-			
+
 		} else {
 			LigneCmdFournisseur line = new LigneCmdFournisseur();
 			line.setCommande(commandeFournisseur);
@@ -302,32 +302,55 @@ public class PaiementProcessController {
 		if (openCaisse == null) {
 			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
-		}else {
-			factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
-			if (factureResult.isEmpty()) {
-				uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_wait", null, LocaleUtil.getCurrentLocale()));
-				return "paiementprocess/encaisserPaiement";
-
-			}else {
-				if (factureResult.size() >1) {
-					Facture facture = Facture.findFacture(factureId);
-					if (factureResult.contains(facture)) {
-						int index = factureResult.indexOf(facture);
-						index = index+1;
-						if (index <factureResult.size()) {
-							Facture facture2 = factureResult.get(index);
-							return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(facture2.getId().toString(), httpServletRequest);
-
-						}
-					}
-				}
-
-				return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(factureResult.iterator().next().getId().toString(), httpServletRequest);
-			}
-
+		}
+		factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+		if (factureResult.isEmpty()) {
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_wait", null, LocaleUtil.getCurrentLocale()));
+			return "paiementprocess/encaisserPaiement";
 
 		}
+		if (factureResult.size() >1) {
+			Facture facture = Facture.findFacture(factureId);
+			if (factureResult.contains(facture)) {
+				int index = factureResult.indexOf(facture);
+				index = index+1;
+				if (index <factureResult.size()) {
+					Facture facture2 = factureResult.get(index);
+					return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(facture2.getId().toString(), httpServletRequest);
 
+				}
+			}
+		}
+
+		return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(factureResult.iterator().next().getId().toString(), httpServletRequest);
+	}
+	@RequestMapping(value = "/facturePrecc/{factureId}" ,method = RequestMethod.GET)
+	public String facturePrecc(@PathVariable("factureId") Long factureId,Model uiModel,  HttpServletRequest httpServletRequest) {
+		List<Facture> factureResult ;
+		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
+		if (openCaisse == null) {
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_warning", null, LocaleUtil.getCurrentLocale()));
+			return "caisses/infos";
+		}
+		factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+		if (factureResult.isEmpty()) {
+			uiModel.addAttribute("apMessage", messageSource.getMessage("payment_cash_invoice_wait", null, LocaleUtil.getCurrentLocale()));
+			return "paiementprocess/encaisserPaiement";
+
+		}
+		int size = factureResult.size();
+		if (size >1) {
+			Facture facture = Facture.findFacture(factureId);
+			if (factureResult.contains(facture)) {
+				int index = factureResult.indexOf(facture);
+				index = index-1;
+				if (index >=0) {
+					Facture facture2 = factureResult.get(index);
+					return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(facture2.getId().toString(), httpServletRequest);
+				}
+			}
+		}
+		return "redirect:/paiementprocess/selectFacture/"+ ProcessHelper.encodeUrlPathSegment(factureResult.get(size-1).getId().toString(), httpServletRequest);
 
 	}
 
@@ -337,7 +360,7 @@ public class PaiementProcessController {
 		List<Facture> resultList = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
 		return ""+resultList.size();
 	}
-	
+
 
 	//@Transactional
 	@RequestMapping(value = "/annulFacture/{cmdId}" ,method = RequestMethod.GET)
@@ -367,8 +390,8 @@ public class PaiementProcessController {
 		return	showPoduct(factures, uiModel);
 	}
 
-	
-	
+
+
 	@RequestMapping(value = "/findFacture" ,params = "find=ByDateCreationBetween", method = RequestMethod.GET)
 	public String findFacturesByDateCreationBetween(@RequestParam("minDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date minDateCreation, @RequestParam("maxDate") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") Date maxDateCreation, Model uiModel) {
 		if (minDateCreation == null || maxDateCreation == null) {
@@ -380,8 +403,8 @@ public class PaiementProcessController {
 
 	}
 
-	
-	
+
+
 	@RequestMapping(value = "/findFacture",params = "find=ByFactureNumberEquals", method = RequestMethod.GET)
 	public String findFacturesByFactureNumberEquals(@RequestParam("factureNumber") String factureNumber, Model uiModel) {
 		if (StringUtils.isBlank(factureNumber)) {
@@ -520,7 +543,7 @@ public class PaiementProcessController {
 
 	}
 
-    @Transactional
+	@Transactional
 	public void encaisserVenteComptant(Facture facture ,Caisse caisse,Paiement paiement){
 		genererMvtStock(facture , caisse);
 		genererOperationCaisse(caisse, paiement);

@@ -380,7 +380,6 @@
 		    		<th style="text-transform: uppercase;">${column_ray}</th>
 		    		<th style="text-transform: uppercase;">${product_provider}</th>
 		    		<th style="text-transform: uppercase;">${column_max_order}</th>
-		    		<th style="text-transform: uppercase;">${column_qty_order}</th>
 				</tr>');
 	}
 	
@@ -466,7 +465,6 @@
 										  <td>'+this.nonRayon+'</td>
 										  <td>'+this.fournisseur+'</td>
 										  <td>'+this.produit.seuilComande+'</td>
-										  <td>'+this.produit.qteCommande+'</td>
 										  </tr>');
 										  displayOrder();
 								});
