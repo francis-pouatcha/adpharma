@@ -473,7 +473,7 @@ public class Produit extends AdPharmaBaseEntity {
 	
 	
 	@PostLoad
-	@Transactional(readOnly=true)
+	//@Transactional(readOnly=true)
 	public void notifyProduct(){
 		if(this.isAlert() && this.getActif()==true){
 			this.setCommander(Boolean.TRUE);
@@ -483,7 +483,7 @@ public class Produit extends AdPharmaBaseEntity {
 		if(Produit.alreadyInStock(this)){
 			this.setInStock(Boolean.TRUE);
 		}
-		this.merge().flush();
+//		this.merge();
 	}
 
 	@Override

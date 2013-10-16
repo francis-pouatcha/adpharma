@@ -71,7 +71,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private String cipMaison = null;
 
 	@NotNull
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private Produit produit;
 	@XmlElement
 	private String designation;
@@ -121,7 +121,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private transient BigInteger qteCip;
 	
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private Approvisionement approvisionement;
 
 	@Value("true")
