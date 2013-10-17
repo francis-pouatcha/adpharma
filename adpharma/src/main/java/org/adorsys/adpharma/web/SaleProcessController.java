@@ -755,8 +755,8 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 	public String selectProduct(@PathVariable("pId") Long pId,@PathVariable("cmdId") Long cmdId, Model uiModel) {
 		LigneApprovisionement ligneApprovisionement = LigneApprovisionement.findLigneApprovisionement(pId);
 		ligneApprovisionement.calculRemise();
-		 return ligneApprovisionement.clone().toJson();
-//		return ligneApprovisionement.toJson();
+//		 return ligneApprovisionement.clone().toJson();
+		return ligneApprovisionement.toJson();
 	}
 	@Transactional
 	public void saveAndCloseCmd(CommandeClient commandeClient ,Caisse caisse , PharmaUser vendeur){
@@ -846,18 +846,16 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 
 
 	//suprime la commande en cour de creation
+	@Transactional
 	@RequestMapping(value = "/{cmdId}/annuler", method = RequestMethod.GET)
 	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel) {
-
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-
 		if (commandeClient.getStatus().equals(Etat.CLOS) && !commandeClient.getEncaisse()) {
 			commandeClient.setAnnuler(true);
 			commandeClient.setStatus(Etat.EN_COUR);
 			commandeClient.merge();
 			uiModel.addAttribute("apMessage", messageSource.getMessage("command_cancel_success", null, LocaleUtil.getCurrentLocale()));
 		}
-
 		if (commandeClient.getStatus().equals(Etat.EN_COUR)) {
 			commandeClient.remove();
 			uiModel.addAttribute("apMessage", messageSource.getMessage("command_remove_success", null, LocaleUtil.getCurrentLocale()));

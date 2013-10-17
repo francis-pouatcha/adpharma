@@ -37,6 +37,8 @@
 				   <spring:message code="lignesappro_totalprice" var="lignesappro_totalprice" />
 				   <spring:message code="tab_supplying" var="tab_supplying" />
 				   
+				   <spring:message code="approprocess_cancel" var="approprocess_cancel" htmlEscape="false" />
+				   
 	
     <util:display-box display="${approvisonementProcess.displayName}" />
 	<spring:url value="/approvisionementprocess/${approvisonementProcess.apId}/edit" var="edit_url" />
@@ -68,7 +70,11 @@
 		<span class="firstTab selectedTab"><a href="${ edit_url}">${tab_supplying}</a></span>
 		<!-- <span class="nextTab unselectedTab"><a href="${ find_cmd_four_url}">RECUPERER CMD FOUR</a></span> --> 
 		<span><a href="${ enr_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="${button_save}" title="${title_save_lignesappro}" /></a></span>
-	    <span><a href="${ delete_cmd_url}" style="text-decoration: none;"><input class="submits" type="button" value="${button_cancel}" title="${title_cancel_lignesappro}" /></a></span>
+	    <span>
+	       <a href="${ delete_cmd_url}" style="text-decoration: none;">
+	       <input class="submits" type="button" value="${button_cancel}" title="${title_cancel_lignesappro}" onclick="return deleteBox('${approprocess_cancel}');" />
+	       </a>
+	    </span>
 	    <span><a  id="findprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="${button_find_product}" title="${button_find_product} " /></a></span>
 	    <span><a  id="createprd" href="#" style="text-decoration: none;"><input	class="submits" type="button" value="${button_create_product}" title="${button_create_product}" /></a></span>
 	</div>
@@ -78,8 +84,8 @@
 			<c:set value="${approvisonementProcess.produit.id}" var="prd"></c:set>
 		</c:when>
 		<c:otherwise>
-			<c:set value="#" var="prd"></c:set>
-
+			<c:set value="#" var="prd">
+			</c:set>
 		</c:otherwise>
 	</c:choose>
 

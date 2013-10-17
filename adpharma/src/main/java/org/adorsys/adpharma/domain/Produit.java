@@ -56,7 +56,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	private String fabricant;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private Rayon rayon;
 
 	 @Enumerated(EnumType.STRING)
@@ -68,7 +68,7 @@ public class Produit extends AdPharmaBaseEntity {
 	public Boolean actif = Boolean.TRUE ;
 	
 	
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private FamilleProduit familleProduit;
 	
 	/**
@@ -200,13 +200,13 @@ public class Produit extends AdPharmaBaseEntity {
 	@ManyToOne
 	private TVA tvaProduit;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private TauxMarge tauxDeMarge;
 
 	@Column(unique = true)
 	private String cip;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private ModeConditionement modeConditionement;
 
 	private boolean venteAutorise = true;
@@ -258,7 +258,7 @@ public class Produit extends AdPharmaBaseEntity {
 		quantiteEnStock = trueStocK!=null?trueStocK:quantiteEnStock;
 	}
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private Filiale filiale;
 
 	public void desableOrEnableSale(boolean status) {
@@ -472,8 +472,8 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 	
 	
+	/*@Transactional(readOnly=true)
 	@PostLoad
-	//@Transactional(readOnly=true)
 	public void notifyProduct(){
 		if(this.isAlert() && this.getActif()==true){
 			this.setCommander(Boolean.TRUE);
@@ -483,8 +483,8 @@ public class Produit extends AdPharmaBaseEntity {
 		if(Produit.alreadyInStock(this)){
 			this.setInStock(Boolean.TRUE);
 		}
-//		this.merge();
-	}
+		this.merge();
+	}*/
 
 	@Override
 	public int hashCode() {
