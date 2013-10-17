@@ -122,7 +122,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
     private TypeCommande typeCommande;
 
     @OrderBy("id DESC")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "commande")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
     private Set<LigneCmdClient> lineCommande = new HashSet<LigneCmdClient>();
 
     @ManyToOne

@@ -556,7 +556,7 @@
 				getSalePrice();
 			},
 			autoOpen: false,
-			width:700,
+			width:1000,
 			resizable:true,
 			draggable :true,
             hide:'fade',
@@ -576,7 +576,7 @@
 				clearProductTable();
 			},
 			autoOpen: false,
-			width: 1000,
+			width: 1100,
 			resizable:true,
 			draggable :true,
             hide:'fade',
@@ -1084,6 +1084,7 @@
 <spring:message code="saleprocess_client_title" var="saleprocess_client_title" />	
 <div id="updateClient" style="display: none;" title="${saleprocess_client_title}">
     <form id="clientForm" >
+    <fieldset class="ordo_css"> <legend> Infos Client</legend>
        <INPUT id="cltid" type="hidden" name="cltid" />
                 <P>
                 <LABEL for="nom"> ${client_nom} :</LABEL> <INPUT id="nom" type="text" name="nom" value="Client Diver"/>
@@ -1095,7 +1096,7 @@
                 
                  <P>
                 <LABEL for="sexe"> ${client_sex} :</LABEL> 
-                <SELECT id="sexe" style="width: 165px;" name="sexe"> 
+                <SELECT id="sexe" style="width: 220px;" name="sexe"> 
                      <OPTION selected="selected">Masculin</OPTION>
                      <OPTION >Feminin</OPTION>
                      <OPTION >Neutre</OPTION>
@@ -1116,10 +1117,11 @@
                  <P>
                 <LABEL for="note"> ${client_note} :</LABEL> <INPUT type="text" id="note" name="note" value=""/>
                 </P>
-              
+          </fieldset>    
         </form>
 </div>
 <c:if test="${not empty ordonnancier}">
+<!-- formulaire ordonnancier  -->
  <div id="ordonnancier" data-dojo-type="dijit.Dialog" style="display: none;" data-dojo-props="title:'Ordonnancier'" >
     <form:create id="fc_org_adorsys_adpharma_domain_Ordonnancier"  modelAttribute="ordonnancier" path="/saleprocess/${saleProcess.cmdId}/ordonnancier" render="true" z="hZvcXFTpo8hTh/5r8Irn4D59h48=">
         <field:input field="Prescripteur" id="c_org_adorsys_adpharma_domain_Ordonnancier_Prescripteur" required="true" z="KFOsz1aRtwSFvjlsCjWEDLR5wx4="/>
