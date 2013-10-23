@@ -463,7 +463,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 
 	// add line to de client commande 
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/{cmdId}/addLine", method = RequestMethod.POST)
 	public String addLine(@PathVariable("cmdId") Long cmdId,@RequestParam Long pId,@RequestParam BigInteger qte,
 		@RequestParam String rem, @RequestParam(required=false) BigDecimal pu, Model uiModel,HttpServletRequest httpServletRequest) {
@@ -471,6 +471,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 	    String langue = (String)httpServletRequest.getSession().getAttribute("lang");
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
+		
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(pId);
 		int remiseAutorise = ProcessHelper.getRemise(ligneApp).intValue();
@@ -478,10 +479,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 		LigneCmdClient sameCipm = commandeClient.getItemHasSameCipm(ligneApp.getCipMaison());
 		if(sameCipm !=null)qteStock = qteStock.subtract(sameCipm.getQuantiteCommande());
 		SaleProcess saleProcess = new SaleProcess(commandeClient, uiModel);
-		BigDecimal remise = BigDecimal.ZERO ;
-		if (!"".equals(rem)) {
-			remise  = new BigDecimal(rem);
-		}
+		BigDecimal remise = StringUtils.isNotBlank(rem) ? new BigDecimal(rem)  :BigDecimal.ZERO;
 		// verifier si la commande est en cour ou annule ou encaisser
 		if (commandeClient.getStatus().equals(Etat.CLOS)) {
 				uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_close_warning", null, LocaleUtil.getCurrentLocale()));
@@ -491,7 +489,6 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_cancel_warning", null, LocaleUtil.getCurrentLocale()));
 		}else if (qte.intValue() == 0) {
 			uiModel.addAttribute("apMessage",  messageSource.getMessage("sale_add_product_order_qty", null, LocaleUtil.getCurrentLocale())); 
-			// test Logger
 			LOGS.error("Impossible de vendre un produit dont la quantite est egale a 0");
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
@@ -508,10 +505,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 				if(SecurityUtil.getPharmaUser().hasAnyRole(Arrays.asList(roleNames)))uiModel.addAttribute("forcer",Boolean.TRUE);
 			}
 
-		}/*else if (commandeClient.contientSameCipM(ligneApp.getCipMaison())) {
-			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
-        return updateCmdLine(cmdId,  sameCipM.getId(), qte, rem, uiModel, httpServletRequest);
-		}*/ else if (!ligneApp.isVenteAutorise()) {
+		} else if (!ligneApp.isVenteAutorise()) {
 			uiModel.addAttribute("apMessage", messageSource.getMessage("sale_add_product_active", null, LocaleUtil.getCurrentLocale()));
 			saleProcess.setProduit(ligneApp);
 			uiModel.addAttribute("qte",qte);
@@ -846,18 +840,16 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 
 
 	//suprime la commande en cour de creation
+	//@Transactional
 	@RequestMapping(value = "/{cmdId}/annuler", method = RequestMethod.GET)
 	public String annuler(@PathVariable("cmdId") Long cmdId, Model uiModel) {
-
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-
 		if (commandeClient.getStatus().equals(Etat.CLOS) && !commandeClient.getEncaisse()) {
 			commandeClient.setAnnuler(true);
 			commandeClient.setStatus(Etat.EN_COUR);
 			commandeClient.merge();
 			uiModel.addAttribute("apMessage", messageSource.getMessage("command_cancel_success", null, LocaleUtil.getCurrentLocale()));
 		}
-
 		if (commandeClient.getStatus().equals(Etat.EN_COUR)) {
 			commandeClient.remove();
 			uiModel.addAttribute("apMessage", messageSource.getMessage("command_remove_success", null, LocaleUtil.getCurrentLocale()));

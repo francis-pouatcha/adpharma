@@ -40,7 +40,6 @@ import org.springframework.roo.addon.json.RooJson;
 @RooJson
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "CommandeClient", finders = { "findCommandeClientsByDateCreationBetween", "findCommandeClientsByStatusAndDateCreationBetween", "findCommandeClientsByCmdNumberEquals" })
 public class CommandeClient extends AdPharmaBaseEntity {
-
     private String cmdNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,22 +53,6 @@ public class CommandeClient extends AdPharmaBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
     private Date dateRestoration;
-
-    public Date getDateAnullation() {
-        return dateAnullation;
-    }
-
-    public void setDateAnullation(Date dateAnullation) {
-        this.dateAnullation = dateAnullation;
-    }
-
-    public Date getDateRestoration() {
-        return dateRestoration;
-    }
-
-    public void setDateRestoration(Date dateRestoration) {
-        this.dateRestoration = dateRestoration;
-    }
 
     @NotNull
     @ManyToOne
@@ -100,28 +83,11 @@ public class CommandeClient extends AdPharmaBaseEntity {
 
     private String anullerPar;
 
-    public String getAnullerPar() {
-        return anullerPar;
-    }
-
-    public void setAnullerPar(String anullerPar) {
-        this.anullerPar = anullerPar;
-    }
-
-    public BigDecimal getOtherRemise() {
-        return otherRemise;
-    }
-
-    public void setOtherRemise(BigDecimal otherRemise) {
-        this.otherRemise = otherRemise;
-    }
-
     private Long factureId;
 
     @Enumerated
     private TypeCommande typeCommande;
 
-    @OrderBy("id DESC")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
     private Set<LigneCmdClient> lineCommande = new HashSet<LigneCmdClient>();
 
@@ -140,6 +106,37 @@ public class CommandeClient extends AdPharmaBaseEntity {
 
     private String numeroBon;
 
+    public String getAnullerPar() {
+        return anullerPar;
+    }
+
+    public void setAnullerPar(String anullerPar) {
+        this.anullerPar = anullerPar;
+    }
+
+    public BigDecimal getOtherRemise() {
+        return otherRemise;
+    }
+
+    public void setOtherRemise(BigDecimal otherRemise) {
+        this.otherRemise = otherRemise;
+    }
+    public Date getDateAnullation() {
+        return dateAnullation;
+    }
+
+    public void setDateAnullation(Date dateAnullation) {
+        this.dateAnullation = dateAnullation;
+    }
+
+    public Date getDateRestoration() {
+        return dateRestoration;
+    }
+
+    public void setDateRestoration(Date dateRestoration) {
+        this.dateRestoration = dateRestoration;
+    }
+    
     public Facture generateFacture() {
         Facture facture = new Facture();
         facture.setClient(client);

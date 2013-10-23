@@ -15,6 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 privileged aspect CommandeClientController_Roo_Controller_Finder {
     
+    @RequestMapping(params = { "find=ByCmdNumberEquals", "form" }, method = RequestMethod.GET)
+    public String CommandeClientController.findCommandeClientsByCmdNumberEqualsForm(Model uiModel) {
+        return "commandeclients/findCommandeClientsByCmdNumberEquals";
+    }
+    
+    @RequestMapping(params = "find=ByCmdNumberEquals", method = RequestMethod.GET)
+    public String CommandeClientController.findCommandeClientsByCmdNumberEquals(@RequestParam("cmdNumber") String cmdNumber, Model uiModel) {
+        uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientsByCmdNumberEquals(cmdNumber).getResultList());
+        return "commandeclients/list";
+    }
+    
     @RequestMapping(params = { "find=ByDateCreationBetween", "form" }, method = RequestMethod.GET)
     public String CommandeClientController.findCommandeClientsByDateCreationBetweenForm(Model uiModel) {
         addDateTimeFormatPatterns(uiModel);

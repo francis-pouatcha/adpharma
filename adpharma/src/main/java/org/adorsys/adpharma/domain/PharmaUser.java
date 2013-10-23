@@ -75,7 +75,7 @@ public class PharmaUser extends AdPharmaBaseEntity {
 		this.displayRole  =displayRole;
 	}
 
-	@ElementCollection(fetch=FetchType.LAZY)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private Set<RoleName> roleNames = new HashSet<RoleName>();
 
 	private String phoneNumber;
@@ -256,6 +256,14 @@ public class PharmaUser extends AdPharmaBaseEntity {
 		TypedQuery<PharmaUser> q = null;
 		q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE o.userName = :userName  AND o.userName != :hideUser ", PharmaUser.class);
 		q.setParameter("hideUser", "adorsys");
+		q.setParameter("userName", userName);
+		return q;
+	}
+	public static TypedQuery<PharmaUser> findNotHiddenPharmaUsersByUserNameEquals(String userName) {
+		if (userName == null || userName.length() == 0) throw new IllegalArgumentException("The userName argument is required");
+		EntityManager em = PharmaUser.entityManager();
+		TypedQuery<PharmaUser> q = null;
+		q = em.createQuery("SELECT o FROM PharmaUser AS o WHERE o.userName = :userName  ", PharmaUser.class);
 		q.setParameter("userName", userName);
 		return q;
 	}

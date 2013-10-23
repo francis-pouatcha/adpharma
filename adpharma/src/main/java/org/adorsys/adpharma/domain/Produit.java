@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
+import javax.persistence.PreUpdate;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,7 +47,6 @@ import flexjson.JSONSerializer;
 @RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "Produit", finders = { "findProduitsByDesignationLike", "findProduitsByProduitNumberLike", "findProduitsByQuantiteEnStock", "findProduitsByFamilleProduit", "findProduitsByRayon", "findProduitsByCipEquals", "findProduitsByDesignationEquals" })
 @RooJson
-//@EntityListeners(ProductMonitor.class)
 public class Produit extends AdPharmaBaseEntity {
 
 	private String produitNumber;
@@ -56,7 +56,7 @@ public class Produit extends AdPharmaBaseEntity {
 
 	private String fabricant;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private Rayon rayon;
 
 	 @Enumerated(EnumType.STRING)
@@ -68,7 +68,7 @@ public class Produit extends AdPharmaBaseEntity {
 	public Boolean actif = Boolean.TRUE ;
 	
 	
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private FamilleProduit familleProduit;
 	
 	/**
@@ -200,13 +200,13 @@ public class Produit extends AdPharmaBaseEntity {
 	@ManyToOne
 	private TVA tvaProduit;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private TauxMarge tauxDeMarge;
 
 	@Column(unique = true)
 	private String cip;
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private ModeConditionement modeConditionement;
 
 	private boolean venteAutorise = true;
@@ -258,7 +258,7 @@ public class Produit extends AdPharmaBaseEntity {
 		quantiteEnStock = trueStocK!=null?trueStocK:quantiteEnStock;
 	}
 
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne
 	private Filiale filiale;
 
 	public void desableOrEnableSale(boolean status) {
@@ -472,7 +472,7 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 	
 	
-	@PostLoad
+    @PreUpdate
 	//@Transactional(readOnly=true)
 	public void notifyProduct(){
 		if(this.isAlert() && this.getActif()==true){
@@ -480,10 +480,9 @@ public class Produit extends AdPharmaBaseEntity {
 		}else if(!this.isAlert() && this.getActif() == true){
 			this.setCommander(Boolean.FALSE);
 		}
-		if(Produit.alreadyInStock(this)){
+		/*if(Produit.alreadyInStock(this)){
 			this.setInStock(Boolean.TRUE);
-		}
-//		this.merge();
+		}*/
 	}
 
 	@Override

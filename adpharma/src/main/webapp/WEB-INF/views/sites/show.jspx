@@ -21,6 +21,8 @@
         <field:display field="orderSentPath" id="s_org_adorsys_adpharma_domain_Site_orderSentPath" label="Dossier Messages PHML" object="${site}" z="user-managed"/>
         <field:display field="orderReceivePath" id="s_org_adorsys_adpharma_domain_Site_orderReceivePath" label="Dossier Reponses PHML" object="${site}" z="user-managed"/>
         <field:display field="bareCodePerLine" id="s_org_adorsys_adpharma_domain_Site_bareCodePerLine" object="${site}" z="tPK20cZVjUceIhSnZiw4qRP5/2o="/>
+        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_Site_LOG" object="${site}" z="WlU9HHzXKwfkonyT1NPQu6aU/W4="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Site_archived" object="${site}" z="OpzwoDlx6Bgycnfas9Q7g2PCAG4="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Site_footPrint" object="${site}" z="user-managed"/>

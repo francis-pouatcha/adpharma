@@ -8,6 +8,8 @@
         <field:input field="libelle" id="c_org_adorsys_adpharma_domain_CategorieClient_libelle" z="8D97pn+4gOrjtuTYCuSjeYZ184g="/>
         <field:input field="tauxRemiseMax" id="c_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax" max="100" min="0" required="true" validationMessageCode="field_invalid_number" z="sCTefHUlu2TM3VylSswEfZfs2HQ="/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_CategorieClient_note" z="dbPNf8iXKrdCz4DIZrx5kdfoFLM="/>
+        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_CategorieClient_LOG" z="KNysd5Re322UmXXWcXC8JYsd3aM="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_CategorieClient_archived" z="/FRUKf0CXUWJAx2PmBKLpf/kOMw="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CategorieClient" render="${not empty dependencies}" z="toJ9Z5aJMsmXjv2EMKcAv055bf8="/>
 </div>

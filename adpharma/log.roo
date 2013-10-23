@@ -515,3 +515,4 @@ finder list --depth 2 --filter solder,annuler
 finder add --finderName findDetteClientsBySolderNotAndAnnulerNot
 q
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2013-10-09 05:06:34
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2013-10-22 23:32:04

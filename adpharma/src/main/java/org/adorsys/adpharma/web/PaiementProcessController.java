@@ -140,7 +140,7 @@ public class PaiementProcessController {
 
 
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/encaisser/{factureId}" , method = RequestMethod.POST)
 	public String encaisserPaiement(@PathVariable("factureId")Long factureId,@Valid Paiement paiement ,BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 		Caisse openCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
@@ -167,15 +167,10 @@ public class PaiementProcessController {
 					uiModel.addAttribute("typepaiements",populateTypePaiements(facture.getCommande()));
 					return "paiementprocess/encaisserPaiement";
 				}
-				uiModel.asMap().clear();
 				paiement.setCaisse(openCaisse);
 				paiement.persist();
-				try {
-					encaisser(facture, openCaisse, paiement);
-				} catch (Exception e) {
-				}
+			    encaisser(facture, openCaisse, paiement);
 				paiement.merge();
-
 				try {
 					gererPreparationAutomatisee(facture);
 				} catch (Exception e) {
@@ -516,7 +511,7 @@ public class PaiementProcessController {
 
 
 	// gere les paiements des facture a credit	
-	//@Transactional
+	@Transactional
 	public void avanceVenteCredit(Facture facture ,Caisse caisse,Paiement paiement){
 		QuiPaye quiPaye = paiement.getQuiPaye();
 		DetteClient detteClient = null ;
@@ -543,7 +538,7 @@ public class PaiementProcessController {
 
 	}
 
-	@Transactional
+	//@Transactional
 	public void encaisserVenteComptant(Facture facture ,Caisse caisse,Paiement paiement){
 		genererMvtStock(facture , caisse);
 		genererOperationCaisse(caisse, paiement);
@@ -596,7 +591,6 @@ public class PaiementProcessController {
 		genererMvtStock(facture,caisse);
 
 	}
-	//@Transactional
 	public void genererDetteClient(Facture facture , BigInteger avance){
 		CommandeClient commande = facture.getCommande();
 		Client client = commande.getClient();
@@ -620,7 +614,6 @@ public class PaiementProcessController {
 
 	}
 
-	//@Transactional
 	public void genererDetteClientPayeur(Facture facture){
 		CommandeClient commande = facture.getCommande();
 		Client paiyeur = commande.getClientPaiyeur();
@@ -645,7 +638,7 @@ public class PaiementProcessController {
 	}
 
 	// genere les mvt de stock
-	@Transactional(rollbackFor=Exception.class, isolation=Isolation.DEFAULT) 
+	//@Transactional
 	public void genererMvtStock(Facture facture , Caisse caisse){
 		Set<LigneCmdClient> lineCommande = facture.getCommande().getLineCommande();
 		if (!lineCommande.isEmpty()) {
@@ -688,7 +681,7 @@ public class PaiementProcessController {
 					}
 				}
 
-				prd.merge().flush();   
+				prd.merge();   
 				mouvementStock.persist();
 			}
 		}

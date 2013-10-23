@@ -6,19 +6,17 @@
         <div id="tabset">
             <ul>
                 <li>
-
-                <spring:message  var="user_info" code="pharma_user_info" />
+                    <spring:message code="pharma_user_info" var="user_info"/>
                     <a href="#tab1">${user_info } </a>
                 </li>
                 <li>
-                <spring:message  var="user_rule" code="pharma_user_rule" />
+                    <spring:message code="pharma_user_rule" var="user_rule"/>
                     <a href="#tab2"> ${user_rule}  </a>
                 </li>
             </ul>
             <div id="tab1">
                 <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" render="false" z="user-managed"/>
                 <field:input field="userNumber" id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" render="false" required="true" z="user-managed"/>
-                
                 <field:input field="userName" id="c_org_adorsys_adpharma_domain_PharmaUser_userName" required="true" z="dQ+MBxRIuLFpZB+9ZECHApYXwQM="/>
                 <field:input field="lastName" id="c_org_adorsys_adpharma_domain_PharmaUser_lastName" required="true" z="PuCOzoneB1lbeFE4VsN+0QScFjA="/>
                 <field:input field="firstName" id="c_org_adorsys_adpharma_domain_PharmaUser_firstName" required="true" z="pHoH+Xz8CIlhYYYzlJAU3gcF2d8="/>
@@ -41,6 +39,8 @@
             </div>
         </div>
         <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" render="false" z="user-managed"/>
+        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_PharmaUser_LOG" z="OBtJu9odOtM5vxTN4P2oXqHV/q0="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_PharmaUser_archived" z="PKT8KAK3CTDhZWViw5VF3ACW9c8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_PharmaUser" render="${not empty dependencies}" z="jW5xSNjpH6A5VKgKa3Qyy8uuHo4="/>
     <script type="text/javascript">

@@ -428,7 +428,7 @@ public class ApprovisionementProcessController {
 				}
 				approvisionement.remove();
 			}
-			uiModel.addAttribute("apMessage",messageSource.getMessage("appro_close_success", null, LocaleUtil.getCurrentLocale()));
+			uiModel.addAttribute("apMessage",messageSource.getMessage("appro_cancel_success", null, LocaleUtil.getCurrentLocale()));
 			return "caisses/infos";
 		}
 

@@ -52,7 +52,7 @@
                         <field:datetime dateTimePattern="${produit_datederniererupture_date_format}" field="dateDerniereRupture" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereRupture" render="false" z="user-managed"/>
                         <field:datetime dateTimePattern="${produit_datederniereentre_date_format}" disabled="true" field="dateDerniereEntre" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereEntre" render="false" z="user-managed"/>
                         <field:datetime dateTimePattern="${produit_datedernieresortie_date_format}" disabled="true" field="dateDerniereSortie" id="c_org_adorsys_adpharma_domain_Produit_dateDerniereSortie" render="false" z="user-managed"/>
-                        <!--  
+                   <!--  
                     <field:textarea field="posologie" id="c_org_adorsys_adpharma_domain_Produit_posologie" z="iNghF2vR1o7CdixHrRcVQoJ3nyg="/>
                     <field:textarea field="principeActif" id="c_org_adorsys_adpharma_domain_Produit_principeActif" z="EX5HVy6UXY/EPv9iJRDwnrs3Ohg="/>
                    -->

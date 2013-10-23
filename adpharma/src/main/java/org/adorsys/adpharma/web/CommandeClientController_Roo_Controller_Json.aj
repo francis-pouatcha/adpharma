@@ -93,6 +93,14 @@ privileged aspect CommandeClientController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     
+    @RequestMapping(params = "find=ByCmdNumberEquals", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByCmdNumberEquals(@RequestParam("cmdNumber") String cmdNumber) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/text; charset=utf-8");
+        return new ResponseEntity<String>(CommandeClient.toJsonArray(CommandeClient.findCommandeClientsByCmdNumberEquals(cmdNumber).getResultList()), headers, HttpStatus.OK);
+    }
+    
     @RequestMapping(params = "find=ByDateCreationBetween", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> CommandeClientController.jsonFindCommandeClientsByDateCreationBetween(@RequestParam("minDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date minDateCreation, @RequestParam("maxDateCreation") @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm") Date maxDateCreation) {

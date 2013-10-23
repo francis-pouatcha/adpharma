@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.RoleName;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityUtil {
+	
+
 
 	public static UserDetails getUserDetails(){
 		SecurityContext context = SecurityContextHolder.getContext();
@@ -43,7 +47,7 @@ public class SecurityUtil {
 		UserDetails userDetails = getUserDetails();
 		if(userDetails==null) return null;
 		String username = userDetails.getUsername();
-		TypedQuery<PharmaUser> query = PharmaUser.findPharmaUsersByUserNameEquals(username) ;
+		TypedQuery<PharmaUser> query = PharmaUser.findNotHiddenPharmaUsersByUserNameEquals(username) ;
 		return query.getSingleResult();
 	}
 

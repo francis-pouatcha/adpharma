@@ -3,30 +3,30 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show1 delete="false" id="ps_org_adorsys_adpharma_domain_Client" object="${client}" path="/clients" z="user-managed">
-                    <field:display field="clientNumber" id="s_org_adorsys_adpharma_domain_Client_clientNumber" object="${client}" z="ddGzH8JV3/4ezZNidn1dt54Mp20="/>
-                    <field:display field="typeClient" id="s_org_adorsys_adpharma_domain_Client_typeClient" object="${client}" z="U8/Nni279vOR2X7vu0UFSrAsThY="/>
-                    <field:display field="nom" id="s_org_adorsys_adpharma_domain_Client_nom" object="${client}" render="false" z="user-managed"/>
-                    <field:display field="prenom" id="s_org_adorsys_adpharma_domain_Client_prenom" object="${client}" render="false" z="user-managed"/>
-                    <field:display field="nomComplet" id="s_org_adorsys_adpharma_domain_Client_nomComplet" object="${client}" z="h81Rh+tfMuc/wRtrmY0Mgx1bUYc="/>
-                    <field:display field="telephoneFixe" id="s_org_adorsys_adpharma_domain_Client_telephoneFixe" object="${client}" z="COJcuEB0s3WOSsqRNtrLngotjtg="/>
-                    <field:display field="telephoneMobile" id="s_org_adorsys_adpharma_domain_Client_telephoneMobile" object="${client}" z="rbaujk7XpJ8saHOcVUmROKLUSt4="/>
-                    <field:display field="fax" id="s_org_adorsys_adpharma_domain_Client_fax" object="${client}" z="+m2bUgCk+rpjGAviM7CBESwp/3o="/>
-                    <field:display field="email" id="s_org_adorsys_adpharma_domain_Client_email" object="${client}" z="M1p8YKzjQthp10UIiLas3hiixM4="/>
-                    <field:display field="creditAutorise" id="s_org_adorsys_adpharma_domain_Client_creditAutorise" object="${client}" z="4fmJaWIzO5OEmVyaxIVIM12+Op0="/>
-                    <field:display field="plafondCredit" id="s_org_adorsys_adpharma_domain_Client_plafondCredit" object="${client}" z="hHkjkXFCGtLC4DcHqVYytf25Aag="/>
-               
-                    <field:display field="employeur" id="s_org_adorsys_adpharma_domain_Client_employeur" object="${client}" z="ZSrA2eFRs69sxek4W3co6njqEP0="/>
-                    <field:display field="clientPayeur" id="s_org_adorsys_adpharma_domain_Client_clientPayeur" object="${client}" z="zk3ThwJncD2nOWC+ZTNNjIMNvQY="/>
-                    <field:display field="tauxCouverture" id="s_org_adorsys_adpharma_domain_Client_tauxCouverture" object="${client}" z="AX1JINM2SwkC/IC03jj6tVSFo+g="/>
-                    <field:display date="true" dateTimePattern="${client_datenaissance_date_format}" field="dateNaissance" id="s_org_adorsys_adpharma_domain_Client_dateNaissance" object="${client}" z="7VTlzSR82veco4UHi+HzLz1sQ/s="/>
-                    <field:display field="sexe" id="s_org_adorsys_adpharma_domain_Client_sexe" object="${client}" z="ODI3o/tRyFr9sQWyPGDf53xJjiQ="/>
-                    <field:display field="note" id="s_org_adorsys_adpharma_domain_Client_note" object="${client}" z="BHwema9+u/P5Io/0VUzDddDigL8="/>
-                    <field:display field="clientPayeurNumber" id="s_org_adorsys_adpharma_domain_Client_clientPayeurNumber" object="${client}" render="false" z="user-managed"/>
-                    <field:display field="categorie" id="s_org_adorsys_adpharma_domain_Client_categorie" object="${client}" z="hkwgsXcrTMugff/lpvfUbc3VfoQ="/>
-                    <field:display field="totalDette" id="s_org_adorsys_adpharma_domain_Client_totalDette" object="${client}" z="aWwDiD2u51A1DcLI2vMumH126NI="/>
-                    <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" object="${client}" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
-             
+        <field:display field="clientNumber" id="s_org_adorsys_adpharma_domain_Client_clientNumber" object="${client}" z="ddGzH8JV3/4ezZNidn1dt54Mp20="/>
+        <field:display field="typeClient" id="s_org_adorsys_adpharma_domain_Client_typeClient" object="${client}" z="U8/Nni279vOR2X7vu0UFSrAsThY="/>
+        <field:display field="nom" id="s_org_adorsys_adpharma_domain_Client_nom" object="${client}" render="false" z="user-managed"/>
+        <field:display field="prenom" id="s_org_adorsys_adpharma_domain_Client_prenom" object="${client}" render="false" z="user-managed"/>
+        <field:display field="nomComplet" id="s_org_adorsys_adpharma_domain_Client_nomComplet" object="${client}" z="h81Rh+tfMuc/wRtrmY0Mgx1bUYc="/>
+        <field:display field="telephoneFixe" id="s_org_adorsys_adpharma_domain_Client_telephoneFixe" object="${client}" z="COJcuEB0s3WOSsqRNtrLngotjtg="/>
+        <field:display field="telephoneMobile" id="s_org_adorsys_adpharma_domain_Client_telephoneMobile" object="${client}" z="rbaujk7XpJ8saHOcVUmROKLUSt4="/>
+        <field:display field="fax" id="s_org_adorsys_adpharma_domain_Client_fax" object="${client}" z="+m2bUgCk+rpjGAviM7CBESwp/3o="/>
+        <field:display field="email" id="s_org_adorsys_adpharma_domain_Client_email" object="${client}" z="M1p8YKzjQthp10UIiLas3hiixM4="/>
+        <field:display field="creditAutorise" id="s_org_adorsys_adpharma_domain_Client_creditAutorise" object="${client}" z="4fmJaWIzO5OEmVyaxIVIM12+Op0="/>
+        <field:display field="plafondCredit" id="s_org_adorsys_adpharma_domain_Client_plafondCredit" object="${client}" z="hHkjkXFCGtLC4DcHqVYytf25Aag="/>
+        <field:display field="employeur" id="s_org_adorsys_adpharma_domain_Client_employeur" object="${client}" z="ZSrA2eFRs69sxek4W3co6njqEP0="/>
+        <field:display field="clientPayeur" id="s_org_adorsys_adpharma_domain_Client_clientPayeur" object="${client}" z="zk3ThwJncD2nOWC+ZTNNjIMNvQY="/>
+        <field:display field="tauxCouverture" id="s_org_adorsys_adpharma_domain_Client_tauxCouverture" object="${client}" z="AX1JINM2SwkC/IC03jj6tVSFo+g="/>
+        <field:display date="true" dateTimePattern="${client_datenaissance_date_format}" field="dateNaissance" id="s_org_adorsys_adpharma_domain_Client_dateNaissance" object="${client}" z="7VTlzSR82veco4UHi+HzLz1sQ/s="/>
+        <field:display field="sexe" id="s_org_adorsys_adpharma_domain_Client_sexe" object="${client}" z="ODI3o/tRyFr9sQWyPGDf53xJjiQ="/>
+        <field:display field="note" id="s_org_adorsys_adpharma_domain_Client_note" object="${client}" z="BHwema9+u/P5Io/0VUzDddDigL8="/>
+        <field:display field="clientPayeurNumber" id="s_org_adorsys_adpharma_domain_Client_clientPayeurNumber" object="${client}" render="false" z="user-managed"/>
+        <field:display field="categorie" id="s_org_adorsys_adpharma_domain_Client_categorie" object="${client}" z="hkwgsXcrTMugff/lpvfUbc3VfoQ="/>
+        <field:display field="totalDette" id="s_org_adorsys_adpharma_domain_Client_totalDette" object="${client}" z="aWwDiD2u51A1DcLI2vMumH126NI="/>
+        <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" object="${client}" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
         <field:display field="matricule" id="s_org_adorsys_adpharma_domain_Client_matricule" object="${client}" z="LfvOzbojV27GKKGMKP7G/8dkJ0Y="/>
+        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_Client_LOG" object="${client}" z="zWsyTx9N2nJhlbSyxFGTxYkaAB0="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Client_archived" object="${client}" z="KOEFcQd7uLE59ZOZyKEtVcukij8="/>
     </page:show1>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Client_footPrint" object="${client}" z="ZI+vlYFf2hFUH6kw4PbmX5QEpA4="/>

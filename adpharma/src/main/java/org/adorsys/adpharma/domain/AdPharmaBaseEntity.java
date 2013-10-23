@@ -16,6 +16,8 @@ import org.adorsys.adpharma.utils.IdGenerator;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.type.TrueFalseType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -29,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RooEntity(identifierType = String.class, mappedSuperclass = true)
 @Configurable
 public abstract class AdPharmaBaseEntity {
-
+	 protected transient Logger LOG = LoggerFactory.getLogger(getClass());
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -125,6 +127,14 @@ public abstract class AdPharmaBaseEntity {
 		AdPharmaBaseEntity merged = this.entityManager.merge(this);
 		this.entityManager.flush();
 		return merged;
+	}
+
+	public Logger getLOG() {
+		return LOG;
+	}
+
+	public void setLOG(Logger lOG) {
+		LOG = lOG;
 	}
 
 	@Override

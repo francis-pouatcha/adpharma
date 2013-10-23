@@ -31,6 +31,7 @@ import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -119,7 +120,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 	private transient BigDecimal prixVenteStock;
 
 	private transient BigInteger qteCip;
-	
+
 
 	@ManyToOne
 	private Approvisionement approvisionement;

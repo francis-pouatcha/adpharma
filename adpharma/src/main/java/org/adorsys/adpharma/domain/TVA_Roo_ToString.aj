@@ -9,8 +9,10 @@ privileged aspect TVA_Roo_ToString {
     
     public String TVA.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Archived: ").append(getArchived()).append(", ");
         sb.append("FootPrint: ").append(getFootPrint()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");
+        sb.append("LOG: ").append(getLOG()).append(", ");
         sb.append("TauxTva: ").append(getTauxTva()).append(", ");
         sb.append("TvaNumber: ").append(getTvaNumber()).append(", ");
         sb.append("Valide: ").append(getValide()).append(", ");

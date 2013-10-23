@@ -6,7 +6,6 @@
         <table:table create="false" data="${caisses}" delete="false" id="l_org_adorsys_adpharma_domain_Caisse" path="/caisses" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Caisse_caisseNumber" property="caisseNumber" z="ezEPUt3bMpKUX5LTlLRptl8Q58Q="/>
             <table:column id="c_org_adorsys_adpharma_domain_Caisse_caissier" maxLength="-1" property="caissier" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Caisse_site" property="site" z="HEKqib+9X06FrVTvAeZ4fspOSMU="/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Caisse_dateOuverture" property="dateOuverture" z="user-managed"/>
             <table:column date="true" dateTimePattern="dd-MM-yyyy HH:mm" id="c_org_adorsys_adpharma_domain_Caisse_dateFemeture" property="dateFemeture" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Caisse_footPrint" property="footPrint" render="false" z="user-managed"/>
@@ -17,7 +16,9 @@
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" property="totalCredit" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" property="totalCheque" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_caisseOuverte" property="caisseOuverte" z="VDvBpDtUFu4mNQiF9rvRNLJrOb0="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Caisse_fermerPar" property="fermerPar" z="mSyEyZKaL9WQ45Vp04VvtwtGvmk="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_LOG" property="LOG" z="Qzij8ZCQL1khT/kbZTSLE+ohuRo="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_archived" property="archived" z="VZk9Yt6hxEPjJZaNgbGJDJmZ69c="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Caisse_totalCashDette" property="totalCashDette" z="b8cCEqO0hVWCAQZH/zY3nicIjVU="/>
         </table:table>
     </page:list>
 </div>

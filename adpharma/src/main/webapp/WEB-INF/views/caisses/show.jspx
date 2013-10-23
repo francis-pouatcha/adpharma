@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" 
-xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
-xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    
     <page:show1 clientLinks="showLink.jspx" create="false" delete="false" id="ps_org_adorsys_adpharma_domain_Caisse" object="${caisse}" path="/caisses" update="false" z="user-managed">
         <c:if test="${not empty apMessage}">
-	        <center style="text-transform: uppercase;">
-	            <p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
-	        </center>
+            <center style="text-transform: uppercase;">
+                <p class="appMessage" style="color: green; margin-bottom: 1px;">${apMessage}</p>
+            </center>
         </c:if>
         <table class="tblog">
             <tr>
@@ -30,17 +26,19 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
                     <field:display field="totalCash" id="s_org_adorsys_adpharma_domain_Caisse_totalCash" object="${caisse}" z="AsKI5HZEji8mzjLcLRCfDHv3XBw="/>
                     <field:display field="totalCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" object="${caisse}" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
                     <field:display field="totalCheque" id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" object="${caisse}" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
-                    <field:display field="totalCashDette" label="Total Cash Dette" id="s_org_adorsys_adpharma_domain_Caisse_totalProformat" object="${caisse}"  z="user-managed"/>
+                    <field:display field="totalCashDette" id="s_org_adorsys_adpharma_domain_Caisse_totalProformat" label="Total Cash Dette" object="${caisse}" z="user-managed"/>
                     <field:display field="totalCarteCredit" id="s_org_adorsys_adpharma_domain_Caisse_totalCarteCredit" object="${caisse}" z="w0dT6k/utjPcrqB+C65tnwsM0yA="/>
                     <field:display field="totalBonClient" id="s_org_adorsys_adpharma_domain_Caisse_totalBonClient" object="${caisse}" z="F2++MQ4grpX3UuLC0Qm9gZpMeMA="/>
-                <field:display field="totalVentePartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalVentePartiel" object="${caisse}" render="false" z="user-managed"/>
-                   <field:display field="totalBonCmd" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmd" object="${caisse}" z="oQ8CEYL0Lj6weK3HOycLO48a/s8="/>
-        <field:display field="totalBonCmdPartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" object="${caisse}" z="lAhhyj6dRSRLs+65iLaUvRmqC9M="/>
-   
+                    <field:display field="totalVentePartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalVentePartiel" object="${caisse}" render="false" z="user-managed"/>
+                    <field:display field="totalBonCmd" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmd" object="${caisse}" z="oQ8CEYL0Lj6weK3HOycLO48a/s8="/>
+                    <field:display field="totalBonCmdPartiel" id="s_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" object="${caisse}" z="lAhhyj6dRSRLs+65iLaUvRmqC9M="/>
                 </td>
             </tr>
         </table>
-        </page:show1>
+        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_Caisse_LOG" object="${caisse}" z="Qv6NSjnGt4BaANDDc5mHoVf4ev4="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Caisse_archived" object="${caisse}" z="VaaM4KfTkZEEa+Wiadzj0PQxFMs="/>
+        <field:display field="totalCashDette" id="s_org_adorsys_adpharma_domain_Caisse_totalCashDette" object="${caisse}" z="GkU6SP1iAzKldjO970ScXl5GqpY="/>
+    </page:show1>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Caisse_footPrint" object="${caisse}" z="ZSMk3lzy8yzmlxcZTYgo/2kynbU="/>
     <HR style="margin-top: -12px;"/>

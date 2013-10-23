@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-xmlns:spring="http://www.springframework.org/tags" 
-xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    
-    <spring:message code="list_search_provider" var="list_search_provider" htmlEscape="false"/>
-    
-    <page:list1 id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" z="user-managed" url="/pharmausers/search" search="true" placeholder="${list_search_provider}">
+    <spring:message code="list_search_provider" htmlEscape="false" var="list_search_provider"/>
+    <page:list1 id="pl_org_adorsys_adpharma_domain_PharmaUser" items="${pharmausers}" placeholder="${list_search_provider}" search="true" url="/pharmausers/search" z="user-managed">
         <table:table data="${pharmausers}" delete="false" id="l_org_adorsys_adpharma_domain_PharmaUser" path="/pharmausers" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_footPrint" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc=" render="false"/>
-            
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_roleNames" maxLength="-1" property="roleNames" render="false" z="mswk7L6IEXNmsQ1XkLKfzCa1Moc="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userNumber" property="userNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_userName" maxLength="-1" property="userName" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_fullName" maxLength="-1" property="fullName" z="user-managed"/>
@@ -24,6 +18,8 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
             <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_accountLocked" property="accountLocked" z="G0dfeHrUCX8ThkYfjpdQZDDnrTI="/>
             <table:column id="s_org_adorsys_adpharma_domain_PharmaUser_saleKey" property="saleKey" z="tgzDYtz9VsWN+kw4XBhT9/ee2c4="/>
             <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" property="displayRole" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_LOG" property="LOG" z="3h0l0m+/LyukiVKGu+r8uRnVKJ0="/>
+            <table:column id="c_org_adorsys_adpharma_domain_PharmaUser_archived" property="archived" z="R1RzwubxLfGzunhaV0nvpykqe/8="/>
         </table:table>
     </page:list1>
 </div>

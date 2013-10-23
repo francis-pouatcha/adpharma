@@ -3,13 +3,14 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_org_adorsys_adpharma_domain_CategorieClient" items="${categorieclients}" z="RmjD332yvkZdadfEewrRtU7Ud9A=">
-        <table:table data="${categorieclients}" delete="false" id="l_org_adorsys_adpharma_domain_CategorieClient" path="/categorieclients"  z="user-managed">
-            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_categorieNumber"  property="categorieNumber" z="user-managed"/>
+        <table:table data="${categorieclients}" delete="false" id="l_org_adorsys_adpharma_domain_CategorieClient" path="/categorieclients" z="user-managed">
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_categorieNumber" property="categorieNumber" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_libelle" maxLength="-1" property="libelle" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax"  property="tauxRemiseMax" z="user-managed"/>
-               <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_note" maxLength="-1" property="note" z="user-managed"/>
-            
-            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_footPrint" render="false" maxLength="-1" property="footPrint" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax" property="tauxRemiseMax" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_note" maxLength="-1" property="note" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_footPrint" maxLength="-1" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_LOG" property="LOG" z="cebA1+0YzScZBNBxvNFwrIamw0o="/>
+            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_archived" property="archived" z="pSIFo1M7/1i94Y3F9Pwobb5pk70="/>
         </table:table>
     </page:list>
 </div>

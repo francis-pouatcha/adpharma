@@ -41,6 +41,9 @@
 	<jsp:directive.attribute name="otherBut" type="java.lang.Boolean"
 		required="false" rtexprvalue="true"
 		description="Indicate if the form need other button " />
+		<jsp:directive.attribute name="hideCancelButton" type="java.lang.Boolean"
+		required="false" rtexprvalue="fasle"
+		description="Indicate if the form need other button " />
 	<jsp:directive.attribute name="openPane" type="java.lang.String"
 		required="false" rtexprvalue="true"
 		description="Control if the title pane is opened or closed by default (default: true)" />
@@ -66,6 +69,9 @@
 		</c:if>
 		<c:if test="${not empty label}">
 			<c:set value="${label}" var="title_msg" /> 
+		</c:if>
+		<c:if test="${not empty hideCancelButton}">
+			<c:set value="false" var="hideCancelButton" /> 
 		</c:if>
 		
 
@@ -190,7 +196,9 @@
 										<c:otherwise>
 										   <spring:url value="/" var="home" />
 										   <input id="proceed" type="submit" value="${fn:escapeXml(save_button)}" style="margin-right: 20px;"/>
+										   <c:if test="${not hideCancelButton}">
 										   <a href="${home}" style="text-decoration: none;"><input type="button" value="${fn:escapeXml(cancel_button)}" /> </a>
+										</c:if>
 										</c:otherwise>
 										</c:choose>
 										

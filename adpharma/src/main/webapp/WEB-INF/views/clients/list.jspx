@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-xmlns:spring="http://www.springframework.org/tags" 
-xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    
-    
-    <spring:message code="list_search_provider" var="list_search_provider" />
-    
-    <page:list1 id="pl_org_adorsys_adpharma_domain_Client" items="${clients}" z="user-managed" url="/clients/searchCustomer" search="true" placeholder="${list_search_provider}">
+    <spring:message code="list_search_provider" var="list_search_provider"/>
+    <page:list1 id="pl_org_adorsys_adpharma_domain_Client" items="${clients}" placeholder="${list_search_provider}" search="true" url="/clients/searchCustomer" z="user-managed">
         <table:table data="${clients}" delete="false" id="l_org_adorsys_adpharma_domain_Client" path="/clients" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_Client_clientNumber" property="clientNumber" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Client_typeClient" render="false" property="typeClient" z="7qmjlMoOcnATeYf5DNwSPXpV+tQ="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Client_nom" render="false" maxLength="-1" property="nom"  z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Client_nomComplet"  maxLength="-1" property="nomComplet" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Client_typeClient" property="typeClient" render="false" z="7qmjlMoOcnATeYf5DNwSPXpV+tQ="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Client_nom" maxLength="-1" property="nom" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Client_nomComplet" maxLength="-1" property="nomComplet" z="user-managed"/>
             <table:column id="s_org_adorsys_adpharma_domain_Client_telephoneMobile" property="telephoneMobile" render="false" z="7qmjlMoOcnATeYf5DNwSPXpV+tQ="/>
             <table:column id="s_org_adorsys_adpharma_domain_Client_creditAutorise" property="creditAutorise" z="4fmJaWIzO5OEmVyaxIVIM12+Op0="/>
-            <table:column id="s_org_adorsys_adpharma_domain_Client_plafondCredit" render="false" property="plafondCredit" z="hHkjkXFCGtLC4DcHqVYytf25Aag="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Client_plafondCredit" property="plafondCredit" render="false" z="hHkjkXFCGtLC4DcHqVYytf25Aag="/>
             <table:column id="s_org_adorsys_adpharma_domain_Client_clientPayeur" maxLength="-1" property="clientPayeur" z="0r7k63JbzAE/ODRaDuEfHK9ejW8="/>
             <table:column id="s_org_adorsys_adpharma_domain_Client_categorie" maxLength="-1" property="categorie" z="hkwgsXcrTMugff/lpvfUbc3VfoQ="/>
             <table:column id="s_org_adorsys_adpharma_domain_Client_totalDette" property="totalDette" z="aWwDiD2u51A1DcLI2vMumH126NI="/>
-            <table:column id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" render="false" property="remiseAutorise" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
+            <table:column id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" property="remiseAutorise" render="false" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_prenom" property="prenom" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" property="telephoneFixe" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Client_LOG" property="LOG" z="GLYqKQcHb6xQL8nwv6nU1TlBYiw="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Client_archived" property="archived" z="9o8ENB0wqnmsJNk0bUCJomQBS6Y="/>
         </table:table>
     </page:list1>
-         <jsp:include page="detaildette.jspx" />
-    
+    <jsp:include page="detaildette.jspx"/>
 </div>

@@ -30,6 +30,8 @@
         <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" z="XSlT/K1ynhmGm1x065HiZwvbhPM="/>
         <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
         <field:input field="bareCodePerLine" id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" validationMessageCode="field_invalid_integer" z="9rPnaMGqvjYspLdLGQrV5sCTCuI="/>
+        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_Site_LOG" z="/DuqUrP5Te0+4xoUniWsk2pZ2NM="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Site_archived" z="0+IFp7EQOIEuR7jVJcca+QK89b4="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Site" render="${not empty dependencies}" z="Iz5J2tR/uNhz0TCAiK64mYX4D+U="/>
 </div>

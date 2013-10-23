@@ -37,7 +37,7 @@ public class AdPharmaUserDetailsService implements UserDetailsService {
 			if(StringUtils.isBlank(username)){
 				throw new UsernameNotFoundException("Estate user with email not found");
 			}
-			TypedQuery<PharmaUser> typedQuery = PharmaUser.findPharmaUsersByUserNameEquals(username);
+			TypedQuery<PharmaUser> typedQuery = PharmaUser.findNotHiddenPharmaUsersByUserNameEquals(username);
 			PharmaUser  user = typedQuery.getSingleResult();
 			
 			if ( user == null)

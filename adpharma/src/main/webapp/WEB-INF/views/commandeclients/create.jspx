@@ -35,6 +35,8 @@
         <field:datetime dateTimePattern="${commandeClient_dateanullation_date_format}" field="dateAnullation" id="c_org_adorsys_adpharma_domain_CommandeClient_dateAnullation" z="S2nnngQxgnpWsTV1TVZ2VBY5yMc="/>
         <field:datetime dateTimePattern="${commandeClient_daterestoration_date_format}" field="dateRestoration" id="c_org_adorsys_adpharma_domain_CommandeClient_dateRestoration" z="VMrDEW2euAjBlUF9oJcNgTzdSgs="/>
         <field:input field="anullerPar" id="c_org_adorsys_adpharma_domain_CommandeClient_anullerPar" z="gad2FnrRLcAhdibFU62GOieMIgw="/>
+        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_CommandeClient_LOG" z="rA5b0jjd7DiTj+N+jP5TJbJ0I4w="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_CommandeClient_archived" z="a9WhFJeHHqrGEq9etTAtEj6SwY4="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeClient" render="${not empty dependencies}" z="tAZ+gy9hoMD3KAJ/PF68PWu787Q="/>
 </div>

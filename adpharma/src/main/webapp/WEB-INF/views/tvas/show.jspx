@@ -6,9 +6,10 @@
         <field:display field="tauxTva" id="s_org_adorsys_adpharma_domain_TVA_tauxTva" object="${tva}" z="UPfcbY6QyGYgw4L09phGU6JiJGI="/>
         <field:display field="valide" id="s_org_adorsys_adpharma_domain_TVA_valide" object="${tva}" z="dNWhumSDLX7RueWnGiCLOTp6tUM="/>
         <field:display field="tvaNumber" id="s_org_adorsys_adpharma_domain_TVA_tvaNumber" object="${tva}" z="+omX1mGk+whLg5ZvPp/uf9G5kjQ="/>
+        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_TVA_LOG" object="${tva}" z="QEAnJjGVS+kr2HLkQFinb58VGBc="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_TVA_archived" object="${tva}" z="Pe3g3nSUoP5f5nGAGftYkgBfpkU="/>
     </page:show>
     <HR/>
-            <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_TVA_footPrint" object="${tva}" z="xQ3Z7wro5/N6xqriHJadwpB/knA="/>
-    
+    <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_TVA_footPrint" object="${tva}" z="xQ3Z7wro5/N6xqriHJadwpB/knA="/>
     <HR style="margin-top: -12px;"/>
 </div>
