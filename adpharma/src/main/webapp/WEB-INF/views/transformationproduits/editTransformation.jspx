@@ -147,7 +147,7 @@ xmlns:spring="http://www.springframework.org/tags" version="2.0">
 		<input type="hidden" id="select" />
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
-			<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
+			<label for="designation">Designation d:</label> <input width="500px;" type="text" name="designation"/>
 			</p>
 		</form>
 		

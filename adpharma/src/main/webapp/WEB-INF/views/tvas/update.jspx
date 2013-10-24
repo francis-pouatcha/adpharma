@@ -7,7 +7,6 @@
         <field:input field="tauxTva" id="c_org_adorsys_adpharma_domain_TVA_tauxTva" required="true" validationMessageCode="field_invalid_number" z="9Z8yT/0V6wMlK+VEv9KpUbRBHB0="/>
         <field:checkbox field="valide" id="c_org_adorsys_adpharma_domain_TVA_valide" z="njXjh6tfRYiOmxEJS5nulZA8Juc="/>
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_TVA_footPrint" render="false" z="user-managed"/>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_TVA_LOG" z="aziO6u+Qzr3mQBzhs2EA2HjMSRo="/>
         <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_TVA_archived" z="71LPvS4KT3zve4038UaVDk0s8bU="/>
     </form:update>
 </div>

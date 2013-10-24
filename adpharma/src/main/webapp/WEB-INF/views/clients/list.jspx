@@ -19,7 +19,6 @@
             <table:column id="c_org_adorsys_adpharma_domain_Client_footPrint" property="footPrint" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_prenom" property="prenom" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" property="telephoneFixe" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_Client_LOG" property="LOG" z="GLYqKQcHb6xQL8nwv6nU1TlBYiw="/>
             <table:column id="c_org_adorsys_adpharma_domain_Client_archived" property="archived" z="9o8ENB0wqnmsJNk0bUCJomQBS6Y="/>
         </table:table>
     </page:list1>

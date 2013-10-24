@@ -21,7 +21,6 @@
             <table:column date="true" dateTimePattern="${commandeClient_dateanullation_date_format}" id="c_org_adorsys_adpharma_domain_CommandeClient_dateAnullation" property="dateAnullation" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="${commandeClient_daterestoration_date_format}" id="c_org_adorsys_adpharma_domain_CommandeClient_dateRestoration" property="dateRestoration" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_anullerPar" property="anullerPar" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_LOG" property="LOG" z="dGdeFdXP724q0n7p7QgOyVB8o7o="/>
             <table:column id="c_org_adorsys_adpharma_domain_CommandeClient_archived" property="archived" z="zCXF5fSpa0mAXuSi55Rq4Bj6ruk="/>
         </table:table>
     </page:list1>

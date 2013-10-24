@@ -34,7 +34,6 @@
         <field:display date="true" dateTimePattern="${commandeClient_dateanullation_date_format}" field="dateAnullation" id="s_org_adorsys_adpharma_domain_CommandeClient_dateAnullation" object="${commandeclient}" z="P2JItZTt71g0ysz2g27izyYIHH8="/>
         <field:display date="true" dateTimePattern="${commandeClient_daterestoration_date_format}" field="dateRestoration" id="s_org_adorsys_adpharma_domain_CommandeClient_dateRestoration" object="${commandeclient}" z="bTSVGWbK6DB30FThkA0mpL6uMFM="/>
         <field:display field="anullerPar" id="s_org_adorsys_adpharma_domain_CommandeClient_anullerPar" object="${commandeclient}" z="2V85i5ljPelB2P3fK7uDUBRg9+I="/>
-        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_CommandeClient_LOG" object="${commandeclient}" z="b3KbR6A8Vbmsh2s6tZgsdKgHAYI="/>
         <field:display field="archived" id="s_org_adorsys_adpharma_domain_CommandeClient_archived" object="${commandeclient}" z="XuAceLbAc6onDilyeHNsPWLb8Zg="/>
     </page:show>
 </div>

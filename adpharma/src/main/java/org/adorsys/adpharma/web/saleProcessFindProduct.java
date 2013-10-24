@@ -38,10 +38,10 @@ public class saleProcessFindProduct {
 		String rp = httpServletRequest.getParameter("rp") ;
 		List <LigneApprovisionement> search = new ArrayList<LigneApprovisionement>();
 		if ("on".equals(rp)) {
-			search = LigneApprovisionement.searchAJAX(designation,null, Etat.CLOS).setMaxResults(100).getResultList();
+			search = LigneApprovisionement.findLigneApprovisionnementForSale(designation,null, Etat.CLOS).setMaxResults(100).getResultList();
 
 		}else {
-			search = LigneApprovisionement.searchAJAX(designation,BigInteger.ONE, Etat.CLOS).setMaxResults(100).getResultList();
+			search = LigneApprovisionement.findLigneApprovisionnementForSale(designation,BigInteger.ONE, Etat.CLOS).setMaxResults(100).getResultList();
 
 		}
 		ArrayList<LigneApprovisionement> arrayList = new ArrayList<LigneApprovisionement>();

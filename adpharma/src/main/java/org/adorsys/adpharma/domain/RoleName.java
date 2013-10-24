@@ -38,7 +38,8 @@ public enum RoleName {
 	 ROLE_MODIFIER_PRIX_DATE("label_org_adorsys_adpharma_domain_rolename_modifier_prixdate")  ,
 	 ROLE_MODIFIER_CIP("label_org_adorsys_adpharma_domain_rolename_modifier_cip") ,
 	 ROLE_MODIFIER_LIGNEAP("label_org_adorsys_adpharma_domain_rolename_modifier_ligneapp"),
-	 ROLE_CASH_DETTE("label_org_adorsys_adpharma_domain_rolename_cash_dette");
+	 ROLE_CASH_DETTE("label_org_adorsys_adpharma_domain_rolename_cash_dette"),
+	 ROLE_CHIFFRE_AFFAIRE_VARIABLE("label_org_adorsys_adpharma_domain_rolename_chiffre_affaire_variable");
 	 
    
 

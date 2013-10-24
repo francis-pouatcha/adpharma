@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RooEntity(identifierType = String.class, mappedSuperclass = true)
 @Configurable
 public abstract class AdPharmaBaseEntity {
-	 protected transient Logger LOG = LoggerFactory.getLogger(getClass());
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -128,15 +127,6 @@ public abstract class AdPharmaBaseEntity {
 		this.entityManager.flush();
 		return merged;
 	}
-
-	public Logger getLOG() {
-		return LOG;
-	}
-
-	public void setLOG(Logger lOG) {
-		LOG = lOG;
-	}
-
 	@Override
 	public int hashCode(){
 		final int prime = 31;

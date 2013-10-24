@@ -22,7 +22,7 @@
 
 </style>
 
-	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
 	<spring:url value="/ligneapprovisionements/findProductAjax"	var="find_product_url" />
 	<spring:url  var="find_prdId_url" value="/ligneapprovisionements/findProductByidAjax" />
 	<spring:url  var="findProductByCipm_url" value="/ligneapprovisionements/findProductByCipmAjax" />
@@ -58,19 +58,19 @@
 				</td>
 			   </tr>
 			</table>
-			<field:input field="designation" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_designation" readonly="true" z="" />
+			<field:input style="color: blue; font-weight: bold; width: 50%;" field="designation" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_designation" readonly="true" z="" />
 		   </div>
 		   <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${update_price_tab_price}">	
-			<field:input field="prixActuel" validationRegex="[0-9]*" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_prixActuel" z="" readonly="true" />
+			<field:input field="prixActuel" style="color: red; font-weight: bold;" validationRegex="[0-9]*" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_prixActuel" z="" readonly="true" />
 			
-			<field:input field="nouveauPrix" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouveauPrix" z="" />
+			<field:input field="nouveauPrix" style="color: blue; font-weight: bold;" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouveauPrix" z="" />
 			
 			<field:checkbox field="appliqueLeNouveauPrixATousLesCipmDeMemeCip" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_appliqueLeNouveauPrixATousLesCipmDeMemeCip" z="" />
 		   </div>
 		   <div closable="false" dojoType="dijit.layout.ContentPane" selected="true" title="${update_price_tab_date}">
-			<field:input field="datePeremptionActuel" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_datePeremptionActuel" readonly="true" z="" />
+			<field:input field="datePeremptionActuel" style="color: red; font-weight: bold;" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_datePeremptionActuel" readonly="true" z="" />
 			
-			<field:datetime dateTimePattern="dd-MM-yyyy" field="nouvelDatePeremption" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouvelDatePeremption" z="" />
+			<field:datetime dateTimePattern="dd-MM-yyyy"  field="nouvelDatePeremption" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_nouvelDatePeremption" z="" />
 			
 			<field:checkbox field="appliqueLaNouvelDateATousLesCipmDeMemeCip" id="c_org_adorsys_adpharma_beans_ChangeDatePrice_appliqueLaNouvelDateATousLesCipmDeMemeCip" z="" />
 		   </div>
@@ -83,7 +83,7 @@
 		<form id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
 				<label for="designation">Designation :</label> 
-				<input width="300" type="text" name="designation" />
+				<input style="width: 70%;" type="text" name="designation" />
 			</p>
 		</form>
 		<center>
@@ -96,7 +96,7 @@
 				<tr>
 					<th style="text-align: center;">CIP</th>
 					<th style="text-align: center;">CIPM</th>
-					<th style="text-align: center; width: 250px;">DESIGNATION</th>
+					<th style="text-align: center; width:50%;">DESIGNATION</th>
 					<th style="text-align: center; text-transform: uppercase;">${column_price}</th>
 					<th style="text-align: center; text-transform: uppercase;">${column_dateperemp}</th>
 				</tr>
@@ -144,7 +144,7 @@
 				'<tr>
 				    <th style="text-align: center;">CIP</th>
 					<th style="text-align: center;">CIPM</th>
-					<th style="text-align: center; width: 250px;">DESIGNATION</th>
+					<th style="text-align: center; width: 50%;">DESIGNATION</th>
 					<th style="text-align: center; text-transform: uppercase;">${column_price}</th>
 					<th style="text-align: center; text-transform: uppercase;">${column_dateperemp}</th>
 				</tr>');

@@ -1,17 +1,22 @@
 package org.adorsys.adpharma.domain;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.PostPersist;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import org.adorsys.adpharma.utils.NumberGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.beans.factory.annotation.Value;
+
 
 @RooJavaBean
 @RooToString
@@ -53,6 +58,9 @@ public class Site extends AdPharmaBaseEntity {
     private String fax;
     
     private String numeroRegistre;
+    
+    @Min(value=1,message="le taux doit etre superieur a 1 ")@Max(value=100,message="le taux doit etre Inferieur a 100 ")
+    private BigDecimal tauxChiffreAffaire = new BigDecimal(100);
     
     private BigInteger bareCodePerLine = new BigInteger("8");
     @Size(max = 256)
@@ -103,6 +111,14 @@ public class Site extends AdPharmaBaseEntity {
 	}
 	
 	
+
+	public BigDecimal getTauxChiffreAffaire() {
+		return tauxChiffreAffaire;
+	}
+
+	public void setTauxChiffreAffaire(BigDecimal tauxChiffreAffaire) {
+		this.tauxChiffreAffaire = tauxChiffreAffaire;
+	}
 
 	public BigInteger getBareCodePerLine() {
 		return bareCodePerLine;

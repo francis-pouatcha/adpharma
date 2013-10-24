@@ -15,7 +15,6 @@
                 </td>
             </tr>
         </table>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_TVA_LOG" z="aziO6u+Qzr3mQBzhs2EA2HjMSRo="/>
         <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_TVA_archived" z="71LPvS4KT3zve4038UaVDk0s8bU="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_TVA" render="${not empty dependencies}" z="vDaqxDw8cFqrxzh/k9j7kzXtM/Q="/>

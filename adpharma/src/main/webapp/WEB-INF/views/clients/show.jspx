@@ -25,7 +25,6 @@
         <field:display field="totalDette" id="s_org_adorsys_adpharma_domain_Client_totalDette" object="${client}" z="aWwDiD2u51A1DcLI2vMumH126NI="/>
         <field:display field="remiseAutorise" id="s_org_adorsys_adpharma_domain_Client_remiseAutorise" object="${client}" z="PKsOn+EZxBRbN9opd38g20SyPdE="/>
         <field:display field="matricule" id="s_org_adorsys_adpharma_domain_Client_matricule" object="${client}" z="LfvOzbojV27GKKGMKP7G/8dkJ0Y="/>
-        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_Client_LOG" object="${client}" z="zWsyTx9N2nJhlbSyxFGTxYkaAB0="/>
         <field:display field="archived" id="s_org_adorsys_adpharma_domain_Client_archived" object="${client}" z="KOEFcQd7uLE59ZOZyKEtVcukij8="/>
     </page:show1>
     <HR/>

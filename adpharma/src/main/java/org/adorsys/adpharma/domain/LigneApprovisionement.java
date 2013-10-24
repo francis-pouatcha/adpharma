@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
@@ -31,7 +30,6 @@ import org.adorsys.adpharma.utils.ProcessHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
@@ -555,7 +553,6 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		PharmaUser pharmaUser=null;
 		try {
 			pharmaUser = SecurityUtil.getPharmaUser();
-			System.out.println("Utilisateur: "+pharmaUser.getUserName());
 		} catch (Exception e) {
 			System.out.println("Utilisateur introuvable...");
 			System.out.println("Cause: "+e.getCause()+"\n"+"Message: "+e.getMessage());
@@ -855,7 +852,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		return q;
 	}
 
-	public static TypedQuery<LigneApprovisionement> searchAJAX(String designation, BigInteger qteStock, Etat etat) {
+	public static TypedQuery<LigneApprovisionement> findLigneApprovisionnementForSale(String designation, BigInteger qteStock, Etat etat) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		etat = etat != null ? etat : Etat.CLOS;
 		if (StringUtils.isNotBlank(designation)) {

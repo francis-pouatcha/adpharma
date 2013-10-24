@@ -8,7 +8,6 @@
             <table:column id="c_org_adorsys_adpharma_domain_TVA_tauxTva" property="tauxTva" z="197qYe7WjsOBIMFfaFQpSQNmXZI="/>
             <table:column id="c_org_adorsys_adpharma_domain_TVA_valide" property="valide" z="QXMdDyLqI2B9Di3WjcRdGyjwW5o="/>
             <table:column id="c_org_adorsys_adpharma_domain_TVA_footPrint" maxLength="-1" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_TVA_LOG" property="LOG" z="OxelrWkCyIDFFpXF+wqWmutYFgY="/>
             <table:column id="c_org_adorsys_adpharma_domain_TVA_archived" property="archived" z="d++P7FlBIFgBnMLv+vGd5xCd8Ho="/>
         </table:table>
     </page:list>

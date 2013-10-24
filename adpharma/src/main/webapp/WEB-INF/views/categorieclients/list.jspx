@@ -9,7 +9,6 @@
             <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax" property="tauxRemiseMax" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_note" maxLength="-1" property="note" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_footPrint" maxLength="-1" property="footPrint" render="false" z="user-managed"/>
-            <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_LOG" property="LOG" z="cebA1+0YzScZBNBxvNFwrIamw0o="/>
             <table:column id="c_org_adorsys_adpharma_domain_CategorieClient_archived" property="archived" z="pSIFo1M7/1i94Y3F9Pwobb5pk70="/>
         </table:table>
     </page:list>

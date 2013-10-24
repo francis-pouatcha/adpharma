@@ -23,7 +23,6 @@
         <field:input field="totalBonClient" id="c_org_adorsys_adpharma_domain_Caisse_totalBonClient" validationMessageCode="field_invalid_number" z="A6LTDJauU6gA2pDrQVgqPGwp1y4="/>
         <field:input field="totalBonCmd" id="c_org_adorsys_adpharma_domain_Caisse_totalBonCmd" validationMessageCode="field_invalid_number" z="Dgpllrpfwj7XPPF1q0bwbWAeSBs="/>
         <field:input field="totalBonCmdPartiel" id="c_org_adorsys_adpharma_domain_Caisse_totalBonCmdPartiel" validationMessageCode="field_invalid_number" z="3qPxASbLiPJcMnWPWyHcFyuS0zQ="/>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_Caisse_LOG" z="MeDgWhxyYVhMLMIlZp3KlYYZ8rY="/>
         <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Caisse_archived" z="b3u3obGaqzvZ6eB/X2TmaD9JDYM="/>
         <field:input field="totalCashDette" id="c_org_adorsys_adpharma_domain_Caisse_totalCashDette" validationMessageCode="field_invalid_number" z="oqaLyVoZiNLNapeKdTnKYnflZEI="/>
     </form:update>

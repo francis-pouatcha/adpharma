@@ -15,9 +15,12 @@
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
                     <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                     <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Dossier Messages PHML" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
+                <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
+              <field:checkbox field="archived" render="false" id="c_org_adorsys_adpharma_domain_Site_archived" z="0+IFp7EQOIEuR7jVJcca+QK89b4="/>
                 </td>
                 <td class="tbcreate">
-                    <field:input field="bareCodePerLine" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" label="nb codeBare/Ligne" z="user-managed"/>
+                    <field:input field="tauxChiffreAffaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" label="Taux Chiffre Affaire" validationMessageCode="field_invalid_number" z="user-managed"/>
+                    <field:input field="bareCodePerLine" id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" label="nb codeBare/Ligne" z="user-managed"/>
                     <field:input field="siteManager" id="c_org_adorsys_adpharma_domain_Site_siteManager" required="true" z="RS3JPJNTpbicmh1hQISTW4PNauU="/>
                     <field:input field="email" id="c_org_adorsys_adpharma_domain_Site_email" validationMessageCode="field_invalid_email" z="B5xhklSxUOECTXS7LCjc8bxQ6t4="/>
                     <field:input field="siteInternet" id="c_org_adorsys_adpharma_domain_Site_siteInternet" z="El0kYdqoZxBQE9X3nYfJDhkRWS4="/>
@@ -26,13 +29,8 @@
                     <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_Site_footPrint" render="false" z="user-managed"/>
                     <field:textarea field="messageTiket" id="c_org_adorsys_adpharma_domain_Site_messageTiket" z="user-managed"/>
                     <field:input field="platformBaseUrl" id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" z="NvRzcK07/uNT5h9xVyJ0W5CzqsQ="/>
-                    <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Dossier Reponses PHML" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                 </td>
             </tr>
         </table>
-        <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
-        <field:input field="bareCodePerLine" id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" validationMessageCode="field_invalid_integer" z="9rPnaMGqvjYspLdLGQrV5sCTCuI="/>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_Site_LOG" z="/DuqUrP5Te0+4xoUniWsk2pZ2NM="/>
-        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Site_archived" z="0+IFp7EQOIEuR7jVJcca+QK89b4="/>
     </form:update>
 </div>

@@ -16,7 +16,7 @@
 	<spring:url value="/transformationproduits/livreeForm"  var="transf_url" />
     <spring:url value="/saleprocess/0/findProduct"   var="find_product_url" />
     <spring:url value="/saleprocess/0/selectProduct"   var="select_product_url" />
-	<spring:url value="/resources/images/globe32.gif" var="loadimage" />
+	<spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
 	
   <script type="text/javascript">
   
@@ -352,7 +352,7 @@ function verif_formulaire()
 <div id="findproduit" style="display: none;" title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
-			<label for="designation">Designation :</label> <input width="300" type="text" name="designation"/>
+			<label for="designation">Designation :</label> <input style="width: 70%;" type="text" name="designation"/>
 			</p>
 		</form>
 		

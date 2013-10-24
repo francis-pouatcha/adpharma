@@ -7,7 +7,6 @@
         <field:display field="libelle" id="s_org_adorsys_adpharma_domain_CategorieClient_libelle" object="${categorieclient}" z="sobxERdOW1wDaNGiMeZMoKOaies="/>
         <field:display field="tauxRemiseMax" id="s_org_adorsys_adpharma_domain_CategorieClient_tauxRemiseMax" object="${categorieclient}" z="QnDbl2LwCXd+hfO2qthywKBN5ZM="/>
         <field:display field="note" id="s_org_adorsys_adpharma_domain_CategorieClient_note" object="${categorieclient}" z="EWnWhh3y/wQolEzCXH1t8D00D0s="/>
-        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_CategorieClient_LOG" object="${categorieclient}" z="zQyEJoQ0jYuEdNT0C/0et+ic8UQ="/>
         <field:display field="archived" id="s_org_adorsys_adpharma_domain_CategorieClient_archived" object="${categorieclient}" z="+D01LuEbVrgaY25tTZvHm6XzmY0="/>
     </page:show>
     <HR/>

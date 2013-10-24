@@ -131,8 +131,7 @@
                 <field:checkbox field="remiseAutorise" id="c_org_adorsys_adpharma_domain_Client_remiseAutorise" z="8+oZZxMe4vZMA0wHjQNcjmMQcJw="/>
             </div>
         </div>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_Client_LOG" z="nrEOzgs6k4GkALhoR1gJIXZfUBU="/>
-        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Client_archived" z="LK41w52Ktl3Mlsjn5Mh7an9OJOc="/>
+        <field:checkbox field="archived" render="false" id="c_org_adorsys_adpharma_domain_Client_archived" z="LK41w52Ktl3Mlsjn5Mh7an9OJOc="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Client" render="${not empty dependencies}" z="nSq/AjKH2v+IhEisFDeN0tNZUJc="/>
     <div id="findClient" style="display: none;" title="${button_find_customer}">

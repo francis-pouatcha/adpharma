@@ -16,7 +16,6 @@
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCredit" property="totalCredit" z="PUZQhZ8GGqrbRAipJYEtHSR3Kbs="/>
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_totalCheque" property="totalCheque" z="3Vq2+by2+6Rog4SoLMV0+tEy9D8="/>
             <table:column id="s_org_adorsys_adpharma_domain_Caisse_caisseOuverte" property="caisseOuverte" z="VDvBpDtUFu4mNQiF9rvRNLJrOb0="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Caisse_LOG" property="LOG" z="Qzij8ZCQL1khT/kbZTSLE+ohuRo="/>
             <table:column id="c_org_adorsys_adpharma_domain_Caisse_archived" property="archived" z="VZk9Yt6hxEPjJZaNgbGJDJmZ69c="/>
             <table:column id="c_org_adorsys_adpharma_domain_Caisse_totalCashDette" property="totalCashDette" z="b8cCEqO0hVWCAQZH/zY3nicIjVU="/>
         </table:table>

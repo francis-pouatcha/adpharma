@@ -17,6 +17,8 @@ import org.adorsys.adpharma.domain.Caisse;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.OperationCaisse;
+import org.adorsys.adpharma.domain.PharmaUser;
+import org.adorsys.adpharma.domain.RoleName;
 import org.adorsys.adpharma.domain.Site;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypePaiement;
@@ -39,7 +41,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 @Component("bordereauCaissePdfDocView")
 public class BordereauCaissePdfDocView extends   AbstractPdfView {
-
 	BigDecimal fondgbl  ;
 	BigDecimal totalencgbl ;
     BigDecimal remglbs  ;
@@ -51,10 +52,22 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	BigDecimal boncmdgbl  ;
 	BigDecimal boncltgbl  ;
 	BigDecimal soldegbl  ;
+	BigDecimal tauxChiffreAffaire  ;
 
 	
 	
 	public void initGlobalAmount(){
+		PharmaUser pharmaUser = SecurityUtil.getPharmaUser();
+		Site site = Site.findSite(Long.valueOf(1));
+		if(pharmaUser.hasAnyRole(RoleName.ROLE_CHIFFRE_AFFAIRE_VARIABLE)){
+			BigDecimal taux = site.getTauxChiffreAffaire();
+			System.out.println("taux : "+taux);
+			if(taux!=null ) tauxChiffreAffaire = taux.divide(BigDecimal.valueOf(100));
+			System.out.println("taux : "+tauxChiffreAffaire);
+		}else {
+			tauxChiffreAffaire = BigDecimal.ONE ;
+			System.out.println("taux : "+tauxChiffreAffaire);
+		}
 		 fondgbl = BigDecimal.ZERO ;
 		 totalencgbl = BigDecimal.ZERO ;
 	     remglbs = BigDecimal.ZERO ;
@@ -71,15 +84,10 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+		Site site = Site.findSite(Long.valueOf(1));
 		
 		Caisse caisse = (Caisse) model.get("caisse");
 		List<Caisse> caisses = (List<Caisse>) model.get("caisses");
-		Site site = Site.findSite(Long.valueOf(1));
-
-		
-		
-		
 		if (caisse != null) {
 			initGlobalAmount();
 			addTexteToDocument(document, caisse, site);
@@ -87,9 +95,6 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 		}
 		
-		System.out.println("Fond global: "+fondgbl);
-		System.out.println("\n");
-		System.out.println("Solde Global: "+soldegbl);
 		
 		if (caisses != null) {
 			initGlobalAmount();
@@ -257,7 +262,6 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 			e.printStackTrace();
 		}
 
-		// la table d'approvisionement
 		float[] colWidths = {1.5f,1.5f, 1.5f, 1.5f ,1.5f,1.5f};
 		PdfPTable table = new PdfPTable(colWidths);
 		table.setWidthPercentage(60);
@@ -308,17 +312,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		pvCell.setPaddingBottom(5);
 		table.addCell(pvCell);
 		
-/*
-		List<OperationCaisse> cash = OperationCaisse.findOperationCaissesByCaisseAndTypeOperation(TypePaiement.CASH, caisse).getResultList();
-		List<OperationCaisse> cheque = OperationCaisse.findOperationCaissesByCaisseAndTypeOperation(TypePaiement.CHEQUE, caisse).getResultList();
-		List<OperationCaisse> credit= OperationCaisse.findOperationCaissesByCaisseAndTypeOperation(TypePaiement.CREDIT, caisse).getResultList();
-		List<OperationCaisse> proformat = OperationCaisse.findOperationCaissesByCaisseAndTypeOperation(TypePaiement.PROFORMAT, caisse).getResultList();
 
-		List<OperationCaisse> operations = new ArrayList<OperationCaisse>();
-		operations.addAll(cash);
-		operations.addAll(cheque);
-		operations.addAll(credit);
-		operations.addAll(proformat);*/
 		List<Object[]> etatCaisse = Caisse.findEtatCaisse(caisse.getCaisseNumber());
 		 String marqueur = "" ;
 		 BigInteger  totalAchat = BigInteger.ZERO ;
@@ -327,13 +321,11 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
          BigDecimal  totalmarge = BigDecimal.ZERO;
          Long  totalclient = new Long(0) ;
 		for (Object[] info : etatCaisse) {
-			//if (operations.iterator().hasNext()) {
-			//for (OperationCaisse line : operations) {	
                      String filale = (String) info[0];
-                     Long  nbClient = (Long) info[1];
-                     BigInteger  montantAchat = (BigInteger) info[2];
-                     BigInteger  montantVente = (BigInteger) info[3];
-                     BigInteger  remise = (BigInteger) info[4];
+                     Long  nbClient = (tauxChiffreAffaire.multiply(new BigDecimal((Long) info[1]))).longValue();
+                     BigInteger  montantAchat = (tauxChiffreAffaire.multiply(new BigDecimal((BigInteger) info[2]))).toBigInteger();
+                     BigInteger  montantVente =(tauxChiffreAffaire.multiply(new BigDecimal((BigInteger) info[3]))).toBigInteger();
+                     BigInteger  remise = (tauxChiffreAffaire.multiply(new BigDecimal((BigInteger) info[4]))).toBigInteger();
                      BigDecimal  marge =  BigDecimal.valueOf(montantVente.longValue()).subtract(BigDecimal.valueOf(montantAchat.longValue()));
                    //marge = marge.divide(BigDecimal.valueOf(montantAchat.longValue()));
                      totalAchat = totalAchat.add(montantAchat); 

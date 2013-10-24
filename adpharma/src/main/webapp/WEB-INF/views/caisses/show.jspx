@@ -35,7 +35,6 @@
                 </td>
             </tr>
         </table>
-        <field:display field="LOG" id="s_org_adorsys_adpharma_domain_Caisse_LOG" object="${caisse}" z="Qv6NSjnGt4BaANDDc5mHoVf4ev4="/>
         <field:display field="archived" id="s_org_adorsys_adpharma_domain_Caisse_archived" object="${caisse}" z="VaaM4KfTkZEEa+Wiadzj0PQxFMs="/>
         <field:display field="totalCashDette" id="s_org_adorsys_adpharma_domain_Caisse_totalCashDette" object="${caisse}" z="GkU6SP1iAzKldjO970ScXl5GqpY="/>
     </page:show1>

@@ -37,8 +37,7 @@
         </div>
         <field:input field="displayRole" id="c_org_adorsys_adpharma_domain_PharmaUser_displayRole" render="false" z="user-managed"/>
         <field:checkbox field="accountLocked" id="c_org_adorsys_adpharma_domain_PharmaUser_accountLocked" render="false" z="user-managed"/>
-        <field:input field="LOG" id="c_org_adorsys_adpharma_domain_PharmaUser_LOG" z="OBtJu9odOtM5vxTN4P2oXqHV/q0="/>
-        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_PharmaUser_archived" z="PKT8KAK3CTDhZWViw5VF3ACW9c8="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_PharmaUser_archived" render="false" z="PKT8KAK3CTDhZWViw5VF3ACW9c8="/>
     </form:update>
     <script type="text/javascript">
  $('#tabset').tabs();

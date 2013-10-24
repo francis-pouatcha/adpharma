@@ -8,15 +8,14 @@
             <table:column id="c_org_adorsys_adpharma_domain_Site_orderSentPath" property="orderSentPath" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" property="orderReceivePath" render="false" z="vp0mUiIavAQPp+Ye0eN67okBc64="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_bareCodePerLine" property="bareCodePerLine" render="false" z="wghG1jX3zxaTYCq+aGKyyqZlU2U="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" property="platformBaseUrl" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_platformBaseUrl" property="tauxChiffreAffaire" label="Taux Chiffre Affaire" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_siteManager" label="Codebare/ligne" property="bareCodePerLine" z="jIDFiTtVXzggNIK5yxX9/Rnp1Pg="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_siteManager" property="siteManager" z="ZRDoZbewSJ8QNCzzrH+fVsItvuQ="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_email" property="email" z="3YrLCkdJI5JdE5Rmu3K2Y6X5qpY="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_siteManager" property="siteManager" maxLength="-1" z="ZRDoZbewSJ8QNCzzrH+fVsItvuQ="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_email" property="email" maxLength="-1" z="3YrLCkdJI5JdE5Rmu3K2Y6X5qpY="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_mobile" property="mobile" z="UBST3Fsg6n+D2kafnoQgk7jOhOA="/>
             <table:column id="c_org_adorsys_adpharma_domain_Site_phone" property="phone" z="vp0mUiIavAQPp+Ye0eN67okBc64="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_footPrint" property="footPrint" z="jIDFiTtVXzggNIK5yxX9/Rnp1Pg="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_LOG" property="LOG" z="oEVE563Q0iZL9SykxmLrcV8D4jg="/>
-            <table:column id="c_org_adorsys_adpharma_domain_Site_archived" property="archived" z="Ub9GY2+5VnQJpcqgUBD2fwXLPiU="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_footPrint" property="footPrint" render="false" z="jIDFiTtVXzggNIK5yxX9/Rnp1Pg="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Site_archived" property="archived" render="false" z="Ub9GY2+5VnQJpcqgUBD2fwXLPiU="/>
         </table:table>
     </page:list>
 </div>
