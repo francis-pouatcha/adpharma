@@ -22,46 +22,66 @@
       
       <c:set value="CLOS" var="etat" />
       
-      <script type="text/javascript">
-function closeApp(){
-Check = confirm("Voulez vous vraiment cloturer cette Approvisonnemet? Apres la cloture il ne sera  plus possible de modifier les details. ");
-if(Check == false){
-	return false;
-	
-}else{
-	return true;
-}
-}
-</script>
+      <!-- Internationalization -->
+      <spring:message code="approprocess_close" var="approprocess_close" htmlEscape="false" />
+      <spring:message code="button_close" var="button_close" htmlEscape="false" />
+      <spring:message code="label_org_adorsys_adpharma_domain_approvisionement" var="label_org_adorsys_adpharma_domain_approvisionement" htmlEscape="false" />
+      <spring:message code="button_close_title" arguments="${label_org_adorsys_adpharma_domain_approvisionement}" var="button_close_title" htmlEscape="false" />
+      <spring:message code="button_modify_details" var="button_modify_details" htmlEscape="false" />
+      <spring:message code="button_modify_details_title" arguments="${label_org_adorsys_adpharma_domain_approvisionement}" var="button_modify_details_title" htmlEscape="false" />
+     
    <c:choose>
       <c:when test="${approvisionement.etat == etat}">
       <security:authorize ifAnyGranted="ROLE_IMPRESSION_CODE_BARE ,ROLE_SITE_MANAGER">
-        <span><a href="${ print_xls_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche EXCEL" title="Imprimer la fiche d approvisionnement au format excel" /></a></span>
-        <span><a href="${ print_ficheCB_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x25)" title="Imprimer la fiche de code bare" /></a></span>
-            <span><a href="${ print_ficheCB_url27}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x27)" title="Imprimer la fiche de code bare" /></a></span>
-                         <span><a href="${ print_ficheCB_url23}" style="text-decoration: none;"><INPUT class="submits" type="button" value="fiche de code bare(8x24)" title="Imprimer la fiche de code bare" /></a></span>
-             
-               <span><a href="${ print_ficheAp_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" /></a></span>
+        <span>
+           <a href="${print_xls_url}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value=" fiche EXCEL" title="Imprimer la fiche d approvisionnement au format excel" />
+           </a>
+        </span>
+        <span>
+           <a href="${print_ficheCB_url}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value="fiche de code bare(8x25)" title="Imprimer la fiche de code bare" />
+           </a>
+        </span>
+        <span>
+           <a href="${print_ficheCB_url27}" style="text-decoration: none;">
+           <INPUT class="submits" type="button" value="fiche de code bare(8x27)" title="Imprimer la fiche de code bare" />
+           </a>
+        </span>
+        <span>
+            <a href="${print_ficheCB_url23}" style="text-decoration: none;">
+            <INPUT class="submits" type="button" value="fiche de code bare(8x24)" title="Imprimer la fiche de code bare" />
+            </a>
+        </span>
+        <span>
+            <a href="${print_ficheAp_url}" style="text-decoration: none;">
+            <INPUT class="submits" type="button" value=" fiche d'aprovisionnement" title="Imprimer la fiche d approvisionnement" />
+            </a>
+        </span>
      </security:authorize>
       </c:when>
       <c:otherwise>
-      <span><a href="${ close_url}" style="text-decoration: none;" onclick="return closeApp();"><INPUT class="submits" type="button" value="CLOTURER" title="Cloturer l'approvisionnement" /></a></span>
+      <span>
+         <a href="${ close_url}" style="text-decoration: none;" onclick="return deleteBox('${approprocess_close}');">
+         <INPUT class="submits" type="button" value="${button_close}" title="${button_close_title}" />
+         </a>
+      </span>
       </c:otherwise>
    </c:choose>
    <c:if test="${not approvisionement.cloturer}">
         <spring:url value="/approvisionementprocess/${itemId}/edit"  var="edit_url" />
         <span>
-	        <a href="${ edit_url}" style="text-decoration: none;"><INPUT class="submits" type="button" value="Modifier detail" title="modifier le detail" />
+	        <a href="${ edit_url}" style="text-decoration: none;">
+	        <INPUT class="submits" type="button" value="${button_modify_details}" title="${button_modify_details_title}" />
 	        </a>
         </span>
-    
    </c:if>
     <security:authorize ifAnyGranted="ROLE_SITE_MANAGER">
 	   <c:if test="${ approvisionement.cloturer and sessionBean.configuration.editCloseSupply}">
 	          <spring:url value="/approvisionementprocess/${itemId}/specialEdit"  var="edit_url" />
 			  <span>  
 			      <a href="${ edit_url}" style="text-decoration: none;">
-			          <INPUT class="submits" type="button" value="Modifier detail" title="Modifier le Contenu" />
+			          <INPUT class="submits" type="button" value="${button_modify_details}" title="${button_modify_details_title}" />
 			      </a>
 			  </span>
 	   </c:if>

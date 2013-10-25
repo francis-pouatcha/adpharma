@@ -63,6 +63,8 @@
 		<spring:message code="saleprocess_product_out"  var="product_product_out" htmlEscape="false"/>
 		<spring:message code="saleprocess_header_title" var="saleprocess_header_title" htmlEscape="false"/>
 		
+		<spring:message code="saleprocess_cancel_order" var="saleprocess_cancel_order" htmlEscape="false" />
+		
 		<c:set value="${param.lang}" var="language" />
 		<style type="text/css">
 		     .ordo_css{
@@ -74,16 +76,6 @@
 		     #ordonanceform input{ background-color: #ffffff;}
 		</style>
 		
-<script type="text/javascript">
-		function annCmd(){
-			Check = confirm("Voulez vous vraiment annuler cette commande ?. ");
-			if(Check == false){
-				return false;
-			}else{
-				return true;
-			}
-			}
-</script>
 
 
 	<util:display-box display="${saleProcess.displayName}" id="text-box" display1="${saleProcess.displayOrdonance}" />
@@ -187,7 +179,7 @@
 	
 		 <span>
 			 <a href="${ delete_cmd_url}" style="text-decoration: none;">
-			  <INPUT class="submits" type="button" value="${cancel_sale}" title="${cancel_sale }" onclick="return annCmd();" />
+			  <INPUT class="submits" type="button" value="${cancel_sale}" title="${cancel_sale }" onclick="return deleteBox('${saleprocess_cancel_order}');" />
 		     </a>
 		 </span> 
 		 <span>

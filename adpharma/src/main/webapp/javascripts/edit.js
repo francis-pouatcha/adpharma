@@ -19,6 +19,7 @@ function annCmd(){
 	}
 	}
 
+
 function calculePtWhithRem() {
 	var rem = document.getElementById("rem").value;
 	var qte = document.getElementById("qte").value;
