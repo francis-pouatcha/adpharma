@@ -97,7 +97,7 @@ public class CommandeClientController {
         return "commandeclients/list";
     }
 
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/annulerCmd/{cmdId}", method = RequestMethod.GET)
 	public String annulerCmd(@PathVariable("cmdId") Long cmdId, Model uiModel , HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
@@ -115,7 +115,7 @@ public class CommandeClientController {
 
 		return "saleprocess/showCmd";
 	}
-	@Transactional
+	//@Transactional
 	@RequestMapping(value = "/annulerCmdByKey/{cmdId}/{key}", method = RequestMethod.GET)
 	public String annulerCmdByKey(@PathVariable("key") String key , @PathVariable("cmdId") Long cmdId, Model uiModel , HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);

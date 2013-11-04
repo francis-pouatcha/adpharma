@@ -24,7 +24,7 @@
 	   </a>
    </span>
    <span>
-       <a href="${show_vente_url}" style="text-decoration: none;">
+       <a href="#" onclick="window.open('${show_vente_url}')" style="text-decoration: none;">
        <INPUT class="submits" type="button" value="VISUALISER LA VENTE" title="Visualiser la Vente de ce mouvement" />
        </a>
    </span>
@@ -33,7 +33,7 @@
  <c:if test="${mouvementstock.typeMouvement eq approvisionement}">
       <spring:url value="/mouvementstocks/redirectTo/${mouvementstock.cipM}/?typeMvt=${mouvementstock.typeMouvement}" var="show_appro_url" />
       <span>
-	   <a href="${show_appro_url}" style="text-decoration: none;">
+	   <a href="#" onclick="window.open('${show_appro_url}')"  style="text-decoration: none;">
 	   <INPUT class="submits" type="button" value="VISUALISER L'APPROVISIONEMENT" title="Visualiser l'approvisionement du mouvement" />
 	   </a>
       </span>
@@ -42,7 +42,7 @@
  <c:if test="${(mouvementstock.typeMouvement eq sortie_produit) or (mouvementstock.typeMouvement eq retour_produit)}">
      <spring:url value="/mouvementstocks/redirectTo/${mouvementstock.cip}/?typeMvt=${mouvementstock.typeMouvement}" var="show_sortie_url" />
       <span>
-	   <a href="${show_sortie_url}" style="text-decoration: none;">
+	   <a href="#"  onclick="window.open('${show_sortie_url}')" style="text-decoration: none;">
 	   <INPUT class="submits" type="button" value="VISUALISER LE PRODUIT" title="Visualiser le produit sorti" />
 	   </a>
      </span>

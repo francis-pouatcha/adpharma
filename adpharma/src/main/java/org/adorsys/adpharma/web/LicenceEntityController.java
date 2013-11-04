@@ -58,7 +58,7 @@ public class LicenceEntityController {
 		licenceEntity = licenceEntity == null ? new LicenceEntity():licenceEntity ;
 		ArrayList<String> arrayList = new ArrayList<String>();
 		arrayList.add("Votre Licence Est Expiree depuis Le : "+PharmaDateUtil.format(licenceEntity.getTranstientEnd(), PharmaDateUtil.DATETIME_PATTERN_LONG));
-		arrayList.add("Veuillez appeler l'un des Numeros Suivants : (+237) 33 42 32 44 / 99 93 99 48  ");	
+		arrayList.add("Veuillez appeler le Numero Suivant : (+237) 77166381 ");	
 		arrayList.add("Votre Cle Secrete est : "+licenceEntity.getGenerateKey());	
 		uiModel.addAttribute("appMessages", arrayList);
 		return "licenceentitys/infos";

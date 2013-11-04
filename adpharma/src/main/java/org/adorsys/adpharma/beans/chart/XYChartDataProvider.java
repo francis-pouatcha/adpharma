@@ -25,7 +25,7 @@ import com.ibm.icu.math.BigDecimal;
 @Component
 public class XYChartDataProvider implements ChartDataProvider {
 
-	
+	@PersistenceContext
 	private EntityManager em ;
 
 	public XYChartDataProvider(){
@@ -180,7 +180,8 @@ public class XYChartDataProvider implements ChartDataProvider {
 		if(TypeCourbeGraphique.COMMANDE_EN_QUANTITE == typeOfChart){
 			buildQueryForSaleChart = ChartDataQueryBuilder.buildQueryForOrderQteByYearsAndMonth();
 		}
-		Query query  = em.createQuery(buildQueryForSaleChart);
+		Query query = em.createQuery(buildQueryForSaleChart);
+		
 		query.setParameter("y", year);
 		query.setParameter("mth", month);
 		query.setParameter("isCash", Boolean.TRUE);

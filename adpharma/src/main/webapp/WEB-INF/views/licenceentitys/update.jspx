@@ -5,8 +5,8 @@
     <form:update id="fu_org_adorsys_adpharma_domain_LicenceEntity" modelAttribute="licenceEntity" path="/licenceentitys" versionField="Version" z="rUW7x0LZ4xUPuzqHEL4tjUO+q9I=">
         <field:input field="beginDate" id="c_org_adorsys_adpharma_domain_LicenceEntity_beginDate" render="false" z="user-managed"/>
         <field:input field="endDate" id="c_org_adorsys_adpharma_domain_LicenceEntity_endDate" render="false" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="transtientBegin" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" label="begin Date" required="true" z="user-managed"/>
-        <field:datetime dateTimePattern="dd-MM-yyyy HH:mm" field="transtientEnd" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" label="end Date" required="true" z="user-managed"/>
+        <field:datetime dateTimePattern="dd-MM yyyy HH:mm" field="transtientBegin" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" label="begin Date" required="true" z="user-managed"/>
+        <field:datetime  dateTimePattern="dd-MM yyyy HH:mm" field="transtientEnd" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" label="end Date" required="true" z="user-managed"/>
         <field:checkbox field="isValid" id="c_org_adorsys_adpharma_domain_LicenceEntity_isValid" label="enable Licence" z="user-managed"/>
         <field:input field="generateKey" id="c_org_adorsys_adpharma_domain_LicenceEntity_generateKey" render="false" z="user-managed"/>
     </form:update>

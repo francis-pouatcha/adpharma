@@ -362,8 +362,8 @@
 	function clearProductTable(){
 		$('#resultproduit').html(
 				'<tr>
-				    <th style="text-transform: uppercase;">${column_cipm}</th>
-			    	<th style="text-transform: uppercase;">${column_cip}</th>
+				    <th style="text-transform: uppercase;">${column_cip}</th>
+			    	<th style="text-transform: uppercase;">${column_cipm}</th>
 		    		<th style="text-transform: uppercase;">${column_designation}</th>
 		    		<th style="text-transform: uppercase;">${column_price}</th>
 		    		<th style="text-transform: uppercase;">${product_qty_cipm}</th>
@@ -739,7 +739,7 @@
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-							<td><INPUT type="text" name="qte" id="qte"   onmouseover="this.select();" onfocus="this.select();"  class="autres"
+							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
 								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
@@ -855,7 +855,7 @@
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte"   onmouseover="this.select();" onfocus="this.select();" 
+							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly"  onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>

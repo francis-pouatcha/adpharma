@@ -20,15 +20,18 @@ public class CheckIsValideLicenceInterceptor extends HandlerInterceptorAdapter {
         	 List<Site> listOfSite  = Site.findAllSites();
     		 request.setAttribute("sites", listOfSite);
     		 //check the valididy of licence 
-    		 LicenceEntity licence = LicenceEntity.findLicenceEntity(new Long(1));
-    		 Configuration configuration = Configuration.findConfiguration(new Long(1));
-    		 if(configuration.getEnableLicence()){
-    			 if(!licence.isValidLicence()) {
-    				 request.getSession().invalidate();
-    				 request.getRequestDispatcher("/licenceentitys/checkLicence").forward(request, response);
-    			 }
-    		 }
         }
+        LicenceEntity licence = LicenceEntity.findLicenceEntity(new Long(1));
+		 Configuration configuration = Configuration.findConfiguration(new Long(1));
+		 System.out.println("in");
+		 if(configuration.getEnableLicence()){
+			 System.out.println("in in");
+			 if(licence.isNotValidLicence()) {
+				 System.out.println("in in in");
+				 request.getSession().invalidate();
+				 request.getRequestDispatcher("/licenceentitys/checkLicence").forward(request, response);
+			 }
+		 }
         	
         return true;        
     }

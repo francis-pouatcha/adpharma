@@ -17,7 +17,6 @@ privileged aspect LicenceEntity_Roo_ToString {
         sb.append("TranstientBegin: ").append(getTranstientBegin()).append(", ");
         sb.append("TranstientEnd: ").append(getTranstientEnd()).append(", ");
         sb.append("Version: ").append(getVersion()).append(", ");
-        sb.append("ValidLicence: ").append(isValidLicence());
         return sb.toString();
     }
     

@@ -270,47 +270,47 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 		headerStyle.setColor(Color.WHITE);
 
-		PdfPCell cipMCell = new PdfPCell(cellStyle);
-		cipMCell.setPhrase(new Phrase(new Chunk("FILIALES", headerStyle)));
-		cipMCell.setBackgroundColor(Color.gray);
-		cipMCell.setPaddingBottom(5);
-		table.addCell(cipMCell );
+		PdfPCell filialCell = new PdfPCell(cellStyle);
+		filialCell.setPhrase(new Phrase(new Chunk("FILIALES", headerStyle)));
+		filialCell.setBackgroundColor(Color.gray);
+		filialCell.setPaddingBottom(5);
+		table.addCell(filialCell );
 
 
-		PdfPCell cipCell = new PdfPCell(cellStyle);
-		cipCell.setPhrase(new Phrase(new Chunk("Nb CLIENTS", headerStyle)));
-		cipCell.setBackgroundColor(Color.gray);
-		cipCell.setPaddingBottom(5);
+		PdfPCell nbclientCell = new PdfPCell(cellStyle);
+		nbclientCell.setPhrase(new Phrase(new Chunk("Nb CLIENTS", headerStyle)));
+		nbclientCell.setBackgroundColor(Color.gray);
+		nbclientCell.setPaddingBottom(5);
 
-		table.addCell(cipCell);
+		table.addCell(nbclientCell);
 		
-		PdfPCell paCell = new PdfPCell(cellStyle);
-		paCell.setPhrase(new Phrase(new Chunk(" ACHAT", headerStyle)));
-		paCell.setBackgroundColor(Color.gray);
-		paCell.setPaddingBottom(5);
+		PdfPCell achatCell = new PdfPCell(cellStyle);
+		achatCell.setPhrase(new Phrase(new Chunk(" ACHAT", headerStyle)));
+		achatCell.setBackgroundColor(Color.gray);
+		achatCell.setPaddingBottom(5);
 
-		table.addCell(paCell);
+		table.addCell(achatCell);
 
-		PdfPCell desCell = new PdfPCell(cellStyle);
-		desCell.setPhrase(new Phrase(new Chunk(" VENTE", headerStyle)));
-		desCell.setBackgroundColor(Color.gray);
-		desCell.setPaddingBottom(5);
+		PdfPCell venteCell = new PdfPCell(cellStyle);
+		venteCell.setPhrase(new Phrase(new Chunk(" VENTE", headerStyle)));
+		venteCell.setBackgroundColor(Color.gray);
+		venteCell.setPaddingBottom(5);
 
-		table.addCell(desCell);
+		table.addCell(venteCell);
 
 
-		PdfPCell datePrmCell = new PdfPCell(cellStyle);
-		datePrmCell.setPhrase(new Phrase(new Chunk(" REMISE", headerStyle)));
-		datePrmCell.setBackgroundColor(Color.gray);
-		datePrmCell.setPaddingBottom(5);
+		PdfPCell remiseCell = new PdfPCell(cellStyle);
+		remiseCell.setPhrase(new Phrase(new Chunk(" REMISE", headerStyle)));
+		remiseCell.setBackgroundColor(Color.gray);
+		remiseCell.setPaddingBottom(5);
 
-		table.addCell(datePrmCell);
+		table.addCell(remiseCell);
 
-		PdfPCell pvCell = new PdfPCell(cellStyle);
-		pvCell.setPhrase(new Phrase(new Chunk("MARGE", headerStyle)));
-		pvCell.setBackgroundColor(Color.gray);
-		pvCell.setPaddingBottom(5);
-		table.addCell(pvCell);
+		PdfPCell margeCell = new PdfPCell(cellStyle);
+		margeCell.setPhrase(new Phrase(new Chunk("MARGE", headerStyle)));
+		margeCell.setBackgroundColor(Color.gray);
+		margeCell.setPaddingBottom(5);
+		table.addCell(margeCell);
 		
 
 		List<Object[]> etatCaisse = Caisse.findEtatCaisse(caisse.getCaisseNumber());
@@ -336,99 +336,98 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
                      
 				
 
-				//date op
-				PdfPCell inCipCell = new PdfPCell(cellBorderless);
-				inCipCell.setPhrase(new Phrase(new Chunk(filale.toUpperCase(), boddyStyle)));
-				inCipCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				inCipCell.setPaddingBottom(5);
-				table.addCell(inCipCell);
+				//fiale value
+				PdfPCell filialevCell = new PdfPCell(cellBorderless);
+				filialevCell.setPhrase(new Phrase(new Chunk(filale.toUpperCase(), boddyStyle)));
+				filialevCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				filialevCell.setPaddingBottom(5);
+				table.addCell(filialevCell);
 				
-				//op number
-				PdfPCell inCipm = new PdfPCell(cellBorderless);
-				inCipm.setPhrase(new Phrase(new Chunk(""+nbClient, boddyStyle)));
-				inCipm.setPaddingBottom(5);
-				inCipm.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				table.addCell(inCipm);
+				//nb client value
+				PdfPCell nbclientvCell = new PdfPCell(cellBorderless);
+				nbclientvCell.setPhrase(new Phrase(new Chunk(""+nbClient, boddyStyle)));
+				nbclientvCell.setPaddingBottom(5);
+				nbclientvCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				table.addCell(nbclientvCell);
 
-				//type op
-				PdfPCell inDesCell = new PdfPCell(cellBorderless);
-				inDesCell.setPhrase(new Phrase(new Chunk(montantAchat.toString(), boddyStyle)));
-				inDesCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				//montant achat
+				PdfPCell achatvCell = new PdfPCell(cellBorderless);
+				achatvCell.setPhrase(new Phrase(new Chunk(montantAchat.toString(), boddyStyle)));
+				achatvCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-				table.addCell(inDesCell);
+				table.addCell(achatvCell);
 
-				// mode paiement
-				PdfPCell inprmCell = new PdfPCell(cellBorderless);
-				inprmCell.setPhrase(new Phrase(new Chunk(montantVente.toString(), boddyStyle)));
-				inprmCell.setPaddingBottom(5);
-				inprmCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				// montant vente 
+				PdfPCell ventevCell = new PdfPCell(cellBorderless);
+				ventevCell.setPhrase(new Phrase(new Chunk(montantVente.toString(), boddyStyle)));
+				ventevCell.setPaddingBottom(5);
+				ventevCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-				table.addCell(inprmCell);
+				table.addCell(ventevCell);
 
-				// montant paiement
-				PdfPCell inPvCell = new PdfPCell(cellBorderless);
-				inPvCell.setPhrase(new Phrase(new Chunk(""+remise, boddyStyle)));
-				inPvCell.setPaddingBottom(5);
-				inPvCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				// montant remise
+				PdfPCell remisevCell = new PdfPCell(cellBorderless);
+				remisevCell.setPhrase(new Phrase(new Chunk(""+remise, boddyStyle)));
+				remisevCell.setPaddingBottom(5);
+				remisevCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-				table.addCell(inPvCell);
+				table.addCell(remisevCell);
 
-				// raison Op
-				PdfPCell inPaCell = new PdfPCell(cellBorderless);
-				inPaCell.setPhrase(new Phrase(new Chunk(""+marge, boddyStyle)));
-				inPaCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				// montant marge
+				PdfPCell margevCell = new PdfPCell(cellBorderless);
+				margevCell.setPhrase(new Phrase(new Chunk(""+marge, boddyStyle)));
+				margevCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-				table.addCell(inPaCell);
-				inPaCell.setPaddingBottom(5);
+				table.addCell(margevCell);
+				margevCell.setPaddingBottom(5);
 
-			//}
 		}
 
 		cellStyle.setBorderWidth(0);
-		PdfPCell cipMCell1 = new PdfPCell(cellStyle);
-		cipMCell1.setPhrase(new Phrase(new Chunk("TOTAL :", headerStyles)));
-		cipMCell1.setPaddingBottom(5);
-		cipMCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		PdfPCell tatalCell = new PdfPCell(cellStyle);
+		tatalCell.setPhrase(new Phrase(new Chunk("TOTAL :", headerStyles)));
+		tatalCell.setPaddingBottom(5);
+		tatalCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-		table.addCell(cipMCell1 );
-
-
-		PdfPCell cipCell2 = new PdfPCell(cellStyle);
-		cipCell2.setPhrase(new Phrase(new Chunk(""+totalclient, headerStyles)));
-		cipCell2.setBorder(0);
-		cipCell2.setPaddingBottom(5);
-		cipCell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		table.addCell(cipCell2);
-
-		PdfPCell desCell1 = new PdfPCell(cellStyle);
-		desCell1.setPhrase(new Phrase(new Chunk(""+totalAchat, headerStyles)));
-		desCell1.setPaddingBottom(5);
-		desCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
-
-		table.addCell(desCell1);
+		table.addCell(tatalCell );
 
 
-		PdfPCell datePrmCell1 = new PdfPCell(cellStyle);
-		datePrmCell1.setPhrase(new Phrase(new Chunk(""+totalVente, headerStyles)));
-		datePrmCell1.setPaddingBottom(5);
-		datePrmCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		PdfPCell totalclientCell = new PdfPCell(cellStyle);
+		totalclientCell.setPhrase(new Phrase(new Chunk(""+totalclient, headerStyles)));
+		totalclientCell.setBorder(0);
+		totalclientCell.setPaddingBottom(5);
+		totalclientCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		table.addCell(totalclientCell);
 
-		table.addCell(datePrmCell1);
+		PdfPCell totalachatCell = new PdfPCell(cellStyle);
+		totalachatCell.setPhrase(new Phrase(new Chunk(""+totalAchat, headerStyles)));
+		totalachatCell.setPaddingBottom(5);
+		totalachatCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-		PdfPCell pvCell1 = new PdfPCell(cellStyle);
-		pvCell1.setPhrase(new Phrase(new Chunk(""+totalremise, headerStyles)));
-		pvCell1.setPaddingBottom(5);
-		pvCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
-
-		table.addCell(pvCell1);
+		table.addCell(totalachatCell);
 
 
-		PdfPCell paCell1 = new PdfPCell(cellStyle);
-		paCell1.setPhrase(new Phrase(new Chunk(""+totalmarge, headerStyles)));
-		paCell1.setPaddingBottom(5);
-		paCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		PdfPCell totalventeCell = new PdfPCell(cellStyle);
+		totalventeCell.setPhrase(new Phrase(new Chunk(""+totalVente, headerStyles)));
+		totalventeCell.setPaddingBottom(5);
+		totalventeCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-		table.addCell(paCell1);
+		table.addCell(totalventeCell);
+
+		PdfPCell totalremiseCell = new PdfPCell(cellStyle);
+		totalremiseCell.setPhrase(new Phrase(new Chunk(""+totalremise, headerStyles)));
+		totalremiseCell.setPaddingBottom(5);
+		totalremiseCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+		table.addCell(totalremiseCell);
+
+
+		PdfPCell totalmargeCell1 = new PdfPCell(cellStyle);
+		totalmargeCell1.setPhrase(new Phrase(new Chunk(""+totalmarge, headerStyles)));
+		totalmargeCell1.setPaddingBottom(5);
+		totalmargeCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+		table.addCell(totalmargeCell1);
 		try {
 			document.add(table);
 		} catch (DocumentException e) {
@@ -526,7 +525,7 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 	// contenu
 		PdfPCell fontc = new PdfPCell(cellStyle);
-		BigDecimal fond = caisse.getFondCaisse()==null?BigDecimal.ZERO:caisse.getFondCaisse();
+		BigDecimal fond =tauxChiffreAffaire.multiply( caisse.getFondCaisse()==null?BigDecimal.ZERO:caisse.getFondCaisse());
 		fondgbl = fondgbl.add(fond);
 		fontc.setPhrase(new Phrase(new Chunk(""+fond.intValue(), headerStyles)));
 		fontc.setPaddingBottom(5);
@@ -534,13 +533,14 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 
 		PdfPCell encv = new PdfPCell(cellStyle);
-		totalencgbl=totalencgbl.add(caisse.getTotalEncaissement());
-		encv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalEncaissement().intValue(), headerStyles)));
+		BigDecimal encaissement = tauxChiffreAffaire.multiply(caisse.getTotalEncaissement());
+		totalencgbl=totalencgbl.add(encaissement);
+		encv.setPhrase(new Phrase(new Chunk(""+encaissement.intValue(), headerStyles)));
 		encv.setPaddingBottom(5);
 
 		tableDetail.addCell(encv);
-	    BigDecimal remglb = caisse.getTotalProformat().subtract(BigDecimal.valueOf(totalremise.longValue()));
-	    remglbs= remglbs.add(remglb) ;
+	    BigDecimal remglb =tauxChiffreAffaire.multiply( caisse.getTotalProformat().subtract(BigDecimal.valueOf(totalremise.longValue())));
+	    remglbs= remglbs.add(remglb);
 		PdfPCell retraitv = new PdfPCell(cellStyle);
 		retraitv.setPhrase(new Phrase(new Chunk(""+remglb.intValue(), headerStyles)));
 		retraitv.setPaddingBottom(5);
@@ -549,42 +549,48 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 
 
 		PdfPCell cashv = new PdfPCell(cellStyle);
-		cashgbl=cashgbl.add(caisse.getTotalCash());
-		cashv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCash().intValue(), headerStyles)));
+		BigDecimal casht = tauxChiffreAffaire.multiply(caisse.getTotalCash());
+		cashgbl=cashgbl.add(casht);
+		cashv.setPhrase(new Phrase(new Chunk(""+casht.intValue(), headerStyles)));
 		cashv.setPaddingBottom(5);
 		tableDetail.addCell(cashv);
 		
 		PdfPCell cashdv = new PdfPCell(cellStyle);
-		cashdgbl=cashdgbl.add(caisse.getTotalCashDette()==null?BigDecimal.ZERO:caisse.getTotalCashDette());
-		cashdv.setPhrase(new Phrase(new Chunk(""+(caisse.getTotalCashDette()==null?BigDecimal.ZERO.intValue():caisse.getTotalCashDette().intValue()), headerStyles)));
+	    BigDecimal cashdettet = tauxChiffreAffaire.multiply(caisse.getTotalCashDette()==null?BigDecimal.ZERO:caisse.getTotalCashDette());
+		cashdgbl=cashdgbl.add(cashdettet);
+		cashdv.setPhrase(new Phrase(new Chunk(""+cashdettet.intValue(), headerStyles)));
 		cashdv.setPaddingBottom(5);
 		tableDetail.addCell(cashdv);
 
 		PdfPCell cbv = new PdfPCell(cellStyle);
-		cartecreditgbl=cartecreditgbl.add(caisse.getTotalCarteCredit());
-		cbv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCarteCredit().intValue(), headerStyles)));
+		 BigDecimal cartecredit = tauxChiffreAffaire.multiply(caisse.getTotalCarteCredit());
+		cartecreditgbl=cartecreditgbl.add(cartecredit);
+		cbv.setPhrase(new Phrase(new Chunk(""+cartecredit.intValue(), headerStyles)));
 		cbv.setPaddingBottom(5);
 
 		tableDetail.addCell(cbv);
 		
 		PdfPCell chequev = new PdfPCell(cellStyle);
-		chequegbl=chequegbl.add(caisse.getTotalCheque());
-		chequev.setPhrase(new Phrase(new Chunk(""+caisse.getTotalCheque().intValue(), headerStyles)));
+		BigDecimal chequet = tauxChiffreAffaire.multiply(caisse.getTotalCheque());
+		chequegbl=chequegbl.add(chequet);
+		chequev.setPhrase(new Phrase(new Chunk(""+chequet.intValue(), headerStyles)));
 		chequev.setPaddingBottom(5);
 
 		tableDetail.addCell(chequev);
 		
 		PdfPCell creditv = new PdfPCell(cellStyle);
-		retraitgbl=retraitgbl.add(caisse.getTotalRetrait());
-		creditv.setPhrase(new Phrase(new Chunk(""+caisse.getTotalRetrait().intValue(), headerStyles)));
+		BigDecimal retraitt = tauxChiffreAffaire.multiply(caisse.getTotalRetrait());
+		retraitgbl=retraitgbl.add(retraitt);
+		creditv.setPhrase(new Phrase(new Chunk(""+retraitt.intValue(), headerStyles)));
 		creditv.setPaddingBottom(5);
 
 		tableDetail.addCell(creditv);
 		
 
 		PdfPCell tbc = new PdfPCell(cellStyle);
-		boncmdgbl=boncmdgbl.add(caisse.getTotalBonCmd());
-		tbc.setPhrase(new Phrase(new Chunk(""+caisse.getTotalBonCmd().intValue(), headerStyles)));
+		BigDecimal boncmd = tauxChiffreAffaire.multiply(caisse.getTotalBonCmd());
+		boncmdgbl=boncmdgbl.add(boncmd);
+		tbc.setPhrase(new Phrase(new Chunk(""+boncmd.intValue(), headerStyles)));
 		tbc.setPaddingBottom(5);
 
 		tableDetail.addCell(tbc);
@@ -593,16 +599,18 @@ public class BordereauCaissePdfDocView extends   AbstractPdfView {
 		
 
 		PdfPCell tbclt = new PdfPCell(cellStyle);
-		boncltgbl=boncltgbl.add(caisse.getTotalBonClient());
-		tbclt.setPhrase(new Phrase(new Chunk(""+caisse.getTotalBonClient().intValue(), headerStyles)));
+		BigDecimal bonclient = tauxChiffreAffaire.multiply(caisse.getTotalBonClient());
+		boncltgbl=boncltgbl.add(bonclient);
+		tbclt.setPhrase(new Phrase(new Chunk(""+bonclient.intValue(), headerStyles)));
 		tbclt.setPaddingBottom(5);
 
 		tableDetail.addCell(tbclt);
 		
 
 		PdfPCell tbsolde = new PdfPCell(cellStyle);
-		soldegbl=soldegbl.add(caisse.calculateSolde());
-		tbsolde.setPhrase(new Phrase(new Chunk(""+caisse.calculateSolde().intValue(), headerStyles)));
+		BigDecimal soldet = tauxChiffreAffaire.multiply(caisse.calculateSolde());
+		soldegbl=soldegbl.add(soldet);
+		tbsolde.setPhrase(new Phrase(new Chunk(""+soldet.intValue(), headerStyles)));
 		tbsolde.setPaddingBottom(5);
 
 		tableDetail.addCell(tbsolde);

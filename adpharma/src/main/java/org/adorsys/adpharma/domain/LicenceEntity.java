@@ -36,12 +36,12 @@ public class LicenceEntity {
 
 	@Transient
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM yyyy HH:mm")
 	private Date transtientBegin = new Date();
 
 	@Transient
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd-MM yyyy HH:mm")
 	private Date transtientEnd = DateUtils.addDays(new Date(), 5);
 
 	@Value("true")
@@ -71,9 +71,10 @@ public class LicenceEntity {
 		}
 	}
 
-	public boolean isValidLicence(){
+	public boolean isNotValidLicence(){
 		if(transtientEnd !=null){
-			System.out.println(PharmaDateUtil.format(transtientEnd, "dd-MM yyyy hh:mm"));
+			System.out.println("firdt"+PharmaDateUtil.format(transtientEnd, "dd-MM yyyy HH:mm"));
+			System.out.println("second"+PharmaDateUtil.format(new Date(), "dd-MM yyyy HH:mm"));
 			return new Date().before(transtientEnd);
 		}
 		return false;

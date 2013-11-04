@@ -165,7 +165,7 @@ function test(){
 		
 		<field:input field="taux" style="color:red;" id="c_org_adorsys_adpharma_domain_CommandeClient_tauxCouverture" max="100" min="0" required="true" z="user-managed" />
 		
-		<field:input field="numeroBon" required="false" id="c_org_adorsys_adpharma_domain_CommandeClient_numeroBon" z="user-managed"  />
+		<field:input field="numeroBon" label="Numero du bon" required="false" id="c_org_adorsys_adpharma_domain_CommandeClient_numeroBon" z="user-managed"  />
 		
 		<field:checkbox field="ventePartiel" id="c_org_adorsys_adpharma_domain_CommandeClient_ventePartiel" z="user-managed" />
 		

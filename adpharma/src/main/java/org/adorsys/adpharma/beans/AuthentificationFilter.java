@@ -44,8 +44,6 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException{
 		HttpSession session = request.getSession();
-		//String siteId = request.getParameter("j_site");
-		//System.out.println(siteId);
 		Site findSite = Site.findSite(new Long(1));
 		SessionBean sessionBean = new SessionBean(findSite);
 		sessionBean.setConfiguration(Configuration.findConfiguration(new Long(1)));
@@ -55,11 +53,9 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
 		}else {
 			session.setAttribute("sessionBean", sessionBean) ;
 		}
-		//TODO  :  find user's target url, 2- set it to the RequestCae
 	    SavedRequest savedRequest = requestCache.getRequest(request, response);
 
         if (savedRequest == null) {
-//            super.onAuthenticationSuccess(request, response, authentication);
         	String redirectLink = getUserRedirectLink();
         	if(StringUtils.isBlank(redirectLink)) redirectLink = "";
 			String userRedirectLink  = new StringBuilder().append(request.getContextPath()).append(redirectLink).toString();
@@ -94,11 +90,7 @@ public class AuthentificationFilter   extends SimpleUrlAuthenticationSuccessHand
         this.requestCache = requestCache;
     }
 	private String getUserRedirectLink(){
-		/*
-		PharmaUser pharmaUser = PharmaUser.findPharmaUsersByUserNameEquals(SecurityUtil.getUserName()).getSingleResult();
-		Set<RoleName> roleNames = pharmaUser.getRoleNames();
-		return rolesToHomePageRegistry.getHomeUrl(roleNames.iterator().next());
-		*/
+	
 		return "";
 	}
 }

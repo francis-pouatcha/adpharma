@@ -7,8 +7,8 @@
         <field:input field="endDate" id="c_org_adorsys_adpharma_domain_LicenceEntity_endDate" z="a90qvhgdvehz2FyO03nyoENWdHE="/>
         <field:checkbox field="isValid" id="c_org_adorsys_adpharma_domain_LicenceEntity_isValid" z="uSu5Ie+hDZgDH/sspm4qL4U0X6Q="/>
         <field:input field="generateKey" id="c_org_adorsys_adpharma_domain_LicenceEntity_generateKey" z="pwFMnkxgWEEWXW/VxAmZXC1f1PI="/>
-        <field:datetime dateTimePattern="${licenceEntity_transtientbegin_date_format}" field="transtientBegin" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" z="pcyOH+1sJ0Bml9G+i8SgepvyF2I="/>
-        <field:datetime dateTimePattern="${licenceEntity_transtientend_date_format}" field="transtientEnd" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" z="+PxUwFVB3Kbstc3J2qcfXBrBOdU="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="transtientBegin" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientBegin" z="pcyOH+1sJ0Bml9G+i8SgepvyF2I="/>
+        <field:datetime dateTimePattern="dd-MM-yyyy hh:mm" field="transtientEnd" id="c_org_adorsys_adpharma_domain_LicenceEntity_transtientEnd" z="+PxUwFVB3Kbstc3J2qcfXBrBOdU="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_LicenceEntity" render="${not empty dependencies}" z="o5oxIr9UMwFuE1ZtUnnsW1sucmw="/>
 </div>

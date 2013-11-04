@@ -113,8 +113,8 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
             </form:custumcreate>
                            <BR />
                            <HR />
-                          <div style="width: 50% ; "  id="legend">
-                            <P> ${statistics_legend} </P>
+                          <div style="width: 55% ; "  id="legend">
+                            <P> ${statistics_legend} jj</P>
                           <TABLE>
                              <TR>
                                 <TD style="background-color: rgb(51,204,255); width: 50%;"></TD>
@@ -134,7 +134,5 @@ xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     		</td>
     	</tr>
    </table>
-  
-       
 
 </div>
