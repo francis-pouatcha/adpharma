@@ -32,6 +32,9 @@ public class AvoirClient extends AdPharmaBaseEntity {
 	private Date dateEdition = new Date();
 
 	@Value("0")
+	private BigDecimal globalSaleRemise;
+	
+	@Value("0")
 	private BigDecimal montant;
 
 	private String clientName;
@@ -156,7 +159,17 @@ public class AvoirClient extends AdPharmaBaseEntity {
 	public AvoirClient() {
 	}
 
-	;
+	
+
+	public BigDecimal getGlobalSaleRemise() {
+		return globalSaleRemise;
+	}
+
+	public void setGlobalSaleRemise(BigDecimal globalSaleRemise) {
+		this.globalSaleRemise = globalSaleRemise;
+	}
+
+	
 
 	public AvoirClient(CommandeClient commandeClient,BigDecimal amount ) {
 		clientNumber = commandeClient.getClient().getClientNumber();
@@ -193,7 +206,20 @@ public class AvoirClient extends AdPharmaBaseEntity {
 		montant = montant.subtract(amount);
 		defineReste();
 	}
+	
+	public void removeGlobalRemise(){
+		globalSaleRemise = globalSaleRemise==null?BigDecimal.ZERO:globalSaleRemise;
+		if(montant.compareTo(globalSaleRemise) == 1){
+			montant = montant.subtract(globalSaleRemise);
+			globalSaleRemise =BigDecimal.ZERO ;
+		}else {
+			globalSaleRemise = globalSaleRemise.subtract(montant);
+			montant =BigDecimal.ZERO ;
+		}
 
+	}
+	
+   
 	public void defineReste() {
 		reste = montant.subtract(montantUtilise);
 		solder = estSolder();

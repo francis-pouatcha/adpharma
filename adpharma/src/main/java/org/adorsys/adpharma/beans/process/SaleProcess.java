@@ -168,7 +168,7 @@ public class SaleProcess {
 	
 	public static  void addToExistingline(Long lineId , BigInteger quantite ,BigDecimal remise ,CommandeClient commandeClient){
 		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(lineId);
-		LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
+		LigneCmdClient sameCipM = commandeClient.getProdcutWhithCipM(ligneApp.getCipMaison());
 		if(sameCipM !=null) {
 			sameCipM.increaseCmdQte(quantite, remise);
 		}else {

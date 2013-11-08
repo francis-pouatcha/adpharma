@@ -15,6 +15,7 @@ import javax.validation.Valid;
 
 import org.adorsys.adpharma.beans.CommandeCredit;
 import org.adorsys.adpharma.beans.process.PaiementProcess;
+import org.adorsys.adpharma.beans.process.ReturnedProductBean;
 import org.adorsys.adpharma.beans.process.SearchSalesBean;
 import org.adorsys.adpharma.beans.process.SessionBean;
 import org.adorsys.adpharma.domain.AvoirClient;
@@ -27,7 +28,6 @@ import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Facture;
 import org.adorsys.adpharma.domain.Genre;
-import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneCmdClient;
 import org.adorsys.adpharma.domain.MouvementStock;
@@ -41,9 +41,11 @@ import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
+import org.adorsys.adpharma.services.DefaultReturnedProductService;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.ProcessHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +61,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/commandeclients")
 @Controller
 public class CommandeClientController {
+	
+	@Autowired 
+	DefaultReturnedProductService returnProductService ;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") Long id, Model uiModel,HttpServletRequest request) {
@@ -375,7 +380,6 @@ public class CommandeClientController {
 			List<LigneCmdClient> resultList = LigneCmdClient.findLigneCmdClientsByCipMEqualsAndCommande(cipm, commandeClient).getResultList();
 			if (!resultList.isEmpty()) {
 				LigneCmdClient next = resultList.iterator().next();
-				//return  resultList.iterator().next().clone().toJson();
 				return next.getStringFormat();
 			}
 		}
@@ -457,12 +461,8 @@ public class CommandeClientController {
 
 	@Transactional
 	@RequestMapping(value="/{cmdId}/retourProduit", method = RequestMethod.POST)
-
-	public String saveRetourAjax(@PathVariable("cmdId") Long cmdId, Model uiModel,HttpServletRequest request) {
-		String cipm = request.getParameter("cipm");
-		LigneCmdClient line = LigneCmdClient.findLigneCmdClientsByCipMEqualsAndCommande(cipm, CommandeClient.findCommandeClient(cmdId)).getResultList().iterator().next();
-		BigInteger qte  = new  BigInteger( request.getParameter("qte").trim()); 
-		String raison = request.getParameter("raison");
+	public String saveRetour(@PathVariable("cmdId") Long cmdId,@Valid ReturnedProductBean returnedProductBean ,  Model uiModel,HttpServletRequest request) {
+		LigneCmdClient line = LigneCmdClient.findLigneCmdClientsByCipMEqualsAndCommande(returnedProductBean.getCipm(), CommandeClient.findCommandeClient(cmdId)).getResultList().iterator().next();
 		Produit produit = line.getProduit().getProduit();
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
 
@@ -475,45 +475,7 @@ public class CommandeClientController {
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
 			return show(commandeClient.getId(), uiModel, request);
 		}
-		AvoirClient bonClient = commandeClient.getBonClient();
-		if (bonClient!=null) {
-			bonClient.setImprimer(false);
-			bonClient.increaseAmount((line.getPrixUnitaire().subtract(line.getRemise())).multiply(new BigDecimal(qte)));
-			bonClient.merge();
-
-		}else {
-			AvoirClient avoirClient = new AvoirClient(commandeClient,line.getPrixUnitaire().multiply(new BigDecimal(qte)));
-			avoirClient.setTypeBon(TypeBon.RETOUR);
-			avoirClient.setMontant((line.getPrixUnitaire().subtract(line.getRemise())).multiply(new BigDecimal(qte)));
-			avoirClient.setImprimer(Boolean.FALSE);
-			avoirClient.persist();
-			System.out.println(avoirClient.getMontant());
-			commandeClient.setAvoirNumber(avoirClient.getNumero());
-			commandeClient.merge();
-
-
-		}
-		MouvementStock mouvementStock = new MouvementStock();
-		mouvementStock.setAgentCreateur(SecurityUtil.getUserName());
-		mouvementStock.setCip(line.getCip());
-		mouvementStock.setCipM(line.getCipM());
-		mouvementStock.setDesignation(line.getDesignation());
-		mouvementStock.setOrigine(DestinationMvt.CLIENT);
-		mouvementStock.setDestination(DestinationMvt.MAGASIN);
-		mouvementStock.setTypeMouvement(TypeMouvement.RETOUR_PRODUIT);
-		mouvementStock.setQteInitiale(produit.getQuantiteEnStock());
-		mouvementStock.setQteDeplace(qte);
-		produit.addproduct(qte);
-		mouvementStock.setNote(raison);
-		mouvementStock.setQteFinale(produit.getQuantiteEnStock());
-		mouvementStock.setNumeroTicket(Facture.findFacture(commandeClient.getFactureId()).getFactureNumber());
-		produit.merge();
-		mouvementStock.persist();
-		ligneApprovisionement.retourEnStock(qte);
-		line.increaseQteRetounee(qte);
-		line.merge();
-		ligneApprovisionement.merge();
-
+		returnProductService.returnProductFromCashSale(line, returnedProductBean, produit);
 		return "redirect:/commandeclients/" + encodeUrlPathSegment(commandeClient.getId().toString(), request);
 	}
 

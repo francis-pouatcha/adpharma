@@ -165,7 +165,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
     }
 
     public Boolean isAllItemToSale(LigneApprovisionement line) {
-        LigneCmdClient sameCipM = this.getSameCipM(line.getCipMaison());
+        LigneCmdClient sameCipM = this.getProdcutWhithCipM(line.getCipMaison());
         if (sameCipM != null) {
             if (sameCipM.getQuantiteCommande().equals(line.getQuantieEnStock())) {
                 return true;
@@ -297,7 +297,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
         merge();
     }
 
-    public boolean contientSameCipM(String cipM) {
+    public boolean hasProductWhithCipm(String cipM) {
         if (lineCommande.isEmpty()) {
             return false;
         } else {
@@ -310,7 +310,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
         return false;
     }
 
-    public LigneCmdClient getSameCipM(String cipM) {
+    public LigneCmdClient getProdcutWhithCipM(String cipM) {
         if (lineCommande.isEmpty()) {
             return null;
         } else {
@@ -411,7 +411,7 @@ public class CommandeClient extends AdPharmaBaseEntity {
     }
 
     public boolean containCipm(String cipM) {
-        return getSameCipM(cipM) == null ? false : true;
+        return getProdcutWhithCipM(cipM) == null ? false : true;
     }
 
     public void calculPrixHtAndRemise() {

@@ -47,7 +47,6 @@ public class SaleService {
 		return ligneCmdClient ;
 	}
 	
-	
 	// Fonction qui retourne le prix de vente unitaire pour la configuration de vente active(vente en details, vente en semi-gros, vente en gros)
 	public BigDecimal getPrixVenteLigne(BigInteger qte, LigneApprovisionement line){
 		List<SalesConfiguration> configurations = SalesConfiguration.findAllSalesConfigurations();
@@ -72,7 +71,7 @@ public class SaleService {
 
 		LigneApprovisionement ligneApp = LigneApprovisionement.findLigneApprovisionement(lineId);
 
-		LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
+		LigneCmdClient sameCipM = commandeClient.getProdcutWhithCipM(ligneApp.getCipMaison());
 
 		if(sameCipM == null) {
 
@@ -183,7 +182,7 @@ public class SaleService {
 
 			}
 		}else {
-			LigneCmdClient sameCipM = commandeClient.getSameCipM(ligneApp.getCipMaison());
+			LigneCmdClient sameCipM = commandeClient.getProdcutWhithCipM(ligneApp.getCipMaison());
 			if(sameCipM != null) sameCipM.increaseCmdQte(qteAfterUpdate, remise);
 
 		}
