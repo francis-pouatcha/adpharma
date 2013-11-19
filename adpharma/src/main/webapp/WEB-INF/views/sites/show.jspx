@@ -22,6 +22,7 @@
         <field:display field="orderReceivePath" id="s_org_adorsys_adpharma_domain_Site_orderReceivePath" label="Dossier Reponses PHML" object="${site}" z="user-managed"/>
         <field:display field="bareCodePerLine" id="s_org_adorsys_adpharma_domain_Site_bareCodePerLine" object="${site}" z="tPK20cZVjUceIhSnZiw4qRP5/2o="/>
         <field:display field="archived" id="s_org_adorsys_adpharma_domain_Site_archived" object="${site}" z="OpzwoDlx6Bgycnfas9Q7g2PCAG4="/>
+        <field:display field="tauxChiffreAffaire" id="s_org_adorsys_adpharma_domain_Site_tauxChiffreAffaire" object="${site}" z="9nbppFgvrmqAOB5nFizHKBsuFlU="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Site_footPrint" object="${site}" z="user-managed"/>

@@ -16,6 +16,7 @@
               <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
               <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
               <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+              <spring:url value="/produits/findStockedProducts"  var="find_listOfPrice_url" />
               <c:choose>
 				<c:when test="${empty approvisonementProcess.apId}">
 		            <spring:url value="/approvisionementprocess/0/findProduct/"  var="find_cip_url" />
@@ -79,7 +80,25 @@
 		$('img.loadimage').ajaxStop(function(){
 			$(this).hide();
 		});
-
+		// Dialog	find produit		
+		$('#listOfPrice').dialog({
+			open:function(){
+				clearListeOfPriceTable();
+			},
+			autoOpen: false,
+			width: 1100,
+			resizable:true,
+			draggable :true,
+            hide:'fade',
+            show:'slide',
+            position:'top',
+			buttons: {
+				"${button_cancel}": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+			
+		});
 	
 		
 		// Dialog	find produit		
@@ -103,7 +122,7 @@
 		});
 		
 		$('#rapidesearch').click(function(){
-			$('#findproduits').dialog('open');
+			$('#listOfPrice').dialog("open");
 			return false;
 		});
 		
@@ -132,6 +151,51 @@
 			  	};
 
 	});
+			
+	
+			function clearListeOfPriceTable(){
+				$('#listOfPriceResult').html(
+						'<tr>
+						    <th style="text-transform: uppercase;">${column_cip}</th>
+				    		<th style="text-transform: uppercase;">${column_designation}</th>
+				    		<th style="text-transform: uppercase;">${column_price}</th>
+				    		<th style="text-transform: uppercase;">${product_qty_cipm}</th>
+				    		<th style="text-transform: uppercase;">${product_qty_cip}</th>
+				    		<th style="text-transform: uppercase;">${product_date_of_record}</th>
+				    		<th style="text-transform: uppercase;">${column_ray}</th>
+				    		<th style="text-transform: uppercase;">${product_provider}</th>
+						</tr>');
+			};
+			
+			$(function(){
+	
+			$('form#listOfPriceForm').submit(function(){
+				clearListeOfPriceTable();
+					$.getJSON( '${find_listOfPrice_url}',
+							$('#listOfPriceForm').serialize(),
+				                function(data){
+									$(data).each(function(){
+										$('#listOfPriceResult').append(
+										 '<tr id="'+this.id+'">
+											  <td>'+this.cip+'</td>
+											  <td>'+this.designation+'</td>
+											  <td>'+this.prixVenteUnitaire+'</td>
+											  <td>'+this.quantieEnStock+'</td>
+											  <td>'+this.qteCip+'</td>
+											  <td>'+this.saisiele+'</td>
+											  <td>'+this.nonRayon+'</td>
+											  <td>'+this.fournisseur+'</td>
+											  </tr>');
+									});
+								  
+															
+										});
+								return false ;
+
+								});
+			}) ;
+					
+				
 	
 	</script>
 	
@@ -156,5 +220,36 @@
 		  </table>
 	</div>	 
    
-</div>      
+</div> 
+
+
+
+<div id="listOfPrice" style="display: none; ">
+		<form  id="listOfPriceForm" enctype="application/x-www-form-urlencoded">
+			<p>
+			  <label for="designation">${column_designation}:</label> 
+			  <input class="searchInput" style="width: 60%;"  type="text" name="designation"/>
+			</p>
+			<p>
+			  <label for="rp" style="display: block; width: auto;">Inclure les ruptures ? :</label> 
+			  <input type="checkbox" style="width: 20px;" name="rp" id="rp"/>
+			</p> 
+		</form>
+		
+		<center> <IMG alt="loading ..." src="${loadimage }" class="loadimage" style="display: none;" /></center>
+ 		<div style="height:400px; overflow: auto; "  >
+		<table cellpadding="0" class="result search" cellspacing="0" border="0" align="left" id="listOfPriceResult"  valign="top" width="100%;" frame="box">
+		    	<tr>
+		    		<th style="text-align: center; width: 250px;">${column_designation}</th>
+		    		<th style="text-align: center;" width="150px;">${saleprocess_product_dosage}</th>
+		    		<th style="text-align: center;" >${column_price}</th>
+		    		<th style="text-align: center;">${product_qty_cipm}</th>
+		    		<th style="text-align: center;">${product_qty_cip}</th>
+		    		<th style="text-align: center;">${product_date_of_record}</th>
+		    		<th style="text-align: center;">${product_provider}</th>
+		    	</tr>
+		  </table>
+	    </div>	 
+   
+</div>     
 </span>

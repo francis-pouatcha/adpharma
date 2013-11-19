@@ -674,9 +674,9 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public static TypedQuery<Produit> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit ,String cip, String designation, String beginBy, String endBy, Rayon rayon, Filiale filiale ,Date dateDerniereRupture,BigInteger qte) {
-		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE  o.id IS NOT NULL ");
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM Produit AS o WHERE  o.inStock IS :inStock");
 		if (StringUtils.isNotBlank(cip)) {
-			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip ", Produit.class).setParameter("cip", cip);
+			return entityManager().createQuery("SELECT o FROM Produit AS o WHERE  o.cip = :cip AND o.inStock IS :inStock", Produit.class).setParameter("cip", cip);
 		}
 		if (StringUtils.isNotBlank(designation)) {
 			designation = designation + "%";
@@ -746,6 +746,7 @@ public class Produit extends AdPharmaBaseEntity {
 		if (qte != null) {
 			q.setParameter("qteRup", qte);
 		}
+		q.setParameter("inStock", true);
 		return q;
 	}
 }

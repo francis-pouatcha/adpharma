@@ -9,6 +9,7 @@ privileged aspect SousFamilleProduit_Roo_ToString {
     
     public String SousFamilleProduit.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Archived: ").append(getArchived()).append(", ");
         sb.append("Famille: ").append(getFamille()).append(", ");
         sb.append("FootPrint: ").append(getFootPrint()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");

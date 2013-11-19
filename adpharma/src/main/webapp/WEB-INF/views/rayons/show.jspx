@@ -10,6 +10,7 @@
         <field:display field="displayName" id="s_org_adorsys_adpharma_domain_Rayon_displayName" object="${rayon}" render="false" z="user-managed"/>
         <field:display field="emplacement" id="s_org_adorsys_adpharma_domain_Rayon_emplacement" object="${rayon}" z="c4+2Bk2VpurEvOzXaHqLqqKUH2A="/>
         <field:display field="codeGeo" id="s_org_adorsys_adpharma_domain_Rayon_codeGeo" object="${rayon}" z="iRlOs7/506cCXcqNZLgnpPoURGI="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Rayon_archived" object="${rayon}" z="uKFyc+Ie1HTUyrIhBpPybYJONV0="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Rayon_footPrint" object="${rayon}" z="P2KMk97pHAigxxFVZ6wMi7IZ1KM="/>

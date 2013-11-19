@@ -7,6 +7,7 @@
         <field:display field="libelle" id="s_org_adorsys_adpharma_domain_Filiale_libelle" object="${filiale}" z="FuAT8/Lebent3+PFNqapjaTbElo="/>
         <field:display field="description" id="s_org_adorsys_adpharma_domain_Filiale_description" object="${filiale}" z="x8Bu+/Q7pjukgfmJCjLjJ7DQAgQ="/>
         <field:display field="actif" id="s_org_adorsys_adpharma_domain_Filiale_actif" object="${filiale}" z="YAQpgzKce4XxsPDTeKzlFwAM1Xw="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_Filiale_archived" object="${filiale}" z="AWf9Tbqv8cjikMK0D+IsxOuJtb4="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_Filiale_footPrint" object="${filiale}" z="4LIlajVQh8UgsBBpOQGKjXEPV1I="/>

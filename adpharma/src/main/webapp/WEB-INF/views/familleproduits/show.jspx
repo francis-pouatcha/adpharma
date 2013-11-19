@@ -5,8 +5,9 @@
     <page:show delete="false" id="ps_org_adorsys_adpharma_domain_FamilleProduit" object="${familleproduit}" path="/familleproduits" z="user-managed">
         <field:display field="familleNumber" id="s_org_adorsys_adpharma_domain_FamilleProduit_familleNumber" object="${familleproduit}" z="gQ34wHuiQQjw1biNYYv0QGLkpk0="/>
         <field:display field="libelleFamille" id="s_org_adorsys_adpharma_domain_FamilleProduit_libelleFamille" object="${familleproduit}" z="WVsgvpAKIfp7JvVANEymeQH8ZdU="/>
-        <field:display field="libelleCourt" render="false" id="s_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" object="${familleproduit}" z="user-managed"/>
+        <field:display field="libelleCourt" id="s_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" object="${familleproduit}" render="false" z="user-managed"/>
         <field:display field="note" id="s_org_adorsys_adpharma_domain_FamilleProduit_note" object="${familleproduit}" z="Pp2LnkwcPLbkzby/jSJpBJaD/s8="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_FamilleProduit_archived" object="${familleproduit}" z="WReXuJuvnm/Gyv3YnbVNEaosnuA="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_FamilleProduit_footPrint" object="${familleproduit}" z="wJHhRsPSsTxwdSiRKBgzBaZauFE="/>

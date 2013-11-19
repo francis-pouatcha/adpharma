@@ -234,7 +234,7 @@ if(Check == false){
 				ifAnyGranted="ROLE_VENDEUR ,ROLE_SITE_MANAGER,ROLE_OPEN_SALE_SESSION">
 				<spring:message code="allmenu_sales_salemenu" var="sales_salemenu" />
 				<li>
-				    <a href="#">${sales_salemenu }</a>
+				    <a href="#">${sales_salemenu}</a>
 					<ul class="sub_menu">
 				<spring:message code="allmenu_sales_findproduct" var="sales_findproduct" />
 							<li><a id="rapidesearch" href="#">${sales_findproduct }</a></li>

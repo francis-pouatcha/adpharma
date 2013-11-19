@@ -8,6 +8,7 @@
         <field:input field="libelle" id="c_org_adorsys_adpharma_domain_Filiale_libelle" z="iH6Rm7xgrzgaA8X/DrRQhauXwYo="/>
         <field:textarea field="description" id="c_org_adorsys_adpharma_domain_Filiale_description" z="aNhdY/C7aJf7c2dXYG3IE5WWed0="/>
         <field:checkbox field="actif" id="c_org_adorsys_adpharma_domain_Filiale_actif" z="ArKTLKr3R8KLzW+ZnKy/+0+XM8s="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Filiale_archived" z="Qd+Gsoe0yW6R6L8KVI8rL2ezCeU="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_Filiale" render="${not empty dependencies}" z="75DVF80008o7keK51GhLd6ugO3o="/>
 </div>

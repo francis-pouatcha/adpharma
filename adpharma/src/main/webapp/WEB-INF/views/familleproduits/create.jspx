@@ -8,6 +8,7 @@
         <field:input field="libelleCourt" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" render="false" z="user-managed"/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_FamilleProduit_note" label="Description" z="user-managed"/>
         <field:input field="familleNumber" id="c_org_adorsys_adpharma_domain_FamilleProduit_familleNumber" render="false" z="user-managed"/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_FamilleProduit_archived" z="T2oMgGWX140hELkFc8svv03sRc4="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_FamilleProduit" render="${not empty dependencies}" z="DF7IMfwEoe1nQIVCgXcOvndeuhY="/>
 </div>

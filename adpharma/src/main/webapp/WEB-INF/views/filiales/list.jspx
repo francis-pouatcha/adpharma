@@ -9,6 +9,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_Filiale_libelle" maxLength="-1" property="libelle" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Filiale_description" maxLength="-1" property="description" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_Filiale_actif" property="actif" z="iaWr/kFR1vTkTtOZSUizQ5E+ggQ="/>
+            <table:column id="c_org_adorsys_adpharma_domain_Filiale_archived" property="archived" z="AWTL+McpT9tUfsw/R3QT7P0U6Hs="/>
         </table:table>
     </page:list>
 </div>

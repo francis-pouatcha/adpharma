@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Value;
 import org.adorsys.adpharma.domain.EtatCredits;
@@ -133,6 +135,16 @@ public class DetteClient extends AdPharmaBaseEntity {
 
     @ManyToOne
     private EtatCredits etatCredit;
+    
+    
+    public boolean isBeginPayement(){
+    	return  avance.intValue() > 0;
+    }
+    
+    public void  reduiceDetteAmount(BigInteger amount){
+    	montantInitial = montantInitial.subtract(amount);
+    
+    }
 
     public String toJson() {
         return new JSONSerializer().include("id", "factureNo", "clientName", "avance", "montantInitial", "reste").exclude("*.class", "*").serialize(this);

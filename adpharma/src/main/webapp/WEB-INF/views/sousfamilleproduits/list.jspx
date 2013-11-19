@@ -8,8 +8,8 @@
             <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_libelleSousFamille" property="libelleSousFamille" z="rANTeN8D0YrF74WmsG7A0SWxTgM="/>
             <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_libelleCourt" property="libelleCourt" z="Y9XOp5yVaI/AKCGSc9KRJ/LqYjU="/>
             <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_note" property="note" z="cFwxC1YVUYPiXv/wcOpTUmYaq8U="/>
-            <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_famille" property="famille" z="4SYNXi6TCXIyKsekTgqvT9hAQAw="/>
             <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_footPrint" property="footPrint" z="/G0eadvLPddvPY2xHnZ1+St3ZF8="/>
+            <table:column id="c_org_adorsys_adpharma_domain_SousFamilleProduit_archived" property="archived" z="PBOSI6QsEnXTXwoKyhRoaMIn72k="/>
         </table:table>
     </page:list>
 </div>

@@ -368,7 +368,7 @@
 		    		<th style="text-transform: uppercase;">${column_price}</th>
 		    		<th style="text-transform: uppercase;">${product_qty_cipm}</th>
 		    		<th style="text-transform: uppercase;">${product_qty_cip}</th>
-		    		<th style="text-transform: uppercase;">${product_date_of_record}</th>
+		    		<th style="text-transform: uppercase;">Date Peremtion</th>
 		    		<th style="text-transform: uppercase;">${column_ray}</th>
 		    		<th style="text-transform: uppercase;">${product_provider}</th>
 		    		<th style="text-transform: uppercase;">${column_max_order}</th>
@@ -428,8 +428,7 @@
 				return false ;
 		});
 		
-		$('form#produitfindform').submit
-		(function(){
+		$('form#produitfindform').submit(function(){
 			clearProductTable();
 				$.getJSON( '${find_product_url}',
 						$('#produitfindform').serialize(),
@@ -1159,6 +1158,8 @@
 <spring:message code="lignesappro_dialog_find_product" var="lignesappro_dialog_find_product" />
 <spring:message code="saleprocess_product_dosage" var="saleprocess_product_dosage" />
 <spring:message code="saleprocess_include_products" var="saleprocess_include_products" />
+
+
 <div id="findproduit" style="display: none; " title="${lignesappro_dialog_find_product}">
 		<form  id="produitfindform" enctype="application/x-www-form-urlencoded">
 			<p>
@@ -1181,7 +1182,7 @@
 		    		<th style="text-align: center;" >${column_price}</th>
 		    		<th style="text-align: center;">${product_qty_cipm}</th>
 		    		<th style="text-align: center;">${product_qty_cip}</th>
-		    		<th style="text-align: center;">${product_date_of_record}</th>
+		    		<th style="text-align: center;">Date Peremtion</th>
 		    		<th style="text-align: center;">${product_provider}</th>
 		    	</tr>
 		  </table>

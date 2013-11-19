@@ -33,7 +33,7 @@ public class saleProcessFindProduct {
 
 	@RequestMapping( method = RequestMethod.GET)
 	@ResponseBody
-	public String findProductForm(Model uiModel,HttpServletRequest httpServletRequest) {
+	public String findProduct(HttpServletRequest httpServletRequest) {
 		String designation = httpServletRequest.getParameter("designation") ;
 		String rp = httpServletRequest.getParameter("rp") ;
 		List <LigneApprovisionement> search = new ArrayList<LigneApprovisionement>();

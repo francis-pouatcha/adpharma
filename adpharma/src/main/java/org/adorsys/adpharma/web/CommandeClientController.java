@@ -42,6 +42,7 @@ import org.adorsys.adpharma.domain.TypeFacture;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.DefaultReturnedProductService;
+import org.adorsys.adpharma.services.ReturnedProductException;
 import org.adorsys.adpharma.utils.DateConfig;
 import org.adorsys.adpharma.utils.DateConfigPeriod;
 import org.adorsys.adpharma.utils.ProcessHelper;
@@ -61,7 +62,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/commandeclients")
 @Controller
 public class CommandeClientController {
-	
+
 	@Autowired 
 	DefaultReturnedProductService returnProductService ;
 
@@ -82,25 +83,25 @@ public class CommandeClientController {
 		uiModel.addAttribute("commandeclient",commandeClient);
 		return "saleprocess/showCmd";
 	}
-	
-	
+
+
 	@RequestMapping(value = "/find=venteJournalier", method = RequestMethod.GET)
 	public String venteJournalier(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date()) ;
-        TypedQuery<CommandeClient> typeQuery = CommandeClient.searchTypeQuery(null,Etat.ALL, period.getBegin(), period.getEnd(), null, TypeCommande.ALL) ;
-        List<CommandeClient> resultList = typeQuery.getResultList();
-        int maxResults = resultList.size();
+		DateConfigPeriod period = DateConfig.getBegingEndOfDay(new Date()) ;
+		TypedQuery<CommandeClient> typeQuery = CommandeClient.searchTypeQuery(null,Etat.ALL, period.getBegin(), period.getEnd(), null, TypeCommande.ALL) ;
+		List<CommandeClient> resultList = typeQuery.getResultList();
+		int maxResults = resultList.size();
 		if (page != null || size != null) {
-            int sizeNo = size == null ? 100 : size.intValue();
-            uiModel.addAttribute("commandeclients", typeQuery.setMaxResults(sizeNo).setFirstResult(page == null ? 0 : (page.intValue() - 1) * sizeNo).getResultList());
-            float nrOfPages = (float) maxResults/ sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("commandeclients",resultList);
-        }
-        addDateTimeFormatPatterns(uiModel);
-        return "commandeclients/list";
-    }
+			int sizeNo = size == null ? 100 : size.intValue();
+			uiModel.addAttribute("commandeclients", typeQuery.setMaxResults(sizeNo).setFirstResult(page == null ? 0 : (page.intValue() - 1) * sizeNo).getResultList());
+			float nrOfPages = (float) maxResults/ sizeNo;
+			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+		} else {
+			uiModel.addAttribute("commandeclients",resultList);
+		}
+		addDateTimeFormatPatterns(uiModel);
+		return "commandeclients/list";
+	}
 
 	//@Transactional
 	@RequestMapping(value = "/annulerCmd/{cmdId}", method = RequestMethod.GET)
@@ -125,7 +126,7 @@ public class CommandeClientController {
 	public String annulerCmdByKey(@PathVariable("key") String key , @PathVariable("cmdId") Long cmdId, Model uiModel , HttpServletRequest httpServletRequest) {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		PharmaUser pharmaUser = SecurityUtil.getPharmaUser(key);
-		
+
 		if (commandeClient.getEncaisse()) {
 			uiModel.addAttribute("apMessage", "impossible d'annuler COMMANDE DEJA ENCAISSEE !");
 
@@ -152,20 +153,20 @@ public class CommandeClientController {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
-      if(configuration.getRestoreCancelSale()){
-    	  
-      
-		if (caisse == null) {
-			uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
+		if(configuration.getRestoreCancelSale()){
 
+
+			if (caisse == null) {
+				uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
+
+			}else {
+				//new SaleProcessController().saveAndCloseCmd(commandeClient, caisse ,SecurityUtil.getPharmaUser(null));
+				commandeClient.restorerCommande();
+				uiModel.addAttribute("apMessage", "Commande Restorer Avec Succes !");
+			}
 		}else {
-			//new SaleProcessController().saveAndCloseCmd(commandeClient, caisse ,SecurityUtil.getPharmaUser(null));
-			commandeClient.restorerCommande();
-			uiModel.addAttribute("apMessage", "Commande Restorer Avec Succes !");
+			uiModel.addAttribute("apMessage", "La restoration des commandes Annuler est DESACTIVE !");  
 		}
-      }else {
-    	  uiModel.addAttribute("apMessage", "La restoration des commandes Annuler est DESACTIVE !");  
-	     }
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandeclient", CommandeClient.findCommandeClient(cmdId));
 		uiModel.addAttribute("itemId", cmdId);
@@ -185,29 +186,29 @@ public class CommandeClientController {
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean");
 		Configuration configuration = sessionBean.getConfiguration();
 		if(configuration.getRestoreCancelSale()){
-			
-		
-		if (caisse == null) {
-			uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
 
-		}else if (key == null) {
-			uiModel.addAttribute("apMessage", " veullez saisir  La cle de validation !") ;
-		}else if (pharmaUser== null) {
-			uiModel.addAttribute("apMessage", "La cle de validation est incorrecte") ;
-		}else if (!pharmaUser.hasAnyRole(role)) {
-			uiModel.addAttribute("apMessage", "Vous n'avez pas les droits necessaire Pour Cloturer cette vente") ;
-		}else if (!commandeClient.validaterCmd(uiModel) ){
 
-		}else {
-			new SaleProcessController().saveAndCloseCmd(commandeClient, caisse ,pharmaUser);
-			uiModel.addAttribute("apMessage", "Commande Restorer Avec Succes !");
+			if (caisse == null) {
+				uiModel.addAttribute("apMessage", "Impossble de restorer cette commande ! AUCUNE CAISSE OUVERTE");
 
-		}
+			}else if (key == null) {
+				uiModel.addAttribute("apMessage", " veullez saisir  La cle de validation !") ;
+			}else if (pharmaUser== null) {
+				uiModel.addAttribute("apMessage", "La cle de validation est incorrecte") ;
+			}else if (!pharmaUser.hasAnyRole(role)) {
+				uiModel.addAttribute("apMessage", "Vous n'avez pas les droits necessaire Pour Cloturer cette vente") ;
+			}else if (!commandeClient.validaterCmd(uiModel) ){
+
+			}else {
+				new SaleProcessController().saveAndCloseCmd(commandeClient, caisse ,pharmaUser);
+				uiModel.addAttribute("apMessage", "Commande Restorer Avec Succes !");
+
+			}
 
 		}else {
 			uiModel.addAttribute("apMessage", "La restoration des commandes Annuler A etee Desactive !");
 		}
-		
+
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("commandeclient", commandeClient);
 		uiModel.addAttribute("itemId", cmdId);
@@ -240,7 +241,7 @@ public class CommandeClientController {
 		uiModel.addAttribute("typeclients",Arrays.asList(TypeClient.class.getEnumConstants()));
 		uiModel.addAttribute("genres",Arrays.asList(Genre.class.getEnumConstants()));
 		uiModel.addAttribute("categorieclients",CategorieClient.findAllCategorieClients());
-		
+
 		return "clients/cmdCredit";
 	}
 
@@ -352,7 +353,7 @@ public class CommandeClientController {
 		uiModel.addAttribute("itemId", cmdId);
 		return "saleprocess/showCmd";
 	}
-	
+
 	@Transactional
 	@RequestMapping(value="/convertirEnVenteCredit/{cmdId}", method = RequestMethod.GET)
 	public String convertirEnVenteCredit(@PathVariable("cmdId") Long cmdId, Model uiModel) {
@@ -394,33 +395,32 @@ public class CommandeClientController {
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
 		List<LigneCmdClient> resultList= new ArrayList<LigneCmdClient>();
 		if (commandeClient==null) return null;
-	    resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
+		resultList = LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList();
 		if(resultList.isEmpty()){
-		return null;
+			return null;
 		}
 		return  LigneCmdClient.toDeepJsonArray(resultList);
 	}
-	
+
 	@RequestMapping(value = "/searchVente", method = RequestMethod.GET)
 	public String search(@RequestParam("name") String  name,  Model uiModel) {
-		
+
 		if("".equals(name)){
 			Integer page = 1;
 			Integer size = 50;
 			int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) CommandeClient.countCommandeClients() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+			uiModel.addAttribute("commandeclients", CommandeClient.findCommandeClientEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+			float nrOfPages = (float) CommandeClient.countCommandeClients() / sizeNo;
+			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
 		}else{
-				List<CommandeClient> list = CommandeClient.findCommandeClientByNomClientLike(name).setMaxResults(50).getResultList();
-				uiModel.addAttribute("commandeclients", list);
+			List<CommandeClient> list = CommandeClient.findCommandeClientByNomClientLike(name).setMaxResults(50).getResultList();
+			uiModel.addAttribute("commandeclients", list);
 		}
 		return "commandeclients/list";
 	}
 
 	@Transactional
 	@RequestMapping(value="/{cmdId}/annulerRetourProduit")
-
 	public String annulerRetourProduit(@PathVariable("cmdId") Long cmdId,@RequestParam("cipm") String cipm, Model uiModel,HttpServletRequest request) {
 		LigneCmdClient line = LigneCmdClient.findLigneCmdClientsByCipMEqualsAndCommande(cipm, CommandeClient.findCommandeClient(cmdId)).getResultList().iterator().next();
 		Produit produit = line.getProduit().getProduit();
@@ -465,17 +465,18 @@ public class CommandeClientController {
 		LigneCmdClient line = LigneCmdClient.findLigneCmdClientsByCipMEqualsAndCommande(returnedProductBean.getCipm(), CommandeClient.findCommandeClient(cmdId)).getResultList().iterator().next();
 		Produit produit = line.getProduit().getProduit();
 		LigneApprovisionement ligneApprovisionement = line.getProduit();
-
 		CommandeClient commandeClient = CommandeClient.findCommandeClient(cmdId);
-		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)){
-			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente a credit !");
-			return show(commandeClient.getId(), uiModel, request);
-		}
+
 		if(commandeClient.getTypeCommande().equals(TypeCommande.VENTE_PROFORMAT)){
 			uiModel.addAttribute("apMessage", "Impossible de retourner Les Produits D'une Vente  Proformat !");
 			return show(commandeClient.getId(), uiModel, request);
 		}
-		returnProductService.returnProductFromCashSale(line, returnedProductBean, produit);
+		try {
+			returnProductService.returnProductFromSaleOrder(line, returnedProductBean);
+		} catch (ReturnedProductException e) {
+			uiModel.addAttribute("apMessage", e.getMessage());
+			e.printStackTrace();
+		}
 		return "redirect:/commandeclients/" + encodeUrlPathSegment(commandeClient.getId().toString(), request);
 	}
 

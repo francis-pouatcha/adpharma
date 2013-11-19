@@ -8,6 +8,7 @@
         <field:display field="libelleCourt" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_libelleCourt" object="${sousfamilleproduit}" z="QAOm+3K2qlj1acLhBOZPE/2uhM8="/>
         <field:display field="note" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_note" object="${sousfamilleproduit}" z="Gxirk8/rcIyRUe3Y1/Pj4zgTdPE="/>
         <field:display field="famille" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_famille" object="${sousfamilleproduit}" z="nnHhjhJhusbFB0JQQ1CKn8CfEZI="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_archived" object="${sousfamilleproduit}" z="Z9J65d4NabF15z+dVaWRN9isWjk="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_SousFamilleProduit_footPrint" object="${sousfamilleproduit}" z="yvFaWXFWFgQhCuzPj7ObXDiJQ3E="/>

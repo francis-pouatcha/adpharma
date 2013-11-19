@@ -15,7 +15,12 @@
         <field:display field="enableLicence" id="s_org_adorsys_adpharma_domain_Configuration_enableLicence" object="${configuration}" z="TLOCC5MPP0Y/Uwr5CxChnsRN7uc="/>
         <field:display field="receptionFolder" id="s_org_adorsys_adpharma_domain_Configuration_receptionFolder" object="${configuration}" z="YjDoxYiAkfTlbO3a+1EVZZPaYvI="/>
         <field:display field="sendFolder" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder" object="${configuration}" z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
-        <field:display field="onlyCashReceiveCreditPay"  label="Autoriser le Paiement des dettes a la caisse" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder" object="${configuration}" z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
-   
+        <field:display field="onlyCashReceiveCreditPay" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder" label="Autoriser le Paiement des dettes a la caisse" object="${configuration}" z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
+        <field:display field="saleCash" id="s_org_adorsys_adpharma_domain_Configuration_saleCash" object="${configuration}" z="t6HiNGc74POUiy+WZ/D/GQ34pTY="/>
+        <field:display field="editCloseSupply" id="s_org_adorsys_adpharma_domain_Configuration_editCloseSupply" object="${configuration}" z="KWLjm5NZYZ1Q+iV5RR2ATYfAwnU="/>
+        <field:display field="onlySaleOld" id="s_org_adorsys_adpharma_domain_Configuration_onlySaleOld" object="${configuration}" z="HcMg6GNpJIk1HW3Iya+kktHGbVY="/>
+        <field:display field="forceToSameLine" id="s_org_adorsys_adpharma_domain_Configuration_forceToSameLine" object="${configuration}" z="3aJnbFatItT+eFOlkbVVmM235eE="/>
+        <field:display field="onlyCashReceiveCreditPay" id="s_org_adorsys_adpharma_domain_Configuration_onlyCashReceiveCreditPay" object="${configuration}" z="xX0U7WRId2hAesDnX4fO64TD2bs="/>
+        <field:display field="preparationAutomatisee" id="s_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" object="${configuration}" z="9521W2t3ws9EbPCuXAvc9L/eS9I="/>
     </page:show>
 </div>

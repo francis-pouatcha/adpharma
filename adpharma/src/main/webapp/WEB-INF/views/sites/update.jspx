@@ -15,8 +15,8 @@
                     <field:textarea field="adresse" id="c_org_adorsys_adpharma_domain_Site_adresse" z="DUbKJhorzX80Ly+QweSTDMcgrRM="/>
                     <field:input field="drugstoreKey" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
                     <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_drugstoreKey" label="Dossier Messages PHML" z="AacLrc4XgDS2ayBB8Nu6rRrATgY="/>
-                <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
-              <field:checkbox field="archived" render="false" id="c_org_adorsys_adpharma_domain_Site_archived" z="0+IFp7EQOIEuR7jVJcca+QK89b4="/>
+                    <field:input field="orderReceivePath" id="c_org_adorsys_adpharma_domain_Site_orderReceivePath" z="28mTqfg8sb3I4hj9tUX/eFAMQO8="/>
+                    <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Site_archived" render="false" z="user-managed"/>
                 </td>
                 <td class="tbcreate">
                     <field:input field="tauxChiffreAffaire" id="c_org_adorsys_adpharma_domain_LigneApprovisionement_prixVenteUnitaire" label="Taux Chiffre Affaire" validationMessageCode="field_invalid_number" z="user-managed"/>
@@ -32,5 +32,7 @@
                 </td>
             </tr>
         </table>
+        <field:input field="orderSentPath" id="c_org_adorsys_adpharma_domain_Site_orderSentPath" z="XSlT/K1ynhmGm1x065HiZwvbhPM="/>
+        <field:input field="tauxChiffreAffaire" id="c_org_adorsys_adpharma_domain_Site_tauxChiffreAffaire" max="100" min="1" required="true" validationMessageCode="field_invalid_number" z="PK+9dPV4N9AZ3BMCZ+1CVHdBdF0="/>
     </form:update>
 </div>

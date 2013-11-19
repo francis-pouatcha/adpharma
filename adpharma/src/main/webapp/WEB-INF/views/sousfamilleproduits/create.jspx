@@ -17,6 +17,7 @@
                 </td>
             </tr>
         </table>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_SousFamilleProduit_archived" z="iq27Vd28b2K1CUUxVeFZ3NTDs0M="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_SousFamilleProduit" render="${not empty dependencies}" z="bwRkSW17f7OVl3XauZ08wXhNsOY="/>
 </div>

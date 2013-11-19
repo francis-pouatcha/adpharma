@@ -14,13 +14,16 @@ privileged aspect Configuration_Roo_ToString {
         sb.append("EditCloseSupply: ").append(getEditCloseSupply()).append(", ");
         sb.append("EnableLicence: ").append(getEnableLicence()).append(", ");
         sb.append("ForceToSameLine: ").append(getForceToSameLine()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
         sb.append("OnlyCashReceiveCreditPay: ").append(getOnlyCashReceiveCreditPay()).append(", ");
         sb.append("OnlySaleOld: ").append(getOnlySaleOld()).append(", ");
+        sb.append("PreparationAutomatisee: ").append(getPreparationAutomatisee()).append(", ");
         sb.append("ReceptionFolder: ").append(getReceptionFolder()).append(", ");
         sb.append("RestoreCancelSale: ").append(getRestoreCancelSale()).append(", ");
         sb.append("SaleCash: ").append(getSaleCash()).append(", ");
         sb.append("SaleForce: ").append(getSaleForce()).append(", ");
-        sb.append("SendFolder: ").append(getSendFolder());
+        sb.append("SendFolder: ").append(getSendFolder()).append(", ");
+        sb.append("Version: ").append(getVersion());
         return sb.toString();
     }
     

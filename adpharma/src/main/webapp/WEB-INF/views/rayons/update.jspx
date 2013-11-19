@@ -19,5 +19,6 @@
         </table>
         <field:input field="emplacement" id="c_org_adorsys_adpharma_domain_Rayon_emplacement" z="fxHxdAwJlhYUFcKua3iT3tVWFy0="/>
         <field:input field="codeGeo" id="c_org_adorsys_adpharma_domain_Rayon_codeGeo" z="0MuVuKOro/JmJ+MQXMinj5VimaY="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Rayon_archived" z="hlg+jwmWXXmhWo+auUij9h1HQPM="/>
     </form:update>
 </div>

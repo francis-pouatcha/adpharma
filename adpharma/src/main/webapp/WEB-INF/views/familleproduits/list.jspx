@@ -9,6 +9,7 @@
             <table:column id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" property="libelleCourt" render="false" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_FamilleProduit_note" maxLength="-1" property="note" z="user-managed"/>
             <table:column id="c_org_adorsys_adpharma_domain_FamilleProduit_footPrint" property="footPrint" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_FamilleProduit_archived" property="archived" z="VwgkkdDB2BXGuLgnXowrw1hhW0A="/>
         </table:table>
     </page:list>
 </div>

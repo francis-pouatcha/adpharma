@@ -176,6 +176,14 @@ public class ProduitController {
 		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(100).getResultList();
 		return Produit.toJsonArray(resultList);
 	}
+	
+	
+	//Recherche ajax de produits par designation
+		@RequestMapping(value="/findStockedProducts", method = RequestMethod.GET)
+		@ResponseBody
+		public String findStockedProducts(HttpServletRequest httpServletRequest) {
+			return new saleProcessFindProduct().findProduct(httpServletRequest);
+		}
 
 	@RequestMapping(value="/findProductByIdAjax/{id}", method = RequestMethod.GET)
 	@ResponseBody

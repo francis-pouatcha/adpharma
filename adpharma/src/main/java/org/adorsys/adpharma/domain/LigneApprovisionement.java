@@ -257,7 +257,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		line.setQuantieEnStock(quantieEnStock);
 		line.setQteCip(getProduit().getQuantiteEnStock());
 		line.setFournisseur(getApprovisionement().getFounisseur().displayShotName());
-		line.setSaisiele(PharmaDateUtil.format(getDateSaisie(), PharmaDateUtil.DATETIME_PATTERN_LONG));
+		line.setSaisiele(PharmaDateUtil.format(datePeremtion, PharmaDateUtil.DATETIME_PATTERN_LONG));
 		//calculRemise();
 		line.setQteCip(produit.getQuantiteEnStock());
 		line.setViewMsg(viewMsg);

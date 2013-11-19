@@ -5,8 +5,9 @@
     <form:update id="fu_org_adorsys_adpharma_domain_FamilleProduit" modelAttribute="familleProduit" path="/familleproduits" versionField="Version" z="pYDDZchkab+Ua5cOjrylfhfQkZs=">
         <field:input disabled="true" field="familleNumber" id="c_org_adorsys_adpharma_domain_FamilleProduit_familleNumber" z="user-managed"/>
         <field:input field="libelleFamille" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleFamille" required="true" z="N+Y4548uTT1WhWA7mEnaRTqRACg="/>
-        <field:input field="libelleCourt" render="false" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" z="user-managed"/>
+        <field:input field="libelleCourt" id="c_org_adorsys_adpharma_domain_FamilleProduit_libelleCourt" render="false" z="user-managed"/>
         <field:textarea field="note" id="c_org_adorsys_adpharma_domain_FamilleProduit_note" z="OIPJ6EHH5OE2zk3PEFFPgu5y/Hw="/>
         <field:input field="footPrint" id="c_org_adorsys_adpharma_domain_FamilleProduit_footPrint" render="false" z="user-managed"/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_FamilleProduit_archived" z="T2oMgGWX140hELkFc8svv03sRc4="/>
     </form:update>
 </div>

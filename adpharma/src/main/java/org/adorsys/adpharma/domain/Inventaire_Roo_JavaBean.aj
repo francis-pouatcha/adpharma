@@ -8,7 +8,6 @@ import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.LigneInventaire;
 import org.adorsys.adpharma.domain.PharmaUser;

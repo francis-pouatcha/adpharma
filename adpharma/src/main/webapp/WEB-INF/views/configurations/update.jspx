@@ -11,11 +11,15 @@
         <field:checkbox field="editCloseSupply" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Editer Les Entrees Clos ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:checkbox field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Toujour Ventre Les Plus Ancien ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
         <field:checkbox field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_restoreCancelSale" label="Forcer Les ventes SUr le meme CIPM ?" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
-        <field:checkbox field="preparationAutomatisee" id="c_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" label="Effectuer Les Preparations Automatisee" z="MeXdUkl5DlTbhYDsOBKZJQRmOA4="/>
+        <field:checkbox field="preparationAutomatisee" id="c_org_adorsys_adpharma_domain_Configuration_preparationAutomatisee" label="Effectuer Les Preparations Automatisee" z="user-managed"/>
         <field:input field="sendFolder" id="c_org_adorsys_adpharma_domain_Configuration_sendFolder" label="Repertoire Envoi" z="user-managed"/>
         <field:input field="receptionFolder" id="c_org_adorsys_adpharma_domain_Configuration_receptionFolder" label="Repertoire De Reception" z="user-managed"/>
         <field:checkbox field="enableLicence" id="c_org_adorsys_adpharma_domain_Configuration_enableLicence" z="uLkgoAWqOZfC0bIWe2C6J1OAdx8="/>
-       <field:checkbox field="onlyCashReceiveCreditPay"  label="Autoriser le Paiement des dettes a la caisse" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder"  z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
-    
+        <field:checkbox field="onlyCashReceiveCreditPay" id="s_org_adorsys_adpharma_domain_Configuration_sendFolder" label="Autoriser le Paiement des dettes a la caisse" z="6op2eJlBx8a3K2gV8oHDfXbQavM="/>
+        <field:checkbox field="saleCash" id="c_org_adorsys_adpharma_domain_Configuration_saleCash" z="yI0e4mPmHH8WWQQJJNgILfZP0TE="/>
+        <field:checkbox field="editCloseSupply" id="c_org_adorsys_adpharma_domain_Configuration_editCloseSupply" z="WndZU7mqbEbziL2TLKKpVNNzlH0="/>
+        <field:checkbox field="onlySaleOld" id="c_org_adorsys_adpharma_domain_Configuration_onlySaleOld" z="nWnoUuN5a3yKQ0OSe7k64bHt/Ng="/>
+        <field:checkbox field="forceToSameLine" id="c_org_adorsys_adpharma_domain_Configuration_forceToSameLine" z="fhFd7EQrDUKNXzbae16hHaeEJEk="/>
+        <field:checkbox field="onlyCashReceiveCreditPay" id="c_org_adorsys_adpharma_domain_Configuration_onlyCashReceiveCreditPay" z="34IgK01j30drhdLFOKx+CQjLadA="/>
     </form:update>
 </div>
