@@ -24,6 +24,7 @@ import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.domain.TypeOpCaisse;
 import org.adorsys.adpharma.domain.TypeSortieProduit;
+import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.JasperPrintService;
 import org.adorsys.adpharma.services.SaleService;
 import org.adorsys.adpharma.utils.DateConfig;
@@ -62,6 +63,9 @@ public class DocumentsPrinterController {
 		uiModel.addAttribute("filiales", Filiale.findAllFiliales());
 		uiModel.addAttribute("typeMouvements", ProcessHelper.populateTypeMouvements());
 		uiModel.addAttribute("users", ProcessHelper.populateUsers());
+		List<TypeSortieProduit> allTypeSortieProduits = TypeSortieProduit.findAllTypeSortieProduits();
+		allTypeSortieProduits.add(0, new TypeSortieProduit());
+		uiModel.addAttribute("typeSortieProduit", allTypeSortieProduits);
 		return "etats/docpages";
 	}
 	
@@ -80,6 +84,24 @@ public class DocumentsPrinterController {
 		parameters.put("DateF",etatBean.getDateFin());
 		try {
 			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_DECOMPOSITION_FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ;
+		}
+	}
+	
+	@Produces({"application/pdf"})
+	@Consumes({""})
+	@RequestMapping(value = "/print/etatPeriodiqueSortie.pdf", method = RequestMethod.GET)
+	public void etatPeriodiqueSortie(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+		Map parameters = new HashMap();
+		parameters.put("DateD",etatBean.getDateDebut());
+		parameters.put("DateF",etatBean.getDateFin());
+		parameters.put("user",SecurityUtil.getUserName());
+		parameters.put("raison",etatBean.getTypeSortieProduit() == null ? "%" : etatBean.getTypeSortieProduit().getLibelle()+"%");
+		try {
+			jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_SORTIE_PRODUIT_FILE_PATH);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

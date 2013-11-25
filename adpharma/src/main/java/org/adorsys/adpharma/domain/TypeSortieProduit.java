@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
-@RooToString
 @RooEntity(inheritanceType = "TABLE_PER_CLASS", entityName = "TypeSortieProduit")
 public class TypeSortieProduit extends AdPharmaBaseEntity {
 
@@ -21,5 +20,14 @@ public class TypeSortieProduit extends AdPharmaBaseEntity {
     private String libelle;
     private String description;
 
+    @Override
+    public String toString(){
+    	return libelle ;
+    	
+    }
+    
+    public TypeSortieProduit() {
+		libelle = " " ;
+	}
     
 }

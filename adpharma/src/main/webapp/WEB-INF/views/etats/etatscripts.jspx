@@ -24,7 +24,8 @@
     <spring:url value="/etats/print/etatFicheStockRayon.pdf?"  var="url9" />  
     <spring:url value="/etats/print/etatValorisationFiliale.pdf?"  var="url10" />
     <spring:url value="/etats/print/etatMouvementByCip.pdf?"  var="url11" />
-    <spring:url value="/etats/print/etatperiodiqueDecaissementgrpes.pdf?"  var="url12" />   
+    <spring:url value="/etats/print/etatperiodiqueDecaissementgrpes.pdf?"  var="url12" />
+    <spring:url value="/etats/print/etatPeriodiqueSortie.pdf?"  var="url13" />   
     <spring:url value="/etats/etatPeriodique?form"  var="date_form_url" />
     
  <script type="text/javascript">
@@ -41,6 +42,7 @@
 	var url10 = '${url10}' ;
 	var url11 = '${url11}';
 	var url12 = '${url12}';
+	var url13 = '${url13}';
 	var gotoUrl =url1 ;
 
     $(function (){
@@ -192,6 +194,9 @@
  	      if(id=="url12"){
  	    	  gotoUrl =url12; reset(); hide7();
  	      }
+ 	     if(id=="url13"){
+			  gotoUrl =url13; reset(); hide2();
+		  }
  		  }
 </script>
 <div id="dialog"><!--  --></div>   

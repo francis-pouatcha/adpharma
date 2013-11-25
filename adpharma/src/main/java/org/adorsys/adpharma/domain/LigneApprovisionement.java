@@ -789,8 +789,8 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 
 	public static TypedQuery<LigneApprovisionement> search(FamilleProduit familleProduit,SousFamilleProduit sousFamilleProduit,String designation, String cipMaison, Rayon rayon, String beginBy, String endBy, Filiale filiale, Date minDate, Date maxDate, BigInteger qteStock, Etat etat) {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.dateSaisie BETWEEN :minDateSaisie AND :maxDateSaisie ");
-		minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
-		maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2090 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
+		maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2090 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
 		etat = etat == null ? Etat.CLOS : etat ;
 		if (StringUtils.isNotBlank(cipMaison)) {
 			return entityManager().createQuery("SELECT o FROM LigneApprovisionement AS o WHERE  o.cipMaison = :cipMaison ", LigneApprovisionement.class).setParameter("cipMaison", cipMaison);

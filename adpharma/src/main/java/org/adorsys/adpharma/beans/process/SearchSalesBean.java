@@ -68,7 +68,7 @@ public class SearchSalesBean {
 	public  List<CommandeClient> search() {
 		 if (this.entityManager == null) this.entityManager = AdPharmaBaseEntity.entityManager();
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM CommandeClient AS o WHERE o.dateCreation >= :minDateCreation ");
-		dateCreation = dateCreation != null ? dateCreation : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+		dateCreation = dateCreation != null ? dateCreation : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
 		dateCreationF = dateCreationF != null ? dateCreationF : PharmaDateUtil.getEndDayDate() ;
 		if (StringUtils.isNotBlank(commandeNumber))return entityManager.createQuery("SELECT o FROM CommandeClient AS o WHERE  o.cmdNumber = :cmdNumber ", CommandeClient.class).setParameter("cmdNumber", "CMD-" + commandeNumber).getResultList();
 		if (StringUtils.isNotBlank(cipm) && StringUtils.isNotBlank(designation)){

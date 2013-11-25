@@ -74,6 +74,7 @@
                     <field:input label="Cip" field="cip" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_cip" required="false" />
                     <field:input label="Designation" field="designation" id="c_org_adorsys_adpharma_beans_process_EtatManagerBean_designation" required="false"  />
 			        <field:select path="/" field="typeMouvement" items="${typeMouvements}" id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" z="user-managed"/>
+			        <field:select path="/" field="typeSortieProduit" items="${typeSortieProduit}" required="false" itemValue="id" itemLabel="libelle" label="Raison Sortie" id="c_org_adorsys_adpharma_domain_MouvementStock_typeMouvement" z="user-managed"/>
             </div>
             <div id="param2_tab3">
                     <field:select path="/" field="typeOperation" items="${typesOperationsCaisses}" id="c_org_adorsys_adpharma_domain_OperationCaisse_typeOperation" z="user-managed"/>
@@ -178,6 +179,14 @@
 				          </td>
 				          <td>
 				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url12"  />
+				          </td>
+				     </tr>
+				      <tr>
+				          <td>
+				               <i class="labeletat">Etat periodique des sorties de produit / raison </i>
+				          </td>
+				          <td>
+				                <input style="float: right;" onclick="defineGotoUrl(this);" type="radio" name="etats" id="url13"  />
 				          </td>
 				     </tr>
 				    </table>
