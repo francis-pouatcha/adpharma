@@ -3,6 +3,7 @@ package org.adorsys.adpharma.domain;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import flexjson.JSONSerializer;
+import flexjson.transformer.DateTransformer;
 
 
 @RooJavaBean
@@ -366,6 +368,7 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 	
 	public boolean isOut(){
+		if(quantiteEnStock==null) quantiteEnStock = BigInteger.ZERO;
 		return quantiteEnStock.intValue() <= 0 ;
 	}
 	
@@ -403,8 +406,9 @@ public class Produit extends AdPharmaBaseEntity {
 
 	}
 
-	public void validate(BindingResult bindingResult) {
-		if (StringUtils.isBlank(cip)) {
+	public void validate(BindingResult bindingResult,Boolean whithcip) {
+		if(!(whithcip ==null || whithcip)) cip = null ;
+		if (StringUtils.isBlank(getCip())) {
 			cip = generateDefaultCip();
 		}
 		List<Produit> resultList = Produit.findProduitsByCipEquals(cip).getResultList();
@@ -412,6 +416,7 @@ public class Produit extends AdPharmaBaseEntity {
 			ObjectError error = new ObjectError("cip", "un produit avec ce Cip existe");
 			bindingResult.addError(error);
 		}
+		System.out.println(cip);
 	}
 
 	public void addproduct(BigInteger qte) {
@@ -423,7 +428,6 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public String generateDefaultCip() {
-		String cip = null;
 		cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
 		while (!Produit.findProduitsByCipEquals(cip).getResultList().isEmpty()) {
 			cip = "9" + RandomStringUtils.randomNumeric(6) + "9";
@@ -440,9 +444,13 @@ public class Produit extends AdPharmaBaseEntity {
 	
 	// Override json product
 	public String toJson(){
-		return new JSONSerializer().include("cip", "designation", "quantiteEnStock").exclude("*.class").serialize(this);
+		return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy hh:mm:ss"), Date.class).include("cip", "designation", "quantiteEnStock"
+				,"rayon.codeRayon","produitNumber","fabricant","prixAchatU","prixVenteU","filiale.libelle","tauxDeMarge.margeValue","tauxRemiseMax","prixAchatSTock","prixVenteStock","id").exclude("*","*.class").serialize(this);
 	}
-	
+	 public static String toJsonArray(Collection<Produit> collection) {
+	        return new JSONSerializer().transform(new DateTransformer("dd-MM-yyyy hh:mm:ss"), Date.class).include("cip", "designation", "quantiteEnStock"
+	        		,"rayon.codeRayon","produitNumber","fabricant","prixAchatU","prixVenteU","filiale.libelle","tauxDeMarge.margeValue","tauxRemiseMax","prixAchatSTock","prixVenteStock","id").exclude("*","*.class").serialize(collection);
+	    }
 	public String toJson1(){
 		return new JSONSerializer().include("cip", "designation", "quantiteEnStock").exclude("*.class", "*").serialize(this);
 	}

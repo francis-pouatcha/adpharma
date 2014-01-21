@@ -11,7 +11,6 @@
 	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-	
 		<spring:message code="column_cip" var="column_cip" htmlEscape="false" />
 		<spring:message code="column_cipm" var="column_cipm" htmlEscape="false" />
 		<spring:message code="column_designation" var="column_designation" htmlEscape="false"/>
@@ -23,7 +22,6 @@
 		<spring:message code="column_ray" var="column_ray" htmlEscape="false" />
 		<spring:message code="column_max_order" var="column_max_order" htmlEscape="false" />
 		<spring:message code="column_qty_order" var="column_qty_order" htmlEscape="false" />
-		
 		
 		<spring:message code="button_cancel" var="button_cancel" htmlEscape="false" />
 		<spring:message code="button_save" var="button_save" htmlEscape="false" />
@@ -738,7 +736,7 @@
 								style="color: blue; padding-left: 0px;"  />
 							</td>
 							
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly"  onmouseover="this.select();" onfocus="this.select();"  class="autres"
+							<td><INPUT type="text" name="qte" id="qte"    onmouseover="this.select();" onfocus="this.select();"  class="autres"
 								onkeyup="calculePt(); configuration();" 
 								value="${saleProcess.lineToUpdate.quantiteCommande}"
 								onKeyPress="return scanTouche(event)" width="50px;"
@@ -854,7 +852,7 @@
 										onKeyPress="return scanTouche(event)" />
 								</c:if>
 							</td>
-							<td><INPUT type="text" name="qte" id="qte"  readonly="readonly"  onmouseover="this.select();" onfocus="this.select();" 
+							<td><INPUT type="text" name="qte" id="qte"     onmouseover="this.select();" onfocus="this.select();" 
 								onkeyup="calculePt(); configuration();" value="${qte}" class="autres"
 								onKeyPress="return scanTouche(event)" width="50px;" 
 								title="${product_qty }"  /></td>

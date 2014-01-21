@@ -46,7 +46,7 @@ public class ProduitController {
 	@RequestMapping(value="/findByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findProductByCip(@PathVariable("cip") String cip,Model uiModel) {
-		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(100).getResultList();
+		List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(200).getResultList();
 		Produit prd = null ;
 		String reponse = "Aucun produit Trouve" ;
 		if (!produits.isEmpty()) {
@@ -214,7 +214,7 @@ public class ProduitController {
 	
 	@RequestMapping(value="/create/{cip}",method = RequestMethod.POST)
 	public String create(@PathVariable("cip") boolean cip, @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-		produit.validate(bindingResult);
+		if(!cip) produit.validate(bindingResult,cip);
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("produit", produit);
 			uiModel.addAttribute("cip", cip);
@@ -229,7 +229,7 @@ public class ProduitController {
 	@ResponseBody
 	@RequestMapping(value="/createByAjax",method = RequestMethod.GET)
 	public String create( @Valid Produit produit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-		produit.validate(bindingResult);
+		produit.validate(bindingResult,null);
 		if (bindingResult.hasErrors()) {
 			return null;
 		}

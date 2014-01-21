@@ -149,6 +149,7 @@ public class LigneApprovisionementController {
 
 	@RequestMapping(value="/sortieProduit", method = RequestMethod.GET)
 	public String sortieProduit(@RequestParam(value="mode",required=false) String mode, Model uiModel) {
+		System.out.println("Mode : "+mode);
 		Date minDate =  PharmaDateUtil.getBeginDayDate();
 		Date maxDate =  PharmaDateUtil.getEndDayDate();
 		List<MouvementStock> mvts = MouvementStock.search(TypeMouvement.SORTIE_PRODUIT, minDate, maxDate);
@@ -202,7 +203,7 @@ public class LigneApprovisionementController {
 	public String addSortie(@RequestParam("mode")String mode ,@RequestParam("qte")BigInteger qte,Model uiModel,HttpServletRequest request) {
 		String raison = request.getParameter("raison");
 
-		if("byCipm".equals(mode)){
+		if("ByCipm".equals(mode)){
 			String cipm = request.getParameter("cipm");
 			List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(cipm).getResultList();
 			if (!resultList.isEmpty()) {
@@ -231,7 +232,7 @@ public class LigneApprovisionementController {
 			}
 		}
 		uiModel.asMap().clear();
-		return sortieProduit(mode, uiModel);
+		return "redirect:/ligneapprovisionements/sortieProduit?mode="+mode;
 	}  
 
 	public void pushLineOut(LigneApprovisionement line ,BigInteger qte ,String raison ){

@@ -22,12 +22,6 @@ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
     <spring:message code="commandefournisseur_title_start_message" var="commandefournisseur_title_start_message" htmlEscape="false" />
     <spring:message code="commandefournisseur_title_end_message" var="commandefournisseur_title_end_message" htmlEscape="false" />
     
-    
-    
-    
-    
-    <jsp:include page="createForm_script.jspx" /> 
-    
     <form:create  id="fc_org_adorsys_adpharma_domain_CommandeFournisseur" modelAttribute="orderPreParationBean" path="/commandprocesses/preparedOrder" render="${empty dependencies}" z="user-managed">
          <table class="tableForm">
              <tr>
@@ -41,7 +35,7 @@ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
                         <springform:select   id="_modeSelection_id" cssStyle=" width: 212px;" path="modeSelection"  items="${modeselections}" dojoType="dijit.form.ComboBox"/> <BR />                
                         <field:input field="productSelectionQuantity"  titleMessage="${commandefournisseur_product_title}"  id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur" label="${commandefournisseur_qty_selection}"  />
                 </div>
-                <div id="periode" style="display: none;">
+                <div id="periode" >
                         <legend>Periode  des Ventes</legend>
                          <field:datetime label="Date debut" dateTimePattern="dd-MM-yyyy HH:mm" field="beginDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
                          <field:datetime label="Date Fin" dateTimePattern="dd-MM-yyyy HH:mm" field="endDate" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_dateLimiteLivraison" z="user-managed"/>
@@ -59,7 +53,7 @@ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
                          <field:input field="beginBy" titleMessage="${commandefournisseur_title_start_message}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="${label_start_by}"  />
                          <field:input field="endBy"  titleMessage="${commandefournisseur_title_end_message}" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_fournisseur"  label="${label_end_by}"  />
                 </div>
-                <div id="plage">
+                <div id="other">
                         <legend>${commandefournisseur_others}</legend>
                         <field:select field="commandType" style="width: 60%;"  disableFormBinding="true" id="c_org_adorsys_adpharma_domain_CommandeFournisseur_commandType" items="${commandTypes}" path="" z="o9ACgUkDWf5k2bGayLPSDBzjHPQ="/>
                 </div>
@@ -68,4 +62,5 @@ xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
          </table>
            </form:create>
     <form:dependency dependencies="${dependencies}" id="d_org_adorsys_adpharma_domain_CommandeFournisseur" render="${not empty dependencies}" z="user-managed"/>
+    <jsp:include page="createForm_script.jspx" /> 
 </div>

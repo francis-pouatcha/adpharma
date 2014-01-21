@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.DestinationMvt;
+import org.adorsys.adpharma.domain.Etat;
 import org.adorsys.adpharma.domain.Inventaire;
 import org.adorsys.adpharma.domain.LigneApprovisionement;
 import org.adorsys.adpharma.domain.LigneInventaire;
@@ -62,6 +63,27 @@ public class DefaultInventoryService implements InventoryService {
         Query q = em.createQuery(searchQuery.toString());
         q.setParameter("quantieEnStock", BigInteger.ZERO);
         q.setParameter("cip", produit.getCip());
+        List<Object>  stock = q.getResultList();
+		if(!stock.isEmpty()){
+			trueStock = (BigInteger) stock.iterator().next();
+			trueStock = trueStock!=null ?trueStock :BigInteger.ZERO;
+		}
+		return trueStock ;
+	}
+	
+	/**
+	 * @param produit
+	 * @return the true value of stock
+	 */
+	public static BigInteger getTruecloseStockQte(Produit produit){
+		BigInteger trueStock = BigInteger.ZERO;
+		if(produit == null) return trueStock ;
+		EntityManager em = MouvementStock.entityManager();
+        StringBuilder searchQuery = new StringBuilder("SELECT SUM(o.quantieEnStock) FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock AND o.cip = :cip and o.approvisionement.etat =: etat ");
+        Query q = em.createQuery(searchQuery.toString());
+        q.setParameter("quantieEnStock", BigInteger.ZERO);
+        q.setParameter("cip", produit.getCip());
+        q.setParameter("etat", Etat.CLOS);
         List<Object>  stock = q.getResultList();
 		if(!stock.isEmpty()){
 			trueStock = (BigInteger) stock.iterator().next();

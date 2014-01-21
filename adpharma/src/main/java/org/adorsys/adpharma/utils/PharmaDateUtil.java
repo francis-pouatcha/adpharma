@@ -19,7 +19,7 @@ public class PharmaDateUtil {
 	public static final String DATE_PATTERN_SHORT = "dd-MM";
 	public static final String DATE_PATTERN_SHORT_LIT = "EEE, dd MMM";
 	
-	public static final String DATETIME_PATTERN_LONG = "dd-MM yyyy HH:mm";
+	public static final String DATETIME_PATTERN_LONG = "dd-MM yyyy hh:mm";
 	public static final String DATETIME_PATTERN_LONGS = "dd-MM-yyyy HH:mm";
 	public static final String DATETIME_PATTERN_LONG_LIT = "EEE, dd MMM yyyy HH:mm";
 	public static final String DATETIME_PATTERN_SHORT = "dd-MM HH:mm";
@@ -70,14 +70,14 @@ public class PharmaDateUtil {
 		Date date = new Date();
 		 String stringDate = format(date, PharmaDateUtil.DATE_PATTERN_LONG);
 		 stringDate = stringDate + " 00:00" ;
-		return parse(stringDate, DATETIME_PATTERN_LONG);
+		return parse(stringDate, DATETIME_PATTERN_LONGS);
 	}
 	
 	public static Date getEndDayDate(){
 		Date date = new Date();
 		 String stringDate = format(date, PharmaDateUtil.DATE_PATTERN_LONG);
 		 stringDate = stringDate + " 23:59" ;
-		return parse(stringDate, DATETIME_PATTERN_LONG);
+		return parse(stringDate, DATETIME_PATTERN_LONGS);
 	}
 	
 	public static String parseToFrenchMonth(int intValue){

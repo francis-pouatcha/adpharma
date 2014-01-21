@@ -193,6 +193,7 @@ public class EtatCreditsController {
 	public String encaisser( Paiement paiement,@PathVariable("id") Long id, Model uiModel ,HttpServletRequest httpServletRequest) {
 		addDateTimeFormatPatterns(uiModel);
 		EtatCredits etatCredits = EtatCredits.findEtatCredits(id);
+		Client client = etatCredits.getClient();
 		Configuration configuration = Configuration.findConfiguration(new Long(1)) ;
 		if(configuration.getOnlyCashReceiveCreditPay()){
 			Caisse myOpenCaisse = PaiementProcess.getMyOpenCaisse(SecurityUtil.getPharmaUser());
@@ -205,6 +206,8 @@ public class EtatCreditsController {
 				etatCredits.merge();
 				uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_success", null, LocaleUtil.getCurrentLocale()));
 			}
+			client.calculeTotalDette();
+			client.merge();
 			return  initShowView(uiModel, etatCredits);
 		}
 		if (etatCredits.getSolder()) {
@@ -218,6 +221,8 @@ public class EtatCreditsController {
 		}
 		etatCredits.encaisser(paiement);
 		etatCredits.merge();
+		client.calculeTotalDette();
+		client.merge();
 		uiModel.addAttribute("apMessage", messageSource.getMessage("etatcredit_payment_success", null, LocaleUtil.getCurrentLocale()));
 		return   initShowView(uiModel, etatCredits);
 

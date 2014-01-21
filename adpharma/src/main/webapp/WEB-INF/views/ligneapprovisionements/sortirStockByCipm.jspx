@@ -217,7 +217,7 @@ $('#subForm').submit(function(){
 
 	<util:panel title="${sortie_panel_cipm}" id="cip">
 		<div id="sortie">
-			<form action="${add_sortie}?mode=byCipm" method="POST" id="subForm">
+			<form action="${add_sortie}?mode=ByCipm" method="POST" id="subForm">
 				<table>
 					<tr>
 						<th style="text-align: center;">CIPM</th>
@@ -289,7 +289,7 @@ $('#subForm').submit(function(){
 				<tr>
 					<td><c:out value="${ligne.cip}"></c:out></td>
 					<td ><c:out value="${ligne.cipM}"></c:out></td>
-					<td class="des"><c:out value="${ligne.designation}"></c:out></td>
+					<td class="des" style="text-align: left;"><c:out value="${ligne.designation}"></c:out></td>
 
 					<td><c:out value="${ligne.qteInitiale}"></c:out></td>
 

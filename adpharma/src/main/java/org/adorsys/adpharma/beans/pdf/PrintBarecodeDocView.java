@@ -67,7 +67,7 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 		emptyCell.setMinimumHeight(6f);
 		PdfPCell empty = new PdfPCell(cellBorderlessStyle);
 		PrintBareCodeBean printBareCodeBean = ( PrintBareCodeBean) model.get("printBareCodeBean");
-		PrintEmptyCell(printBareCodeBean.getEmptyLine(), printBareCodeBean.getEmptyColumn(), adressTable, emptyCell);
+		printEmptyCell(printBareCodeBean.getEmptyLine(), printBareCodeBean.getEmptyColumn(), adressTable, emptyCell);
 
 		List<LigneApprovisionement> ligne = LigneApprovisionement.findLigneApprovisionementsByCipMaisonEquals(printBareCodeBean.getBareCode()).getResultList();
 		if (!ligne.isEmpty()) {
@@ -123,7 +123,7 @@ public class PrintBarecodeDocView extends   AbstractPdfView {
 			document.add(new Phrase(new Chunk(".")));
 	}
 	
-	public void PrintEmptyCell(int emptyLine,int emptyColumn,PdfPTable table,PdfPCell emptyCell){
+	public void printEmptyCell(int emptyLine,int emptyColumn,PdfPTable table,PdfPCell emptyCell){
 		PdfPCell cellStyle = new PdfPCell();
 		cellStyle.setPadding(.1f);
 

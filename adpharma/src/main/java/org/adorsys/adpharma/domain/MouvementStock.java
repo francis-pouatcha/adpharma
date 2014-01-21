@@ -30,7 +30,7 @@ public class MouvementStock extends AdPharmaBaseEntity {
     private String mvtNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd-MM-yyyy hh:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date dateCreation = new Date();
 
     @NotNull
@@ -107,8 +107,8 @@ public class MouvementStock extends AdPharmaBaseEntity {
 
     public static List<MouvementStock> search(TypeMouvement typeMouvement, String cipM, String cip, Date minDate, Date maxDate, String designation) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM MouvementStock AS o WHERE o.dateCreation BETWEEN :minDateCreation AND :maxDateCreation ");
-        minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
-        maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+        minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
+        maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
         if (StringUtils.isNotBlank(cipM)) {
             searchQuery.append(" AND o.cipM = :cipM ");
         }
@@ -142,8 +142,8 @@ public class MouvementStock extends AdPharmaBaseEntity {
 
     public static List<MouvementStock> search(TypeMouvement typeMouvement, Date minDate, Date maxDate) {
         StringBuilder searchQuery = new StringBuilder("SELECT o FROM MouvementStock AS o WHERE o.dateCreation >= :minDateCreation AND o.dateCreation <= :maxDateCreation ");
-        minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
-        maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONG);
+        minDate = minDate != null ? minDate : PharmaDateUtil.parse("10-10-2010 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
+        maxDate = maxDate != null ? maxDate : PharmaDateUtil.parse("10-10-2050 00:00", PharmaDateUtil.DATETIME_PATTERN_LONGS);
         if (!typeMouvement.equals(TypeMouvement.ALL)) {
             searchQuery.append(" AND o.typeMouvement = :typeMouvement ");
         }

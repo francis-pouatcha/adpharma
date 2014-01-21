@@ -92,7 +92,7 @@
 
 	<util:panel title="${sortie_panel_cipm}" id="cip">
 		<div id="sortie">
-			<form action="${add_sortie}?mode=byCip" method="POST" id="subForm" onsubmit="return isValide();" >
+			<form action="${add_sortie}?mode=ByCip" method="POST" id="subForm" onsubmit="return isValide();" >
 				<table>
 					<tr>
 				

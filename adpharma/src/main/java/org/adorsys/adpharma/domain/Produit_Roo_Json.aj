@@ -17,9 +17,7 @@ privileged aspect Produit_Roo_Json {
         return new JSONDeserializer<Produit>().use(null, Produit.class).deserialize(json);
     }
     
-    public static String Produit.toJsonArray(Collection<Produit> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
-    }
+   
     
     public static Collection<Produit> Produit.fromJsonArrayToProduits(String json) {
         return new JSONDeserializer<List<Produit>>().use(null, ArrayList.class).use("values", Produit.class).deserialize(json);

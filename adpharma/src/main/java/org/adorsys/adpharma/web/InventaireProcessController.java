@@ -146,7 +146,7 @@ public class InventaireProcessController {
 		}
 		
 		// Download the file to the Client
-		File file = new File("/tools/produits.kk");
+		File file = new File("/tools/produits.xls");
 		String path = file.getAbsolutePath();
 		String name = file.getName();
 		String fileName=name;
@@ -259,9 +259,8 @@ public class InventaireProcessController {
 	
 	@RequestMapping(value="/findApproLine", method = RequestMethod.GET)
 	@ResponseBody
-	public String findApproLine(Model uiModel,HttpServletRequest httpServletRequest) {
-		String designation = httpServletRequest.getParameter("designation") ;
-		List<LigneApprovisionement> search = LigneApprovisionement.findLigneApprovisionementsByDesignationLike(designation).getResultList();
+	public String findApproLine(@RequestParam("designation") String designation ,Model uiModel,HttpServletRequest httpServletRequest) {
+		List<LigneApprovisionement> search = LigneApprovisionement.findLigneApprovisionementsByDesignationLike(designation).setMaxResults(200).getResultList();
 		ArrayList<LigneApprovisionement> arrayList = new ArrayList<LigneApprovisionement>();
 			for (LigneApprovisionement ligneApprovisionement : search) {
 				arrayList.add(ligneApprovisionement.clone());

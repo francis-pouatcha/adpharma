@@ -57,9 +57,8 @@
 		var="exportlines_url" />
 	<div style="margin-bottom: 6px; font-weight: bold;">
 		<span class="firstTab selectedTab"><a href="${ edit_url}">DETAIL
-				INVENTAIRE</a></span> <span><a href="#" style="text-decoration: none;"
-			id="findcip"> <INPUT type="button" class="submits"
-				value="rechercher un produit" /></a></span> <span><a
+				INVENTAIRE</a></span> <span><INPUT id="findcip" type="button" class="submits"
+				value="rechercher un produit" /></span> <span><a
 			href="${ enr_cmd_url}" style="text-decoration: none;"><INPUT
 				class="submits" type="button" value="Enregistrer l'inventaire"
 				title="Enregistre L'inventaire" /></a></span> <span><a

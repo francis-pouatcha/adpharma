@@ -658,7 +658,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
 		designation = designation + "%";
 		EntityManager em = LigneApprovisionement.entityManager();
-		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE LOWER(o.produit.designation) LIKE LOWER(:designation) ORDER BY o.designation ASC", LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE LOWER(o.produit.designation) LIKE LOWER(:designation) ORDER BY o.designation ASC id DESC", LigneApprovisionement.class);
 		q.setParameter("designation", designation);
 		return q;
 	}

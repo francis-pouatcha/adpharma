@@ -537,7 +537,7 @@ public class ApprovisionementProcessController {
 	            float nrOfPages = (float) Approvisionement.countApprovisionements() / sizeNo;
 	            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
 			}else{
-				List<Approvisionement> list = Approvisionement.findApproByFournisseurLike(name).setMaxResults(50).getResultList();
+				List<Approvisionement> list = Approvisionement.findApproByFournisseurLike(name).setMaxResults(100).getResultList();
 			    uiModel.addAttribute("approvisionements", list);
 			}
 			
@@ -570,7 +570,7 @@ public class ApprovisionementProcessController {
 			List<LigneApprovisionement> ligneApprivisionement = LigneApprovisionement.findLigneApprovisionementsByApprovisionement(approvisionement).getResultList();
 			uiModel.addAttribute("ligneApprivisionement", ligneApprivisionement);
 			uiModel.addAttribute("apNumber", approvisionement.getApprovisionementNumber());
-			return "ficheCodeBare24";
+			return "customFicheCodeBare24";
 
 		}
 		
