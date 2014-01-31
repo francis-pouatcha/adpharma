@@ -192,6 +192,24 @@ public class DocumentsPrinterController {
 		}
 	}
 	
+	// Etat periodique du chiffre d'affaire par rayon
+		@Produces({"application/pdf"})
+		@Consumes({""})
+		@RequestMapping(value = "/print/chiffeAffaireRayon.pdf", method = RequestMethod.GET)
+		public void chiffeAffaireRayon(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+			Map parameters = new HashMap();
+			parameters.put("DateD",etatBean.getDateDebut());
+			parameters.put("DateF",etatBean.getDateFin());
+			parameters.put("rayon",etatBean.getRayon().getId());
+			
+			try {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_CHIFFRE_AFFAIRE_RAYON_FILE_PATH);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
+		}
 	
 	// Etat periodique des mouvements de stock
 	@Produces({"application/pdf"})

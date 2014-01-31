@@ -664,7 +664,6 @@ public class PaiementProcessController {
 				ligneApprovisionement.CalculeQteEnStock();
 				ligneApprovisionement.merge();
 				prd.setQuantiteEnStock(prd.getQuantiteEnStock().subtract(ligne.getQuantiteCommande()));
-				//prd.setTrueStockValue();
 				prd.setDateDerniereSortie(new Date());
 				mouvementStock.setQteFinale(ligneApprovisionement.getQuantieEnStock());
 				mouvementStock.setPVenteTotal(ligne.getPrixTotal().subtract(ligne.getTotalRemise()).toBigInteger());
@@ -680,6 +679,7 @@ public class PaiementProcessController {
 						mouvementStock.setFiliale(prd.getFiliale().getFilialeNumber());
 					}
 				}
+				prd.setTrueStockValue();
 
 				prd.merge();   
 				mouvementStock.persist();

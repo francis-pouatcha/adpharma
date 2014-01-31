@@ -25,7 +25,7 @@
     
     <spring:url value="/commandeclients/findDetails/ByAjax" var="find_cmdDetail_url"/>
     <spring:url value="/resources/images/ajax-loader.gif" var="loadimage" />
-    <spring:url value="/produits/findProductByCipAjax"  var="find_productajax_url" />
+    <spring:url value="/produits/findProductByCipAjaxForOrder"  var="find_productajax_url" />
     <c:choose>
 		<c:when test="${empty approvisonementProcess.apId}">
              <spring:url value="/approvisionementprocess/0/findProduct/"  var="find_cip_url" />

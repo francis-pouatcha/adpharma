@@ -79,7 +79,7 @@ public class DefaultInventoryService implements InventoryService {
 		BigInteger trueStock = BigInteger.ZERO;
 		if(produit == null) return trueStock ;
 		EntityManager em = MouvementStock.entityManager();
-        StringBuilder searchQuery = new StringBuilder("SELECT SUM(o.quantieEnStock) FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock AND o.cip = :cip and o.approvisionement.etat =: etat ");
+        StringBuilder searchQuery = new StringBuilder("SELECT SUM(o.quantieEnStock) FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock AND o.cip = :cip and o.approvisionement.etat = :etat ");
         Query q = em.createQuery(searchQuery.toString());
         q.setParameter("quantieEnStock", BigInteger.ZERO);
         q.setParameter("cip", produit.getCip());
@@ -192,7 +192,7 @@ public class DefaultInventoryService implements InventoryService {
 	public void updateStockToUp(Produit produit, BigInteger quantity){
 		if(produit == null || quantity == null ) throw  new IllegalArgumentException(" produit or quantity arguments is required ")	;
 		if(quantity.intValue() <= 0) return ;
-		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ZERO, produit.getCip()).setMaxResults(100).getResultList();
+		List<LigneApprovisionement> resultList = LigneApprovisionement.findLigneApprovisionementsByQuantieEnStockUpThanAndCipEquals(BigInteger.ZERO, produit.getCip()).setMaxResults(50).getResultList();
 		if(!resultList.isEmpty()){
 			for (LigneApprovisionement line : resultList) {
 				if(quantity.intValue() <= 0) break ;
@@ -222,6 +222,7 @@ public class DefaultInventoryService implements InventoryService {
 				}
 				produit.setPrixAchatU(prixAchatU);
 				produit.setPrixVenteU(prixVenteU);
+				produit.setInStock(true);
 				Produit merge = (Produit) produit.merge();
 				item.setProduit(merge);
 
@@ -246,7 +247,7 @@ public class DefaultInventoryService implements InventoryService {
 		for (LigneInventaire ligneInventaire : ligneInventaires) {
 			Produit produit = ligneInventaire.getProduit();
 			setNegativeStockToZero(produit);
-			BigInteger trueStock = getTrueStockQuantity(produit);
+			BigInteger trueStock = getTruecloseStockQte(produit);
 			BigInteger qteReel = ligneInventaire.getQteReel();
 			if (qteReel.intValue() > trueStock.intValue()) {
 				BigInteger ecart = qteReel.subtract(trueStock);

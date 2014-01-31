@@ -378,12 +378,18 @@ public class Approvisionement extends AdPharmaBaseEntity implements UseItemsInte
 	 * @return
 	 */
 	public static Approvisionement getFirstApprovisionement(){
-		Approvisionement first = Approvisionement.findAllApprovisionements().iterator().next();
+		Approvisionement first = Approvisionement.findAllCLoseApprovisionements().setMaxResults(5).getResultList().iterator().next();
 		return first;
 	}
 
 	public static List<Approvisionement> findAllApprovisionements() {
 		return entityManager().createQuery("SELECT o FROM Approvisionement o", Approvisionement.class).getResultList();
+	}
+	
+	public static TypedQuery<Approvisionement> findAllCLoseApprovisionements() {
+		TypedQuery<Approvisionement> createQuery = entityManager().createQuery("SELECT o FROM Approvisionement o where o.etat = :etat", Approvisionement.class);
+		createQuery.setParameter("etat", Etat.CLOS);
+		return createQuery ;
 	}
 
 

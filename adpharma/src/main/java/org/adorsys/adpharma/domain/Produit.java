@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EntityListeners;
 import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,7 +25,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.adorsys.adpharma.beans.ProductMonitor;
+import org.adorsys.adpharma.services.DefaultInventoryService;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
 import org.apache.commons.lang.RandomStringUtils;
@@ -37,7 +36,6 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
@@ -256,8 +254,7 @@ public class Produit extends AdPharmaBaseEntity {
 	}
 
 	public void setTrueStockValue(){
-		BigInteger trueStocK = LigneApprovisionement.findTrueStocK(getCip());
-		quantiteEnStock = trueStocK!=null?trueStocK:quantiteEnStock;
+		quantiteEnStock = new DefaultInventoryService().getTruecloseStockQte(this);
 	}
 
 	@ManyToOne
@@ -299,14 +296,15 @@ public class Produit extends AdPharmaBaseEntity {
 
 	@Override
 	protected void internalPreUpdate() {
-		//quantiteEnStock= DefaultInventoryService.getTrueStockQuantity(this);
+		//quantiteEnStock= DefaultInventoryService.getTruecloseStockQte(this);
 	}
+	
 	
 	public void defineArchived(){
 		archived = LigneApprovisionement.findLigneApprovisionementsByProduit(this).setMaxResults(1).getResultList().isEmpty();
 
 	}
-	
+
 	@PostUpdate
 	public void postUpdateProduct(){
 		//quantiteEnStock  = InventoryService.getStockIncludeNegativeQte(this);
@@ -651,8 +649,29 @@ public class Produit extends AdPharmaBaseEntity {
 		designation =designation + "%";
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  And o.actif =:actif  order By  o.designation ASC ", Produit.class);
-		q.setParameter("designation", designation);
+		q.setParameter("designation", designation); 
 		q.setParameter("actif", Boolean.TRUE);
+		return q;
+	}
+	
+	public static TypedQuery<Produit> findInStockProduitsByDesignationLike(String designation) {
+		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
+		designation =designation + "%";
+		EntityManager em = Produit.entityManager();
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  And o.actif =:actif And o.inStock =:inStock  order By  o.designation ASC ", Produit.class);
+		q.setParameter("designation", designation); 
+		q.setParameter("actif", Boolean.TRUE);
+		q.setParameter("inStock", Boolean.TRUE);
+		return q;
+	}
+	
+	
+	public static TypedQuery<Produit> findProduitsForOrderByDesignationLike(String designation) {
+		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
+		designation =designation + "%";
+		EntityManager em = Produit.entityManager();
+		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  order By  o.designation ASC ", Produit.class);
+		q.setParameter("designation", designation);
 		return q;
 	}
 

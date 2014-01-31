@@ -90,6 +90,8 @@ public class LigneInventaire {
 		caculMontantEcart();
 	}
 	public void calculerEcart(){
+         if(qteReel==null) qteReel = BigInteger.ZERO;
+         if(qteEnStock==null) qteEnStock = BigInteger.ZERO;
 		ecart = qteReel.subtract(qteEnStock);
 	}
 

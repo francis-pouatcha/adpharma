@@ -60,7 +60,7 @@ public class ProduitController {
 	// Recherche ajax d'un produit par son CIP
 	@RequestMapping(value="/searchProductByCipAjax/{cip}", method = RequestMethod.GET)
 	@ResponseBody
-	public String findProductByCipAjax(@PathVariable("cip") String cip, HttpServletRequest request, Model uiModel) {
+	public String searchProductByCipAjax(@PathVariable("cip") String cip, HttpServletRequest request, Model uiModel) {
 	    Produit produit= new Produit();
 	    List<Produit> produits = Produit.findProduitsByCipEquals(cip).setMaxResults(1).getResultList();
 	    if(!produits.isEmpty()){
@@ -173,9 +173,20 @@ public class ProduitController {
 	@ResponseBody
 	public String findProductByCipAjax(HttpServletRequest httpServletRequest) {
 		String des = httpServletRequest.getParameter("designation");
-		List<Produit> resultList = Produit.findProduitsByDesignationLike(des).setMaxResults(100).getResultList();
+		List<Produit> resultList = Produit.findInStockProduitsByDesignationLike(des).setMaxResults(300).getResultList();
 		return Produit.toJsonArray(resultList);
 	}
+	
+	//Recherche ajax de produits par designation
+		@RequestMapping(value="/findProductByCipAjaxForOrder", method = RequestMethod.GET)
+		@ResponseBody
+		public String findProductByCipAjaxForOrder(HttpServletRequest httpServletRequest) {
+			String des = httpServletRequest.getParameter("designation");
+			List<Produit> resultList = Produit.findProduitsForOrderByDesignationLike(des).setMaxResults(300).getResultList();
+			System.out.println(resultList);
+			
+			return Produit.toJsonArray(resultList);
+		}
 	
 	
 	//Recherche ajax de produits par designation

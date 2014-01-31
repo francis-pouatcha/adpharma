@@ -18,6 +18,7 @@
     <spring:url value="/etats/print/etatPeriodiqueDettes.pdf?"  var="url3" />
     <spring:url value="/etats/print/etatPeriodiqueMouvenentStock.pdf?"  var="url4" />
     <spring:url value="/etats/print/chiffeAffaireVendeur.pdf?"  var="url5" />
+    <spring:url value="/etats/print/chiffeAffaireRayon.pdf?"  var="url20" />
     <spring:url value="/etats/print/etatPeriodiqueTransformation.pdf?"  var="url6" />
     <spring:url value="/etats/print/etatPeriodiqueMarges.pdf?"  var="url7" />    
     <spring:url value="/etats/print/etatVAlorisationRayon.pdf?"  var="url8" />
@@ -39,6 +40,7 @@
 	var url7 = '${url7}' ;
 	var url8 = '${url8}' ;
 	var url9 = '${url9}' ;
+	var url20 = '${url20}' ;
 	var url10 = '${url10}' ;
 	var url11 = '${url11}';
 	var url12 = '${url12}';
@@ -120,6 +122,11 @@
      	 $("#param2_tab2 input").hide();
      	 $("#param2_tab3 input").hide();
     }
+    function hide20(){
+    	 $("#param1_tab2 input").hide();
+    	 $("#param2_tab2 input").hide();
+    	 $("#param2_tab3 input").hide();
+   }
     function hide5(){
     	 $("#param1_tab1 input").hide();
     	 $("#param1_tab2 input").hide();
@@ -173,6 +180,9 @@
  	      if(id=="url5"){
  	    	  gotoUrl =url5; reset(); hide4();
  	      }
+ 	     if(id=="url20"){
+	    	  gotoUrl =url20; reset(); hide20();
+	      }
  	      if(id=="url6"){
  	    	  gotoUrl =url6; reset(); hide1();
  	      }

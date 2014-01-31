@@ -13,6 +13,7 @@ public class DocumentsPath
     public static final String ETAT_PERIODIQUE_DETTES = ROOT_DIR+"etat_periodique_dette_client.jrxml";
     public static final String ETAT_PERIODIQUE_MVTS_FILE_PATH =ROOT_DIR+ "etat_periodique_mouvement_stock_cip.jrxml";
     public static final String ETAT_PERIODIQUE_CHIFFRE_AFFAIRE_VENDEUR_FILE_PATH =ROOT_DIR+ "etat_periodique_vente_vendeur.jrxml";
+    public static final String ETAT_PERIODIQUE_CHIFFRE_AFFAIRE_RAYON_FILE_PATH =ROOT_DIR+ "listing_periodique_produit_plus_vendu_rayon_ca.jrxml";
     public static final String ETA_VALORISATION_STOCK_FILE_PATH =ROOT_DIR+ "fiche_valorisation_stock.jrxml";
     public static final String ETAT_VALORISATION_RAYON_FILE_PATH =ROOT_DIR+ "fiche_valorisation_rayon.jrxml";
     public static final String ETAT_PERIODIQUE_DECOMPOSITION_FILE_PATH =ROOT_DIR+ "etat_periodique_transformation_produit.jrxml";

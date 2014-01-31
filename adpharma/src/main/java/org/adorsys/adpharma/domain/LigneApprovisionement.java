@@ -332,17 +332,15 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 			setQuantiteVendu(BigInteger.ZERO);
 			amount = amount.subtract(pushInQuantity);
 		}else {
-			if(getQuantiteSortie().intValue() <= amount.intValue()){
-				if(getQuantiteSortie().intValue()>0) amount = amount.subtract(getQuantiteSortie());
-				setQuantiteSortie(BigInteger.ZERO);
-				setQuantiteVendu(getQuantiteVendu().subtract(amount));
-
-			}else {
+			if(getQuantiteVendu().intValue() <= amount.intValue()){
+				if(getQuantiteVendu().intValue()>0) 
 				amount = amount.subtract(getQuantiteVendu());
 				setQuantiteVendu(BigInteger.ZERO);
+			}else {
+				setQuantiteVendu(getQuantiteVendu().subtract(amount));
 				setQuantiteSortie(getQuantiteSortie().subtract(amount));
+				amount = BigInteger.ZERO;
 			}
-			amount = BigInteger.ZERO;
 		}
 		CalculeQteEnStock();
 		merge();
@@ -594,9 +592,10 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		if (quantieEnStock == null) throw new IllegalArgumentException("The quantieEnStock argument is required");
 		if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
 		EntityManager em = LigneApprovisionement.entityManager();
-		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock >= :quantieEnStock AND o.cip = :cip order by o.id ASC", LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock >= :quantieEnStock AND o.cip = :cip AND o.approvisionement.etat = :etat order by o.id DESC", LigneApprovisionement.class);
 		q.setParameter("quantieEnStock", quantieEnStock);
 		q.setParameter("cip", cip);
+		q.setParameter("etat", Etat.CLOS);
 		return q;
 	}
 
@@ -627,9 +626,10 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		if (quantieEnStock == null) throw new IllegalArgumentException("The quantieEnStock argument is required");
 		if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
 		EntityManager em = LigneApprovisionement.entityManager();
-		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock < :quantieEnStock AND o.cip = :cip order by o.id DESC", LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock < :quantieEnStock AND o.cip = :cip AND o.approvisionement.etat = :etat   order by o.id DESC", LigneApprovisionement.class);
 		q.setParameter("quantieEnStock", quantieEnStock);
 		q.setParameter("cip", cip);
+		q.setParameter("etat", Etat.CLOS);
 		return q;
 	}
 
@@ -637,9 +637,10 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		if (quantiteVendu == null) throw new IllegalArgumentException("The quantiteVendu argument is required");
 		if (cip == null || cip.length() == 0) throw new IllegalArgumentException("The cip argument is required");
 		EntityManager em = LigneApprovisionement.entityManager();
-		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantiteVendu >= :quantiteVendu AND o.cip = :cip order by o.id ASC", LigneApprovisionement.class);
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o FROM LigneApprovisionement AS o WHERE o.quantiteVendu >= :quantiteVendu AND o.cip = :cip AND o.approvisionement.etat = :etat order by o.id ASC", LigneApprovisionement.class);
 		q.setParameter("quantiteVendu", quantiteVendu);
 		q.setParameter("cip", cip);
+		q.setParameter("etat", Etat.CLOS);
 		return q;
 	}
 	public static List<LigneApprovisionement> findLigneApprovisionementEntries(int firstResult, int maxResults) {

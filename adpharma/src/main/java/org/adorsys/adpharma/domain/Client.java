@@ -46,7 +46,6 @@ public class Client extends AdPharmaBaseEntity {
 
     private String telephoneFixe;
 
-    @NotNull(message="Veuillez entrer le numero de telephone mobile")
     private String telephoneMobile;
 
     private String fax;
