@@ -174,6 +174,32 @@ public class DocumentsPrinterController {
 		}
 	}
 	
+	// Etat periodique des ventes
+		@Produces({"application/pdf"})
+		@Consumes({""})
+		@RequestMapping(value = "/print/etatPeriodiqueAppro.pdf", method = RequestMethod.GET)
+		public void etatPeriodiqueAppro(EtatManagerBean etatBean  ,HttpServletRequest request,HttpServletResponse response) {
+			Map parameters = new HashMap();
+			if(etatBean.getDateDebut()==null){
+				parameters.put("DateD",saleService.getFirstSale().getDateCreation());
+			}else{
+				parameters.put("DateD",etatBean.getDateDebut());
+			}
+			if(etatBean.getDateFin()==null){
+				parameters.put("DateF", new Date());
+			}else{
+				parameters.put("DateF",etatBean.getDateFin());
+			}
+			
+			try {
+				jasperPrintService.printDocument(parameters, response, DocumentsPath.ETAT_PERIODIQUE_APPRO_FILE_PATH);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return ;
+			}
+		}
+	
 
 	// Etat periodique du chiffre d'affaire par vendeur
 	@Produces({"application/pdf"})

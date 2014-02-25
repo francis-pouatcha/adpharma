@@ -1,5 +1,6 @@
 package org.adorsys.adpharma.beans;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -119,7 +120,7 @@ public class InventoryUisearchModel {
 
 
 	public  List<LigneApprovisionement> seach() {
-		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.id IS NOT NULL ");
+		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.quantieEnStock <> :quantieEnStock ");
 		if (this.productRow !=null) {
 			searchQuery.append(" AND  o.produit.rayon = :productRow ");	
 		} 
@@ -153,6 +154,7 @@ public class InventoryUisearchModel {
 			q.setParameter("endOrderedDate", endOrderedDate);
 		}
 		q.setParameter("archived", includeArchivedLine);
+		q.setParameter("quantieEnStock", BigInteger.ZERO);
 		return q.getResultList(); 
 	}
 

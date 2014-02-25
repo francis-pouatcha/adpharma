@@ -60,10 +60,6 @@
                 <menu:category id="c_rayon" z="ZY+0/2DP6Xm/ElTWDq0nuJS9V6Y=">
                     <menu:item id="i_rayon_new" messageCode="global_menu_new" url="/rayons?form" z="WDxM5fmAZNL3w5C8u8FeEtkWx24="/>
                     <menu:item id="i_rayon_list" messageCode="global_menu_list" url="/rayons?page=1&amp;size=${empty param.size ? 10 : param.size}" z="M811RdvBMKWBo+RRb0Wsac3SfWI="/>
-                    <menu:item id="fi_rayon_displaynameequals" messageCode="global_menu_find" url="/rayons?find=ByDisplayNameEquals&amp;form" z="tVMs2INbfvuBr4sDURyTtE3lvgE="/>
-                    <menu:item id="fi_rayon_nameequals" messageCode="global_menu_find" url="/rayons?find=ByNameEquals&amp;form" z="Y4VikhfcEPAMxN3uTwIzZtwchdI="/>
-                    <menu:item id="fi_rayon_displaynamelike" messageCode="global_menu_find" url="/rayons?find=ByDisplayNameLike&amp;form" z="YQl2tZMwSlIFdHDRAdlhf0WqEMo="/>
-                    <menu:item id="fi_rayon_namelike" messageCode="global_menu_find" url="/rayons?find=ByNameLike&amp;form" z="hGCWLlwLKKy5N6ZFi9TPP0ZwRnM="/>
                 </menu:category>
                 <menu:category id="c_familleproduit" z="GxA7BfO3xc1lQDIKQgWdAJvJnNU=">
                     <menu:item id="i_familleproduit_new" messageCode="global_menu_new" url="/familleproduits?form" z="RQBig+w/eLLh0jCvVG3rTTFC3dA="/>

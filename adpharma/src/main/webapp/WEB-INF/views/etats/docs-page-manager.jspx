@@ -95,6 +95,14 @@
 				     </tr>
 				     <tr>
 				          <td>
+				               <i class="labeletat">Etat PEriodique des Approvisionements </i>
+				          </td>
+				          <td>
+				               <input style="float: right;" onclick="defineGotoUrl(this);"  type="radio" name="etats"  id="url21"  />
+				          </td>
+				     </tr>
+				     <tr>
+				          <td>
 				               <i class="labeletat"> ${reports_other_reports_periodic_cash} </i>
 				          </td>
 				          <td>

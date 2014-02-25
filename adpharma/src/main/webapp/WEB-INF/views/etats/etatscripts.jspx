@@ -14,6 +14,7 @@
     <jsp:output omit-xml-declaration="yes"/>
     
     <spring:url value="/etats/print/etatPeriodiqueVente.pdf?"  var="url1" />
+    <spring:url value="/etats/print/etatPeriodiqueAppro.pdf?"  var="url21" />
     <spring:url value="/etats/print/etatPeriodiqueCaisse.pdf?"  var="url2" />
     <spring:url value="/etats/print/etatPeriodiqueDettes.pdf?"  var="url3" />
     <spring:url value="/etats/print/etatPeriodiqueMouvenentStock.pdf?"  var="url4" />
@@ -41,6 +42,7 @@
 	var url8 = '${url8}' ;
 	var url9 = '${url9}' ;
 	var url20 = '${url20}' ;
+	var url21 = '${url21}' ;
 	var url10 = '${url10}' ;
 	var url11 = '${url11}';
 	var url12 = '${url12}';
@@ -167,6 +169,9 @@
  		  id = clickedElt.id;
  		  if(id=="url1"){
  			 gotoUrl =url1; reset(); hide1();
+ 		  }
+ 		 if(id=="url21"){
+ 			 gotoUrl =url21; reset(); hide1();
  		  }
  		  if(id=="url2"){
  			 gotoUrl =url2; reset(); hide1();

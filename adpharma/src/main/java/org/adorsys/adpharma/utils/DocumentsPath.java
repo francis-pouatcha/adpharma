@@ -8,6 +8,7 @@ public class DocumentsPath
     public static final String ETAT_CATALOGUE_RAYON_FILE_PATH = ROOT_DIR+"fiche_stock_rayon.jrxml";
     public static final String PRODUIT_RUPTURE_FILE_PATH = ROOT_DIR+"fiche_stock _rupture.jrxml";
     public static final String ETAT_PERIODIQUE_VENTE_FILE_PATH = ROOT_DIR+"listing_periodique_vente.jrxml";
+    public static final String ETAT_PERIODIQUE_APPRO_FILE_PATH = ROOT_DIR+"listing_periodique_appro.jrxml";
     public static final String ETAT_PERIODIQUE_CAISSE_FILE_PATH = ROOT_DIR+"etat_periodique_caisse.jrxml";
     public static final String ETAT_VALORISATION_STOCK = ROOT_DIR+"fiche_valorisation_stock.jrxml";
     public static final String ETAT_PERIODIQUE_DETTES = ROOT_DIR+"etat_periodique_dette_client.jrxml";

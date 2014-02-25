@@ -121,11 +121,12 @@ public class ApprovisonementProcess {
 			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mise a jour de la date de derniere entree
 			ligneApprovisionement.setVenteAutorise(produit.isVenteAutorise());
 			//ligneApprovisionement.merge();
-			//produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mise a jour du stock de produit 
 			ligneApprovisionement.compenserStock();
+			//produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mise a jour du stock de produit 
 			produit.setQuantiteEnStock(DefaultInventoryService.stock(produit));
 			produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
 			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
+			produit.setInStock(true);
 			produit.merge();
 			mouvementStock.setQteFinale(mouvementStock.getQteInitiale().add(mouvementStock.getQteDeplace()));
 			mouvementStock.persist();

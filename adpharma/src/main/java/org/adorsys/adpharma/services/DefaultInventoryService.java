@@ -113,7 +113,7 @@ public class DefaultInventoryService implements InventoryService {
 	 * @return the true value of stock
 	 */
 	public static BigInteger stock(Produit produit){
-		return getTrueStockQuantity(produit);
+		return getTruecloseStockQte(produit);
 	}
 
 	public void mergeProduct(Produit product,Produit mergeWith){
