@@ -35,7 +35,6 @@ import org.adorsys.adpharma.domain.Ordonnancier;
 import org.adorsys.adpharma.domain.PharmaUser;
 import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.RoleName;
-import org.adorsys.adpharma.domain.TypeBon;
 import org.adorsys.adpharma.domain.TypeClient;
 import org.adorsys.adpharma.domain.TypeCommande;
 import org.adorsys.adpharma.domain.TypeFacture;
