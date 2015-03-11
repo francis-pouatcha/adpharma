@@ -26,10 +26,10 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 	public List<String> useFieldName() {
 		String[] fieldNames = {"cip","designation","pa","pv","rayon"} ;
 		//String[] fieldNames = {"cip","designation"} ;
-	    return	Arrays.asList(fieldNames);
-		
+		return	Arrays.asList(fieldNames);
+
 	}
-	
+
 	public   List<Produit> importListFromSheet(Sheet sheet,Rayon rayon) {
 		if(isfieldNamesMacthed(sheet, useFieldName())){
 			List<Produit> items = new ArrayList<Produit>();
@@ -38,10 +38,10 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 				Cell[] row = sheet.getRow(i);
 				Produit itemFromSheetRow = itemFromSheetRow(row);
 				if(itemFromSheetRow!=null){
-				if(rayon!=null)itemFromSheetRow.setRayon(rayon);
-				if(itemFromSheetRow.existe())continue;
+					if(rayon!=null)itemFromSheetRow.setRayon(rayon);
+					if(itemFromSheetRow.existe())continue;
 					itemFromSheetRow.persist();
-				items.add(itemFromSheetRow);
+					items.add(itemFromSheetRow);
 				}
 			}
 			return items ;
@@ -60,12 +60,12 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 			prd.setDesignation(cells[1].getContents());
 			prd.setFabricant("-//-");
 			prd.setFiliale(Filiale.findFiliale(new Long(1)));
-			/*List<Rayon> resultList = Rayon.findRayonsByEmplacement(cells[4].getContents()).getResultList();
+			List<Rayon> resultList = Rayon.findRayonsByEmplacement(cells[4].getContents()).getResultList();
 			if(!resultList.isEmpty()){
 				prd.setRayon(resultList.iterator().next());
 			}else {
 				prd.setRayon(Rayon.findRayon(new Long(1)));
-			}*/
+			}
 			prd.setRayon(Rayon.findRayon(new Long(1)));
 			prd.setPrixAchatU(ProcessHelper.stringToBigDecimal(StringUtils.remove(cells[2].getContents(), "�").trim()));
 			prd.setPrixVenteU(ProcessHelper.stringToBigDecimal(StringUtils.remove(cells[3].getContents(), "�").trim()));
@@ -75,7 +75,7 @@ public class ProductsImportExportService extends ImportExportService<Produit>{
 			return prd ;
 		}
 		return null ;
-		}
-	
+	}
+
 
 }
