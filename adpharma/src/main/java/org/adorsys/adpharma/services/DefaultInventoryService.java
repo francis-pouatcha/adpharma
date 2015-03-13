@@ -25,7 +25,9 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Gkc
@@ -288,6 +290,24 @@ public class DefaultInventoryService implements InventoryService {
 				produit.merge();
 			}
 		}
+	}
+	
+	
+	
+	
+	@Scheduled(fixedDelay = 7200000, initialDelay = 1000)
+	public void scheduleFixedRateWithInitialDelayTask() {
+		makeStockCorrection();
+	}
+	
+	@Transactional
+	public void makeStockCorrection(){
+		EntityManager em = MouvementStock.entityManager();
+        StringBuilder searchQuery = new StringBuilder(""
+        		+ "update produit set produit.quantite_en_stock = (select SUM(l.quantie_en_stock) from  ligne_approvisionement as l where l.cip = produit.cip )where id > 0 ");
+        Query q = em.createNativeQuery(searchQuery.toString());
+        int executeUpdate = q.executeUpdate();
+	    System.out.println("Number article item affected " + executeUpdate);
 	}
 
 }

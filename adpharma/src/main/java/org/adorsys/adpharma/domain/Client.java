@@ -65,7 +65,7 @@ public class Client extends AdPharmaBaseEntity {
     private Date dateNaissance;
 
     @Enumerated
-    private Genre sexe;
+    private Genre sexe = Genre.Neutre;
 
     @NotNull(message="Veuillez entrer le taux de couverture")
     private BigDecimal tauxCouverture = BigDecimal.valueOf(100);
@@ -79,7 +79,7 @@ public class Client extends AdPharmaBaseEntity {
     private String clientPayeurNumber;
 
     @ManyToOne
-    private CategorieClient categorie;
+    private CategorieClient categorie ;
 
     private BigInteger totalDette = BigInteger.ZERO;
 

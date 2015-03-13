@@ -9,10 +9,13 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 import org.adorsys.adpharma.beans.ApprovisonementProcess;
+import org.adorsys.adpharma.beans.importExport.CustomerImporService;
 import org.adorsys.adpharma.beans.importExport.LigneApproImportExportService;
+import org.adorsys.adpharma.beans.importExport.LoginImportService;
+import org.adorsys.adpharma.beans.importExport.ProductDetailsImportService;
 import org.adorsys.adpharma.beans.importExport.ProductsImportExportService;
 import org.adorsys.adpharma.beans.importExport.RayonImportExportService;
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
+import org.adorsys.adpharma.beans.importExport.SupplierImporService;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.Devise;
 import org.adorsys.adpharma.domain.Filiale;
@@ -22,7 +25,6 @@ import org.adorsys.adpharma.domain.Produit;
 import org.adorsys.adpharma.domain.Rayon;
 import org.adorsys.adpharma.domain.Site;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +41,15 @@ public class DataloaderController {
     @Autowired
    	ProductsImportExportService productsImportExportService ;
     @Autowired
+   	LoginImportService loginImportService ;
+    @Autowired
+    CustomerImporService customerImporService ;
+    @Autowired
+   	SupplierImporService supplierImporService ;
+    @Autowired
    	LigneApproImportExportService ligneApproImportExportService ;
+    @Autowired
+   	ProductDetailsImportService productDetailsImportService ;
 	
    	@RequestMapping(value = "/loadrayon",params="form",method = RequestMethod.GET)
 	public String loadrayonForm( Model uiModel) {
@@ -53,8 +63,16 @@ public class DataloaderController {
 		 try
         {
             Workbook workbook = Workbook.getWorkbook(fichier.getInputStream());
-            Sheet sheet = workbook.getSheet(0);
-            listFromSheet = rayonImportExportService.importListFromSheet(sheet);
+            Sheet sheet = workbook.getSheet("Rayon");
+            if(sheet!=null )listFromSheet = rayonImportExportService.importListFromSheet(sheet);
+            Sheet loginSheet = workbook.getSheet("Login");
+            Sheet supplierSheet = workbook.getSheet("Supplier");
+            Sheet customerSheet = workbook.getSheet("Customer");
+            Sheet detailsSheet = workbook.getSheet("Tranasformation");
+            if(loginSheet!=null) loginImportService.itemFromSheetRow(loginSheet);
+            if(supplierSheet!=null) supplierImporService.itemFromSheetRow(supplierSheet);
+            if(customerSheet!=null) customerImporService.itemFromSheetRow(customerSheet);
+            if(detailsSheet!=null) productDetailsImportService.itemFromSheetRow(detailsSheet);
         }
         catch(BiffException e)
         {
@@ -79,6 +97,7 @@ public class DataloaderController {
 	@RequestMapping(value = "/loadproduit",method = RequestMethod.POST)
    	public String loadproduit(@RequestParam("fichier")MultipartFile fichier,@RequestParam("rayon")Long rayon, Model uiModel) {
 		List<Produit> listFromSheet = new ArrayList<Produit>();
+		
 		Rayon findRayon = Rayon.findRayon(rayon);
 		 try
         {

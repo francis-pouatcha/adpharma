@@ -48,7 +48,7 @@ public class PharmaUser extends AdPharmaBaseEntity {
 	private String userNumber;
 
 	@Enumerated
-	private Genre gender;
+	private Genre gender=Genre.Neutre;
 
 	@NotNull
 	@Column(unique = true)
@@ -158,7 +158,7 @@ public class PharmaUser extends AdPharmaBaseEntity {
 	@ManyToOne
 	private Site office;
 
-	@Value("15")
+	@Value("2")
 	@Min(0L)
 	@Max(100L)
 	private BigDecimal tauxRemise;

@@ -39,7 +39,7 @@ public class LigneApproImportExportService extends ImportExportService<LigneAppr
 		if(cells == null )return null ;
 		LigneApprovisionement item = new LigneApprovisionement();
 		List<Produit> products = Produit.findProduitsByCip(cells[0].getContents()).getResultList();
-		BigInteger qte = new BigInteger(cells[1].getContents());
+		BigInteger qte = new BigDecimal(cells[1].getContents()).toBigInteger();
 		BigDecimal pa = BigDecimal.ZERO;
 		BigDecimal pv = BigDecimal.ZERO;
 		try {
@@ -61,7 +61,7 @@ public class LigneApproImportExportService extends ImportExportService<LigneAppr
 			item.setPrixVenteUnitaire(pv);
 			item.CalculePaTotal();
 			item.CalculeQteEnStock();
-			if(qte.intValue() == 0) return null;
+//			if(qte.intValue() == 0) return null;
 			return item ;
 		}
 		return null ;

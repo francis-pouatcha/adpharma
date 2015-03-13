@@ -100,37 +100,7 @@ public class ApprovisonementProcess {
 		Contract.notNull("ligne approvisionement ", lines);
 
 		for (LigneApprovisionement ligneApprovisionement : lines) {
-			// creation du mouvement de stock
-			Produit produit = ligneApprovisionement.getProduit() ;
-			MouvementStock mouvementStock = new MouvementStock();
-			mouvementStock.setAgentCreateur(SecurityUtil.getUserName());
-			mouvementStock.setDestination(DestinationMvt.MAGASIN);
-			mouvementStock.setNumeroBordereau(approvisionement.getBordereauNumber());
-			mouvementStock.setNumeroTicket("-");
-			mouvementStock.setOrigine(DestinationMvt.FOURNISSEUR);
-			mouvementStock.setSite(approvisionement.getMagasin());
-			mouvementStock.setQteDeplace(ligneApprovisionement.getQuantiteAprovisione());
-			mouvementStock.setCip(ligneApprovisionement.getProduit().getCip());
-			mouvementStock.setCipM(ligneApprovisionement.getCipMaison());
-			mouvementStock.setDesignation(ligneApprovisionement.getProduit().getDesignation());
-			mouvementStock.setTypeMouvement(TypeMouvement.APPROVISIONEMENT);
-			mouvementStock.setQteInitiale(BigInteger.ZERO);
-			mouvementStock.setPAchatTotal(ligneApprovisionement.getPrixAchatTotal().toBigInteger());
-			mouvementStock.setPVenteTotal(ligneApprovisionement.getPrixVenteUnitaire().toBigInteger().multiply(ligneApprovisionement.getQuantiteAprovisione()));
-			ligneApprovisionement.setQuantieEnStock(ligneApprovisionement.getQuantiteAprovisione());//initialisation de la quantite en stock de cette ligne 
-			ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mise a jour de la date de derniere entree
-			ligneApprovisionement.setVenteAutorise(produit.isVenteAutorise());
-			//ligneApprovisionement.merge();
-			ligneApprovisionement.compenserStock();
-			//produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mise a jour du stock de produit 
-			produit.setQuantiteEnStock(DefaultInventoryService.stock(produit));
-			produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
-			produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
-			produit.setInStock(true);
-			produit.merge();
-			mouvementStock.setQteFinale(mouvementStock.getQteInitiale().add(mouvementStock.getQteDeplace()));
-			mouvementStock.persist();
-			ligneApprovisionement.merge();
+			generateLotMvtForEntry(ligneApprovisionement, approvisionement);
 		}
 		approvisionement.close();
 		approvisionement.merge();
@@ -180,6 +150,40 @@ public class ApprovisonementProcess {
 		if(lineToCompensate.isEmpty()) return ;
 		BigInteger stockIn = lineIn.getQuantieEnStock();
 
+	}
+	
+	public static void generateLotMvtForEntry(LigneApprovisionement ligneApprovisionement,Approvisionement approvisionement){
+		// creation du mouvement de stock
+					Produit produit = ligneApprovisionement.getProduit() ;
+					MouvementStock mouvementStock = new MouvementStock();
+					mouvementStock.setAgentCreateur(SecurityUtil.getUserName());
+					mouvementStock.setDestination(DestinationMvt.MAGASIN);
+					mouvementStock.setNumeroBordereau(approvisionement.getBordereauNumber());
+					mouvementStock.setNumeroTicket("-");
+					mouvementStock.setOrigine(DestinationMvt.FOURNISSEUR);
+					mouvementStock.setSite(approvisionement.getMagasin());
+					mouvementStock.setQteDeplace(ligneApprovisionement.getQuantiteAprovisione());
+					mouvementStock.setCip(ligneApprovisionement.getProduit().getCip());
+					mouvementStock.setCipM(ligneApprovisionement.getCipMaison());
+					mouvementStock.setDesignation(ligneApprovisionement.getProduit().getDesignation());
+					mouvementStock.setTypeMouvement(TypeMouvement.APPROVISIONEMENT);
+					mouvementStock.setQteInitiale(BigInteger.ZERO);
+					mouvementStock.setPAchatTotal(ligneApprovisionement.getPrixAchatTotal().toBigInteger());
+					mouvementStock.setPVenteTotal(ligneApprovisionement.getPrixVenteUnitaire().toBigInteger().multiply(ligneApprovisionement.getQuantiteAprovisione()));
+					ligneApprovisionement.setQuantieEnStock(ligneApprovisionement.getQuantiteAprovisione());//initialisation de la quantite en stock de cette ligne 
+					ligneApprovisionement.getProduit().setDateDerniereEntre(new Date());// mise a jour de la date de derniere entree
+					ligneApprovisionement.setVenteAutorise(produit.isVenteAutorise());
+					//ligneApprovisionement.merge();
+					ligneApprovisionement.compenserStock();
+					produit.addproduct(ligneApprovisionement.getQuantieEnStock());  // mise a jour du stock de produit 
+//					produit.setQuantiteEnStock(DefaultInventoryService.stock(produit));
+					produit.setPrixAchatU(ligneApprovisionement.getPrixAchatUnitaire());
+					produit.setPrixVenteU(ligneApprovisionement.getPrixVenteUnitaire());
+					produit.setInStock(true);
+					produit.merge();
+					mouvementStock.setQteFinale(mouvementStock.getQteInitiale().add(mouvementStock.getQteDeplace()));
+					mouvementStock.persist();
+					ligneApprovisionement.merge();
 	}
 
 }
