@@ -96,6 +96,19 @@ public class Produit extends AdPharmaBaseEntity {
 	private transient BigInteger qtevendu = BigInteger.ZERO;
 	
 	private boolean perissable;
+	
+	private boolean clone = false;
+
+	
+	public boolean isClone() {
+		return clone;
+	}
+
+
+	public void setClone(boolean clone) {
+		this.clone = clone;
+	}
+
 
 	public BigDecimal getPrixAchatSTock() {
 		return prixAchatSTock;
