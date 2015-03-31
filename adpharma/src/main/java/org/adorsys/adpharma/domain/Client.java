@@ -224,7 +224,7 @@ public class Client extends AdPharmaBaseEntity {
 
     public static TypedQuery<Client> findClientsByNomLike(String nom) {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
-        nom =nom + "%";
+        nom ="%"+nom + "%";
         EntityManager em = Client.entityManager();
         TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) ORDER BY o.nom ASC", Client.class);
         q.setParameter("nom", nom);
@@ -233,7 +233,7 @@ public class Client extends AdPharmaBaseEntity {
     
     public static TypedQuery<Client> findClientsByNomLikeAndPayeurLike(String nom) {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
-        nom =nom + "%";
+        nom ="%"+nom + "%";
         EntityManager em = Client.entityManager();
         TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) OR LOWER(o.clientPayeur.nom) LIKE LOWER(:nom) ORDER BY o.nom ASC", Client.class);
         q.setParameter("nom", nom);
@@ -264,12 +264,12 @@ public class Client extends AdPharmaBaseEntity {
         
         totalDette = totalDette!=null ?totalDette:BigInteger.ZERO;
         if (StringUtils.isNotBlank(nom)) {
-        	nom =  nom + "%";
+        	nom =  "%"+nom + "%";
             searchQuery.append(" AND  LOWER(o.nom) LIKE LOWER(:nom) ");
         } 
         
         if (StringUtils.isNotBlank(employeur)) {
-        	employeur = employeur + "%";
+        	employeur = "%"+employeur + "%";
         	 searchQuery.append(" AND  LOWER(o.employeur) LIKE LOWER(:employeur) ");
         }
         
