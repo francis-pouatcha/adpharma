@@ -485,7 +485,7 @@ public class InventaireProcessController {
 		if (StringUtils.isBlank(prd.getDesignation())&& StringUtils.isBlank(prd.getCip()) && prd.getFiliale()==null && prd.getRayon() ==null ) {
 			return "redirect:/produits?page=1" ;
 		}
-		uiModel.addAttribute("results", Produit.search(prd.getFamilleProduit(),prd.getSousfamilleProduit(),prd.getCip(), prd.getDesignation(),null,null, prd.getRayon(), prd.getFiliale() ,prd.getDateDerniereRupture(),null ).getResultList());
+ 		uiModel.addAttribute("results", Produit.search(prd.getFamilleProduit(),prd.getSousfamilleProduit(),prd.getCip(), prd.getDesignation(),null,null, prd.getRayon(), prd.getFiliale() ,prd.getDateDerniereRupture(),null ).getResultList());
 		uiModel.addAttribute("rayon", ProcessHelper.populateRayon());
 		uiModel.addAttribute("filiale", ProcessHelper.populateFiliale());
 		return "produits/search";

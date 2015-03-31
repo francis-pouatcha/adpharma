@@ -857,7 +857,7 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		StringBuilder searchQuery = new StringBuilder("SELECT o FROM LigneApprovisionement AS o WHERE o.approvisionement.etat = :etat ");
 		etat = etat != null ? etat : Etat.CLOS;
 		if (StringUtils.isNotBlank(designation)) {
-			designation = designation + "%";
+			designation = "%"+designation + "%";
 			searchQuery.append(" AND  LOWER(o.produit.designation) LIKE LOWER(:designation) ");
 		}
 		if (qteStock != null) {
