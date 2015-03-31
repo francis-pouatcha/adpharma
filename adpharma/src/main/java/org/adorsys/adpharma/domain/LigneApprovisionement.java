@@ -727,6 +727,14 @@ public class LigneApprovisionement extends AdPharmaBaseEntity {
 		q.setParameter("cip", cip);
 		return q;
 	}
+	
+	public static TypedQuery<LigneApprovisionement>  findLastClosedLigneApprovisionementsByCip(String cip) {
+		EntityManager em = LigneApprovisionement.entityManager();
+		TypedQuery<LigneApprovisionement> q = em.createQuery("SELECT o  FROM LigneApprovisionement AS o WHERE o.produit.cip = :cip AND o.approvisionement.etat = :state ORDER BY o.id DESC" ,LigneApprovisionement.class);
+		q.setParameter("cip", cip);
+		q.setParameter("state", Etat.CLOS);
+		return q;
+	}
 
 	public static BigInteger findTrueStocK(String cip) {
 		if(StringUtils.isBlank(cip)) throw new IllegalArgumentException("cip must not be null or empty");

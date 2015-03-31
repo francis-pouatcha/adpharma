@@ -121,6 +121,8 @@ public class InventaireController {
 			if(!inventaire.isInventoryBycipm()){
 				List<Produit> search = Produit.search(null, null, null, null, inventaire.getBeginBy(), inventaire.getEndBy(), inventaire.getRayon(), null, null ,null).getResultList();
 				for (Produit produit : search) {
+					List<LigneApprovisionement> alreadyPurchases = LigneApprovisionement.findLastClosedLigneApprovisionementsByCip(produit.getCip()).setMaxResults(1).getResultList();
+					if(alreadyPurchases.isEmpty()) continue ;
 					if(!inventaire.contientProduit(produit)){
 						LigneInventaire itemFromProduct = Inventaire.itemFromProduct(produit);
 						if(itemFromProduct!=null){
