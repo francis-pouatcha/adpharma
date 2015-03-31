@@ -226,8 +226,9 @@ public class Client extends AdPharmaBaseEntity {
         if (nom == null || nom.length() == 0) throw new IllegalArgumentException("The nom argument is required");
         nom ="%"+nom + "%";
         EntityManager em = Client.entityManager();
-        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) ORDER BY o.nom ASC", Client.class);
+        TypedQuery<Client> q = em.createQuery("SELECT o FROM Client AS o WHERE LOWER(o.nom) LIKE LOWER(:nom) OR LOWER(o.prenom) LIKE LOWER(:prenom) ORDER BY o.nom ASC", Client.class);
         q.setParameter("nom", nom);
+        q.setParameter("prenom", nom);
         return q;
     }
     
