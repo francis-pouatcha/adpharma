@@ -547,6 +547,7 @@ public static Logger LOGS= Logger.getLogger(SaleProcessController.class);
 		}
 		saleProcess.calculPrix(commandeClient);
 		saleProcess.setLigneCommande(LigneCmdClient.findLigneCmdClientsByCommande(commandeClient).getResultList());
+		saleProcess.resetDisplayName(commandeClient);
 		uiModel.addAttribute("saleProcess",saleProcess);
 		return "saleprocess/edit";
 

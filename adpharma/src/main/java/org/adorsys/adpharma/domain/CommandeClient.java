@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
@@ -22,6 +23,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -495,14 +497,16 @@ public class CommandeClient extends AdPharmaBaseEntity {
 		 return q;
 	 }
 
-	 public static List<Long> findUnpayCloseSales(Etat status, Boolean encaisser, Boolean annuler, TypeCommande typeCommande) {
+	 public static Long findUnpayCloseSales(Etat status, Boolean encaisser, Boolean annuler, TypeCommande typeCommande) {
 		 EntityManager em = CommandeClient.entityManager();
-		 Query q = em.createQuery("SELECT  COUNT(distinct o.id) FROM CommandeClient AS o WHERE o.status = :status AND o.encaisse IS :encaisse  AND o.annuler IS :annuler AND  o.typeCommande != :typeCommande   ");
+		 Query q = em.createQuery("SELECT  COUNT(o) FROM CommandeClient AS o WHERE o.status = :status AND o.encaisse IS :encaisse  AND o.annuler IS :annuler AND  o.typeCommande != :typeCommande   ");
 		 q.setParameter("status", status);
 		 q.setParameter("encaisse", encaisser);
 		 q.setParameter("annuler", annuler);
 		 q.setParameter("typeCommande", typeCommande);
-		 return q.getResultList();
+		 Long  waitingSalesNb =  (Long)  q.getSingleResult();
+		 System.out.println("Waitting sales number "+waitingSalesNb);
+		 return waitingSalesNb ;
 	 }
 
 	 public static TypedQuery<CommandeClient> findCommandeClientByNomClientLike(String nom) {

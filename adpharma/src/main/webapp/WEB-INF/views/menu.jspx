@@ -217,6 +217,7 @@
                 <menu:item id="fi_detteclient_datecreationbetween" messageCode="global_menu_find" url="/detteclients?find=ByDateCreationBetween&amp;form" z="/jajvHx419OAcShtXVtfg5UmuoI="/>
                 <menu:item id="fi_detteclient_soldernotorclientnoequals" messageCode="global_menu_find" url="/detteclients?find=BySolderNotOrClientNoEquals&amp;form" z="syTjj4CsHBkXQw33H9W+5cGzCbE="/>
                 <menu:item id="fi_detteclient_clientnolike" messageCode="global_menu_find" url="/detteclients?find=ByClientNoLike&amp;form" z="EyDtVHjvLXFszdhi57a/ASNlF3g="/>
+                <menu:item id="fi_detteclient_soldernotandannulernot" messageCode="global_menu_find" url="/detteclients?find=BySolderNotAndAnnulerNot&amp;form" z="0Pvslx0qRm9CvGOXL88nMWO5R7w="/>
             </menu:category>
             <menu:category id="c_ordonnancier" z="QEm+pe5Hb0+PMcOlkrVS/YO623s=">
                 <menu:item id="i_ordonnancier_new" messageCode="global_menu_new" url="/ordonnanciers?form" z="D+GyILU4aV9pOZiqSYPKMmq+M3c="/>

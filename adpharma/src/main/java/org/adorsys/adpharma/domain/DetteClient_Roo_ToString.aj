@@ -33,7 +33,8 @@ privileged aspect DetteClient_Roo_ToString {
         sb.append("SousTotal: ").append(getSousTotal()).append(", ");
         sb.append("Taux: ").append(getTaux()).append(", ");
         sb.append("TauxAssure: ").append(getTauxAssure()).append(", ");
-        sb.append("Version: ").append(getVersion());
+        sb.append("Version: ").append(getVersion()).append(", ");
+        sb.append("BeginPayement: ").append(isBeginPayement());
         return sb.toString();
     }
     

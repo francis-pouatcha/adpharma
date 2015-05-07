@@ -186,14 +186,13 @@ public class CaisseController {
 		Caisse caisse = list.isEmpty() ?null :list.iterator().next();
 		SessionBean sessionBean =	 (SessionBean) httpServletRequest.getSession().getAttribute("sessionBean") ;
 		Configuration configuration = sessionBean.getConfiguration();
-		List<Long> unpaySalesNumber = CommandeClient.findUnpayCloseSales(Etat.CLOS, false, false, TypeCommande.VENTE_PROFORMAT);
+		Long unpaySalesNumber = CommandeClient.findUnpayCloseSales(Etat.CLOS, false, false, TypeCommande.VENTE_PROFORMAT);
 		if(caisse != null){
 			if(configuration.getCloseCashUnpaySale()){
 				closeCash(uiModel,caisse);
 			}else {
-				Long number = unpaySalesNumber.iterator().next();
-				if(number >0){
-					uiModel.addAttribute("apMessage", messageSource.getMessage("cash_close_warning1", null, LocaleUtil.getCurrentLocale()) +number +  messageSource.getMessage("cash_close_warning2", null, LocaleUtil.getCurrentLocale()) );
+				if(unpaySalesNumber >0){
+					uiModel.addAttribute("apMessage", messageSource.getMessage("cash_close_warning1", null, LocaleUtil.getCurrentLocale()) +unpaySalesNumber +  messageSource.getMessage("cash_close_warning2", null, LocaleUtil.getCurrentLocale()) );
 				}else {
 					closeCash(uiModel,caisse);
 				}

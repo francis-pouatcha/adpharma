@@ -681,7 +681,7 @@ public class Produit extends AdPharmaBaseEntity {
 	
 	public static TypedQuery<Produit> findProduitsForOrderByDesignationLike(String designation) {
 		if (designation == null || designation.length() == 0) throw new IllegalArgumentException("The designation argument is required");
-		designation =designation + "%";
+		designation ="%"+designation + "%";
 		EntityManager em = Produit.entityManager();
 		TypedQuery<Produit> q = em.createQuery("SELECT o FROM Produit AS o WHERE LOWER(o.designation) LIKE LOWER(:designation)  order By  o.designation ASC ", Produit.class);
 		q.setParameter("designation", designation);

@@ -102,6 +102,13 @@ public class SaleProcess {
 		ordonne(cmdId, uiModel);
 		displayOrdonance= displayOrdonnance();
 	}
+	
+	public void resetDisplayName(CommandeClient commande){
+		displayName = displayName() ;
+		if (commande.getTypeCommande().equals(TypeCommande.VENTE_A_CREDIT)) {
+			displayName = displayName + ", PART CLIENT :"+commande.getPartClient().longValue()+" FCFA";
+		}
+	}
 
 	public void calculPrix(CommandeClient commande){
 		commande.calculPrixHtAndRemise();
@@ -203,7 +210,7 @@ public class SaleProcess {
 	}
 
 	// Affichage des donnees de la commande
-	private String displayName(){
+	public String displayName(){
 		StringBuilder displayText= new StringBuilder();
 		displayText.append(" "+cmdNumber).append("  , du: ").append(PharmaDateUtil.format(dateCommande, "dd-MM-yyyy HH:mm")).append("  , ").append(clientName).append("   ,     "+typeCommande);
 		return displayText.toString();

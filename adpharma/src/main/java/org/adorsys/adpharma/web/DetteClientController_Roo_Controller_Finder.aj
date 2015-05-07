@@ -84,4 +84,15 @@ privileged aspect DetteClientController_Roo_Controller_Finder {
         return "detteclients/list";
     }
     
+    @RequestMapping(params = { "find=BySolderNotAndAnnulerNot", "form" }, method = RequestMethod.GET)
+    public String DetteClientController.findDetteClientsBySolderNotAndAnnulerNotForm(Model uiModel) {
+        return "detteclients/findDetteClientsBySolderNotAndAnnulerNot";
+    }
+    
+    @RequestMapping(params = "find=BySolderNotAndAnnulerNot", method = RequestMethod.GET)
+    public String DetteClientController.findDetteClientsBySolderNotAndAnnulerNot(@RequestParam(value = "solder", required = false) Boolean solder, @RequestParam(value = "annuler", required = false) Boolean annuler, Model uiModel) {
+        uiModel.addAttribute("detteclients", DetteClient.findDetteClientsBySolderNotAndAnnulerNot(solder == null ? new Boolean(false) : solder, annuler == null ? new Boolean(false) : annuler).getResultList());
+        return "detteclients/list";
+    }
+    
 }

@@ -37,4 +37,7 @@
 <definition extends="default" name="detteclients/findDetteClientsByClientNoLike">
         <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsByClientNoLike.jspx"/>
     </definition>
+<definition extends="default" name="detteclients/findDetteClientsBySolderNotAndAnnulerNot">
+        <put-attribute name="body" value="/WEB-INF/views/detteclients/findDetteClientsBySolderNotAndAnnulerNot.jspx"/>
+    </definition>
 </tiles-definitions>

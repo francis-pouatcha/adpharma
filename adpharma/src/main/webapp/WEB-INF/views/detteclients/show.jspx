@@ -23,6 +23,7 @@
         <field:display field="sousTotal" id="s_org_adorsys_adpharma_domain_DetteClient_sousTotal" object="${detteclient}" z="9ogIEzHVaS99BuDUMurJ1NBGnxg="/>
         <field:display field="assurer" id="s_org_adorsys_adpharma_domain_DetteClient_assurer" object="${detteclient}" z="t6u0uWqvIZbFjNj80YD4242rwIY="/>
         <field:display date="true" dateTimePattern="${detteClient_enddate_date_format}" field="endDate" id="s_org_adorsys_adpharma_domain_DetteClient_endDate" object="${detteclient}" z="bYHgCujhijlJO8qsJqYDv5bTMus="/>
+        <field:display field="archived" id="s_org_adorsys_adpharma_domain_DetteClient_archived" object="${detteclient}" z="jxx13MU//vKCwSg2Qdv2Syg+q6w="/>
     </page:show>
     <HR/>
     <field:display field="footPrint" id="s_org_adorsys_adpharma_domain_DetteClient_footPrint" object="${detteclient}" z="0p7bLhhldxi9O1NqU4fW8cHI8Js="/>

@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.adorsys.adpharma.domain.AdPharmaBaseEntity;
 import org.adorsys.adpharma.domain.Approvisionement;
 import org.adorsys.adpharma.domain.DestinationMvt;
 import org.adorsys.adpharma.domain.Etat;
@@ -21,7 +20,6 @@ import org.adorsys.adpharma.domain.TypeMouvement;
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.services.core.InventoryService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,7 +293,7 @@ public class DefaultInventoryService implements InventoryService {
 	
 	
 	
-	@Scheduled(fixedDelay = 7200000, initialDelay = 1000)
+	@Scheduled(fixedRate=8*60*60*1000, initialDelay=1*60*1000) 
 	public void scheduleFixedRateWithInitialDelayTask() {
 		makeStockCorrection();
 	}
@@ -303,8 +301,11 @@ public class DefaultInventoryService implements InventoryService {
 	@Transactional
 	public void makeStockCorrection(){
 		EntityManager em = MouvementStock.entityManager();
-        StringBuilder searchQuery = new StringBuilder(""
-        		+ "update produit set produit.quantite_en_stock = (select SUM(l.quantie_en_stock) from  ligne_approvisionement as l where l.cip = produit.cip )where id > 0 ");
+        StringBuilder searchQuery = new StringBuilder("update produit as  p "+ 
+" set p.quantite_en_stock = (select SUM(quantie_en_stock) from ligne_approvisionement as l,approvisionement as ap  where l.produit = p.id and  ap.etat = 2 and  l.approvisionement = ap.id and l.quantie_en_stock <> 0  ) "+
+"where p.quantite_en_stock <> (select SUM(quantie_en_stock) from ligne_approvisionement as l,approvisionement as ap  where l.produit = p.id and  ap.etat = 2 and  l.approvisionement = ap.id and l.quantie_en_stock <> 0 ); ");
+       
+        
         Query q = em.createNativeQuery(searchQuery.toString());
         int executeUpdate = q.executeUpdate();
 	    System.out.println("Number article item affected " + executeUpdate);

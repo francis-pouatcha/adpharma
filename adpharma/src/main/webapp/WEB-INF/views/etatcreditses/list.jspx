@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" 
-xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
-xmlns:spring="http://www.springframework.org/tags" 
-xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    
-    <spring:message code="list_search_sales" var="list_search_sales" />
-    
+    <spring:message code="list_search_sales" var="list_search_sales"/>
     <page:list1 id="pl_org_adorsys_adpharma_domain_EtatCredits" items="${etatcreditses}" placeholder="${list_search_sales}" search="${search}" url="/etatcreditses/searchCredit" z="user-managed">
         <table:table data="${etatcreditses}" delete="false" id="l_org_adorsys_adpharma_domain_EtatCredits" path="/etatcreditses" update="false" z="user-managed">
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_footPrint" property="footPrint" render="false" z="user-managed"/>
@@ -24,6 +19,7 @@ xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
             <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_addAllUnbilledInvoices" property="addAllUnbilledInvoices" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="${etatCredits_mindatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_minDateDette" property="minDateDette" render="false" z="user-managed"/>
             <table:column date="true" dateTimePattern="${etatCredits_maxdatedette_date_format}" id="c_org_adorsys_adpharma_domain_EtatCredits_maxDateDette" property="maxDateDette" render="false" z="user-managed"/>
+            <table:column id="c_org_adorsys_adpharma_domain_EtatCredits_archived" property="archived" z="qTTmkSh7iiZqi5UcBZh9KUiPj7g="/>
         </table:table>
     </page:list1>
 </div>

@@ -80,14 +80,12 @@ public class PaiementProcessController {
 
 	@RequestMapping(value="/getUnpayCloseSalesNumber/ByAjax", method = RequestMethod.GET)
 	@ResponseBody
-	public String getUnpayCloseSalesNumber() {
-		List<Long> unpayCloseSales = CommandeClient.findUnpayCloseSales(Etat.CLOS, Boolean.FALSE,  Boolean.FALSE, TypeCommande.VENTE_PROFORMAT);
-		if(!unpayCloseSales.isEmpty()){
-			Long unpay =  unpayCloseSales.iterator().next();
-
-			return unpay.toString() ;
-		}
-		return  null ;
+	public Long getUnpayCloseSalesNumber() {
+		Long unpayCloseSales = Long.valueOf(0) ; //CommandeClient.findUnpayCloseSales(Etat.CLOS, Boolean.FALSE,  Boolean.FALSE, TypeCommande.VENTE_PROFORMAT);
+		List<Facture> factureResult = Facture.findFacturesByCaisseAndEncaisserNot(null, Boolean.TRUE).getResultList();
+		if(!factureResult.isEmpty())
+			unpayCloseSales = Long.valueOf(factureResult.size());
+		return  unpayCloseSales ;
 	}
 	@RequestMapping(value = "/editPaiement", method = RequestMethod.GET)
 	public String editPaiement( Model uiModel, HttpServletRequest httpServletRequest) {

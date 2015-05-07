@@ -134,7 +134,7 @@
                     <field:input field="prenom" id="c_org_adorsys_adpharma_domain_Client_prenom" required="true" z="user-managed"/>
                     <field:input field="nomComplet" id="c_org_adorsys_adpharma_domain_Client_nomComplet" render="false" z="user-managed"/>
                     <field:input field="telephoneFixe" id="c_org_adorsys_adpharma_domain_Client_telephoneFixe" z="V26887UHy1vOexyRbG/AYnzQN1o="/>
-                    <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" required="true" z="cgA267/y+TXb15mcuplhD3RLmP8="/>
+                    <field:input field="telephoneMobile" id="c_org_adorsys_adpharma_domain_Client_telephoneMobile" z="UEVz4Qi38EfJSl81OAO5fxyACeo="/>
                     <field:input field="fax" id="c_org_adorsys_adpharma_domain_Client_fax" z="aOSu7ScTBW5cIY/nnmRzVfsL4UE="/>
                     <field:input field="email" id="c_org_adorsys_adpharma_domain_Client_email" validationMessageCode="field_invalid_email" z="iDoIUvMfd7ASgweG9SdQtj9MkMw="/>
                 </td>
@@ -189,8 +189,8 @@
             </table>
         </div>
     </div>
-    <form:update render="false" id="fu_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/clients" versionField="Version" z="Il6d8I6l1DUYb7NswUqvws6qXoM=">
+    <form:update id="fu_org_adorsys_adpharma_domain_Client" modelAttribute="client" path="/clients" render="false" versionField="Version" z="user-managed">
         <field:input field="matricule" id="c_org_adorsys_adpharma_domain_Client_matricule" z="H6o2Ueu45M4CEIDZt35qTloDamg="/>
-        <field:checkbox field="archived" render="false" id="c_org_adorsys_adpharma_domain_Client_archived" z="LK41w52Ktl3Mlsjn5Mh7an9OJOc="/>
+        <field:checkbox field="archived" id="c_org_adorsys_adpharma_domain_Client_archived" render="false" z="user-managed"/>
     </form:update>
 </div>

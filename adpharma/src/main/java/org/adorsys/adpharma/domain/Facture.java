@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javassist.expr.NewArray;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.Enumerated;
@@ -20,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
+
 import org.adorsys.adpharma.security.SecurityUtil;
 import org.adorsys.adpharma.utils.NumberGenerator;
 import org.adorsys.adpharma.utils.PharmaDateUtil;
@@ -35,7 +38,9 @@ import org.adorsys.adpharma.domain.TypeFacture;
 import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.loader.custom.Return;
+
 import com.mysql.jdbc.jmx.LoadBalanceConnectionGroupManager;
+
 import org.springframework.roo.addon.json.RooJson;
 
 @RooJavaBean
@@ -228,15 +233,16 @@ public class Facture extends AdPharmaBaseEntity {
         TypedQuery<Facture> q;
         EntityManager em = Facture.entityManager();
         if (caisse == null) {
-            q = em.createQuery("SELECT o FROM Facture AS o WHERE o.encaisser IS NOT :encaisser  AND o.solder IS :solder AND o.typeFacture != :typeFacture ORDER BY o.id ASC", Facture.class);
+            q = em.createQuery("SELECT o FROM Facture AS o WHERE o.encaisser IS NOT :encaisser AND o.commande.status = :status AND o.typeFacture != :typeFacture ORDER BY o.id ASC", Facture.class);
         } else {
-            q = em.createQuery("SELECT o FROM Facture AS o WHERE o.caisse = :caisse AND o.encaisser IS NOT :encaisser  AND o.solder IS :solder AND o.typeFacture != :typeFacture ORDER BY o.id ASC", Facture.class);
+            q = em.createQuery("SELECT o FROM Facture AS o WHERE o.caisse = :caisse AND o.encaisser IS NOT :encaisser  AND o.commande.status = :status AND o.typeFacture != :typeFacture ORDER BY o.id ASC", Facture.class);
         }
         if (caisse != null) {
             q.setParameter("caisse", caisse);
         }
+        q.setParameter("status", Etat.CLOS);
         q.setParameter("encaisser", encaisser);
-        q.setParameter("solder", Boolean.FALSE);
+//        q.setParameter("solder", Boolean.FALSE);
         q.setParameter("typeFacture", TypeFacture.PROFORMAT);
         return q;
     }

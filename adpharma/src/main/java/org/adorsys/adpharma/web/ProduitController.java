@@ -183,8 +183,6 @@ public class ProduitController {
 		public String findProductByCipAjaxForOrder(HttpServletRequest httpServletRequest) {
 			String des = httpServletRequest.getParameter("designation");
 			List<Produit> resultList = Produit.findProduitsForOrderByDesignationLike(des).setMaxResults(300).getResultList();
-			System.out.println(resultList);
-			
 			return Produit.toJsonArray(resultList);
 		}
 	
